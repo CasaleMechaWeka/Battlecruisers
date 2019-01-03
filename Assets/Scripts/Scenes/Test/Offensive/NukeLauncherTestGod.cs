@@ -30,10 +30,10 @@ namespace BattleCruisers.Scenes.Test.Offensive
 			ICruiser enemyCruiser = helper.CreateCruiser(basetarget.GameObject);
 			IExactMatchTargetFilter targetFilter = Substitute.For<IExactMatchTargetFilter>();
 			targetFilter.IsMatch(basetarget).Returns(true);
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(basetarget.GameObject, exactMatchTargetFilter: targetFilter);
+            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(basetarget.GameObject, exactMatchTargetFilter: targetFilter);
 
 			NukeLauncherController launcher = FindObjectOfType<NukeLauncherController>();
-            helper.InitialiseBuilding(launcher, enemyCruiser: enemyCruiser, targetsFactory: targetsFactory);
+            helper.InitialiseBuilding(launcher, enemyCruiser: enemyCruiser, targetFactories: targetFactories);
 			launcher.StartConstruction();
 		}
 	}

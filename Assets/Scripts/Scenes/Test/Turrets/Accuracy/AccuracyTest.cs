@@ -43,14 +43,14 @@ namespace BattleCruisers.Scenes.Test.Turrets.Accuracy
                 Target = target
             };
 
-            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
+            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(target.GameObject, targetFilter);
             IAccuracyAdjusterFactory accuracyAdusterFactory = new AccuracyAdjusterFactory();
 
             helper
                 .InitialiseBuilding(
                     turret, 
                     Faction.Reds, 
-                    targetsFactory: targetsFactory,
+                    targetFactories: targetFactories,
                     accuracyAdjusterFactory: accuracyAdusterFactory);
 
             turret.StartConstruction();

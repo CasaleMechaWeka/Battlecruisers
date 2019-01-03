@@ -24,11 +24,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
             IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
-            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(factory.GameObject, targetFilter);
+            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter);
 
             BomberController bomber = FindObjectOfType<BomberController>();
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
-            helper.InitialiseUnit(bomber, Faction.Reds, aircraftProvider: aircraftProvider, targetsFactory: targetsFactory, parentCruiserDirection: Direction.Right);
+            helper.InitialiseUnit(bomber, Faction.Reds, aircraftProvider: aircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Right);
             bomber.StartConstruction();
         }
     }

@@ -44,10 +44,10 @@ namespace BattleCruisers.Scenes.Test.Tactical
             {
                 Target = target
             };
-            ITargetsFactory targetsFactory = helper.CreateTargetsFactory(target.GameObject, targetFilter);
+            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(target.GameObject, targetFilter);
 
             TurretController turret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(turret, Faction.Blues, targetsFactory: targetsFactory, parentSlot: slotToBoost);
+            helper.InitialiseBuilding(turret, Faction.Blues, targetFactories: targetFactories, parentSlot: slotToBoost);
             turret.StartConstruction();
 
 

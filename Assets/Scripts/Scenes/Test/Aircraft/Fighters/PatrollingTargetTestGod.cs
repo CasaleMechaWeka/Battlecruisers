@@ -35,8 +35,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 			// Fighter
 			IList<TargetType> targetTypes = new List<TargetType>() { target.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(target.Faction, targetTypes);
-			ITargetsFactory targetsFactory = _helper.CreateTargetsFactory(target.GameObject, targetFilter);
-            _helper.InitialiseUnit(fighter, Faction.Reds, targetsFactory: targetsFactory);
+            ITargetFactoriesProvider targetFactories = _helper.CreateTargetFactories(target.GameObject, targetFilter);
+            _helper.InitialiseUnit(fighter, Faction.Reds, targetFactories: targetFactories);
 			fighter.StartConstruction();
 		}
 	}

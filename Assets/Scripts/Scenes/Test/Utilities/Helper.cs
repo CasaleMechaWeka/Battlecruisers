@@ -226,50 +226,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return enemyCruiser;
         }
 
-		/// <summary>
-		/// Target processors only assign the specified target once, and then chill forever.
-		/// </summary>
-        /// FELIX  Remove :D
-		public ITargetsFactory CreateTargetsFactory(GameObject globalTarget, ITargetFilter targetFilter = null, IExactMatchTargetFilter exactMatchTargetFilter = null)
-		{
-			// The enemy cruiser is added as a target by the global target finder.
-			// So pretend the cruiser game object is the specified target.
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-			enemyCruiser.GameObject.Returns(globalTarget);
-			enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
-
-			GlobalTargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
-            IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
-			ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
-            ITargetsFactory targetsFactory = Substitute.For<ITargetsFactory>();
-            targetFinder.EmitCruiserAsGlobalTarget();
-
-            if (exactMatchTargetFilter == null)
-            {
-                exactMatchTargetFilter = new ExactMatchTargetFilter();
-            }
-
-			targetsFactory.BomberTargetProcessor.Returns(targetProcessor);
-			targetsFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-			targetsFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-            targetsFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
-			targetsFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
-            targetsFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            targetsFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
-            targetsFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
-			
-            if (targetFilter != null)
-            {
-                targetsFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
-			}
-            else
-            {
-                SetupCreateTargetFilter(targetsFactory);
-            }
-
-			return targetsFactory;
-		}
-
         public ITargetFactoriesProvider CreateTargetFactories(
             GameObject globalTarget, 
             ITargetFilter targetFilter = null, 

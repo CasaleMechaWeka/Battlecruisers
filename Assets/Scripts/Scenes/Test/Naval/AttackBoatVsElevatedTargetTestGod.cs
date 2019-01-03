@@ -10,8 +10,8 @@ namespace BattleCruisers.Scenes.Test.Naval
 	{
         protected override void InitialiseBoat(Helper helper, ShipController boat, TurretController[] turrets)
         {
-			ITargetsFactory targetsFactory = helper.CreateTargetsFactory(globalTarget: turrets[0].GameObject);
-			helper.InitialiseUnit(boat, Faction.Blues, targetsFactory: targetsFactory);
+            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(globalTarget: turrets[0].GameObject);
+			helper.InitialiseUnit(boat, Faction.Blues, targetFactories: targetFactories);
         }
    	}
 }
