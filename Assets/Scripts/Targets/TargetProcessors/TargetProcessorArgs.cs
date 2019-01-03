@@ -9,7 +9,6 @@ namespace BattleCruisers.Targets.TargetProcessors
     public class TargetProcessorArgs : ITargetProcessorArgs
     {
         public ITargetFactoriesProvider TargetFactories { get; private set; }
-        public ITargetsFactory TargetsFactory { get; private set; }
         public Faction EnemyFaction { get; private set; }
         public IList<TargetType> AttackCapabilities { get; private set; }
         public float MaxRangeInM { get; private set; }
@@ -18,18 +17,16 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public TargetProcessorArgs(
             ITargetFactoriesProvider targetFactories,
-            ITargetsFactory targetsFactory,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
             float maxRangeInM,
             float minRangeInM = 0,
             ITarget parentTarget = null)
         {
-            Helper.AssertIsNotNull(targetFactories, targetsFactory, attackCapabilities);
+            Helper.AssertIsNotNull(targetFactories, attackCapabilities);
             Assert.IsTrue(maxRangeInM > minRangeInM);
 
             TargetFactories = targetFactories;
-            TargetsFactory = targetsFactory;
             EnemyFaction = enemyFaction;
             AttackCapabilities = attackCapabilities;
             MaxRangeInM = maxRangeInM;

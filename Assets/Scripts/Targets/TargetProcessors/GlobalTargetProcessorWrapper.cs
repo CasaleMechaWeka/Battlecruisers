@@ -4,7 +4,7 @@
     {
         public override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
         {
-            return args.TargetsFactory.OffensiveBuildableTargetProcessor;
+            return args.TargetFactories.ProcessorFactory.OffensiveBuildableTargetProcessor;
         }
     }
 }

@@ -20,17 +20,17 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
-            _targetTracker = args.TargetsFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
+            _targetTracker = args.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
 
             if (considerUserChosenTarget)
             {
-                ITargetTracker inRangeTargetTracker = args.TargetsFactory.CreateTargetTracker(_targetFinder);
-                IRankedTargetTracker userChosenInRangeTargetTracker = args.TargetsFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
+                ITargetTracker inRangeTargetTracker = args.TargetFactories.TrackerFactory.CreateTargetTracker(_targetFinder);
+                IRankedTargetTracker userChosenInRangeTargetTracker = args.TargetFactories.TrackerFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
                 IRankedTargetTracker inRangeSingleTargetTracker = _targetTracker;
-                _targetTracker = args.TargetsFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
+                _targetTracker = args.TargetFactories.TrackerFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
             }
 
-            return args.TargetsFactory.CreateTargetProcessor(_targetTracker);
+            return args.TargetFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
         }
 
         protected ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
@@ -47,8 +47,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 			
 			// Create target finder
 			enemyDetector.Initialise(args.MaxRangeInM);
-			ITargetFilter enemyDetectionFilter = args.TargetsFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-			return args.TargetsFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+			ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+			return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
     }
 }

@@ -124,7 +124,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _factoryProvider.TargetFactories,
-                    _factoryProvider.TargetsFactory,
                     _enemyFaction,
                     DamageCapability.AttackCapabilities,
                     RangeInM,
