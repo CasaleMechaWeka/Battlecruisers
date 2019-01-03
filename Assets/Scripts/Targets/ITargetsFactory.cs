@@ -41,6 +41,7 @@ namespace BattleCruisers.Targets
         ITargetFilter CreateTargetInFrontFilter(IUnit source);
 		IExactMatchTargetFilter CreateExactMatchTargetFilter();
 		IExactMatchTargetFilter CreateExactMatchTargetFilter(ITarget targetToMatch);
+        IExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter();
 
 		// Rankers
 		ITargetRanker EqualTargetRanker { get; }

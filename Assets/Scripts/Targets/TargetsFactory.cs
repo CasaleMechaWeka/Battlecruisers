@@ -16,6 +16,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Targets
 {
+    // FELIX  Create separate factories, and contain in a TargetFactoriesProvider :)
     public class TargetsFactory : ITargetsFactory
 	{
         public TargetsFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
@@ -108,6 +109,11 @@ namespace BattleCruisers.Targets
 				Target = targetToMatch
 			};
 		}
+
+        public IExactMatchTargetFilter CreateMulitpleExactMatchTargetFilter()
+        {
+            return new MultipleExactMatchesTargetFilter();
+        }
 
         public ITargetFilter CreateDummyTargetFilter(bool isMatchResult)
         {
