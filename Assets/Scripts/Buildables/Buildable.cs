@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables
         protected ICruiser _enemyCruiser;
         protected IDroneManager _droneManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
-        protected ITargetsFactory _targetsFactory;
+        protected ITargetFactoriesProvider _targetFactories;
         protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
         protected IFactoryProvider _factoryProvider;
@@ -223,7 +223,7 @@ namespace BattleCruisers.Buildables
             _aircraftProvider = factoryProvider.AircraftProvider;
 
             _factoryProvider = factoryProvider;
-            _targetsFactory = _factoryProvider.TargetsFactory;
+            _targetFactories = _factoryProvider.TargetFactories;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
 
             Faction = ParentCruiser.Faction;

@@ -89,7 +89,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnInitialised();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider);
 
@@ -104,7 +104,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-			_targetProcessor = _targetsFactory.BomberTargetProcessor;
+			_targetProcessor = _targetFactories.ProcessorFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooser(this);

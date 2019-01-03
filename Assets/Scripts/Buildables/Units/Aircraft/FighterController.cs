@@ -97,7 +97,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
-                    _targetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
+                    _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
                     _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
                     _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
@@ -132,25 +132,25 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			followableEnemyDetector.Initialise(enemyFollowDetectionRangeInM);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft };
-            ITargetFilter targetFilter = _targetsFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
-			_followableTargetFinder = _targetsFactory.CreateRangedTargetFinder(followableEnemyDetector, targetFilter);
+            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
+			_followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(followableEnemyDetector, targetFilter);
 			
-			ITargetRanker followableTargetRanker = _targetsFactory.EqualTargetRanker;
-            IRankedTargetTracker followableTargetTracker = _targetsFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
-			_followableTargetProcessor = _targetsFactory.CreateTargetProcessor(followableTargetTracker);
+			ITargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
+            IRankedTargetTracker followableTargetTracker = _targetFactories.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
+			_followableTargetProcessor = _targetFactories.ProcessorFactory.CreateTargetProcessor(followableTargetTracker);
 			_followableTargetProcessor.AddTargetConsumer(this);
 
 
 			// Detect shootable enemies
-			_exactMatchTargetFilter = _targetsFactory.CreateMulitpleExactMatchTargetFilter();
+			_exactMatchTargetFilter = _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 			
 			shootableEnemyDetector.Initialise(_barrelController.TurretStats.RangeInM);
-			_shootableTargetFinder = _targetsFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
+			_shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
 			
-			ITargetRanker shootableTargetRanker = _targetsFactory.EqualTargetRanker;
-            IRankedTargetTracker shootableTargetTracker = _targetsFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
-			_shootableTargetProcessor = _targetsFactory.CreateTargetProcessor(shootableTargetTracker);
+			ITargetRanker shootableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
+            IRankedTargetTracker shootableTargetTracker = _targetFactories.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
+			_shootableTargetProcessor = _targetFactories.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
 			_shootableTargetProcessor.AddTargetConsumer(_barrelController);
 		}
 

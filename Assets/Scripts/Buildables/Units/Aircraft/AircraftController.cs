@@ -143,7 +143,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 return;
             }
 
-            ITargetProvider cruiserTarget = _targetsFactory.CreateStaticTargetProvider(kamikazeTarget);
+            ITargetProvider cruiserTarget = _targetFactories.ProviderFactory.CreateStaticTargetProvider(kamikazeTarget);
             ActiveMovementController = _movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget);
 
             UpdateFaction(kamikazeTarget);
