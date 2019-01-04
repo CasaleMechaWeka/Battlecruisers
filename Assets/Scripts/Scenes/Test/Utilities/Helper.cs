@@ -71,8 +71,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
             ITargetFactoriesProvider targetFactories = null,
-            // FELIX  Remove :P
-            ITargetsFactory targetsFactory = null,
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
@@ -136,7 +134,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			IAircraftProvider aircraftProvider = null,
 			IPrefabFactory prefabFactory = null,
             ITargetFactoriesProvider targetFactories = null,
-			ITargetsFactory targetsFactory = null,
             IMovementControllerFactory movementControllerFactory = null,
 			IAngleCalculatorFactory angleCalculatorFactory = null,
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
