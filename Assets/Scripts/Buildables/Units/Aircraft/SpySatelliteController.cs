@@ -12,6 +12,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Satellite; } }
 
+        public override TargetType TargetType { get { return TargetType.Satellite; } }
+
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
 			IList<Vector2> patrolPositions = _aircraftProvider.FindSpySatellitePatrolPoints(transform.position, cruisingAltitudeInM);

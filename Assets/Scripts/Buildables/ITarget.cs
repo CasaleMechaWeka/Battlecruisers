@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables
 
 	public enum TargetType
 	{
-		Aircraft, Ships, Cruiser, Buildings, Rocket
+		Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite
 	}
 
 	/// <summary>
