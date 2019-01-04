@@ -76,7 +76,7 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey CartoonExplosion75 { get { return new ExplosionKey("CartoonExplosion0.75"); } }
             public static ExplosionKey CartoonExplosion100 { get { return new ExplosionKey("CartoonExplosion1.0"); } }
             public static ExplosionKey CartoonExplosion150 { get { return new ExplosionKey("CartoonExplosion1.5"); } }
-            public static ExplosionKey CartoonExplosion1000 { get { return new ExplosionKey("CartoonExplosion10"); } }
+            public static ExplosionKey CartoonExplosion1000 { get { return new ExplosionKey("CartoonExplosion10.0"); } }
         }
 	}
 }
