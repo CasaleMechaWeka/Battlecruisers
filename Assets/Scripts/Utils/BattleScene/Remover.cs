@@ -7,7 +7,7 @@ namespace BattleCruisers.Utils.BattleScene
 	{
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-            IDestructable removable = collider.GetComponent<IDestructable>();
+            IRemovable removable = collider.GetComponent<IRemovable>();
             Assert.IsNotNull(removable);
             removable.RemoveFromScene();
 		}

@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public class ProjectileController : MonoBehaviour, IDestructable, ITrackable
+    public class ProjectileController : MonoBehaviour, IRemovable, ITrackable
     {
         private IExplosionStats _explosionStats;
         private IProjectileStats _projectileStats;

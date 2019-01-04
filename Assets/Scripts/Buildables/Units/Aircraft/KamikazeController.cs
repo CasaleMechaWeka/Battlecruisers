@@ -10,10 +10,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class KamikazeController : MonoBehaviour, IDestructable
+    public class KamikazeController : MonoBehaviour, IRemovable
     {
         private IUnit _parentAircraft;
-        private IDestructable _parentAsRemovable;
+        private IRemovable _parentAsRemovable;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private IExplosionManager _explosionManager;

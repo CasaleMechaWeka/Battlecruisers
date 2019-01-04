@@ -6,7 +6,6 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public abstract class AircraftController : 
         Unit, 
         IVelocityProvider, 
-        IPatrollingVelocityProvider, 
-        IDestructable
+        IPatrollingVelocityProvider
 	{
         private KamikazeController _kamikazeController;
 		private SpriteRenderer _spriteRenderer;
