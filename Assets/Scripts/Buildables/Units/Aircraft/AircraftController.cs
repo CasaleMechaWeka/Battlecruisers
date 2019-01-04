@@ -126,6 +126,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
+            Logging.Log(Tags.AIRCRAFT, "AircraftController.OnFixedUpdate()  Adjusting velocity");
+
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 
@@ -201,7 +203,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override void OnDeathWhileCompleted()
         {
             base.OnDeathWhileCompleted();
-            
+
+            Logging.Log(Tags.AIRCRAFT, "AircraftController.OnDeathWhileCompleted()");
+
             // Pass on current velocity
             rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
 
