@@ -32,7 +32,6 @@ namespace BattleCruisers.Utils.Factories
         public IPrefabFactory PrefabFactory { get; private set; }
         public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
         public ITargetFactoriesProvider TargetFactories { get; private set; }
-        public ITargetsFactory TargetsFactory { get; private set; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
         public ITrackerFactory TrackerFactory { get; private set; }
 
@@ -52,7 +51,6 @@ namespace BattleCruisers.Utils.Factories
 
 			PrefabFactory = prefabFactory;
             TargetFactories = new TargetFactoriesProvider(enemyCruiser, userChosenTargetTracker);
-			TargetsFactory = new TargetsFactory(enemyCruiser, userChosenTargetTracker);
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory(new TimeBC());
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());

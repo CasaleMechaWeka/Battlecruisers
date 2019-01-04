@@ -78,7 +78,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_launchedNuke = Instantiate(nukeMissilePrefab);
 			_launchedNuke.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
-			ITargetFilter targetFilter = _factoryProvider.TargetsFactory.CreateExactMatchTargetFilter(_enemyCruiser);
+			ITargetFilter targetFilter = _factoryProvider.TargetFactories.FilterFactory.CreateExactMatchTargetFilter(_enemyCruiser);
             _launchedNuke.Initialise(_nukeStats, targetFilter, _enemyCruiser, _factoryProvider, this);
 
             // Make nuke face upwards (rotation is set in Initialise() above)

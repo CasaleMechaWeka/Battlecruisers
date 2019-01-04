@@ -47,8 +47,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
             ITargetFactoriesProvider targetFactories = null,
-            // FELIX  Remove :P
-            ITargetsFactory targetsFactory = null,
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
@@ -74,7 +72,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             targetFactories = targetFactories ?? new TargetFactoriesProvider(EnemyCruiser, userChosenTargetManager);
-            targetsFactory = targetsFactory ?? new TargetsFactory(EnemyCruiser, userChosenTargetManager);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             variableDelayDeferrer = variableDelayDeferrer ?? Substitute.For<IVariableDelayDeferrer>();
@@ -85,7 +82,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             FactoryProvider
                 = CreateFactoryProvider(
                     prefabFactory,
-                    targetsFactory,
                     movementControllerFactory ?? new MovementControllerFactory(new TimeBC()),
                     angleCalculatorFactory ?? new AngleCalculatorFactory(),
                     targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),
@@ -108,12 +104,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new AttackablePositionFinderFactory(),
                     new DeferrerProvider(variableDelayDeferrer),
                     explosionManager,
-                    trackerFactory ?? Substitute.For<ITrackerFactory>());
+                    trackerFactory ?? Substitute.For<ITrackerFactory>(),
+                    targetFactories);
         }
 
         private IFactoryProvider CreateFactoryProvider(
             IPrefabFactory prefabFactory,
-            ITargetsFactory targetsFactory,
             IMovementControllerFactory movementControllerFactory,
             IAngleCalculatorFactory angleCalculatorFactory,
             ITargetPositionPredictorFactory targetPositionControllerFactory,
@@ -133,7 +129,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAttackablePositionFinderFactory attackablePositionFinderFactory,
             IDeferrerProvider deferrerProvider,
             IExplosionManager explosionManager,
-            ITrackerFactory trackerFactory)
+            ITrackerFactory trackerFactory,
+            ITargetFactoriesProvider targetFactories)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -148,7 +145,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
-            factoryProvider.TargetsFactory.Returns(targetsFactory);
+            factoryProvider.TargetFactories.Returns(targetFactories);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
 
             // Turrets

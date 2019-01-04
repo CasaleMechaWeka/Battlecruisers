@@ -95,9 +95,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             // Create target tracker => For keeping track of in range targets
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
-            ITargetFilter enemyDetectionFilter = _factoryProvider.TargetsFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.TargetsFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
-            _inRangeTargetTracker = _factoryProvider.TargetsFactory.CreateTargetTracker(_inRangeTargetFinder);
+            ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
+            _inRangeTargetTracker = _factoryProvider.TargetFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
 
             _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);

@@ -166,7 +166,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.TargetsFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
+            return _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()

@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _targetToDamage = null;
 
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
-            _targetFilter = factoryProvider.TargetsFactory.CreateTargetFilter(target.Faction, targetTypes);
+            _targetFilter = factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(target.Faction, targetTypes);
 
             IDamageStats kamikazeDamageStats
                 = factoryProvider.DamageApplierFactory.CreateDamageStats(
