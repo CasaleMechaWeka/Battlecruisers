@@ -151,7 +151,7 @@ namespace BattleCruisers.Buildables.Units
             rigidBody.gravityScale = OnDeathGravityScale;
         }
 
-        void IDestructable.Destroy()
+        void IDestructable.RemoveFromScene()
         {
             base.InternalDestroy();
         }

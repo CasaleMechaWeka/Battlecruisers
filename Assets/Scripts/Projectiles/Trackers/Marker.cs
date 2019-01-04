@@ -7,7 +7,7 @@ namespace BattleCruisers.Projectiles.Trackers
         public bool IsVisible { set { gameObject.SetActive(value); } }
         public Vector2 OnScreenPostion { set { transform.position = value; } }
 
-        public void Destroy()
+        public void RemoveFromScene()
         {
             Destroy(gameObject);
         }

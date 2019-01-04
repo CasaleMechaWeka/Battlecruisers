@@ -56,7 +56,7 @@ namespace BattleCruisers.Tests.Projectiles.Trackers
 
             _trackable.Destroyed += Raise.Event();
 
-            _marker.Received().Destroy();
+            _marker.Received().RemoveFromScene();
 
             // PositionChanged event was unsubscribed
             _trackable.PositionChanged += Raise.Event();
@@ -65,7 +65,7 @@ namespace BattleCruisers.Tests.Projectiles.Trackers
             // Destroyed event was unsubscribed
             _marker.ClearReceivedCalls();
             _trackable.Destroyed += Raise.Event();
-            _marker.DidNotReceiveWithAnyArgs().Destroy();
+            _marker.DidNotReceiveWithAnyArgs().RemoveFromScene();
 
             // PotentialMatchChange event was unsubscribed
             _trackerVisibilityFilter.PotentialMatchChange += Raise.Event();

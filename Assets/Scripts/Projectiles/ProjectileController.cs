@@ -142,7 +142,7 @@ namespace BattleCruisers.Projectiles
                 _soundPlayer.PlaySound(ImpactSoundKey, transform.position);
             }
 
-			Destroy();
+			RemoveFromScene();
 		}
 
 
@@ -159,7 +159,7 @@ namespace BattleCruisers.Projectiles
             transform.right = _rigidBody.velocity;
         }
 
-        public void Destroy()
+        public void RemoveFromScene()
         {
             Destroy(gameObject);
 

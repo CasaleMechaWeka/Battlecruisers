@@ -55,7 +55,7 @@ namespace BattleCruisers.Projectiles.Trackers
             _trackable.Destroyed -= _trackable_Destroyed;
             _trackerVisibilityFilter.PotentialMatchChange -= _trackerVisibilityFilter_PotentialMatchChange;
 
-            _marker.Destroy();
+            _marker.RemoveFromScene();
         }
 
         private void _trackerVisibilityFilter_PotentialMatchChange(object sender, EventArgs e)
