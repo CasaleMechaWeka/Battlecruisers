@@ -13,24 +13,27 @@ using UnityEngine;
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class KamikazeTestGod : MonoBehaviour
-	{
-		void Start()
-		{
-			Helper helper = new Helper();
-			
+    {
+        void Start()
+        {
+            Helper helper = new Helper();
+
             // Setup target
             IFactory _target = FindObjectOfType<Factory>();
             helper.InitialiseBuilding(_target);
-			_target.StartConstruction();
+            _target.StartConstruction();
 
-			ICruiser enemyCruiser = Substitute.For<ICruiser>();
-			enemyCruiser.GameObject.Returns(_target.GameObject);
+            ICruiser enemyCruiser = Substitute.For<ICruiser>();
+            enemyCruiser.GameObject.Returns(_target.GameObject);
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 
             // Setup AA
-            TurretController aaTurret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(aaTurret);
-            aaTurret.StartConstruction();
+            TurretController[] aaTurrets = FindObjectsOfType<TurretController>();
+            foreach (TurretController aaTurret in aaTurrets)
+            {
+                helper.InitialiseBuilding(aaTurret);
+                aaTurret.StartConstruction();
+            }
 
             // Setup aircraft
             AircraftController[] aircraftList = FindObjectsOfType<AircraftController>();
@@ -44,6 +47,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             KamikazeSignal kamikazeSignal = FindObjectOfType<KamikazeSignal>();
             helper.InitialiseBuilding(kamikazeSignal, enemyCruiser: enemyCruiser);
             kamikazeSignal.StartConstruction();
-		}
-	}
+        }
+    }
 }
