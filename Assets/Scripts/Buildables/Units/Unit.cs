@@ -13,7 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-    public abstract class Unit : Buildable, IUnit, IDestructable
+    public abstract class Unit : Buildable, IUnit
     {
         private IAudioClipWrapper _engineAudioClip;
 

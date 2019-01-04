@@ -3,15 +3,17 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class KamikazeController : MonoBehaviour
+    public class KamikazeController : MonoBehaviour, IDestructable
     {
         private IUnit _parentAircraft;
+        private IDestructable _parentAsRemovable;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private IExplosionManager _explosionManager;
@@ -29,6 +31,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Helper.AssertIsNotNull(parentAircraft, factoryProvider);
 
             _parentAircraft = parentAircraft;
+            _parentAsRemovable = parentAircraft;
             _targetToDamage = null;
 
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
@@ -62,11 +65,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             if (_targetToDamage != null
                 && !_parentAircraft.IsDestroyed)
             {
-                _parentAircraft.Destroy();
+                RemoveFromScene();
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
                 IExplosionStats explosionStats = new ExplosionStats(ExplosionSize.Small, showTrails: true);
                 _explosionManager.ShowExplosion(explosionStats, transform.position);
             }
+        }
+
+        public void RemoveFromScene()
+        {
+            _parentAsRemovable.RemoveFromScene();
         }
     }
 }
