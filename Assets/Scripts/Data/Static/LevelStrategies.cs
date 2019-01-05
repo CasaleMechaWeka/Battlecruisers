@@ -130,7 +130,7 @@ namespace BattleCruisers.Data.Static
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
                 new IOffensiveRequest[]
                 {
@@ -140,7 +140,7 @@ namespace BattleCruisers.Data.Static
                 },
                 new IOffensiveRequest[]
                 {
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
                 
@@ -169,7 +169,7 @@ namespace BattleCruisers.Data.Static
                 },
                 new IOffensiveRequest[]
                 {
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
                 new IOffensiveRequest[]
                 {
@@ -196,7 +196,7 @@ namespace BattleCruisers.Data.Static
 				},
 				new IOffensiveRequest[]
 				{
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
 				},
 				new IOffensiveRequest[]
 				{
@@ -229,7 +229,7 @@ namespace BattleCruisers.Data.Static
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 },
                 new IOffensiveRequest[]
                 {
