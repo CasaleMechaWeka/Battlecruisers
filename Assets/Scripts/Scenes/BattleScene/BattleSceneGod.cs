@@ -18,6 +18,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -35,6 +36,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private IArtificialIntelligence _ai;
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private ITutorialProvider _tutorialProvider;
+        private IBattleCompletionHandler _battleCompletionHandler;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -64,7 +66,8 @@ namespace BattleCruisers.Scenes.BattleScene
             //applicationModel.IsTutorial = true;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
-            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            _battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            _battleCompletionHandler.BattleCompleted += BattleCompletionHandler_BattleCompleted;
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
@@ -148,7 +151,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
                     pauseGameManager,
-                    battleCompletionHandler);
+                    _battleCompletionHandler);
 
             ManagerArgs args
                 = new ManagerArgs(
@@ -179,7 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
-            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, battleCompletionHandler, pauseGameManager);
+            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, _battleCompletionHandler, pauseGameManager);
 
             StartTutorialIfNecessary(
                 prefabFactory, 
@@ -241,6 +244,14 @@ namespace BattleCruisers.Scenes.BattleScene
                 tutorialManager.Initialise(tutorialArgs);
                 tutorialManager.StartTutorial();
             }
+        }
+
+        private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
+        {
+            _battleCompletionHandler.BattleCompleted -= BattleCompletionHandler_BattleCompleted;
+
+            _userChosenTargetHighligher.DisposeManagedState();
+            _ai.DisposeManagedState();
         }
     }
 }
