@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Scenes;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.Buttons;
@@ -35,20 +34,28 @@ namespace BattleCruisers.UI.BattleScene
 
         public RightPanelComponents Initialise(
             IApplicationModel applicationModel,
-            ISceneNavigator sceneNavigator,
             IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            IPauseGameManager pauseGameManager)
+            IPauseGameManager pauseGameManager,
+            IBattleCompletionHandler battleCompletionHandler)
         {
-            Helper.AssertIsNotNull(modalMenu, applicationModel, sceneNavigator, uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, pauseGameManager);
+            Helper.AssertIsNotNull(
+                modalMenu, 
+                applicationModel, 
+                uiManager, 
+                playerCruiser, 
+                userChosenTargetHelper, 
+                buttonVisibilityFilters, 
+                pauseGameManager,
+                battleCompletionHandler);
 
             modalMenu.Initialise(applicationModel.IsTutorial);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
-            SetupMainMenuButton(applicationModel, sceneNavigator, pauseGameManager);
+            SetupMainMenuButton(pauseGameManager, battleCompletionHandler);
             SetupHelpButton(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
@@ -81,12 +88,8 @@ namespace BattleCruisers.UI.BattleScene
             return speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButton(
-            IApplicationModel applicationModel, 
-            ISceneNavigator sceneNavigator,
-            IPauseGameManager pauseGameManager)
+        private void SetupMainMenuButton(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
         {
-            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
 
             MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();

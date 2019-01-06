@@ -143,12 +143,12 @@ namespace BattleCruisers.Scenes.BattleScene
             RightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
                     applicationModel,
-                    sceneNavigator,
                     uiManager,
                     playerCruiser,
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
-                    pauseGameManager);
+                    pauseGameManager,
+                    battleCompletionHandler);
 
             ManagerArgs args
                 = new ManagerArgs(
