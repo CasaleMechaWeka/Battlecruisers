@@ -61,6 +61,7 @@ namespace BattleCruisers.AI.BuildOrders
 			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
 
 			IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
+            Logging.Log(Tags.AI_BUILD_ORDERS, baseBuildOrder);
 
             foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
 			{

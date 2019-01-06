@@ -10,7 +10,16 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly IEnumerator<IPrefabKeyWrapper> _baseBuildOrder;
         private readonly ILevelInfo _levelInfo;
 
-        public BuildingKey Current { get; private set; }
+        private BuildingKey _current;
+        public BuildingKey Current
+        {
+            get { return _current; }
+            private set
+            {
+                _current = value;
+                Logging.Log(Tags.AI_BUILD_ORDERS, this + ".Current = " + _current);
+            }
+        }
 
         public StrategyBuildOrder(IEnumerator<IPrefabKeyWrapper> baseBuildOrder, ILevelInfo levelInfo)
         {

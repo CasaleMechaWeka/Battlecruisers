@@ -47,6 +47,7 @@ namespace BattleCruisers.Utils
 
         // AI
 		public const string AI = "AI";
+		public const string AI_BUILD_ORDERS = "AIBuildOrders";
 		public const string AI_TASKS = "Tasks";
         public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
 
@@ -132,6 +133,9 @@ namespace BattleCruisers.Utils
 
             // AI
             tagsToActiveness.Add(Tags.AI, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.AI_BUILD_ORDERS, true);
+            //tagsToActiveness.Add(Tags.AI_BUILD_ORDERS, false);
             tagsToActiveness.Add(Tags.AI_TASKS, false);
             tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
@@ -191,6 +195,14 @@ namespace BattleCruisers.Utils
 		{
 			Log(LoggingLevel.Warning, tag, message);
 		}
+
+        public static void Log<T>(string tag, IList<T> items)
+        {
+            for (int i = 0; i < items.Count; ++i)
+            {
+                Log(tag, i + " " + items[i]);
+            }
+        }
 
 		private static void Log(LoggingLevel logLevel, string tag, string message)
 		{
