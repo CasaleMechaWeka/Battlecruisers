@@ -61,7 +61,6 @@ namespace BattleCruisers.AI.BuildOrders
 			IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
 
 			IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
-            Logging.Log(Tags.AI_BUILD_ORDERS, baseBuildOrder);
 
             foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
 			{
@@ -109,6 +108,8 @@ namespace BattleCruisers.AI.BuildOrders
 
         private IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, ILevelInfo levelInfo)
         {
+            Logging.Log(Tags.AI_BUILD_ORDERS, this + ".CreateBuildOrder(): " + request);
+
             switch (request.Type)
 			{
 				case OffensiveType.Air:

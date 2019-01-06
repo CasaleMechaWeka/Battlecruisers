@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.AI.BuildOrders;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
@@ -26,9 +27,10 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
                         Key = _buildOrder.Current;
                         Assert.IsNotNull(Key);
                     }
-
                 }
-				
+
+                Logging.Log(Tags.AI_BUILD_ORDERS, this + ".get_HasKey: " + _hasKey + "  Key: " + Key);
+
                 return _hasKey;
             }
         }

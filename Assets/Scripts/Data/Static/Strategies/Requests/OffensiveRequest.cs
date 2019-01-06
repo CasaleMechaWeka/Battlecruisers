@@ -12,5 +12,10 @@
             Focus = focus;
             NumOfSlotsToUse = 0;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "  Type: " + Type + "  Focus: " + Focus + " SlotNum: " + NumOfSlotsToUse;
+        }
     }
 }
