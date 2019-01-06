@@ -1,13 +1,17 @@
-﻿using BattleCruisers.Data;
+﻿using System;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Utils.BattleScene
 {
+    // FELIX  Update tests :)
     public class BattleCompletionHandler : IBattleCompletionHandler
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
+
+        public event EventHandler BattleCompleted;
 
         public BattleCompletionHandler(IApplicationModel applicationModel, ISceneNavigator sceneNavigator)
         {
@@ -19,6 +23,11 @@ namespace BattleCruisers.Utils.BattleScene
 
         public void CompleteBattle(bool wasVictory)
         {
+            if (BattleCompleted != null)
+            {
+                BattleCompleted.Invoke(this, EventArgs.Empty);
+            }
+
             BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
 
             if (!_applicationModel.IsTutorial)
