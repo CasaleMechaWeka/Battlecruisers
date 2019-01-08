@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Data.Static.Strategies.Requests
+﻿using BattleCruisers.Utils;
+
+namespace BattleCruisers.Data.Static.Strategies.Requests
 {
     public class OffensiveRequest : IOffensiveRequest
     {
@@ -23,6 +25,21 @@
         public override string ToString()
         {
             return base.ToString() + "  Type: " + Type + "  Focus: " + Focus + " SlotNum: " + NumOfSlotsToUse;
+        }
+
+        public override bool Equals(object obj)
+        {
+            OffensiveRequest other = obj as OffensiveRequest;
+            return
+                other != null
+                && other.Type == Type
+                && other.Focus == Focus
+                && other.NumOfSlotsToUse == NumOfSlotsToUse;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Type, Focus, NumOfSlotsToUse);
         }
     }
 }

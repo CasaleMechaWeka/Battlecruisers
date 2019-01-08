@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Data.Static.Strategies.Requests;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static.Strategies
@@ -19,7 +20,6 @@ namespace BattleCruisers.Data.Static.Strategies
             Offensives = offensives;
         }
 
-        // FELIX  Test :)
         public Strategy(IStrategy strategyToCopy)
         {
             BaseStrategy = strategyToCopy.BaseStrategy;
@@ -31,6 +31,20 @@ namespace BattleCruisers.Data.Static.Strategies
                 = strategyToCopy.Offensives
                     .Select(originalOffensiveRequest => (IOffensiveRequest)new OffensiveRequest(originalOffensiveRequest))
                     .ToList();
+        }
+
+        public override bool Equals(object obj)
+        {
+            Strategy other = obj as Strategy;
+            return
+                other != null
+                && other.BaseStrategy.SmartEquals(BaseStrategy)
+                && Enumerable.SequenceEqual(other.Offensives, Offensives);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(BaseStrategy, Offensives);
         }
     }
 }
