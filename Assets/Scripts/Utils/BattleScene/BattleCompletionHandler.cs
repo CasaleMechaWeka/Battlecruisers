@@ -5,7 +5,6 @@ using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    // FELIX  Update tests :)
     public class BattleCompletionHandler : IBattleCompletionHandler
     {
         private readonly IApplicationModel _applicationModel;

@@ -13,6 +13,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IBattleCompletionHandler _battleCompletionHandler;
         private IApplicationModel _applicationModel;
         private ISceneNavigator _sceneNavigator;
+        private int _battleCompletedCount;
 
         [SetUp]
         public void TestSetup()
@@ -21,6 +22,9 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _sceneNavigator = Substitute.For<ISceneNavigator>();
 
             _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
+
+            _battleCompletedCount = 0;
+            _battleCompletionHandler.BattleCompleted += (sender, e) => _battleCompletedCount++;
         }
 
         [Test]
@@ -50,6 +54,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
         private void ReceivedCommonCompletion()
         {
+            Assert.AreEqual(1, _battleCompletedCount);
             _applicationModel.Received().IsTutorial = false;
             _applicationModel.Received().ShowPostBattleScreen = true;
             _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE);
