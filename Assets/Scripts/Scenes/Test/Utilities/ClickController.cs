@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -7,7 +8,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log(name + " OnPointerClick()");
+            Debug.Log(DateTime.Now + ":  " + name + " OnPointerClick()");
         }
     }
 }
