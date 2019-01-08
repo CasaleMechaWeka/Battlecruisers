@@ -24,6 +24,7 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys{ get; }
         int LastLevelWithLoot { get; }
+        ILevelStrategies Strategies { get; }
 
         bool IsUnitAvailable(UnitKey unitKey, int levelNum);
         IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum);
@@ -32,9 +33,6 @@ namespace BattleCruisers.Data.Static
         IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
 
         ILoot GetLevelLoot(int levelCompleted);
-
-        IStrategy GetAdaptiveStrategy(int levelNum);
-        IStrategy GetBasicStrategy(int levelNum);
 	}
 }
 	

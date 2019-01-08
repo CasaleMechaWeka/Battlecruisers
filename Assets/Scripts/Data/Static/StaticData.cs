@@ -21,7 +21,6 @@ namespace BattleCruisers.Data.Static
 
         private readonly IList<BuildingKey> _allBuildings;
         private readonly IList<UnitKey> _allUnits;
-        private readonly ILevelStrategies _strategies;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
 
@@ -32,6 +31,7 @@ namespace BattleCruisers.Data.Static
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; private set; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; private set; }
         public int LastLevelWithLoot { get { return 20; } }
+        public ILevelStrategies Strategies { get; private set; }
 
         public StaticData()
 		{
@@ -47,7 +47,7 @@ namespace BattleCruisers.Data.Static
             _unitToUnlockedLevel = CreateUnitAvailabilityMap();
             _hullToUnlockedLevel = CreateHullAvailabilityMap();
 
-            _strategies = new LevelStrategies();
+            Strategies = new LevelStrategies();
 
             AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());
 			
@@ -327,22 +327,6 @@ namespace BattleCruisers.Data.Static
                 _allUnits
                     .Where(unitKey => unitKey.UnitCategory == category && IsUnitAvailable(unitKey, levelNum))
                     .ToList();
-        }
-
-        public IStrategy GetAdaptiveStrategy(int levelNum)
-        {
-			int levelIndex = levelNum - 1;
-            Assert.IsTrue(levelIndex < _strategies.AdaptiveStrategies.Count);
-
-            return _strategies.AdaptiveStrategies[levelIndex];
-		}
-
-        public IStrategy GetBasicStrategy(int levelNum)
-        {
-			int levelIndex = levelNum - 1;
-            Assert.IsTrue(levelIndex < _strategies.BasicStrategies.Count);
-
-            return _strategies.BasicStrategies[levelIndex];
         }
 
         /// <summary>

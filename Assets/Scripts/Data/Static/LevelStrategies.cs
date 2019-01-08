@@ -7,8 +7,8 @@ namespace BattleCruisers.Data.Static
 {
     public class LevelStrategies : ILevelStrategies
     {
-		public IList<IStrategy> AdaptiveStrategies { get; private set; }
-		public IList<IStrategy> BasicStrategies { get; private set; }
+        private IList<IStrategy> _adaptiveStrategies;
+        private IList<IStrategy> _basicStrategies;
 
         public LevelStrategies()
         {
@@ -16,8 +16,8 @@ namespace BattleCruisers.Data.Static
             IList<IBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
 			IList<IOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
-            AdaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
-            BasicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
+            _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
+            _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
         }
 
         private IList<IBaseStrategy> CreateAdaptiveBaseStrategies()
@@ -278,6 +278,27 @@ namespace BattleCruisers.Data.Static
             }
 
             return strategies;
+        }
+
+        public IStrategy GetAdaptiveStrategy(int levelNum)
+        {
+            return GetStrategy(_adaptiveStrategies, levelNum);
+        }
+
+        public IStrategy GetBasicStrategy(int levelNum)
+        {
+            return GetStrategy(_basicStrategies, levelNum);
+        }
+
+        private IStrategy GetStrategy(IList<IStrategy> strategies, int levelNum)
+        {
+            int levelIndex = levelNum - 1;
+            Assert.IsTrue(levelIndex < strategies.Count);
+
+            // Create a new object to avoid the same level reusing the
+            // same strategy object.  This resulted in a subtle bug, as
+            // a strategy's offensive requests would be modified.
+            return new Strategy(strategies[levelIndex]);
         }
     }
 }

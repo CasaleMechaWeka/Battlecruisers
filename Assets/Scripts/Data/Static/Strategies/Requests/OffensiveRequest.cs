@@ -13,6 +13,13 @@
             NumOfSlotsToUse = 0;
         }
 
+        public OffensiveRequest(IOffensiveRequest requestToCopy)
+        {
+            Type = requestToCopy.Type;
+            Focus = requestToCopy.Focus;
+            NumOfSlotsToUse = requestToCopy.NumOfSlotsToUse;
+        }
+
         public override string ToString()
         {
             return base.ToString() + "  Type: " + Type + "  Focus: " + Focus + " SlotNum: " + NumOfSlotsToUse;

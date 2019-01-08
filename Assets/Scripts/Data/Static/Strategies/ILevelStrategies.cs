@@ -5,7 +5,7 @@ namespace BattleCruisers.Data.Static
 {
     public interface ILevelStrategies
     {
-		IList<IStrategy> AdaptiveStrategies { get; }
-		IList<IStrategy> BasicStrategies { get; }
+        IStrategy GetAdaptiveStrategy(int levelNum);
+        IStrategy GetBasicStrategy(int levelNum);
     }
 }

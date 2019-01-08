@@ -34,7 +34,7 @@ namespace BattleCruisers.AI.BuildOrders
 		/// </summary>
         public IDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
 		{
-            IStrategy strategy = _staticData.GetBasicStrategy(levelInfo.LevelNum);
+            IStrategy strategy = _staticData.Strategies.GetBasicStrategy(levelInfo.LevelNum);
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
 		}
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.AI.BuildOrders
 		/// </summary>
         public IDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
 		{
-            IStrategy strategy = _staticData.GetAdaptiveStrategy(levelInfo.LevelNum);
+            IStrategy strategy = _staticData.Strategies.GetAdaptiveStrategy(levelInfo.LevelNum);
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
 		}
 
