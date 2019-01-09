@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using UnityEngine;
@@ -12,17 +13,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		protected override LayerMask UnitLayerMask { get { return unitsLayerMask; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.NavalFactory; } }
         public override UnitCategory UnitCategory { get { return UnitCategory.Naval; } }
-        
-		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
-		{
-			float horizontalChange = (Size.x * 0.6f) + (unit.Size.x * 0.5f);
 
-			// If the factory is facing left it has been mirrored (rotated
-			// around the y-axis by 180*).  So its right is an unmirrored
-			// factory's left :/
-			Vector3 direction = transform.right;
-
-			return transform.position + (direction * horizontalChange);
-		}
-	}
+        protected override ISpawnPositionFinder CreateSpawnPositionFinder()
+        {
+            return new NavalFactorySpawnPositionFinder(this);
+        }
+    }
 }

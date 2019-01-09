@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using UnityEngine;
@@ -13,10 +14,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.AirFactory; } }
         public override UnitCategory UnitCategory { get { return UnitCategory.Aircraft; } }
 
-		protected override Vector3 FindUnitSpawnPosition(IUnit unit)
-		{
-			float verticalChange = (Size.y * 0.6f) + (unit.Size.y * 0.5f);
-			return transform.position + (transform.up * verticalChange);
-		}
-	}
+        protected override ISpawnPositionFinder CreateSpawnPositionFinder()
+        {
+            return new AirFactorySpawnPositionFinder(this);
+        }
+    }
 }

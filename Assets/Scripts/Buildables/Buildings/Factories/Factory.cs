@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public abstract class Factory : Building, IFactory, IDroneConsumerProvider
 	{
 		private IUnit _lastUnitProduced;
+        private ISpawnPositionFinder _unitSpawnPositionFinder;
 
         public abstract UnitCategory UnitCategory { get; }
 
@@ -77,6 +79,14 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             _isUnitPaused = new ObservableValue<bool>(false);
         }
 
+        protected override void OnInitialised()
+        {
+            base.OnInitialised();
+            _unitSpawnPositionFinder = CreateSpawnPositionFinder();
+        }
+
+        protected abstract ISpawnPositionFinder CreateSpawnPositionFinder();
+
         /// <summary>
         /// Buildings only become repairable after they are completed.  So buildings
         /// reuse the text mesh for the number of building drones for the number
@@ -118,7 +128,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
 			{
-				Vector3 spawnPositionV3 = FindUnitSpawnPosition(unit);
+				Vector3 spawnPositionV3 = _unitSpawnPositionFinder.FindSpawnPosition(unit);
 				Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
 				float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unit.Size.x;
 				Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, UnitLayerMask);
@@ -143,7 +153,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			UnitUnderConstruction.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
 			UnitUnderConstruction.DroneConsumerProvider = this;
 
-			Vector3 spawnPosition = FindUnitSpawnPosition(UnitUnderConstruction);
+			Vector3 spawnPosition = _unitSpawnPositionFinder.FindSpawnPosition(UnitUnderConstruction);
             UnitUnderConstruction.Position = spawnPosition;
             UnitUnderConstruction.Rotation = transform.rotation;
 
@@ -155,8 +165,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 			UnitUnderConstruction.StartConstruction();
 		}
-
-		protected abstract Vector3 FindUnitSpawnPosition(IUnit unit);
 
 		protected virtual void Unit_BuildingStarted(object sender, EventArgs e) 
 		{ 
