@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public abstract class Factory : Building, IFactory, IDroneConsumerProvider
 	{
         private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
+        private IUnitSpawnDecider _unitSpawnDecider;
 
         public abstract UnitCategory UnitCategory { get; }
 
@@ -82,7 +83,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override void OnInitialised()
         {
             base.OnInitialised();
+
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
+            _unitSpawnDecider = new UnitSpawnDecider(this, _unitSpawnPositionFinder);
         }
 
         protected abstract IUnitSpawnPositionFinder CreateSpawnPositionFinder();
@@ -117,34 +120,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
 			if (_unitWrapper != null 
 				&& (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
-				&& CanSpawnUnit(_unitWrapper.Buildable))
+				&& _unitSpawnDecider.CanSpawnUnit(_unitWrapper.Buildable))
 			{
 				StartBuildingUnit();
 			}
 		}
 		
-		/// <returns><c>true</c> if the last produced unit is not blocking the spawn point, otherwise <c>false</c>.</returns>
-		private bool CanSpawnUnit(IUnit unit)
-		{
-			if (LastUnitProduced != null && !LastUnitProduced.IsDestroyed)
-			{
-				Vector3 spawnPositionV3 = _unitSpawnPositionFinder.FindSpawnPosition(unit);
-				Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
-				float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unit.Size.x;
-				Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, UnitLayerMask);
-
-				foreach (Collider2D collider in colliders)
-				{
-                    if (collider.gameObject == LastUnitProduced.GameObject)
-					{
-						return false;
-					}
-				}
-			}
-
-			return true;
-		}
-
 		private void StartBuildingUnit()
 		{
 			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
