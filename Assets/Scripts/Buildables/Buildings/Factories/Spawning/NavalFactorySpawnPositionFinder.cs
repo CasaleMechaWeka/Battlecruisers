@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
     // FELIX  Test :)
-    public class NavalFactorySpawnPositionFinder : ISpawnPositionFinder
+    public class NavalFactorySpawnPositionFinder : IUnitSpawnPositionFinder
     {
         private readonly IFactory _factory;
 

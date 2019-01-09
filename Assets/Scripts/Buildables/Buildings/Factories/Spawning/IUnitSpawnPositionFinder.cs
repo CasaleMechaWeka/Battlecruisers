@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
-    public interface ISpawnPositionFinder
+    public interface IUnitSpawnPositionFinder
     {
         Vector3 FindSpawnPosition(IUnit unitToSpawn);
     }

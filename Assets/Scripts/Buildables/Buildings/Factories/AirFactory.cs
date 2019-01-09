@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.AirFactory; } }
         public override UnitCategory UnitCategory { get { return UnitCategory.Aircraft; } }
 
-        protected override ISpawnPositionFinder CreateSpawnPositionFinder()
+        protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
             return new AirFactorySpawnPositionFinder(this);
         }

@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public abstract class Factory : Building, IFactory, IDroneConsumerProvider
 	{
 		private IUnit _lastUnitProduced;
-        private ISpawnPositionFinder _unitSpawnPositionFinder;
+        private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
 
         public abstract UnitCategory UnitCategory { get; }
 
@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
         }
 
-        protected abstract ISpawnPositionFinder CreateSpawnPositionFinder();
+        protected abstract IUnitSpawnPositionFinder CreateSpawnPositionFinder();
 
         /// <summary>
         /// Buildings only become repairable after they are completed.  So buildings
