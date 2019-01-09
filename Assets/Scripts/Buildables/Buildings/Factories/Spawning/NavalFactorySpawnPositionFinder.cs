@@ -5,11 +5,11 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
     // FELIX  Test :)
-    public class NavalSpawnPositionFinder : ISpawnPositionFinder
+    public class NavalFactorySpawnPositionFinder : ISpawnPositionFinder
     {
         private readonly IFactory _factory;
 
-        public NavalSpawnPositionFinder(IFactory factory)
+        public NavalFactorySpawnPositionFinder(IFactory factory)
         {
             Assert.IsNotNull(factory);
             _factory = factory;
