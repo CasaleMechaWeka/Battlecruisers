@@ -2,6 +2,10 @@
 {
     public interface IUnitSpawnTimer
     {
-        float TimeSinceLastUnitStartedInS { get; }
+        /// <summary>
+        /// The time in seconds since the factory last completed a unit,
+        /// or an in progress unit was destroyed.
+        /// </summary>
+        float TimeSinceFactoryWasClearInS { get; }
     }
 }

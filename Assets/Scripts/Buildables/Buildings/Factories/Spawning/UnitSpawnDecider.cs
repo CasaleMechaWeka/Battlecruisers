@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             // If the unit under construction is destroyed, do not want to immediately
             // start buliding the next unit.  This avoids the factory being "protected"
             // by instantly respawning in progress units.
-            if (_unitSpawnTimer.TimeSinceLastUnitStartedInS <= MIN_BUILD_BREAK_IN_S)
+            if (_unitSpawnTimer.TimeSinceFactoryWasClearInS <= MIN_BUILD_BREAK_IN_S)
             {
                 return false;
             }
