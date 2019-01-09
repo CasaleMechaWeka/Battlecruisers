@@ -1,26 +1,30 @@
 ﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
+    // FELIX  Test :)
     public class NavalSpawnPositionFinder : ISpawnPositionFinder
     {
         private readonly IFactory _factory;
 
+        public NavalSpawnPositionFinder(IFactory factory)
+        {
+            Assert.IsNotNull(factory);
+            _factory = factory;
+        }
+
         public Vector3 FindSpawnPosition(IUnit unitToSpawn)
         {
-            //float horizontalChange = (_factory.Size.x * 0.6f) + (unitToSpawn.Size.x * 0.5f);
+            float horizontalChange = (_factory.Size.x * 0.6f) + (unitToSpawn.Size.x * 0.5f);
 
-            //// If the factory is facing left it has been mirrored (rotated
-            //// around the y-axis by 180*).  So its right is an unmirrored
-            //// factory's left :/
-            //Vector3 direction = _factory.Transform transform.right;
+            // If the factory is facing left it has been mirrored (rotated
+            // around the y-axis by 180*).  So its right is an unmirrored
+            // factory's left :/
+            Vector3 direction = _factory.Transform.Right;
 
-            //return transform.position + (direction * horizontalChange);
-
-            // FELIX :P
-            return default(Vector3);
+            return _factory.Transform.Position + (direction * horizontalChange);
         }
     }
 }
