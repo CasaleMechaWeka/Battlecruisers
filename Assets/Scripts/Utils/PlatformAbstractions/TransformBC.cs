@@ -14,6 +14,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         }
 
         public Vector3 EulerAngles { get { return _platformTransform.rotation.eulerAngles; } }
+        public Vector3 Right { get { return _platformTransform.right; } }
+        public Vector3 Up { get { return _platformTransform.up; } }
 
         public TransformBC(Transform platformTransform)
         {
