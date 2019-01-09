@@ -8,19 +8,30 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
     {
         private readonly IFactory _factory;
         private readonly IUnitSpawnPositionFinder _unitSpawnPositionFinder;
+        private readonly IUnitSpawnTimer _unitSpawnTimer;
 
+        public const float MIN_BUILD_BREAK_IN_S = 0.5f;
         public const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
-        public UnitSpawnDecider(IFactory factory, IUnitSpawnPositionFinder unitSpawnPositionFinder)
+        public UnitSpawnDecider(IFactory factory, IUnitSpawnPositionFinder unitSpawnPositionFinder, IUnitSpawnTimer unitSpawnTimer)
         {
-            Helper.AssertIsNotNull(factory, unitSpawnPositionFinder);
+            Helper.AssertIsNotNull(factory, unitSpawnPositionFinder, unitSpawnTimer);
 
             _factory = factory;
             _unitSpawnPositionFinder = unitSpawnPositionFinder;
+            _unitSpawnTimer = unitSpawnTimer;
         }
 
         public bool CanSpawnUnit(IUnit unitToSpawn)
         {
+            // If the unit under construction is destroyed, do not want to immediately
+            // start buliding the next unit.  This avoids the factory being "protected"
+            // by instantly respawning in progress units.
+            if (_unitSpawnTimer.TimeSinceLastUnitStartedInS <= MIN_BUILD_BREAK_IN_S)
+            {
+                return false;
+            }
+
             if (_factory.LastUnitProduced != null && !_factory.LastUnitProduced.IsDestroyed)
             {
                 Vector3 spawnPositionV3 = _unitSpawnPositionFinder.FindSpawnPosition(unitToSpawn);

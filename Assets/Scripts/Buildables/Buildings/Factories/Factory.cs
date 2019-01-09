@@ -5,6 +5,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
@@ -85,7 +86,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             base.OnInitialised();
 
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
-            _unitSpawnDecider = new UnitSpawnDecider(this, _unitSpawnPositionFinder);
+            IUnitSpawnTimer unitSpawnTimer = new UnitSpawnTimer(this, new TimeBC());
+            _unitSpawnDecider = new UnitSpawnDecider(this, _unitSpawnPositionFinder, unitSpawnTimer);
         }
 
         protected abstract IUnitSpawnPositionFinder CreateSpawnPositionFinder();
