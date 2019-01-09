@@ -10,9 +10,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
 		public LayerMask unitsLayerMask;
 
-		protected override LayerMask UnitLayerMask { get { return unitsLayerMask; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.NavalFactory; } }
         public override UnitCategory UnitCategory { get { return UnitCategory.Naval; } }
+		public override LayerMask UnitLayerMask { get { return unitsLayerMask; } }
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {

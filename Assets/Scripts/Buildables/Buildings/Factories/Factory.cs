@@ -14,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public abstract class Factory : Building, IFactory, IDroneConsumerProvider
 	{
-		private IUnit _lastUnitProduced;
         private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
 
         public abstract UnitCategory UnitCategory { get; }
@@ -26,7 +25,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         #region Properties
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building3; } }
-        protected abstract LayerMask UnitLayerMask { get; }
+        public abstract LayerMask UnitLayerMask { get; }
+		public IUnit LastUnitProduced { get; private set; }
         public IUnit UnitUnderConstruction { get; private set; }
 
         private ObservableValue<bool> _isUnitPaused;
@@ -126,7 +126,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		/// <returns><c>true</c> if the last produced unit is not blocking the spawn point, otherwise <c>false</c>.</returns>
 		private bool CanSpawnUnit(IUnit unit)
 		{
-			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
+			if (LastUnitProduced != null && !LastUnitProduced.IsDestroyed)
 			{
 				Vector3 spawnPositionV3 = _unitSpawnPositionFinder.FindSpawnPosition(unit);
 				Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
@@ -135,7 +135,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 				foreach (Collider2D collider in colliders)
 				{
-                    if (collider.gameObject == _lastUnitProduced.GameObject)
+                    if (collider.gameObject == LastUnitProduced.GameObject)
 					{
 						return false;
 					}
@@ -171,7 +171,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			UnitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
 
             IUnit unit = sender.Parse<IUnit>();
-			_lastUnitProduced = unit;
+			LastUnitProduced = unit;
 
             if (StartedBuildingUnit != null)
             {

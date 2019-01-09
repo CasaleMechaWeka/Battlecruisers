@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils.DataStrctures;
 using System;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
@@ -23,7 +24,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         int NumOfDrones { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; }
         IUnit UnitUnderConstruction { get; }
+        IUnit LastUnitProduced { get; }
         IObservableValue<bool> IsUnitPaused { get; }
+        LayerMask UnitLayerMask { get; }
 
         void StartBuildingUnit(IBuildableWrapper<IUnit> unit);
         void StopBuildingUnit();
