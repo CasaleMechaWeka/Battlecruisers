@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Factories
             unitPrefab.Initialise();
             unitPrefab.Buildable.StaticInitialise();
 
-            Helper helper = new Helper();
+            Helper helper = new Helper(buildSpeedMultiplier: 5);
 
             // Factory
             Factory factory = FindObjectOfType<Factory>();
