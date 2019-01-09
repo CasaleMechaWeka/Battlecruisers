@@ -2,6 +2,7 @@
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace BattleCruisers.Buildables
         }
 
         // IHighlightable
-        public Transform Transform { get { return transform; } }
+        public ITransform Transform { get; private set; }
         public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public abstract Vector2 Size { get; }
         public virtual float SizeMultiplier { get { return 1; } }
@@ -126,6 +127,8 @@ namespace BattleCruisers.Buildables
             AudioSource audioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(audioSource);
             _audioSource = new AudioSourceBC(audioSource);
+
+            Transform = new TransformBC(transform);
 
             OnStaticInitialised();
         }

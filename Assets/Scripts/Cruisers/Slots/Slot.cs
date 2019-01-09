@@ -6,6 +6,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -73,7 +74,7 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         // IHighlightable
-        public Transform Transform { get { return transform; } }
+        public ITransform Transform { get; private set; }
         public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
         public Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
         public virtual float SizeMultiplier { get { return 2; } }
@@ -105,6 +106,8 @@ namespace BattleCruisers.Cruisers.Slots
             SlotBoostFeedbackInitialiser feedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackInitialiser>();
             Assert.IsNotNull(feedbackInitialiser);
             _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
+
+            Transform = new TransformBC(transform);
         }
 
 		public void OnPointerClick(PointerEventData eventData)
@@ -134,7 +137,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
-            return highlightArgsFactory.CreateForInGameObject(Transform.position, Size);
+            return highlightArgsFactory.CreateForInGameObject(Transform.Position, Size);
         }
     }
 }

@@ -21,11 +21,11 @@ namespace BattleCruisers.Tutorial.Highlighting
             switch (highlightable.HighlightableType)
             {
                 case HighlightableType.InGame:
-                    Vector2 spawnPosition = (Vector2)highlightable.Transform.position + highlightable.PositionAdjustment;
+                    Vector2 spawnPosition = (Vector2)highlightable.Transform.Position + highlightable.PositionAdjustment;
                     return _highlightFactory.CreateInGameHighlight(radius, spawnPosition, usePulsingAnimation);
 
                 case HighlightableType.OnCanvas:
-                    return _highlightFactory.CreateOnCanvasHighlight(radius, highlightable.Transform, highlightable.PositionAdjustment);
+                    return _highlightFactory.CreateOnCanvasHighlight(radius, highlightable.Transform.PlatformObject, highlightable.PositionAdjustment);
 
                 default:
                     throw new ArgumentException();

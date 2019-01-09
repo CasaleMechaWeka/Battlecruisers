@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tutorial.Highlighting
 
     public interface IHighlightable
     {
-        Transform Transform { get; }
+        ITransform Transform { get; }
         Vector2 PositionAdjustment { get; }
         Vector2 Size { get; }
         float SizeMultiplier { get; }

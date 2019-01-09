@@ -130,7 +130,7 @@ namespace BattleCruisers.Buildables
 
                     // Position below buildable
                     float yOffset = -Size.y / 2;
-                    _deleteCountdown.transform.position = transform.position + Transform.up * yOffset;
+                    _deleteCountdown.transform.position = transform.position + Transform.Up * yOffset;
                 }
                 return _deleteCountdown;
             }

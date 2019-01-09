@@ -5,27 +5,28 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 {
     public class TransformBC : ITransform
     {
-        private readonly Transform _platformTransform;
+        public Transform PlatformObject { get; private set; }
 
         public Vector3 Position
         {
-            get { return _platformTransform.position; }
-            set { _platformTransform.position = value; }
+            get { return PlatformObject.position; }
+            set { PlatformObject.position = value; }
         }
 
-        public Vector3 EulerAngles { get { return _platformTransform.rotation.eulerAngles; } }
-        public Vector3 Right { get { return _platformTransform.right; } }
-        public Vector3 Up { get { return _platformTransform.up; } }
+        public Vector3 EulerAngles { get { return PlatformObject.rotation.eulerAngles; } }
+        public Vector3 Right { get { return PlatformObject.right; } }
+        public Vector3 Up { get { return PlatformObject.up; } }
+        public Quaternion Rotation { get { return PlatformObject.rotation; } }
 
         public TransformBC(Transform platformTransform)
         {
             Assert.IsNotNull(platformTransform);
-            _platformTransform = platformTransform;
+            PlatformObject = platformTransform;
         }
 
         public void Rotate(Vector3 rotationChangeVector)
         {
-            _platformTransform.Rotate(rotationChangeVector);
+            PlatformObject.Rotate(rotationChangeVector);
         }
     }
 }

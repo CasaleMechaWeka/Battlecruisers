@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -31,7 +32,8 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
             Vector2 positionAdjustment = new Vector2(3, 3);
             _highlightable.PositionAdjustment.Returns(positionAdjustment);
             _gameObj = new GameObject();
-            _highlightable.Transform.Returns(_gameObj.transform);
+            ITransform transform = new TransformBC(_gameObj.transform);
+            _highlightable.Transform.Returns(transform);
         }
 
         [Test]

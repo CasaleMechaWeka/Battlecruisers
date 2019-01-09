@@ -14,7 +14,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
         private IBuildingPlacer _placer;
         private IBuilding _building;
         private ISlot _slot;
-        private Transform _slotTransform;
 
         [SetUp]
         public void TestSetup()
@@ -25,8 +24,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
             _building.Size.Returns(new Vector2(4, 2));
 
             _slot = Substitute.For<ISlot>();
-            _slotTransform = new GameObject().transform;
-            _slot.Transform.Returns(_slotTransform);
+            _slot.Transform.Rotation.Returns(new Quaternion(1, 2, 3, 4));
+            _slot.Transform.Right.Returns(new Vector3(1, 0, 0));
+            _slot.Transform.Up.Returns(new Vector3(0, 1, 0));
             _slot.BuildingPlacementPoint.Returns(new Vector3(0, -0.5f, 0));
         }
 
@@ -37,10 +37,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
 
             _placer.PlaceBuilding(_building, _slot);
 
-            _building.Received().Rotation = _slotTransform.rotation;
+            _building.Received().Rotation = _slot.Transform.Rotation;
 
             float horizontalChange = _building.Size.x / 2;
-            Vector3 expectedPosition = _slot.BuildingPlacementPoint + (_slot.Transform.right * horizontalChange);
+            Vector3 expectedPosition = _slot.BuildingPlacementPoint + (_slot.Transform.Right * horizontalChange);
             _building.Received().Position = expectedPosition;
         }
 
@@ -51,10 +51,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
 
             _placer.PlaceBuilding(_building, _slot);
 
-            _building.Received().Rotation = _slotTransform.rotation;
+            _building.Received().Rotation = _slot.Transform.Rotation;
 
             float verticalChange = _building.Size.y / 2;
-            Vector3 expectedPosition = _slot.BuildingPlacementPoint + (_slot.Transform.up * verticalChange);
+            Vector3 expectedPosition = _slot.BuildingPlacementPoint + (_slot.Transform.Up * verticalChange);
             _building.Received().Position = expectedPosition;
         }
 
