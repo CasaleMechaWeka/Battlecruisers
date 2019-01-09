@@ -124,7 +124,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		}
 		
 		/// <returns><c>true</c> if the last produced unit is not blocking the spawn point, otherwise <c>false</c>.</returns>
-		protected virtual bool CanSpawnUnit(IUnit unit)
+		private bool CanSpawnUnit(IUnit unit)
 		{
 			if (_lastUnitProduced != null && !_lastUnitProduced.IsDestroyed)
 			{
