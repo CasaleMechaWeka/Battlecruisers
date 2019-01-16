@@ -233,6 +233,7 @@ namespace BattleCruisers.Data.Static
                 },
                 new IOffensiveRequest[]
                 {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
                 new IOffensiveRequest[]
@@ -242,6 +243,7 @@ namespace BattleCruisers.Data.Static
                 },
                 new IOffensiveRequest[]
                 {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
                 new IOffensiveRequest[]
