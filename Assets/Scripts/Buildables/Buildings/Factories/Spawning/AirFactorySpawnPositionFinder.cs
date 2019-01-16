@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
-    // FELIX  Test :)
     public class AirFactorySpawnPositionFinder : IUnitSpawnPositionFinder
     {
         private readonly IFactory _factory;
