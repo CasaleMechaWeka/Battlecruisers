@@ -4,7 +4,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
-    // FELIX Test :)
     public class UnitSpawnTimer : IUnitSpawnTimer
     {
         private readonly ITime _time;
