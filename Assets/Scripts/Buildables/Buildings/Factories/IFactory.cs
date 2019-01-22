@@ -35,5 +35,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
 		event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+        event EventHandler NewUnitChosen;
 	}
 }

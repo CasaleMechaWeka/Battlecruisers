@@ -24,11 +24,23 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
         public bool CanSpawnUnit(IUnit unitToSpawn)
         {
+            Helper.AssertIsNotNull(unitToSpawn);
+
             // If the unit under construction is destroyed, do not want to immediately
             // start buliding the next unit.  This avoids the factory being "protected"
-            // by instantly respawning in progress units.
-            if (_unitSpawnTimer.TimeSinceFactoryWasClearInS <= MIN_BUILD_BREAK_IN_S)
+            // by instantly respawning in progress units.  Ignore if the unit under 
+            // construction was recently changed.
+            // FELIX  update tests :)
+
+            Logging.Log(Tags.FACTORY, "UnitSpawnDecider.CanSpawnUnit(): " + unitToSpawn
+                + "  time since chosen: " + _unitSpawnTimer.TimeSinceUnitWasChosenInS
+                + "  time since clear:  " + _unitSpawnTimer.TimeSinceFactoryWasClearInS);
+
+            if (_unitSpawnTimer.TimeSinceUnitWasChosenInS >= MIN_BUILD_BREAK_IN_S
+                && _unitSpawnTimer.TimeSinceFactoryWasClearInS <= MIN_BUILD_BREAK_IN_S)
             {
+                Logging.Log(Tags.FACTORY, "UnitSpawnDecider.CanSpawnUnit():  times mean false :)");
+
                 return false;
             }
 
@@ -49,6 +61,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             }
 
             return true;
+        }
+
+        private bool IsSameAsLastUnit(IUnit unitToSpawn)
+        {
+            return
+                _factory.LastUnitProduced != null
+                && _factory.LastUnitProduced.Name == unitToSpawn.Name;
         }
     }
 }

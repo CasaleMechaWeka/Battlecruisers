@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -56,6 +57,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			}
 
             _currentFactory.StartedBuildingUnit += _currentFactory_StartedBuildingUnit;
+            _currentFactory.NewUnitChosen += _currentFactory_NewUnitChosen;
+
             ShowBuildProgressIfNecessary(_currentFactory.UnitUnderConstruction);
 
             TriggerPotentialMatchChange();
@@ -66,7 +69,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			base.OnPresenting(activationParameter);
 		}
 
-        private void _factory_CompletedBuildable(object sender, System.EventArgs e)
+        private void _factory_CompletedBuildable(object sender, EventArgs e)
 		{
             TriggerPotentialMatchChange();
 		}
@@ -74,6 +77,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private void _currentFactory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
         {
             ShowBuildProgressIfNecessary(e.Buildable);
+        }
+
+        private void _currentFactory_NewUnitChosen(object sender, EventArgs e)
+        {
+            _buildProgressFeedback.HideBuildProgress();
         }
 
         private void ShowBuildProgressIfNecessary(IUnit unitUnderConstruction)
@@ -96,6 +104,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _buildProgressFeedback.HideBuildProgress();
 			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
             _currentFactory.StartedBuildingUnit -= _currentFactory_StartedBuildingUnit;
+            _currentFactory.NewUnitChosen -= _currentFactory_NewUnitChosen;
 			_currentFactory = null;
 		}
 

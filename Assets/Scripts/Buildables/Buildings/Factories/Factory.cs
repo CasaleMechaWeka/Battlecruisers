@@ -24,6 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+        public event EventHandler NewUnitChosen;
 
         #region Properties
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building3; } }
@@ -60,6 +61,11 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                     {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
                         EnsureDroneConsumerHasHighestPriority();
+
+                        if (NewUnitChosen != null)
+                        {
+                            NewUnitChosen.Invoke(this, EventArgs.Empty);
+                        }
                     }
                 }
 			}

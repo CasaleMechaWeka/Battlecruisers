@@ -107,7 +107,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.BUILDABLE, false);
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-            tagsToActiveness.Add(Tags.FACTORY, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.FACTORY, true);
+            //tagsToActiveness.Add(Tags.FACTORY, false);
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);

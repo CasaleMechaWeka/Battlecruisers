@@ -7,5 +7,7 @@
         /// or an in progress unit was destroyed.
         /// </summary>
         float TimeSinceFactoryWasClearInS { get; }
+
+        float TimeSinceUnitWasChosenInS { get; }
     }
 }

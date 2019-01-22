@@ -1,15 +1,18 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
+    // FELIX  Update tests :)
     public class UnitSpawnTimer : IUnitSpawnTimer
     {
         private readonly ITime _time;
-        private float _timeWhenFactoryWasClearInS;
+        private float _timeWhenFactoryWasClearInS, _timeWhenUnitWasChosenInS;
 
         public float TimeSinceFactoryWasClearInS { get { return _time.TimeSinceGameStartInS - _timeWhenFactoryWasClearInS; } }
+        public float TimeSinceUnitWasChosenInS { get { return _time.TimeSinceGameStartInS - _timeWhenUnitWasChosenInS; } }
 
         public UnitSpawnTimer(IFactory factory, ITime time)
         {
@@ -18,6 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
             factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
             factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
+            factory.NewUnitChosen += Factory_NewUnitChosen;
         }
 
         private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
@@ -39,6 +43,11 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
         {
             _timeWhenFactoryWasClearInS = _time.TimeSinceGameStartInS;
             unitCleared.Destroyed -= Buildable_Destroyed;
+        }
+
+        private void Factory_NewUnitChosen(object sender, EventArgs e)
+        {
+            _timeWhenUnitWasChosenInS = _time.TimeSinceGameStartInS;
         }
     }
 }
