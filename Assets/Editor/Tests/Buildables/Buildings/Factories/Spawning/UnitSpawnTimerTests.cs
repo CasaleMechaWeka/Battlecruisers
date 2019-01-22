@@ -31,6 +31,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Factories.Spawning
         {
             float expectedTime = _time.TimeSinceGameStartInS - float.MinValue;
             Assert.AreEqual(expectedTime, _unitSpawnTimer.TimeSinceFactoryWasClearInS);
+            Assert.AreEqual(expectedTime, _unitSpawnTimer.TimeSinceUnitWasChosenInS);
         }
 
         [Test]
@@ -65,6 +66,15 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Factories.Spawning
             _unit.Destroyed += Raise.EventWith(new DestroyedEventArgs(_unit));
 
             Assert.AreEqual(1, _unitSpawnTimer.TimeSinceFactoryWasClearInS);
+        }
+
+        [Test]
+        public void NewUnitChosen_ResetsTimer()
+        {
+            _time.TimeSinceGameStartInS.Returns(1);
+            _factory.NewUnitChosen += Raise.Event();
+
+            Assert.AreEqual(0, _unitSpawnTimer.TimeSinceUnitWasChosenInS);
         }
     }
 }

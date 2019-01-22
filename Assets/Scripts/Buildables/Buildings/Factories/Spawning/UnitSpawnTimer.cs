@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
-    // FELIX  Update tests :)
     public class UnitSpawnTimer : IUnitSpawnTimer
     {
         private readonly ITime _time;
@@ -18,6 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
         {
             _time = time;
             _timeWhenFactoryWasClearInS = float.MinValue;
+            _timeWhenUnitWasChosenInS = float.MinValue;
 
             factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
             factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
