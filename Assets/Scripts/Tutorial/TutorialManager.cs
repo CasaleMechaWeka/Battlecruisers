@@ -13,6 +13,7 @@ namespace BattleCruisers.Tutorial
     public class TutorialManager : MonoBehaviour, ITutorialManager
     {
         private ITutorialStepConsumer _consumer;
+        private IExplanationPanel _explanationPanel;
 
         public event EventHandler TutorialCompleted;
 
@@ -32,6 +33,7 @@ namespace BattleCruisers.Tutorial
             ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
             Assert.IsNotNull(explanationPanel);
             explanationPanel.Initialise();
+            _explanationPanel = explanationPanel;
 
             ITutorialStepsFactory stepsFactory 
                 = new MasterTutorialStepsFactory(
@@ -44,11 +46,8 @@ namespace BattleCruisers.Tutorial
             _consumer = new TutorialStepConsumer(steps);
 
             _consumer.Completed += _consumer_Completed;
-        }
 
-        public void StartTutorial()
-        {
-            _consumer.StartConsuming();
+            tutorialArgs.BattleCompletionHandler.BattleCompleted += BattleCompletionHandler_BattleCompleted;
         }
 
         private void _consumer_Completed(object sender, EventArgs e)
@@ -59,6 +58,16 @@ namespace BattleCruisers.Tutorial
             {
                 TutorialCompleted.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
+        {
+            _explanationPanel.IsVisible = false;
+        }
+
+        public void StartTutorial()
+        {
+            _consumer.StartConsuming();
         }
     }
 }

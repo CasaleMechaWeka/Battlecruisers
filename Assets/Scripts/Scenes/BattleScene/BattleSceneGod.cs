@@ -237,7 +237,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         cameraComponents,
                         leftPanelComponents,
                         rightPanelComponents,
-                        uiManager);
+                        uiManager,
+                        _battleCompletionHandler);
 
                 TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);

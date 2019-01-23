@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
@@ -19,6 +20,7 @@ namespace BattleCruisers.Tutorial
         public LeftPanelComponents LeftPanelComponents { get; private set; }
         public RightPanelComponents RightPanelComponents { get; private set; }
         public IUIManager UIManager { get; private set; }
+        public IBattleCompletionHandler BattleCompletionHandler { get; private set; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 
@@ -29,7 +31,8 @@ namespace BattleCruisers.Tutorial
             ICameraComponents cameraComponents,
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
-            IUIManager uiManager)
+            IUIManager uiManager,
+            IBattleCompletionHandler battleCompletionHandler)
         {
             Helper.AssertIsNotNull(
                 playerCruiser, 
@@ -40,7 +43,8 @@ namespace BattleCruisers.Tutorial
                 cameraComponents, 
                 leftPanelComponents, 
                 rightPanelComponents,
-                uiManager);
+                uiManager,
+                battleCompletionHandler);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -51,6 +55,7 @@ namespace BattleCruisers.Tutorial
             LeftPanelComponents = leftPanelComponents;
             RightPanelComponents = rightPanelComponents;
             UIManager = uiManager;
+            BattleCompletionHandler = battleCompletionHandler;
         }
     }
 }

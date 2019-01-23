@@ -3,6 +3,7 @@ using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
@@ -18,5 +19,6 @@ namespace BattleCruisers.Tutorial
         LeftPanelComponents LeftPanelComponents { get; }
         RightPanelComponents RightPanelComponents { get; }
         IUIManager UIManager { get; }
+        IBattleCompletionHandler BattleCompletionHandler { get; }
     }
 }

@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    public class ExplanationPanel : MonoBehaviour, IExplanationPanel
+    public class ExplanationPanel : MonoBehaviourWrapper, IExplanationPanel
     {
         public ITextDisplayer TextDisplayer { get; private set; }
         public IExplanationDismissButton DismissButton { get; private set; }
