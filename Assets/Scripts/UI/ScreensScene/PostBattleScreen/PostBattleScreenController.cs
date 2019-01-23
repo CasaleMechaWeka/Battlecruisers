@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public GameObject postBattleButtonsPanel, postTutorialButtonsPanel;
         public GameObject postTutorialMessage, completedGameMessage;
 
-		private const string VICTORY_TITLE = "Congratulations!";
+		private const string VICTORY_TITLE = "Sweet!";
 		private const string LOSS_TITLE = "Bad luck!";
 
         private BattleResult BattleResult { get { return _dataProvider.GameModel.LastBattleResult; } }
