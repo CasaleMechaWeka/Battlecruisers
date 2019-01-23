@@ -8,6 +8,7 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -31,11 +32,12 @@ namespace BattleCruisers.Scenes
 		public LevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
+        public LoadoutScreenControllerNEW loadoutScreenNEW;
         public SettingsScreenController settingsScreen;
 
 		void Start()
 		{
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, loadoutScreenNEW, settingsScreen);
 
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -61,6 +63,7 @@ namespace BattleCruisers.Scenes
             _musicPlayer.PlayScreensSceneMusic();
             homeScreen.Initialise(this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
+            loadoutScreenNEW.Initialise(this, _dataProvider);
 
 
             if (_applicationModel.ShowPostBattleScreen)
@@ -79,6 +82,7 @@ namespace BattleCruisers.Scenes
             //GoToSettingsScreen();
             //GoToLevelsScreen();
             //GoToLoadoutScreen();
+            GoToLoadoutScreenNEW();
         }
         
         private void GoToPostBattleScreen()
@@ -131,6 +135,12 @@ namespace BattleCruisers.Scenes
 			GoToScreen(homeScreen);
 		}
 
+        public void GoToLoadoutScreenNEW()
+        {
+            GoToScreen(loadoutScreenNEW);
+        }
+
+        // FELIX  Remove :)
 		public void GoToLoadoutScreen()
 		{
             StartCoroutine(GotToLoadoutScreenAsync());
