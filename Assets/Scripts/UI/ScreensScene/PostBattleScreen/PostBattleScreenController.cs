@@ -41,8 +41,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(dataProvider, prefabFactory, musicPlayer);
 
             _dataProvider = dataProvider;
-			
             _lootManager = CreateLootManager(prefabFactory);
+
+            SetupBackground();
 
             if (BattleResult == null)
             {
@@ -102,6 +103,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ItemDetailsGroupController detailsGroup = transform.FindNamedComponent<ItemDetailsGroupController>(componentPath);
             detailsGroup.Initialise();
             return detailsGroup;
+        }
+
+        private void SetupBackground()
+        {
+            PostBattleBackgroundController background = GetComponentInChildren<PostBattleBackgroundController>(includeInactive: true);
+            Assert.IsNotNull(background);
+            bool isVictory = BattleResult == null || BattleResult.WasVictory;
+            background.Initalise(isVictory);
         }
 
 		public void Retry()
