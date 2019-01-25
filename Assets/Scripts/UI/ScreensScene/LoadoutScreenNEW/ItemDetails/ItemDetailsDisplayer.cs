@@ -18,23 +18,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         public void ShowDetails(IBuilding building)
         {
+            Assert.IsNotNull(building);
+
             HideDetails();
             _itemDetailsPanel.LeftBuildingDetails.ShowItemDetails(building);
         }
 
         public void ShowDetails(IUnit unit)
         {
-            throw new System.NotImplementedException();
+            Assert.IsNotNull(unit);
+
+            HideDetails();
+            _itemDetailsPanel.LeftUnitDetails.ShowItemDetails(unit);
         }
 
         public void ShowDetails(ICruiser cruiser)
         {
+            Assert.IsNotNull(cruiser);
+
             throw new System.NotImplementedException();
         }
 
         private void HideDetails()
         {
             _itemDetailsPanel.LeftBuildingDetails.Hide();
+            _itemDetailsPanel.LeftUnitDetails.Hide();
             // FELIX  Hide others :)
         }
     }

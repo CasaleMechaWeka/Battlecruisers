@@ -20,6 +20,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         public void Initialise()
         {
+            // Cruisers
+            // FELIX  Initialise others :)
+
+            // Buildings
             ComparableBuildingDetailsController leftBuildingDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("BuildingDetailsPanel/LeftDetails");
             leftBuildingDetails.Initialise();
             LeftBuildingDetails = leftBuildingDetails;
@@ -28,7 +32,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             rightBuildingDetails.Initialise();
             RightBuildingDetails = rightBuildingDetails;
 
-            // FELIX  Initialise others :)
+            // Units
+            ComparableUnitDetailsController leftUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/LeftDetails");
+            leftUnitDetails.Initialise();
+            LeftUnitDetails = leftUnitDetails;
+
+            ComparableUnitDetailsController rightUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/RightDetails");
+            rightUnitDetails.Initialise();
+            RightUnitDetails = rightUnitDetails;
         }
     }
 }
