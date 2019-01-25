@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 {
     public class ItemPanelsController : MonoBehaviour, IItemPanelsController
     {

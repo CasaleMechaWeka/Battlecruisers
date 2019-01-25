@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
+﻿namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 {
     public enum ItemType
     {

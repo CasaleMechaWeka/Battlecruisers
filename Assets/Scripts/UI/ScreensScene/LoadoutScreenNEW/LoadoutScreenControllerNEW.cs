@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
