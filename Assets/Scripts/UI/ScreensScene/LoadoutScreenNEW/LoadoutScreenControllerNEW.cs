@@ -18,9 +18,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             Assert.IsNotNull(dataProvider);
             _dataProvider = dataProvider;
 
+            // FELIX  Move down, into MainPanelController?
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
             itemPanels.Initialise(ItemType.Hull);
+
+            CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
+            Assert.IsNotNull(categoryButtonsPanel);
+            categoryButtonsPanel.Initialise(itemPanels);
         }
 
         public void Cancel()
