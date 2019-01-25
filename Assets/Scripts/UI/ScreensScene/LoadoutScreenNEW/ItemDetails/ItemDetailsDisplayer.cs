@@ -13,7 +13,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         public ItemDetailsDisplayer(IItemDetailsPanel itemDetailsPanel)
         {
             Assert.IsNotNull(itemDetailsPanel);
+
             _itemDetailsPanel = itemDetailsPanel;
+            HideDetails();
         }
 
         public void ShowDetails(IBuilding building)
