@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         {
             _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
 
-            IItemsPanel[] panels = GetComponentsInChildren<IItemsPanel>();
+            IItemsPanel[] panels = GetComponentsInChildren<IItemsPanel>(includeInactive: true);
 
             foreach (IItemsPanel panel in panels)
             {

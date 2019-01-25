@@ -16,6 +16,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             Assert.IsNotNull(dataProvider);
             _dataProvider = dataProvider;
+
+            ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
+            Assert.IsNotNull(itemPanels);
+            itemPanels.Initialise(ItemType.Hull);
         }
 
         public void Cancel()
