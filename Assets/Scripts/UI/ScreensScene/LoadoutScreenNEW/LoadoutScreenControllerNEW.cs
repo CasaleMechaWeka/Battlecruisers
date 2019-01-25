@@ -19,18 +19,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             Assert.IsNotNull(dataProvider);
             _dataProvider = dataProvider;
 
-            // FELIX  Move down, into MainPanelController?
+            // FELIX  Move some initialisation down?  Into child game objects?
+            ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
+            Assert.IsNotNull(itemDetailsPanel);
+            itemDetailsPanel.Initialise();
+
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(ItemType.Hull);
+            itemPanels.Initialise(new ItemDetailsDisplayer(itemDetailsPanel), ItemType.Hull);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
             categoryButtonsPanel.Initialise(itemPanels);
-
-            ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
-            Assert.IsNotNull(itemDetailsPanel);
-            itemDetailsPanel.Initialise();
         }
 
         public void Cancel()

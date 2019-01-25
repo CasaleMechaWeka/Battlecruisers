@@ -6,17 +6,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     public class BuildingButton : ItemButton
     {
-        public IBuilding building;
+        public BuildingWrapper building;
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer)
+        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer)
         {
-            base.Initailise(itemDetailsDisplayer);
+            base.Initialise(itemDetailsDisplayer);
+
             Assert.IsNotNull(building);
+
+            building.Initialise();
+            building.Buildable.StaticInitialise();
         }
 
         protected override void ShowItemDetails()
         {
-            _itemDetailsDisplayer.ShowDetails(building);
+            _itemDetailsDisplayer.ShowDetails(building.Buildable);
         }
     }
 }

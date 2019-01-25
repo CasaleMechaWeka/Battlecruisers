@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         protected IItemDetailsDisplayer _itemDetailsDisplayer;
 
-        protected void Initailise(IItemDetailsDisplayer itemDetailsDisplayer)
+        public virtual void Initialise(IItemDetailsDisplayer itemDetailsDisplayer)
         {
             Assert.IsNotNull(itemDetailsDisplayer);
             _itemDetailsDisplayer = itemDetailsDisplayer;
