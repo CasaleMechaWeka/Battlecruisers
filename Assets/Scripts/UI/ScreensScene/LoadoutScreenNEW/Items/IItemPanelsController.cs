@@ -1,6 +1,8 @@
-﻿namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
+﻿using BattleCruisers.UI.Filters;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 {
-    public interface IItemPanelsController
+    public interface IItemPanelsController : IBroadcastingFilter<ItemType>
     {
         void ShowItemsPanel(ItemType itemType);
     }

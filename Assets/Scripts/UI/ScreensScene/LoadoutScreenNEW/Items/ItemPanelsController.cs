@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         private IItemsPanel _currentlyShownPanel;
         private IItemsPanel CurrentlyShownPanel
         {
+            get { return _currentlyShownPanel; }
             set
             {
                 if (_currentlyShownPanel != null)
@@ -24,8 +26,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
                 {
                     _currentlyShownPanel.Show();
                 }
+
+                if (PotentialMatchChange != null)
+                {
+                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
+                }
             }
         }
+
+        public event EventHandler PotentialMatchChange;
 
         public void Initialise(ItemType defaultItemTypeToShow)
         {
@@ -49,6 +58,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         {
             Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
             CurrentlyShownPanel = _typeToPanel[itemType];
+        }
+
+        public bool IsMatch(ItemType element)
+        {
+            return
+                CurrentlyShownPanel != null
+                && CurrentlyShownPanel.ItemType == element;
         }
     }
 }
