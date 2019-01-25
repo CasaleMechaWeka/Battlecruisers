@@ -3,6 +3,6 @@
     public class ItemsPanel : Panel, IItemsPanel
     {
         public ItemType itemType;
-        public ItemType ItemType { get { return ItemType; } }
+        public ItemType ItemType { get { return itemType; } }
     }
 }
