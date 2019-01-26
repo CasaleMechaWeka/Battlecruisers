@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
     {
         TargetType SelectedItemType { get; }
 
+        // FELIX  Remove event?
         event EventHandler SelectedItemTypeChanged;
 
         void ShowDetails(IBuilding building);
