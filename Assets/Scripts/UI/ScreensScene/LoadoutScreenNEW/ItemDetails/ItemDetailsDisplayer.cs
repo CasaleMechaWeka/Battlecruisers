@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
-using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
@@ -13,32 +12,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
     {
         private readonly IItemDetailsPanel _itemDetailsPanel;
 
-        private ItemFamily? _selectedItemFamily;
-        public ItemFamily? SelectedItemFamily
-        {
-            get { return _selectedItemFamily; }
-            private set
-            {
-                if (_selectedItemFamily != value)
-                {
-                    _selectedItemFamily = value;
-
-                    if (SelectedItemFamilyChanged != null)
-                    {
-                        SelectedItemFamilyChanged.Invoke(this, EventArgs.Empty);
-                    }
-                }
-            }
-        }
-
-        public event EventHandler SelectedItemFamilyChanged;
+        public ItemFamily? SelectedItemFamily { get; private set; }
 
         public ItemDetailsDisplayer(IItemDetailsPanel itemDetailsPanel)
         {
             Assert.IsNotNull(itemDetailsPanel);
 
             _itemDetailsPanel = itemDetailsPanel;
-            _selectedItemFamily = null;
+            SelectedItemFamily = null;
         }
 
         public void ShowDetails(IBuilding building)
@@ -63,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         {
             Assert.IsNotNull(item);
 
-            _selectedItemFamily = itemFamily;
+            SelectedItemFamily = itemFamily;
             HideDetails();
         }
 
