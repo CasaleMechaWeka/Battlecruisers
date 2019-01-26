@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System;
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using UnityEngine.Assertions;
@@ -10,36 +12,61 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
     {
         private readonly IItemDetailsPanel _itemDetailsPanel;
 
+        private TargetType _selectedItemType;
+        public TargetType SelectedItemType
+        {
+            get { return _selectedItemType; }
+            private set
+            {
+                if (_selectedItemType != value)
+                {
+                    _selectedItemType = value;
+
+                    if (SelectedItemTypeChanged != null)
+                    {
+                        SelectedItemTypeChanged.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public event EventHandler SelectedItemTypeChanged;
+
         public ItemDetailsDisplayer(IItemDetailsPanel itemDetailsPanel)
         {
             Assert.IsNotNull(itemDetailsPanel);
 
             _itemDetailsPanel = itemDetailsPanel;
+            // Any type, as long as it's not an item type:  Cruiser, Aircraft, Ships
+            _selectedItemType = TargetType.Rocket;
+
             HideDetails();
         }
 
         public void ShowDetails(IBuilding building)
         {
-            Assert.IsNotNull(building);
-
-            HideDetails();
+            ShowDetailsInternal(building);
             _itemDetailsPanel.LeftBuildingDetails.ShowItemDetails(building);
         }
 
         public void ShowDetails(IUnit unit)
         {
-            Assert.IsNotNull(unit);
-
-            HideDetails();
+            ShowDetailsInternal(unit);
             _itemDetailsPanel.LeftUnitDetails.ShowItemDetails(unit);
         }
 
         public void ShowDetails(ICruiser cruiser)
         {
-            Assert.IsNotNull(cruiser);
-
-            HideDetails();
+            ShowDetailsInternal(cruiser);
             _itemDetailsPanel.LeftCruiserDetails.ShowItemDetails(cruiser);
+        }
+
+        private void ShowDetailsInternal(ITarget item)
+        {
+            Assert.IsNotNull(item);
+
+            _selectedItemType = item.TargetType;
+            HideDetails();
         }
 
         private void HideDetails()
