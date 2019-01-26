@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
@@ -18,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         private IItemDetailsDisplayer _itemDetailsDisplayer;
-        private IBroadcastingProperty<TargetType?> _itemTypeToCompare;
+        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -37,9 +36,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             Assert.IsNotNull(itemDetailsPanel);
 
             _itemDetailsDisplayer = new ItemDetailsDisplayer(itemDetailsPanel);
-            _itemTypeToCompare = new BroadcastingProperty<TargetType?>();
+            _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
 
-            itemDetailsPanel.Initialise(_itemDetailsDisplayer, _itemTypeToCompare);
+            itemDetailsPanel.Initialise(_itemDetailsDisplayer, _itemFamilyToCompare);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
@@ -66,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         public void Cancel()
         {
-            _itemTypeToCompare.Value = null;
+            _itemFamilyToCompare.Value = null;
             _itemDetailsDisplayer.HideDetails();
             _screensSceneGod.GoToHomeScreen();
         }

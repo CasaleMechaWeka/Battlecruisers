@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using System;
@@ -10,30 +10,30 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     public class CompareButton : Togglable, IPointerClickHandler
     {
         private IItemDetailsDisplayer _itemDetailsDisplayer;
-        private IBroadcastingProperty<TargetType?> _itemTypeToCompare;
+        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
 
         protected override bool ToggleVisibility { get { return true; } }
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<TargetType?> itemTypeToCompare)
+        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemTypeToCompare);
+            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
 
             _itemDetailsDisplayer = itemDetailsDisplayer;
-            _itemTypeToCompare = itemTypeToCompare;
+            _itemFamilyToCompare = itemFamilyToCompare;
 
-            _itemTypeToCompare.ValueChanged += _itemTypeToCompare_ValueChanged;
+            _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
         }
 
-        private void _itemTypeToCompare_ValueChanged(object sender, EventArgs e)
+        private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
         {
-            Enabled = _itemTypeToCompare.Value == null;
+            Enabled = _itemFamilyToCompare.Value == null;
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _itemTypeToCompare.Value = _itemDetailsDisplayer.SelectedItemType;
+            _itemFamilyToCompare.Value = _itemDetailsDisplayer.SelectedItemFamily;
         }
     }
 }

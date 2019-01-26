@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -21,15 +21,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         public IComparableItemDetails<IUnit> LeftUnitDetails { get; private set; }
         public IComparableItemDetails<IUnit> RightUnitDetails { get; private set; }
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<TargetType?> itemTypeToCompare)
+        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemTypeToCompare);
+            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
 
             InitialiseDetails();
 
             CompareButton compareButton = GetComponentInChildren<CompareButton>();
             Assert.IsNotNull(compareButton);
-            compareButton.Initialise(itemDetailsDisplayer, itemTypeToCompare);
+            compareButton.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
         }
 
         private void InitialiseDetails()

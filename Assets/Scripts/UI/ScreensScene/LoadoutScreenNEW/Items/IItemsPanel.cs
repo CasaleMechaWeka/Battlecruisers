@@ -9,6 +9,11 @@
         Ship, Aircraft
     }
 
+    public enum ItemFamily
+    {
+        Hulls, Buildings, Units
+    }
+
     public interface IItemsPanel : IPanel
     {
         ItemType ItemType { get; }
