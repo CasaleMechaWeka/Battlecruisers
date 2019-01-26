@@ -27,6 +27,7 @@ namespace BattleCruisers.UI
         }
     }
 
+    // FELIX  Remove if unused :)
     // FELIX  Test :P
     public class FilterToggler<TTogglable> where TTogglable : ITogglable
     {
