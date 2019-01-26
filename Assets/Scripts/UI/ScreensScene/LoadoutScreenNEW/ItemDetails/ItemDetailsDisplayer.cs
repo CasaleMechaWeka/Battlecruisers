@@ -38,13 +38,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         {
             Assert.IsNotNull(cruiser);
 
-            throw new System.NotImplementedException();
+            HideDetails();
+            _itemDetailsPanel.LeftCruiserDetails.ShowItemDetails(cruiser);
         }
 
         private void HideDetails()
         {
             _itemDetailsPanel.LeftBuildingDetails.Hide();
             _itemDetailsPanel.LeftUnitDetails.Hide();
+            _itemDetailsPanel.LeftCruiserDetails.Hide();
             // FELIX  Hide others :)
         }
     }

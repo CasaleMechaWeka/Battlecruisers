@@ -21,7 +21,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         public void Initialise()
         {
             // Cruisers
-            // FELIX  Initialise others :)
+            ComparableCruiserDetailsController leftCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/LeftDetails");
+            leftCruiserDetails.Initialise();
+            LeftCruiserDetails = leftCruiserDetails;
+            
+            ComparableCruiserDetailsController rightCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/RightDetails");
+            rightCruiserDetails.Initialise();
+            RightCruiserDetails = rightCruiserDetails;
 
             // Buildings
             ComparableBuildingDetailsController leftBuildingDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("BuildingDetailsPanel/LeftDetails");
