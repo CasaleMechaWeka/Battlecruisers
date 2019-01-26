@@ -14,12 +14,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         protected override bool Disable { get { return true; } }
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<TargetType?> itemToCompareTracker)
+        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<TargetType?> itemTypeToCompare)
         {
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemToCompareTracker);
+            base.Initialise();
+
+            Helper.AssertIsNotNull(itemDetailsDisplayer, itemTypeToCompare);
 
             _itemDetailsDisplayer = itemDetailsDisplayer;
-            _itemTypeToCompare = itemToCompareTracker;
+            _itemTypeToCompare = itemTypeToCompare;
 
             _itemTypeToCompare.ValueChanged += _itemTypeToCompare_ValueChanged;
         }
