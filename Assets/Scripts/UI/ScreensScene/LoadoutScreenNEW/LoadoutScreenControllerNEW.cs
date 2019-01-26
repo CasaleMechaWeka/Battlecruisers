@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
-            categoryButtonsPanel.Initialise(itemPanels);
+            categoryButtonsPanel.Initialise(itemPanels, _itemFamilyToCompare);
 
             ShowPlayerHull();
         }

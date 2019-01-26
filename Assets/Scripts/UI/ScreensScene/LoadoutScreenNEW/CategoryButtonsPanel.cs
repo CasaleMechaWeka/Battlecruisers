@@ -1,20 +1,21 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     public class CategoryButtonsPanel : MonoBehaviour
     {
-        public void Initialise(IItemPanelsController itemPanels)
+        public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            Assert.IsNotNull(itemPanels);
+            Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare);
 
             ItemCategoryButton[] buttons = GetComponentsInChildren<ItemCategoryButton>(includeInactive: true);
 
             foreach (ItemCategoryButton button in buttons)
             {
-                button.Initialise(itemPanels);
+                button.Initialise(itemPanels, itemFamilyToCompare);
             }
         }
     }
