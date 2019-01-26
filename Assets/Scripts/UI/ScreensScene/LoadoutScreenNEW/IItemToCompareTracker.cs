@@ -5,8 +5,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     public interface IItemToCompareTracker
     {
-        TargetType? ItemToCompare { get; }
+        TargetType? ItemTypeToCompare { get; set; }
 
-        event EventHandler ItemToCompareChanged;
+        event EventHandler ItemTypeToCompareChanged;
     }
 }
