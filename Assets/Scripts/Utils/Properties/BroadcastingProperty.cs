@@ -1,17 +1,18 @@
-﻿using BattleCruisers.Buildables;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Utils.Properties
 {
-    public class BroadcastingProperty : IBroadcastingProperty<TargetType?>
+    // FELIX  Test :D
+    public class BroadcastingProperty<T> : IBroadcastingProperty<T>
     {
-        private TargetType? _value;
-        public TargetType? Value
+        private T _value;
+        public T Value
         {
             get { return _value; }
             set
             {
-                if (_value != value)
+                if (!EqualityComparer<T>.Default.Equals(_value, value))
                 {
                     _value = value;
 
