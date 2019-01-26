@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IItemDetailsDisplayer _itemDetailsDisplayer;
         private IBroadcastingProperty<TargetType?> _itemTypeToCompare;
 
-        protected override bool Disable { get { return true; } }
+        protected override bool ToggleVisibility { get { return true; } }
 
         public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<TargetType?> itemTypeToCompare)
         {

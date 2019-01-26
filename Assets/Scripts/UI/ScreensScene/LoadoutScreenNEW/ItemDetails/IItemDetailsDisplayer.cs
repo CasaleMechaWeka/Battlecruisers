@@ -16,5 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);
         void ShowDetails(ICruiser cruiser);
+
+        void HideDetails();
     }
 }

@@ -37,10 +37,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             Assert.IsNotNull(itemDetailsPanel);
 
             _itemDetailsPanel = itemDetailsPanel;
+            // FELIX  Codesmell :/  Nullable?  Argh
             // Any type, as long as it's not an item type:  Cruiser, Aircraft, Ships
             _selectedItemType = TargetType.Rocket;
-
-            HideDetails();
         }
 
         public void ShowDetails(IBuilding building)
@@ -69,7 +68,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             HideDetails();
         }
 
-        private void HideDetails()
+        public void HideDetails()
         {
             _itemDetailsPanel.LeftBuildingDetails.Hide();
             _itemDetailsPanel.LeftUnitDetails.Hide();

@@ -1,9 +1,12 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
@@ -18,7 +21,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         public IComparableItemDetails<IUnit> LeftUnitDetails { get; private set; }
         public IComparableItemDetails<IUnit> RightUnitDetails { get; private set; }
 
-        public void Initialise()
+        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<TargetType?> itemTypeToCompare)
+        {
+            Helper.AssertIsNotNull(itemDetailsDisplayer, itemTypeToCompare);
+
+            InitialiseDetails();
+
+            CompareButton compareButton = GetComponentInChildren<CompareButton>();
+            Assert.IsNotNull(compareButton);
+            compareButton.Initialise(itemDetailsDisplayer, itemTypeToCompare);
+        }
+
+        private void InitialiseDetails()
         {
             // Cruisers
             ComparableCruiserDetailsController leftCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/LeftDetails");
@@ -46,6 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             ComparableUnitDetailsController rightUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/RightDetails");
             rightUnitDetails.Initialise();
             RightUnitDetails = rightUnitDetails;
+
         }
     }
 }

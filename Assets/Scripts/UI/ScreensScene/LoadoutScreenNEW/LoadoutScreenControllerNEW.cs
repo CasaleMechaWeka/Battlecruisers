@@ -1,10 +1,12 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
@@ -16,6 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         private IItemDetailsDisplayer _itemDetailsDisplayer;
+        private IBroadcastingProperty<TargetType?> _itemTypeToCompare;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -32,9 +35,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             // FELIX  Move some initialisation down?  Into child game objects?
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
-            itemDetailsPanel.Initialise();
 
             _itemDetailsDisplayer = new ItemDetailsDisplayer(itemDetailsPanel);
+            _itemTypeToCompare = new BroadcastingProperty<TargetType?>();
+
+            itemDetailsPanel.Initialise(_itemDetailsDisplayer, _itemTypeToCompare);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
@@ -53,14 +58,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _itemDetailsDisplayer.ShowDetails(playerCruiser);
         }
 
-        public void Cancel()
-        {
-            _screensSceneGod.GoToHomeScreen();
-        }
-
         public void Save()
         {
             // FELIX  Save hull choice :)
+            Cancel();
+        }
+
+        public void Cancel()
+        {
+            _itemTypeToCompare.Value = null;
+            _itemDetailsDisplayer.HideDetails();
             _screensSceneGod.GoToHomeScreen();
         }
     }
