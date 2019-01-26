@@ -63,7 +63,7 @@ namespace BattleCruisers.Scenes
             _musicPlayer.PlayScreensSceneMusic();
             homeScreen.Initialise(this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
-            loadoutScreenNEW.Initialise(this, _dataProvider);
+            loadoutScreenNEW.Initialise(this, _dataProvider, _prefabFactory);
 
 
             if (_applicationModel.ShowPostBattleScreen)
