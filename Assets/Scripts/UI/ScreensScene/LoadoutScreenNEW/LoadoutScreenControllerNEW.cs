@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
@@ -34,11 +36,29 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             // FELIX  Move some initialisation down?  Into child game objects?
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
+            itemDetailsPanel.FindComponents();
 
-            _itemDetailsDisplayer = new ItemDetailsDisplayer(itemDetailsPanel);
+            IItemFamilyDetailsDisplayer<IBuilding> buildingDetails
+                = new ItemFamilyDetailsDisplayer<IBuilding>(
+                    itemDetailsPanel.LeftBuildingDetails,
+                    itemDetailsPanel.RightBuildingDetails);
+
+            IItemFamilyDetailsDisplayer<IUnit> unitDetails
+                = new ItemFamilyDetailsDisplayer<IUnit>(
+                    itemDetailsPanel.LeftUnitDetails,
+                    itemDetailsPanel.RightUnitDetails);
+
+            IItemFamilyDetailsDisplayer<ICruiser> cruiserDetails
+                = new ItemFamilyDetailsDisplayer<ICruiser>(
+                    itemDetailsPanel.LeftCruiserDetails,
+                    itemDetailsPanel.RightCruiserDetails);
+
+            _itemDetailsDisplayer = new ItemDetailsDisplayer(buildingDetails, unitDetails, cruiserDetails);
+            
+            // FELIX  Create custom interface?
             _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
 
-            itemDetailsPanel.Initialise(_itemDetailsDisplayer, _itemFamilyToCompare);
+            itemDetailsPanel.InitialiseComponents(_itemDetailsDisplayer, _itemFamilyToCompare);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
