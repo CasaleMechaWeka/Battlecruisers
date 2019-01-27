@@ -1,6 +1,9 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
@@ -8,9 +11,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         public UnitWrapper unit;
 
-        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer)
+        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            base.Initialise(itemDetailsDisplayer);
+            base.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
 
             Assert.IsNotNull(unit);
 
@@ -18,9 +21,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             unit.Buildable.StaticInitialise();
         }
 
-        protected override void ShowItemDetails()
+        public override void OnPointerClick(PointerEventData eventData)
         {
-            _itemDetailsDisplayer.ShowDetails(unit.Buildable);
+            if (_itemFamilyToCompare.Value == null)
+            {
+                _itemDetailsDisplayer.ShowDetails(unit.Buildable);
+            }
+            else
+            {
+                _itemDetailsDisplayer.CompareWithSelectedItem(unit.Buildable);
+                _itemFamilyToCompare.Value = null;
+            }
         }
     }
 }

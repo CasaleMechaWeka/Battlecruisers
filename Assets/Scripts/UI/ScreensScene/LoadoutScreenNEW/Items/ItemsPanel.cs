@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 {
@@ -8,15 +9,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public ItemType itemType;
         public ItemType ItemType { get { return itemType; } }
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer)
+        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            Assert.IsNotNull(itemDetailsDisplayer);
+            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
 
             ItemButton[] buttons = GetComponentsInChildren<ItemButton>(includeInactive: true);
 
             foreach (ItemButton button in buttons)
             {
-                button.Initialise(itemDetailsDisplayer);
+                button.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
             }
         }
     }

@@ -59,25 +59,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         public void CompareWithSelectedItem(IBuilding building)
         {
-            CompareWithSelectedItem(building, _buildingDetails);
+            CompareWithSelectedItem(building, _buildingDetails, ItemFamily.Buildings);
         }
 
         public void CompareWithSelectedItem(IUnit unit)
         {
-            CompareWithSelectedItem(unit, _unitDetails);
+            CompareWithSelectedItem(unit, _unitDetails, ItemFamily.Units);
         }
 
         public void CompareWithSelectedItem(ICruiser cruiser)
         {
-            CompareWithSelectedItem(cruiser, _cruiserDetails);
+            CompareWithSelectedItem(cruiser, _cruiserDetails, ItemFamily.Hulls);
         }
 
-        private void CompareWithSelectedItem<TItem, TItemDetails>(TItem item, TItemDetails itemDetails)
+        private void CompareWithSelectedItem<TItem, TItemDetails>(TItem item, TItemDetails itemDetails, ItemFamily itemFamily)
             where TItem : class, IComparableItem
             where TItemDetails : IItemFamilyDetailsDisplayer<TItem>
         {
             Assert.IsNotNull(item);
-            Assert.AreEqual(ItemFamily.Buildings, SelectedItemFamily);
+            Assert.AreEqual(SelectedItemFamily, itemFamily);
 
             itemDetails.CompareWithSelectedItem(item);
         }

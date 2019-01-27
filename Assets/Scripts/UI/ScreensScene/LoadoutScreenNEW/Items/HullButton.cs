@@ -1,6 +1,9 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
@@ -8,17 +11,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         public Cruiser cruiser;
 
-        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer)
+        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            base.Initialise(itemDetailsDisplayer);
+            base.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
 
             Assert.IsNotNull(cruiser);
             cruiser.StaticInitialise();
         }
 
-        protected override void ShowItemDetails()
+        public override void OnPointerClick(PointerEventData eventData)
         {
-            _itemDetailsDisplayer.ShowDetails(cruiser);
+            if (_itemFamilyToCompare.Value == null)
+            {
+                _itemDetailsDisplayer.ShowDetails(cruiser);
+            }
+            else
+            {
+                _itemDetailsDisplayer.CompareWithSelectedItem(cruiser);
+                _itemFamilyToCompare.Value = null;
+            }
         }
     }
 }

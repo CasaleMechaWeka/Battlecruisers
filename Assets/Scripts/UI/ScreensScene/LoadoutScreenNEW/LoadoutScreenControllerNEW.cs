@@ -54,15 +54,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
                     itemDetailsPanel.RightCruiserDetails);
 
             _itemDetailsDisplayer = new ItemDetailsDisplayer(buildingDetails, unitDetails, cruiserDetails);
-            
-            // FELIX  Create custom interface?
+
+            // FELIX  Create custom interface?  Would be more readable than:  IBroadcastingProperty<ItemFamily?> itemFamilyToCompare :P
             _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
 
             itemDetailsPanel.InitialiseComponents(_itemDetailsDisplayer, _itemFamilyToCompare);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(_itemDetailsDisplayer, ItemType.Hull);
+            itemPanels.Initialise(_itemDetailsDisplayer, ItemType.Hull, _itemFamilyToCompare);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
