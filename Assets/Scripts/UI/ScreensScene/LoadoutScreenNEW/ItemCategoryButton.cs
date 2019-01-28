@@ -53,9 +53,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
         {
-            Enabled = 
-                _itemFamilyToCompare.Value == null
-                || _itemFamilyToCompare.Value == itemFamily;
+            Enabled 
+                = _itemFamilyToCompare.Value == null
+                    || _itemFamilyToCompare.Value == itemFamily;
         }
 
         private void UpdateSelectedFeedback()
