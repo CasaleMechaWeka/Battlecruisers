@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
@@ -9,6 +10,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
     public interface IItemDetailsDisplayer
     {
         ItemFamily? SelectedItemFamily { get; }
+        int NumOfDetailsShown { get; }
+
+        event EventHandler NumOfDetailsShownChanged;
 
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);

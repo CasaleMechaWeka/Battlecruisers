@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using System;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
@@ -17,6 +18,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         public ItemFamily? SelectedItemFamily { get; private set; }
 
+        private int _numOfDetailsShown;
+        public int NumOfDetailsShown
+        {
+            get { return _numOfDetailsShown; }
+            private set
+            {
+                if (_numOfDetailsShown != value)
+                {
+                    _numOfDetailsShown = value;
+
+                    if (NumOfDetailsShownChanged != null)
+                    {
+                        NumOfDetailsShownChanged.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public event EventHandler NumOfDetailsShownChanged;
+
         public ItemDetailsDisplayer(
             IItemFamilyDetailsDisplayer<IBuilding> buildingDetails,
             IItemFamilyDetailsDisplayer<IUnit> unitDetails,
@@ -29,6 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             _cruiserDetails = cruiserDetails;
 
             SelectedItemFamily = null;
+            _numOfDetailsShown = 0;
         }
 
         public void ShowDetails(IBuilding building)
@@ -55,6 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             HideDetails();
             SelectedItemFamily = itemFamily;
             itemDetails.SelectItem(item);
+            NumOfDetailsShown = 1;
         }
 
         public void CompareWithSelectedItem(IBuilding building)
@@ -80,6 +103,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             Assert.AreEqual(SelectedItemFamily, itemFamily);
 
             itemDetails.CompareWithSelectedItem(item);
+            NumOfDetailsShown = 2;
         }
 
         public void HideDetails()
@@ -87,6 +111,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             _buildingDetails.HideDetails();
             _unitDetails.HideDetails();
             _cruiserDetails.HideDetails();
+            NumOfDetailsShown = 0;
         }
     }
 }
