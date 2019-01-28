@@ -9,7 +9,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
-    // FELIX  Test :)
     public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IItemDetailsDisplayer<IBuilding> _buildingDetails;
