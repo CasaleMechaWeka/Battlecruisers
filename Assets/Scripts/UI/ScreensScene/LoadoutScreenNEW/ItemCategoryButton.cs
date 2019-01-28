@@ -44,9 +44,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             UpdateSelectedFeedback();
         }
 
+        // FELIX Use generic FilterToggler instead.  Extracts this logic to implementation of IBroadcastingFilter.
+        // => Makes that part testable, simplifies this class :)
         private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
         {
-            Enabled = _itemFamilyToCompare.Value == itemFamily;
+            Enabled = 
+                _itemFamilyToCompare.Value == null
+                || _itemFamilyToCompare.Value == itemFamily;
         }
 
         private void UpdateSelectedFeedback()
