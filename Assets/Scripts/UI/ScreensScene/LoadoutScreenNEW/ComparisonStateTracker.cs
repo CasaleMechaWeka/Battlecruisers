@@ -41,6 +41,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemDetailsDisplayer = itemDetailsDisplayer;
             _itemDetailsDisplayer.NumOfDetailsShownChanged += _itemDetailsDisplayer_NumOfDetailsShownChanged;
+
+            State = EvaluateState();
         }
 
         private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
@@ -65,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             }
             else
             {
-                return ComparisonState.ReadyToCompare;
+                return ComparisonState.NotComparing;
             }
         }
     }

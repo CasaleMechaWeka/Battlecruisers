@@ -11,26 +11,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         private IItemDetailsDisplayer _itemDetailsDisplayer;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private IComparisonStateTracker _comparisonStateTracker;
 
         protected override bool ToggleVisibility { get { return true; } }
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public void Initialise(
+            IItemDetailsDisplayer itemDetailsDisplayer, 
+            IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
+            IComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare, comparisonStateTracker);
 
             _itemDetailsDisplayer = itemDetailsDisplayer;
             _itemFamilyToCompare = itemFamilyToCompare;
+            _comparisonStateTracker = comparisonStateTracker;
 
-            _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
+            _comparisonStateTracker.StateChanged += _comparisonStateTracker_StateChanged;
         }
 
         // FELIX  Don't show while comparing, otherwise is visible above left item details :P
         // FELIX Use generic FilterToggler instead.  Extracts this logic to implementation of IBroadcastingFilter.
-        private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
+        private void _comparisonStateTracker_StateChanged(object sender, EventArgs e)
         {
-            Enabled = _itemFamilyToCompare.Value == null;
+            Enabled = _comparisonStateTracker.State == ComparisonState.NotComparing;
         }
 
         public void OnPointerClick(PointerEventData eventData)

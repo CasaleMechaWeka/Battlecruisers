@@ -57,8 +57,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             // FELIX  Create custom interface?  Would be more readable than:  IBroadcastingProperty<ItemFamily?> itemFamilyToCompare :P
             _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
+            IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsDisplayer);
 
-            itemDetailsPanel.InitialiseComponents(_itemDetailsDisplayer, _itemFamilyToCompare);
+            itemDetailsPanel.InitialiseComponents(_itemDetailsDisplayer, _itemFamilyToCompare, comparisonStateTracker);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
