@@ -39,7 +39,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
                     || itemFamily == _itemFamilyToCompare.Value;
         }
 
-        // FELIX  Avoid duplicate code in child classes?  Complicates initialisation code if this class becomes generic :/  Worth it?
         public abstract void OnPointerClick(PointerEventData eventData);
     }
 }
