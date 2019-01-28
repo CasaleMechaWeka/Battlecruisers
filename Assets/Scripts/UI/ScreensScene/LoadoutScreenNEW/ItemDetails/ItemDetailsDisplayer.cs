@@ -3,7 +3,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
     // FELIX  Test :D
     public class ItemDetailsDisplayer<TItem> : IItemDetailsDisplayer<TItem> where TItem : class, IComparableItem
