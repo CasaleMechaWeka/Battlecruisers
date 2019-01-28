@@ -33,7 +33,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
-            // FELIX  Move some initialisation down?  Into child game objects?
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
             itemDetailsPanel.FindComponents();
@@ -55,7 +54,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
 
-            // FELIX  Create custom interface?  Would be more readable than:  IBroadcastingProperty<ItemFamily?> itemFamilyToCompare :P
             _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
 
