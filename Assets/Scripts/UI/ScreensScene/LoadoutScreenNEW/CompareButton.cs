@@ -26,6 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
         }
 
+        // FELIX  Don't show while comparing, otherwise is visible above left item details :P
+        // FELIX Use generic FilterToggler instead.  Extracts this logic to implementation of IBroadcastingFilter.
         private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
         {
             Enabled = _itemFamilyToCompare.Value == null;
