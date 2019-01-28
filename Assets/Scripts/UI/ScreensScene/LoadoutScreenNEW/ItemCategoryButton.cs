@@ -2,12 +2,13 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using System;
+using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
-    // FELIX  Show disabled feedback.  Make text opaque?  CanvasGroup?
     public class ItemCategoryButton : Togglable, IPointerClickHandler
     {
         private IItemPanelsController _itemPanels;
@@ -25,6 +26,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             }
         }
 
+        private CanvasGroup _canvasGroup;
+        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+
         public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
             Helper.AssertIsNotNull(itemPanels, itemFamily);
@@ -34,6 +38,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemFamilyToCompare = itemFamilyToCompare;
             _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
+
+            _canvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(_canvasGroup);
 
             _selectedFeedback = transform.FindNamedComponent<Image>("SelectedFeedback");
             UpdateSelectedFeedback();
