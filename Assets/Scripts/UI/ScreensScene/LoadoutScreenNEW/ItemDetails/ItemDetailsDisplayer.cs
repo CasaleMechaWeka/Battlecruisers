@@ -6,13 +6,12 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     // FELIX  Test :D
-    // FELIX  Rename to ItemDetailsDisplayer?
-    public class ItemFamilyDetailsDisplayer<TItem> : IItemFamilyDetailsDisplayer<TItem> where TItem : class, IComparableItem
+    public class ItemDetailsDisplayer<TItem> : IItemDetailsDisplayer<TItem> where TItem : class, IComparableItem
     {
         private readonly IComparableItemDetails<TItem> _leftDetails, _rightDetails;
         private TItem _selectedItem;
 
-        public ItemFamilyDetailsDisplayer(IComparableItemDetails<TItem> leftDetails, IComparableItemDetails<TItem> rightDetails)
+        public ItemDetailsDisplayer(IComparableItemDetails<TItem> leftDetails, IComparableItemDetails<TItem> rightDetails)
         {
             Helper.AssertIsNotNull(leftDetails, rightDetails);
 

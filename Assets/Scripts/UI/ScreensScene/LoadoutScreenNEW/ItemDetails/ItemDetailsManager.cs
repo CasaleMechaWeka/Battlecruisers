@@ -12,9 +12,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
     // FELIX  Test :)
     public class ItemDetailsManager : IItemDetailsManager
     {
-        private readonly IItemFamilyDetailsDisplayer<IBuilding> _buildingDetails;
-        private readonly IItemFamilyDetailsDisplayer<IUnit> _unitDetails;
-        private readonly IItemFamilyDetailsDisplayer<ICruiser> _cruiserDetails;
+        private readonly IItemDetailsDisplayer<IBuilding> _buildingDetails;
+        private readonly IItemDetailsDisplayer<IUnit> _unitDetails;
+        private readonly IItemDetailsDisplayer<ICruiser> _cruiserDetails;
 
         public ItemFamily? SelectedItemFamily { get; private set; }
 
@@ -39,9 +39,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         public event EventHandler NumOfDetailsShownChanged;
 
         public ItemDetailsManager(
-            IItemFamilyDetailsDisplayer<IBuilding> buildingDetails,
-            IItemFamilyDetailsDisplayer<IUnit> unitDetails,
-            IItemFamilyDetailsDisplayer<ICruiser> cruiserDetails)
+            IItemDetailsDisplayer<IBuilding> buildingDetails,
+            IItemDetailsDisplayer<IUnit> unitDetails,
+            IItemDetailsDisplayer<ICruiser> cruiserDetails)
         {
             Helper.AssertIsNotNull(buildingDetails, unitDetails, cruiserDetails);
 
@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         private void ShowDetails<TItem, TItemDetails>(TItem item, TItemDetails itemDetails, ItemFamily itemFamily)
             where TItem : class, IComparableItem
-            where TItemDetails : IItemFamilyDetailsDisplayer<TItem>
+            where TItemDetails : IItemDetailsDisplayer<TItem>
         {
             Assert.IsNotNull(item);
 
@@ -97,7 +97,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         private void CompareWithSelectedItem<TItem, TItemDetails>(TItem item, TItemDetails itemDetails, ItemFamily itemFamily)
             where TItem : class, IComparableItem
-            where TItemDetails : IItemFamilyDetailsDisplayer<TItem>
+            where TItemDetails : IItemDetailsDisplayer<TItem>
         {
             Assert.IsNotNull(item);
             Assert.AreEqual(SelectedItemFamily, itemFamily);

@@ -38,18 +38,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             Assert.IsNotNull(itemDetailsPanel);
             itemDetailsPanel.FindComponents();
 
-            IItemFamilyDetailsDisplayer<IBuilding> buildingDetails
-                = new ItemFamilyDetailsDisplayer<IBuilding>(
+            IItemDetailsDisplayer<IBuilding> buildingDetails
+                = new ItemDetailsDisplayer<IBuilding>(
                     itemDetailsPanel.LeftBuildingDetails,
                     itemDetailsPanel.RightBuildingDetails);
 
-            IItemFamilyDetailsDisplayer<IUnit> unitDetails
-                = new ItemFamilyDetailsDisplayer<IUnit>(
+            IItemDetailsDisplayer<IUnit> unitDetails
+                = new ItemDetailsDisplayer<IUnit>(
                     itemDetailsPanel.LeftUnitDetails,
                     itemDetailsPanel.RightUnitDetails);
 
-            IItemFamilyDetailsDisplayer<ICruiser> cruiserDetails
-                = new ItemFamilyDetailsDisplayer<ICruiser>(
+            IItemDetailsDisplayer<ICruiser> cruiserDetails
+                = new ItemDetailsDisplayer<ICruiser>(
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
 
