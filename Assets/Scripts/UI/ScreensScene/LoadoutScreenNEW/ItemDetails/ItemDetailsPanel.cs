@@ -51,14 +51,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         // Not part of GetComponents() due to circular dependency :)
         public void InitialiseComponents(
-            IItemDetailsDisplayer itemDetailsDisplayer, 
+            IItemDetailsManager itemDetailsManager, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IComparisonStateTracker comparisonStateTracker)
         {
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare, comparisonStateTracker);
+            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare, comparisonStateTracker);
 
             InitialiseDetails();
-            _compareButton.Initialise(itemDetailsDisplayer, itemFamilyToCompare, comparisonStateTracker);
+            _compareButton.Initialise(itemDetailsManager, itemFamilyToCompare, comparisonStateTracker);
         }
 
         private void InitialiseDetails()

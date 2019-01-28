@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
-        private IItemDetailsDisplayer _itemDetailsDisplayer;
+        private IItemDetailsManager _itemDetailsManager;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
 
         public void Initialise(
@@ -53,17 +53,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
 
-            _itemDetailsDisplayer = new ItemDetailsDisplayer(buildingDetails, unitDetails, cruiserDetails);
+            _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
 
             // FELIX  Create custom interface?  Would be more readable than:  IBroadcastingProperty<ItemFamily?> itemFamilyToCompare :P
             _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
-            IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsDisplayer);
+            IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
 
-            itemDetailsPanel.InitialiseComponents(_itemDetailsDisplayer, _itemFamilyToCompare, comparisonStateTracker);
+            itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _itemFamilyToCompare, comparisonStateTracker);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(_itemDetailsDisplayer, ItemType.Hull, _itemFamilyToCompare);
+            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _itemFamilyToCompare);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
@@ -75,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private void ShowPlayerHull()
         {
             ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
-            _itemDetailsDisplayer.ShowDetails(playerCruiser);
+            _itemDetailsManager.ShowDetails(playerCruiser);
         }
 
         public void Save()
@@ -87,7 +87,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         public void Cancel()
         {
             _itemFamilyToCompare.Value = null;
-            _itemDetailsDisplayer.HideDetails();
+            _itemDetailsManager.HideDetails();
             _screensSceneGod.GoToHomeScreen();
         }
     }

@@ -6,8 +6,7 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
-    // FELIX  Rename to IItemDetailsManager :)
-    public interface IItemDetailsDisplayer
+    public interface IItemDetailsManager
     {
         ItemFamily? SelectedItemFamily { get; }
         int NumOfDetailsShown { get; }

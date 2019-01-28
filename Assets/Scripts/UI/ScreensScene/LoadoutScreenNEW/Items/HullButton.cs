@@ -11,9 +11,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         public Cruiser cruiser;
 
-        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public override void Initialise(IItemDetailsManager itemDetailsManager, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            base.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
+            base.Initialise(itemDetailsManager, itemFamilyToCompare);
 
             Assert.IsNotNull(cruiser);
             cruiser.StaticInitialise();
@@ -23,11 +23,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         {
             if (_itemFamilyToCompare.Value == null)
             {
-                _itemDetailsDisplayer.ShowDetails(cruiser);
+                _itemDetailsManager.ShowDetails(cruiser);
             }
             else
             {
-                _itemDetailsDisplayer.CompareWithSelectedItem(cruiser);
+                _itemDetailsManager.CompareWithSelectedItem(cruiser);
                 _itemFamilyToCompare.Value = null;
             }
         }

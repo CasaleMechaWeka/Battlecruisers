@@ -11,9 +11,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     {
         public BuildingWrapper building;
 
-        public override void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public override void Initialise(IItemDetailsManager itemDetailsManager, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            base.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
+            base.Initialise(itemDetailsManager, itemFamilyToCompare);
 
             Assert.IsNotNull(building);
 
@@ -25,11 +25,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         {
             if (_itemFamilyToCompare.Value == null)
             {
-                _itemDetailsDisplayer.ShowDetails(building.Buildable);
+                _itemDetailsManager.ShowDetails(building.Buildable);
             }
             else
             {
-                _itemDetailsDisplayer.CompareWithSelectedItem(building.Buildable);
+                _itemDetailsManager.CompareWithSelectedItem(building.Buildable);
                 _itemFamilyToCompare.Value = null;
             }
         }

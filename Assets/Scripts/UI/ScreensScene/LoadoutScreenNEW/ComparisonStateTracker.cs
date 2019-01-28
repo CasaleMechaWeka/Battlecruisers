@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     public class ComparisonStateTracker : IComparisonStateTracker
     {
         private readonly IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
-        private readonly IItemDetailsDisplayer _itemDetailsDisplayer;
+        private readonly IItemDetailsManager _itemDetailsManager;
 
         private ComparisonState _state;
         public ComparisonState State
@@ -32,15 +32,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         public event EventHandler StateChanged;
 
-        public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsDisplayer itemDetailsDisplayer)
+        public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
         {
-            Helper.AssertIsNotNull(itemFamilyToCompare, itemDetailsDisplayer);
+            Helper.AssertIsNotNull(itemFamilyToCompare, itemDetailsManager);
             
             _itemFamilyToCompare = itemFamilyToCompare;
             _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
 
-            _itemDetailsDisplayer = itemDetailsDisplayer;
-            _itemDetailsDisplayer.NumOfDetailsShownChanged += _itemDetailsDisplayer_NumOfDetailsShownChanged;
+            _itemDetailsManager = itemDetailsManager;
+            _itemDetailsManager.NumOfDetailsShownChanged += _itemDetailsManager_NumOfDetailsShownChanged;
 
             State = EvaluateState();
         }
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             State = EvaluateState();
         }
 
-        private void _itemDetailsDisplayer_NumOfDetailsShownChanged(object sender, EventArgs e)
+        private void _itemDetailsManager_NumOfDetailsShownChanged(object sender, EventArgs e)
         {
             State = EvaluateState();
         }
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             {
                 return ComparisonState.ReadyToCompare;
             }
-            else if (_itemDetailsDisplayer.NumOfDetailsShown == 2)
+            else if (_itemDetailsManager.NumOfDetailsShown == 2)
             {
                 return ComparisonState.Comparing;
             }

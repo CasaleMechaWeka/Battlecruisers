@@ -9,22 +9,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     public class CompareButton : Togglable, IPointerClickHandler
     {
-        private IItemDetailsDisplayer _itemDetailsDisplayer;
+        private IItemDetailsManager _itemDetailsManager;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IComparisonStateTracker _comparisonStateTracker;
 
         protected override bool ToggleVisibility { get { return true; } }
 
         public void Initialise(
-            IItemDetailsDisplayer itemDetailsDisplayer, 
+            IItemDetailsManager itemDetailsManager, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare, comparisonStateTracker);
+            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare, comparisonStateTracker);
 
-            _itemDetailsDisplayer = itemDetailsDisplayer;
+            _itemDetailsManager = itemDetailsManager;
             _itemFamilyToCompare = itemFamilyToCompare;
             _comparisonStateTracker = comparisonStateTracker;
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _itemFamilyToCompare.Value = _itemDetailsDisplayer.SelectedItemFamily;
+            _itemFamilyToCompare.Value = _itemDetailsManager.SelectedItemFamily;
         }
     }
 }

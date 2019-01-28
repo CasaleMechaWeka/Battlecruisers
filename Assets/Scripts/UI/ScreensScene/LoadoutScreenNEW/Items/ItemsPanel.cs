@@ -9,15 +9,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public ItemType itemType;
         public ItemType ItemType { get { return itemType; } }
 
-        public void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public void Initialise(IItemDetailsManager itemDetailsManager, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
 
             ItemButton[] buttons = GetComponentsInChildren<ItemButton>(includeInactive: true);
 
             foreach (ItemButton button in buttons)
             {
-                button.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
+                button.Initialise(itemDetailsManager, itemFamilyToCompare);
             }
         }
     }

@@ -40,11 +40,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public event EventHandler PotentialMatchChange;
 
         public void Initialise(
-            IItemDetailsDisplayer itemDetailsDisplayer, 
+            IItemDetailsManager itemDetailsManager, 
             ItemType defaultItemTypeToShow,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
 
             _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                panel.Initialise(itemDetailsDisplayer, itemFamilyToCompare);
+                panel.Initialise(itemDetailsManager, itemFamilyToCompare);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();
 

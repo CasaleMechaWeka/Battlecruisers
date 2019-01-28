@@ -9,14 +9,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     public abstract class ItemButton : MonoBehaviour, IPointerClickHandler
     {
-        protected IItemDetailsDisplayer _itemDetailsDisplayer;
+        protected IItemDetailsManager _itemDetailsManager;
         protected IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
 
-        public virtual void Initialise(IItemDetailsDisplayer itemDetailsDisplayer, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public virtual void Initialise(IItemDetailsManager itemDetailsManager, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            Helper.AssertIsNotNull(itemDetailsDisplayer, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
 
-            _itemDetailsDisplayer = itemDetailsDisplayer;
+            _itemDetailsManager = itemDetailsManager;
             _itemFamilyToCompare = itemFamilyToCompare;
         }
 

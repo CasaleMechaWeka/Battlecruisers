@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
     // FELIX  Test :)
-    public class ItemDetailsDisplayer : IItemDetailsDisplayer
+    public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IItemFamilyDetailsDisplayer<IBuilding> _buildingDetails;
         private readonly IItemFamilyDetailsDisplayer<IUnit> _unitDetails;
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         public event EventHandler NumOfDetailsShownChanged;
 
-        public ItemDetailsDisplayer(
+        public ItemDetailsManager(
             IItemFamilyDetailsDisplayer<IBuilding> buildingDetails,
             IItemFamilyDetailsDisplayer<IUnit> unitDetails,
             IItemFamilyDetailsDisplayer<ICruiser> cruiserDetails)
