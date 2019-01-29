@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         private IItemDetailsManager _itemDetailsManager;
-        private ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private IComparingItemFamilyTracker _comparingFamilyTracker;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -55,18 +55,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
 
-            _itemFamilyToCompare = new SettableBroadcastingProperty<ItemFamily?>(initialValue: null);
-            IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
+            _comparingFamilyTracker = new ComparingItemFamilyTracker();
+            IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
 
-            itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _itemFamilyToCompare, comparisonStateTracker);
+            itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _itemFamilyToCompare);
+            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
-            categoryButtonsPanel.Initialise(itemPanels, _itemFamilyToCompare);
+            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily);
 
             ShowPlayerHull();
         }
@@ -85,7 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         public void Cancel()
         {
-            _itemFamilyToCompare.Value = null;
+            _comparingFamilyTracker.SetComparingFamily(null);
             _itemDetailsManager.HideDetails();
             _screensSceneGod.GoToHomeScreen();
         }

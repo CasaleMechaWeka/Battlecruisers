@@ -8,13 +8,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons
 {
     public class ComparisonStateTracker : IComparisonStateTracker
     {
-        private readonly ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private readonly IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private readonly IItemDetailsManager _itemDetailsManager;
 
         private readonly ISettableBroadcastingProperty<ComparisonState> _state;
         public IBroadcastingProperty<ComparisonState> State { get; private set; }
 
-        public ComparisonStateTracker(ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
+        public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
         {
             Helper.AssertIsNotNull(itemFamilyToCompare, itemDetailsManager);
             

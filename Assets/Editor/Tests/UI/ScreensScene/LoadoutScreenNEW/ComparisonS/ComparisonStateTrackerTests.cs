@@ -10,14 +10,14 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW.Comparisons
     public class ComparisonStateTrackerTests
     {
         private IComparisonStateTracker _stateTracker;
-        private ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IItemDetailsManager _itemDetailsManager;
         private int _stateChangedCounter;
 
         [SetUp]
         public void TestSetup()
         {
-            _itemFamilyToCompare = Substitute.For<ISettableBroadcastingProperty<ItemFamily?>>();
+            _itemFamilyToCompare = Substitute.For<IBroadcastingProperty<ItemFamily?>>();
             _itemFamilyToCompare.Value.Returns((ItemFamily?)null);
 
             _itemDetailsManager = Substitute.For<IItemDetailsManager>();

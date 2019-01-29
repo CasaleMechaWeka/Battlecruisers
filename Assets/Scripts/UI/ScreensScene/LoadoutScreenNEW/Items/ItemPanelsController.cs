@@ -1,6 +1,6 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,9 +42,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public void Initialise(
             IItemDetailsManager itemDetailsManager, 
             ItemType defaultItemTypeToShow,
-            ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+            IComparingItemFamilyTracker comparingFamiltyTracker)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
 
             _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                panel.Initialise(itemDetailsManager, itemFamilyToCompare);
+                panel.Initialise(itemDetailsManager, comparingFamiltyTracker);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();
 

@@ -1,7 +1,7 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -12,31 +12,31 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     public abstract class ItemButton : Togglable, IPointerClickHandler
     {
         protected IItemDetailsManager _itemDetailsManager;
-        protected ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        protected IComparingItemFamilyTracker _comparingFamiltyTracker;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
 
         public ItemFamily itemFamily;
 
-        public virtual void Initialise(IItemDetailsManager itemDetailsManager, ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public virtual void Initialise(IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
 
             _itemDetailsManager = itemDetailsManager;
-            _itemFamilyToCompare = itemFamilyToCompare;
+            _comparingFamiltyTracker = comparingFamiltyTracker;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
-            _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
+            _comparingFamiltyTracker.ComparingFamily.ValueChanged += _comparingFamiltyTracker_ValueChanged;
         }
 
-        private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
+        private void _comparingFamiltyTracker_ValueChanged(object sender, EventArgs e)
         {
             Enabled 
-                = _itemFamilyToCompare.Value == null
-                    || itemFamily == _itemFamilyToCompare.Value;
+                = _comparingFamiltyTracker.ComparingFamily.Value == null
+                    || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
         }
 
         public abstract void OnPointerClick(PointerEventData eventData);

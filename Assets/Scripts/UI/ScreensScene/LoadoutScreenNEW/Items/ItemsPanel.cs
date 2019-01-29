@@ -1,6 +1,6 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 {
@@ -9,15 +9,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public ItemType itemType;
         public ItemType ItemType { get { return itemType; } }
 
-        public void Initialise(IItemDetailsManager itemDetailsManager, ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public void Initialise(IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
 
             ItemButton[] buttons = GetComponentsInChildren<ItemButton>(includeInactive: true);
 
             foreach (ItemButton button in buttons)
             {
-                button.Initialise(itemDetailsManager, itemFamilyToCompare);
+                button.Initialise(itemDetailsManager, comparingFamiltyTracker);
             }
         }
     }

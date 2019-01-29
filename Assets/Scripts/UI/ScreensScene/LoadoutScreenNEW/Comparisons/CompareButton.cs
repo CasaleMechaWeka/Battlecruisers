@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
 using System;
 using UnityEngine.EventSystems;
 
@@ -10,22 +8,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons
     public class CompareButton : Togglable, IPointerClickHandler
     {
         private IItemDetailsManager _itemDetailsManager;
-        private ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private IComparingItemFamilyTracker _comparingFamilyTracker;
         private IComparisonStateTracker _comparisonStateTracker;
 
         protected override bool ToggleVisibility { get { return true; } }
 
         public void Initialise(
-            IItemDetailsManager itemDetailsManager, 
-            ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
+            IItemDetailsManager itemDetailsManager,
+            IComparingItemFamilyTracker comparingFamilyTracker,
             IComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare, comparisonStateTracker);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, comparisonStateTracker);
 
             _itemDetailsManager = itemDetailsManager;
-            _itemFamilyToCompare = itemFamilyToCompare;
+            _comparingFamilyTracker = comparingFamilyTracker;
             _comparisonStateTracker = comparisonStateTracker;
 
             _comparisonStateTracker.State.ValueChanged += State_ValueChanged;
@@ -38,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _itemFamilyToCompare.Value = _itemDetailsManager.SelectedItemFamily;
+            _comparingFamilyTracker.SetComparingFamily(_itemDetailsManager.SelectedItemFamily);
         }
     }
 }

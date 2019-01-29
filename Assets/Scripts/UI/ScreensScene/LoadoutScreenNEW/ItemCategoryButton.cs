@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     public class ItemCategoryButton : Togglable, IPointerClickHandler
     {
         private IItemPanelsController _itemPanels;
-        private ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private Image _selectedFeedback;
 
         public ItemType itemType;
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
 
-        public void Initialise(IItemPanelsController itemPanels, ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
             Helper.AssertIsNotNull(itemPanels, itemFamily);
 

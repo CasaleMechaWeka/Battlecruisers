@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
     public class CategoryButtonsPanel : MonoBehaviour
     {
-        public void Initialise(IItemPanelsController itemPanels, ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare);
 
