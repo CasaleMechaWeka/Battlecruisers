@@ -1,4 +1,4 @@
-﻿using System;
+﻿using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
@@ -9,11 +9,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         Comparing       // Two item details visible, no compare button
     }
 
-    // FELIX  IBroadcastingProperty, but no setter :/  Hmmmm
     public interface IComparisonStateTracker
     {
-        ComparisonState State { get; }
-
-        event EventHandler StateChanged;
+        IBroadcastingProperty<ComparisonState> State { get; }
     }
 }

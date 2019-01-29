@@ -28,12 +28,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _itemFamilyToCompare = itemFamilyToCompare;
             _comparisonStateTracker = comparisonStateTracker;
 
-            _comparisonStateTracker.StateChanged += _comparisonStateTracker_StateChanged;
+            _comparisonStateTracker.State.ValueChanged += State_ValueChanged;
         }
 
-        private void _comparisonStateTracker_StateChanged(object sender, EventArgs e)
+        private void State_ValueChanged(object sender, EventArgs e)
         {
-            Enabled = _comparisonStateTracker.State == ComparisonState.NotComparing;
+            Enabled = _comparisonStateTracker.State.Value == ComparisonState.NotComparing;
         }
 
         public void OnPointerClick(PointerEventData eventData)

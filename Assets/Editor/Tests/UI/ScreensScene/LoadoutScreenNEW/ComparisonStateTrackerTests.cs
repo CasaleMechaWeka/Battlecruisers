@@ -26,13 +26,13 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW
             _stateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
 
             _stateChangedCounter = 0;
-            _stateTracker.StateChanged += (sender, e) => _stateChangedCounter++;
+            _stateTracker.State.ValueChanged += (sender, e) => _stateChangedCounter++;
         }
 
         [Test]
         public void InitialState()
         {
-            Assert.AreEqual(ComparisonState.NotComparing, _stateTracker.State);
+            Assert.AreEqual(ComparisonState.NotComparing, _stateTracker.State.Value);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW
             _itemFamilyToCompare.ValueChanged += Raise.Event();
 
             Assert.AreEqual(1, _stateChangedCounter);
-            Assert.AreEqual(ComparisonState.ReadyToCompare, _stateTracker.State);
+            Assert.AreEqual(ComparisonState.ReadyToCompare, _stateTracker.State.Value);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW
             _itemDetailsManager.NumOfDetailsShownChanged += Raise.Event();
 
             Assert.AreEqual(1, _stateChangedCounter);
-            Assert.AreEqual(ComparisonState.Comparing, _stateTracker.State);
+            Assert.AreEqual(ComparisonState.Comparing, _stateTracker.State.Value);
         }
     }
 }

@@ -54,7 +54,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
 
-            // FELIX  Create class with a broadcasting property getter?
             _itemFamilyToCompare = new SettableBroadcastingProperty<ItemFamily?>();
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
 

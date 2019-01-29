@@ -11,25 +11,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private readonly ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private readonly IItemDetailsManager _itemDetailsManager;
 
-        private ComparisonState _state;
-        public ComparisonState State
-        {
-            get { return _state; }
-            private set
-            {
-                if (_state != value)
-                {
-                    _state = value;
-
-                    if (StateChanged != null)
-                    {
-                        StateChanged.Invoke(this, EventArgs.Empty);
-                    }
-                }
-            }
-        }
-
-        public event EventHandler StateChanged;
+        private readonly ISettableBroadcastingProperty<ComparisonState> _state;
+        public IBroadcastingProperty<ComparisonState> State { get; private set; }
 
         public ComparisonStateTracker(ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
         {
@@ -41,17 +24,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _itemDetailsManager = itemDetailsManager;
             _itemDetailsManager.NumOfDetailsShownChanged += _itemDetailsManager_NumOfDetailsShownChanged;
 
-            State = EvaluateState();
+            _state = new SettableBroadcastingProperty<ComparisonState>();
+            State = new BroadcastingProperty<ComparisonState>(_state);
+
+            _state.Value = EvaluateState();
         }
 
         private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
         {
-            State = EvaluateState();
+            _state.Value = EvaluateState();
         }
 
         private void _itemDetailsManager_NumOfDetailsShownChanged(object sender, EventArgs e)
         {
-            State = EvaluateState();
+            _state.Value = EvaluateState();
         }
 
         private ComparisonState EvaluateState()
