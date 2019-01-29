@@ -15,9 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             base.Initialise(itemDetailsManager, comparingFamiltyTracker);
 
             Assert.IsNotNull(building);
-
             building.Initialise();
-            building.Buildable.StaticInitialise();
         }
 
         public override void OnPointerClick(PointerEventData eventData)

@@ -44,7 +44,6 @@ namespace BattleCruisers.Utils.Fetchers
 		{
 			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
 			buildableWrapperPrefab.Initialise();
-			buildableWrapperPrefab.Buildable.StaticInitialise();
 			return buildableWrapperPrefab;
 		}
 
@@ -53,7 +52,6 @@ namespace BattleCruisers.Utils.Fetchers
 			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
 			buildableWrapper.gameObject.SetActive(true);
 			buildableWrapper.Initialise();
-			buildableWrapper.Buildable.StaticInitialise();
 			return buildableWrapper.Buildable;
 		}
 

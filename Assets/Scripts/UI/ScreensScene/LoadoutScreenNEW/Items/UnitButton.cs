@@ -15,9 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             base.Initialise(itemDetailsManager, comparingItemFamily);
 
             Assert.IsNotNull(unit);
-
             unit.Initialise();
-            unit.Buildable.StaticInitialise();
         }
 
         public override void OnPointerClick(PointerEventData eventData)

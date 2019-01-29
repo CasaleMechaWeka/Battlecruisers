@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables
 		{
             Buildable = gameObject.GetComponentInChildren<TBuildable>();
 			Assert.IsNotNull(Buildable);
+            Buildable.StaticInitialise();
 		}
 	}
 }

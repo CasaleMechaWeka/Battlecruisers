@@ -20,7 +20,6 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
 
             // Initialise prefab
 			unitPrefab.Initialise();
-            unitPrefab.Buildable.StaticInitialise();
 
 
             // Initialise air factory
