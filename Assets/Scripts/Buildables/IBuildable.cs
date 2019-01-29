@@ -47,7 +47,6 @@ namespace BattleCruisers.Buildables
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-        // FELIX  Should not be part of interface :/  Initialise as part of BuildableWrapper?
         void StaticInitialise();
 		void StartConstruction();
         void InitiateDelete();
