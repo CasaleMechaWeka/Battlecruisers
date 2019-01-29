@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils.Properties;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons
 {
     public enum ComparisonState
     {

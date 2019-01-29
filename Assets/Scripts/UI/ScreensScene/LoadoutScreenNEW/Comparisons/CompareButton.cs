@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Properties;
 using System;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons
 {
     public class CompareButton : Togglable, IPointerClickHandler
     {

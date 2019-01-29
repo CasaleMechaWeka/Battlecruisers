@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using System;
 
-namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons
 {
     public class ComparisonStateTracker : IComparisonStateTracker
     {

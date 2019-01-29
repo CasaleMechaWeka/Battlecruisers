@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;

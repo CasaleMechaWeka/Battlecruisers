@@ -1,11 +1,11 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils.Properties;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW
+namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW.Comparisons
 {
     public class ComparisonStateTrackerTests
     {
