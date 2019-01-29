@@ -1,10 +1,10 @@
-﻿using System;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
@@ -17,25 +17,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
         public ItemFamily? SelectedItemFamily { get; private set; }
 
-        private int _numOfDetailsShown;
-        public int NumOfDetailsShown
-        {
-            get { return _numOfDetailsShown; }
-            private set
-            {
-                if (_numOfDetailsShown != value)
-                {
-                    _numOfDetailsShown = value;
-
-                    if (NumOfDetailsShownChanged != null)
-                    {
-                        NumOfDetailsShownChanged.Invoke(this, EventArgs.Empty);
-                    }
-                }
-            }
-        }
-
-        public event EventHandler NumOfDetailsShownChanged;
+        private readonly ISettableBroadcastingProperty<int> _numOfDetailsShown;
+        public IBroadcastingProperty<int> NumOfDetailsShown { get; private set; }
 
         public ItemDetailsManager(
             IItemDetailsDisplayer<IBuilding> buildingDetails,
@@ -49,7 +32,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             _cruiserDetails = cruiserDetails;
 
             SelectedItemFamily = null;
-            _numOfDetailsShown = 0;
+
+            _numOfDetailsShown = new SettableBroadcastingProperty<int>(initialValue: 0);
+            NumOfDetailsShown = new BroadcastingProperty<int>(_numOfDetailsShown);
         }
 
         public void ShowDetails(IBuilding building)
@@ -76,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             HideDetails();
             SelectedItemFamily = itemFamily;
             itemDetails.SelectItem(item);
-            NumOfDetailsShown = 1;
+            _numOfDetailsShown.Value = 1;
         }
 
         public void CompareWithSelectedItem(IBuilding building)
@@ -102,7 +87,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             Assert.AreEqual(SelectedItemFamily, itemFamily);
 
             itemDetails.CompareWithSelectedItem(item);
-            NumOfDetailsShown = 2;
+            _numOfDetailsShown.Value = 2;
         }
 
         public void HideDetails()
@@ -110,7 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             _buildingDetails.HideDetails();
             _unitDetails.HideDetails();
             _cruiserDetails.HideDetails();
-            NumOfDetailsShown = 0;
+            _numOfDetailsShown.Value = 0;
         }
     }
 }

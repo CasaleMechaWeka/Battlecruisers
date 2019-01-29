@@ -2,16 +2,14 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
-using System;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
     public interface IItemDetailsManager
     {
         ItemFamily? SelectedItemFamily { get; }
-        int NumOfDetailsShown { get; }
-
-        event EventHandler NumOfDetailsShownChanged;
+        IBroadcastingProperty<int> NumOfDetailsShown { get; }
 
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);

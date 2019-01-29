@@ -25,5 +25,10 @@ namespace BattleCruisers.Utils.Properties
         }
 
         public event EventHandler ValueChanged;
+
+        public SettableBroadcastingProperty(T initialValue)
+        {
+            _value = initialValue;
+        }
     }
 }

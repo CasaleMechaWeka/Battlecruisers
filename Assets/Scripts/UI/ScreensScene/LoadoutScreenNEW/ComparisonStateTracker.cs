@@ -22,9 +22,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
 
             _itemDetailsManager = itemDetailsManager;
-            _itemDetailsManager.NumOfDetailsShownChanged += _itemDetailsManager_NumOfDetailsShownChanged;
+            _itemDetailsManager.NumOfDetailsShown.ValueChanged += _itemDetailsManager_NumOfDetailsShownChanged;
 
-            _state = new SettableBroadcastingProperty<ComparisonState>();
+            _state = new SettableBroadcastingProperty<ComparisonState>(initialValue: ComparisonState.NotComparing);
             State = new BroadcastingProperty<ComparisonState>(_state);
 
             _state.Value = EvaluateState();
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             {
                 return ComparisonState.ReadyToCompare;
             }
-            else if (_itemDetailsManager.NumOfDetailsShown == 2)
+            else if (_itemDetailsManager.NumOfDetailsShown.Value == 2)
             {
                 return ComparisonState.Comparing;
             }

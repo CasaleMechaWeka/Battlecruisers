@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
 
-            _itemFamilyToCompare = new SettableBroadcastingProperty<ItemFamily?>();
+            _itemFamilyToCompare = new SettableBroadcastingProperty<ItemFamily?>(initialValue: null);
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
 
             itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _itemFamilyToCompare, comparisonStateTracker);
