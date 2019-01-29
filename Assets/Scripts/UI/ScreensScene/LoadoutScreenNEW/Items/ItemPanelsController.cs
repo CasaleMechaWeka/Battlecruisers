@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public void Initialise(
             IItemDetailsManager itemDetailsManager, 
             ItemType defaultItemTypeToShow,
-            IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+            ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
             Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
 

@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         // Not part of GetComponents() due to circular dependency :)
         public void InitialiseComponents(
             IItemDetailsManager itemDetailsManager, 
-            IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
+            ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IComparisonStateTracker comparisonStateTracker)
         {
             Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare, comparisonStateTracker);

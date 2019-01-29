@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace BattleCruisers.Utils.Properties
 {
     // FELIX  Test :D
-    public class BroadcastingProperty<T> : IBroadcastingProperty<T>
+    public class SettableBroadcastingProperty<T> : ISettableBroadcastingProperty<T>
     {
         private T _value;
         public T Value

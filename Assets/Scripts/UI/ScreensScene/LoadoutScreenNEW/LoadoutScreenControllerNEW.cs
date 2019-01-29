@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         private IItemDetailsManager _itemDetailsManager;
-        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -54,7 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _itemDetailsManager = new ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
 
-            _itemFamilyToCompare = new BroadcastingProperty<ItemFamily?>();
+            // FELIX  Create class with a broadcasting property getter?
+            _itemFamilyToCompare = new SettableBroadcastingProperty<ItemFamily?>();
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);
 
             itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _itemFamilyToCompare, comparisonStateTracker);

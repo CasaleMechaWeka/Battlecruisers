@@ -12,14 +12,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     public abstract class ItemButton : Togglable, IPointerClickHandler
     {
         protected IItemDetailsManager _itemDetailsManager;
-        protected IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        protected ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
 
         public ItemFamily itemFamily;
 
-        public virtual void Initialise(IItemDetailsManager itemDetailsManager, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public virtual void Initialise(IItemDetailsManager itemDetailsManager, ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
             Helper.AssertIsNotNull(itemDetailsManager, itemFamilyToCompare);
 

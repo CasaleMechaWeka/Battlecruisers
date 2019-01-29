@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Utils.Properties
 {
-    public interface IBroadcastingProperty<T>
+    public interface ISettableBroadcastingProperty<T>
     {
         T Value { get; set; }
 

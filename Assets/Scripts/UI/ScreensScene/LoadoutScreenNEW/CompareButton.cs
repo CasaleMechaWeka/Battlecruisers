@@ -10,14 +10,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
     public class CompareButton : Togglable, IPointerClickHandler
     {
         private IItemDetailsManager _itemDetailsManager;
-        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private ISettableBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IComparisonStateTracker _comparisonStateTracker;
 
         protected override bool ToggleVisibility { get { return true; } }
 
         public void Initialise(
             IItemDetailsManager itemDetailsManager, 
-            IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
+            ISettableBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise();
