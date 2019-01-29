@@ -6,7 +6,6 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
-    // FELIX  Test :)
     public class ComparisonStateTracker : IComparisonStateTracker
     {
         private readonly IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
