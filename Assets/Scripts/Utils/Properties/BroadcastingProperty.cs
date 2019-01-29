@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Properties
 {
-    // FELIX  Test :D
     public class BroadcastingProperty<T> : IBroadcastingProperty<T>
     {
         private readonly ISettableBroadcastingProperty<T> _baseProperty;
