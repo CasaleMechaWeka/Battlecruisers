@@ -11,6 +11,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
     /// </summary>
     public enum PrefabKeyName
     {
+        // === Hulls ===
+        Hull_Trident,
+        Hull_Raptor,
+        Hull_Rockjaw,
+        Hull_Hammerhead,
+        Hull_Longbow,
+        Hull_Megalodon,
+        Hull_Eagle,
+        Hull_Bullshark,
+
         // === Buildings ===
         // Factories
         Building_AirFactory,
@@ -57,7 +67,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         Unit_ArchonBattleship,
     }
 
-    // FELIX  Support hulls :)
     // FELIX  Move to NEW loadout screen namespace :P
     public static class StaticPrefabKeyHelper
     {
@@ -75,6 +84,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             switch (keyType)
             {
+                case "Hull":
+                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Hulls), keyName);
+
                 case "Building":
                     return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Buildings), keyName);
 
