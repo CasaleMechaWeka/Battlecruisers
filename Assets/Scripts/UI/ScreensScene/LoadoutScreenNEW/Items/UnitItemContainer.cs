@@ -1,14 +1,16 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 {
     public class UnitItemContainer : ItemContainer
     {
-        public UnitKey unitKey;
+        public PrefabKeyName unitKeyName;
 
         protected override bool IsUnlocked(IGameModel gameModel)
         {
+            UnitKey unitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(unitKeyName);
             return gameModel.UnlockedUnits.Contains(unitKey);
         }
     }
