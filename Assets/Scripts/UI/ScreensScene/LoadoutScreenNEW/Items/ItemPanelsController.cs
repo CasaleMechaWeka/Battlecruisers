@@ -71,6 +71,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
             CurrentlyShownPanel = _typeToPanel[itemType];
         }
 
+        public IItemsPanel GetPanel(ItemType itemType)
+        {
+            Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
+            return _typeToPanel[itemType];
+        }
+
         public bool IsMatch(ItemType element)
         {
             return

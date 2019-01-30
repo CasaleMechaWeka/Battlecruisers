@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
             foreach (ItemContainer itemContainer in itemContainers)
             {
                 bool isItemUnlocked = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel);
-                HasUnlockedItem |= isItemUnlocked;
+                HasUnlockedItem = HasUnlockedItem || isItemUnlocked;
             }
         }
     }
