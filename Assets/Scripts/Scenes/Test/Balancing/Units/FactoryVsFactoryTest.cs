@@ -42,8 +42,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _deferrer = GetComponent<VariableDelayDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            IPrefabKey leftUnitKey = StaticPrefabKeyHelper.GetPrefabKey(leftUnitKeyName);
-            IPrefabKey rightUnitKey = StaticPrefabKeyHelper.GetPrefabKey(rightUnitKeyName);
+            IPrefabKey leftUnitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(leftUnitKeyName);
+            IPrefabKey rightUnitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(rightUnitKeyName);
 
             ShowScenarioDetails(leftUnitKey, rightUnitKey);
 

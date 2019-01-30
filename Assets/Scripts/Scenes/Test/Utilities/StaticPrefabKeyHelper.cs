@@ -57,11 +57,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
         Unit_ArchonBattleship,
     }
 
+    // FELIX  Support hulls :)
+    // FELIX  Move to NEW loadout screen namespace :P
     public static class StaticPrefabKeyHelper
     {
         private const char SEPARATOR = '_';
 
-        public static IPrefabKey GetPrefabKey(PrefabKeyName prefabKeyName)
+        public static TKey GetPrefabKey<TKey>(PrefabKeyName prefabKeyName) where TKey : IPrefabKey
         {
             string keyNameStr = prefabKeyName.ToString();
 
@@ -74,20 +76,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
             switch (keyType)
             {
                 case "Building":
-                    return GetPrefabKey(typeof(StaticPrefabKeys.Buildings), keyName);
+                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Buildings), keyName);
 
                 case "Unit":
-                    return GetPrefabKey(typeof(StaticPrefabKeys.Units), keyName);
+                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Units), keyName);
 
                 default:
                     throw new ArgumentException();
             }
         }
 
-        private static IPrefabKey GetPrefabKey(Type type, string keyName)
+        private static TKey GetPrefabKey<TKey>(Type type, string keyName) where TKey : IPrefabKey
         {
             return
-                (IPrefabKey)type
+                (TKey)type
                     .GetProperty(keyName)
                     .GetValue(obj: null, index: null);
         }

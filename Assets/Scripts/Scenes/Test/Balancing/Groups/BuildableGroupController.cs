@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             BuildableInitialisationArgs args,
             Vector2 spawnPosition)
         {
-            IPrefabKey buildableKey = StaticPrefabKeyHelper.GetPrefabKey(prefabKeyName);
+            IPrefabKey buildableKey = StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(prefabKeyName);
             return CreateGroup(buildableKey, prefabFactory, helper, args, spawnPosition);
         }
 

@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _completedUnits = new List<ITarget>();
 
             IPrefabKey gunshipKey = StaticPrefabKeys.Units.Gunship;
-            IPrefabKey shipKey = StaticPrefabKeyHelper.GetPrefabKey(shipPrefabKeyName);
+            IPrefabKey shipKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(shipPrefabKeyName);
 
             ShowScenarioDetails(shipKey, gunshipKey);
 
