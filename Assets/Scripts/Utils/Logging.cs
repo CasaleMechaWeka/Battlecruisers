@@ -42,6 +42,7 @@ namespace BattleCruisers.Utils
 		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
 
         // UI
+        public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
 		public const string UI_MANAGER = "UIManager";
 
@@ -128,6 +129,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
 
             // UI
+            tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
 

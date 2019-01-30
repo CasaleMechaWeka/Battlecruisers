@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -25,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         // Factories
         Building_AirFactory,
         Building_NavalFactory,
-        Building_EngineeringBay,
+        Building_DroneStation,
 
         // Tactical
         Building_ShieldGenerator,
@@ -100,6 +101,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private static TKey GetPrefabKey<TKey>(Type type, string keyName) where TKey : IPrefabKey
         {
+            Logging.Log(Tags.PREFAB_KEY_HELPER, "StaticPrefabKeyHelper.GetPrefabKey(): " + keyName);
+
             return
                 (TKey)type
                     .GetProperty(keyName)
