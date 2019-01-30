@@ -17,5 +17,6 @@
     public interface IItemsPanel : IPanel
     {
         ItemType ItemType { get; }
+        bool HasUnlockedItem { get; }
     }
 }

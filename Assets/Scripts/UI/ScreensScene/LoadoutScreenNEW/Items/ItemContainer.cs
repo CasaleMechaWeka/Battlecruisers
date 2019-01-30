@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
     /// </summary>
     public abstract class ItemContainer : MonoBehaviour
     {
-        public void Initialise(
+        public bool Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel)
@@ -34,6 +34,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
             bool isItemUnlocked = IsUnlocked(gameModel);
             lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
+
+            return isItemUnlocked;
         }
 
         protected abstract bool IsUnlocked(IGameModel gameModel);

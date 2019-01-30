@@ -10,6 +10,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public ItemType itemType;
         public ItemType ItemType { get { return itemType; } }
 
+        public bool HasUnlockedItem { get; private set; }
+
         public void Initialise(
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -19,9 +21,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 
             ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
 
+            HasUnlockedItem = false;
+
             foreach (ItemContainer itemContainer in itemContainers)
             {
-                itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel);
+                bool isItemUnlocked = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel);
+                HasUnlockedItem |= isItemUnlocked;
             }
         }
     }
