@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Models;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.LockedItems;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.Utils;
