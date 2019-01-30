@@ -1,10 +1,9 @@
-﻿using System;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Utils
 {
     /// <summary>
     /// To allow inspector to specify prefab keys.  Should be used to map to
@@ -68,7 +67,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         Unit_ArchonBattleship,
     }
 
-    // FELIX  Move to NEW loadout screen namespace :P
     public static class StaticPrefabKeyHelper
     {
         private const char SEPARATOR = '_';

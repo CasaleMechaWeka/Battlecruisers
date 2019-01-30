@@ -1,14 +1,15 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
     public abstract class BuildableGroupController : MonoBehaviour 
     {
-        public PrefabKeyName prefabKeyName;
+        public BCUtils.PrefabKeyName prefabKeyName;
         public int numOfBuildables;
         public float spacingMultiplier;
 
@@ -26,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             BuildableInitialisationArgs args,
             Vector2 spawnPosition)
         {
-            IPrefabKey buildableKey = StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(prefabKeyName);
+            IPrefabKey buildableKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(prefabKeyName);
             return CreateGroup(buildableKey, prefabFactory, helper, args, spawnPosition);
         }
 
