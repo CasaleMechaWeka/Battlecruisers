@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.Utils;
 using System;
@@ -42,7 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
         public void Initialise(
             IItemDetailsManager itemDetailsManager, 
             ItemType defaultItemTypeToShow,
-            IComparingItemFamilyTracker comparingFamiltyTracker)
+            IComparingItemFamilyTracker comparingFamiltyTracker,
+            IGameModel gameModel)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
 
@@ -52,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                panel.Initialise(itemDetailsManager, comparingFamiltyTracker);
+                panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();
 

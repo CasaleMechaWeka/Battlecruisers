@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker);
+            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
