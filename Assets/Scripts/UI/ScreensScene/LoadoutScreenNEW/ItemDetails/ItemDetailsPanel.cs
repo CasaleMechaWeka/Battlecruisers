@@ -59,6 +59,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, comparisonStateTracker);
 
             InitialiseDetails();
+
+            // FELIX  Initialise Compare button in LoadoutScreenControllerNEW => No need for 2 initialisatoin methods!!
             _compareButton.Initialise(itemDetailsManager, comparingFamilyTracker, comparisonStateTracker);
         }
 

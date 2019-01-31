@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
@@ -59,6 +60,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
 
             itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
+
+            SelectCruiserButton selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
+            Assert.IsNotNull(selectCruiserButton);
+            selectCruiserButton
+                .Initialise(
+                    cruiserDetails,
+                    comparisonStateTracker,
+                    new HullNamelToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
+                    _dataProvider.GameModel.PlayerLoadout.Hull);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);

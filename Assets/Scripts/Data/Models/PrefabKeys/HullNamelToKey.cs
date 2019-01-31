@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
+    // FELIX  Rename class :P
     public class HullNamelToKey : IHullNameToKey
     {
         private readonly IDictionary<string, HullKey> _hullNameToKey;

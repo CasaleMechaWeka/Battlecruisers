@@ -25,9 +25,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         public void Initialise(
             IItemDetailsDisplayer<ICruiser> cruiserDetails, 
             IComparisonStateTracker comparisonStateTracker,
-            IHullNameToKey hullNameToKey)
+            IHullNameToKey hullNameToKey,
+            HullKey playerLoadoutHull)
         {
-            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey);
+            base.Initialise();
+
+            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, playerLoadoutHull);
 
             _cruiserDetails = cruiserDetails;
             _cruiserDetails.SelectedItem.ValueChanged += SelectedCruiserChanged;
@@ -37,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _hullNameToKey = hullNameToKey;
 
-            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: null);
+            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: playerLoadoutHull);
             SelectedHull = new BroadcastingProperty<HullKey>(_selectedHull);
 
             Enabled = ShouldBeEnabled();
