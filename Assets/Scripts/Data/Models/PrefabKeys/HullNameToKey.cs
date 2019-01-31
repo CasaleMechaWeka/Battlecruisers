@@ -6,12 +6,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
-    // FELIX  Rename class :P
-    public class HullNamelToKey : IHullNameToKey
+    public class HullNameToKey : IHullNameToKey
     {
         private readonly IDictionary<string, HullKey> _hullNameToKey;
 
-        public HullNamelToKey(IList<HullKey> keys, IPrefabFactory prefabFactory)
+        public HullNameToKey(IList<HullKey> keys, IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(keys, prefabFactory);
 

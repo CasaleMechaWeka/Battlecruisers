@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
                 .Initialise(
                     cruiserDetails,
                     comparisonStateTracker,
-                    new HullNamelToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
+                    new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
                     _dataProvider.GameModel.PlayerLoadout.Hull);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
