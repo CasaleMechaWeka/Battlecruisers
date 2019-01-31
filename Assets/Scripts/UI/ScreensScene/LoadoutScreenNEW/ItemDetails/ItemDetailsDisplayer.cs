@@ -1,14 +1,18 @@
 ﻿using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
+    // FELIX  Update tests for broadcasting property :)
     public class ItemDetailsDisplayer<TItem> : IItemDetailsDisplayer<TItem> where TItem : class, IComparableItem
     {
         private readonly IComparableItemDetails<TItem> _leftDetails, _rightDetails;
-        private TItem _selectedItem;
+
+        private ISettableBroadcastingProperty<TItem> _selectedItem;
+        public IBroadcastingProperty<TItem> SelectedItem { get; private set; }
 
         public ItemDetailsDisplayer(IComparableItemDetails<TItem> leftDetails, IComparableItemDetails<TItem> rightDetails)
         {
@@ -16,7 +20,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
             _leftDetails = leftDetails;
             _rightDetails = rightDetails;
-            _selectedItem = null;
+
+            _selectedItem = new SettableBroadcastingProperty<TItem>(initialValue: null);
+            SelectedItem = new BroadcastingProperty<TItem>(_selectedItem);
         }
 
         public void SelectItem(TItem item)
@@ -24,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             Assert.IsNotNull(item);
 
             HideDetails();
-            _selectedItem = item;
+            _selectedItem.Value = item;
             _leftDetails.ShowItemDetails(item);
         }
 
@@ -33,15 +39,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
             Assert.IsNotNull(item);
             Assert.IsNotNull(_selectedItem);
 
-            _leftDetails.ShowItemDetails(_selectedItem, item);
-            _rightDetails.ShowItemDetails(item, _selectedItem);
+            _leftDetails.ShowItemDetails(_selectedItem.Value, item);
+            _rightDetails.ShowItemDetails(item, _selectedItem.Value);
         }
 
         public void HideDetails()
         {
             _leftDetails.Hide();
             _rightDetails.Hide();
-            _selectedItem = null;
+            _selectedItem.Value = null;
         }
     }
 }
