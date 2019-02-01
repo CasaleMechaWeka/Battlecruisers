@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 {
-    // FELIX  Create interface for Save button to consume :)
     public class SelectCruiserButton : Togglable, IPointerClickHandler
     {
         private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
