@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
@@ -21,6 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IPrefabFactory _prefabFactory;
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
+        private SelectCruiserButton _selectCruiserButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -60,9 +62,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
 
-            SelectCruiserButton selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
-            Assert.IsNotNull(selectCruiserButton);
-            selectCruiserButton
+            _selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
+            Assert.IsNotNull(_selectCruiserButton);
+            _selectCruiserButton
                 .Initialise(
                     cruiserDetails,
                     comparisonStateTracker,
@@ -71,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel, selectCruiserButton.SelectedHull);
+            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel, _selectCruiserButton.SelectedHull);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
@@ -88,7 +90,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
         public void Save()
         {
-            // FELIX  Save hull choice :)
+            ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            HullKey selectedHull = _selectCruiserButton.SelectedHull.Value;
+
+            if (!playerLoadout.Hull.Equals(selectedHull))
+            {
+                playerLoadout.Hull = selectedHull;
+                _dataProvider.SaveGame();
+            }
+
             Cancel();
         }
 
