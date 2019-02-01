@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 

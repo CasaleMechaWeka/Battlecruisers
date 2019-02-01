@@ -1,7 +1,8 @@
-﻿using System;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;

@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;

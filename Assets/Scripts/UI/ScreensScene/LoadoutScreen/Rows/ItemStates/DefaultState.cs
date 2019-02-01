@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.ItemStates
 {

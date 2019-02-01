@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows
 {

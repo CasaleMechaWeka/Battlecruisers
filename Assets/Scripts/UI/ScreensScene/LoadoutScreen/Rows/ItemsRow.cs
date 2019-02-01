@@ -2,6 +2,7 @@
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 

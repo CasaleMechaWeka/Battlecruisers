@@ -1,5 +1,6 @@
-﻿using System;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.States
 {

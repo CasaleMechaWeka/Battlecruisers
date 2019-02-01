@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails

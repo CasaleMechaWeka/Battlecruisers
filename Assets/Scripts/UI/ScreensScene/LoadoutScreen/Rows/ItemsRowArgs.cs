@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 

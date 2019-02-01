@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using UnityEngine;
 using UnityEngine.Assertions;
 

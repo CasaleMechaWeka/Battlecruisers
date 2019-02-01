@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows

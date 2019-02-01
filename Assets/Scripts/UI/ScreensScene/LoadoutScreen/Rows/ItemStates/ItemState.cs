@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Rows.UnlockedItems;
+﻿using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using UnityEngine;
 using UnityEngine.Assertions;
 
