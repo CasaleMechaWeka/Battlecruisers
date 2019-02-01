@@ -102,7 +102,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         public void Cancel()
         {
             _comparingFamilyTracker.SetComparingFamily(null);
-            _itemDetailsManager.HideDetails();
             _screensSceneGod.GoToHomeScreen();
         }
     }
