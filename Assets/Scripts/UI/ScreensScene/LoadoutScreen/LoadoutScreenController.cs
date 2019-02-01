@@ -21,7 +21,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
 
-        // FELIX  Remove IEnumerator and yields if load is super fast?  (Via Unity is super fast, but might be slower for real game.)
         public IEnumerator Initialise(
             IScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider,
