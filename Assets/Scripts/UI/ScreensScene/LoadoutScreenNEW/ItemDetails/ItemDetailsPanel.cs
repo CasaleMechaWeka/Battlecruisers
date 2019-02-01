@@ -3,75 +3,52 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
     public class ItemDetailsPanel : MonoBehaviour, IItemDetailsPanel
     {
-        private ComparableCruiserDetailsController _leftCruiserDetails, _rightCruiserDetails;
-        public IComparableItemDetails<ICruiser> LeftCruiserDetails { get { return _leftCruiserDetails; } }
-        public IComparableItemDetails<ICruiser> RightCruiserDetails { get { return _rightCruiserDetails; } }
+        public IComparableItemDetails<ICruiser> LeftCruiserDetails { get; private set; }
+        public IComparableItemDetails<ICruiser> RightCruiserDetails { get; private set; }
 
-        private ComparableBuildingDetailsController _leftBuildingDetails, _rightBuildingDetails;
-        public IComparableItemDetails<IBuilding> LeftBuildingDetails { get { return _leftBuildingDetails; } }
-        public IComparableItemDetails<IBuilding> RightBuildingDetails { get { return _rightBuildingDetails; } }
+        public IComparableItemDetails<IBuilding> LeftBuildingDetails { get; private set; }
+        public IComparableItemDetails<IBuilding> RightBuildingDetails { get; private set; }
 
-        private ComparableUnitDetailsController _leftUnitDetails, _rightUnitDetails;
-        public IComparableItemDetails<IUnit> LeftUnitDetails { get { return _leftUnitDetails; } }
-        public IComparableItemDetails<IUnit> RightUnitDetails { get { return _rightUnitDetails; } }
+        public IComparableItemDetails<IUnit> LeftUnitDetails { get; private set; }
+        public IComparableItemDetails<IUnit> RightUnitDetails { get; private set; }
 
         private CompareButton _compareButton;
 
-        public void FindComponents()
-        {
-            GetDetails();
-
-            _compareButton = GetComponentInChildren<CompareButton>();
-            Assert.IsNotNull(_compareButton);
-        }
-
-        private void GetDetails()
+        public void Initialise()
         {
             // Cruisers
-            _leftCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/LeftDetails");
-            _rightCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/RightDetails");
+            ComparableCruiserDetailsController leftCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/LeftDetails");
+            leftCruiserDetails.Initialise();
+            LeftCruiserDetails = leftCruiserDetails;
+
+            ComparableCruiserDetailsController rightCruiserDetails = transform.FindNamedComponent<ComparableCruiserDetailsController>("HullDetailsPanel/RightDetails");
+            rightCruiserDetails.Initialise();
+            RightCruiserDetails = rightCruiserDetails;
 
             // Buildings
-            _leftBuildingDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("BuildingDetailsPanel/LeftDetails");
-            _rightBuildingDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("BuildingDetailsPanel/RightDetails");
+            ComparableBuildingDetailsController leftBuildingDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("BuildingDetailsPanel/LeftDetails");
+            leftBuildingDetails.Initialise();
+            LeftBuildingDetails = leftBuildingDetails;
+
+            ComparableBuildingDetailsController rightBuildingDetails = transform.FindNamedComponent<ComparableBuildingDetailsController>("BuildingDetailsPanel/RightDetails");
+            rightBuildingDetails.Initialise();
+            RightBuildingDetails = rightBuildingDetails;
 
             // Units
-            _leftUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/LeftDetails");
-            _rightUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/RightDetails");
-        }
+            ComparableUnitDetailsController leftUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/LeftDetails");
+            leftUnitDetails.Initialise();
+            LeftUnitDetails = leftUnitDetails;
 
-        // Not part of GetComponents() due to circular dependency :)
-        public void InitialiseComponents(
-            IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamilyTracker,
-            IComparisonStateTracker comparisonStateTracker)
-        {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, comparisonStateTracker);
-
-            InitialiseDetails();
-
-            // FELIX  Initialise Compare button in LoadoutScreenControllerNEW => No need for 2 initialisatoin methods!!
-            _compareButton.Initialise(itemDetailsManager, comparingFamilyTracker, comparisonStateTracker);
-        }
-
-        private void InitialiseDetails()
-        {
-            _leftCruiserDetails.Initialise();
-            _rightCruiserDetails.Initialise();
-            _leftBuildingDetails.Initialise();
-            _rightBuildingDetails.Initialise();
-            _leftUnitDetails.Initialise();
-            _rightUnitDetails.Initialise();
+            ComparableUnitDetailsController rightUnitDetails = transform.FindNamedComponent<ComparableUnitDetailsController>("UnitDetailsPanel/RightDetails");
+            rightUnitDetails.Initialise();
+            RightUnitDetails = rightUnitDetails;
         }
     }
 }

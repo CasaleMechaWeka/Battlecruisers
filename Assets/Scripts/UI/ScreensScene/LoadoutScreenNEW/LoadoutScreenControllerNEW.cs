@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
-            itemDetailsPanel.FindComponents();
+            itemDetailsPanel.Initialise();
 
             IItemDetailsDisplayer<IBuilding> buildingDetails
                 = new ItemDetailsDisplayer<IBuilding>(
@@ -59,7 +59,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             _comparingFamilyTracker = new ComparingItemFamilyTracker();
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
 
-            itemDetailsPanel.InitialiseComponents(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
+            CompareButton compareButton = GetComponentInChildren<CompareButton>();
+            Assert.IsNotNull(compareButton);
+            compareButton.Initialise(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
 
             SelectCruiserButton selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
             Assert.IsNotNull(selectCruiserButton);
