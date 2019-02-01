@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -19,23 +21,33 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items
     {
         public bool Initialise(
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamiltyTracker,
-            IGameModel gameModel)
+            IComparingItemFamilyTracker comparingFamilyTracker,
+            IGameModel gameModel,
+            IBroadcastingProperty<HullKey> selectedHull)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull);
 
             LockedItem lockedItem = GetComponentInChildren<LockedItem>(includeInactive: true);
             Assert.IsNotNull(lockedItem);
 
-            ItemButton itemButton = GetComponentInChildren<ItemButton>(includeInactive: true);
-            Assert.IsNotNull(itemButton);
-            itemButton.Initialise(itemDetailsManager, comparingFamiltyTracker);
+            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull);
 
             bool isItemUnlocked = IsUnlocked(gameModel);
             lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
 
             return isItemUnlocked;
+        }
+
+        protected virtual ItemButton InitialiseItemButton(
+            IItemDetailsManager itemDetailsManager, 
+            IComparingItemFamilyTracker comparingFamilyTracker,
+            IBroadcastingProperty<HullKey> selectedHull)
+        {
+            ItemButton itemButton = GetComponentInChildren<ItemButton>(includeInactive: true);
+            Assert.IsNotNull(itemButton);
+            itemButton.Initialise(itemDetailsManager, comparingFamilyTracker);
+            return itemButton;
         }
 
         protected abstract bool IsUnlocked(IGameModel gameModel);
