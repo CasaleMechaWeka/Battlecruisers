@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 {
-    // FELIX  Update tests for broadcasting property :)
     public class ItemDetailsDisplayer<TItem> : IItemDetailsDisplayer<TItem> where TItem : class, IComparableItem
     {
         private readonly IComparableItemDetails<TItem> _leftDetails, _rightDetails;
@@ -37,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         public void CompareWithSelectedItem(TItem item)
         {
             Assert.IsNotNull(item);
-            Assert.IsNotNull(_selectedItem);
+            Assert.IsNotNull(_selectedItem.Value);
 
             _leftDetails.ShowItemDetails(_selectedItem.Value, item);
             _rightDetails.ShowItemDetails(item, _selectedItem.Value);

@@ -34,6 +34,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
 
             ReceivedHideDetails();
             _leftDetails.Received().ShowItemDetails(_building1);
+            Assert.AreSame(_building1, _displayer.SelectedItem.Value);
         }
 
         [Test]
@@ -58,6 +59,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreenNEW.ItemDetails
         {
             _displayer.HideDetails();
             ReceivedHideDetails();
+            Assert.IsNull(_displayer.SelectedItem.Value);
         }
 
         private void ReceivedHideDetails()
