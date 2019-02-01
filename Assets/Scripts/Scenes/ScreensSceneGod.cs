@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -31,13 +30,12 @@ namespace BattleCruisers.Scenes
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
-		public LoadoutScreenController loadoutScreen;
-        public LoadoutScreenControllerNEW loadoutScreenNEW;
+		public LoadoutScreenControllerNEW loadoutScreen;
         public SettingsScreenController settingsScreen;
 
 		void Start()
 		{
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, loadoutScreenNEW, settingsScreen);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
 
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -63,7 +61,6 @@ namespace BattleCruisers.Scenes
             _musicPlayer.PlayScreensSceneMusic();
             homeScreen.Initialise(this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(this, _dataProvider.SettingsManager);
-            loadoutScreenNEW.Initialise(this, _dataProvider, _prefabFactory);
 
 
             if (_applicationModel.ShowPostBattleScreen)
@@ -82,7 +79,6 @@ namespace BattleCruisers.Scenes
             //GoToSettingsScreen();
             //GoToLevelsScreen();
             //GoToLoadoutScreen();
-            GoToLoadoutScreenNEW();
         }
         
         private void GoToPostBattleScreen()
@@ -135,16 +131,10 @@ namespace BattleCruisers.Scenes
 			GoToScreen(homeScreen);
 		}
 
-        public void GoToLoadoutScreenNEW()
-        {
-            GoToScreen(loadoutScreenNEW);
-        }
-
-        // FELIX  Remove :)
 		public void GoToLoadoutScreen()
 		{
             StartCoroutine(GotToLoadoutScreenAsync());
-		}
+        }
 
         private IEnumerator GotToLoadoutScreenAsync()
         {

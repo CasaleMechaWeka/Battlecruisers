@@ -10,6 +10,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Items;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System.Collections;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
@@ -23,7 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
 
-        public void Initialise(
+        // FELIX  Remove IEnumerator and yields if load is super fast?  (Via Unity is super fast, but might be slower for real game.)
+        public IEnumerator Initialise(
             IScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
@@ -34,6 +36,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
+
+            yield return null;
 
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
@@ -62,6 +66,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreenNEW
             CompareButton compareButton = GetComponentInChildren<CompareButton>();
             Assert.IsNotNull(compareButton);
             compareButton.Initialise(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
+
+            yield return null;
 
             SelectCruiserButton selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
             Assert.IsNotNull(selectCruiserButton);
