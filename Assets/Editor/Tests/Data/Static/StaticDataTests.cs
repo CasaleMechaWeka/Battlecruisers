@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Data.Static
         [Test]
         public void Levels()
         {
-            Assert.AreEqual(21, _staticData.Levels.Count);
+            Assert.AreEqual(28, _staticData.Levels.Count);
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace BattleCruisers.Tests.Data.Static
         [Test]
         public void GetLevelLoot_TooLargeLevelNum_Throws()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.GetLevelLoot(levelCompleted: 22));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.GetLevelLoot(levelCompleted: 29));
         }
 
         [Test]
