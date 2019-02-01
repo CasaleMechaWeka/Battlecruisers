@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Commands;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using System;
 using System.Collections.ObjectModel;
 

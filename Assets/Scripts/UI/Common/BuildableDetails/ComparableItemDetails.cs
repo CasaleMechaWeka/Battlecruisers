@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Common.BuildableDetails

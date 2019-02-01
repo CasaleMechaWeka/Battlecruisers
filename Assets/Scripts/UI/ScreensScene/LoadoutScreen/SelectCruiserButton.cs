@@ -1,0 +1,78 @@
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
+using System;
+using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+{
+    public class SelectCruiserButton : Togglable, IPointerClickHandler
+    {
+        private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
+        private IComparisonStateTracker _comparisonStateTracker;
+        private IHullNameToKey _hullNameToKey;
+
+        protected override bool ToggleVisibility { get { return true; } }
+
+        private ISettableBroadcastingProperty<HullKey> _selectedHull;
+        public IBroadcastingProperty<HullKey> SelectedHull { get; private set; }
+
+        public void Initialise(
+            IItemDetailsDisplayer<ICruiser> cruiserDetails, 
+            IComparisonStateTracker comparisonStateTracker,
+            IHullNameToKey hullNameToKey,
+            HullKey playerLoadoutHull)
+        {
+            base.Initialise();
+
+            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, playerLoadoutHull);
+
+            _cruiserDetails = cruiserDetails;
+            _cruiserDetails.SelectedItem.ValueChanged += SelectedCruiserChanged;
+
+            _comparisonStateTracker = comparisonStateTracker;
+            _comparisonStateTracker.State.ValueChanged += ComparisonStateChanged;
+
+            _hullNameToKey = hullNameToKey;
+
+            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: playerLoadoutHull);
+            SelectedHull = new BroadcastingProperty<HullKey>(_selectedHull);
+
+            Enabled = ShouldBeEnabled();
+        }
+
+        private void SelectedCruiserChanged(object sender, EventArgs e)
+        {
+            Enabled = ShouldBeEnabled();
+        }
+
+        private void ComparisonStateChanged(object sender, EventArgs e)
+        {
+            Enabled = ShouldBeEnabled();
+        }
+
+        private bool ShouldBeEnabled()
+        {
+            return
+               _comparisonStateTracker.State.Value == ComparisonState.NotComparing
+               && _cruiserDetails.SelectedItem.Value != null
+               && !IsDisplayedCruiserSelected(_cruiserDetails.SelectedItem.Value);
+        }
+
+        private bool IsDisplayedCruiserSelected(ICruiser displayedCruiser)
+        {
+            return _hullNameToKey.GetKey(displayedCruiser.Name) == SelectedHull.Value;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
+            Assert.IsNotNull(displayedCruiser);
+            _selectedHull.Value = _hullNameToKey.GetKey(displayedCruiser.Name);
+        }
+    }
+}

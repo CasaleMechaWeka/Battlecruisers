@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;

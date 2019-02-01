@@ -4,7 +4,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
-		public LoadoutScreenControllerNEW loadoutScreen;
+		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
 
 		void Start()

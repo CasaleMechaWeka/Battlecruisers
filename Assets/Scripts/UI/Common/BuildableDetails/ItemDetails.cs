@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;

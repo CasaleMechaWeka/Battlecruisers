@@ -13,7 +13,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
-using BattleCruisers.UI.ScreensScene.LoadoutScreenNEW.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
