@@ -17,6 +17,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             }
         }
 
+        public Color Color
+        {
+            set
+            {
+                _enabledStar.color = value;
+                _disabledStar.color = value;
+            }
+        }
+
         public void Initialise()
         {
             _enabledStar = transform.FindNamedComponent<Image>("EnabledStar");

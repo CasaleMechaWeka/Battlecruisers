@@ -27,6 +27,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 		{
 			base.ShowResult(comparisonResult);
 			_rowValue.text = value;
+            _rowValue.color = comparisonResult.ForegroundColor;
 		}
 	}
 }
