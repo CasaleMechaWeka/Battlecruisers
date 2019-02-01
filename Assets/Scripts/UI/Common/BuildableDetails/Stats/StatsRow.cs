@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 
 		public void ShowResult(ComparisonResult comparisonResult)
 		{
-			_comparisonFeedbackBackground.color = comparisonResult.Color;
+			_comparisonFeedbackBackground.color = comparisonResult.BackgroundColor;
 		}
 	}
 }
