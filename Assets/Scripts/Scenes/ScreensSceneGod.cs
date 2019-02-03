@@ -3,6 +3,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
+using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
