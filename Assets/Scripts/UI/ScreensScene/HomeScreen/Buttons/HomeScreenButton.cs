@@ -2,7 +2,7 @@
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.UI.ScreensScene.HomeScreen
+namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 {
     public abstract class HomeScreenButton : MonoBehaviour, IPointerClickHandler
     {

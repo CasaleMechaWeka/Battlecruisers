@@ -1,6 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 
-namespace BattleCruisers.UI.ScreensScene.HomeScreen
+namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 {
     public class SettingsButton : HomeScreenButton
     {
