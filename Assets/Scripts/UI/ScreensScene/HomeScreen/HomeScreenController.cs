@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
-    public class HomeScreenController : ScreenController
+    public class HomeScreenController : ScreenController, IHomeScreen
 	{
 		private BattleResult _lastBattleResult;
 		private int _totalNumOfLevels;
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 			}
 		}
 
-		private void Continue()
+        public void Continue()
 		{
 			Assert.IsNotNull(_lastBattleResult);
 
@@ -78,30 +78,35 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 			_screensSceneGod.LoadLevel(nextLevelToPlay);
 		}
 
-		private void GoToLevelsScreen()
+        public void GoToLevelsScreen()
 		{
 			_screensSceneGod.GoToLevelsScreen();
 		}
 
-		private void GoToLoadoutScreen()
+        public void GoToLoadoutScreen()
 		{
 			_screensSceneGod.GoToLoadoutScreen();
 		}
 
-        private void GoToSettingsScreen()
+        public void GoToSettingsScreen()
         {
             _screensSceneGod.GoToSettingsScreen();
         }
 
-        private void StartTutorial()
+        public void StartTutorial()
         {
             ApplicationModelProvider.ApplicationModel.IsTutorial = true;
             _screensSceneGod.LoadLevel(levelNum: 1);
         }
 
-		private void Quit()
+        public void Quit()
 		{
 			Application.Quit();
 		}
-	}
+
+        public void StartLevel1()
+        {
+            _screensSceneGod.LoadLevel(levelNum: 1);
+        }
+    }
 }
