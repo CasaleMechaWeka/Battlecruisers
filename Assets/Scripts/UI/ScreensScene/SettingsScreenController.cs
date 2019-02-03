@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -13,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene
         private ISettingsManager _settingsManager;
         private IList<Difficulty> _difficulties;
         private Dropdown _difficultyDropdown;
-        private Slider _zoomSpeedSlider, _scrollSpeedSlider;
 
 		public void Initialise(IScreensSceneGod screensSceneGod, ISettingsManager settingsManager)
 		{
@@ -25,12 +23,6 @@ namespace BattleCruisers.UI.ScreensScene
             _difficultyDropdown = GetComponentInChildren<Dropdown>(includeInactive: true);
             Assert.IsNotNull(_difficultyDropdown);
 			SetupDifficultyDropdown();
-
-            _zoomSpeedSlider = transform.FindNamedComponent<Slider>("ZoomSpeedRow/Slider");
-			SetupZoomSpeedSlider();
-            
-			_scrollSpeedSlider = transform.FindNamedComponent<Slider>("ScrollSpeedRow/Slider");
-			SetupScrollSpeedSlider();
 		}
 
         private void SetupDifficultyDropdown()
@@ -58,27 +50,10 @@ namespace BattleCruisers.UI.ScreensScene
             _difficultyDropdown.value = currentIndex;
         }
 
-        private void SetupZoomSpeedSlider()
-        {
-            _zoomSpeedSlider.minValue = SettingsManager.MIN_ZOOM_SPEED;
-            _zoomSpeedSlider.maxValue = SettingsManager.MAX_ZOOM_SPEED;
-			_zoomSpeedSlider.value = _settingsManager.ZoomSpeed;
-        }
-
-		private void SetupScrollSpeedSlider()
-		{
-			_scrollSpeedSlider.minValue = SettingsManager.MIN_SCROLL_SPEED;
-			_scrollSpeedSlider.maxValue = SettingsManager.MAX_SCROLL_SPEED;
-			_scrollSpeedSlider.value = _settingsManager.ScrollSpeed;
-		}
-
         public void Save()
         {
             Assert.IsTrue(_difficultyDropdown.value < _difficulties.Count);
             _settingsManager.AIDifficulty = _difficulties[_difficultyDropdown.value];
-
-            _settingsManager.ZoomSpeed = _zoomSpeedSlider.value;
-            _settingsManager.ScrollSpeed = _scrollSpeedSlider.value;
 
             _settingsManager.Save();
 
