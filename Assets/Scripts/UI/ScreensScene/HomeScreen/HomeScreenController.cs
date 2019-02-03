@@ -21,48 +21,33 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
             Assert.IsNotNull(gameModel);
 
-            _firstTimePlayButton = transform.FindNamedComponent<Button>("FirstTimePlayButton");
-            _firstTimePlayButton.onClick.AddListener(StartTutorial);
+            HomeScreenLayout layout = GetLayout(gameModel);
+            layout.Initialise(this, gameModel);
+		}
 
-            _continueButton = transform.FindNamedComponent<Button>("ContinueButton");
-            _continueButton.onClick.AddListener(Continue);
+        private HomeScreenLayout GetLayout(IGameModel gameModel)
+        {
+            // TEMP  Force layouyts :)
+            //return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeLayout");
+            //return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeNonTutorial");
+            return transform.FindNamedComponent<HomeScreenLayout>("DefaultLayout");
 
-            _selectLevelButton = transform.FindNamedComponent<Button>("SelectLevelButton");
-            _selectLevelButton.onClick.AddListener(GoToLevelsScreen);
-
-            _loadoutButton = transform.FindNamedComponent<Button>("LoadoutButton");
-            _loadoutButton.onClick.AddListener(GoToLoadoutScreen);
-
-            _settingsButton = transform.FindNamedComponent<Button>("SettingsButton");
-            _settingsButton.onClick.AddListener(GoToSettingsScreen);
-
-            _tutorialButton = transform.FindNamedComponent<Button>("TutorialButton");
-            _tutorialButton.onClick.AddListener(StartTutorial);
-
-            _quitButton = transform.FindNamedComponent<Button>("QuitButton");
-            _quitButton.onClick.AddListener(Quit);
-
-            _lastBattleResult = gameModel.LastBattleResult;
-			_totalNumOfLevels = totalNumOfLevels;
-
-            if (gameModel.HasAttemptedTutorial)
+            if (!gameModel.HasAttemptedTutorial)
             {
-                _firstTimePlayButton.gameObject.SetActive(false);
+                // First time play
+                return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeLayout");
+            }
+            else if (_lastBattleResult == null)
+            {
+                // First time playing non-tutorial
+                return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeNonTutorial");
             }
             else
             {
-                _selectLevelButton.gameObject.SetActive(false);
-                _tutorialButton.gameObject.SetActive(false);
-                _loadoutButton.gameObject.SetActive(false);
-                _settingsButton.gameObject.SetActive(false);
+                // Normal play
+                return transform.FindNamedComponent<HomeScreenLayout>("DefaultLayout");
             }
-
-            // Player has never played a (non-tutorial) battle!
-			if (_lastBattleResult == null)
-			{
-				_continueButton.gameObject.SetActive(false);
-			}
-		}
+        }
 
         public void Continue()
 		{
