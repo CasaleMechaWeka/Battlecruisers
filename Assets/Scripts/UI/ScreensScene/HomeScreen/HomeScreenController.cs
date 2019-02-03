@@ -21,6 +21,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
             Assert.IsNotNull(gameModel);
 
+            _lastBattleResult = gameModel.LastBattleResult;
+            _totalNumOfLevels = totalNumOfLevels;
+
             HomeScreenLayout layout = GetLayout(gameModel);
             layout.Initialise(this, gameModel);
             layout.IsVisible = true;
