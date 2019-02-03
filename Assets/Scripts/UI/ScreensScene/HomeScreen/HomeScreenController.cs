@@ -23,6 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
             HomeScreenLayout layout = GetLayout(gameModel);
             layout.Initialise(this, gameModel);
+            layout.IsVisible = true;
 		}
 
         private HomeScreenLayout GetLayout(IGameModel gameModel)
@@ -30,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
             // TEMP  Force layouyts :)
             //return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeLayout");
             //return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeNonTutorial");
-            return transform.FindNamedComponent<HomeScreenLayout>("DefaultLayout");
+            //return transform.FindNamedComponent<HomeScreenLayout>("DefaultLayout");
 
             if (!gameModel.HasAttemptedTutorial)
             {
