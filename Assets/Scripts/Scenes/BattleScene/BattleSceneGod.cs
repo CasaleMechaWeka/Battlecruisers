@@ -63,7 +63,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
             // TEMP  Force  tutorial
-            applicationModel.IsTutorial = true;
+            //applicationModel.IsTutorial = true;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             _battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
