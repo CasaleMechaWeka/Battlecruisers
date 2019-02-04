@@ -23,19 +23,18 @@ namespace BattleCruisers.Scenes
         {
             if (!_isInitialised)
             {
-                MusicPlayer = CreateMusicPlayer();
-
                 LoadingScreenController loadingScreen = GetComponent<LoadingScreenController>();
                 Assert.IsNotNull(loadingScreen);
-                loadingScreen.Initialise(MusicPlayer);
+                loadingScreen.Initialise();
                 LoadingScreen = loadingScreen;
-
 
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
 
                 SceneNavigator = this;
+
+                MusicPlayer = CreateMusicPlayer();
 
                 // Game starts with the screens scene
                 GoToScene(SceneNames.SCREENS_SCENE);
