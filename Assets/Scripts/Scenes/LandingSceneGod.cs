@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
 
-        void Awake()
+        void Start()
         {
             if (!_isInitialised)
             {
