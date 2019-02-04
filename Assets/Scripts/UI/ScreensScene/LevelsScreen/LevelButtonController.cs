@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
+    // FELIX  Extend Togglable :P
+    // FELIX  Implement IPointerClickHandler instead of public Button field :)
     public class LevelButtonController : MonoBehaviour 
 	{
 		public Button button;
