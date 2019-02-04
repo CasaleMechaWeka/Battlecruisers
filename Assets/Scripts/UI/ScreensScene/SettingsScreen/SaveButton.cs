@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    // FELIX  Disable save button if there is nothing to save :)
-    // FELIX  Avoid duplicate code with CancelButton?
     public class SaveButton : Togglable, IPointerClickHandler
     {
         private IDifficultyDropdown _difficultyDropdown;
