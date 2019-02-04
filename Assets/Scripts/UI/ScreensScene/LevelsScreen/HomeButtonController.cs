@@ -1,16 +1,23 @@
 ﻿using BattleCruisers.Scenes;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    public class HomeButtonController : MonoBehaviour 
-	{
-		public Button button;
+    public class HomeButtonController : MonoBehaviour, IPointerClickHandler
+    {
+        private IScreensSceneGod _screensSceneGod;
 
 		public void Initialise(IScreensSceneGod screensSceneGod)
 		{
-			button.onClick.AddListener(() => screensSceneGod.GoToHomeScreen());
+            Assert.IsNotNull(screensSceneGod);
+            _screensSceneGod = screensSceneGod;
 		}
-	}
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            _screensSceneGod.GoToHomeScreen();
+        }
+    }
 }
