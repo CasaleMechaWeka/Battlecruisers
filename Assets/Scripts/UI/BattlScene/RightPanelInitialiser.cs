@@ -24,8 +24,8 @@ namespace BattleCruisers.UI.BattleScene
     /// </summary>
     public class RightPanelInitialiser : MonoBehaviour
     {
-        // Not using FindObjectOfType() because that ignores inactive objects
         public ModalMenuController modalMenu;
+        public MainMenuButtonController modalMainMenuButton;
 
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -43,6 +43,7 @@ namespace BattleCruisers.UI.BattleScene
         {
             Helper.AssertIsNotNull(
                 modalMenu, 
+                modalMainMenuButton,
                 applicationModel, 
                 uiManager, 
                 playerCruiser, 
@@ -55,7 +56,7 @@ namespace BattleCruisers.UI.BattleScene
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
             IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
-            SetupMainMenuButton(pauseGameManager, battleCompletionHandler);
+            SetupMainMenuButtons(pauseGameManager, battleCompletionHandler);
             SetupHelpButton(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
@@ -88,13 +89,15 @@ namespace BattleCruisers.UI.BattleScene
             return speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButton(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
+        private void SetupMainMenuButtons(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
         {
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
 
             MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);
             mainMenuButton.Initialise(mainMenuManager);
+
+            modalMainMenuButton.Initialise(mainMenuManager);
         }
 
         private void SetupHelpButton(BroadcastingFilter helpLabelsVisibilityFilter)
