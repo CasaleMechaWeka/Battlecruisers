@@ -1,4 +1,8 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
+using System;
+using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -7,17 +11,50 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     // FELIX  Avoid duplicate code with CancelButton?
     public class SaveButton : Togglable, IPointerClickHandler
     {
-        private ISettingsScreen _settingsScreen;
+        private IDifficultyDropdown _difficultyDropdown;
+        private ISettingsManager _settingsManager;
 
-        public void Initialise(ISettingsScreen settingsScreen)
+        private CanvasGroup _canvasGroup;
+        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+
+        public void Initialise(IDifficultyDropdown difficultyDropdown, ISettingsManager settingsManager)
         {
-            Assert.IsNotNull(settingsScreen);
-            _settingsScreen = settingsScreen;
+            Helper.AssertIsNotNull(difficultyDropdown, settingsManager);
+
+            _difficultyDropdown = difficultyDropdown;
+            _settingsManager = settingsManager;
+
+            _canvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(_canvasGroup);
+
+            _difficultyDropdown.DifficultyChanged += _difficultyDropdown_DifficultyChanged;
+
+            UpdateEnabledStatus();
+        }
+
+        private void _difficultyDropdown_DifficultyChanged(object sender, EventArgs e)
+        {
+            UpdateEnabledStatus();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _settingsScreen.Save();
+            Assert.IsTrue(ShouldBeEnabled());
+
+            _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
+            _settingsManager.Save();
+
+            UpdateEnabledStatus();
+        }
+
+        private void UpdateEnabledStatus()
+        {
+            Enabled = ShouldBeEnabled();
+        }
+
+        private bool ShouldBeEnabled()
+        {
+            return _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty;
         }
     }
 }
