@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene
+namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class SettingsScreenController : ScreenController
+    public class SettingsScreenController : ScreenController, ISettingsScreen
     {
         private ISettingsManager _settingsManager;
         private IList<Difficulty> _difficulties;
@@ -19,6 +19,14 @@ namespace BattleCruisers.UI.ScreensScene
 
             Assert.IsNotNull(settingsManager);
             _settingsManager = settingsManager;
+
+            SaveButton saveButton = GetComponentInChildren<SaveButton>();
+            Assert.IsNotNull(saveButton);
+            saveButton.Initialise(this);
+
+            CancelButton cancelButton = GetComponentInChildren<CancelButton>();
+            Assert.IsNotNull(cancelButton);
+            cancelButton.Initialise(this);
 
             _difficultyDropdown = GetComponentInChildren<Dropdown>(includeInactive: true);
             Assert.IsNotNull(_difficultyDropdown);

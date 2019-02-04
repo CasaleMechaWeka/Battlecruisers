@@ -7,6 +7,7 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
+using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
