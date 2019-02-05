@@ -135,31 +135,36 @@ namespace BattleCruisers.Scenes
 
 		public void GoToLoadoutScreen()
 		{
-            StartCoroutine(GotToLoadoutScreenAsync());
-        }
-
-        private IEnumerator GotToLoadoutScreenAsync()
-        {
-            // Laziliy initalise, because post battle screen can change the loadout
-            if (!loadoutScreen.IsInitialised)
+            if (loadoutScreen.IsInitialised)
             {
-                // TEMP  For starting ScreensScene without previous LandingScene.
-                // So I can test the ScreensScene without having to go through
-                // the LandingScene each time :P
-                // => Should be able to remove if els, and just keep if content
-                IEnumerator initialiseLoadout = loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
-
+                GoToScreen(loadoutScreen);
+            }
+            else
+            {
+                // Laziliy initalise, because post battle screen can change the loadout
                 if (LandingSceneGod.LoadingScreen != null)
                 {
-                    yield return StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(initialiseLoadout));
+                    StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(GoToLoadoutScreenAsync()));
                 }
                 else
                 {
-                    yield return StartCoroutine(initialiseLoadout);
+                    // TEMP  For starting ScreensScene without previous LandingScene.
+                    // So I can test the ScreensScene without having to go through
+                    // the LandingScene each time :P
+                    // => Should be able to remove if else, and just keep if content
+                    StartCoroutine(GoToLoadoutScreenAsync());
                 }
             }
+        }
 
+        private IEnumerator GoToLoadoutScreenAsync()
+        {
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "GoToLoadoutScreenAsync()  START");
+
+            yield return loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
             yield return GoToScreenAsync(loadoutScreen);
+
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "GoToLoadoutScreenAsync()  END");
         }
 
         public void GoToSettingsScreen()
@@ -185,7 +190,9 @@ namespace BattleCruisers.Scenes
 
 		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
-			Assert.AreNotEqual(_currentScreen, destinationScreen);
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "GoToScreen()  START  current: " + _currentScreen + "  destination: " + destinationScreen);
+
+            Assert.AreNotEqual(_currentScreen, destinationScreen);
 
 			if (_currentScreen != null)
 			{

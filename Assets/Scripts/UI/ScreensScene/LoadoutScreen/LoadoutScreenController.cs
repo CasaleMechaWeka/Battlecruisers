@@ -26,6 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
         {
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "LoadoutScreenController.Initialise()  START");
+
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
@@ -87,6 +89,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             saveButton.Initialise(_dataProvider, selectCruiserButton.SelectedHull);
 
             ShowPlayerHull();
+
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "LoadoutScreenController.Initialise()  END");
         }
 
         private void ShowPlayerHull()
