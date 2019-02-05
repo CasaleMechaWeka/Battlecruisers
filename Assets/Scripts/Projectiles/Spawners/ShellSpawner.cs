@@ -10,8 +10,6 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
         private IProjectileSpawnerSoundPlayer _soundPlayer;
 
-        public bool showTracker;
-
         public ProjectileController shellPrefab;
 		protected override ProjectileController ProjectilePrefab { get { return shellPrefab; } }
 
@@ -33,10 +31,7 @@ namespace BattleCruisers.Projectiles.Spawners
             shell.Initialise(_projectileStats, shellVelocity, _targetFilter, _factoryProvider, _parent);
             _soundPlayer.OnProjectileFired();
 
-            if (showTracker)
-            {
-                _factoryProvider.TrackerFactory.CreateTracker(shell);
-            }
+            base.ShowTrackerIfNeeded(shell);
 		}
 	}
 }

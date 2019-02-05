@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Projectiles.Trackers;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
@@ -7,6 +8,8 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
 		protected ITargetFilter _targetFilter;
 
+        public bool showTracker;
+
         public void Initialise(IProjectileSpawnerArgs args, ITargetFilter targetFilter)
 		{
             base.Initialise(args);
@@ -14,5 +17,13 @@ namespace BattleCruisers.Projectiles.Spawners
             Assert.IsNotNull(targetFilter);
 			_targetFilter = targetFilter;
 		}
+
+        protected void ShowTrackerIfNeeded(ITrackable shell)
+        {
+            if (showTracker)
+            {
+                _factoryProvider.TrackerFactory.CreateTracker(shell);
+            }
+        }
 	}
 }
