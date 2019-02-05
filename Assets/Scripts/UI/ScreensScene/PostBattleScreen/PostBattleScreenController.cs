@@ -22,9 +22,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		public GameObject unlockedItemSection;
 		public ButtonController nextButton;
         public GameObject postBattleButtonsPanel, postTutorialButtonsPanel;
-        public GameObject postTutorialMessage, completedGameMessage;
+        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage;
 
-		private const string VICTORY_TITLE = "Sweet!";
+		private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
 
         private BattleResult BattleResult { get { return _dataProvider.GameModel.LastBattleResult; } }
@@ -37,7 +37,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(title, unlockedItemSection, nextButton, postBattleButtonsPanel, postTutorialButtonsPanel, postTutorialMessage, completedGameMessage);
+            Helper.AssertIsNotNull(
+                title, 
+                unlockedItemSection, 
+                nextButton, 
+                postBattleButtonsPanel, 
+                postTutorialButtonsPanel, 
+                postTutorialMessage, 
+                completedGameMessage, 
+                defeatMessage,
+                victoryNoLootMessage);
             Helper.AssertIsNotNull(dataProvider, prefabFactory, musicPlayer);
 
             _dataProvider = dataProvider;
@@ -73,6 +82,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         // Completed last level for the frist time
                         completedGameMessage.SetActive(true);
                     }
+                    else
+                    {
+                        victoryNoLootMessage.SetActive(true);
+                    }
 
                     CompletedLevel level = new CompletedLevel(levelNum: BattleResult.LevelNum, hardestDifficulty: _dataProvider.SettingsManager.AIDifficulty);
                     _dataProvider.GameModel.AddCompletedLevel(level);
@@ -81,6 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 else
                 {
                     title.text = LOSS_TITLE;
+                    defeatMessage.SetActive(true);
                 }
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
