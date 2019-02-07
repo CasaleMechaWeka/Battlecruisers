@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class TeslaCoil : TurretController
+    public class TeslaCoil : DefenseTurret
 	{
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.TeslaCoil; } }
 

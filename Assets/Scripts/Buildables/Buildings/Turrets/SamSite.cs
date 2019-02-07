@@ -3,7 +3,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class SamSite : TurretController
+    public class SamSite : DefenseTurret
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.SamSite; } }
     }

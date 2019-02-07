@@ -3,7 +3,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class Railgun : TurretController
+    public class Railgun : OffenseTurret
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.Railgun; } }
     }
