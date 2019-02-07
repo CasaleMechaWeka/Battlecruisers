@@ -135,7 +135,7 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection = Direction.Left;
             FogStrength fogStrength = FogStrength.Strong;
 
-            IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
+            IDroneNumFeedbackFactory feedbackFactory = new DummyDroneNumFeedbackFactory();
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new AIBuildingDoubleClickHandler(userChosenTargetHelper);
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
 
