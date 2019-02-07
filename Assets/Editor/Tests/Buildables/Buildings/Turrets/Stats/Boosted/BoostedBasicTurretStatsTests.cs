@@ -60,7 +60,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         private IBasicTurretStats CreateBoostedStats(bool hasLocalBoosters)
         {
             IObservableCollection<IBoostProvider> localBoosters = hasLocalBoosters ? _localBoostProviders : null;
-            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _boostFactory, _globalBoostProviders, localBoosters);
+            IObservableCollection<IBoostProvider> fireRateGlobalBoostProviders = new DummyObservableCollection<IBoostProvider>();
+            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _boostFactory, _globalBoostProviders, localBoosters, fireRateGlobalBoostProviders);
         }
     }
 }

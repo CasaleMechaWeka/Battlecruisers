@@ -480,6 +480,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
                     parent ?? Substitute.For<ITarget>(),
+                    new DummyObservableCollection<IBoostProvider>(),
                     firingSound ?? SoundKeys.Firing.BigCannon,
                     localBoostProviders);
         }

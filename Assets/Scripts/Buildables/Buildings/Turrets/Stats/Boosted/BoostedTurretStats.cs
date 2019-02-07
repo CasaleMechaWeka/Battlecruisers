@@ -21,8 +21,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
             ITurretStats baseStats,
             IBoostFactory boostFactory,
             IGlobalBoostProviders globalBoostProviders,
-            IObservableCollection<IBoostProvider> localBoostProviders = null)
-            : base(baseStats, boostFactory, globalBoostProviders, localBoostProviders)
+            IObservableCollection<IBoostProvider> localBoostProviders,
+            IObservableCollection<IBoostProvider> globalFireRateBoostProviders)
+            : base(baseStats, boostFactory, globalBoostProviders, localBoostProviders, globalFireRateBoostProviders)
         {
             _accuracyBoostable = boostFactory.CreateBoostable();
             _accuracyBoostableGroup = boostFactory.CreateBoostableGroup();

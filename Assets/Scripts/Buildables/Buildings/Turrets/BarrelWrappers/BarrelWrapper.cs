@@ -102,11 +102,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public void Initialise(
             ITarget parent, 
             IFactoryProvider factoryProvider, 
-            Faction enemyFaction, 
+            Faction enemyFaction,
+            IObservableCollection<IBoostProvider> globalFireRateBoostProviders,
             ISoundKey firingSound = null,
             IObservableCollection<IBoostProvider> localBoostProviders = null)
         {
-            Helper.AssertIsNotNull(parent, factoryProvider, enemyFaction);
+            Helper.AssertIsNotNull(parent, factoryProvider, globalFireRateBoostProviders);
 
             _factoryProvider = factoryProvider;
             _enemyFaction = enemyFaction;
@@ -118,7 +119,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs = CreateBarrelControllerArgs(barrel, parent, targetFilter, angleCalculator, attackablePositionFinder, firingSound, localBoostProviders);
+                IBarrelControllerArgs barrelArgs 
+                    = CreateBarrelControllerArgs(
+                        barrel, 
+                        parent, 
+                        targetFilter, 
+                        angleCalculator, 
+                        attackablePositionFinder, 
+                        firingSound, 
+                        localBoostProviders,
+                        globalFireRateBoostProviders);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -143,7 +153,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IAngleCalculator angleCalculator,
             IAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
-            IObservableCollection<IBoostProvider> localBoostProviders)
+            IObservableCollection<IBoostProvider> localBoostProviders,
+            IObservableCollection<IBoostProvider> globalFireRateBoostProvider)
         {
             return new BarrelControllerArgs(
                 targetFilter,
@@ -156,6 +167,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreateAngleLimiter(),
                 _factoryProvider,
                 parent,
+                globalFireRateBoostProvider,
                 firingSound,
                 localBoostProviders);
         }

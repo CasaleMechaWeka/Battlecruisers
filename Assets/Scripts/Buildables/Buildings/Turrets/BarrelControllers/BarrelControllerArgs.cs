@@ -26,6 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITargetPositionValidator TargetPositionValidator { get; private set; }
         public IAngleLimiter AngleLimiter { get; private set; }
         public ITarget Parent { get; private set; }
+        public IObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; private set; }
         public ISoundKey SpawnerSoundKey { get; private set; }
         public IObservableCollection<IBoostProvider> LocalBoostProviders { get; private set; }
 
@@ -40,6 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IAngleLimiter angleLimiter,
             IFactoryProvider factoryProvider,
             ITarget parent,
+            IObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             ISoundKey firingSound = null,
             IObservableCollection<IBoostProvider> localBoostProviders = null)
         {
@@ -53,7 +55,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 targetPositionValidator,
                 angleLimiter,
                 factoryProvider,
-                parent);
+                parent,
+                globalFireRateBoostProvider);
 
             TargetFilter = targetFilter;
             TargetPositionPredictor = targetPositionPredictor;
@@ -65,6 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             AngleLimiter = angleLimiter;
             TargetPositionValidator = targetPositionValidator;
             Parent = parent;
+            GlobalFireRateBoostProviders = globalFireRateBoostProvider;
             SpawnerSoundKey = firingSound;
             LocalBoostProviders = localBoostProviders;
         }

@@ -1,14 +1,18 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 {
+    // FELIX  Update tests :)
     public class BoostedTurretStatsTests : BoostedTurretStatsTestsBase<ITurretStats>
     {
         private ITurretStats _boostedStats;
+        private IObservableCollection<IBoostProvider> _localBoostProviders, _fireRateGlobalBoostProviders;
 
         [SetUp]
         public override void SetuUp()
@@ -19,7 +23,9 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
             _baseStats.IsInBurst.Returns(true);
             _baseStats.BurstSize.Returns(7);
 
-            _boostedStats = new BoostedTurretStats(_baseStats, _boostFactory, _globalBoostProviders);
+            _fireRateGlobalBoostProviders = new ObservableCollection<IBoostProvider>();
+
+            _boostedStats = new BoostedTurretStats(_baseStats, _boostFactory, _globalBoostProviders, _localBoostProviders, _fireRateGlobalBoostProviders);
         }
 
         [Test]

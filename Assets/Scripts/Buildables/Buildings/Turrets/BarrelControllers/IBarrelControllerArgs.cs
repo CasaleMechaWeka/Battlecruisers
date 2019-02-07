@@ -27,5 +27,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         ITarget Parent { get; }
         ISoundKey SpawnerSoundKey { get; }
         IObservableCollection<IBoostProvider> LocalBoostProviders { get; }
+        IObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
     }
 }

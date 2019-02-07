@@ -24,10 +24,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public BoostedBasicTurretStats(
             TStats baseStats,
             IBoostFactory boostFactory,
+            // FELIX  Remove :)  Pass globalAccuracyFireRAteBoostProvider instead :)
             IGlobalBoostProviders globalBoostProviders,
-            IObservableCollection<IBoostProvider> localBoostProviders = null)
+            IObservableCollection<IBoostProvider> localBoostProviders,
+            IObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
-            Helper.AssertIsNotNull(baseStats, boostFactory, globalBoostProviders);
+            Helper.AssertIsNotNull(baseStats, boostFactory, globalBoostProviders, globalFireRateBoostProviders);
 
             _baseStats = baseStats;
 

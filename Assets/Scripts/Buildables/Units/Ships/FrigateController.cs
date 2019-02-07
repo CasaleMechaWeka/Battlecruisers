@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Ships
@@ -56,9 +58,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
-            _mortar.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
-            _directFireAntiAir.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.AntiAir);
+            IObservableCollection<IBoostProvider> dummyFireRateBoostProviders = _factoryProvider.GlobalBoostProviders.DummyBoostProviders;
+
+            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders, SoundKeys.Firing.BigCannon);
+            _mortar.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders, SoundKeys.Firing.BigCannon);
+            _directFireAntiAir.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders, SoundKeys.Firing.AntiAir);
 		}
 	}
 }

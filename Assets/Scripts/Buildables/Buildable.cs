@@ -15,6 +15,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Timers;
@@ -137,6 +138,14 @@ namespace BattleCruisers.Buildables
         }
 
         public bool IsInitialised { get { return BuildProgressBoostable != null; } }
+
+        protected virtual IObservableCollection<IBoostProvider> TurretFireRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.DummyBoostProviders;
+            }
+        }
 
         #region IComparableItem
         Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }

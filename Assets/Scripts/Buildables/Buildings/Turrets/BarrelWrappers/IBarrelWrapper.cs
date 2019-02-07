@@ -23,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             IFactoryProvider factoryProvider, 
             Faction enemyFaction, 
+            IObservableCollection<IBoostProvider> globalFireRateBoostProviders,
             ISoundKey firingSound = null,
             IObservableCollection<IBoostProvider> localBoostProviders = null);
 	}

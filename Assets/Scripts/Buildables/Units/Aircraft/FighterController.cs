@@ -107,6 +107,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,
                     parent: this,
+                    globalFireRateBoostProvider: _factoryProvider.GlobalBoostProviders.DummyBoostProviders,
                     firingSound: SoundKeys.Firing.BigCannon);
 
             _barrelController.Initialise(args);
