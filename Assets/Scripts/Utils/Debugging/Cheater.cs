@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace BattleCruisers.Utils.Debugging
     // TEMP  Turn this class off for final game :P
     public class Cheater : MonoBehaviour
     {
+        public int droneBoostNumber;
+
         void Start()
         {
             if (!Debug.isDebugBuild)
@@ -17,16 +20,32 @@ namespace BattleCruisers.Utils.Debugging
 
         void Update()
         {
+            // W = Win
             if (Input.GetKeyUp(KeyCode.W))
             {
-                Cruiser[] cruisers = FindObjectsOfType<Cruiser>();
-                Cruiser aiCruiser = cruisers.FirstOrDefault(cruiser => cruiser.Faction == Buildables.Faction.Reds);
+                ICruiser aiCruiser = FindCruiser(Faction.Reds);
 
                 if (aiCruiser != null)
                 {
                     aiCruiser.TakeDamage(aiCruiser.MaxHealth, null);
                 }
             }
+            // B = Builders
+            else if (Input.GetKeyUp(KeyCode.B))
+            {
+                ICruiser playerCruiser = FindCruiser(Faction.Blues);
+
+                if (playerCruiser != null)
+                {
+                    playerCruiser.DroneManager.NumOfDrones += droneBoostNumber;
+                }
+            }
+        }
+
+        private ICruiser FindCruiser(Faction faction)
+        {
+            ICruiser[] cruisers = FindObjectsOfType<Cruiser>();
+            return cruisers.FirstOrDefault(cruiser => cruiser.Faction == faction);
         }
     }
 }
