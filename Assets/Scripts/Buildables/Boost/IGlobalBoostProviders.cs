@@ -11,6 +11,5 @@ namespace BattleCruisers.Buildables.Boost
 
         // FELIX  Currently affects ALL turrets (ships, gunship, buildings).  Use more restrictive boosters :)
         IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
-        IObservableCollection<IBoostProvider> TurretFireRateBoostProviders { get; }
     }
 }

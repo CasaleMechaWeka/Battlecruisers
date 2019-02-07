@@ -76,7 +76,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     // 0.05 * 20 = 1 (100% accuracy)
                     new BoostProvider(20)),
 
-                new AddTurretFireRateBoostStep(
+                new AddArtilleryFireRateBoostStep(
                     _argsFactory.CreateTutorialStepArgs(),
                     _playerCruiser.FactoryProvider.GlobalBoostProviders,
                     new BoostProvider(3))

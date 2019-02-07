@@ -518,8 +518,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IObservableCollection<IBoostProvider> turretAccuracyBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
             globalBoostProviders.TurretAccuracyBoostProviders.Returns(turretAccuracyBoostProviders);
 
-            IObservableCollection<IBoostProvider> turretFireRateBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
-            globalBoostProviders.TurretFireRateBoostProviders.Returns(turretFireRateBoostProviders);
+            IObservableCollection<IBoostProvider> offenseFireRateBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            globalBoostProviders.OffenseFireRateBoostProviders.Returns(offenseFireRateBoostProviders);
+
+            IObservableCollection<IBoostProvider> defenseFireRateBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            globalBoostProviders.DefenseFireRateBoostProviders.Returns(defenseFireRateBoostProviders);
 
             return globalBoostProviders;
         }

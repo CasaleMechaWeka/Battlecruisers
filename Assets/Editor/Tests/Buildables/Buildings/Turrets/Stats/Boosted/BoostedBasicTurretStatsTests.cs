@@ -18,7 +18,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
             _boostFactory.Received().CreateBoostable();
             _boostFactory.Received().CreateBoostableGroup();
             _boostableGroup.Received().AddBoostable(_boostable);
-            _boostableGroup.Received().AddBoostProvidersList(_globalBoostProviders.TurretFireRateBoostProviders);
         }
 
         [Test]

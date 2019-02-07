@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
-    public class AddTurretFireRateBoostStepTests : BoostStepTestsBase
+    public class AddArtilleryFireRateBoostStepTests : BoostStepTestsBase
     {
         private ITutorialStep _boostStep;
 
@@ -14,14 +14,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
         {
             base.SetuUp();
 
-            _boostStep = new AddTurretFireRateBoostStep(_args, _globalBoostProviders, _boostProvider);
+            _boostStep = new AddArtilleryFireRateBoostStep(_args, _globalBoostProviders, _boostProvider);
         }
 
         [Test]
         public void Start_AddsBoost_AndCompletes()
         {
             _boostStep.Start(_completionCallback);
-            _globalBoostProviders.TurretFireRateBoostProviders.Received().Add(_boostProvider);
+            _globalBoostProviders.OffenseFireRateBoostProviders.Received().Add(_boostProvider);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {
-    public class AddTurretFireRateBoostStep : BoostStep
+    public class AddArtilleryFireRateBoostStep : BoostStep
     {
-        public AddTurretFireRateBoostStep(
+        public AddArtilleryFireRateBoostStep(
             ITutorialStepArgs args,
             IGlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.BoostSteps
 
         protected override void BoostProviderAction()
         {
-            _globalBoostProviders.TurretFireRateBoostProviders.Add(_boostProvider);
+            _globalBoostProviders.OffenseFireRateBoostProviders.Add(_boostProvider);
         }
     }
 }
