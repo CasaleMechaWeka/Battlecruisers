@@ -9,7 +9,8 @@ namespace BattleCruisers.Buildables.Boost
         IObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
         IObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
 
-        // FELIX  Currently affects ALL turrets (ships, gunship, buildings).  Use more restrictive boosters :)
+        // Currently affects ALL turrets (ships, gunship, buildings).  
+        // That's ok though, because only used in tutorial to improve artillery accuracy :)
         IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
     }
 }
