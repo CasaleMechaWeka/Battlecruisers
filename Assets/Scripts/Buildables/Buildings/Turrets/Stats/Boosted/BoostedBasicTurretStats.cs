@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
             _fireRateBoostable = boostFactory.CreateBoostable();
             _fireRateBoostabelGroup = boostFactory.CreateBoostableGroup();
             _fireRateBoostabelGroup.AddBoostable(_fireRateBoostable);
-            _fireRateBoostabelGroup.AddBoostProvidersList(globalBoostProviders.TurretFireRateBoostProviders);
+            _fireRateBoostabelGroup.AddBoostProvidersList(globalFireRateBoostProviders);
 
             // Only building turret stats will potentially have local boosters
             // from their slots.  Turret stats for barrels on units will not have
