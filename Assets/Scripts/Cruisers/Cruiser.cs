@@ -134,7 +134,7 @@ namespace BattleCruisers.Cruisers
             return new TextMeshWrapper(numOfRepairDronesText);
         }
 
-        public void Initialise(ICruiserArgs args)
+        public virtual void Initialise(ICruiserArgs args)
         {
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
