@@ -103,11 +103,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITarget parent, 
             IFactoryProvider factoryProvider, 
             Faction enemyFaction,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProviders,
             ISoundKey firingSound = null,
-            IObservableCollection<IBoostProvider> localBoostProviders = null)
+            IObservableCollection<IBoostProvider> localBoostProviders = null,
+            IObservableCollection<IBoostProvider> globalFireRateBoostProviders = null)
         {
-            Helper.AssertIsNotNull(parent, factoryProvider, globalFireRateBoostProviders);
+            Helper.AssertIsNotNull(parent, factoryProvider);
 
             _factoryProvider = factoryProvider;
             _enemyFaction = enemyFaction;
@@ -127,8 +127,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         angleCalculator, 
                         attackablePositionFinder, 
                         firingSound, 
-                        localBoostProviders,
-                        globalFireRateBoostProviders);
+                        localBoostProviders ?? factoryProvider.GlobalBoostProviders.DummyBoostProviders,
+                        globalFireRateBoostProviders ?? factoryProvider.GlobalBoostProviders.DummyBoostProviders);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -167,9 +167,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreateAngleLimiter(),
                 _factoryProvider,
                 parent,
+                localBoostProviders,
                 globalFireRateBoostProvider,
-                firingSound,
-                localBoostProviders);
+                firingSound);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)

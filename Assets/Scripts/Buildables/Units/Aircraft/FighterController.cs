@@ -95,6 +95,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
+            ITarget parent = this;
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
                     _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
@@ -106,9 +107,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,
-                    parent: this,
-                    globalFireRateBoostProvider: _factoryProvider.GlobalBoostProviders.DummyBoostProviders,
-                    firingSound: SoundKeys.Firing.BigCannon);
+                    parent,
+                    _factoryProvider.GlobalBoostProviders.DummyBoostProviders,
+                    _factoryProvider.GlobalBoostProviders.DummyBoostProviders,
+                    SoundKeys.Firing.BigCannon);
 
             _barrelController.Initialise(args);
 

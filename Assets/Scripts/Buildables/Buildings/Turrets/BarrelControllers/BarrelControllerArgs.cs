@@ -26,9 +26,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITargetPositionValidator TargetPositionValidator { get; private set; }
         public IAngleLimiter AngleLimiter { get; private set; }
         public ITarget Parent { get; private set; }
+        public IObservableCollection<IBoostProvider> LocalBoostProviders { get; private set; }
         public IObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; private set; }
         public ISoundKey SpawnerSoundKey { get; private set; }
-        public IObservableCollection<IBoostProvider> LocalBoostProviders { get; private set; }
 
         public BarrelControllerArgs(
             ITargetFilter targetFilter,
@@ -37,13 +37,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IAttackablePositionFinder attackablePositionFinder,
             IAccuracyAdjuster accuracyAdjuster,
             IRotationMovementController rotationMovementController,
-			ITargetPositionValidator targetPositionValidator,
+            ITargetPositionValidator targetPositionValidator,
             IAngleLimiter angleLimiter,
             IFactoryProvider factoryProvider,
             ITarget parent,
+            IObservableCollection<IBoostProvider> localBoostProviders,
             IObservableCollection<IBoostProvider> globalFireRateBoostProvider,
-            ISoundKey firingSound = null,
-            IObservableCollection<IBoostProvider> localBoostProviders = null)
+            ISoundKey firingSound = null)
         {
             Helper.AssertIsNotNull(
                 targetFilter, 
@@ -56,6 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 angleLimiter,
                 factoryProvider,
                 parent,
+                localBoostProviders,
                 globalFireRateBoostProvider);
 
             TargetFilter = targetFilter;
@@ -68,9 +69,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             AngleLimiter = angleLimiter;
             TargetPositionValidator = targetPositionValidator;
             Parent = parent;
+            LocalBoostProviders = localBoostProviders;
             GlobalFireRateBoostProviders = globalFireRateBoostProvider;
             SpawnerSoundKey = firingSound;
-            LocalBoostProviders = localBoostProviders;
         }
     }
 }

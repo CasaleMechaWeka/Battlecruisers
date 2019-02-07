@@ -480,9 +480,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
                     parent ?? Substitute.For<ITarget>(),
+                    localBoostProviders ?? new DummyObservableCollection<IBoostProvider>(),
                     new DummyObservableCollection<IBoostProvider>(),
-                    firingSound ?? SoundKeys.Firing.BigCannon,
-                    localBoostProviders);
+                    firingSound ?? SoundKeys.Firing.BigCannon);
         }
 
         private IRotationMovementController CreateRotationMovementController(BarrelController barrel)

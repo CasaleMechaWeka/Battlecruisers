@@ -67,13 +67,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            IObservableCollection<IBoostProvider> dummyFireRateBoostProviders = _factoryProvider.GlobalBoostProviders.DummyBoostProviders;
-
-            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders, SoundKeys.Firing.BigCannon);
-            _mortar.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders, SoundKeys.Firing.BigCannon);
-            _missileLauncher.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders);
-            _directFireAntiAir.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders, SoundKeys.Firing.AntiAir);
-            _samSite.Initialise(this, _factoryProvider, enemyFaction, dummyFireRateBoostProviders);
+            _directFireAntiSea.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
+            _mortar.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
+            _missileLauncher.Initialise(this, _factoryProvider, enemyFaction);
+            _directFireAntiAir.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.AntiAir);
+            _samSite.Initialise(this, _factoryProvider, enemyFaction);
 		}
 	}
 }

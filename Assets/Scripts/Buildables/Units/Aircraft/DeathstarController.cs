@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, _factoryProvider.GlobalBoostProviders.DummyBoostProviders, SoundKeys.Firing.Laser);
+            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.Laser);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

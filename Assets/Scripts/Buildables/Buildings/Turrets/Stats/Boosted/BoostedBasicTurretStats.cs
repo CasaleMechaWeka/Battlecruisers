@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
             IObservableCollection<IBoostProvider> localBoostProviders,
             IObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
-            Helper.AssertIsNotNull(baseStats, boostFactory, globalBoostProviders, globalFireRateBoostProviders);
+            Helper.AssertIsNotNull(baseStats, boostFactory, globalBoostProviders, localBoostProviders, globalFireRateBoostProviders);
 
             _baseStats = baseStats;
 
@@ -37,17 +37,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
             _fireRateBoostabelGroup = boostFactory.CreateBoostableGroup();
             _fireRateBoostabelGroup.AddBoostable(_fireRateBoostable);
             _fireRateBoostabelGroup.AddBoostProvidersList(globalFireRateBoostProviders);
-
-            // Only building turret stats will potentially have local boosters
-            // from their slots.  Turret stats for barrels on units will not have
-            // any local boosters.
-            // FELIX  Pass DummyObservableCollection to avoid null check :)
-            if (localBoostProviders != null)
-            {
-                // Assign local boost to fire rate.  Can easily be changed to boost
-                // another statistic :)
-                _fireRateBoostabelGroup.AddBoostProvidersList(localBoostProviders);
-            }
+            _fireRateBoostabelGroup.AddBoostProvidersList(localBoostProviders);
         }
 
         public void MoveToNextDuration()
