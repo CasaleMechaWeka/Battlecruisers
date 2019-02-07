@@ -9,6 +9,7 @@ namespace BattleCruisers.Buildables.Boost
         public IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; private set; }
         public IObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; private set; }
         public IObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; private set; }
+        public IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; private set; }
 
         public GlobalBoostProviders()
         {
@@ -17,6 +18,7 @@ namespace BattleCruisers.Buildables.Boost
             TurretAccuracyBoostProviders = new ObservableCollection<IBoostProvider>();
             DefenseFireRateBoostProviders = new ObservableCollection<IBoostProvider>();
             OffenseFireRateBoostProviders = new ObservableCollection<IBoostProvider>();
+            ShieldRechargeRateBoostProviders = new ObservableCollection<IBoostProvider>();
         }
 	}
 }

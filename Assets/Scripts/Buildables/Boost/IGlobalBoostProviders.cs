@@ -8,6 +8,7 @@ namespace BattleCruisers.Buildables.Boost
         IObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
         IObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
         IObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
+        IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
 
         // Currently affects ALL turrets (ships, gunship, buildings).  
         // That's ok though, because only used in tutorial to improve artillery accuracy :)

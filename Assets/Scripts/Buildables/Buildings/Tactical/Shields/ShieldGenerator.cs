@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			_shieldController.gameObject.SetActive(false);
 
             _boostableGroup.AddBoostable(_shieldController.Stats);
+            _boostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
 		}
 
 		protected override void OnBuildableCompleted()
