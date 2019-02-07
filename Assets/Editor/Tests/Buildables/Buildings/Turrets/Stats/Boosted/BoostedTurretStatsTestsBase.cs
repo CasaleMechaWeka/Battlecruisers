@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 {
@@ -41,7 +40,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
             _boostableGroup = Substitute.For<IBoostableGroup>();
             _boostFactory.CreateBoostableGroup().Returns(_boostableGroup);
 
-            _globalBoostProviders = Helper.CreateGlobalBoostProviders();
+            _globalBoostProviders = new GlobalBoostProviders();
 
             _localBoostProviders = new ObservableCollection<IBoostProvider>();
         }

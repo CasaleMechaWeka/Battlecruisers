@@ -1,7 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted;
-using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -11,27 +9,21 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
     public class BoostedBasicTurretStatsTests : BoostedTurretStatsTestsBase<IBasicTurretStats>
     {
         [Test]
-        public void Constructor_NoLocalBoosts()
+        public void Constructor()
         {
-            CreateBoostedStats(hasLocalBoosters: false);
+            CreateTurretStats();
 
             _boostFactory.Received().CreateBoostable();
             _boostFactory.Received().CreateBoostableGroup();
             _boostableGroup.Received().AddBoostable(_boostable);
-        }
-
-        [Test]
-        public void Constructor_WithLocalBoosts()
-        {
-            CreateBoostedStats(hasLocalBoosters: true);
-
             _boostableGroup.Received().AddBoostProvidersList(_localBoostProviders);
+            _boostableGroup.Received().AddBoostProvidersList(_globalBoostProviders.DefenseFireRateBoostProviders);
         }
 
         [Test]
         public void Forwarding_Properties()
         {
-            IBasicTurretStats boostedStats = CreateBoostedStats(hasLocalBoosters: false);
+            IBasicTurretStats boostedStats = CreateTurretStats();
 
             float expectedFireRate = _boostable.BoostMultiplier * _baseStats.FireRatePerS;
             Assert.IsTrue(Mathf.Approximately(expectedFireRate, boostedStats.FireRatePerS));
@@ -50,17 +42,15 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         [Test]
         public void Forwarding_Methods()
         {
-            IBasicTurretStats boostedStats = CreateBoostedStats(hasLocalBoosters: false);
+            IBasicTurretStats boostedStats = CreateTurretStats();
 
             boostedStats.MoveToNextDuration();
             _baseStats.Received().MoveToNextDuration();
         }
 
-        private IBasicTurretStats CreateBoostedStats(bool hasLocalBoosters)
+        private IBasicTurretStats CreateTurretStats()
         {
-            IObservableCollection<IBoostProvider> localBoosters = hasLocalBoosters ? _localBoostProviders : null;
-            IObservableCollection<IBoostProvider> fireRateGlobalBoostProviders = new DummyObservableCollection<IBoostProvider>();
-            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _boostFactory, localBoosters, fireRateGlobalBoostProviders);
+            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _boostFactory, _localBoostProviders, _globalBoostProviders.DefenseFireRateBoostProviders);
         }
     }
 }
