@@ -39,6 +39,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
             // Only building turret stats will potentially have local boosters
             // from their slots.  Turret stats for barrels on units will not have
             // any local boosters.
+            // FELIX  Pass DummyObservableCollection to avoid null check :)
             if (localBoostProviders != null)
             {
                 // Assign local boost to fire rate.  Can easily be changed to boost
