@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             IObservableCollection<IBoostProvider> localBoostProviders,
             IObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
-            return new BoostedTurretStats(baseTurretStats, _boostFactory, _globalBoostProviders, localBoostProviders, globalFireRateBoostProviders);
+            return new BoostedTurretStats(baseTurretStats, _boostFactory, localBoostProviders, globalFireRateBoostProviders, _globalBoostProviders);
         }
     }
 }

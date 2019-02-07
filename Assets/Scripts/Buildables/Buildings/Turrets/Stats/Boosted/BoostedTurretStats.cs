@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
 {
@@ -20,11 +21,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public BoostedTurretStats(
             ITurretStats baseStats,
             IBoostFactory boostFactory,
-            IGlobalBoostProviders globalBoostProviders,
             IObservableCollection<IBoostProvider> localBoostProviders,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProviders)
-            : base(baseStats, boostFactory, globalBoostProviders, localBoostProviders, globalFireRateBoostProviders)
+            IObservableCollection<IBoostProvider> globalFireRateBoostProviders,
+            IGlobalBoostProviders globalBoostProviders)
+            : base(baseStats, boostFactory, localBoostProviders, globalFireRateBoostProviders)
         {
+            Assert.IsNotNull(globalBoostProviders);
+
             _accuracyBoostable = boostFactory.CreateBoostable();
             _accuracyBoostableGroup = boostFactory.CreateBoostableGroup();
             _accuracyBoostableGroup.AddBoostable(_accuracyBoostable);
