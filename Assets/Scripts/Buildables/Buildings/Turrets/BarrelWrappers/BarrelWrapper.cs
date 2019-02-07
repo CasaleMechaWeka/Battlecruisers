@@ -98,7 +98,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
         }
 
-        // FELIX Create BarrelWrapperArgs class?
         public void Initialise(
             ITarget parent, 
             IFactoryProvider factoryProvider, 
