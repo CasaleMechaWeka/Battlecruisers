@@ -117,7 +117,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)
         {
-            return new NullManagedDispoasable();
+            return new DummyManagedDisposable();
         }
 
         public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)

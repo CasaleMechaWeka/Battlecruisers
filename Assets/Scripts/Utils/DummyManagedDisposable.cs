@@ -1,7 +1,6 @@
 ﻿namespace BattleCruisers.Utils
 {
-    // FELIX  Rename to DummyManagedDisposable, convention :P
-    public class NullManagedDispoasable : IManagedDisposable
+    public class DummyManagedDisposable : IManagedDisposable
     {
         public void DisposeManagedState()
         {
