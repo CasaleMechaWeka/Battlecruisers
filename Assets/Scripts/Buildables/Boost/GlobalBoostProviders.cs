@@ -37,12 +37,12 @@ namespace BattleCruisers.Buildables.Boost
             ShieldRechargeRateBoostProviders = new ObservableCollection<IBoostProvider>();
 
             // Build rate
-            DefenseFireRateBoostProviders = new ObservableCollection<IBoostProvider>();
+            DefensivesBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
             OffensivesBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
             TacticalsBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
             ShieldsBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
             UltrasBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            AircraftBoostProviders = new ObservableCollection<IBoostProvider>();
+            AirFactoryBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
             NavalFactoryBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
             DroneBuildingsBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
         }
