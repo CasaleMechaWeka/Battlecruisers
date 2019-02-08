@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -16,12 +17,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public override UnitCategory UnitCategory { get { return UnitCategory.Naval; } }
 		public override LayerMask UnitLayerMask { get { return unitsLayerMask; } }
 
-        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders,
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            get
-            {
-                return _factoryProvider.GlobalBoostProviders.NavalFactoryBuildRateBoostProviders;
-            }
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.NavalFactoryBuildRateBoostProviders);
         }
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()

@@ -14,12 +14,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override bool IsUltra { get { return true; } }
 
-        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders,
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            get
-            {
-                return _factoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders;
-            }
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders);
         }
 
         public override float OptimalArmamentRangeInM

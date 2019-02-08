@@ -2,22 +2,23 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	public class SpySatelliteLauncherController : SatelliteLauncherController, ISpySatelliteLauncher
-	{
-		protected override Vector3 SpawnPositionAdjustment { get { return new Vector3(0, 0.121f, 0); } }
+    public class SpySatelliteLauncherController : SatelliteLauncherController, ISpySatelliteLauncher
+    {
+        protected override Vector3 SpawnPositionAdjustment { get { return new Vector3(0, 0.121f, 0); } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.SpySatellite; } }
         public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
-        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders,
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            get
-            {
-                return _factoryProvider.GlobalBoostProviders.TacticalsBuildRateBoostProviders;
-            }
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.TacticalsBuildRateBoostProviders);
         }
     }
 }

@@ -150,14 +150,6 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        protected virtual IObservableCollection<IBoostProvider> BuildRateBoostProviders
-        {
-            get
-            {
-                return _factoryProvider.GlobalBoostProviders.DummyBoostProviders;
-            }
-        }
-
         #region IComparableItem
         Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
         string IComparableItem.Description { get { return description; } }
@@ -253,15 +245,39 @@ namespace BattleCruisers.Buildables
 
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
 
+
+            
+            // FELIX  Move to separate boost related method?
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
 
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _buildRateBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            _buildRateBoostableGroup.AddBoostProvidersList(BuildRateBoostProviders);
             _buildRateBoostableGroup.AddBoostable(BuildProgressBoostable);
+
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<IObservableCollection<IBoostProvider>>();
+            AddBuildRateBoostProviders(_factoryProvider.GlobalBoostProviders, buildRateBoostProvidersList);
+            
+            foreach (IObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
+            {
+                _buildRateBoostableGroup.AddBoostProvidersList(buildRateBoostProviders);
+            }
+
+
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
+        }
+
+        /// <summary>
+        /// To allow multiple boost provider sources.  Eg, for the ShieldGenerator:
+        /// + Tacticals => Boost from Trident
+        /// + Shields   => Boost from Raptor
+        /// </summary>
+        protected virtual void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders, 
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+        {
+            // empty
         }
 
         protected virtual void OnInitialised() { }

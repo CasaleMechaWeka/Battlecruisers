@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
@@ -13,12 +14,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             }
         }
 
-        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders,
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            get
-            {
-                return _factoryProvider.GlobalBoostProviders.DefensivesBuildRateBoostProviders;
-            }
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.DefensivesBuildRateBoostProviders);
         }
     }
 }

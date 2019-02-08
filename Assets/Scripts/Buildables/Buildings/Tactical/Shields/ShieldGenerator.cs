@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
@@ -14,12 +15,12 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.Shields; } }
         public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
-        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders,
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            get
-            {
-                return _factoryProvider.GlobalBoostProviders.ShieldsBuildRateBoostProviders;
-            }
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.ShieldsBuildRateBoostProviders);
         }
 
         protected override void OnStaticInitialised()
