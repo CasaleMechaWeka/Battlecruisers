@@ -19,6 +19,7 @@ namespace BattleCruisers.Cruisers
 
             IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
             FactoryProvider.GlobalBoostProviders.TacticalsBuildRateBoostProviders.Add(boostProvider);
+            FactoryProvider.GlobalBoostProviders.ShieldsBuildRateBoostProviders.Add(boostProvider);
         }
     }
 }

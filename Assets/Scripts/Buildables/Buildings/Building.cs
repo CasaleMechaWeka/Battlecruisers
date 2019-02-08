@@ -65,7 +65,7 @@ namespace BattleCruisers.Buildables.Buildings
 
             _parentSlot = parentSlot;
             _doubleClickHandler = doubleClickHandler;
-            _boostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
             OnInitialised();
 		}

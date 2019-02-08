@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         {
             get
             {
-                return _factoryProvider.GlobalBoostProviders.DroneBuildingsBuildRateBoostProviders;
+                return _factoryProvider.GlobalBoostProviders.DroneStationBuildRateBoostProviders;
             }
         }
 

@@ -18,7 +18,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(droneBuildingBuildRateBoost > 0);
 
             IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(droneBuildingBuildRateBoost);
-            FactoryProvider.GlobalBoostProviders.DroneBuildingsBuildRateBoostProviders.Add(boostProvider);
+            FactoryProvider.GlobalBoostProviders.DroneStationBuildRateBoostProviders.Add(boostProvider);
         }
     }
 }

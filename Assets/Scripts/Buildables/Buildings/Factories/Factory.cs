@@ -150,7 +150,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			UnitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;
             UnitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
 
-            _boostableGroup.AddBoostable(UnitUnderConstruction.BuildProgressBoostable);
+            _localBoosterBoostableGroup.AddBoostable(UnitUnderConstruction.BuildProgressBoostable);
 
 			UnitUnderConstruction.StartConstruction();
 		}
@@ -219,7 +219,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void CleanUpUnitUnderConstruction()
 		{
-            _boostableGroup.RemoveBoostable(UnitUnderConstruction.BuildProgressBoostable);
+            _localBoosterBoostableGroup.RemoveBoostable(UnitUnderConstruction.BuildProgressBoostable);
 			UnitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
             UnitUnderConstruction.Destroyed -= UnitUnderConstruction_Destroyed;
 			UnitUnderConstruction = null;

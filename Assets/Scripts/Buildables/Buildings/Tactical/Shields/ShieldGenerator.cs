@@ -38,8 +38,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			_shieldController.Initialise(Faction, _factoryProvider.Sound.BuildableEffectsSoundPlayer);
 			_shieldController.gameObject.SetActive(false);
 
-            _boostableGroup.AddBoostable(_shieldController.Stats);
-            _boostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
+            _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
 		}
 
 		protected override void OnBuildableCompleted()

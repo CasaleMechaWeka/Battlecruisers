@@ -88,9 +88,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnInitialised();
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            _boostableGroup.AddBoostable(_velocityBoostable);
-            _boostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.AircraftBoostProviders);
-            _boostableGroup.BoostChanged += _boostableGroup_BoostChanged;
+            _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.AircraftBoostProviders);
+            _localBoosterBoostableGroup.BoostChanged += _boostableGroup_BoostChanged;
             _fuzziedMaxVelocityInMPerS = new RandomGenerator().Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
 
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
@@ -195,7 +195,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-            _boostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
+            _localBoosterBoostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
         }
 
         protected override void OnDeathWhileCompleted()
