@@ -38,8 +38,6 @@ namespace BattleCruisers.Buildables
 #pragma warning disable CS0414  // Variable is assigned but never used
         private SmokeInitialiser _smokeInitialiser;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        // Boost resulting from global cruiser bonuses
-        private IBoostableGroup _buildRateBoostableGroup;
 
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
@@ -49,6 +47,8 @@ namespace BattleCruisers.Buildables
         protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
         protected IFactoryProvider _factoryProvider;
+        // Boost resulting from global cruiser bonuses
+        protected IBoostableGroup _buildRateBoostableGroup;
         // Boost resulting from adjacent local boosters
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected BuildableProgressController _buildableProgress;

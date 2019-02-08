@@ -1,10 +1,12 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
@@ -154,6 +156,11 @@ namespace BattleCruisers.Buildables.Units
         void IRemovable.RemoveFromScene()
         {
             base.InternalDestroy();
+        }
+
+        public void AddBuildRateBoostProviders(IObservableCollection<IBoostProvider> boostProviders)
+        {
+            _buildRateBoostableGroup.AddBoostProvidersList(boostProviders);
         }
     }
 }
