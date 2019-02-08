@@ -6,7 +6,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-    public class LocalBoosterController : Building
+    public class LocalBoosterController : TacticalBuilding
     {
         private IBoostProvider _boostProvider;
 

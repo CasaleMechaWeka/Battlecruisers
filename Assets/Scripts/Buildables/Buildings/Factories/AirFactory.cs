@@ -1,7 +1,9 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -13,6 +15,14 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.AirFactory; } }
         public override UnitCategory UnitCategory { get { return UnitCategory.Aircraft; } }
 		public  override LayerMask UnitLayerMask { get { return aircraftLayerMask; } }
+
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.AirFactoryBuildRateBoostProviders;
+            }
+        }
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {

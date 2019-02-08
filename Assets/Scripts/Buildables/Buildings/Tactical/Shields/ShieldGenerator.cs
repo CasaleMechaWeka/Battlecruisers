@@ -1,16 +1,26 @@
-﻿using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
-    public class ShieldGenerator : Building
-	{
+    public class ShieldGenerator : TacticalBuilding
+    {
         private ShieldController _shieldController;
 
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building5; } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.Shields; } }
         public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.ShieldsBuildRateBoostProviders;
+            }
+        }
 
         protected override void OnStaticInitialised()
         {
@@ -38,5 +48,5 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
 			_shieldController.gameObject.SetActive(true);
 		}
-	}
+    }
 }

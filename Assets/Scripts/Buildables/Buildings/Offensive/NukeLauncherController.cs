@@ -1,10 +1,12 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +29,15 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
         public override TargetValue TargetValue { get { return TargetValue.High; } }
-		
+
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders;
+            }
+        }
+
         protected override void OnStaticInitialised()
 		{
             base.OnStaticInitialised();

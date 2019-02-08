@@ -4,7 +4,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-    public class ControlTowerController : Building
+    public class ControlTowerController : TacticalBuilding
     {
 		private IBoostProvider _boostProvider;
 

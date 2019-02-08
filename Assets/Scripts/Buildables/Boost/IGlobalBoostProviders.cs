@@ -24,6 +24,7 @@ namespace BattleCruisers.Buildables.Boost
         IObservableCollection<IBoostProvider> UltrasBuildRateBoostProviders { get; }
         IObservableCollection<IBoostProvider> AirFactoryBuildRateBoostProviders { get; }
         IObservableCollection<IBoostProvider> NavalFactoryBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> DroneStationBuildRateBoostProviders { get; }
+        // Drone station, ultralisk
+        IObservableCollection<IBoostProvider> DroneBuildingsBuildRateBoostProviders { get; }
     }
 }

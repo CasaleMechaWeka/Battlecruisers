@@ -1,6 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
@@ -10,6 +12,14 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		protected override Vector3 SpawnPositionAdjustment { get { return new Vector3(0.003f, 0.145f, 0); } }
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
         public override TargetValue TargetValue { get { return TargetValue.High; } }
+
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders;
+            }
+        }
 
         protected override void OnStaticInitialised()
         {

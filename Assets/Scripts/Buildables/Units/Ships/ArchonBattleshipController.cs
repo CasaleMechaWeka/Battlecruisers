@@ -14,6 +14,14 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override bool IsUltra { get { return true; } }
 
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders;
+            }
+        }
+
         public override float OptimalArmamentRangeInM
         {
             get

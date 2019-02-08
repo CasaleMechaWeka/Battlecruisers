@@ -147,6 +147,14 @@ namespace BattleCruisers.Buildables
             }
         }
 
+        protected virtual IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.DummyBoostProviders;
+            }
+        }
+
         #region IComparableItem
         Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
         string IComparableItem.Description { get { return description; } }

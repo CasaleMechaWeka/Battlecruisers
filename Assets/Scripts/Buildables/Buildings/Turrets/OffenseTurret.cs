@@ -12,5 +12,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                 return _factoryProvider.GlobalBoostProviders.OffenseFireRateBoostProviders;
             }
         }
+
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.OffensivesBuildRateBoostProviders;
+            }
+        }
     }
 }

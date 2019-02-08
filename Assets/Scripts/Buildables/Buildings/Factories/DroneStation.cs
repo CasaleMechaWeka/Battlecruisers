@@ -1,5 +1,7 @@
-﻿using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
@@ -11,7 +13,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.DroneStation; } }
         public override TargetValue TargetValue { get { return TargetValue.Medium; } }
 
-		protected override void OnBuildableCompleted()
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.DroneBuildingsBuildRateBoostProviders;
+            }
+        }
+
+        protected override void OnBuildableCompleted()
 		{
 			_droneManager.NumOfDrones += numOfDronesProvided;
             

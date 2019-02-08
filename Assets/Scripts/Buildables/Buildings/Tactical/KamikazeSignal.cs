@@ -1,7 +1,9 @@
-﻿using BattleCruisers.Buildables.Units.Aircraft;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,6 +12,14 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
     public class KamikazeSignal : Building
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
+
+        protected override IObservableCollection<IBoostProvider> BuildRateBoostProviders
+        {
+            get
+            {
+                return _factoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders;
+            }
+        }
 
         protected override void OnBuildableCompleted()
         {
