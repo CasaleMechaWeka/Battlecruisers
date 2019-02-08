@@ -4,7 +4,10 @@ namespace BattleCruisers.Buildables.Boost
 {
     public class GlobalBoostProviders : IGlobalBoostProviders
     {
-        public IObservableCollection<IBoostProvider> DummyBoostProviders { get; private set; }
+        // The BoostableGroup does not allow the same IBoostProviders collection
+        // to be added twice, even if it is just the same DummyBoostProviders :/
+        // Hence create fresh instead of returning the same instance.
+        public IObservableCollection<IBoostProvider> DummyBoostProviders { get { return new DummyObservableCollection<IBoostProvider>(); } }
 
         public IObservableCollection<IBoostProvider> AircraftBoostProviders { get; private set; }
 
@@ -26,8 +29,6 @@ namespace BattleCruisers.Buildables.Boost
 
         public GlobalBoostProviders()
         {
-            DummyBoostProviders = new DummyObservableCollection<IBoostProvider>();
-
             AircraftBoostProviders = new ObservableCollection<IBoostProvider>();
 
             DefenseFireRateBoostProviders = new ObservableCollection<IBoostProvider>();
