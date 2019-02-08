@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
@@ -15,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
         private IComparisonStateTracker _comparisonStateTracker;
         private IHullNameToKey _hullNameToKey;
+        private IDataProvider _dataProvider;
 
         protected override bool ToggleVisibility { get { return true; } }
 
@@ -25,11 +28,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IItemDetailsDisplayer<ICruiser> cruiserDetails, 
             IComparisonStateTracker comparisonStateTracker,
             IHullNameToKey hullNameToKey,
-            HullKey playerLoadoutHull)
+            IDataProvider dataProvider)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, playerLoadoutHull);
+            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, dataProvider);
 
             _cruiserDetails = cruiserDetails;
             _cruiserDetails.SelectedItem.ValueChanged += SelectedCruiserChanged;
@@ -38,8 +41,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _comparisonStateTracker.State.ValueChanged += ComparisonStateChanged;
 
             _hullNameToKey = hullNameToKey;
+            _dataProvider = dataProvider;
 
-            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: playerLoadoutHull);
+            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: dataProvider.GameModel.PlayerLoadout.Hull);
             SelectedHull = new BroadcastingProperty<HullKey>(_selectedHull);
 
             Enabled = ShouldBeEnabled();
@@ -55,6 +59,23 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Enabled = ShouldBeEnabled();
         }
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
+            Assert.IsNotNull(displayedCruiser);
+            _selectedHull.Value = _hullNameToKey.GetKey(displayedCruiser.Name);
+
+            ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+
+            if (!playerLoadout.Hull.Equals(_selectedHull.Value))
+            {
+                playerLoadout.Hull = _selectedHull.Value;
+                _dataProvider.SaveGame();
+            }
+
+            Enabled = ShouldBeEnabled();
+        }
+
         private bool ShouldBeEnabled()
         {
             return
@@ -66,13 +87,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private bool IsDisplayedCruiserSelected(ICruiser displayedCruiser)
         {
             return _hullNameToKey.GetKey(displayedCruiser.Name) == SelectedHull.Value;
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
-            Assert.IsNotNull(displayedCruiser);
-            _selectedHull.Value = _hullNameToKey.GetKey(displayedCruiser.Name);
         }
     }
 }

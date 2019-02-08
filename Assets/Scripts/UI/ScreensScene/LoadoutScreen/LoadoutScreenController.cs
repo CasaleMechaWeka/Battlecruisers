@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     cruiserDetails,
                     comparisonStateTracker,
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
-                    _dataProvider.GameModel.PlayerLoadout.Hull);
+                    _dataProvider);
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
@@ -83,10 +83,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily);
-
-            SaveButton saveButton = GetComponentInChildren<SaveButton>(includeInactive: true);
-            Assert.IsNotNull(saveButton);
-            saveButton.Initialise(_dataProvider, selectCruiserButton.SelectedHull);
 
             ShowPlayerHull();
 
