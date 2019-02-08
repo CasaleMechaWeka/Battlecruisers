@@ -277,7 +277,7 @@ namespace BattleCruisers.Buildables
             IGlobalBoostProviders globalBoostProviders, 
             IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            // empty
+            Logging.Log(Tags.BOOST, "Buildable.AddBuildRateBoostProviders()  " + this);
         }
 
         protected virtual void OnInitialised() { }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -38,6 +39,8 @@ namespace BattleCruisers.Buildables.Boost
 
         public void AddBoostProvider(IBoostProvider boostProvider)
         {
+            Logging.Log(Tags.BOOST, "BoostConsumer.AddBoostProvider()");
+
             Assert.IsFalse(_boostProviders.Contains(boostProvider));
             _boostProviders.Add(boostProvider);
             UpdateCumulativeBoost();
@@ -45,6 +48,8 @@ namespace BattleCruisers.Buildables.Boost
 		
 		public void RemoveBoostProvider(IBoostProvider boostProvider)
 		{
+            Logging.Log(Tags.BOOST, "BoostConsumer.RemoveBoostProvider()");
+
             Assert.IsTrue(_boostProviders.Contains(boostProvider));
             _boostProviders.Remove(boostProvider);
 			UpdateCumulativeBoost();

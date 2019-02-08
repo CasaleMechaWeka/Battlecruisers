@@ -68,8 +68,9 @@ namespace BattleCruisers.Utils
         public const string CAMERA_CALCULATOR = "CameraCalculator";
 
         // Other
+        public const string BOOST = "Boost";
         public const string CRUISER = "Cruiser";
-		public const string GENERIC = "Generic";
+        public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
         public const string PREDICTORS = "TargetPositionPredictors";
         public const string REPAIR_MANAGER = "RepairManager";
@@ -156,6 +157,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
 
             // Other
+            tagsToActiveness.Add(Tags.BOOST, false);
             tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
