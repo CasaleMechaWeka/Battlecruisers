@@ -245,11 +245,15 @@ namespace BattleCruisers.Buildables
 
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
 
-
-            
-            // FELIX  Move to separate boost related method?
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
+            SetupBuildRateBoost();
 
+            _clickHandler.SingleClick += ClickHandler_SingleClick;
+            _clickHandler.DoubleClick += ClickHandler_DoubleClick;
+        }
+
+        private void SetupBuildRateBoost()
+        {
             BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _buildRateBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup.AddBoostable(BuildProgressBoostable);
@@ -261,11 +265,6 @@ namespace BattleCruisers.Buildables
             {
                 _buildRateBoostableGroup.AddBoostProvidersList(buildRateBoostProviders);
             }
-
-
-
-            _clickHandler.SingleClick += ClickHandler_SingleClick;
-            _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
 
         /// <summary>
