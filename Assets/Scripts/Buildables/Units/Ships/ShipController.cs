@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
@@ -7,6 +9,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -118,6 +121,14 @@ namespace BattleCruisers.Buildables.Units.Ships
 			_movementTargetProcessor = SetupTargetProcessorWrapper();
             _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
             _movementTargetProcessor.AddTargetConsumer(_movementDecider);
+        }
+
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders, 
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.ShipProviders);
         }
 
         // Turrets start attacking targets as soon as they are initialised, so

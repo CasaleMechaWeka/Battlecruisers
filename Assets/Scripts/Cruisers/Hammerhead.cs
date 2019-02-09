@@ -11,7 +11,6 @@ namespace BattleCruisers.Cruisers
     public class Hammerhead : Cruiser
     {
         public float navalFactoryBuildRateBoost;
-        // FELIX  Use :)
         public float shipBuildRateBoost;
 
         public override void Initialise(ICruiserArgs args)
@@ -23,6 +22,9 @@ namespace BattleCruisers.Cruisers
 
             IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(navalFactoryBuildRateBoost);
             FactoryProvider.GlobalBoostProviders.BuildingBuildRate.NavalFactoryProviders.Add(factoryBoostProvider);
+
+            IBoostProvider shipBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(shipBuildRateBoost);
+            FactoryProvider.GlobalBoostProviders.UnitBuildRate.ShipProviders.Add(shipBoostProvider);
         }
     }
 }

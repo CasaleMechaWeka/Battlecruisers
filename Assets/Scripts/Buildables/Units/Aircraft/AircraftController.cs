@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
@@ -6,6 +7,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -113,7 +115,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ActiveMovementController = PatrollingMovementController;
         }
 
-		protected abstract IList<IPatrolPoint> GetPatrolPoints();
+        protected override void AddBuildRateBoostProviders(
+            IGlobalBoostProviders globalBoostProviders, 
+            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+        {
+            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.AircraftProviders);
+        }
+
+        protected abstract IList<IPatrolPoint> GetPatrolPoints();
 
 		private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
 		{

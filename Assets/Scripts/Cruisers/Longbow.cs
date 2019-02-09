@@ -11,7 +11,6 @@ namespace BattleCruisers.Cruisers
     public class Longbow : Cruiser
     {
         public float airFactoryBuildRateBoost;
-        // FELIX  Use :)
         public float aircarftBuildRateBoost;
 
         public override void Initialise(ICruiserArgs args)
@@ -23,6 +22,9 @@ namespace BattleCruisers.Cruisers
 
             IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(airFactoryBuildRateBoost);
             FactoryProvider.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders.Add(factoryBoostProvider);
+
+            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(aircarftBuildRateBoost);
+            FactoryProvider.GlobalBoostProviders.UnitBuildRate.AircraftProviders.Add(aircraftBoostProvider);
         }
     }
 }
