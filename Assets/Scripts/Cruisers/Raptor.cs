@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
             FactoryProvider.GlobalBoostProviders.ShieldRechargeRateBoostProviders.Add(rechargeRateBoost);
 
             IBoostProvider buildRateBoost = FactoryProvider.BoostFactory.CreateBoostProvider(shieldBuildRateBoost);
-            FactoryProvider.GlobalBoostProviders.BuildRate.ShieldsProviders.Add(buildRateBoost);
+            FactoryProvider.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders.Add(buildRateBoost);
         }
     }
 }

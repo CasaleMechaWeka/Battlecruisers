@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildRate.ShieldsProviders);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
         }
 
         protected override void OnStaticInitialised()
