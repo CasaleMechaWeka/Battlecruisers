@@ -18,7 +18,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(ultrasBuildRateBoost > 0);
 
             IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(ultrasBuildRateBoost);
-            FactoryProvider.GlobalBoostProviders.UltrasBuildRateBoostProviders.Add(boostProvider);
+            FactoryProvider.GlobalBoostProviders.BuildRate.UltrasProviders.Add(boostProvider);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(aircarftBuildRateBoost > 0);
 
             IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(airFactoryBuildRateBoost);
-            FactoryProvider.GlobalBoostProviders.AirFactoryBuildRateBoostProviders.Add(factoryBoostProvider);
+            FactoryProvider.GlobalBoostProviders.BuildRate.AirFactoryProviders.Add(factoryBoostProvider);
         }
     }
 }

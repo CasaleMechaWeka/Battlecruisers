@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.NavalFactoryBuildRateBoostProviders);
+            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildRate.NavalFactoryProviders);
         }
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()

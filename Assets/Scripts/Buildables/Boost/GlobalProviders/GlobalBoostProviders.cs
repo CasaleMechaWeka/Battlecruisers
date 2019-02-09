@@ -17,15 +17,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         
         public IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; private set; }
 
-        // Build rate
-        public IObservableCollection<IBoostProvider> DefensivesBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> OffensivesBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> TacticalsBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> ShieldsBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> UltrasBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> AirFactoryBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> NavalFactoryBuildRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> DroneBuildingsBuildRateBoostProviders { get; private set; }
+        public IBuildingBuildRatelBoostProviders BuildRate { get; private set; }
 
         public GlobalBoostProviders()
         {
@@ -37,15 +29,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 
             ShieldRechargeRateBoostProviders = new ObservableCollection<IBoostProvider>();
 
-            // Build rate
-            DefensivesBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            OffensivesBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            TacticalsBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            ShieldsBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            UltrasBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            AirFactoryBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            NavalFactoryBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
-            DroneBuildingsBuildRateBoostProviders = new ObservableCollection<IBoostProvider>();
+            BuildRate = new BuildingBuildRatelBoostProviders();
         }
 	}
 }

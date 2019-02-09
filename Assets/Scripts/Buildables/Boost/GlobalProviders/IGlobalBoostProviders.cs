@@ -16,15 +16,6 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 
         IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
 
-        // Build rate
-        IObservableCollection<IBoostProvider> DefensivesBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> OffensivesBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> TacticalsBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> ShieldsBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> UltrasBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> AirFactoryBuildRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> NavalFactoryBuildRateBoostProviders { get; }
-        // Drone stations and Ultralisks
-        IObservableCollection<IBoostProvider> DroneBuildingsBuildRateBoostProviders { get; }
+        IBuildingBuildRatelBoostProviders BuildRate { get; }
     }
 }
