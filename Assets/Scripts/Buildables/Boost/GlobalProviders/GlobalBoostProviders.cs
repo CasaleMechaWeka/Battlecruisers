@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         public IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; private set; }
 
         public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; private set; }
+        public IUnitBuildRatelBoostProviders UnitBuildRate { get; private set; }
 
         public GlobalBoostProviders()
         {
@@ -30,6 +31,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
             ShieldRechargeRateBoostProviders = new ObservableCollection<IBoostProvider>();
 
             BuildingBuildRate = new BuildingBuildRatelBoostProviders();
+            UnitBuildRate = new UnitBuildRatelBoostProviders();
         }
 	}
 }
