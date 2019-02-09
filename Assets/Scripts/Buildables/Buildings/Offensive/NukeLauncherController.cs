@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;

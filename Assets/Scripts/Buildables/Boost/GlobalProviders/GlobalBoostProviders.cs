@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils.DataStrctures;
 
-namespace BattleCruisers.Buildables.Boost
+namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public class GlobalBoostProviders : IGlobalBoostProviders
     {

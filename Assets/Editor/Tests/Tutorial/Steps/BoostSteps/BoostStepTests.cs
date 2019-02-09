@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.BoostSteps;
 using NUnit.Framework;

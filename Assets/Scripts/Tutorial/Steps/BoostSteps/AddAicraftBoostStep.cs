@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 
 namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {

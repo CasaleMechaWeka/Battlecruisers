@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {

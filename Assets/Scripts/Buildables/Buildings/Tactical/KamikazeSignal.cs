@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;

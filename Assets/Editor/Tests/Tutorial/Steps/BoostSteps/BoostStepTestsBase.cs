@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using NUnit.Framework;

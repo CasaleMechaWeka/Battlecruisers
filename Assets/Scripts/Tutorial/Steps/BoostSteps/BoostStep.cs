@@ -1,6 +1,7 @@
-﻿using System;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {
