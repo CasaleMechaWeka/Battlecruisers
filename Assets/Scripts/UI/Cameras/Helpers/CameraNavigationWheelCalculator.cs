@@ -13,22 +13,25 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private readonly INavigationWheelPanel _navigationWheelPanel;
         private readonly ICameraCalculator _cameraCalculator;
         private readonly IRange<float> _validOrthographicSizeRange;
+        private readonly IProportionCalculator _proportionCalculator;
 
         public CameraNavigationWheelCalculator(
             INavigationWheelPanel navigationWheelPanel,
             ICameraCalculator cameraCalculator,
-            IRange<float> validOrthographicSizeRange)
+            IRange<float> validOrthographicSizeRange,
+            IProportionCalculator proportionCalculator)
         {
-            Helper.AssertIsNotNull(navigationWheelPanel, cameraCalculator, validOrthographicSizeRange);
+            Helper.AssertIsNotNull(navigationWheelPanel, cameraCalculator, validOrthographicSizeRange, proportionCalculator);
 
             _navigationWheelPanel = navigationWheelPanel;
             _cameraCalculator = cameraCalculator;
             _validOrthographicSizeRange = validOrthographicSizeRange;
+            _proportionCalculator = proportionCalculator;
         }
 
         public float FindOrthographicSize()
         {
-            return FindProportionalValue(_navigationWheelPanel.FindYProportion(), _validOrthographicSizeRange);
+            return _proportionCalculator.FindProportionalValue(_navigationWheelPanel.FindYProportion(), _validOrthographicSizeRange);
         }
 
         public Vector2 FindCameraPosition()
@@ -38,19 +41,9 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
             IRange<float> validCameraXPositions = _cameraCalculator.FindValidCameraXPositions(desiredOrthographicSize);
             float xProportion = _navigationWheelPanel.FindXProportion();
-            float desiredCameraXPosition = FindProportionalValue(xProportion, validCameraXPositions);
+            float desiredCameraXPosition = _proportionCalculator.FindProportionalValue(xProportion, validCameraXPositions);
 
             return new Vector2(desiredCameraXPosition, desiredCameraYPosition);
-        }
-
-        private float FindProportionalValue(float proportion, IRange<float> valueRange)
-        {
-            Assert.IsTrue(proportion >= 0);
-            Assert.IsTrue(proportion <= 1);
-
-            float valueDifference = valueRange.Max - valueRange.Min;
-            float valueOffset = proportion * valueDifference;
-            return valueRange.Min + valueOffset;
         }
 
         // FELIX  Test needing the clamps :)
@@ -59,23 +52,16 @@ namespace BattleCruisers.UI.Cameras.Helpers
             Assert.IsNotNull(cameraTarget);
 
             // Find y-position from camera orthographic size
-            float orthographicSizeProportion = FindProportion(cameraTarget.OrthographicSize, _validOrthographicSizeRange);
+            float orthographicSizeProportion = _proportionCalculator.FindProportion(cameraTarget.OrthographicSize, _validOrthographicSizeRange);
             float navigationWheelYPosition = _navigationWheelPanel.FindYPosition(orthographicSizeProportion);
 
             // Find x-position from camera x-position
             float clampedOrthographicSize = Mathf.Clamp(cameraTarget.OrthographicSize, _validOrthographicSizeRange.Min, _validOrthographicSizeRange.Max);
             IRange<float> validCameraXPositions = _cameraCalculator.FindValidCameraXPositions(clampedOrthographicSize);
-            float xPositionProportion = FindProportion(cameraTarget.Position.x, validCameraXPositions);
+            float xPositionProportion = _proportionCalculator.FindProportion(cameraTarget.Position.x, validCameraXPositions);
             float navigationWheelXPosition = _navigationWheelPanel.FindXPosition(xPositionProportion, navigationWheelYPosition);
 
             return new Vector2(navigationWheelXPosition, navigationWheelYPosition);
-        }
-
-        private float FindProportion(float value, IRange<float> valueRange)
-        {
-            float clampedValue = Mathf.Clamp(value, valueRange.Min, valueRange.Max);
-            float range = valueRange.Max - valueRange.Min;
-            return (clampedValue - valueRange.Min) / range;
         }
     }
 }

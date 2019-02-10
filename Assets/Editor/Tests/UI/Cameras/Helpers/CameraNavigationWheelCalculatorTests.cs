@@ -14,6 +14,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         private INavigationWheelPanel _navigationWheelPanel;
         private ICameraCalculator _cameraCalculator;
         private IRange<float> _validOrthographicSizeRange;
+        private IProportionCalculator _proportionCalculator;
 
         [SetUp]
         public void TestSetup()
@@ -21,47 +22,42 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _navigationWheelPanel = Substitute.For<INavigationWheelPanel>();
             _cameraCalculator = Substitute.For<ICameraCalculator>();
             _validOrthographicSizeRange = Substitute.For<IRange<float>>();
+            _proportionCalculator = Substitute.For<IProportionCalculator>();
 
-            _cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(_navigationWheelPanel, _cameraCalculator, _validOrthographicSizeRange);
+            _cameraNavigationWheelCalculator 
+                = new CameraNavigationWheelCalculator(
+                    _navigationWheelPanel, 
+                    _cameraCalculator, 
+                    _validOrthographicSizeRange, 
+                    _proportionCalculator);
 
             UnityAsserts.Assert.raiseExceptions = true;
-        }
-
-        #region FindOrthographicSize
-        [Test]
-        public void FindOrthographicSize_TooSmallProportion_Throws()
-        {
-            _navigationWheelPanel.FindYProportion().Returns(-0.01f);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _cameraNavigationWheelCalculator.FindOrthographicSize());
-        }
-
-        [Test]
-        public void FindOrthographicSize_TooBigProportion_Throws()
-        {
-            _navigationWheelPanel.FindYProportion().Returns(1.01f);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _cameraNavigationWheelCalculator.FindOrthographicSize());
         }
 
         [Test]
         public void FindOrthographicSize_ValidProportion_FindsOrthographicSize()
         {
-            _navigationWheelPanel.FindYProportion().Returns(0.5f);
+            float yProportion = 0.5f;
+            _navigationWheelPanel.FindYProportion().Returns(yProportion);
             _validOrthographicSizeRange.Min.Returns(5);
             _validOrthographicSizeRange.Max.Returns(15);
 
-            Assert.AreEqual(10, _cameraNavigationWheelCalculator.FindOrthographicSize());
-        }
-        #endregion FindOrthographicSize
+            float expectedProportion = 10;
+            _proportionCalculator.FindProportionalValue(yProportion, _validOrthographicSizeRange).Returns(expectedProportion);
 
-        #region FindCameraPosition
+            Assert.AreEqual(expectedProportion, _cameraNavigationWheelCalculator.FindOrthographicSize());
+        }
+
         [Test]
         public void FindCameraPosition()
         {
             // Calls FindOrthographicSize() :)
-            _navigationWheelPanel.FindYProportion().Returns(0.5f);
+            float yProportion = 0.5f;
+            _navigationWheelPanel.FindYProportion().Returns(yProportion);
             _validOrthographicSizeRange.Min.Returns(5);
             _validOrthographicSizeRange.Max.Returns(15);
             float desiredOrthographicSize = 10;
+            _proportionCalculator.FindProportionalValue(yProportion, _validOrthographicSizeRange).Returns(desiredOrthographicSize);
 
             float desiredCameraYPosition = 17;
             _cameraCalculator.FindCameraYPosition(desiredOrthographicSize).Returns(desiredCameraYPosition);
@@ -73,10 +69,17 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _navigationWheelPanel.FindXProportion().Returns(xProportion);
 
             float desiredCameraXPosition = -3;
+            _proportionCalculator.FindProportionalValue(xProportion, validCameraXPositions).Returns(desiredCameraXPosition);
+
             Vector2 expectedCameraPosition = new Vector2(desiredCameraXPosition, desiredCameraYPosition);
 
             Assert.AreEqual(expectedCameraPosition, _cameraNavigationWheelCalculator.FindCameraPosition());
         }
-        #endregion FindCameraPosition
+
+        [Test]
+        public void FindNavigationWheelPosition()
+        {
+            // FELIX  :D
+        }
     }
 }

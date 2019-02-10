@@ -34,7 +34,12 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
 
-            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(navigationWheelPanel, cameraCalculator, settings.ValidOrthographicSizes);
+            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
+                = new CameraNavigationWheelCalculator(
+                    navigationWheelPanel, 
+                    cameraCalculator, 
+                    settings.ValidOrthographicSizes,
+                    new ProportionCalculator());
             ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetFinder cornerCameraTargetFinder
                 = new NavigationWheelCornersCameraTargetFinder(

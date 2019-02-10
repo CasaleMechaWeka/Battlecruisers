@@ -34,7 +34,12 @@ namespace BattleCruisers.Scenes.Test
                     _camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(_camera, settings);
 
-            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator = new CameraNavigationWheelCalculator(navigationWheelPanel, cameraCalculator, settings.ValidOrthographicSizes);
+            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
+                = new CameraNavigationWheelCalculator(
+                    navigationWheelPanel, 
+                    cameraCalculator, 
+                    settings.ValidOrthographicSizes,
+                    new ProportionCalculator());
             ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, _camera);
 
             if (useCorners)
