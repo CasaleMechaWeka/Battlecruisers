@@ -31,23 +31,17 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             float midLeftY = navigationPanelArea.FindMaxY(midLeftX);
             MidLeftPosition = new Vector2(midLeftX, midLeftY);
 
-            // FELIX  Remove :p
-            float navalFactoryXDelta = navigationPanelArea.Width / 6;
-            float navalFactoryY = navigationPanelArea.BottomLeftVertex.y;
-
-            float aiNavalFactoryX = navigationPanelArea.BottomRightVertex.x - navalFactoryXDelta;
-            AINavalFactoryPosition = new Vector2(aiNavalFactoryX, navalFactoryY);
-
-            float playerNavalFactoryX = navigationPanelArea.BottomLeftVertex.x + navalFactoryXDelta;
-            PlayerNavalFactoryPosition = new Vector2(playerNavalFactoryX, navalFactoryY);
-
             // Player cruiser naval factory
             float playerCruiserBowSlotXPosition = playerCruiser.Position.x + playerCruiser.Size.x / 2;
             Vector3 playerCruiserNavalFactoryTargetPosition = new Vector3(playerCruiserBowSlotXPosition, float.MinValue);
             ICameraTarget playerCruiserNavalFactoryTarget = new CameraTarget(playerCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
             PlayerNavalFactoryPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserNavalFactoryTarget);
 
-            // FELIX  AI naval factory :P
+            // AI cruiser naval factory
+            float aiCruiserBowSlotXPosition = aiCruiser.Position.x - aiCruiser.Size.x / 2;
+            Vector3 aiCruiserNavalFactoryTargetPosition = new Vector3(aiCruiserBowSlotXPosition, float.MinValue);
+            ICameraTarget aiCruiserNavalFactoryTarget = new CameraTarget(aiCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
+            AICruiserPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
         }
     }
 }
