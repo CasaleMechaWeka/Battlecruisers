@@ -132,7 +132,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            if (_isAtCruisingHeight && !IsInKamikazeMode)
+            if (_isAtCruisingHeight 
+                && !IsInKamikazeMode
+                && Target != null)
 			{
 				TryBombTarget();
 			}
@@ -140,8 +142,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void TryBombTarget()
 		{
-			Assert.IsNotNull(Target);
-
 			if (_haveDroppedBombOnRun)
 			{
 				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, EffectiveMaxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
