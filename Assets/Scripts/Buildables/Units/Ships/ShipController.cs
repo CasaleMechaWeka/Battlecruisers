@@ -210,5 +210,17 @@ namespace BattleCruisers.Buildables.Units.Ships
             // Make ship rear sink first
             rigidBody.AddTorque(0.75f, ForceMode2D.Impulse);
         }
+
+        protected override List<Renderer> GetInGameRenderers()
+        {
+            List<Renderer> renderers = base.GetInGameRenderers();
+
+            foreach (IBarrelWrapper turret in _turrets)
+            {
+                renderers.AddRange(turret.Renderers);
+            }
+
+            return renderers;
+        }
     }
 }

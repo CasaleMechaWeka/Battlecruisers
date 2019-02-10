@@ -36,9 +36,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, FiringSound, _parentSlot.BoostProviders, TurretFireRateBoostProviders);
         }
 
-        protected override IList<Renderer> GetInGameRenderers()
+        protected override List<Renderer> GetInGameRenderers()
         {
-            IList<Renderer> renderers = _barrelWrapper.Renderers.ToList();
+            List<Renderer> renderers = _barrelWrapper.Renderers.ToList();
             renderers.Add(GetBaseRenderer());
             return renderers;
         }
