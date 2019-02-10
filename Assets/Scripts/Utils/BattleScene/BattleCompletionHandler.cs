@@ -37,7 +37,6 @@ namespace BattleCruisers.Utils.BattleScene
                 _applicationModel.DataProvider.SaveGame();
             }
 
-            _applicationModel.IsTutorial = false;
             _applicationModel.ShowPostBattleScreen = true;
 
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);

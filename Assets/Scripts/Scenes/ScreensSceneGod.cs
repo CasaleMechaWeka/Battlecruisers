@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes
         private void GoToPostBattleScreen()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            postBattleScreen.Initialise(this, _dataProvider, _prefabFactory, _musicPlayer);
+            postBattleScreen.Initialise(this, _applicationModel, _prefabFactory, _musicPlayer);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }

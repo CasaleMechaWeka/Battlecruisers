@@ -55,7 +55,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private void ReceivedCommonCompletion()
         {
             Assert.AreEqual(1, _battleCompletedCount);
-            _applicationModel.Received().IsTutorial = false;
             _applicationModel.Received().ShowPostBattleScreen = true;
             _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE);
         }

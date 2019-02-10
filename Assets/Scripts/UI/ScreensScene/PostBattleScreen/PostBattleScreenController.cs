@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleScreenController : ScreenController
 	{
+        private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
         private ILootManager _lootManager;
 
@@ -31,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public void Initialise(
             ScreensSceneGod screensSceneGod, 
-            IDataProvider dataProvider,
+            IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer)
 		{
@@ -47,22 +48,26 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 completedGameMessage, 
                 defeatMessage,
                 victoryNoLootMessage);
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, musicPlayer);
+            Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer);
 
-            _dataProvider = dataProvider;
+            _applicationModel = applicationModel;
+            _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
 
             SetupBackground();
 
-            if (BattleResult == null)
+            if (_applicationModel.IsTutorial)
             {
                 // User completed (or rage quit) the tutorial
+                _applicationModel.IsTutorial = false;
                 postTutorialMessage.SetActive(true);
                 postTutorialButtonsPanel.SetActive(true);
                 musicPlayer.PlayVictoryMusic();
             }
             else
             {
+                Assert.IsNotNull(BattleResult);
+
                 // User completed a level
                 postBattleButtonsPanel.SetActive(true);
 
