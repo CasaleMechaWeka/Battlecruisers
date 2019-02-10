@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Test :D
     public class ProportionCalculator : IProportionCalculator
     {
         public float FindProportion(float value, IRange<float> valueRange)
