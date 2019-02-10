@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
-using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.UI.BattleScene.Clouds;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -198,11 +197,11 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Kentient, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(1, "Sprawl Brawl", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(2, "Fisticuffs", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Kentient, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(3, "Ambush at Dire Straits", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(4, "Battle of Watercress", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Kentient, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(5, "Little big elbow", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Kentient, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(6, "Dunspock", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(7, "Gallient Flippery", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
 
@@ -254,7 +253,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
 
                 // Tactical
-                { StaticPrefabKeys.Buildings.ShieldGenerator, 5 },
+                { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
                 { StaticPrefabKeys.Buildings.LocalBooster, 10 },
                 { StaticPrefabKeys.Buildings.ControlTower, 11 },
                 { StaticPrefabKeys.Buildings.StealthGenerator, 14 },
@@ -263,8 +262,8 @@ namespace BattleCruisers.Data.Static
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
                 { StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
-                { StaticPrefabKeys.Buildings.Mortar, 2 },
-                { StaticPrefabKeys.Buildings.SamSite, 3 },
+                { StaticPrefabKeys.Buildings.Mortar, 3 },
+                { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 13 },
 
                 // Offence
@@ -287,12 +286,12 @@ namespace BattleCruisers.Data.Static
             {
                 // Aircraft
                 { StaticPrefabKeys.Units.Bomber, 1 },
-                { StaticPrefabKeys.Units.Gunship, 3 },
+                { StaticPrefabKeys.Units.Gunship, 5 },
                 { StaticPrefabKeys.Units.Fighter, 9 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
-                { StaticPrefabKeys.Units.Frigate, 2 },
+                { StaticPrefabKeys.Units.Frigate, 3 },
                 { StaticPrefabKeys.Units.Destroyer, 9 },
                 { StaticPrefabKeys.Units.ArchonBattleship, 20 }
             };
@@ -303,8 +302,8 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<HullKey, int>()
             {
                 { StaticPrefabKeys.Hulls.Trident, 1 },
-                { StaticPrefabKeys.Hulls.Bullshark, 4 },
-                { StaticPrefabKeys.Hulls.Raptor, 6 },
+                { StaticPrefabKeys.Hulls.Raptor, 4 },
+                { StaticPrefabKeys.Hulls.Bullshark, 6 },
                 { StaticPrefabKeys.Hulls.Rockjaw, 8 },
                 { StaticPrefabKeys.Hulls.Eagle, 12 },
                 { StaticPrefabKeys.Hulls.Hammerhead, 15 },
