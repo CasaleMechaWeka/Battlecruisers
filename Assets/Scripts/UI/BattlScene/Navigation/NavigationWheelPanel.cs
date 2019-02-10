@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // FELIX  Update tests :)
     public class NavigationWheelPanel : INavigationWheelPanel
     {
         public INavigationWheel NavigationWheel { get; private set; }
@@ -20,16 +21,22 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public float FindYProportion()
         {
-            return FindLocalY() / PanelArea.Height;
+            return FindLocalY(NavigationWheel.CenterPosition.y) / PanelArea.Height;
+        }
+
+        public float FindYPosition(float yProportion)
+        {
+            float yFromPanelBase = yProportion * PanelArea.Height;
+            return PanelArea.BottomLeftVertex.y + yFromPanelBase;
         }
 
         public float FindXProportion()
         {
-            float localYPosition = FindLocalY();
+            float localYPosition = FindLocalY(NavigationWheel.CenterPosition.y);
 
             IRange<float> globalXRangeAtHeight = PanelArea.FindGlobalXRange(localYPosition);
 
-            // Sometimes _navigationWheel.CenterPosition.x can be slightly smaller (eg: by 3 x 10^7)
+            // Sometimes _navigationWheel.CenterPosition.x can be slightly smaller (eg: by 3 x 10^-7)
             // than the minimim expected position due to float rounding errors, so clamp to avoid this.
             float navigationWheelClampedXPosition = Mathf.Clamp(NavigationWheel.CenterPosition.x, globalXRangeAtHeight.Min, globalXRangeAtHeight.Max);
 
@@ -38,7 +45,16 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             return localXPositionAtHeight / widthAtHeight;
         }
 
-        private float FindLocalY()
+        public float FindXPosition(float xProportion, float navigationWheelYPosition)
+        {
+            float localYPosition = FindLocalY(navigationWheelYPosition);
+            IRange<float> globalXRangeAtHeight = PanelArea.FindGlobalXRange(localYPosition);
+            float widthAtHeight = globalXRangeAtHeight.Max - globalXRangeAtHeight.Min;
+            float xFromLeftEdgeAtHeight = xProportion * widthAtHeight;
+            return globalXRangeAtHeight.Min + xFromLeftEdgeAtHeight;
+        }
+
+        private float FindLocalY(float navigationWheelYPosition)
         {
             float localYPosition = NavigationWheel.CenterPosition.y - PanelArea.BottomLeftVertex.y;
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.Cameras.Targets;
+using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
@@ -15,5 +16,10 @@ namespace BattleCruisers.UI.Cameras.Helpers
         /// navigation wheel position.
         /// </summary>
         Vector2 FindCameraPosition();
+
+        /// <summary>
+        /// The reverse of the other methods.
+        /// </summary>
+        Vector2 FindNavigationWheelPosition(ICameraTarget cameraTarget);
     }
 }

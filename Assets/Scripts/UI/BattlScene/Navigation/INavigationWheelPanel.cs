@@ -13,10 +13,20 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         /// </returns>
         float FindYProportion();
 
+        /// <summary>
+        /// Reverse of FindYProportion.
+        /// </summary>
+        float FindYPosition(float yProportion);
+
         /// <returns>
         /// The navigation wheel x position as a proportion of valid
         /// width at the current wheel y position:  0-1
         /// </returns>
         float FindXProportion();
+
+        /// <summary>
+        /// Reverse of FindXProportion.
+        /// </summary>
+        float FindXPosition(float xProportion, float navigationWheelYPosition);
     }
 }
