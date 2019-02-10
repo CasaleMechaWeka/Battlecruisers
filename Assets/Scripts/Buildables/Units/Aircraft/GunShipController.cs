@@ -160,5 +160,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _inRangeTargetTracker.DisposeManagedState();
 		}
-	}
+
+        protected override List<Renderer> GetInGameRenderers()
+        {
+            List<Renderer> renderers = base.GetInGameRenderers();
+            renderers.AddRange(_barrelWrapper.Renderers);
+            return renderers;
+        }
+    }
 }
