@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
@@ -31,6 +32,9 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
                     _validOrthographicSizeRange, 
                     _proportionCalculator);
 
+            _validOrthographicSizeRange.Min.Returns(5);
+            _validOrthographicSizeRange.Max.Returns(15);
+
             UnityAsserts.Assert.raiseExceptions = true;
         }
 
@@ -39,8 +43,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         {
             float yProportion = 0.5f;
             _navigationWheelPanel.FindYProportion().Returns(yProportion);
-            _validOrthographicSizeRange.Min.Returns(5);
-            _validOrthographicSizeRange.Max.Returns(15);
 
             float expectedProportion = 10;
             _proportionCalculator.FindProportionalValue(yProportion, _validOrthographicSizeRange).Returns(expectedProportion);
@@ -54,8 +56,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             // Calls FindOrthographicSize() :)
             float yProportion = 0.5f;
             _navigationWheelPanel.FindYProportion().Returns(yProportion);
-            _validOrthographicSizeRange.Min.Returns(5);
-            _validOrthographicSizeRange.Max.Returns(15);
             float desiredOrthographicSize = 10;
             _proportionCalculator.FindProportionalValue(yProportion, _validOrthographicSizeRange).Returns(desiredOrthographicSize);
 
@@ -79,7 +79,26 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         [Test]
         public void FindNavigationWheelPosition()
         {
-            // FELIX  :D
+            ICameraTarget cameraTarget = new CameraTarget(new Vector3(1, 2, 3), 27);
+
+            // Find y-position from camera orthographic size
+            float orthographicSizeProportion = 0.77f;
+            _proportionCalculator.FindProportion(cameraTarget.OrthographicSize, _validOrthographicSizeRange).Returns(orthographicSizeProportion);
+            float navigationWheelYPosition = 88;
+            _navigationWheelPanel.FindYPosition(orthographicSizeProportion).Returns(navigationWheelYPosition);
+
+            // Find x-position from camera x-position
+            float clampedOrthographicSize = Mathf.Clamp(cameraTarget.OrthographicSize, _validOrthographicSizeRange.Min, _validOrthographicSizeRange.Max);
+            IRange<float> validCameraXPositions = new Range<float>(-32.1f, 12.3f);
+            _cameraCalculator.FindValidCameraXPositions(clampedOrthographicSize).Returns(validCameraXPositions);
+
+            float xPositionProportion = 0.55f;
+            _proportionCalculator.FindProportion(cameraTarget.Position.x, validCameraXPositions).Returns(xPositionProportion);
+            float navigationWheelXPosition = 97.531f;
+            _navigationWheelPanel.FindXPosition(xPositionProportion, navigationWheelYPosition).Returns(navigationWheelXPosition);
+
+            Vector2 expectedNavigationWheelPosition = new Vector2(navigationWheelXPosition, navigationWheelYPosition);
+            Assert.AreEqual(expectedNavigationWheelPosition, _cameraNavigationWheelCalculator.FindNavigationWheelPosition(cameraTarget));
         }
     }
 }

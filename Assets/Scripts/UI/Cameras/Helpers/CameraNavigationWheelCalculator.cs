@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Update tests :)
     public class CameraNavigationWheelCalculator : ICameraNavigationWheelCalculator
     {
         private readonly INavigationWheelPanel _navigationWheelPanel;
@@ -46,7 +45,6 @@ namespace BattleCruisers.UI.Cameras.Helpers
             return new Vector2(desiredCameraXPosition, desiredCameraYPosition);
         }
 
-        // FELIX  Test needing the clamps :)
         public Vector2 FindNavigationWheelPosition(ICameraTarget cameraTarget)
         {
             Assert.IsNotNull(cameraTarget);
