@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  Update tests :)
     public class NavigationWheelPanel : INavigationWheelPanel
     {
         public INavigationWheel NavigationWheel { get; private set; }
@@ -56,7 +55,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         private float FindLocalY(float navigationWheelYPosition)
         {
-            float localYPosition = NavigationWheel.CenterPosition.y - PanelArea.BottomLeftVertex.y;
+            float localYPosition = navigationWheelYPosition - PanelArea.BottomLeftVertex.y;
 
             Assert.IsTrue(localYPosition >= 0);
             Assert.IsTrue(localYPosition <= PanelArea.Height);

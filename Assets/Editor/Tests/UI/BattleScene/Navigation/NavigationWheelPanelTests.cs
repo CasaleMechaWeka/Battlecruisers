@@ -24,6 +24,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             UnityAsserts.Assert.raiseExceptions = true;
         }
 
+        #region FindYProportion
         [Test]
         public void FindYProportion_NavigationWheelIsTeLeftOfArea_Throws()
         {
@@ -54,7 +55,20 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             Assert.IsTrue(Mathf.Approximately(expectedProportion, _wheelPanel.FindYProportion()));
         }
+        #endregion FindYProportion
 
+        [Test]
+        public void FindYPosition()
+        {
+            _panelArea.BottomLeftVertex.Returns(new Vector2(-3, 2));
+            float yProportion = 0.6f;
+            float yFromPanelBase = yProportion * _panelArea.Height;
+            float expectedYPosition = _panelArea.BottomLeftVertex.y + yFromPanelBase;
+
+            Assert.AreEqual(expectedYPosition, _wheelPanel.FindYPosition(yProportion));
+        }
+
+        #region FindXProportion
         [Test]
         public void FindXProportion_WheelPositionIsClamped()
         {
@@ -85,6 +99,27 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 
             float expectedProportion = (_navigationWheel.CenterPosition.x - globalXRangeAtHeight.Min) / (globalXRangeAtHeight.Max - globalXRangeAtHeight.Min);
             Assert.AreEqual(expectedProportion, _wheelPanel.FindXProportion());
+        }
+        #endregion FindXProportion
+
+        [Test]
+        public void FindXPosition()
+        {
+            float xProportion = 0.44f;
+            float navigationWheelYPosition = 12;
+
+            _panelArea.BottomLeftVertex.Returns(new Vector2(0, 9));
+            _panelArea.Height.Returns(4);
+
+            float localYPosition = navigationWheelYPosition - _panelArea.BottomLeftVertex.y;
+
+            IRange<float> globalXRangeAtHeight = new Range<float>(-12.3f, 32.1f);
+            _panelArea.FindGlobalXRange(localYPosition).Returns(globalXRangeAtHeight);
+            float widthAtHeight = globalXRangeAtHeight.Max - globalXRangeAtHeight.Min;
+            float xFromLeftEdgeAtHeight = xProportion * widthAtHeight;
+            float expectedXPosition = globalXRangeAtHeight.Min + xFromLeftEdgeAtHeight;
+
+            Assert.AreEqual(expectedXPosition, _wheelPanel.FindXPosition(xProportion, navigationWheelYPosition));
         }
     }
 }
