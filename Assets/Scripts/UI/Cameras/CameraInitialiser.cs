@@ -53,7 +53,13 @@ namespace BattleCruisers.UI.Cameras
             Skybox skybox = GetComponent<Skybox>();
             Assert.IsNotNull(skybox);
 
-            INavigationWheelPositionProvider navigationWheelPositionProvider = new NavigationWheelPositionProvider(navigationWheelPanel.PanelArea);
+            INavigationWheelPositionProvider navigationWheelPositionProvider 
+                = new NavigationWheelPositionProvider(
+                    navigationWheelPanel.PanelArea,
+                    cameraNavigationWheelCalculator,
+                    settings.ValidOrthographicSizes,
+                    playerCruiser,
+                    aiCruiser);
 
             return
                 new CameraComponents(

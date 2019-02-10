@@ -43,25 +43,6 @@ namespace BattleCruisers.UI.Cameras.Helpers
             return new Vector2(desiredCameraXPosition, desiredCameraYPosition);
         }
 
-        // FELIX  Test needing the clamps :)
-        public Vector2 FindNavigationWheelPosition(ICameraTarget cameraTarget)
-        {
-            Assert.IsNotNull(cameraTarget);
-
-            // Find y-position from camera orthographic size
-            float clampedOrthographicSize = Mathf.Clamp(cameraTarget.OrthographicSize, _validOrthographicSizeRange.Min, _validOrthographicSizeRange.Max);
-            float orthographicSizeProportion = FindProportionalValue(clampedOrthographicSize, _validOrthographicSizeRange);
-            float navigationWheelYPosition = _navigationWheelPanel.FindYPosition(orthographicSizeProportion);
-
-            // Find x-position from camera x-position
-            IRange<float> validCameraXPositions = _cameraCalculator.FindValidCameraXPositions(clampedOrthographicSize);
-            float clampedXPosion = Mathf.Clamp(cameraTarget.Position.x, validCameraXPositions.Min, validCameraXPositions.Max);
-            float xPositionProportion = FindProportionalValue(clampedXPosion, validCameraXPositions);
-            float navigationWheelXPosition = _navigationWheelPanel.FindXPosition(xPositionProportion, navigationWheelYPosition);
-
-            return new Vector2(navigationWheelXPosition, navigationWheelYPosition);
-        }
-
         private float FindProportionalValue(float proportion, IRange<float> valueRange)
         {
             Assert.IsTrue(proportion >= 0);
@@ -70,6 +51,31 @@ namespace BattleCruisers.UI.Cameras.Helpers
             float valueDifference = valueRange.Max - valueRange.Min;
             float valueOffset = proportion * valueDifference;
             return valueRange.Min + valueOffset;
+        }
+
+        // FELIX  Test needing the clamps :)
+        public Vector2 FindNavigationWheelPosition(ICameraTarget cameraTarget)
+        {
+            Assert.IsNotNull(cameraTarget);
+
+            // Find y-position from camera orthographic size
+            float orthographicSizeProportion = FindProportion(cameraTarget.OrthographicSize, _validOrthographicSizeRange);
+            float navigationWheelYPosition = _navigationWheelPanel.FindYPosition(orthographicSizeProportion);
+
+            // Find x-position from camera x-position
+            float clampedOrthographicSize = Mathf.Clamp(cameraTarget.OrthographicSize, _validOrthographicSizeRange.Min, _validOrthographicSizeRange.Max);
+            IRange<float> validCameraXPositions = _cameraCalculator.FindValidCameraXPositions(clampedOrthographicSize);
+            float xPositionProportion = FindProportion(cameraTarget.Position.x, validCameraXPositions);
+            float navigationWheelXPosition = _navigationWheelPanel.FindXPosition(xPositionProportion, navigationWheelYPosition);
+
+            return new Vector2(navigationWheelXPosition, navigationWheelYPosition);
+        }
+
+        private float FindProportion(float value, IRange<float> valueRange)
+        {
+            float clampedValue = Mathf.Clamp(value, valueRange.Min, valueRange.Max);
+            float range = valueRange.Max - valueRange.Min;
+            return (clampedValue - valueRange.Min) / range;
         }
     }
 }
