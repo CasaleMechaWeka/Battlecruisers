@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             float aiCruiserBowSlotXPosition = aiCruiser.Position.x - aiCruiser.Size.x / 2;
             Vector3 aiCruiserNavalFactoryTargetPosition = new Vector3(aiCruiserBowSlotXPosition, float.MinValue);
             ICameraTarget aiCruiserNavalFactoryTarget = new CameraTarget(aiCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
-            AICruiserPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
+            AINavalFactoryPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
         }
     }
 }
