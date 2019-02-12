@@ -3,11 +3,13 @@ using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
+    // FELIX  Delete :D
     public enum HighlightableType
     {
         InGame, OnCanvas
     }
 
+    // FELIX  Delete :D
     public interface IHighlightable
     {
         ITransform Transform { get; }
