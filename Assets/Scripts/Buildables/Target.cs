@@ -57,6 +57,8 @@ namespace BattleCruisers.Buildables
         public event EventHandler<DamagedEventArgs> Damaged;
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
+        public virtual Color Color { set { /* empty */ } }
+        public bool IsInScene { get { return gameObject.scene.IsValid(); } }
 
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
@@ -115,8 +117,6 @@ namespace BattleCruisers.Buildables
                 return _numOfRepairDronesText;
             }
         }
-
-        public virtual Color Color { set { /* empty */ } }
 
         public void StaticInitialise()
 		{

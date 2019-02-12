@@ -32,6 +32,7 @@ namespace BattleCruisers.Buildables
 		ReadOnlyCollection<TargetType> AttackCapabilities { get; }
 		TargetValue TargetValue { get; }
         Color Color { set; }
+        bool IsInScene { get; }
 
         Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }
