@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 HandleFactory(unitClicked, unitFactory);
 			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
             }
-            else
+            else if (unitFactory.BuildableState == BuildableState.Completed)
             {
                 PlayUnaffordableSound();
             }
