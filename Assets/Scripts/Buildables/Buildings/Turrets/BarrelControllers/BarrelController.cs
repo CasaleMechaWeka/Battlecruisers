@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         private bool IsInitialised { get { return _targetFilter != null; } }
         private bool IsActive { get { return IsInitialised && !_isCleanedUp; } }
-        public Renderer[] Renderers { get; private set; }
+        public SpriteRenderer[] Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
         private IDamageCapability _damageCapability;
@@ -55,7 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public virtual void StaticInitialise()
         {
             // Usually > 0, but can be 0 (invisible barrel controller for fighters)
-            Renderers = GetComponentsInChildren<Renderer>();
+            Renderers = GetComponentsInChildren<SpriteRenderer>();
 
             _projectileStats = GetProjectileStats();
             _baseTurretStats = SetupTurretStats();

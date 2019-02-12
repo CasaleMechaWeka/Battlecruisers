@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables
 {
@@ -69,7 +70,7 @@ namespace BattleCruisers.Buildables
         public float BuildTimeInS { get { return buildTimeInS; } }
         protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
-        public override Vector2 Size { get { return _buildableProgress.FillableImageSprite.bounds.size; } }
+        public override Vector2 Size { get { return _buildableProgress.FillableImage.sprite.bounds.size; } }
         public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
         protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
         protected abstract PrioritisedSoundKey ConstructionCompletedSoundKey { get; }
@@ -102,8 +103,8 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        private IList<Renderer> _inGameRenderers;
-        private IList<Renderer> InGameRenderers
+        private IList<SpriteRenderer> _inGameRenderers;
+        private IList<SpriteRenderer> InGameRenderers
         {
             // Lazily initialise so that the StaticInitialise() (constructor
             // equivalent) of this class and all child classes has completed.
@@ -151,8 +152,22 @@ namespace BattleCruisers.Buildables
             }
         }
 
+        public override Color Color
+        {
+            set
+            {
+                foreach (SpriteRenderer renderer in InGameRenderers)
+                {
+                    renderer.color = value;
+                }
+
+                _buildableProgress.FillableImage.color = value;
+                _buildableProgress.OutlineImage.color = value;
+            }
+        }
+
         #region IComparableItem
-        Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImageSprite; } }
+        Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImage.sprite; } }
         string IComparableItem.Description { get { return description; } }
         string IComparableItem.Name { get { return buildableName; } }
         #endregion IComparableItem
@@ -217,11 +232,11 @@ namespace BattleCruisers.Buildables
             return _numOfDronesText.NumOfDronesText;
         }
 
-        protected virtual List<Renderer> GetInGameRenderers()
+        protected virtual List<SpriteRenderer> GetInGameRenderers()
         {
-            Renderer mainRenderer = GetComponent<Renderer>();
+            SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(mainRenderer);
-            return new List<Renderer>() { mainRenderer };
+            return new List<SpriteRenderer>() { mainRenderer };
         }
 
         protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)

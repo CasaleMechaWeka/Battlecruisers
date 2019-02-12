@@ -9,20 +9,19 @@ namespace BattleCruisers.Buildables.BuildProgress
     public class BuildableProgressController : MonoBehaviour
 	{
 		private Buildable _buildable;
-		private Image _fillableImage;
-		private Image _outlineImage;
 
-		public Sprite FillableImageSprite { get { return _fillableImage.sprite; } }
+		public Image FillableImage { get; private set; }
+        public Image OutlineImage { get; private set; }
 
 		public void Initialise() 
 		{
 			_buildable = gameObject.GetComponentInInactiveParent<Buildable>();
 			Assert.IsNotNull(_buildable);
 
-            _fillableImage = transform.FindNamedComponent<Image>("Canvas/FillableImage");
-            _outlineImage = transform.FindNamedComponent<Image>("Canvas/OutlineImage");
+            FillableImage = transform.FindNamedComponent<Image>("Canvas/FillableImage");
+            OutlineImage = transform.FindNamedComponent<Image>("Canvas/OutlineImage");
 
-			_fillableImage.fillAmount = 0;
+			FillableImage.fillAmount = 0;
 			gameObject.SetActive(false);
 
 			_buildable.StartedConstruction += Buildable_StartedBuilding;
@@ -41,7 +40,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 			Logging.Log(Tags.PROGRESS_BARS, "e.Buildable.BuildProgress: " + e.Buildable.BuildProgress);
 
 			Assert.IsTrue(e.Buildable.BuildProgress >= 0);
-			_fillableImage.fillAmount = e.Buildable.BuildProgress;
+			FillableImage.fillAmount = e.Buildable.BuildProgress;
 		}
 		
 		private void Buildable_CompletedOrDestroyedBuilding(object sender, EventArgs e)
@@ -51,8 +50,8 @@ namespace BattleCruisers.Buildables.BuildProgress
 			_buildable.CompletedBuildable -= Buildable_CompletedOrDestroyedBuilding;
 			_buildable.Destroyed -= Buildable_CompletedOrDestroyedBuilding;
 
-			_fillableImage.enabled = false;
-			_outlineImage.enabled = false;
+			FillableImage.enabled = false;
+			OutlineImage.enabled = false;
 		}
 	}
 }

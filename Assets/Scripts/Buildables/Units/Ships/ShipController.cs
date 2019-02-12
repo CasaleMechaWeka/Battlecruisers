@@ -211,9 +211,9 @@ namespace BattleCruisers.Buildables.Units.Ships
             rigidBody.AddTorque(0.75f, ForceMode2D.Impulse);
         }
 
-        protected override List<Renderer> GetInGameRenderers()
+        protected override List<SpriteRenderer> GetInGameRenderers()
         {
-            List<Renderer> renderers = base.GetInGameRenderers();
+            List<SpriteRenderer> renderers = base.GetInGameRenderers();
 
             foreach (IBarrelWrapper turret in _turrets)
             {

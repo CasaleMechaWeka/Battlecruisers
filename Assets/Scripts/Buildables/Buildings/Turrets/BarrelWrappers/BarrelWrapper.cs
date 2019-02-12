@@ -34,8 +34,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public IDamageCapability DamageCapability { get; private set; }
         public float RangeInM { get; private set; }
 
-        private List<Renderer> _renderers;
-        public IList<Renderer> Renderers { get { return _renderers; } }
+        private List<SpriteRenderer> _renderers;
+        public IList<SpriteRenderer> Renderers { get { return _renderers; } }
 
         private ITarget _target;
         public ITarget Target
@@ -64,7 +64,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public virtual void StaticInitialise()
         {
-            _renderers = new List<Renderer>();
+            _renderers = new List<SpriteRenderer>();
 
             InitialiseBarrels();
 

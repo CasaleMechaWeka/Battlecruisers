@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         IDamageCapability DamageCapability { get; }
         float RangeInM { get; }
         Vector2 Position { get; }
-        IList<Renderer> Renderers { get; }
+        IList<SpriteRenderer> Renderers { get; }
 
 		void StaticInitialise();
 

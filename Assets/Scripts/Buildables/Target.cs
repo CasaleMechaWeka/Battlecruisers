@@ -116,6 +116,8 @@ namespace BattleCruisers.Buildables
             }
         }
 
+        public virtual Color Color { set { /* empty */ } }
+
         public void StaticInitialise()
 		{
 			_health = maxHealth;
@@ -219,6 +221,11 @@ namespace BattleCruisers.Buildables
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
+        }
+
+        protected virtual IList<Renderer> GetInGameRenderers()
+        {
+            return new List<Renderer>();
         }
     }
 }
