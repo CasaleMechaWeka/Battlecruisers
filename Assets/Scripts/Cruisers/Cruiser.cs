@@ -38,7 +38,7 @@ namespace BattleCruisers.Cruisers
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private FogOfWarManager _fogOfWarManager;
-        private SmokeInitialiser _smokeInitialiser;
+        private SmokeGroupInitialiser _smokeGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public int numOfDrones;
@@ -123,8 +123,8 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
-            _smokeInitialiser = GetComponentInChildren<SmokeInitialiser>(includeInactive: true);
-            Assert.IsNotNull(_smokeInitialiser);
+            _smokeGroup = GetComponentInChildren<SmokeGroupInitialiser>(includeInactive: true);
+            Assert.IsNotNull(_smokeGroup);
         }
 
         protected override ITextMesh GetRepairDroneNumText()
@@ -160,7 +160,8 @@ namespace BattleCruisers.Cruisers
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, this);
 
             _unitConstructionMonitor = new UnitConstructionMonitor(this);
-            _smokeInitialiser.Initialise(this, showSmokeWhenDestroyed: true);
+
+            _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
