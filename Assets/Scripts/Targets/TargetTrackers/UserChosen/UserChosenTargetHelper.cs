@@ -44,9 +44,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 
         public void ToggleChosenTarget(ITarget target)
         {
-            ITarget currentUserChosenTarget = _userChosenTargetManager.HighestPriorityTarget != null ? _userChosenTargetManager.HighestPriorityTarget.Target : null;
-
-            if (ReferenceEquals(currentUserChosenTarget, target))
+            if (ReferenceEquals(UserChosenTarget, target))
             {
                 // Clear user chosen target
                 _userChosenTargetManager.Target = null;
