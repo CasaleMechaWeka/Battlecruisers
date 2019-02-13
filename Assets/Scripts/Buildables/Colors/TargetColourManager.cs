@@ -12,8 +12,8 @@ namespace BattleCruisers.Buildables.Colors
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
 
         private static Color DefaultColor = Color.black;
-        private static Color SelectedColor = Color.magenta;
-        private static Color TargettedColor = Color.red;
+        private static Color SelectedColor = new Color(186f/255f, 56f/255f, 32f/255f);    // Orange
+        private static Color TargettedColor = new Color(176f/255f, 51f/255f, 17f/255f);   // Dark orange
 
         private ITarget _selectedTarget;
         private ITarget SelectedTarget
