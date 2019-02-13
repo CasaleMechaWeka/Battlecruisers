@@ -1,16 +1,22 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
+    // FELIX  Update tests :)
     public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IInformatorPanel _informatorPanel;
         private readonly IBuildableDetails<IBuilding> _buildingDetails;
         private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
+
+        private ISettableBroadcastingProperty<ITarget> _selectedItem;
+        public IBroadcastingProperty<ITarget> SelectedItem { get; private set; }
 
         public ItemDetailsManager(IInformatorPanel informator)
         {
@@ -21,6 +27,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _unitDetails = informator.UnitDetails;
             _cruiserDetails = informator.CruiserDetails;
 
+            _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
+            SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
+
             _informatorPanel.Hide();
         }
 
@@ -30,6 +39,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _informatorPanel.Show();
             _buildingDetails.ShowBuildableDetails(building);
+            _selectedItem.Value = building;
         }
 
         public void ShowDetails(IUnit unit)
@@ -38,6 +48,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _informatorPanel.Show();
             _unitDetails.ShowBuildableDetails(unit);
+            _selectedItem.Value = unit;
         }
 
         public void ShowDetails(ICruiser cruiser)
@@ -46,6 +57,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _informatorPanel.Show();
             _cruiserDetails.ShowCruiserDetails(cruiser);
+            _selectedItem.Value = cruiser;
         }
 		
         public void HideDetails()
@@ -54,6 +66,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _unitDetails.Hide();
             _cruiserDetails.Hide();
             _informatorPanel.Hide();
+            _selectedItem.Value = null;
         }
     }
 }
