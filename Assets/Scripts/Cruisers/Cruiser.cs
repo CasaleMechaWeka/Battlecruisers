@@ -49,9 +49,10 @@ namespace BattleCruisers.Cruisers
 
         // ITarget
         public override TargetType TargetType { get { return TargetType.Cruiser; } }
+        public override Color Color { set { _renderer.color = value; } }
 
         // IHighlightable
-		public override Vector2 Size { get { return _renderer.bounds.size; } }
+        public override Vector2 Size { get { return _renderer.bounds.size; } }
         public override float SizeMultiplier { get { return 0.25f; } }
         public override Vector2 PositionAdjustment
         {
