@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Projectiles.Trackers;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -14,7 +13,6 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         public IDeferrer Deferrer { get; private set; }
         public IVariableDelayDeferrer VariableDelayDeferrer { get; private set; }
-        public IHighlightFactory HighlightFactory { get; private set; }
         public IAudioSource AudioSource { get; private set; }
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
@@ -28,9 +26,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             VariableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
             Assert.IsNotNull(VariableDelayDeferrer);
-
-            HighlightFactory = GetComponent<IHighlightFactory>();
-            Assert.IsNotNull(HighlightFactory);
 
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
