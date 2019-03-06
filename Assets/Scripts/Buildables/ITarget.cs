@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Utils.PlatformAbstractions;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables
@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables
 		Low, Medium, High
 	}
 
-    public interface ITarget : IDamagable, IRepairable, IHighlightable, IMaskHighlightable
+    public interface ITarget : IDamagable, IRepairable, IMaskHighlightable
     {
 		Faction Faction { get; }
 		TargetType TargetType { get; }
@@ -33,6 +33,8 @@ namespace BattleCruisers.Buildables
 		TargetValue TargetValue { get; }
         Color Color { set; }
         bool IsInScene { get; }
+        Vector2 Size { get; }
+        ITransform Transform { get; }
 
         Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }

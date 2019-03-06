@@ -2,10 +2,10 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Cruisers.Slots
         }
     }
 
-    public interface ISlot : IHighlightable, IClickableEmitter, IMaskHighlightable
+    public interface ISlot : IClickableEmitter, IMaskHighlightable
     {
         bool IsFree { get; }
         SlotType Type { get; }
@@ -50,6 +50,7 @@ namespace BattleCruisers.Cruisers.Slots
         IObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
         Vector2 Position { get; }
+        ITransform Transform { get; }
 
         /// <summary>
         /// Reference point used to line up buildings with.

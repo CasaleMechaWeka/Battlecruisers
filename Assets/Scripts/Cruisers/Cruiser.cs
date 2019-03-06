@@ -43,25 +43,13 @@ namespace BattleCruisers.Cruisers
 
         public int numOfDrones;
         public float yAdjustmentInM;
-        public float highlightXAdjustmentInM;
         public string description;
         public string cruiserName;
 
         // ITarget
         public override TargetType TargetType { get { return TargetType.Cruiser; } }
         public override Color Color { set { _renderer.color = value; } }
-
-        // IHighlightable
         public override Vector2 Size { get { return _renderer.bounds.size; } }
-        public override float SizeMultiplier { get { return 0.25f; } }
-        public override Vector2 PositionAdjustment
-        {
-            get
-            {
-                float xAdjustment = Direction == Direction.Right ? -highlightXAdjustmentInM : highlightXAdjustmentInM;
-                return new Vector2(xAdjustment, 0);
-            }
-        }
         
 		// IComparableItem
 		public string Description { get { return description; } }

@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -38,10 +37,14 @@ namespace BattleCruisers.Cruisers.Slots
         public float index;
         public float Index { get { return index; } }
 
+        private Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
         public bool IsFree { get { return Building == null; } }
         public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
-		
+        public ITransform Transform { get; private set; }
+        public Vector3 BuildingPlacementPoint { get; private set; }
+        public Vector2 Position { get { return transform.position; } }
+
         /// <summary>
         /// Only show/hide slot sprite renderer.  Always show boost feedback.
         /// </summary>
@@ -72,15 +75,6 @@ namespace BattleCruisers.Cruisers.Slots
 				}
             }
         }
-
-        // IHighlightable
-        public ITransform Transform { get; private set; }
-        public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
-        public Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
-        public virtual float SizeMultiplier { get { return 2; } }
-        public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
-        public Vector3 BuildingPlacementPoint { get; private set; }
-        public Vector2 Position { get { return transform.position; } }
 
         public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;

@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -25,6 +24,8 @@ namespace BattleCruisers.Buildables
         public abstract TargetType TargetType { get; }
         public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
         public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
+        public abstract Vector2 Size { get; }
+        public ITransform Transform { get; private set; }
 
         public Quaternion Rotation
         {
@@ -37,13 +38,6 @@ namespace BattleCruisers.Buildables
             get { return transform.position; }
             set { transform.position = value; }
         }
-
-        // IHighlightable
-        public ITransform Transform { get; private set; }
-        public virtual Vector2 PositionAdjustment { get { return Vector2.zero; } }
-        public abstract Vector2 Size { get; }
-        public virtual float SizeMultiplier { get { return 1; } }
-        public HighlightableType HighlightableType { get { return HighlightableType.InGame; } }
 
         // IMaskHighlightable
         protected virtual Vector2 MaskHighlightableSize { get { return Size; } }
