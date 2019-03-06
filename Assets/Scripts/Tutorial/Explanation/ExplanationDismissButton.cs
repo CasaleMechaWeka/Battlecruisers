@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    public class ExplanationDismissButton : UIElement, 
+    public class ExplanationDismissButton : Togglable, 
         IExplanationDismissButton, 
         IPointerClickHandler
     {

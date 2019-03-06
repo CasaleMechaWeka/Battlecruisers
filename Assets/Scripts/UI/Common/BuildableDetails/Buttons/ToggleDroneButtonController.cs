@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class ToggleDroneButtonController : UIElement, IButton
+    public class ToggleDroneButtonController : Togglable, IButton
     {
         private Button _button;
 

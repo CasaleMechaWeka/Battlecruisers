@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class ChooseTargetButtonController : UIElement, IButton
+    public class ChooseTargetButtonController : Togglable, IButton
     {
         private Button _button;
         private Text _buttonText;

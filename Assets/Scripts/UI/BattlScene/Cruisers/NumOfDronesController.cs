@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    public class NumOfDronesController : UIElement, IManagedDisposable, IButton, IPointerClickHandler
+    public class NumOfDronesController : Togglable, IManagedDisposable, IButton, IPointerClickHandler
     {
         private IDroneManager _droneManager;
 
