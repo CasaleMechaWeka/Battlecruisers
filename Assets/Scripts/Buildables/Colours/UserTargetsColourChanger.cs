@@ -1,7 +1,5 @@
 ﻿namespace BattleCruisers.Buildables.Colours
 {
-    // FELIX  Test :)
-
     /// <summary>
     /// Changes a targets colour depending on whether is is selected or targetted.
     /// </summary>
