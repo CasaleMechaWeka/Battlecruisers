@@ -6,7 +6,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -33,7 +32,6 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGod : MonoBehaviour
     {
         private AudioInitialiser _audioInitialiser;
-        private UserChosenTargetHighligher _userChosenTargetHighligher;
         private IArtificialIntelligence _ai;
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private ITutorialProvider _tutorialProvider;
@@ -165,10 +163,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     itemDetailsManager);
             helper.InitialiseUIManager(args);
 
-            // User chosen target highlighter
-            IHighlightHelper highlightHelper = new HighlightHelper(components.HighlightFactory);
-            _userChosenTargetHighligher = new UserChosenTargetHighligher(playerCruiserUserChosenTargetManager, highlightHelper);
-
             // Audio
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             musicPlayer.LevelMusicKey = currentLevel.MusicKey;
@@ -253,8 +247,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
         {
             _battleCompletionHandler.BattleCompleted -= BattleCompletionHandler_BattleCompleted;
-
-            _userChosenTargetHighligher.DisposeManagedState();
             _ai.DisposeManagedState();
         }
     }

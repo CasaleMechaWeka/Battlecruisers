@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
+    // FELIX  Remove (as well as test scene :) )
     public class HighlightFactory : MonoBehaviour, IHighlightFactory
     {
         public InGameHighlight inGameHighlightPrefab;
