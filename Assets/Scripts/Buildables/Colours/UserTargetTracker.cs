@@ -5,8 +5,6 @@ using System;
 
 namespace BattleCruisers.Buildables.Colours
 {
-    // FELIX  Test :)
-
     public class UserTargetTracker
     {
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
