@@ -1,7 +1,11 @@
 ﻿namespace BattleCruisers.Buildables.Colours
 {
     // FELIX  Test :)
-    public class UserTargets : IUserTargets
+
+    /// <summary>
+    /// Changes a targets colour depending on whether is is selected or targetted.
+    /// </summary>
+    public class UserTargetsColourChanger : IUserTargets
     {
         // The user chosen target colour trumps the selected target colour.
         // Hence, do NOT set the SelectedColor if the TargettedColour is
