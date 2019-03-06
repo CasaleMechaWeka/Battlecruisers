@@ -16,81 +16,41 @@ namespace BattleCruisers.Buildables.Colours
     {
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
         private readonly IRankedTargetTracker _userChosenTargetTracker;
+        private readonly IUserTargets _userTargets;
 
-        // The user chosen target colour trumps the selected target colour.
-        // Hence, do NOT set the SelectedColor if the TargettedColour is
-        // already set.
-        private ITarget _selectedTarget;
-        private ITarget SelectedTarget
+        public TargetColourManager(
+            IBroadcastingProperty<ITarget> itemShownInInformator, 
+            IRankedTargetTracker userChosenTargetTracker,
+            IUserTargets userTargets)
         {
-            set
-            {
-                if (_selectedTarget != null
-                    && !ReferenceEquals(_userChosenTarget, _selectedTarget))
-                {
-                    _selectedTarget.Color = TargetColours.Default;
-                }
-
-                _selectedTarget = value;
-
-                if (_selectedTarget != null
-                    && !ReferenceEquals(_userChosenTarget, _selectedTarget))
-                {
-                    _selectedTarget.Color = TargetColours.Selected;
-                }
-            }
-        }
-
-        private ITarget _userChosenTarget;
-        private ITarget UserChosenTarget
-        {
-            set
-            {
-                if (_userChosenTarget != null)
-                {
-                    // When the user clears their chosen target, the target may still be selected.
-                    // In this case apply the SelectedColor instead of the DefaultColor.
-                    _userChosenTarget.Color = ReferenceEquals(_userChosenTarget, _selectedTarget) ? TargetColours.Selected : TargetColours.Default;
-                }
-
-                _userChosenTarget = value;
-
-                if (_userChosenTarget != null)
-                {
-                    _userChosenTarget.Color = TargetColours.Targetted;
-                }
-            }
-        }
-
-        public TargetColourManager(IBroadcastingProperty<ITarget> itemShownInInformator, IRankedTargetTracker userChosenTargetTracker)
-        {
-            Helper.AssertIsNotNull(itemShownInInformator, userChosenTargetTracker);
+            Helper.AssertIsNotNull(itemShownInInformator, userChosenTargetTracker, userTargets);
 
             _itemShownInInformator = itemShownInInformator;
-            _itemShownInInformator.ValueChanged += _itemShownInInformator_ValueChanged;
-
             _userChosenTargetTracker = userChosenTargetTracker;
+            _userTargets = userTargets;
+
+            _itemShownInInformator.ValueChanged += _itemShownInInformator_ValueChanged;
             _userChosenTargetTracker.HighestPriorityTargetChanged += _userChosenTargetTracker_HighestPriorityTargetChanged;
         }
 
         private void _itemShownInInformator_ValueChanged(object sender, EventArgs e)
         {
-            SelectedTarget = null;
+            _userTargets.SelectedTarget = null;
 
             if (_itemShownInInformator.Value != null
                 && _itemShownInInformator.Value.IsInScene)
             {
-                SelectedTarget = _itemShownInInformator.Value;
+                _userTargets.SelectedTarget = _itemShownInInformator.Value;
             }
         }
 
         private void _userChosenTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
-            UserChosenTarget = null;
+            _userTargets.TargetToAttack = null;
 
             if (_userChosenTargetTracker.HighestPriorityTarget != null)
             {
-                UserChosenTarget = _userChosenTargetTracker.HighestPriorityTarget.Target;
+                _userTargets.TargetToAttack = _userChosenTargetTracker.HighestPriorityTarget.Target;
             }
         }
     }

@@ -154,7 +154,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     _battleCompletionHandler);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
-            _targetColourManager = new TargetColourManager(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager);
+            _targetColourManager = new TargetColourManager(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargets());
             ManagerArgs args
                 = new ManagerArgs(
                     playerCruiser,
