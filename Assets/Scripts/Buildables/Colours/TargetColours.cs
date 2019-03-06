@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Buildables.Colors
+namespace BattleCruisers.Buildables.Colours
 {
     public static class TargetColours
     {

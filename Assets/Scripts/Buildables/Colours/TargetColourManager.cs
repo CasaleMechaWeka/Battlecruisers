@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using System;
 
-namespace BattleCruisers.Buildables.Colors
+namespace BattleCruisers.Buildables.Colours
 {
     // FELIX  Test :)
 

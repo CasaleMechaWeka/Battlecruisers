@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables.Colors;
+using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
