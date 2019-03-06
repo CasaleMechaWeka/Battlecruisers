@@ -2,7 +2,6 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using System;
-using UnityEngine;
 
 namespace BattleCruisers.Buildables.Colors
 {
@@ -18,10 +17,6 @@ namespace BattleCruisers.Buildables.Colors
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
         private readonly IRankedTargetTracker _userChosenTargetTracker;
 
-        private static Color DefaultColor = Color.black;
-        private static Color SelectedColor = new Color(186f/255f, 56f/255f, 32f/255f);    // Orange
-        private static Color TargettedColor = Color.red;
-
         // The user chosen target colour trumps the selected target colour.
         // Hence, do NOT set the SelectedColor if the TargettedColour is
         // already set.
@@ -33,7 +28,7 @@ namespace BattleCruisers.Buildables.Colors
                 if (_selectedTarget != null
                     && !ReferenceEquals(_userChosenTarget, _selectedTarget))
                 {
-                    _selectedTarget.Color = DefaultColor;
+                    _selectedTarget.Color = TargetColours.Default;
                 }
 
                 _selectedTarget = value;
@@ -41,7 +36,7 @@ namespace BattleCruisers.Buildables.Colors
                 if (_selectedTarget != null
                     && !ReferenceEquals(_userChosenTarget, _selectedTarget))
                 {
-                    _selectedTarget.Color = SelectedColor;
+                    _selectedTarget.Color = TargetColours.Selected;
                 }
             }
         }
@@ -55,14 +50,14 @@ namespace BattleCruisers.Buildables.Colors
                 {
                     // When the user clears their chosen target, the target may still be selected.
                     // In this case apply the SelectedColor instead of the DefaultColor.
-                    _userChosenTarget.Color = ReferenceEquals(_userChosenTarget, _selectedTarget) ? SelectedColor : DefaultColor;
+                    _userChosenTarget.Color = ReferenceEquals(_userChosenTarget, _selectedTarget) ? TargetColours.Selected : TargetColours.Default;
                 }
 
                 _userChosenTarget = value;
 
                 if (_userChosenTarget != null)
                 {
-                    _userChosenTarget.Color = TargettedColor;
+                    _userChosenTarget.Color = TargetColours.Targetted;
                 }
             }
         }
