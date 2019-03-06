@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private ITutorialProvider _tutorialProvider;
         private IBattleCompletionHandler _battleCompletionHandler;
-        private TargetColourManager _targetColourManager;
+        private UserTargetTracker _userTargetTracker;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -154,7 +154,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     _battleCompletionHandler);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
-            _targetColourManager = new TargetColourManager(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargets());
+            _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargets());
             ManagerArgs args
                 = new ManagerArgs(
                     playerCruiser,

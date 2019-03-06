@@ -7,18 +7,13 @@ namespace BattleCruisers.Buildables.Colours
 {
     // FELIX  Test :)
 
-    /// <summary>
-    /// Handles changing a targets colour when the user has:
-    /// 1. Selected it (to view the target details)
-    /// 2. Chosen as the number one target (to make everything attack that target above all others)
-    /// </summary>
-    public class TargetColourManager
+    public class UserTargetTracker
     {
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
         private readonly IRankedTargetTracker _userChosenTargetTracker;
         private readonly IUserTargets _userTargets;
 
-        public TargetColourManager(
+        public UserTargetTracker(
             IBroadcastingProperty<ITarget> itemShownInInformator, 
             IRankedTargetTracker userChosenTargetTracker,
             IUserTargets userTargets)
