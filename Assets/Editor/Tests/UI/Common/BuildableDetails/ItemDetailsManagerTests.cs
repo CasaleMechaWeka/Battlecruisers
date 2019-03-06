@@ -51,6 +51,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             AllDetails_ReceivedHide();
             _buildingDetails.Received().ShowBuildableDetails(_building);
             _informatorPanel.Received().Show();
+            Assert.AreSame(_building, _detailsManager.SelectedItem.Value);
         }
 
         [Test]
@@ -61,6 +62,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             AllDetails_ReceivedHide();
             _unitDetails.Received().ShowBuildableDetails(_unit);
             _informatorPanel.Received().Show();
+            Assert.AreSame(_unit, _detailsManager.SelectedItem.Value);
         }
 
         [Test]
@@ -71,13 +73,16 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             AllDetails_ReceivedHide();
             _cruiserDetails.Received().ShowCruiserDetails(_cruiser);
             _informatorPanel.Received().Show();
+            Assert.AreSame(_cruiser, _detailsManager.SelectedItem.Value);
         }
 
         [Test]
         public void Hide()
         {
             _detailsManager.HideDetails();
+
             AllDetails_ReceivedHide();
+            Assert.IsNull(_detailsManager.SelectedItem.Value);
         }
 
         private void AllDetails_ReceivedHide()
