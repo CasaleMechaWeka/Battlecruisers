@@ -103,33 +103,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
         #region SelectBuilding()
         [Test]
-        public void SelectBuilding_ParentIsPlayerCruiser()
+        public void SelectBuilding()
         {
-            _building.ParentCruiser.Returns(_playerCruiser);
-
             _uiManager.SelectBuilding(_building);
-
             Received_HideItemDetails();
-
-            _playerCruiser.SlotHighlighter.Received().HighlightBuildingSlot(_building);
             _detailsManager.Received().ShowDetails(_building);
-
-            _aiCruiser.SlotHighlighter.DidNotReceive().HighlightBuildingSlot(_building);
-        }
-
-        [Test]
-        public void SelectBuilding_ParentIsAiCruiser_ShowsDetails()
-        {
-            _building.ParentCruiser.Returns(_aiCruiser);
-
-            _uiManager.SelectBuilding(_building);
-
-            Received_HideItemDetails();
-
-            _aiCruiser.SlotHighlighter.Received().HighlightBuildingSlot(_building);
-            _detailsManager.Received().ShowDetails(_building);
-
-            _playerCruiser.SlotHighlighter.DidNotReceive().HighlightBuildingSlot(_building);
         }
 
         [Test]

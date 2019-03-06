@@ -94,30 +94,9 @@ namespace BattleCruisers.UI.BattleScene.Manager
 			Logging.Log(Tags.UI_MANAGER, ".SelectBuilding()");
 
             HideItemDetails();
-
-            if (ReferenceEquals(building.ParentCruiser, _playerCruiser))
-            {
-                SelectBuildingFromFriendlyCruiser(building);
-            }
-            else
-            {
-                SelectBuildingFromEnemyCruiser(building);
-            }
-
+            _detailsManager.ShowDetails(building);
             ShownItem = building;
         }
-
-        private void SelectBuildingFromFriendlyCruiser(IBuilding building)
-		{
-            _playerCruiser.SlotHighlighter.HighlightBuildingSlot(building);
-            _detailsManager.ShowDetails(building);
-		}
-
-		private void SelectBuildingFromEnemyCruiser(IBuilding building)
-		{
-            _aiCruiser.SlotHighlighter.HighlightBuildingSlot(building);
-            _detailsManager.ShowDetails(building);
-		}
 
 		public void ShowFactoryUnits(IFactory factory)
 		{
