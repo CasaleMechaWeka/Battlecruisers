@@ -24,7 +24,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         int NumOfDrones { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; }
         IUnit UnitUnderConstruction { get; }
-        IUnit LastUnitProduced { get; }
         IObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
 
