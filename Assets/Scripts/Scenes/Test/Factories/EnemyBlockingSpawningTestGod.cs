@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 		private void LeftFactory_CompletedBuildable(object sender, EventArgs e)
         {
-            Invoke("StartBuildingArchon", 5);
+            Invoke("StartBuildingArchon", 3);
         }
 
         private void StartBuildingArchon()

@@ -29,8 +29,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         #region Properties
         protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building3; } }
         public abstract LayerMask UnitLayerMask { get; }
-		public IUnit LastUnitProduced { get; private set; }
         public IUnit UnitUnderConstruction { get; private set; }
+        // FELIX  Unused, remove?
+		public IUnit LastUnitProduced { get; private set; }
 
         private ObservableValue<bool> _isUnitPaused;
         public IObservableValue<bool> IsUnitPaused

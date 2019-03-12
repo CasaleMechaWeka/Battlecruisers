@@ -42,30 +42,23 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
                 return false;
             }
 
-            if (_factory.LastUnitProduced != null && !_factory.LastUnitProduced.IsDestroyed)
-            {
-                Vector3 spawnPositionV3 = _unitSpawnPositionFinder.FindSpawnPosition(unitToSpawn);
-                Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
-                float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unitToSpawn.Size.x;
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, _factory.UnitLayerMask);
+            Vector3 spawnPositionV3 = _unitSpawnPositionFinder.FindSpawnPosition(unitToSpawn);
+            Vector2 spawnPositionV2 = new Vector2(spawnPositionV3.x, spawnPositionV3.y);
+            float spawnRadius = SPAWN_RADIUS_MULTIPLIER * unitToSpawn.Size.x;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPositionV2, spawnRadius, _factory.UnitLayerMask);
 
-                foreach (Collider2D collider in colliders)
+            foreach (Collider2D collider in colliders)
+            {
+                IUnit blockingUnit = collider.GetComponent<IUnit>();
+
+                if (blockingUnit != null
+                    && blockingUnit.TargetType == unitToSpawn.TargetType)
                 {
-                    if (collider.gameObject == _factory.LastUnitProduced.GameObject)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
             return true;
-        }
-
-        private bool IsSameAsLastUnit(IUnit unitToSpawn)
-        {
-            return
-                _factory.LastUnitProduced != null
-                && _factory.LastUnitProduced.Name == unitToSpawn.Name;
         }
     }
 }
