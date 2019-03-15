@@ -26,5 +26,6 @@ namespace BattleCruisers.Cruisers
         bool IsPlayerCruiser { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
+        void MakeInvincible();
     }
 }

@@ -44,12 +44,19 @@ namespace BattleCruisers.Cruisers
         // + After watching sinking animation, go to post battle screen :)
         private void _playerCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
-            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasVictory: false), POST_GAME_WAIT_TIME_IN_S);
+            OnCruiserDestroyed(false, _aiCruiser, _playerCruiser);
         }
 
         private void _aiCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
-            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasVictory: true), POST_GAME_WAIT_TIME_IN_S);
+            OnCruiserDestroyed(true, _playerCruiser, _aiCruiser);
+        }
+
+        private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
+        {
+            victoryCruiser.MakeInvincible();
+
+            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasVictory), POST_GAME_WAIT_TIME_IN_S);
         }
     }
 }

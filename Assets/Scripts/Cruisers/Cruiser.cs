@@ -240,5 +240,10 @@ namespace BattleCruisers.Cruisers
             base.OnDestroyed();
             FactoryProvider.Sound.SoundPlayer.PlaySound(SoundKeys.Deaths.Cruiser, Position);
         }
+
+        public void MakeInvincible()
+        {
+            _healthTracker.State = HealthTrackerState.Immutable;
+        }
     }
 }
