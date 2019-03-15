@@ -47,7 +47,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _deferrer = deferrer;
             _unitBuiltProvider = unitBuiltProvider;
             _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.Bomber, "bomber");
-            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret");
+            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "air turret");
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);
         }
 

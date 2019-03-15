@@ -68,7 +68,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                     BuildingCategory.Defence,
                     DefenceToBuild,
                     SlotSpecification,
-                    "Quick, build an " + DefenceToBuild.Name + "!");
+                    "Quick, build " + IndefiniteyArticleHelper.FindIndefiniteArticle(DefenceToBuild.Name) + " " + DefenceToBuild.Name + "!");
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 
             // 6. Navigate to mid left

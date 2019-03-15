@@ -61,7 +61,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                    "Managing your builders is vital.  Let's start 3 buildings, so we can see how this works :)")));
+                    "Managing your builders is vital.  Let's start three buildings, so we can see how this works :)")));
 
             // Infinitely slow build speed
             steps.Add(
@@ -73,9 +73,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Defence,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "anti-air turret"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "air turret"),
                     new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: false),
-                    "First, another anti-air turret.",
+                    "First, another air turret.",
                     waitForBuildingToComplete: false));
 
             steps.AddRange(
@@ -122,7 +122,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Now play around with the \"builders\" button for these 3 buildings, and see how the builders move between buildings.  (Click the \"Done\" when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("Now play around with the \"builders\" button for these three buildings, and see how the builders move between buildings.  (Click the \"Done\" when you have had enough.)")));
 
             return steps;
         }

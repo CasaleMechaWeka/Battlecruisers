@@ -39,13 +39,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "This is the navigation wheel, which you use to navigate around the map.",
+                        "This is the map control, which you use to look around the map.",
                         _cameraComponents.NavigationWheel)));
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Drag the navigation wheel to navigate.  (Click \"Done\" when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("Drag the map control to look around.  (Click \"Done\" when you have had enough.)")));
 
             // Disable navigation
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: false));

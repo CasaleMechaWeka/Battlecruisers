@@ -36,7 +36,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Nice!  You have gained 2 builders :D")));
+                    _argsFactory.CreateTutorialStepArgs("Nice!  You have gained two builders :D")));
 
             return steps;
         }
