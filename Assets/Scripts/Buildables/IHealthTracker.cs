@@ -2,23 +2,26 @@
 
 namespace BattleCruisers.Buildables
 {
-    public enum DamagableState
+    public enum HealthTrackerState
     {
-        Damagable, Invincible
+        Mutable, Immutable
     }
 
     public interface IHealthTracker
     {
         float Health { get; }
         float MaxHealth { get; }
-        DamagableState DamagableState { set; }
+        HealthTrackerState State { set; }
 
         event EventHandler HealthChanged;
         event EventHandler HealthGone;
 
-        /// <returns>True if the target was damaged, false otherwise (eg: due to being in invincible state).</returns>
-        bool TakeDamage(float damageAmount);
+        /// <returns>True if the health was removed, false otherwise.</returns>
+        bool RemoveHealth(float amountToRemove);
 
-        void Repair(float repairAmount);
+        /// <returns>True if the health was added, false otherwise.</returns>
+        bool AddHealth(float amountToAdd);
+
+        void SetMinHealth();
     }
 }

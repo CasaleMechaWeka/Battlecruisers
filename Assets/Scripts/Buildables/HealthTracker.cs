@@ -3,18 +3,17 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    // FELIX  Use :)
     // FELIX  Test :)
     public class HealthTracker : IHealthTracker
     {
         public float MaxHealth { get; private set; }
-        public DamagableState DamagableState { private get; set; }
+        public HealthTrackerState State { private get; set; }
 
         private float _health;
         public float Health
         {
             get { return _health; }
-            protected set
+            private set
             {
                 if (value >= MaxHealth)
                 {
@@ -47,16 +46,17 @@ namespace BattleCruisers.Buildables
         public HealthTracker(float maxHealth)
         {
             MaxHealth = maxHealth;
+            Health = maxHealth;
         }
 
-        public bool TakeDamage(float damageAmount)
+        public bool RemoveHealth(float amountToRemove)
         {
-            Assert.IsTrue(damageAmount > 0);
+            Assert.IsTrue(amountToRemove > 0);
 
             if (Health > 0
-                && DamagableState == DamagableState.Damagable)
+                && State == HealthTrackerState.Mutable)
             {
-                Health -= damageAmount;
+                Health -= amountToRemove;
                 return true;
             }
             else
@@ -65,10 +65,25 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        public void Repair(float repairAmount)
+        public bool AddHealth(float amountToAdd)
         {
-            Assert.IsTrue(repairAmount > 0);
-            Health += repairAmount;
+            Assert.IsTrue(amountToAdd > 0);
+
+            if (Health < MaxHealth
+                && State == HealthTrackerState.Mutable)
+            {
+                Health += amountToAdd;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void SetMinHealth()
+        {
+            Health = 1;
         }
     }
 }

@@ -11,9 +11,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    // FELIX  Extract health related logic => Makes testable :)
     public abstract class Target : MonoBehaviour, ITarget
     {
+        protected IHealthTracker _healthTracker;
         protected IAudioSource _audioSource;
 
         public float maxHealth;
@@ -48,8 +48,13 @@ namespace BattleCruisers.Buildables
 		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 3;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
-        public event EventHandler HealthChanged;
         public event EventHandler<DamagedEventArgs> Damaged;
+
+        public event EventHandler HealthChanged
+        {
+            add { _healthTracker.HealthChanged += value; }
+            remove { _healthTracker.HealthChanged -= value; }
+        }
 
         private bool IsFullHealth { get { return Health == maxHealth; } }
         public virtual Color Color { set { /* empty */ } }
@@ -65,32 +70,9 @@ namespace BattleCruisers.Buildables
 			}
         }
 
-        private float _health;
         public float Health
         {
-            get { return _health; }
-            protected set
-            {
-                if (value >= maxHealth)
-                {
-                    _health = maxHealth;
-                }
-                else if (value <= 0)
-                {
-                    _health = 0;
-                    OnHealthGone();
-                }
-                else
-                {
-                    _health = value;
-                }
-
-                if (HealthChanged != null)
-                {
-                    Logging.Log(Tags.TARGET, "HealthChanged  " + this + "  " + _health);
-                    HealthChanged.Invoke(this, EventArgs.Empty);
-                }
-            }
+            get { return _healthTracker.Health; }
         }
 
         public IRepairCommand RepairCommand { get; private set; }
@@ -114,8 +96,10 @@ namespace BattleCruisers.Buildables
 
         public void StaticInitialise()
 		{
-			_health = maxHealth;
-			_attackCapabilities = new List<TargetType>();
+            _healthTracker = new HealthTracker(maxHealth);
+            _healthTracker.HealthGone += _health_HealthGone;
+
+            _attackCapabilities = new List<TargetType>();
             AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
@@ -136,6 +120,11 @@ namespace BattleCruisers.Buildables
             return new DummyTextMesh();
         }
 
+        private void _health_HealthGone(object sender, EventArgs e)
+        {
+            OnHealthGone();
+        }
+
 		protected virtual void OnHealthGone()
 		{
 			OnDestroyed();
@@ -146,7 +135,7 @@ namespace BattleCruisers.Buildables
         public void Destroy()
         {
             Assert.IsFalse(IsDestroyed, "Same target should not be destroyed more than once scrub :P");
-            Health = 0;
+            _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
 		}
 
 		protected virtual void InternalDestroy()
@@ -168,38 +157,36 @@ namespace BattleCruisers.Buildables
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
 		{
-            bool wasFullHealth = IsFullHealth;
-
-            // Guard against the rare case where a target takes damage after it has
-            // been destroyed, in the same frame it was destroyed in.
-            if (Health > 0)
+            if (_healthTracker.RemoveHealth(damageAmount))
             {
-	            Health -= damageAmount;
+                bool wasFullHealth = IsFullHealth;
+
 	            OnTakeDamage();
 
                 if (Damaged != null)
                 {
                     Damaged.Invoke(this, new DamagedEventArgs(damageSource));
                 }
-			}
 
-            if (wasFullHealth)
-            {
-                RepairCommand.EmitCanExecuteChanged();
-            }
+                if (wasFullHealth)
+                {
+                    RepairCommand.EmitCanExecuteChanged();
+                }
+			}
 		}
 
 		protected virtual void OnTakeDamage() { }
 
 		protected void RepairCommandExecute(float repairAmount)
 		{
-			Assert.IsTrue(Health < maxHealth);
-			Health += repairAmount;
-			OnRepair();
+			Assert.IsTrue(CanRepairCommandExecute());
 
-            if (IsFullHealth)
+            if (_healthTracker.AddHealth(repairAmount))
             {
-                RepairCommand.EmitCanExecuteChanged();
+                if (IsFullHealth)
+                {
+                    RepairCommand.EmitCanExecuteChanged();
+                }
             }
 		}
 
@@ -207,8 +194,6 @@ namespace BattleCruisers.Buildables
         {
             return Health < maxHealth;
         }
-
-		protected virtual void OnRepair() { }
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {

@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables
 {
@@ -61,7 +60,6 @@ namespace BattleCruisers.Buildables
         public float buildTimeInS;
 
         private const float MAX_BUILD_PROGRESS = 1;
-        private const float INITIAL_HEALTH = 1;
 
         #region Properties
         public BuildableState BuildableState { get; private set; }
@@ -351,7 +349,7 @@ namespace BattleCruisers.Buildables
 
         public void StartConstruction()
         {
-            Health = INITIAL_HEALTH;
+            _healthTracker.SetMinHealth();
 
             SetupDroneConsumer(numOfDronesRequired);
 
@@ -387,7 +385,7 @@ namespace BattleCruisers.Buildables
 
                 // Increase health with build progress
                 float buildProgressIncrement = buildProgressInDroneS / _buildTimeInDroneSeconds;
-                Health += buildProgressIncrement * MaxHealth;
+                _healthTracker.AddHealth(buildProgressIncrement * MaxHealth);
 
                 if (BuildableProgress != null)
                 {
