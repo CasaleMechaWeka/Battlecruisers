@@ -32,16 +32,14 @@ namespace BattleCruisers.Cruisers
         }
 
         // FELIX:
-        // + [Destroy all Losing Cruiser (LC) buildables]
         // + Make Victory Cruiser (VC) invincible (so in flight projectiles cannot destroy it)
-        // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
-        // + Stop global targetting
-        //      + Bombers?
-        //      + Offensives?
-        // + Handle VC unit movement
-        //      + Bombers?
-        //      + Ships
         // + After watching sinking animation, go to post battle screen :)
+        
+        // + Destroy all Losing Cruiser (LC) buildables
+        // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
+        // + Handle VC unit movement
+        //      + Ships => Stop them from moving :)
+        // + Implement sinking animation :P
         private void _playerCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             OnCruiserDestroyed(false, _aiCruiser, _playerCruiser);
