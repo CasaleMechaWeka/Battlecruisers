@@ -44,8 +44,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Encourage user to experiment
             steps.Add(
-                _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Drag the navigation wheel to navigate.  (Click \"OK\" when you have had enough.)")));
+                _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
+                    _argsFactory.CreateTutorialStepArgs("Drag the navigation wheel to navigate.  (Click \"Done\" when you have had enough.)")));
 
             // Disable navigation
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: false));

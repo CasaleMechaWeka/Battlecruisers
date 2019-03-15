@@ -64,8 +64,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Encourage user to experiment
             steps.Add(
-                _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Play around with the speed buttons a bit.  (Click the \"OK\" when you have had enough.)")));
+                _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
+                    _argsFactory.CreateTutorialStepArgs("Play around with the speed buttons a bit.  (Click the \"Done\" when you have had enough.)")));
 
             return steps;
         }

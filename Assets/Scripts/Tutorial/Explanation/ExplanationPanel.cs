@@ -1,11 +1,13 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
     public class ExplanationPanel : MonoBehaviourWrapper, IExplanationPanel
     {
         public ITextDisplayer TextDisplayer { get; private set; }
-        public IExplanationDismissButton DismissButton { get; private set; }
+        public IExplanationDismissButton OkButton { get; private set; }
+        public IExplanationDismissButton DoneButton { get; private set; }
 
         public void Initialise()
         {
@@ -14,8 +16,8 @@ namespace BattleCruisers.Tutorial.Explanation
             textDisplayer.Initialise();
             TextDisplayer = textDisplayer;
 
-            DismissButton = GetComponentInChildren<IExplanationDismissButton>(includeInactive: true);
-            Assert.IsNotNull(DismissButton);
+            OkButton = transform.FindNamedComponent<IExplanationDismissButton>("OkButton");
+            DoneButton = transform.FindNamedComponent<IExplanationDismissButton>("DoneButton");
         }
     }
 }

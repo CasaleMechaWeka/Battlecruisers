@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialStepArgsFactory argsFactory = new TutorialStepArgsFactory(highlighter, explanationPanel.TextDisplayer);
             ITutorialStepFactory cameraAdjustmentWaitStepFactory = new CameraAdjustmentWaitStepFactory(argsFactory, tutorialArgs.CameraComponents);
             IExplanationDismissableStepFactory explanationDismissableStepFactory 
-                = new ExplanationDismissableStepFactory(argsFactory, explanationPanel.DismissButton);
+                = new ExplanationDismissableStepFactory(argsFactory, explanationPanel.OkButton, explanationPanel.DoneButton);
             IFeaturePermitterStepFactory featurePermitterStepFactory = new FeaturePermitterStepFactory(argsFactory);
             IAutoNavigationStepFactory autoNavigationStepFactory 
                 = new AutoNavigationStepFactory(argsFactory, cameraAdjustmentWaitStepFactory, tutorialArgs.CameraComponents);
