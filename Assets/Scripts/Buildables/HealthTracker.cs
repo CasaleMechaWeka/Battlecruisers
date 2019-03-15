@@ -3,9 +3,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    // FELIX  Test :)
     public class HealthTracker : IHealthTracker
     {
+        public const float MIN_HEALTH = 1;
+
         public float MaxHealth { get; private set; }
         public HealthTrackerState State { private get; set; }
 
@@ -47,6 +48,7 @@ namespace BattleCruisers.Buildables
         {
             MaxHealth = maxHealth;
             Health = maxHealth;
+            State = HealthTrackerState.Mutable;
         }
 
         public bool RemoveHealth(float amountToRemove)
@@ -83,7 +85,7 @@ namespace BattleCruisers.Buildables
 
         public void SetMinHealth()
         {
-            Health = 1;
+            Health = MIN_HEALTH;
         }
     }
 }
