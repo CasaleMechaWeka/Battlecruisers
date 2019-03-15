@@ -180,7 +180,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
-            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, _battleCompletionHandler, pauseGameManager);
+            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, _battleCompletionHandler, components.VariableDelayDeferrer);
 
             StartTutorialIfNecessary(
                 prefabFactory, 

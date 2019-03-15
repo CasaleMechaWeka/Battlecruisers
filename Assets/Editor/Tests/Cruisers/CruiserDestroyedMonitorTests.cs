@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Cruisers
 {
+    // FELIX  Update test :)
     public class CruiserDestroyedMonitorTests
     {
         private CruiserDestroyedMonitor _monitor;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Tests.Cruisers
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
             _pauseGameManager = Substitute.For<IPauseGameManager>();
 
-            _monitor = new CruiserDestroyedMonitor(_playerCruiser, _aiCruiser, _battleCompletionHandler, _pauseGameManager);
+            //_monitor = new CruiserDestroyedMonitor(_playerCruiser, _aiCruiser, _battleCompletionHandler, _pauseGameManager);
         }
 
         [Test]
