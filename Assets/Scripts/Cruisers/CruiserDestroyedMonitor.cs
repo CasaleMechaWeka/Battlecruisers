@@ -32,7 +32,7 @@ namespace BattleCruisers.Cruisers
         }
 
         // FELIX:
-        // + Destroy all Losing Cruiser (LC) buildables
+        // + [Destroy all Losing Cruiser (LC) buildables]
         // + Make Victory Cruiser (VC) invincible (so in flight projectiles cannot destroy it)
         // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
         // + Stop global targetting

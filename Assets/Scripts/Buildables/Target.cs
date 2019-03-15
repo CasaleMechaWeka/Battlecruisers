@@ -11,6 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
+    // FELIX  Extract health related logic => Makes testable :)
     public abstract class Target : MonoBehaviour, ITarget
     {
         protected IAudioSource _audioSource;
