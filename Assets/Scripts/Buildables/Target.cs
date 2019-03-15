@@ -74,7 +74,6 @@ namespace BattleCruisers.Buildables
                 if (value >= maxHealth)
                 {
                     _health = maxHealth;
-                    OnFullyRepaired();
                 }
                 else if (value <= 0)
                 {
@@ -136,8 +135,6 @@ namespace BattleCruisers.Buildables
         {
             return new DummyTextMesh();
         }
-
-		protected virtual void OnFullyRepaired() { }
 
 		protected virtual void OnHealthGone()
 		{
