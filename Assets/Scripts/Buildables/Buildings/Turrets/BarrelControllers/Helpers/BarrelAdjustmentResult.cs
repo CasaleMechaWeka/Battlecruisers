@@ -11,8 +11,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public BarrelAdjustmentResult(
             bool isOnTarget,
-            float desiredAngleInDegrees = default(float),
-            Vector2 predictedTargetPosition = default(Vector2))
+            float desiredAngleInDegrees = default,
+            Vector2 predictedTargetPosition = default)
         {
             this.IsOnTarget = isOnTarget;
             this.DesiredAngleInDegrees = desiredAngleInDegrees;

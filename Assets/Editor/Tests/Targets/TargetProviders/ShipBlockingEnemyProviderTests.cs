@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             IUnit parentUnit = Substitute.For<IUnit>();
 
             targetFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
-            targetFactories.FilterFactory.CreateTargetFilter(default(Faction), targetTypes: null).ReturnsForAnyArgs(enemyFilter);
+            targetFactories.FilterFactory.CreateTargetFilter(default, targetTypes: null).ReturnsForAnyArgs(enemyFilter);
             targetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetFactories.RankerFactory.EqualTargetRanker.Returns(enemyRanker);
             targetFactories.TrackerFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);

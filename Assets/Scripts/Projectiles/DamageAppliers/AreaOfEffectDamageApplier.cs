@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         private readonly ITargetFilter _targetFilter;
         private readonly LayerMask _targetLayerMask;
 
-        public AreaOfEffectDamageApplier(IDamageStats damageStats, ITargetFilter targetFilter, LayerMask targetLayerMask = default(LayerMask))
+        public AreaOfEffectDamageApplier(IDamageStats damageStats, ITargetFilter targetFilter, LayerMask targetLayerMask = default)
         {
             Helper.AssertIsNotNull(damageStats, targetFilter);
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
         {
             Collider2D[] colliders;
 
-            if (_targetLayerMask == default(LayerMask))
+            if (_targetLayerMask == default)
             {
                 colliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.DamageRadiusInM);
             }

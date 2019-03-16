@@ -64,7 +64,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
 
             _handler.OnDoubleClick(_clickedCruiser);
 
-            _droneFocuser.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(null, default(bool));
+            _droneFocuser.DidNotReceiveWithAnyArgs().ToggleDroneConsumerFocus(null, default);
         }
     }
 }

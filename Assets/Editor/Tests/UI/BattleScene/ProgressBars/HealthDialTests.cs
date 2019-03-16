@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
             SetDamagable_DoesNotMatchVisibilityFilter_DoesNothing();
 
             _damagable1.HealthChanged += Raise.Event();
-            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default(float);
+            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default;
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
 
             // Old damagable health changes are ignored
             _damagable1.HealthChanged += Raise.Event();
-            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default(float);
+            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default;
 
             // New damagable health changes are processed
             _damagable2.Health.Returns(12);

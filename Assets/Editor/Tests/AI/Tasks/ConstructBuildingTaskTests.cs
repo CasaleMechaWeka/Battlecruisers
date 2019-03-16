@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.AI.Tasks
             _task.Completed += _task_Completed;
 
 			_building = Substitute.For<IBuilding>();
-            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Platform, default(BuildingFunction), default(bool));
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Platform, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
             _prefab = Substitute.For<IBuildableWrapper<IBuilding>>();
 			_prefab.Buildable.Returns(_building);

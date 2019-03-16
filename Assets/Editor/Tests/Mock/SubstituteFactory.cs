@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Mock
 
             // Call deferred action immediately
             deferrer
-                .WhenForAnyArgs(def => def.Defer(null, default(float)))
+                .WhenForAnyArgs(def => def.Defer(null, default))
                 .Do(callInfo =>
                 {
                     Assert.IsTrue(callInfo.Args().Length == 2);

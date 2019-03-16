@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.Fi
             _firingState = Substitute.For<IState>();
             _firingState.ShouldFire.Returns(true);
             _firingState.OnFired().Returns(_waitingState);
-            _firingState.ProcessTimeInterval(default(float)).ReturnsForAnyArgs(_waitingState);
+            _firingState.ProcessTimeInterval(default).ReturnsForAnyArgs(_waitingState);
 
             _manager = new FireIntervalManager(_firingState);
         }

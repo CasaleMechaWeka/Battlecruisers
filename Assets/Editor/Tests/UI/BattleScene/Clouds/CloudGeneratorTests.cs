@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
 
             _factory = Substitute.For<ICloudFactory>();
             _factory.CreateCloudStats(_generationStats).Returns(_cloudStats);
-            _factory.CreateCloud(default(Vector2)).ReturnsForAnyArgs(_cloud);
+            _factory.CreateCloud(default).ReturnsForAnyArgs(_cloud);
 			
 			_generator = new CloudGenerator(_factory);
         }

@@ -177,7 +177,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void GetSlot_NonExistantSlotType_Throws()
         {
-            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Utility, default(BuildingFunction), default(bool));
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Utility, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
 
             Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetSlot(_building));
@@ -186,7 +186,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void GetSlot_NoSlotForBuilding_ReturnsNull()
         {
-            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default(BuildingFunction), default(bool));
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
 
             Assert.IsNull(_slotAccessor.GetSlot(_building));
@@ -195,7 +195,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void GetSlot_ReturnsBuildingSlot()
         {
-            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default(BuildingFunction), default(bool));
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
             _deckSlot2.Building.Returns(_building);
 

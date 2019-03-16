@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.Buildables.Colours
 
             _userTargets.SelectedTarget = null;
 
-            _target1.DidNotReceiveWithAnyArgs().Color = default(Color);
+            _target1.DidNotReceiveWithAnyArgs().Color = default;
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace BattleCruisers.Tests.Buildables.Colours
 
             _userTargets.SelectedTarget = _target1;
 
-            _target1.DidNotReceiveWithAnyArgs().Color = default(Color);
+            _target1.DidNotReceiveWithAnyArgs().Color = default;
         }
 
         [Test]

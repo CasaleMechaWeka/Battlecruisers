@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Cruisers
         public void DroneNumChanged_UpdatesNumberDisplay()
         {
             _droneManager.NumOfDrones.Returns(71);
-            _droneManager.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(default(int)));
+            _droneManager.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(default));
 
             _numberDisplay.Received().Num = _droneManager.NumOfDrones;
         }

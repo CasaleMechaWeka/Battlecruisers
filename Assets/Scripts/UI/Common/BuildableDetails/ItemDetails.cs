@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         protected abstract StatsController<TItem> GetStatsController();
 
-        public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default(TItem))
+        public virtual void ShowItemDetails(TItem item, TItem itemToCompareTo = default)
         {
 			Assert.IsNotNull(item);
 

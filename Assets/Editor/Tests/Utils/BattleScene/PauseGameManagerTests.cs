@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _manager.PauseGame();
 
             Assert.AreEqual(1, _pausedGameCount);
-            _time.DidNotReceiveWithAnyArgs().TimeScale = default(float);
+            _time.DidNotReceiveWithAnyArgs().TimeScale = default;
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _manager.ResumeGame();
 
             Assert.AreEqual(1, _resumedGameCount);
-            _time.DidNotReceiveWithAnyArgs().TimeScale = default(float);
+            _time.DidNotReceiveWithAnyArgs().TimeScale = default;
         }
     }
 }

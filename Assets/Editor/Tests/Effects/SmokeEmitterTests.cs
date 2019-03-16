@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Effects.Smoke
             _healthStateMonitor = Substitute.For<IHealthStateMonitor>();
             _smoke = Substitute.For<ISmoke>();
 
-            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: default(bool));
+            _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: default);
         }
 
         [Test]

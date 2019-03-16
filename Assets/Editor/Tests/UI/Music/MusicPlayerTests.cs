@@ -69,7 +69,7 @@ namespace BattleCruisers.Tests.UI.Music
             // Second time playing same music
             _soundPlayer.ClearReceivedCalls();
             _musicPlayer.PlayScreensSceneMusic();
-            _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null, default(bool));
+            _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null, default);
         }
 
         [Test]

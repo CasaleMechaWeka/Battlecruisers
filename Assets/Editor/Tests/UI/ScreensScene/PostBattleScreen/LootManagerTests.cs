@@ -42,7 +42,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _unlockedLoot = Substitute.For<ILoot>();
             _unlockedLoot.Items.Returns(readonlyLootItems);
 
-            _dataProvider.StaticData.GetLevelLoot(default(int)).ReturnsForAnyArgs(_unlockedLoot);
+            _dataProvider.StaticData.GetLevelLoot(default).ReturnsForAnyArgs(_unlockedLoot);
             _dataProvider.StaticData.LastLevelWithLoot.Returns(99);
 
             _item1 = Substitute.For<ILootItem>();

@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Aircraft
 
 			// Just return center provided, without any randomisation (ie, do not fuzz cruising altitude)
             _random = Substitute.For<BCUtils.IRandomGenerator>();
-            _random.RangeFromCenter(default(float), default(float)).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]));
+            _random.RangeFromCenter(default, default).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]));
 
             _playerAircraftProvider = new AircraftProvider(_playerCruiserPosition, _aiCruiserPosition, _random);
             _aiAircraftProvider = new AircraftProvider(_aiCruiserPosition, _playerCruiserPosition, _random);
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.Aircraft
         [Test]
         public void UsesRandomisedCruisingAltitude()
         {
-            _random.RangeFromCenter(default(float), default(float)).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]) + 1.5f);
+            _random.RangeFromCenter(default, default).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]) + 1.5f);
 
             IList<Vector2> patrolPoints = _aiAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
 

@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
             _filter.PermittedBuilding = null;
 
             Assert.AreEqual(1, _eventCounter);
-            _prefabFactory.DidNotReceiveWithAnyArgs().GetBuildingWrapperPrefab(default(IPrefabKey));
+            _prefabFactory.DidNotReceiveWithAnyArgs().GetBuildingWrapperPrefab(default);
         }
 
         [Test]

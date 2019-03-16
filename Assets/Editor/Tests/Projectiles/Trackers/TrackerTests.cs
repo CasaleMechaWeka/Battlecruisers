@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.Projectiles.Trackers
 
             // PositionChanged event was unsubscribed
             _trackable.PositionChanged += Raise.Event();
-            _camera.DidNotReceiveWithAnyArgs().WorldToScreenPoint(default(Vector3));
+            _camera.DidNotReceiveWithAnyArgs().WorldToScreenPoint(default);
 
             // Destroyed event was unsubscribed
             _marker.ClearReceivedCalls();

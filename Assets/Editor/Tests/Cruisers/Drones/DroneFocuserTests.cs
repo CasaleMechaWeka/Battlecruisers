@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             _droneFocuser.ToggleDroneConsumerFocus(_droneConsumer, isTriggeredByPlayer: false);
 
             _droneManager.Received().ToggleDroneConsumerFocus(_droneConsumer);
-            _soundPicker.DidNotReceiveWithAnyArgs().PickSound(default(DroneConsumerState), default(DroneConsumerState));
+            _soundPicker.DidNotReceiveWithAnyArgs().PickSound(default, default);
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
         }
     }

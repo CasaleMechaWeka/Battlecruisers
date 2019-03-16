@@ -132,7 +132,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 
         private void Expect_NoFire()
         {
-            _barrelController.DidNotReceiveWithAnyArgs().Fire(default(float));
+            _barrelController.DidNotReceiveWithAnyArgs().Fire(default);
             _fireIntervalManager.DidNotReceive().OnFired();
         }
 

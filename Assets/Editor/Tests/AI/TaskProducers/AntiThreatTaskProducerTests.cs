@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _threatMonitor.ThreatLevelChanged += Raise.Event();
 
             _slotNumCalculator.Received().FindSlotNum(_threatMonitor.CurrentThreatLevel);
-            _taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default(TaskPriority), null);
+            _taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default, null);
 		}
 
 		[Test]
@@ -73,7 +73,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 
 			_threatMonitor.ThreatLevelChanged += Raise.Event();
 
-			_taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default(TaskPriority), null);
+			_taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default, null);
 		}
 		#endregion ThreatLevelChanged
 

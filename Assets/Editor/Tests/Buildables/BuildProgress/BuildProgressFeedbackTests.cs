@@ -153,14 +153,14 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
             // IBuildable events unsubsribed
             _fillableImage.ClearReceivedCalls();
             buildable.BuildableProgress += Raise.EventWith(new BuildProgressEventArgs(buildable));
-            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default(float);
+            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default;
         }
 
         private void AssertUnsubsribedFromFactory(IFactory factory)
         {
             _pausedFeedback.ClearReceivedCalls();
             factory.IsUnitPaused.ValueChanged += Raise.Event();
-            _pausedFeedback.DidNotReceiveWithAnyArgs().IsVisible = default(bool);
+            _pausedFeedback.DidNotReceiveWithAnyArgs().IsVisible = default;
         }
     }
 }

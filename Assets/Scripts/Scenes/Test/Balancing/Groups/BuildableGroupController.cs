@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
         {
             get
             {
-                return spacingMultiplier != default(float) ? spacingMultiplier : BuildableSpawner.DEFAULT_SPACING_MULTIPLIER;
+                return spacingMultiplier != default ? spacingMultiplier : BuildableSpawner.DEFAULT_SPACING_MULTIPLIER;
             }
         }
 

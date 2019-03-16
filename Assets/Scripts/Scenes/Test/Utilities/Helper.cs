@@ -193,7 +193,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			droneConsumer.State.Returns(DroneConsumerState.Active);
 
 			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
-			droneConsumerProvider.RequestDroneConsumer(default(int)).ReturnsForAnyArgs(callInfo =>
+			droneConsumerProvider.RequestDroneConsumer(default).ReturnsForAnyArgs(callInfo =>
 			{
 				droneConsumer.NumOfDronesRequired.Returns(callInfo.Arg<int>());
 				return droneConsumer;
@@ -257,7 +257,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             if (targetFilter != null)
             {
-                targetFactories.FilterFactory.CreateTargetFilter(default(Faction), null).ReturnsForAnyArgs(targetFilter);
+                targetFactories.FilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
             }
             else
             {
@@ -325,7 +325,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
 
             targetFactories.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
-            targetFactories.FilterFactory.CreateDummyTargetFilter(default(bool)).ReturnsForAnyArgs(targetFilter);
+            targetFactories.FilterFactory.CreateDummyTargetFilter(default).ReturnsForAnyArgs(targetFilter);
             targetFactories.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
             targetFactories.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetFactories.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
@@ -342,7 +342,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private void SetupCreateTargetFilter(ITargetFilterFactory filterFactory)
         {
             filterFactory
-                .CreateTargetFilter(default(Faction), null)
+                .CreateTargetFilter(default, null)
                 .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }
 
@@ -420,7 +420,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					new Vector2(0, 40)
 				};
 			}
-			provider.FindDeathstarPatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(deathstarPatrolPoints);
+			provider.FindDeathstarPatrolPoints(default, 0).ReturnsForAnyArgs(deathstarPatrolPoints);
 
             if (spySatellitePatrolPoints == null)
             {
@@ -431,7 +431,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					new Vector2(0, 30)
                 };
             }
-            provider.FindSpySatellitePatrolPoints(default(Vector2), 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
+            provider.FindSpySatellitePatrolPoints(default, 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
 
 			if (fighterSafeZone == null)
 			{

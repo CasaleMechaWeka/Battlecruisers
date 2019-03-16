@@ -70,7 +70,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 		public void RandomFriendlyBuildingBuilt()
 		{
             _friendlyCruiser.CompleteConstructingBuliding(_randomBuilding);
-            _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default(int), default(int));
+            _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default, default);
 		}
 		#endregion Friendly cruiser building completed
 
@@ -125,7 +125,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 		public void RandomEnemyBuildingBuilt()
 		{
             _enemyCruiser.CompleteConstructingBuliding(_randomBuilding);
-            _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default(int), default(int));
+            _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default, default);
 		}
 		#endregion Enemy cruiser building completed
 

@@ -173,7 +173,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _parentCruiser.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(null));
 
             // Received no highlight refresh
-            _slot2.DidNotReceiveWithAnyArgs().IsVisible = default(bool);
+            _slot2.DidNotReceiveWithAnyArgs().IsVisible = default;
         }
         #endregion BuildingDestroyed event
     }

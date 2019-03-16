@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager.Initialise(managerArgs);
 
             _building = Substitute.For<IBuilding>();
-            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Platform, default(BuildingFunction), default(bool));
+            SlotSpecification slotSpecification = new SlotSpecification(SlotType.Platform, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
 
             _factory = Substitute.For<IFactory>();

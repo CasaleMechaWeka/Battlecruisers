@@ -50,7 +50,7 @@ namespace BattleCruisers.UI
         {
             _rectTransform = transform.Parse<RectTransform>();
 
-            if (highlightSizeMultiplier == default(float))
+            if (highlightSizeMultiplier == default)
             {
                 highlightSizeMultiplier = DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER;
             }

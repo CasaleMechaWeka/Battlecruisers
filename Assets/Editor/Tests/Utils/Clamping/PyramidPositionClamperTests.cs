@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Utils.Clamping
             _pyramid.BottomLeftVertex.Returns(new Vector2(-2, 0));
             _pyramid.BottomRightVertex.Returns(new Vector2(2, 0));
             float maxY = 4;
-            _pyramid.FindMaxY(default(float)).ReturnsForAnyArgs(maxY);
+            _pyramid.FindMaxY(default).ReturnsForAnyArgs(maxY);
 
             Vector2 positionToClamp = new Vector2(_pyramid.BottomLeftVertex.x - 0.01f, maxY + 0.01f);
             Vector2 expectedClampedResult = new Vector2(_pyramid.BottomLeftVertex.x, maxY);

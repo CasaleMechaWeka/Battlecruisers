@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         {
             _deferredTask.Start();
 
-            _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
+            _deferrer.ReceivedWithAnyArgs().Defer(null, default);
             _baseTask.Received().Start();
         }
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         {
             _deferredTask.Stop();
 
-            _deferrer.ReceivedWithAnyArgs().Defer(null, default(float));
+            _deferrer.ReceivedWithAnyArgs().Defer(null, default);
             _baseTask.Received().Stop();
         }
 
