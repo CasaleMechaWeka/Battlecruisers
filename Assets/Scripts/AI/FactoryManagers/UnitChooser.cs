@@ -17,10 +17,9 @@ namespace BattleCruisers.AI.FactoryManagers
                 IBuildableWrapper<IUnit> oldChosenUnit = _chosenUnit;
                 _chosenUnit = value;
 
-                if (!ReferenceEquals(oldChosenUnit, _chosenUnit)
-                    && ChosenUnitChanged != null)
+                if (!ReferenceEquals(oldChosenUnit, _chosenUnit))
                 {
-                    ChosenUnitChanged.Invoke(this, EventArgs.Empty);
+                    ChosenUnitChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

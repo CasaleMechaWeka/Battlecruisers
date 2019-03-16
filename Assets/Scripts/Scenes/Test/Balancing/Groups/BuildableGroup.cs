@@ -59,9 +59,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             Assert.IsTrue(_aliveBuildables.Contains(destroyedBuildable));
             _aliveBuildables.Remove(destroyedBuildable);
 
-            if (_aliveBuildables.Count == 0 && BuildablesDestroyed != null)
+            if (_aliveBuildables.Count == 0)
             {
-                BuildablesDestroyed.Invoke(this, EventArgs.Empty);
+                BuildablesDestroyed?.Invoke(this, EventArgs.Empty);
             }
         }
 

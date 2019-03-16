@@ -36,10 +36,9 @@ namespace BattleCruisers.Cruisers.Damage
         private void _damagable_HealthChanged(object sender, EventArgs e)
         {
             if (_wasAboveThreshold
-                && _damagable.Health < _threshold
-                && ThresholdReached != null)
+                && _damagable.Health < _threshold)
             {
-                ThresholdReached.Invoke(this, EventArgs.Empty);
+                ThresholdReached?.Invoke(this, EventArgs.Empty);
             }
 
             _wasAboveThreshold = _damagable.Health >= _threshold;

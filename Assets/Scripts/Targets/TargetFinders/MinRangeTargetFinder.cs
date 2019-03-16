@@ -41,19 +41,17 @@ namespace BattleCruisers.Targets.TargetFinders
         private void OnTargetFound(object sender, TargetEventArgs args)
         {
             if (!args.Target.IsDestroyed
-                && _targetFilter.IsMatch(args.Target) 
-                && TargetFound != null)
+                && _targetFilter.IsMatch(args.Target))
             {
-                TargetFound.Invoke(this, args);
+                TargetFound?.Invoke(this, args);
             }
         }
 
         private void OnTargetLost(object sender, TargetEventArgs args)
         {
-            if (_targetFilter.IsMatch(args.Target) 
-                && TargetLost != null)
+            if (_targetFilter.IsMatch(args.Target))
             {
-                TargetLost.Invoke(this, args);
+                TargetLost?.Invoke(this, args);
             }
         }
 

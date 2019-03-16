@@ -55,10 +55,9 @@ namespace BattleCruisers.Cruisers.Drones
 
         private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
-            if (e.NewNumOfDrones > _previousNumOfDrones
-                && DroneNumIncreased != null)
+            if (e.NewNumOfDrones > _previousNumOfDrones)
             {
-                DroneNumIncreased.Invoke(this, EventArgs.Empty);
+                DroneNumIncreased?.Invoke(this, EventArgs.Empty);
             }
 
             DeferCheckForIdleDrones();

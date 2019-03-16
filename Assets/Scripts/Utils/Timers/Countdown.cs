@@ -45,11 +45,8 @@ namespace BattleCruisers.Utils.Timers
             {
                 _timeElapsedInFullS = timeElapsedInFullS;
 
-                if (OnSecondPassed != null)
-                {
-                    int secondsRemaining = _durationInS - _timeElapsedInFullS;
-                    OnSecondPassed.Invoke(this, new CountdownEventArgs(secondsRemaining));
-                }
+                int secondsRemaining = _durationInS - _timeElapsedInFullS;
+                OnSecondPassed?.Invoke(this, new CountdownEventArgs(secondsRemaining));
             }
 
             // Check if the countdown is over
