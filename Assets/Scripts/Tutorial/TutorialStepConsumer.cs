@@ -28,10 +28,7 @@ namespace BattleCruisers.Tutorial
             {
                 _tutorialSteps.Dequeue().Start(StartNextTask);
             }
-            else if (Completed != null)
-            {
-                Completed.Invoke(this, EventArgs.Empty);
-            }
+            else Completed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

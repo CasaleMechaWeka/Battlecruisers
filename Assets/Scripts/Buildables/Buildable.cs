@@ -307,10 +307,7 @@ namespace BattleCruisers.Buildables
                 OnSingleClick();
             }
 
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         protected abstract void OnSingleClick();
@@ -325,10 +322,7 @@ namespace BattleCruisers.Buildables
 
         private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
-            if (DroneNumChanged != null)
-            {
-                DroneNumChanged.Invoke(this, e);
-            }
+            DroneNumChanged?.Invoke(this, e);
         }
 
         private void DroneConsumer_DroneStateChanged(object sender, DroneStateChangedEventArgs e)
@@ -359,10 +353,7 @@ namespace BattleCruisers.Buildables
                 BuildableState = BuildableState.InProgress;
             }
 
-            if (StartedConstruction != null)
-            {
-                StartedConstruction.Invoke(this, EventArgs.Empty);
-            }
+            StartedConstruction?.Invoke(this, EventArgs.Empty);
         }
 
         void Update()
@@ -386,10 +377,7 @@ namespace BattleCruisers.Buildables
                 float buildProgressIncrement = buildProgressInDroneS / _buildTimeInDroneSeconds;
                 _healthTracker.AddHealth(buildProgressIncrement * MaxHealth);
 
-                if (BuildableProgress != null)
-                {
-                    BuildableProgress.Invoke(this, new BuildProgressEventArgs(this));
-                }
+                BuildableProgress?.Invoke(this, new BuildProgressEventArgs(this));
 
                 if (_cumulativeBuildProgressInDroneS >= _buildTimeInDroneSeconds)
                 {
@@ -409,10 +397,7 @@ namespace BattleCruisers.Buildables
             EnableRenderers(true);
             BuildableState = BuildableState.Completed;
 
-            if (CompletedBuildable != null)
-            {
-                CompletedBuildable.Invoke(this, EventArgs.Empty);
-            }
+            CompletedBuildable?.Invoke(this, EventArgs.Empty);
 
             RepairCommand.EmitCanExecuteChanged();
 

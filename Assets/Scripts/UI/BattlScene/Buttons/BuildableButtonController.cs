@@ -62,10 +62,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         protected void TriggerPotentialMatchChange()
         {
-            if (PotentialMatchChange != null)
-            {
-                PotentialMatchChange.Invoke(this, EventArgs.Empty);
-            }
+            PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }
 
         protected abstract void OnClicked(bool isButtonEnabled);
@@ -74,10 +71,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             OnClicked(IsMatch);
 
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }

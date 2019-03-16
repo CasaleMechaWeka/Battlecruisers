@@ -26,17 +26,11 @@ namespace BattleCruisers.Cruisers.Drones
 
                     if (_areDronesIdle)
                     {
-                        if (IdleDronesStarted != null)
-                        {
-                            IdleDronesStarted.Invoke(this, EventArgs.Empty);
-                        }
+                        IdleDronesStarted?.Invoke(this, EventArgs.Empty);
                     }
                     else
                     {
-                        if (IdleDronesEnded != null)
-                        {
-                            IdleDronesEnded.Invoke(this, EventArgs.Empty);
-                        }
+                        IdleDronesEnded?.Invoke(this, EventArgs.Empty);
                     }
                 }
             }

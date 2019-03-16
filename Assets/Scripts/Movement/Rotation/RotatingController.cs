@@ -44,10 +44,7 @@ namespace BattleCruisers.Movement.Rotation
 				{
 					_haveReachedDesiredAngle = true;
 
-					if (ReachedDesiredAngle != null)
-					{
-						ReachedDesiredAngle.Invoke(this, EventArgs.Empty);
-					}
+					ReachedDesiredAngle?.Invoke(this, EventArgs.Empty);
 				}
 			}
 		}

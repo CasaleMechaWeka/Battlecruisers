@@ -19,10 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             {
                 _permittedBuilding = value != null ? _prefabFactory.GetBuildingWrapperPrefab(value).Buildable : null;
 
-                if (PotentialMatchChange != null)
-                {
-                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
-                }
+                PotentialMatchChange?.Invoke(this, EventArgs.Empty);
             }
         }
 

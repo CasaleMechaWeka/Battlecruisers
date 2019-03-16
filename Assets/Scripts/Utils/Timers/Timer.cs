@@ -43,10 +43,7 @@ namespace BattleCruisers.Utils.Timers
                 {
                     _timeElapsedInFullS = timeElapsedInFullS;
 
-                    if (OnSecondPassed != null)
-                    {
-                        OnSecondPassed.Invoke(this, new TimerEventArgs(_timeElapsedInFullS));
-                    }
+                    OnSecondPassed?.Invoke(this, new TimerEventArgs(_timeElapsedInFullS));
                 }
             }
         }

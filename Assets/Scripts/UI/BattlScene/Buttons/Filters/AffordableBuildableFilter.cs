@@ -22,10 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 
         private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {
-            if (PotentialMatchChange != null)
-            {
-                PotentialMatchChange.Invoke(this, EventArgs.Empty);
-            }
+            PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }
 
         /// <returns><c>true</c>, if the buildable is affordable (can be built), <c>false</c> otherwise.</returns>

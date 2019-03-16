@@ -15,10 +15,7 @@ namespace BattleCruisers.Utils.DataStrctures
                 {
                     _value = value;
 
-                    if (ValueChanged != null)
-                    {
-                        ValueChanged.Invoke(this, EventArgs.Empty);
-                    }
+                    ValueChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

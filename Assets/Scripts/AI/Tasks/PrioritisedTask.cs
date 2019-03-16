@@ -44,10 +44,7 @@ namespace BattleCruisers.AI.Tasks
         
         public void EmitCompletedEvent()
         {
-            if (Completed != null)
-            {
-                Completed.Invoke(this, EventArgs.Empty);
-            }
+            Completed?.Invoke(this, EventArgs.Empty);
         }
 		
 		private void _task_Completed(object sender, EventArgs e)

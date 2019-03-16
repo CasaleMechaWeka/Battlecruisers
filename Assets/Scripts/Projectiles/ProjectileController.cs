@@ -112,10 +112,7 @@ namespace BattleCruisers.Projectiles
                 AdjustGameObjectDirection();
             }
 
-            if (PositionChanged != null)
-            {
-                PositionChanged.Invoke(this, EventArgs.Empty);
-            }
+            PositionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         void OnTriggerEnter2D(Collider2D collider)
@@ -163,10 +160,7 @@ namespace BattleCruisers.Projectiles
         {
             Destroy(gameObject);
 
-            if (Destroyed != null)
-            {
-                Destroyed.Invoke(this, EventArgs.Empty);
-            }
+            Destroyed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

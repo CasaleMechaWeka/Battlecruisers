@@ -33,10 +33,7 @@ namespace BattleCruisers.Cruisers.Damage
         {
             if ((_time.TimeSinceGameStartInS - _lastChangeTimestamp) >= _debounceTimeInS)
             {
-                if (CruiserOrBuildingDamaged != null)
-                {
-                    CruiserOrBuildingDamaged.Invoke(this, EventArgs.Empty);
-                }
+                CruiserOrBuildingDamaged?.Invoke(this, EventArgs.Empty);
 
                 _lastChangeTimestamp = _time.TimeSinceGameStartInS;
             }

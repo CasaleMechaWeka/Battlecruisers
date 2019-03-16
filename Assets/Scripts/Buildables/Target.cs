@@ -149,10 +149,7 @@ namespace BattleCruisers.Buildables
 		{
             Logging.Log(Tags.TARGET, this + " destroyed :/");
 
-			if (Destroyed != null)
-			{
-				Destroyed.Invoke(this, new DestroyedEventArgs(this));
-			}
+			Destroyed?.Invoke(this, new DestroyedEventArgs(this));
 		}
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
@@ -163,10 +160,7 @@ namespace BattleCruisers.Buildables
 
 	            OnTakeDamage();
 
-                if (Damaged != null)
-                {
-                    Damaged.Invoke(this, new DamagedEventArgs(damageSource));
-                }
+                Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
 
                 if (wasFullHealth)
                 {

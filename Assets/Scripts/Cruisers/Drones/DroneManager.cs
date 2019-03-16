@@ -55,10 +55,7 @@ namespace BattleCruisers.Cruisers.Drones
 
                     _numOfDrones = value;
 
-                    if (DroneNumChanged != null)
-                    {
-                        DroneNumChanged.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
-                    }
+                    DroneNumChanged?.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
                 }
             }
         }

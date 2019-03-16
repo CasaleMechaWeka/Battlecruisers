@@ -14,10 +14,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 				{
 					_currentThreatLevel = value;
 
-					if (ThreatLevelChanged != null)
-					{
-						ThreatLevelChanged.Invoke(this, EventArgs.Empty);
-					}
+					ThreatLevelChanged?.Invoke(this, EventArgs.Empty);
 				}
 			}
 		}

@@ -51,18 +51,12 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         public void InvokeTargetEnteredEvent(ITarget target)
         {
-            if (TargetEntered != null)
-            {
-                TargetEntered.Invoke(this, new TargetEventArgs(target));
-            }
+            TargetEntered?.Invoke(this, new TargetEventArgs(target));
         }
 
         public void InvokeTargetExitedEvent(ITarget target)
         {
-            if (TargetExited != null)
-            {
-                TargetExited.Invoke(this, new TargetEventArgs(target));
-            }
+            TargetExited?.Invoke(this, new TargetEventArgs(target));
         }
     }
 }

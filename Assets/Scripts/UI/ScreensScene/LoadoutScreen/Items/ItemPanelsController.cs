@@ -33,10 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     _currentlyShownPanel.Show();
                 }
 
-                if (PotentialMatchChange != null)
-                {
-                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
-                }
+                PotentialMatchChange?.Invoke(this, EventArgs.Empty);
             }
         }
 

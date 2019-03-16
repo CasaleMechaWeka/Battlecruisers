@@ -57,10 +57,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         {
             _userChosenTargetHelper.ToggleChosenTarget(_target);
 
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdateButtonText()

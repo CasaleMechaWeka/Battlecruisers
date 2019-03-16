@@ -163,10 +163,7 @@ namespace BattleCruisers.Cruisers
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
 
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void _clickHandler_DoubleClick(object sender, EventArgs e)
@@ -198,10 +195,7 @@ namespace BattleCruisers.Cruisers
 
 			building.StartConstruction();
 
-			if (BuildingStarted != null)
-			{
-				BuildingStarted.Invoke(this, new StartedBuildingConstructionEventArgs(building));
-			}
+			BuildingStarted?.Invoke(this, new StartedBuildingConstructionEventArgs(building));
 
 			return building;
 		}
@@ -211,10 +205,7 @@ namespace BattleCruisers.Cruisers
             IBuilding completedBuilding = sender.Parse<IBuilding>();
             completedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
-            if (BuildingCompleted != null)
-            {
-                BuildingCompleted.Invoke(this, new CompletedBuildingConstructionEventArgs(completedBuilding));
-            }
+            BuildingCompleted?.Invoke(this, new CompletedBuildingConstructionEventArgs(completedBuilding));
         }
 
         private void Building_Destroyed(object sender, DestroyedEventArgs e)
@@ -224,10 +215,7 @@ namespace BattleCruisers.Cruisers
 			IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
             destroyedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
-            if (BuildingDestroyed != null)
-            {
-				BuildingDestroyed.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
-            }
+            BuildingDestroyed?.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
         }
 
         void Update()

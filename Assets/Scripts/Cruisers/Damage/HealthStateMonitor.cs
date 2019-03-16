@@ -18,10 +18,7 @@ namespace BattleCruisers.Cruisers.Damage
                 {
                     _healthState = value;
 
-                    if (HealthStateChanged != null)
-                    {
-                        HealthStateChanged.Invoke(this, EventArgs.Empty);
-                    }
+                    HealthStateChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

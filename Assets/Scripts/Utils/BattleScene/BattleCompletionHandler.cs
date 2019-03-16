@@ -22,10 +22,7 @@ namespace BattleCruisers.Utils.BattleScene
 
         public void CompleteBattle(bool wasVictory)
         {
-            if (BattleCompleted != null)
-            {
-                BattleCompleted.Invoke(this, EventArgs.Empty);
-            }
+            BattleCompleted?.Invoke(this, EventArgs.Empty);
 
             BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
 

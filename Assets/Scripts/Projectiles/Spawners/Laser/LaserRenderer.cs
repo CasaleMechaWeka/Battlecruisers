@@ -18,10 +18,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
                     _isVisible = value;
                     _lineRenderer.enabled = _isVisible;
 
-                    if (LaserVisibilityChanged != null)
-                    {
-                        LaserVisibilityChanged.Invoke(this, new LaserVisibilityChangedEventArgs(_isVisible));
-                    }
+                    LaserVisibilityChanged?.Invoke(this, new LaserVisibilityChangedEventArgs(_isVisible));
                 }
             }
         }

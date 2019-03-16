@@ -49,10 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             Assert.IsTrue(_difficultyDropdown.value < _difficulties.Count);
 
-            if (DifficultyChanged != null)
-            {
-                DifficultyChanged.Invoke(this, EventArgs.Empty);
-            }
+            DifficultyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

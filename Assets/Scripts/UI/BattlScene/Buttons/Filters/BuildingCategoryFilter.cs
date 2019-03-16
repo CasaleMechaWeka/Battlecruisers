@@ -13,10 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             {
                 _permittedCategory = value;
 
-                if (PotentialMatchChange != null)
-                {
-                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
-                }
+                PotentialMatchChange?.Invoke(this, EventArgs.Empty);
             }
         }
 

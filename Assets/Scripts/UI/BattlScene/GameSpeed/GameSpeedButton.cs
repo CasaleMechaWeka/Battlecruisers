@@ -48,10 +48,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }

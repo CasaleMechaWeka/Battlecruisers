@@ -15,10 +15,7 @@ namespace BattleCruisers.UI.Filters
             {
                 _isMatch = value;
 
-                if (PotentialMatchChange != null)
-                {
-                    PotentialMatchChange.Invoke(this, EventArgs.Empty);
-                }
+                PotentialMatchChange?.Invoke(this, EventArgs.Empty);
             }
         }
 

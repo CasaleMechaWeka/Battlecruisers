@@ -23,10 +23,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             {
                 _platfromCamera.orthographicSize = value;
 
-                if (OrthographicSizeChanged != null)
-                {
-                    OrthographicSizeChanged.Invoke(this, EventArgs.Empty);
-                }
+                OrthographicSizeChanged?.Invoke(this, EventArgs.Empty);
             }
 		}
 

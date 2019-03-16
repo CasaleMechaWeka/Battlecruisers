@@ -57,10 +57,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             CleanUp();
             gameObject.SetActive(false);
 
-            if (Dismissed != null)
-            {
-                Dismissed.Invoke(this, EventArgs.Empty);
-            }
+            Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void CleanUp() { }

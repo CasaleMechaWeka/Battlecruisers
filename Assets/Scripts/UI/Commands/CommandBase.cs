@@ -22,10 +22,7 @@ namespace BattleCruisers.UI.Commands
 
 		public void EmitCanExecuteChanged()
 		{
-			if (CanExecuteChanged != null)
-			{
-				CanExecuteChanged.Invoke(this, EventArgs.Empty);
-			}
+			CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

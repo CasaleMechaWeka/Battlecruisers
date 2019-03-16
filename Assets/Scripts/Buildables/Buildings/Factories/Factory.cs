@@ -61,10 +61,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
                         EnsureDroneConsumerHasHighestPriority();
 
-                        if (NewUnitChosen != null)
-                        {
-                            NewUnitChosen.Invoke(this, EventArgs.Empty);
-                        }
+                        NewUnitChosen?.Invoke(this, EventArgs.Empty);
                     }
                 }
 			}
@@ -160,18 +157,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             IUnit unit = sender.Parse<IUnit>();
 
-            if (StartedBuildingUnit != null)
-            {
-                StartedBuildingUnit.Invoke(this, new StartedUnitConstructionEventArgs(unit));
-            }
+            StartedBuildingUnit?.Invoke(this, new StartedUnitConstructionEventArgs(unit));
 		}
 
 		private void Unit_CompletedBuildable(object sender, EventArgs e)
 		{
-			if (CompletedBuildingUnit != null)
-			{
-				CompletedBuildingUnit.Invoke(this, new CompletedUnitConstructionEventArgs(UnitUnderConstruction));
-			}
+			CompletedBuildingUnit?.Invoke(this, new CompletedUnitConstructionEventArgs(UnitUnderConstruction));
 
             CleanUpUnitUnderConstruction();
 		}

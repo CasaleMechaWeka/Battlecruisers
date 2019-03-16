@@ -32,10 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 _nextSetCommand.EmitCanExecuteChanged();
                 _previousSetCommand.EmitCanExecuteChanged();
 
-                if (VisibleSetChanged != null)
-                {
-                    VisibleSetChanged.Invoke(this, EventArgs.Empty);
-                }
+                VisibleSetChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

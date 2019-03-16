@@ -85,18 +85,12 @@ namespace BattleCruisers.AI
 
         private void EmitHighestPriorityTaskChangedEvent()
         {
-            if (HighestPriorityTaskChanged != null)
-            {
-                HighestPriorityTaskChanged.Invoke(this, EventArgs.Empty);
-            }
+            HighestPriorityTaskChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void EmitIsEmptyChangedEvent()
         {
-            if (IsEmptyChanged != null)
-            {
-				IsEmptyChanged.Invoke(this, EventArgs.Empty);
-			}
+            IsEmptyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

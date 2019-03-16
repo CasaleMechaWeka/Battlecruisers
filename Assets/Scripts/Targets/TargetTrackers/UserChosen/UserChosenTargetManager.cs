@@ -39,10 +39,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
                     _userChosenTarget.Destroyed += _userChosenTarget_Destroyed;
                 }
 
-                if (HighestPriorityTargetChanged != null)
-                {
-                    HighestPriorityTargetChanged.Invoke(this, EventArgs.Empty);
-                }
+                HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

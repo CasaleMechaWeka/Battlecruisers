@@ -57,10 +57,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void EmitTargetsChangedEvent()
         {
-            if (TargetsChanged != null)
-            {
-                TargetsChanged.Invoke(this, EventArgs.Empty);
-            }
+            TargetsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public bool ContainsTarget(ITarget target)

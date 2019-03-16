@@ -56,10 +56,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         {
 			_buildable.ToggleDroneConsumerFocusCommand.Execute();
    
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdateVisibility()

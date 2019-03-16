@@ -20,10 +20,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
         protected void InvokeCompletedAdjustmentEvent()
         {
-            if (CompletedAdjustment != null)
-            {
-                CompletedAdjustment.Invoke(this, EventArgs.Empty);
-            }
+            CompletedAdjustment?.Invoke(this, EventArgs.Empty);
         }
     }
 }

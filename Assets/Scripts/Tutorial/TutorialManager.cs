@@ -54,10 +54,7 @@ namespace BattleCruisers.Tutorial
         {
             _consumer.Completed -= _consumer_Completed;
 
-            if (TutorialCompleted != null)
-            {
-                TutorialCompleted.Invoke(this, EventArgs.Empty);
-            }
+            TutorialCompleted?.Invoke(this, EventArgs.Empty);
         }
 
         private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)

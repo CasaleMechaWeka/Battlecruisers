@@ -70,10 +70,7 @@ namespace BattleCruisers.UI.Music
 
         private void EmitDanger()
         {
-            if (Danger != null)
-            {
-                Danger.Invoke(this, EventArgs.Empty);
-            }
+            Danger?.Invoke(this, EventArgs.Empty);
         }
     }
 }

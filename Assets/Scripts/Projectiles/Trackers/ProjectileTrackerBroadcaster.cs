@@ -26,10 +26,7 @@ namespace BattleCruisers.Projectiles.Trackers
 
         private void _camera_OrthographicSizeChanged(object sender, EventArgs e)
         {
-            if (PotentialMatchChange != null)
-            {
-                PotentialMatchChange.Invoke(this, EventArgs.Empty);
-            }
+            PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }
     }
 }

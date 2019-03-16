@@ -24,10 +24,7 @@ namespace BattleCruisers.UI.Common.Click
             if ((timeSinceGameStartInS - _lastClickTime) <= _doubleClickThresholdInS)
             {
                 // Double click
-                if (DoubleClick != null)
-                {
-                    DoubleClick.Invoke(this, EventArgs.Empty);
-                }
+                DoubleClick?.Invoke(this, EventArgs.Empty);
 
                 // Don't want third click within threshold to count as a second double click :)
                 _lastClickTime = float.MinValue;
@@ -35,10 +32,7 @@ namespace BattleCruisers.UI.Common.Click
             else
             {
                 // Single click
-                if (SingleClick != null)
-                {
-                    SingleClick.Invoke(this, EventArgs.Empty);
-                }
+                SingleClick?.Invoke(this, EventArgs.Empty);
 
                 _lastClickTime = timeSinceGameStartInS;
             }

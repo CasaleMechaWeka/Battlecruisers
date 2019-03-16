@@ -21,10 +21,7 @@ namespace BattleCruisers.Buildables.Boost
                 {
                     _cumulativeBoost = value;
 
-                    if (BoostChanged != null)
-                    {
-                        BoostChanged.Invoke(this, EventArgs.Empty);
-                    }
+                    BoostChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

@@ -24,20 +24,14 @@ namespace BattleCruisers.Buildables
                 {
                     _health = 0;
                     
-                    if (HealthGone != null)
-                    {
-                        HealthGone.Invoke(this, EventArgs.Empty);
-                    }
+                    HealthGone?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
                     _health = value;
                 }
 
-                if (HealthChanged != null)
-                {
-                    HealthChanged.Invoke(this, EventArgs.Empty);
-                }
+                HealthChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

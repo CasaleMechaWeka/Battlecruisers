@@ -15,10 +15,7 @@ namespace BattleCruisers.Targets.TargetProviders
                 {
                     _target = value;
 
-                    if (TargetChanged != null)
-                    {
-                        TargetChanged.Invoke(this, EventArgs.Empty);
-                    }
+                    TargetChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

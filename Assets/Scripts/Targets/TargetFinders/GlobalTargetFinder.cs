@@ -84,18 +84,12 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void InvokeTargetFoundEvent(ITarget targetFound)
 		{
-			if (TargetFound != null)
-			{
-				TargetFound.Invoke(this, new TargetEventArgs(targetFound));
-			}
+			TargetFound?.Invoke(this, new TargetEventArgs(targetFound));
 		}
 
         private void InvokeTargetLostEvent(ITarget targetLost)
         {
-            if (TargetLost != null)
-            {
-                TargetLost.Invoke(this, new TargetEventArgs(targetLost));
-            }
+            TargetLost?.Invoke(this, new TargetEventArgs(targetLost));
         }
 
 		public void DisposeManagedState()

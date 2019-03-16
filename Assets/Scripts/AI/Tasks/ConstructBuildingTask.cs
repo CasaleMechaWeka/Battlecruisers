@@ -85,10 +85,7 @@ namespace BattleCruisers.AI.Tasks
 
         private void EmitCompletedEvent()
         {
-            if (Completed != null)
-            {
-                Completed.Invoke(this, EventArgs.Empty);
-            }
+            Completed?.Invoke(this, EventArgs.Empty);
         }
 
         public override string ToString()

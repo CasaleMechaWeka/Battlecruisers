@@ -35,18 +35,12 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
         {
-            if (StartedBuildingUnit != null)
-            {
-                StartedBuildingUnit.Invoke(this, e);
-            }
+            StartedBuildingUnit?.Invoke(this, e);
         }
 
         private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
         {
-            if (CompletedBuildingUnit != null)
-            {
-                CompletedBuildingUnit.Invoke(this, e);
-            }
+            CompletedBuildingUnit?.Invoke(this, e);
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)

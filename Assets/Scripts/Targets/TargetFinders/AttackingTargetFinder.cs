@@ -37,10 +37,7 @@ namespace BattleCruisers.Targets.TargetFinders
             {
                 e.DamageSource.Destroyed += AttackingTarget_Destroyed;
 
-                if (TargetFound != null)
-                {
-                    TargetFound.Invoke(this, new TargetEventArgs(e.DamageSource));
-                }
+                TargetFound?.Invoke(this, new TargetEventArgs(e.DamageSource));
             }
         }
 
@@ -48,10 +45,7 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             e.DestroyedTarget.Destroyed -= AttackingTarget_Destroyed;
 
-            if (TargetLost != null)
-            {
-                TargetLost.Invoke(this, new TargetEventArgs(e.DestroyedTarget));
-            }
+            TargetLost?.Invoke(this, new TargetEventArgs(e.DestroyedTarget));
         }
 
         public void DisposeManagedState()

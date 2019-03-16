@@ -19,10 +19,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
                 {
                     _highestPriorityTarget = value;
 
-                    if (HighestPriorityTargetChanged != null)
-                    {
-                        HighestPriorityTargetChanged.Invoke(this, EventArgs.Empty);
-                    }
+                    HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

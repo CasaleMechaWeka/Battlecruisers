@@ -70,10 +70,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             _uiManager.SelectBuildingGroup(Category);
 
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }

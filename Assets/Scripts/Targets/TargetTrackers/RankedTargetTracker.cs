@@ -121,10 +121,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void InvokeHighestPriorityTargetChanged()
         {
-            if (HighestPriorityTargetChanged != null)
-            {
-                HighestPriorityTargetChanged.Invoke(this, EventArgs.Empty);
-            }
+            HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private RankedTarget CreateRankedTarget(ITarget target)

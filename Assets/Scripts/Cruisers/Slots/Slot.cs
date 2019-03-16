@@ -112,20 +112,14 @@ namespace BattleCruisers.Cruisers.Slots
                 _parentCruiser.ConstructSelectedBuilding(this);
             }
 
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, EventArgs.Empty);
-            }
+            Clicked?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
 			Building = null;
 
-            if (BuildingDestroyed != null)
-            {
-                BuildingDestroyed.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
-            }
+            BuildingDestroyed?.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
 		}
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)

@@ -39,10 +39,7 @@ namespace BattleCruisers.Utils.BattleScene
             _prePauseTimeScale = _time.TimeScale;
             _time.TimeScale = 0;
 
-            if (GamePaused != null)
-            {
-                GamePaused.Invoke(this, EventArgs.Empty);
-            }
+            GamePaused?.Invoke(this, EventArgs.Empty);
         }
 
         public void ResumeGame()
@@ -54,10 +51,7 @@ namespace BattleCruisers.Utils.BattleScene
 
             _time.TimeScale = _prePauseTimeScale;
 
-            if (GameResumed != null)
-            {
-                GameResumed.Invoke(this, EventArgs.Empty);
-            }
+            GameResumed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -39,10 +39,7 @@ namespace BattleCruisers.Buildables.Boost
                 boostable.BoostMultiplier = _boostConsumer.CumulativeBoost;
             }
 
-            if (BoostChanged != null)
-            {
-                BoostChanged.Invoke(this, EventArgs.Empty);
-            }
+            BoostChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void AddBoostable(IBoostable boostable)

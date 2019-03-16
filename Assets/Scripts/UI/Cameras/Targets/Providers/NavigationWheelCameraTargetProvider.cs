@@ -24,10 +24,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 {
                     _target = value;
 
-                    if (TargetChanged != null)
-                    {
-                        TargetChanged.Invoke(this, EventArgs.Empty);
-                    }
+                    TargetChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

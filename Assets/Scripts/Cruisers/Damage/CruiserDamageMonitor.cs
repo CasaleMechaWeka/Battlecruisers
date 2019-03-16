@@ -33,10 +33,7 @@ namespace BattleCruisers.Cruisers.Damage
 
         private void OnCruiserOrBuildingDamaged(object sender, DamagedEventArgs e)
         {
-            if (CruiserOrBuildingDamaged != null)
-            {
-                CruiserOrBuildingDamaged.Invoke(this, EventArgs.Empty);
-            }
+            CruiserOrBuildingDamaged?.Invoke(this, EventArgs.Empty);
         }
 
         public void DisposeManagedState()
