@@ -68,7 +68,7 @@ namespace BattleCruisers.Scenes
 
             while(!loadingScene.isDone)
             {
-                Logging.Verbose(Tags.SCENE_NAVIGATION, "LoadScene():  " + sceneName + "  progress: " + loadingScene.progress);
+                Logging.Verbose(Tags.SCENE_NAVIGATION, $"{sceneName}  progress: {loadingScene.progress}");
                 yield return null;
             }
 			

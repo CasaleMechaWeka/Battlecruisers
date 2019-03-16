@@ -174,7 +174,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			float turnAroundDistance = absoluteLeadDistance * TURN_AROUND_DISTANCE_MULTIPLIER;
 			float xTurnAroundPosition = targetXVelocity > 0 ? targetPosition.x + turnAroundDistance : targetPosition.x - turnAroundDistance;
 
-			Logging.Verbose(Tags.AIRCRAFT, string.Format("IsReadyToTurnAround():  planePosition.x: {0}  xTurnAroundPosition: {1}", planePosition.x, xTurnAroundPosition));
+            Logging.Verbose(Tags.AIRCRAFT, $"IsReadyToTurnAround():  planePosition.x: {planePosition.x}  xTurnAroundPosition: {xTurnAroundPosition}");
 
 			return 
 				((targetXVelocity > 0 && planePosition.x >= xTurnAroundPosition)
@@ -196,7 +196,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		/// </summary>
 		private bool IsOnTarget(Vector2 planePosition, Vector2 targetPosition, float planeXVelocityInMPerS)
 		{
-			Logging.Verbose(Tags.AIRCRAFT, string.Format("IsOnTarget():  targetPosition: {0}  planePosition: {1}  planeXVelocityInMPerS: {2}", targetPosition, planePosition, planeXVelocityInMPerS));
+            Logging.Verbose(Tags.AIRCRAFT, $"targetPosition: {targetPosition}  planePosition: {planePosition}  planeXVelocityInMPerS: {planeXVelocityInMPerS}");
 
 			float leadDistance = FindLeadDistance(planePosition, targetPosition, planeXVelocityInMPerS);
 			float xDropPosition = targetPosition.x - leadDistance;

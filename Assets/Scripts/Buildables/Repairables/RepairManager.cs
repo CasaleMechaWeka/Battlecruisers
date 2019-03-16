@@ -86,7 +86,7 @@ namespace BattleCruisers.Buildables.Repairables
 
         public void Repair(float deltaTimeInS)
         {
-            Logging.Verbose(Tags.REPAIR_MANAGER, "Repair()  _repairableToDroneConsumer.Count:  " + _repairableToDroneNum.Count);
+            Logging.Verbose(Tags.REPAIR_MANAGER, "_repairableToDroneConsumer.Count:  " + _repairableToDroneNum.Count);
 
             foreach (KeyValuePair<IRepairable, IDroneNumFeedback> pair in _repairableToDroneNum)
             {
@@ -96,7 +96,7 @@ namespace BattleCruisers.Buildables.Repairables
                 if (droneConsumer != null
                     && droneConsumer.State != DroneConsumerState.Idle)
                 {
-                    Logging.Verbose(Tags.REPAIR_MANAGER, "Repair()  About to repair: " + repairable);
+                    Logging.Verbose(Tags.REPAIR_MANAGER, "About to repair: " + repairable);
 
                     Assert.IsTrue(repairable.RepairCommand.CanExecute);
                     float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * BuildSpeedMultipliers.DEFAULT;

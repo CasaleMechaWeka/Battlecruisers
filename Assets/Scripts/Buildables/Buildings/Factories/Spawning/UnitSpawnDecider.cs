@@ -30,14 +30,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             // start buliding the next unit.  This avoids the factory being "protected"
             // by instantly respawning in progress units.  Ignore if the unit under 
             // construction was recently changed.
-            Logging.Verbose(Tags.FACTORY, "UnitSpawnDecider.CanSpawnUnit(): " + unitToSpawn
-                + "  time since chosen: " + _unitSpawnTimer.TimeSinceUnitWasChosenInS
-                + "  time since clear:  " + _unitSpawnTimer.TimeSinceFactoryWasClearInS);
+            Logging.Verbose(Tags.FACTORY, $"{unitToSpawn}  Time since chosen: {_unitSpawnTimer.TimeSinceUnitWasChosenInS}  " +
+                $"Time since clear:  {_unitSpawnTimer.TimeSinceFactoryWasClearInS}");
 
             if (_unitSpawnTimer.TimeSinceUnitWasChosenInS >= MIN_BUILD_BREAK_IN_S
                 && _unitSpawnTimer.TimeSinceFactoryWasClearInS <= MIN_BUILD_BREAK_IN_S)
             {
-                Logging.Verbose(Tags.FACTORY, "UnitSpawnDecider.CanSpawnUnit():  times mean false :)");
+                Logging.Verbose(Tags.FACTORY, "Times mean false :)");
 
                 return false;
             }

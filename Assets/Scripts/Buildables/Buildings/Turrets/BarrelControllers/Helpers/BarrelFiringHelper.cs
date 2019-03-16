@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
         {
-            Logging.Verbose(Tags.BARREL_CONTROLLER, "BarrelFiringHelper.TryFire()  _fireIntervalManager.ShouldFire: " + _fireIntervalManager.ShouldFire);
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"_fireIntervalManager.ShouldFire: {_fireIntervalManager.ShouldFire}");
 
             if (_fireIntervalManager.ShouldFire)
             {

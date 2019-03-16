@@ -35,7 +35,7 @@ namespace BattleCruisers.Movement.Rotation
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
 			bool isOnTarget = differenceInDegrees < ROTATION_EQUALITY_MARGIN_IN_DEGREES;
 
-            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, "isOnTarget: " + isOnTarget + " currentAngle: " + currentAngleInDegrees + "  desiredAngle: " + desiredAngleInDegrees);
+            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, $"isOnTarget: {isOnTarget}  currentAngle: {currentAngleInDegrees}  desiredAngle: {desiredAngleInDegrees}");
             return isOnTarget;
 		}
 
