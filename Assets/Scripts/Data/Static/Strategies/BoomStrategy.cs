@@ -6,6 +6,6 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class BoomStrategy : IBaseStrategy
     {
-        public IList<IPrefabKeyWrapper> BuildOrder { get { return StaticBuildOrders.Adaptive.Boom; } }
+        public IList<IPrefabKeyWrapper> BuildOrder => StaticBuildOrders.Adaptive.Boom;
     }
 }

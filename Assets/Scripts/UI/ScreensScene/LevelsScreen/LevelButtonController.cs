@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public LevelStatsController levelStatsController;
 
 		private CanvasGroup _canvasGroup;
-        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(LevelInfo level, IScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
 		{

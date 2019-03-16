@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private BarrelController _barrelController;
         private IAngleHelper _angleHelper;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Fighter; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Fighter;
 
         // Detects enemies that come within following range
         public CircleTargetDetectorController followableEnemyDetector;
@@ -59,9 +59,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-		protected override float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR; } }
-        protected override float PositionEqualityMarginInM { get { return 2; } }
-        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Fighter; } }
+		protected override float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR;
+        protected override float PositionEqualityMarginInM => 2;
+        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Fighter;
 
         protected override void OnStaticInitialised()
 		{

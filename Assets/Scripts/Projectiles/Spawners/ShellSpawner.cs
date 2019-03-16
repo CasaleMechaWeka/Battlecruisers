@@ -11,7 +11,7 @@ namespace BattleCruisers.Projectiles.Spawners
         private IProjectileSpawnerSoundPlayer _soundPlayer;
 
         public ProjectileController shellPrefab;
-		protected override ProjectileController ProjectilePrefab { get { return shellPrefab; } }
+		protected override ProjectileController ProjectilePrefab => shellPrefab;
 
         public void Initialise(IProjectileSpawnerArgs args, ITargetFilter targetFilter, ISoundKey firingSound)
         {

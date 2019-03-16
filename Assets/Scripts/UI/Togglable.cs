@@ -11,10 +11,10 @@ namespace BattleCruisers.UI
 
         private const float DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER = 1;
 
-        protected virtual bool Disable { get { return true; } }
-        protected virtual Image Image { get { return null; } }
-        protected virtual CanvasGroup CanvasGroup { get { return null; } }
-        protected virtual bool ToggleVisibility { get { return false; } }
+        protected virtual bool Disable => true;
+        protected virtual Image Image => null;
+        protected virtual CanvasGroup CanvasGroup => null;
+        protected virtual bool ToggleVisibility => false;
 
         public float highlightSizeMultiplier;
 

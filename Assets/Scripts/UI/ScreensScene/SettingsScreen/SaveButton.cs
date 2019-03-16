@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
 
         private CanvasGroup _canvasGroup;
-        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(IDifficultyDropdown difficultyDropdown, ISettingsManager settingsManager)
         {

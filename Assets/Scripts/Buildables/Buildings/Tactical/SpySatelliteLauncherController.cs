@@ -10,9 +10,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class SpySatelliteLauncherController : SatelliteLauncherController, ISpySatelliteLauncher
     {
-        protected override Vector3 SpawnPositionAdjustment { get { return new Vector3(0, 0.121f, 0); } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.SpySatellite; } }
-        public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+        protected override Vector3 SpawnPositionAdjustment => new Vector3(0, 0.121f, 0);
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SpySatellite;
+        public override TargetValue TargetValue => TargetValue.Medium;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,

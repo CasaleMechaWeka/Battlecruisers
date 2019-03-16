@@ -12,7 +12,7 @@ namespace BattleCruisers.Utils.Timers
 
         public int durationInS;
 
-        public bool IsInProgress { get { return gameObject.activeSelf; } }
+        public bool IsInProgress => gameObject.activeSelf;
 
         public void Initialise()
         {

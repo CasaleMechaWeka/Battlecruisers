@@ -9,20 +9,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public class EnemyShipStepsFactory : EnemyUnitDefenceStepsFactory
     {
-        protected override IPrefabKey FactoryKey { get { return StaticPrefabKeys.Buildings.NavalFactory; } }
-        protected override CameraFocuserTarget UnitCameraFocusTarget { get { return CameraFocuserTarget.AICruiserNavalFactory; } }
+        protected override IPrefabKey FactoryKey => StaticPrefabKeys.Buildings.NavalFactory;
+        protected override CameraFocuserTarget UnitCameraFocusTarget => CameraFocuserTarget.AICruiserNavalFactory;
 
         private readonly BuildableInfo _unitToBuild;
-        protected override BuildableInfo UnitToBuild { get { return _unitToBuild; } }
+        protected override BuildableInfo UnitToBuild => _unitToBuild;
 
         private readonly ISingleBuildableProvider _unitBuiltProvider;
-        protected override ISingleBuildableProvider UnitBuiltProvider { get { return _unitBuiltProvider; } }
+        protected override ISingleBuildableProvider UnitBuiltProvider => _unitBuiltProvider;
 
         private readonly BuildableInfo _defenceToBuild;
-        protected override BuildableInfo DefenceToBuild { get { return _defenceToBuild; } }
+        protected override BuildableInfo DefenceToBuild => _defenceToBuild;
 
         private readonly SlotSpecification _slotSpecification;
-        protected override SlotSpecification SlotSpecification { get { return _slotSpecification; } }
+        protected override SlotSpecification SlotSpecification => _slotSpecification;
 
         public EnemyShipStepsFactory(
             ITutorialStepArgsFactory argsFactory,

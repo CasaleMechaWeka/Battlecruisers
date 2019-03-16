@@ -6,6 +6,6 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class RushStrategy : IBaseStrategy
     {
-        public IList<IPrefabKeyWrapper> BuildOrder { get { return StaticBuildOrders.Adaptive.Rush; } }
+        public IList<IPrefabKeyWrapper> BuildOrder => StaticBuildOrders.Adaptive.Rush;
     }
 }

@@ -9,7 +9,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         private readonly IUserChosenTargetHelper _baseHelper;
         private readonly IUserChosenTargetHelperPermissions _permissions;
 
-        public ITarget UserChosenTarget { get { return _baseHelper.UserChosenTarget; } }
+        public ITarget UserChosenTarget => _baseHelper.UserChosenTarget;
 
         public event EventHandler UserChosenTargetChanged
         {

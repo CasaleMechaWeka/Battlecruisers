@@ -5,6 +5,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class StealthGenerator : TacticalBuilding, IStealthGenerator
     {
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.StealthGenerator; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.StealthGenerator;
     }
 }

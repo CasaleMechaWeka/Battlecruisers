@@ -6,7 +6,7 @@ namespace BattleCruisers.Movement.Velocity.Providers
     {
         private readonly IPatrollingVelocityProvider _patrollingAircraft;
 
-        public float VelocityInMPerS { get { return _patrollingAircraft.PatrollingVelocityInMPerS; } }
+        public float VelocityInMPerS => _patrollingAircraft.PatrollingVelocityInMPerS;
 
         public PatrollingVelocityProvider(IPatrollingVelocityProvider patrollingAircraft)
         {

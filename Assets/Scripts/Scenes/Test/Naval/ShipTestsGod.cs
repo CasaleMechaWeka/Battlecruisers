@@ -5,7 +5,7 @@ namespace BattleCruisers.Scenes.Test.Naval
 {
 	public class ShipTestsGod : FactoryTestGod
 	{
-		protected override Faction FactoryFacingLeftFaction { get { return Faction.Reds; } }
-		protected override Faction FactoryFacingRightFaction { get { return Faction.Blues; } }
+		protected override Faction FactoryFacingLeftFaction => Faction.Reds;
+		protected override Faction FactoryFacingRightFaction => Faction.Blues;
 	}
 }

@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class KamikazeSignal : Building
     {
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,

@@ -13,10 +13,10 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             set { PlatformObject.position = value; }
         }
 
-        public Vector3 EulerAngles { get { return PlatformObject.rotation.eulerAngles; } }
-        public Vector3 Right { get { return PlatformObject.right; } }
-        public Vector3 Up { get { return PlatformObject.up; } }
-        public Quaternion Rotation { get { return PlatformObject.rotation; } }
+        public Vector3 EulerAngles => PlatformObject.rotation.eulerAngles;
+        public Vector3 Right => PlatformObject.right;
+        public Vector3 Up => PlatformObject.up;
+        public Quaternion Rotation => PlatformObject.rotation;
 
         public TransformBC(Transform platformTransform)
         {

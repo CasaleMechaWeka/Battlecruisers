@@ -12,8 +12,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 		public Factory factoryFacingRight, factoryFacingLeft;
 		public UnitWrapper unitPrefab;
 
-		protected virtual Faction FactoryFacingLeftFaction { get { return Faction.Blues; } }
-		protected virtual Faction FactoryFacingRightFaction { get { return Faction.Blues; } }
+		protected virtual Faction FactoryFacingLeftFaction => Faction.Blues;
+		protected virtual Faction FactoryFacingRightFaction => Faction.Blues;
 
 		void Start()
 		{

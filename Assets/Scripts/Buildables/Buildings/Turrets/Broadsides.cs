@@ -9,8 +9,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class Broadsides : OffenseTurret
     {
-        protected override ISoundKey FiringSound { get { return SoundKeys.Firing.Broadsides; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
+        protected override ISoundKey FiringSound => SoundKeys.Firing.Broadsides;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,

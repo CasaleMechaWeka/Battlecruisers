@@ -8,9 +8,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		public float shieldRechargeDelayInS;
 		public float shieldRechargeRatePerS;
 
-        public float ShieldRadiusInM { get { return shieldRadiusInM; } }
-        public float ShieldRechargeDelayInS { get { return shieldRechargeDelayInS; } }
-        public float ShieldRechargeRatePerS { get { return BoostMultiplier * shieldRechargeRatePerS; } }
+        public float ShieldRadiusInM => shieldRadiusInM;
+        public float ShieldRechargeDelayInS => shieldRechargeDelayInS;
+        public float ShieldRechargeRatePerS => BoostMultiplier * shieldRechargeRatePerS;
 
         public float BoostMultiplier { get; set; }
 	}

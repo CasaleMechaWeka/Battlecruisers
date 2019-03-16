@@ -7,7 +7,7 @@ namespace BattleCruisers.Movement.Velocity.Providers
         private readonly IVelocityProvider _providerToWrap;
         private readonly float _multiplier;
 
-        public float VelocityInMPerS { get { return _providerToWrap.VelocityInMPerS * _multiplier; } }
+        public float VelocityInMPerS => _providerToWrap.VelocityInMPerS * _multiplier;
 
         public MultiplyingVelocityProvider(IVelocityProvider providerToWrap, float multiplier)
         {

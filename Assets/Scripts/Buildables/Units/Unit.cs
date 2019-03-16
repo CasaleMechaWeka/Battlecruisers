@@ -22,15 +22,15 @@ namespace BattleCruisers.Buildables.Units
 		public UnitCategory category;
 
 		public float maxVelocityInMPerS;
-        public float MaxVelocityInMPerS { get { return maxVelocityInMPerS; } }
+        public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
 		public Rigidbody2D rigidBody;
 
 		#region Properties
 		public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
-		public UnitCategory Category { get { return category; } }
-		public override Vector2 Velocity { get { return rigidBody.velocity; } }
-        public virtual bool IsUltra { get { return false; } }
+		public UnitCategory Category => category;
+		public override Vector2 Velocity => rigidBody.velocity;
+        public virtual bool IsUltra => false;
 
 		private Direction _facingDirection;
 		public Direction FacingDirection
@@ -52,10 +52,10 @@ namespace BattleCruisers.Buildables.Units
             }
         }
 
-        protected override bool IsDroneConsumerFocusable { get { return false; } }
+        protected override bool IsDroneConsumerFocusable => false;
 
         protected abstract ISoundKey EngineSoundKey { get; }
-        protected virtual float OnDeathGravityScale { get { return 1; } }
+        protected virtual float OnDeathGravityScale => 1;
 		#endregion Properties
 
 		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)

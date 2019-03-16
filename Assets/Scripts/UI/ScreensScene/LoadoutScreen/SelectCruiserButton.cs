@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IHullNameToKey _hullNameToKey;
         private IDataProvider _dataProvider;
 
-        protected override bool ToggleVisibility { get { return true; } }
+        protected override bool ToggleVisibility => true;
 
         private ISettableBroadcastingProperty<HullKey> _selectedHull;
         public IBroadcastingProperty<HullKey> SelectedHull { get; private set; }

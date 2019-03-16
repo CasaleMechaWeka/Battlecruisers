@@ -9,74 +9,74 @@ namespace BattleCruisers.Data.Static
 		public static class Buildings
 		{
 			// Factories
-			public static BuildingKey AirFactory { get { return new BuildingKey(BuildingCategory.Factory, "AirFactory"); } }
-			public static BuildingKey NavalFactory { get { return new BuildingKey(BuildingCategory.Factory, "NavalFactory"); } }
-			public static BuildingKey DroneStation { get { return new BuildingKey(BuildingCategory.Factory, "EngineeringBay"); } }
+			public static BuildingKey AirFactory => new BuildingKey(BuildingCategory.Factory, "AirFactory");
+			public static BuildingKey NavalFactory => new BuildingKey(BuildingCategory.Factory, "NavalFactory");
+			public static BuildingKey DroneStation => new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
 
 			// Tactical
-			public static BuildingKey ShieldGenerator { get { return new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator"); } }
-            public static BuildingKey StealthGenerator { get { return new BuildingKey(BuildingCategory.Tactical, "StealthGenerator"); } }
-            public static BuildingKey SpySatelliteLauncher { get { return new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher"); } }
-			public static BuildingKey LocalBooster { get { return new BuildingKey(BuildingCategory.Tactical, "LocalBooster"); } }
-            public static BuildingKey ControlTower { get { return new BuildingKey(BuildingCategory.Tactical, "ControlTower"); } }
+			public static BuildingKey ShieldGenerator => new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
+            public static BuildingKey StealthGenerator => new BuildingKey(BuildingCategory.Tactical, "StealthGenerator");
+            public static BuildingKey SpySatelliteLauncher => new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
+			public static BuildingKey LocalBooster => new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
+            public static BuildingKey ControlTower => new BuildingKey(BuildingCategory.Tactical, "ControlTower");
 
 			// Defence
-			public static BuildingKey AntiShipTurret { get { return new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"); } }
-			public static BuildingKey AntiAirTurret { get { return new BuildingKey(BuildingCategory.Defence, "AntiAirTurret"); } }
-			public static BuildingKey Mortar { get { return new BuildingKey(BuildingCategory.Defence, "Mortar"); } }
-			public static BuildingKey SamSite { get { return new BuildingKey(BuildingCategory.Defence, "SamSite"); } }
-			public static BuildingKey TeslaCoil { get { return new BuildingKey(BuildingCategory.Defence, "TeslaCoil"); } }
+			public static BuildingKey AntiShipTurret => new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
+			public static BuildingKey AntiAirTurret => new BuildingKey(BuildingCategory.Defence, "AntiAirTurret");
+			public static BuildingKey Mortar => new BuildingKey(BuildingCategory.Defence, "Mortar");
+			public static BuildingKey SamSite => new BuildingKey(BuildingCategory.Defence, "SamSite");
+			public static BuildingKey TeslaCoil => new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
 
 			// Offence
-			public static BuildingKey Artillery { get { return new BuildingKey(BuildingCategory.Offence, "Artillery"); } }
-			public static BuildingKey RocketLauncher { get { return new BuildingKey(BuildingCategory.Offence, "RocketLauncher"); } }
-			public static BuildingKey Railgun { get { return new BuildingKey(BuildingCategory.Offence, "Railgun"); } }
+			public static BuildingKey Artillery => new BuildingKey(BuildingCategory.Offence, "Artillery");
+			public static BuildingKey RocketLauncher => new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
+			public static BuildingKey Railgun => new BuildingKey(BuildingCategory.Offence, "Railgun");
 
 			// Ultras
-			public static BuildingKey DeathstarLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher"); } }
-			public static BuildingKey NukeLauncher { get { return new BuildingKey(BuildingCategory.Ultra, "NukeLauncher"); } }
-			public static BuildingKey Ultralisk { get { return new BuildingKey(BuildingCategory.Ultra, "Ultralisk"); } }
-            public static BuildingKey KamikazeSignal { get { return new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal"); } }
-            public static BuildingKey Broadsides { get { return new BuildingKey(BuildingCategory.Ultra, "Broadsides"); } }
+			public static BuildingKey DeathstarLauncher => new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
+			public static BuildingKey NukeLauncher => new BuildingKey(BuildingCategory.Ultra, "NukeLauncher");
+			public static BuildingKey Ultralisk => new BuildingKey(BuildingCategory.Ultra, "Ultralisk");
+            public static BuildingKey KamikazeSignal => new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal");
+            public static BuildingKey Broadsides => new BuildingKey(BuildingCategory.Ultra, "Broadsides");
         }
 
         public static class Units
         {
             // Aircraft
-            public static UnitKey Bomber { get { return new UnitKey(UnitCategory.Aircraft, "Bomber"); } }
-            public static UnitKey Fighter { get { return new UnitKey(UnitCategory.Aircraft, "Fighter"); } }
-            public static UnitKey Gunship { get { return new UnitKey(UnitCategory.Aircraft, "Gunship"); } }
+            public static UnitKey Bomber => new UnitKey(UnitCategory.Aircraft, "Bomber");
+            public static UnitKey Fighter => new UnitKey(UnitCategory.Aircraft, "Fighter");
+            public static UnitKey Gunship => new UnitKey(UnitCategory.Aircraft, "Gunship");
 
             // Ships
-            public static UnitKey AttackBoat { get { return new UnitKey(UnitCategory.Naval, "AttackBoat"); } }
-            public static UnitKey Frigate { get { return new UnitKey(UnitCategory.Naval, "Frigate"); } }
-            public static UnitKey Destroyer { get { return new UnitKey(UnitCategory.Naval, "Destroyer"); } }
-            public static UnitKey ArchonBattleship { get { return new UnitKey(UnitCategory.Naval, "ArchonBattleship"); } }
+            public static UnitKey AttackBoat => new UnitKey(UnitCategory.Naval, "AttackBoat");
+            public static UnitKey Frigate => new UnitKey(UnitCategory.Naval, "Frigate");
+            public static UnitKey Destroyer => new UnitKey(UnitCategory.Naval, "Destroyer");
+            public static UnitKey ArchonBattleship => new UnitKey(UnitCategory.Naval, "ArchonBattleship");
 		}
 
 		public static class Hulls
 		{
-			public static HullKey Bullshark { get { return new HullKey("Bullshark"); } }
-			public static HullKey Eagle { get { return new HullKey("Eagle"); } }
-			public static HullKey Hammerhead { get { return new HullKey("Hammerhead"); } }
-			public static HullKey Longbow { get { return new HullKey("Longbow"); } }
-			public static HullKey Megalodon { get { return new HullKey("Megalodon"); } }
-			public static HullKey Raptor { get { return new HullKey("Raptor"); } }
-			public static HullKey Rockjaw { get { return new HullKey("Rockjaw"); } }
-			public static HullKey Trident { get { return new HullKey("Trident"); } }
+			public static HullKey Bullshark => new HullKey("Bullshark");
+			public static HullKey Eagle => new HullKey("Eagle");
+			public static HullKey Hammerhead => new HullKey("Hammerhead");
+			public static HullKey Longbow => new HullKey("Longbow");
+			public static HullKey Megalodon => new HullKey("Megalodon");
+			public static HullKey Raptor => new HullKey("Raptor");
+			public static HullKey Rockjaw => new HullKey("Rockjaw");
+			public static HullKey Trident => new HullKey("Trident");
 		}
 
         public static class UI
         {
-            public static UIKey DeleteCountdown { get { return new UIKey("DeleteCountdown"); } }
+            public static UIKey DeleteCountdown => new UIKey("DeleteCountdown");
         }
 
         public static class Explosions
         {
-            public static ExplosionKey CartoonExplosion75 { get { return new ExplosionKey("CartoonExplosion0.75"); } }
-            public static ExplosionKey CartoonExplosion100 { get { return new ExplosionKey("CartoonExplosion1.0"); } }
-            public static ExplosionKey CartoonExplosion150 { get { return new ExplosionKey("CartoonExplosion1.5"); } }
-            public static ExplosionKey CartoonExplosion1000 { get { return new ExplosionKey("CartoonExplosion10.0"); } }
+            public static ExplosionKey CartoonExplosion75 => new ExplosionKey("CartoonExplosion0.75");
+            public static ExplosionKey CartoonExplosion100 => new ExplosionKey("CartoonExplosion1.0");
+            public static ExplosionKey CartoonExplosion150 => new ExplosionKey("CartoonExplosion1.5");
+            public static ExplosionKey CartoonExplosion1000 => new ExplosionKey("CartoonExplosion10.0");
         }
 	}
 }

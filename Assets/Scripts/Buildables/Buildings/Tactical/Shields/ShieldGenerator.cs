@@ -12,9 +12,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
     {
         private ShieldController _shieldController;
 
-        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building5; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.Shields; } }
-        public override TargetValue TargetValue { get { return TargetValue.Medium; } }
+        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building5;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
+        public override TargetValue TargetValue => TargetValue.Medium;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,

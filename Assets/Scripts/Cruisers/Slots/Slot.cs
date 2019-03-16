@@ -25,24 +25,24 @@ namespace BattleCruisers.Cruisers.Slots
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public SlotType type;
-        public SlotType Type { get { return type; } }
+        public SlotType Type => type;
 
         public BuildingFunction buildingFunctionAffinity;
-        public BuildingFunction BuildingFunctionAffinity { get { return buildingFunctionAffinity; } }
+        public BuildingFunction BuildingFunctionAffinity => buildingFunctionAffinity;
 
         public Direction direction;
-        public Direction Direction { get { return direction; } }
+        public Direction Direction => direction;
 
         public float index;
-        public float Index { get { return index; } }
+        public float Index => index;
 
-        private Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
-        public bool IsFree { get { return Building == null; } }
+        private Vector2 Size => new Vector2(_collider.radius * 2, _collider.radius * 2);
+        public bool IsFree => Building == null;
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         public Vector3 BuildingPlacementPoint { get; private set; }
-        public Vector2 Position { get { return transform.position; } }
+        public Vector2 Position => transform.position;
 
         /// <summary>
         /// Only show/hide slot sprite renderer.  Always show boost feedback.

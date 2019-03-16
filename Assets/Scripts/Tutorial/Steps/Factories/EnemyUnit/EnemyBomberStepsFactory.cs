@@ -18,20 +18,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         private readonly ICruiser _aiCruiser;
         private readonly IVariableDelayDeferrer _deferrer;
 
-        protected override IPrefabKey FactoryKey { get { return StaticPrefabKeys.Buildings.AirFactory; } }
-        protected override CameraFocuserTarget UnitCameraFocusTarget { get { return CameraFocuserTarget.AICruiser; } }
+        protected override IPrefabKey FactoryKey => StaticPrefabKeys.Buildings.AirFactory;
+        protected override CameraFocuserTarget UnitCameraFocusTarget => CameraFocuserTarget.AICruiser;
 
         private readonly BuildableInfo _unitToBuild;
-        protected override BuildableInfo UnitToBuild { get { return _unitToBuild; } }
+        protected override BuildableInfo UnitToBuild => _unitToBuild;
 
         private readonly ISingleBuildableProvider _unitBuiltProvider;
-        protected override ISingleBuildableProvider UnitBuiltProvider { get { return _unitBuiltProvider; } }
+        protected override ISingleBuildableProvider UnitBuiltProvider => _unitBuiltProvider;
 
         private readonly BuildableInfo _defenceToBuild;
-        protected override BuildableInfo DefenceToBuild { get { return _defenceToBuild; } }
+        protected override BuildableInfo DefenceToBuild => _defenceToBuild;
 
         private readonly SlotSpecification _slotSpecification;
-        protected override SlotSpecification SlotSpecification { get { return _slotSpecification; } }
+        protected override SlotSpecification SlotSpecification => _slotSpecification;
 
         public EnemyBomberStepsFactory(
             ITutorialStepArgsFactory argsFactory,

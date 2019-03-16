@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected IComparingItemFamilyTracker _comparingFamiltyTracker;
 
         private CanvasGroup _canvasGroup;
-        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public ItemFamily itemFamily;
 

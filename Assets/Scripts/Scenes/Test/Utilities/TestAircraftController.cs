@@ -21,9 +21,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			set { patrolPoints = new List<Vector2>(value); }
 		}
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Bomber; } }
-        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Gunship; } }
-		public override TargetType TargetType { get { return _targetType; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Bomber;
+        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Gunship;
+		public override TargetType TargetType => _targetType;
 
 		private bool _useDummyMovementController = false; 
 		public bool UseDummyMovementController
@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		}
 
         public TargetValue targetValue;
-        public override TargetValue TargetValue { get { return targetValue; } }
+        public override TargetValue TargetValue => targetValue;
 
         protected override void OnBuildableCompleted()
 		{

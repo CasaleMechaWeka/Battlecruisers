@@ -31,16 +31,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
 
-        protected bool IsInKamikazeMode { get { return _kamikazeController.isActiveAndEnabled; } }
-        public override TargetType TargetType { get { return TargetType.Aircraft; } }
-		public override Vector2 Velocity { get { return ActiveMovementController.Velocity; } }
-        protected virtual float MaxPatrollingVelocity { get { return EffectiveMaxVelocityInMPerS; } }
-        protected float EffectiveMaxVelocityInMPerS { get { return _velocityBoostable.BoostMultiplier * _fuzziedMaxVelocityInMPerS; } }
-		public float PatrollingVelocityInMPerS { get { return MaxPatrollingVelocity; } }
-        public float VelocityInMPerS { get { return EffectiveMaxVelocityInMPerS; } }
-        protected virtual float PositionEqualityMarginInM { get { return 0.5f; } }
-        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Aircraft; } }
-        protected override bool ShowSmokeWhenDestroyed { get { return true; } }
+        protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
+        public override TargetType TargetType => TargetType.Aircraft;
+		public override Vector2 Velocity => ActiveMovementController.Velocity;
+        protected virtual float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS;
+        protected float EffectiveMaxVelocityInMPerS => _velocityBoostable.BoostMultiplier * _fuzziedMaxVelocityInMPerS;
+		public float PatrollingVelocityInMPerS => MaxPatrollingVelocity;
+        public float VelocityInMPerS => EffectiveMaxVelocityInMPerS;
+        protected virtual float PositionEqualityMarginInM => 0.5f;
+        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Aircraft;
+        protected override bool ShowSmokeWhenDestroyed => true;
 
         protected IMovementController DummyMovementController { get; private set; }
         protected IMovementController PatrollingMovementController { get; private set; }

@@ -23,14 +23,14 @@ namespace BattleCruisers.Buildables.Buildings
         public bool preferCruiserFront;
         public SlotType slotType;
 
-        public override TargetType TargetType { get { return TargetType.Buildings; } }
-        public override Vector2 Size { get { return _collider.size; } }
+        public override TargetType TargetType => TargetType.Buildings;
+        public override Vector2 Size => _collider.size;
         public SlotSpecification SlotSpecification { get; private set; }
 
         public BuildingCategory category;
-        public BuildingCategory Category { get { return category; } }
+        public BuildingCategory Category => category;
 
-        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building1; } }
+        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building1;
 
         protected override HealthBarController HealthBarController
         {

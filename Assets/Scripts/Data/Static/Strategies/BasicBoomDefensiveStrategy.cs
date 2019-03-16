@@ -6,6 +6,6 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class BasicBoomDefensiveStrategy : IBaseStrategy
 	{
-        public IList<IPrefabKeyWrapper> BuildOrder { get { return StaticBuildOrders.Basic.BoomDefensive; } }
+        public IList<IPrefabKeyWrapper> BuildOrder => StaticBuildOrders.Basic.BoomDefensive;
 	}
 }

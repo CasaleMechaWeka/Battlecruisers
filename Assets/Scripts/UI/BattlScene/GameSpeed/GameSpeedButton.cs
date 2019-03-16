@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public event EventHandler Clicked;
 
         private Image _buttonImage;
-        protected override Image Image { get { return _buttonImage; } }
+        protected override Image Image => _buttonImage;
 
         public bool IsSelected
         {

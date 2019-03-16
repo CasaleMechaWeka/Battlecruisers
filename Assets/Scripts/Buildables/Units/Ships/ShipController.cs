@@ -37,9 +37,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
 		public CircleTargetDetectorController enemyDetector, friendDetector;
 
-        public override TargetType TargetType { get { return TargetType.Ships; } }
-        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Ship; } }
-        protected override float OnDeathGravityScale { get { return 0.2f; } }
+        public override TargetType TargetType => TargetType.Ships;
+        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Ship;
+        protected override float OnDeathGravityScale => 0.2f;
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
@@ -66,7 +66,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        public bool IsMoving { get { return rigidBody.velocity.x != 0; } }
+        public bool IsMoving => rigidBody.velocity.x != 0;
 
         protected override void OnStaticInitialised()
         {

@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private IHealthDial<IBuildable> _healthDial;
 
         private ToggleDroneButtonController _toggleDronesButton;
-        public IButton ToggleDronesButton { get { return _toggleDronesButton; } }
+        public IButton ToggleDronesButton => _toggleDronesButton;
 
         public IBuildable Buildable
         {

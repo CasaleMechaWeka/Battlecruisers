@@ -10,8 +10,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private MissileSpawner _missileSpawner;
 
-        public override Vector3 ProjectileSpawnerPosition { get { return _missileSpawner.transform.position; } }
-        public override bool CanFireWithoutTarget { get { return false; } }
+        public override Vector3 ProjectileSpawnerPosition => _missileSpawner.transform.position;
+        public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
         {

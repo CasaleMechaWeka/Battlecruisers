@@ -3,9 +3,9 @@
     public class LaserTurretStats : TurretStats, ILaserTurretStats
 	{
 		public float damagePerS;
-        public float DamagePerS { get { return damagePerS; } }
+        public float DamagePerS => damagePerS;
 		
         public float laserDurationInS;
-        public float LaserDurationInS { get { return laserDurationInS; } }
+        public float LaserDurationInS => laserDurationInS;
 	}
 }

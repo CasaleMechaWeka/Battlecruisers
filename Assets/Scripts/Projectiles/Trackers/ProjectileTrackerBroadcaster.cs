@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.Trackers
 
         public event EventHandler PotentialMatchChange;
 
-        public bool IsMatch { get { return _camera.OrthographicSize >= _orthographicSizeThreshold; } }
+        public bool IsMatch => _camera.OrthographicSize >= _orthographicSizeThreshold;
 
         public ProjectileTrackerBroadcaster(ICamera camera, float orthographicSizeThreshold)
         {

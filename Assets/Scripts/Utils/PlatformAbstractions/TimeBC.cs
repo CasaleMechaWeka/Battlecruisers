@@ -10,8 +10,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             set { Time.timeScale = value; }
         }
 
-        public float TimeSinceGameStartInS { get { return Time.time; } }
-        public float UnscaledDeltaTime { get { return Time.unscaledDeltaTime; } }
-        public float DeltaTime { get { return Time.deltaTime; } }
+        public float TimeSinceGameStartInS => Time.time;
+        public float UnscaledDeltaTime => Time.unscaledDeltaTime;
+        public float DeltaTime => Time.deltaTime;
     }
 }

@@ -5,7 +5,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class AntiAirTurret : DefenseTurret
 	{
-        protected override ISoundKey FiringSound { get { return SoundKeys.Firing.AntiAir; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.AntiAirTurret; } }
+        protected override ISoundKey FiringSound => SoundKeys.Firing.AntiAir;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AntiAirTurret;
     }
 }

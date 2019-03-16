@@ -29,12 +29,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         }
 
         public BuildingCategory category;
-        public BuildingCategory Category { get { return category; } }
+        public BuildingCategory Category => category;
 
         private Image _buttonImage;
-        protected override Image Image { get { return _buttonImage; } }
+        protected override Image Image => _buttonImage;
 
-        public bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Category); } }
+        public bool IsMatch => _shouldBeEnabledFilter.IsMatch(Category);
         public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }
 
         public void Initialise(

@@ -34,7 +34,7 @@ namespace BattleCruisers.Cruisers.Drones
 		}
 
 		public int NumOfDronesRequired { get; set; }
-        public int NumOfSpareDrones { get { return NumOfDrones - NumOfDronesRequired; } }
+        public int NumOfSpareDrones => NumOfDrones - NumOfDronesRequired;
         public DroneConsumerState State { get; private set; }
 
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;

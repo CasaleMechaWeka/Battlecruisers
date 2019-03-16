@@ -5,14 +5,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class NavigationSettings : INavigationSettings
 	{
-		public bool AreTransitionsEnabled { get { return AreTransitionsEnabledFilter.IsMatch; } }
-		public bool IsUserInputEnabled { get { return IsUserInputEnabledFilter.IsMatch; } }
+		public bool AreTransitionsEnabled => AreTransitionsEnabledFilter.IsMatch;
+		public bool IsUserInputEnabled => IsUserInputEnabledFilter.IsMatch;
 
 		private readonly BroadcastingFilter _areTransitionsEnabledFilter;
-		public IBroadcastingFilter AreTransitionsEnabledFilter { get { return _areTransitionsEnabledFilter; } }
+		public IBroadcastingFilter AreTransitionsEnabledFilter => _areTransitionsEnabledFilter;
 
 		private readonly BroadcastingFilter _isUserInputEnabledFilter;
-		public IBroadcastingFilter IsUserInputEnabledFilter { get { return _isUserInputEnabledFilter; } }
+		public IBroadcastingFilter IsUserInputEnabledFilter => _isUserInputEnabledFilter;
         
 		public NavigationPermission Permission
 		{

@@ -6,7 +6,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.Fi
 {
     public class DummyState : DurationState
     {
-        public override bool ShouldFire { get { return true; } }
+        public override bool ShouldFire => true;
     }
 
     public class DurationStateTests : StatesTestBase

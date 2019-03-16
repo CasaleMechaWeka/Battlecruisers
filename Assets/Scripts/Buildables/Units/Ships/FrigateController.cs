@@ -12,10 +12,10 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
 
         private float _optimalArmamentRangeInM;
-        public override float OptimalArmamentRangeInM { get { return _optimalArmamentRangeInM; } }
+        public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Units.Frigate; } }
-        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Frigate; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Frigate;
+        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Frigate;
 
         protected override void OnStaticInitialised()
         {

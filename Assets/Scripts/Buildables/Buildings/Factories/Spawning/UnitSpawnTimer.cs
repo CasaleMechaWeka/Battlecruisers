@@ -10,8 +10,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
         private readonly ITime _time;
         private float _timeWhenFactoryWasClearInS, _timeWhenUnitWasChosenInS;
 
-        public float TimeSinceFactoryWasClearInS { get { return _time.TimeSinceGameStartInS - _timeWhenFactoryWasClearInS; } }
-        public float TimeSinceUnitWasChosenInS { get { return _time.TimeSinceGameStartInS - _timeWhenUnitWasChosenInS; } }
+        public float TimeSinceFactoryWasClearInS => _time.TimeSinceGameStartInS - _timeWhenFactoryWasClearInS;
+        public float TimeSinceUnitWasChosenInS => _time.TimeSinceGameStartInS - _timeWhenUnitWasChosenInS;
 
         public UnitSpawnTimer(IFactory factory, ITime time)
         {

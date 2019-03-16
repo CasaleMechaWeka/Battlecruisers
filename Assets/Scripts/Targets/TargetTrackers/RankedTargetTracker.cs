@@ -26,7 +26,7 @@ namespace BattleCruisers.Targets.TargetTrackers
         // List of targets, in decreasing priority
         private readonly IList<RankedTarget> _targets;
 
-        public RankedTarget HighestPriorityTarget { get { return _targets.FirstOrDefault(); } }
+        public RankedTarget HighestPriorityTarget => _targets.FirstOrDefault();
 
         public event EventHandler HighestPriorityTargetChanged;
 

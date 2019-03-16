@@ -18,21 +18,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected ITargetFilter _targetFilter;
 		
         protected IProjectileStats _projectileStats;
-        public IProjectileStats ProjectileStats { get { return _projectileStats; } }
+        public IProjectileStats ProjectileStats => _projectileStats;
 
         private ITurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
-        public ITurretStats TurretStats { get { return _turretStatsWrapper; } }
+        public ITurretStats TurretStats => _turretStatsWrapper;
 
         public ITarget Target { get; set; }
-        public ITarget CurrentTarget { get { return Target; } }
-        public bool IsSourceMirrored { get { return transform.IsMirrored(); } }
-        protected virtual int NumOfBarrels { get { return 1; } }
-        public Transform Transform { get { return transform; } }
-        public float BarrelAngleInDegrees { get { return Transform.rotation.eulerAngles.z; } }
+        public ITarget CurrentTarget => Target;
+        public bool IsSourceMirrored => transform.IsMirrored();
+        protected virtual int NumOfBarrels => 1;
+        public Transform Transform => transform;
+        public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
 
-        private bool IsInitialised { get { return _targetFilter != null; } }
-        private bool IsActive { get { return IsInitialised && !_isCleanedUp; } }
+        private bool IsInitialised => _targetFilter != null;
+        private bool IsActive => IsInitialised && !_isCleanedUp;
         public SpriteRenderer[] Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.

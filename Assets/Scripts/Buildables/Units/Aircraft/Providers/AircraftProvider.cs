@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
         public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
-        private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
+        private bool IsEnemyToTheRight => _enemyCruiserPosition.x > _parentCruiserPosition.x;
 		public Rectangle FighterSafeZone { get; }
 
 		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition, IRandomGenerator random)

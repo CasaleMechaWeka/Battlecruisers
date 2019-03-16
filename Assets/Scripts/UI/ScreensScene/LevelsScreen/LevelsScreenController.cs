@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         private const int SET_SIZE = 7;
 
-        private IGameObject VisibleLevelsSet { get { return _levelSets[VisibleSetIndex]; } }
+        private IGameObject VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
         private int _visibleSetIndex;
         public int VisibleSetIndex 

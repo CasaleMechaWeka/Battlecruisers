@@ -10,8 +10,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
         private ICircularList<MissileSpawner> _missileSpawners;
 
-        public override Vector3 ProjectileSpawnerPosition { get { return _missileSpawners.Items.Middle().transform.position; } }
-        public override bool CanFireWithoutTarget { get { return false; } }
+        public override Vector3 ProjectileSpawnerPosition => _missileSpawners.Items.Middle().transform.position;
+        public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
         {

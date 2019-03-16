@@ -13,7 +13,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             set { _platformObject.SetActive(value); }
         }
 
-        public Vector2 Position { get { return _platformObject.transform.position; } }
+        public Vector2 Position => _platformObject.transform.position;
 
         public GameObjectBC(GameObject platformObject)
         {

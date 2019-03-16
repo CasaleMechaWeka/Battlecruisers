@@ -4,7 +4,7 @@
 	{
         private IPresentableComponent _presentableComponent;
 
-		protected bool IsPresented { get { return _presentableComponent.IsPresented; } }
+		protected bool IsPresented => _presentableComponent.IsPresented;
 
 		public override void Initialise()
 		{

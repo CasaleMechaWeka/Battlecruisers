@@ -30,12 +30,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected Faction _enemyFaction;
         protected float _minRangeInM;
 
-        public Vector2 Position { get { return transform.position; } }
+        public Vector2 Position => transform.position;
         public IDamageCapability DamageCapability { get; private set; }
         public float RangeInM { get; private set; }
 
         private List<SpriteRenderer> _renderers;
-        public IList<SpriteRenderer> Renderers { get { return _renderers; } }
+        public IList<SpriteRenderer> Renderers => _renderers;
 
         private ITarget _target;
         public ITarget Target

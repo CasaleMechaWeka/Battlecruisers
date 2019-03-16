@@ -29,7 +29,7 @@ namespace BattleCruisers.Data.Static
 		public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
-        public int LastLevelWithLoot { get { return 20; } }
+        public int LastLevelWithLoot => 20;
         public ILevelStrategies Strategies { get; }
 
         public StaticData()

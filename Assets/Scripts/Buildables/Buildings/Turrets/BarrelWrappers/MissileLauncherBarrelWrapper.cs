@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     public class MissileLauncherBarrelWrapper : StaticBarrelWrapper
     {
         private float _desiredAngleInDegrees;
-        protected override float DesiredAngleInDegrees { get { return _desiredAngleInDegrees; } }
+        protected override float DesiredAngleInDegrees => _desiredAngleInDegrees;
 
         public override void StaticInitialise()
         {

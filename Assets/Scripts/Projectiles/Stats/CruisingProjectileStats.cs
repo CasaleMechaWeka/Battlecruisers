@@ -5,7 +5,7 @@ namespace BattleCruisers.Projectiles.Stats
     public class CruisingProjectileStats : ProjectileStats, ICruisingProjectileStats
     {
         public float cruisingAltitudeInM;
-        public float CruisingAltitudeInM { get { return cruisingAltitudeInM; } }
+        public float CruisingAltitudeInM => cruisingAltitudeInM;
 
         protected override void OnAwake()
         {

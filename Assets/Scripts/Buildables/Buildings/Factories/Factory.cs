@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public event EventHandler NewUnitChosen;
 
         #region Properties
-        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building3; } }
+        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building3;
         public abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
 

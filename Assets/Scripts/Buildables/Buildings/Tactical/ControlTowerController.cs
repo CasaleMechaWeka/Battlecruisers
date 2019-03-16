@@ -8,7 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
     {
 		private IBoostProvider _boostProvider;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.ControlTower; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.ControlTower;
 
         public float boostMultiplier;
 

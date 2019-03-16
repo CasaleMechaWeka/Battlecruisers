@@ -6,6 +6,6 @@ namespace BattleCruisers.Data.Static.Strategies
 {
 	public class BasicTurtleStrategy : IBaseStrategy
 	{
-        public IList<IPrefabKeyWrapper> BuildOrder { get { return StaticBuildOrders.Basic.Turtle; } }
+        public IList<IPrefabKeyWrapper> BuildOrder => StaticBuildOrders.Basic.Turtle;
 	}
 }

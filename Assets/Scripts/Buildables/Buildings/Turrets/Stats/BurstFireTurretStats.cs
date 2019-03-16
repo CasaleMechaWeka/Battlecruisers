@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         private const int MIN_BURST_SIZE = 2;
 
         public int burstSize;
-        public override int BurstSize { get { return burstSize; } }
+        public override int BurstSize => burstSize;
 
         private int _queryIndex;
         private int QueryIndex
@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             }
         }
 
-        private float LongDurationInS { get { return 1 / FireRatePerS; } }
+        private float LongDurationInS => 1 / FireRatePerS;
 
         public override bool IsInBurst 
         { 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         }
 
         private float _meanFireRatePerS;
-        public override float MeanFireRatePerS { get { return _meanFireRatePerS; } }
+        public override float MeanFireRatePerS => _meanFireRatePerS;
 
 		public override void Initialise()
 		{

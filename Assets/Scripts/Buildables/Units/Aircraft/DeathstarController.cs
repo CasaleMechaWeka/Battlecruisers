@@ -22,10 +22,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
 
         // TEMP  Use satellite sound once we have it :)
-        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Bomber; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
+        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Bomber;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
-        public override TargetType TargetType { get { return TargetType.Satellite; } }
+        public override TargetType TargetType => TargetType.Satellite;
 
         protected override void OnStaticInitialised()
 		{

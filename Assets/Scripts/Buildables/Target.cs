@@ -18,13 +18,13 @@ namespace BattleCruisers.Buildables
 
         public float maxHealth;
 
-        public float MaxHealth { get { return maxHealth; } }
-        public bool IsDestroyed { get { return Health == 0; } }
+        public float MaxHealth => maxHealth;
+        public bool IsDestroyed => Health == 0;
         public Faction Faction { get; protected set; }
-        public GameObject GameObject { get { return gameObject; } }
+        public GameObject GameObject => gameObject;
         public abstract TargetType TargetType { get; }
-        public virtual TargetValue TargetValue { get { return TargetValue.Low; } }
-        public virtual Vector2 Velocity { get { return new Vector2(0, 0); } }
+        public virtual TargetValue TargetValue => TargetValue.Low;
+        public virtual Vector2 Velocity => new Vector2(0, 0);
         public abstract Vector2 Size { get; }
         public ITransform Transform { get; private set; }
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables
         }
 
         // IMaskHighlightable
-        protected virtual Vector2 MaskHighlightableSize { get { return Size; } }
+        protected virtual Vector2 MaskHighlightableSize => Size;
 
         // Seems to be an okay approximation (for cruisers at least).
         // For buildables ranges from 0.75 (tesla coil) to 5 (broadsides)
@@ -56,9 +56,9 @@ namespace BattleCruisers.Buildables
             remove { _healthTracker.HealthChanged -= value; }
         }
 
-        private bool IsFullHealth { get { return Health == maxHealth; } }
+        private bool IsFullHealth => Health == maxHealth;
         public virtual Color Color { set { /* empty */ } }
-        public bool IsInScene { get { return gameObject.scene.IsValid(); } }
+        public bool IsInScene => gameObject.scene.IsValid();
 
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }

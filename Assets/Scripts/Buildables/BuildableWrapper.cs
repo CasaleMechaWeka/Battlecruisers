@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables
 	{
         public TBuildable Buildable { get; private set; }
 
-        public BuildableWrapper<TBuildable> UnityObject { get { return this; } }
+        public BuildableWrapper<TBuildable> UnityObject => this;
 
         public void Initialise()
 		{

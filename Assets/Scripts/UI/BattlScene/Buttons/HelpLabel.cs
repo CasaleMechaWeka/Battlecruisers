@@ -2,6 +2,6 @@
 {
     public class HelpLabel : Togglable
     {
-        protected override bool ToggleVisibility { get { return true; } }
+        protected override bool ToggleVisibility => true;
     }
 }

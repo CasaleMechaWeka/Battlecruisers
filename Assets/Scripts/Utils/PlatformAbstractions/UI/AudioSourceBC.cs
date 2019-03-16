@@ -18,7 +18,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             }
         }
 
-        public bool IsPlaying { get { return _audioSource.isPlaying; } }
+        public bool IsPlaying => _audioSource.isPlaying;
 
         public AudioSourceBC(AudioSource audioSource)
         {

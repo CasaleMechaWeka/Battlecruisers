@@ -2,7 +2,7 @@
 {
     public class FiringOnceState : State
     {
-        public override bool ShouldFire { get { return true; } }
+        public override bool ShouldFire => true;
 
         public override IState OnFired()
         {

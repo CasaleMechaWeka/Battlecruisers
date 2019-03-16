@@ -7,7 +7,7 @@ namespace BattleCruisers.Utils.Properties
     {
         private readonly ISettableBroadcastingProperty<T> _baseProperty;
 
-        public T Value { get { return _baseProperty.Value; } }
+        public T Value => _baseProperty.Value;
 
         public event EventHandler ValueChanged
         {

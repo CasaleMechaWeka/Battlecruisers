@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private Dropdown _difficultyDropdown;
         private IList<Difficulty> _difficulties;
 
-        public Difficulty Difficulty { get { return _difficulties[_difficultyDropdown.value]; } }
+        public Difficulty Difficulty => _difficulties[_difficultyDropdown.value];
 
         public event EventHandler DifficultyChanged;
 

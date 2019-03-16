@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private DeleteButtonController _deleteButton;
         private InformatorWidgetManager _buttonManager;
 
-        public IButton DroneFocusButton { get { return _buttonManager.ToggleDronesButton; } }
+        public IButton DroneFocusButton => _buttonManager.ToggleDronesButton;
 
         public void Initialise(
             IUIManager uiManager,

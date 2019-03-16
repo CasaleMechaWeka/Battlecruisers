@@ -14,10 +14,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         private readonly IBoostable _accuracyBoostable;
         private readonly IBoostableGroup _accuracyBoostableGroup;
 
-        public float Accuracy { get { return Mathf.Clamp01(_accuracyBoostable.BoostMultiplier * _baseStats.Accuracy); } }
-        public float TurretRotateSpeedInDegrees { get { return _baseStats.TurretRotateSpeedInDegrees; } }
-        public bool IsInBurst { get { return _baseStats.IsInBurst; } }
-        public int BurstSize { get { return _baseStats.BurstSize; } }
+        public float Accuracy => Mathf.Clamp01(_accuracyBoostable.BoostMultiplier * _baseStats.Accuracy);
+        public float TurretRotateSpeedInDegrees => _baseStats.TurretRotateSpeedInDegrees;
+        public bool IsInBurst => _baseStats.IsInBurst;
+        public int BurstSize => _baseStats.BurstSize;
 
         public BoostedTurretStats(
             ITurretStats baseStats,

@@ -13,16 +13,16 @@ namespace BattleCruisers.UI.Cameras.Helpers
         // so can see bombers as they overshoot the cruiser :)
         private const float DEFAULT_MAX_ORTHOGRAPHIC_SIZE = 38;  
 
-        public float CruiserWidthMultiplier { get { return 1.2f; } }
-        public float CruiserCameraPositionAdjustmentMultiplier { get { return 0.08f; } }
+        public float CruiserWidthMultiplier => 1.2f;
+        public float CruiserCameraPositionAdjustmentMultiplier => 0.08f;
 
-        public float WaterProportion { get { return 0.35f; } }
-        public float MaxWaterPositionY { get { return -1.5f; } }
+        public float WaterProportion => 0.35f;
+        public float MaxWaterPositionY => -1.5f;
 
         // Based off the two points:  (5, 10) and (33, 50)
-        public float ScrollSpeedGradient { get { return 1.43f; } }  // 10/7
-        public float ScrollSpeedConstant { get { return 2.86f; } }  // 20/7
-        public float ScrollSpeed { get { return _settingsManager.ScrollSpeed; } }
+        public float ScrollSpeedGradient => 1.43f;  // 10/7
+        public float ScrollSpeedConstant => 2.86f;  // 20/7
+        public float ScrollSpeed => _settingsManager.ScrollSpeed;
 
         public IRange<float> ValidOrthographicSizes { get; }
         public IRange<float> CameraVisibleXRange { get; }

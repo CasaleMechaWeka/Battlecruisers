@@ -14,9 +14,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
 		public LayerMask unitsLayerMask;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Buildings.NavalFactory; } }
-        public override UnitCategory UnitCategory { get { return UnitCategory.Naval; } }
-		public override LayerMask UnitLayerMask { get { return unitsLayerMask; } }
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.NavalFactory;
+        public override UnitCategory UnitCategory => UnitCategory.Naval;
+		public override LayerMask UnitLayerMask => unitsLayerMask;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,

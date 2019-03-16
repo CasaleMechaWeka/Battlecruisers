@@ -23,8 +23,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         private bool _isScenarioOver;
 
-        protected float LeftOffsetInM { get { return leftOffsetInM != default ? leftOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
-        protected float RightOffsetInM { get { return rightOffsetInM != default ? rightOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M; } }
+        protected float LeftOffsetInM => leftOffsetInM != default ? leftOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M;
+        protected float RightOffsetInM => rightOffsetInM != default ? rightOffsetInM : DEFAULT_OFFSET_FROM_CENTRE_IN_M;
 
         // Lazily initialise, so camera can be accessed even if scenario 
         // initialisation is delayed (kamikaze balancing tests)

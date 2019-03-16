@@ -33,7 +33,7 @@ namespace BattleCruisers.AI.Tasks
         public const float DEFAULT_DELAY_IN_S = 1;
         private const float MIN_DELAY_IN_S = 0.1f;
 
-        public TaskPriority Priority { get { return _baseTask.Priority; } }
+        public TaskPriority Priority => _baseTask.Priority;
 
         public event EventHandler<EventArgs> Completed
         {

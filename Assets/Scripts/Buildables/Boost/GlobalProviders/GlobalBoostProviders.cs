@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         // The BoostableGroup does not allow the same IBoostProviders collection
         // to be added twice, even if it is just the same DummyBoostProviders :/
         // Hence create fresh instance instead of returning the same instance.
-        public ObservableCollection<IBoostProvider> DummyBoostProviders { get { return new ObservableCollection<IBoostProvider>(); } }
+        public ObservableCollection<IBoostProvider> DummyBoostProviders => new ObservableCollection<IBoostProvider>();
 
         public ObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
 

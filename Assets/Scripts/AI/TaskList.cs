@@ -19,9 +19,9 @@ namespace BattleCruisers.AI
     {
         private readonly IList<IPrioritisedTask> _tasks;
 
-        public bool IsEmpty { get { return _tasks.Count == 0; } }
+        public bool IsEmpty => _tasks.Count == 0;
 		
-        public IPrioritisedTask HighestPriorityTask { get { return _tasks.LastOrDefault(); } }
+        public IPrioritisedTask HighestPriorityTask => _tasks.LastOrDefault();
 
         public event EventHandler HighestPriorityTaskChanged;
         public event EventHandler IsEmptyChanged;

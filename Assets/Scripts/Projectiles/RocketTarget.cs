@@ -8,11 +8,11 @@ namespace BattleCruisers.Projectiles
 	{
 		private Rigidbody2D _rigidBody;
 
-		public override TargetType TargetType { get { return TargetType.Rocket; } }
-		public override Vector2 Velocity { get { return _rigidBody.velocity; } }
+		public override TargetType TargetType => TargetType.Rocket;
+		public override Vector2 Velocity => _rigidBody.velocity;
 
         private Vector2 _size;
-        public override Vector2 Size { get { return _size; } }
+        public override Vector2 Size => _size;
 
         public void Initialise(Faction faction, Rigidbody2D rigidBody)
 		{

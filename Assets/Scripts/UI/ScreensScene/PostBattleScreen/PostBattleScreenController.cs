@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
 
-        private BattleResult BattleResult { get { return _dataProvider.GameModel.LastBattleResult; } }
+        private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
 		public void Initialise(
             ScreensSceneGod screensSceneGod, 

@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public class ItemsPanel : Panel, IItemsPanel
     {
         public ItemType itemType;
-        public ItemType ItemType { get { return itemType; } }
+        public ItemType ItemType => itemType;
 
         public bool HasUnlockedItem { get; private set; }
 

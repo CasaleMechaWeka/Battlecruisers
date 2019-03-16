@@ -28,10 +28,10 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         private LimitableUIManager _uiManager;
 
-        public ISlotPermitter SlotPermitter { get { return _slotFilter; } }
-        public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
-        public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
-        public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
+        public ISlotPermitter SlotPermitter => _slotFilter;
+        public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
+        public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
         public BroadcastingFilter BackButtonPermitter { get; }
         public BroadcastingFilter SpeedButtonsPermitter { get; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }

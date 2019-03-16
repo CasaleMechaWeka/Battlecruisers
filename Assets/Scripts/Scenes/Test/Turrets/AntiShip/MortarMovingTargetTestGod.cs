@@ -7,6 +7,6 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
     {
         public List<Vector2> targetPatrolPoints;
 
-        protected override List<Vector2> TargetPatrolPoints { get { return targetPatrolPoints; } }
+        protected override List<Vector2> TargetPatrolPoints => targetPatrolPoints;
     }
 }

@@ -63,16 +63,16 @@ namespace BattleCruisers.Buildables
         #region Properties
         public BuildableState BuildableState { get; private set; }
         public float BuildProgress { get; private set; }
-        public int NumOfDronesRequired { get { return numOfDronesRequired; } }
-        public float BuildTimeInS { get { return buildTimeInS; } }
+        public int NumOfDronesRequired => numOfDronesRequired;
+        public float BuildTimeInS => buildTimeInS;
         protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
-        public override Vector2 Size { get { return _buildableProgress.FillableImage.sprite.bounds.size; } }
-        public float CostInDroneS { get { return NumOfDronesRequired * BuildTimeInS; } }
-        protected virtual ISoundKey DeathSoundKey { get { return SoundKeys.Explosions.Default; } }
+        public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
+        public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
+        protected virtual ISoundKey DeathSoundKey => SoundKeys.Explosions.Default;
         protected abstract PrioritisedSoundKey ConstructionCompletedSoundKey { get; }
         public ICruiser ParentCruiser { get; private set; }
-        protected virtual bool ShowSmokeWhenDestroyed { get { return false; } }
+        protected virtual bool ShowSmokeWhenDestroyed => false;
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
@@ -118,7 +118,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        protected virtual bool IsDroneConsumerFocusable { get { return DroneConsumer != null; } }
+        protected virtual bool IsDroneConsumerFocusable => DroneConsumer != null;
 
         public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
 
@@ -139,7 +139,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        public bool IsInitialised { get { return BuildProgressBoostable != null; } }
+        public bool IsInitialised => BuildProgressBoostable != null;
 
         protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {
@@ -164,9 +164,9 @@ namespace BattleCruisers.Buildables
         }
 
         #region IComparableItem
-        Sprite IComparableItem.Sprite { get { return _buildableProgress.FillableImage.sprite; } }
-        string IComparableItem.Description { get { return description; } }
-        string IComparableItem.Name { get { return buildableName; } }
+        Sprite IComparableItem.Sprite => _buildableProgress.FillableImage.sprite;
+        string IComparableItem.Description => description;
+        string IComparableItem.Name => buildableName;
         #endregion IComparableItem
         #endregion Properties
 

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             }
         }
 
-        private bool ShowButton { get { return _buttonVisibilityFilter.IsMatch(Target); } }
+        private bool ShowButton => _buttonVisibilityFilter.IsMatch(Target);
 
         public event EventHandler Clicked;
 

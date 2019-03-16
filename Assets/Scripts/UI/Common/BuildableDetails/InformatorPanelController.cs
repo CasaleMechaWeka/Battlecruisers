@@ -16,13 +16,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private DismissInformatorButtonController _dismissButton;
 
         private BuildingDetailsController _buildingDetails;
-        public IBuildableDetails<IBuilding> BuildingDetails { get { return _buildingDetails; } }
+        public IBuildableDetails<IBuilding> BuildingDetails => _buildingDetails;
 
         private UnitDetailsController _unitDetails;
-        public IBuildableDetails<IUnit> UnitDetails { get { return _unitDetails; } }
+        public IBuildableDetails<IUnit> UnitDetails => _unitDetails;
 
         private CruiserDetailsController _cruiserDetails;
-        public ICruiserDetails CruiserDetails { get { return _cruiserDetails; } }
+        public ICruiserDetails CruiserDetails => _cruiserDetails;
 
         public void Initialise(
             IUIManager uiManager,

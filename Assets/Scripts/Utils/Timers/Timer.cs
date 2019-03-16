@@ -11,7 +11,7 @@ namespace BattleCruisers.Utils.Timers
 
         public event EventHandler<TimerEventArgs> OnSecondPassed;
 
-        public bool IsRunning { get { return _timerStarted; } }
+        public bool IsRunning => _timerStarted;
 		
         public Timer()
         {

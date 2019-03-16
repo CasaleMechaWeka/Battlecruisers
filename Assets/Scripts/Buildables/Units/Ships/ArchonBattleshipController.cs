@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
         private IBarrelWrapper _directFireAntiSea, _directFireAntiAir1, _directFireAntiAir2, _missileLauncherFront, _missileLauncherRear;
 
-        public override bool IsUltra { get { return true; } }
+        public override bool IsUltra => true;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
@@ -32,8 +32,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        protected override ISoundKey EngineSoundKey { get { return SoundKeys.Engines.Archon; } }
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey { get { return PrioritisedSoundKeys.Completed.Ultra; } }
+        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Archon;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {

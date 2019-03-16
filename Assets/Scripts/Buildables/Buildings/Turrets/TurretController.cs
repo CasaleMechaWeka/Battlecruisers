@@ -13,10 +13,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
 		protected IBarrelWrapper _barrelWrapper;
 
-        protected override ISoundKey DeathSoundKey { get { return SoundKeys.Deaths.Building2; } }
+        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building2;
 
         // By default have null (no) sound
-        protected virtual ISoundKey FiringSound { get { return null; } }
+        protected virtual ISoundKey FiringSound => null;
 
         protected override void OnStaticInitialised()
 		{

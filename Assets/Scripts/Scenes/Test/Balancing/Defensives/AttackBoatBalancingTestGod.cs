@@ -5,6 +5,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
     public class AttackBoatBalancingTestGod : AntiSeaBalancingTestGod
     {
-        protected override IPrefabKey UnitKey { get { return StaticPrefabKeys.Units.AttackBoat; } }
+        protected override IPrefabKey UnitKey => StaticPrefabKeys.Units.AttackBoat;
     }
 }

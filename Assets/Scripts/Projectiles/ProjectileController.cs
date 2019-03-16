@@ -56,9 +56,9 @@ namespace BattleCruisers.Projectiles
         }
 
         // By default have no impact sound
-        protected virtual ISoundKey ImpactSoundKey { get { return null; } }
+        protected virtual ISoundKey ImpactSoundKey => null;
 
-        public Vector3 Position { get { return transform.position; } }
+        public Vector3 Position => transform.position;
 
         public void Initialise(
             IProjectileStats projectileStats, 

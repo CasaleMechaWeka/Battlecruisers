@@ -28,11 +28,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public IBuildable Buildable { get; private set; }
 
         private CanvasGroup _canvasGroup;
-        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        protected override bool Disable { get { return false; } }
+        protected override bool Disable => false;
 
-        public virtual bool IsMatch { get { return _shouldBeEnabledFilter.IsMatch(Buildable); } }
+        public virtual bool IsMatch => _shouldBeEnabledFilter.IsMatch(Buildable);
 
         public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{

@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private ChooseTargetButtonController _chooseTargetButton;
 
         private ToggleDroneButtonController _toggleDronesButton;
-        public IButton ToggleDronesButton { get { return _toggleDronesButton; } }
+        public IButton ToggleDronesButton => _toggleDronesButton;
 
         public IBuildable Buildable
         {

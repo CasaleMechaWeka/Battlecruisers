@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         }
 
         private CanvasGroup _canvasGroup;
-        protected override CanvasGroup CanvasGroup { get { return _canvasGroup; } }
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {

@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
         private HealthBarController _cruiserHealthBar;
 
 		private NumOfDronesController _numOfDrones;
-        public IButton NumOfDronesButton { get { return _numOfDrones; } }
+        public IButton NumOfDronesButton => _numOfDrones;
 
         public void Initialise(ICruiser cruiser)
         {

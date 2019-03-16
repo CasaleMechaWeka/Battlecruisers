@@ -5,14 +5,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
     public class TurretStats : BasicTurretStats, ITurretStats
 	{
 		public float accuracy;
-		public float Accuracy { get { return accuracy; } }
+		public float Accuracy => accuracy;
 		
         public float turretRotateSpeedInDegrees;
-		public float TurretRotateSpeedInDegrees { get { return turretRotateSpeedInDegrees; } }
+		public float TurretRotateSpeedInDegrees => turretRotateSpeedInDegrees;
 
-        public virtual bool IsInBurst { get { return false; } }
+        public virtual bool IsInBurst => false;
 
-        public virtual int BurstSize { get { return DEFAULT_BURST_SIZE; } }
+        public virtual int BurstSize => DEFAULT_BURST_SIZE;
 
         private const int DEFAULT_BURST_SIZE = 1;
 

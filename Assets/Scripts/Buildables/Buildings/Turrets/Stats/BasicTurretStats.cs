@@ -8,16 +8,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
     public class BasicTurretStats : MonoBehaviour, IBasicTurretStats
     {
         public float fireRatePerS;
-        public float FireRatePerS { get { return fireRatePerS; } }
-        public virtual float MeanFireRatePerS { get { return FireRatePerS; } }
+        public float FireRatePerS => fireRatePerS;
+        public virtual float MeanFireRatePerS => FireRatePerS;
 
         public float rangeInM;
-        public float RangeInM { get { return rangeInM; } }
+        public float RangeInM => rangeInM;
 
         public float minRangeInM;
-        public float MinRangeInM { get { return minRangeInM; } }
+        public float MinRangeInM => minRangeInM;
 
-        public virtual float DurationInS { get { return 1 / FireRatePerS; } }
+        public virtual float DurationInS => 1 / FireRatePerS;
 
         public List<TargetType> attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }

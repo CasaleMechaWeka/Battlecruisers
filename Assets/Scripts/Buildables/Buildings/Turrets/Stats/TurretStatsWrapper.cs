@@ -16,16 +16,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             }
         }
 
-        public float Accuracy { get { return TurretStats.Accuracy; } }
-        public float TurretRotateSpeedInDegrees { get { return TurretStats.TurretRotateSpeedInDegrees; } }
-        public bool IsInBurst { get { return TurretStats.IsInBurst; } }
-        public float FireRatePerS { get { return TurretStats.FireRatePerS; } }
-        public float RangeInM { get { return TurretStats.RangeInM; } }
-        public float MinRangeInM { get { return TurretStats.MinRangeInM; } }
-        public float MeanFireRatePerS { get { return TurretStats.MeanFireRatePerS; } }
-        public ReadOnlyCollection<TargetType> AttackCapabilities { get { return TurretStats.AttackCapabilities; } }
-        public float DurationInS { get { return TurretStats.DurationInS; } }
-        public int BurstSize { get { return TurretStats.BurstSize; } }
+        public float Accuracy => TurretStats.Accuracy;
+        public float TurretRotateSpeedInDegrees => TurretStats.TurretRotateSpeedInDegrees;
+        public bool IsInBurst => TurretStats.IsInBurst;
+        public float FireRatePerS => TurretStats.FireRatePerS;
+        public float RangeInM => TurretStats.RangeInM;
+        public float MinRangeInM => TurretStats.MinRangeInM;
+        public float MeanFireRatePerS => TurretStats.MeanFireRatePerS;
+        public ReadOnlyCollection<TargetType> AttackCapabilities => TurretStats.AttackCapabilities;
+        public float DurationInS => TurretStats.DurationInS;
+        public int BurstSize => TurretStats.BurstSize;
 
         public TurretStatsWrapper(ITurretStats turretStats)
         {

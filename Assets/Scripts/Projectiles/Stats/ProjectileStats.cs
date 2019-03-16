@@ -9,19 +9,19 @@ namespace BattleCruisers.Projectiles.Stats
         public float initialVelocityMultiplier;
 
         public float damage;
-        public float Damage { get { return damage; } }
+        public float Damage => damage;
 
         public float maxVelocityInMPerS;
-        public float MaxVelocityInMPerS { get { return maxVelocityInMPerS; } }
+        public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
         public float gravityScale;
-        public float GravityScale { get { return gravityScale; } }
+        public float GravityScale => gravityScale;
 
         public bool hasAreaOfEffectDamage;
-        public bool HasAreaOfEffectDamage { get { return hasAreaOfEffectDamage; } }
+        public bool HasAreaOfEffectDamage => hasAreaOfEffectDamage;
 
         public float damageRadiusInM;
-        public float DamageRadiusInM { get { return damageRadiusInM; } }
+        public float DamageRadiusInM => damageRadiusInM;
 
         public float InitialVelocityInMPerS { get; private set; }
 

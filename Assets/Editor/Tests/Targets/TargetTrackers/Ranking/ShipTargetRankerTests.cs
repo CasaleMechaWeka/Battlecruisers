@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.Ranking
     public class ShipTargetRankerTests : TargetRankerTestsBase
 	{
         private ITargetRanker _targetRanker;
-        protected override ITargetRanker TargetRanker { get { return _targetRanker; } }
+        protected override ITargetRanker TargetRanker => _targetRanker;
 
         [SetUp]
 		public void SetuUp()

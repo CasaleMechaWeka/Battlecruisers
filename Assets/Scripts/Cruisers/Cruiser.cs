@@ -47,30 +47,30 @@ namespace BattleCruisers.Cruisers
         public string cruiserName;
 
         // ITarget
-        public override TargetType TargetType { get { return TargetType.Cruiser; } }
+        public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
-        public override Vector2 Size { get { return _renderer.bounds.size; } }
+        public override Vector2 Size => _renderer.bounds.size;
         
 		// IComparableItem
-		public string Description { get { return description; } }
-        public string Name { get { return cruiserName; } }
-		public Sprite Sprite { get { return _renderer.sprite; } }
+		public string Description => description;
+        public string Name => cruiserName;
+		public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
-        public float YAdjustmentInM { get { return yAdjustmentInM; } }
+        public float YAdjustmentInM => yAdjustmentInM;
         public IFactoryProvider FactoryProvider { get; private set; }
         private FogOfWar _fog;
-        public IGameObject Fog { get { return _fog; } }
+        public IGameObject Fog => _fog;
 		public IRepairManager RepairManager { get; private set; }
-        public int NumOfDrones { get { return numOfDrones; } }
+        public int NumOfDrones => numOfDrones;
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
-        public bool IsPlayerCruiser { get { return Position.x < 0; } }
+        public bool IsPlayerCruiser => Position.x < 0;
 
         // ICruiserController
-        public bool IsAlive { get { return !IsDestroyed; } }
+        public bool IsAlive => !IsDestroyed;
         public ISlotAccessor SlotAccessor { get; private set; }
         public ISlotHighlighter SlotHighlighter { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }

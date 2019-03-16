@@ -4,6 +4,6 @@ namespace BattleCruisers.Projectiles.Stats
 {
     public class NukeProjectileStats : CruisingProjectileStats, INukeStats
     {
-        public Vector2 InitialVelocity { get { return new Vector2(0, 0); } }
+        public Vector2 InitialVelocity => new Vector2(0, 0);
     }
 }

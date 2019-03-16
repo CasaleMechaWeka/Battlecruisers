@@ -35,7 +35,7 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
-		public int NumOfLevelsCompleted { get { return _completedLevels.Count; } }
+		public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial
         {

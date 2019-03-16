@@ -2,6 +2,6 @@
 {
     public class FiringDurationState : DurationState
     {
-        public override bool ShouldFire { get { return true; } }
+        public override bool ShouldFire => true;
     }
 }

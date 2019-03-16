@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
 	{
         private IState _currentState;
 
-		public bool ShouldFire { get { return _currentState.ShouldFire; } }
+		public bool ShouldFire => _currentState.ShouldFire;
 
 		public FireIntervalManager(IState startingState)
 		{

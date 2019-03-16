@@ -12,8 +12,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
 
-        public override Vector3 ProjectileSpawnerPosition { get { return _laserEmitter.transform.position; } }
-        public override bool CanFireWithoutTarget { get { return false; } }
+        public override Vector3 ProjectileSpawnerPosition => _laserEmitter.transform.position;
+        public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
 		{

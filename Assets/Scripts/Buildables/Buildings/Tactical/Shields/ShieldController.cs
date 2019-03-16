@@ -22,10 +22,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private const float HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER = 0.025f;
 
         public IShieldStats Stats { get; private set; } 
-		public override TargetType TargetType { get { return TargetType.Buildings; } }
+		public override TargetType TargetType => TargetType.Buildings;
 
         private Vector2 _size;
-        public override Vector2 Size { get { return _size; } }
+        public override Vector2 Size => _size;
 
         protected override void OnStaticInitialised()
         {

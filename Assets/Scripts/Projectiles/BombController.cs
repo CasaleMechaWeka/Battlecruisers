@@ -5,6 +5,6 @@ namespace BattleCruisers.Projectiles
 {
     public class BombController : ProjectileController
     {
-        protected override ISoundKey ImpactSoundKey { get { return SoundKeys.Explosions.Bomb; } }
+        protected override ISoundKey ImpactSoundKey => SoundKeys.Explosions.Bomb;
     }
 }
