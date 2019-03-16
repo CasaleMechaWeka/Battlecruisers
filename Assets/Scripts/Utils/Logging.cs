@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Utils
@@ -102,7 +103,9 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
             // Units
-            tagsToActiveness.Add(Tags.AIRCRAFT, false);
+            // FELIX :d
+            tagsToActiveness.Add(Tags.AIRCRAFT, true);
+            //tagsToActiveness.Add(Tags.AIRCRAFT, false);
             tagsToActiveness.Add(Tags.FIGHTER, false);
             tagsToActiveness.Add(Tags.SHIPS, false);
 
@@ -169,43 +172,40 @@ namespace BattleCruisers.Utils
             return tagsToActiveness;
 		}
 
-        public static void Log(string message)
-        {
-            Log(Tags.GENERIC, message);
+		public static void Log(
+            string tag, 
+            string message,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+		{
+			Log(LoggingLevel.Normal, tag, CreateMessage(message, memberName, sourceFilePath, sourceLineNumber));
         }
 
-		public static void Log(string tag, string message)
-		{
-			Log(LoggingLevel.Normal, tag, message);
-		}
-
-		public static void Log(string tag, object obj, string message)
-		{
-			Log(tag, GetClassName(obj) + "." + message);
-		}
-
-		private static string GetClassName(object obj)
-		{
-			string[] fullyQualifiedName = obj.GetType().ToString().Split('.');
-			return fullyQualifiedName[fullyQualifiedName.Length - 1];
-		}
-
-		public static void Verbose(string tag, string message)
-		{
-			Log(LoggingLevel.Verbose, tag, message);
-		}
-
-		public static void Warn(string tag, string message)
-		{
-			Log(LoggingLevel.Warning, tag, message);
-		}
-
-        public static void Log<T>(string tag, IList<T> items)
+		public static void Verbose(
+            string tag, 
+            string message,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            for (int i = 0; i < items.Count; ++i)
-            {
-                Log(tag, i + " " + items[i]);
-            }
+            Log(LoggingLevel.Verbose, tag, CreateMessage(message, memberName, sourceFilePath, sourceLineNumber));
+        }
+
+        public static void Warn(
+            string tag, 
+            string message,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+		{
+			Log(LoggingLevel.Warning, tag, CreateMessage(message, memberName, sourceFilePath, sourceLineNumber));
+        }
+
+        private static string CreateMessage(string message, string memberName, string sourceFilePath, int sourceLineNumber)
+        {
+            string fileName = sourceFilePath.Split('\\').Last();
+            return $"{fileName}:{memberName}[{sourceLineNumber}]: {message}";
         }
 
 		private static void Log(LoggingLevel logLevel, string tag, string message)
@@ -214,7 +214,7 @@ namespace BattleCruisers.Utils
 				&& (TagsToActiveness[tag] || LOG_ALL))
 			{
 				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
-				string fullMsg = timestamp + "-" + tag + ":  " + message;
+				string fullMsg = $"{timestamp} -  {tag}:  {message}";
 
 				if (logLevel == LoggingLevel.Warning)
 				{
