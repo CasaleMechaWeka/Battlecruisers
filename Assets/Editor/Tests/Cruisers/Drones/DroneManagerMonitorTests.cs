@@ -63,25 +63,11 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
         #region IdleDrones
         [Test]
-        public void IdleDrones_DroneConsumerRemoved_TriggersCheck()
-        {
-            // Add drone consumer
-            _droneConsumers.Add(_idleDroneConsumer);
-            _deferrer.ClearReceivedCalls();
-            _idleDronesStartedEventCount = 0;
-
-            // Remove drone consumer
-            _droneConsumers.Remove(_idleDroneConsumer);
-            _deferrer.ReceivedWithAnyArgs().Defer(null, default);
-            Assert.AreEqual(1, _idleDronesStartedEventCount);
-        }
-
-        [Test]
-        public void IdleDrones_DroneConsumerAdded_TriggersCheck()
+        public void IdleDrones_DroneConsumersChanged_TriggersCheck()
         {
             _droneConsumers.Add(_idleDroneConsumer);
             _deferrer.ReceivedWithAnyArgs().Defer(null, default);
-            Assert.AreEqual(1, _idleDronesStartedEventCount);
+            Assert.AreEqual(1, _idleDronesStartedEventCount);         
         }
 
         [Test]
@@ -113,6 +99,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         {
             _droneConsumers.Add(_idleDroneConsumer);
             _droneConsumers.Add(_activeDroneConsumer);
+            _idleDronesStartedEventCount = 0;
 
             TriggerIdleDronesCheck();
             Assert.AreEqual(0, _idleDronesStartedEventCount);
@@ -134,6 +121,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void IdleDronesEnded_InNonIdleState_BusyDrones_DoesNotEmitEvent()
         {
             _droneConsumers.Add(_activeDroneConsumer);
+            _idleDronesEndedEventCount = 0;
+
             TriggerIdleDronesCheck();
             Assert.AreEqual(0, _idleDronesEndedEventCount);
         }

@@ -152,7 +152,7 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_Building()
         {
             // Shield
-            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 4);
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 1);
             ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.ShieldGenerator});
 
             Assert.AreEqual(expectedLoot, actualLoot);
@@ -173,7 +173,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Bullshark
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 3);
-            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Bullshark});
+            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -182,7 +182,7 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_UnitAndBuilding()
         {
             // Mortar, frigate
-            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 1);
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 2);
             ILoot expectedLoot 
                 = CreateLoot(
                     unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Frigate },
