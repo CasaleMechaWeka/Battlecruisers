@@ -22,7 +22,7 @@ namespace BattleCruisers.AI.BuildOrders
 		public bool MoveNext()
 		{
             IDynamicBuildOrder validBuildOrder = _buildOrders.FirstOrDefault(buildOrder => buildOrder.MoveNext());
-            Current = validBuildOrder != null ? validBuildOrder.Current : null;
+            Current = validBuildOrder?.Current;
             return Current != null;
 		}
 	}

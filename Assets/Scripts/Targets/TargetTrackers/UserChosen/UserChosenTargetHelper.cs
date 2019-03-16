@@ -11,16 +11,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         private readonly IUserChosenTargetManager _userChosenTargetManager;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
 
-        public ITarget UserChosenTarget
-        {
-            get
-            {
-                return
-                    _userChosenTargetManager.HighestPriorityTarget != null ?
-                    _userChosenTargetManager.HighestPriorityTarget.Target :
-                    null;
-            }
-        }
+        public ITarget UserChosenTarget => _userChosenTargetManager.HighestPriorityTarget?.Target;
 
         public event EventHandler UserChosenTargetChanged;
 

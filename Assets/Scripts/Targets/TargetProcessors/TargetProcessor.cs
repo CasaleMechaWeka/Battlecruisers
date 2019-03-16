@@ -20,7 +20,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             get
             {
-                ITarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget != null ? _rankedTargetTracker.HighestPriorityTarget.Target : null;
+                ITarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget?.Target;
                 Logging.Log(Tags.TARGET_PROCESSORS, highestPriorityTarget.ToString());
                 return highestPriorityTarget;
             }

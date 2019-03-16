@@ -14,7 +14,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
         {
             set
             {
-                _audioSource.clip = value != null ? value.AudioClip : null;
+                _audioSource.clip = value?.AudioClip;
             }
         }
 
