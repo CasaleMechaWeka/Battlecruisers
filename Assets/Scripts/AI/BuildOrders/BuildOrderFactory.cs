@@ -108,7 +108,7 @@ namespace BattleCruisers.AI.BuildOrders
 
         private IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, ILevelInfo levelInfo)
         {
-            Logging.Log(Tags.AI_BUILD_ORDERS, this + ".CreateBuildOrder(): " + request);
+            Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
             switch (request.Type)
 			{

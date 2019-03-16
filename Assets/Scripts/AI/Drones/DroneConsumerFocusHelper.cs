@@ -21,7 +21,7 @@ namespace BattleCruisers.AI.Drones
 
         public void FocusOnNonFactoryDroneConsumer(bool forceInProgressBuildingToFocused)
         {
-            Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()");
+            Logging.LogDefault(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
 
             if (!_factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones)
             {
@@ -36,7 +36,7 @@ namespace BattleCruisers.AI.Drones
                 return;
             }
 
-            Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "FocusOnNonFactoryDroneConsumer()  Going to focus on: " + affordableBuilding);
+            Logging.Log(Tags.DRONE_CONUMSER_FOCUS_MANAGER, "Going to focus on: " + affordableBuilding);
             IDroneConsumer affordableDroneConsumer = affordableBuilding.DroneConsumer;
 
             // Try to upgrade: Idle => Active

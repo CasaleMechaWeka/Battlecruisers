@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public virtual void HideItemDetails()
 		{
-            Logging.Log(Tags.UI_MANAGER, ".HideItemDetails()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             _detailsManager.HideDetails();
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public void HideCurrentlyShownMenu()
         {
-            Logging.Log(Tags.UI_MANAGER, ".HideCurrentlyShownMenu()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             _detailsManager.HideDetails();
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
@@ -75,14 +75,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
 		{
-			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingGroup()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
 		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
 		{
-			Logging.Log(Tags.UI_MANAGER, ".SelectBuildingFromMenu()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
@@ -91,7 +91,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public virtual void SelectBuilding(IBuilding building)
 		{
-			Logging.Log(Tags.UI_MANAGER, ".SelectBuilding()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             HideItemDetails();
             _detailsManager.ShowDetails(building);
@@ -100,7 +100,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public void ShowFactoryUnits(IFactory factory)
 		{
-			Logging.Log(Tags.UI_MANAGER, ".SelectFactoryUnits()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
             {
@@ -110,7 +110,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
 		public virtual void ShowUnitDetails(IUnit unit)
 		{
-            Logging.Log(Tags.UI_MANAGER, ".ShowUnitDetails()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             HideItemDetails();
             _detailsManager.ShowDetails(unit);
@@ -119,7 +119,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
         public virtual void ShowCruiserDetails(ICruiser cruiser)
         {
-			Logging.Log(Tags.UI_MANAGER, ".ShowCruiserDetails()");
+            Logging.LogDefault(Tags.UI_MANAGER);
 
             HideItemDetails();
             _detailsManager.ShowDetails(cruiser);

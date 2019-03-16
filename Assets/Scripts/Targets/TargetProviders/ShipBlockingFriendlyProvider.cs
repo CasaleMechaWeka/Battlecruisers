@@ -42,7 +42,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
         private void OnFriendFound(object sender, TargetEventArgs args)
         {
-            Logging.Log(Tags.TARGET_PROVIDERS, "OnFriendFound()");
+            Logging.LogDefault(Tags.TARGET_PROVIDERS);
 
             if (!args.Target.IsDestroyed
                 && _isInFrontFilter.IsMatch(args.Target))
@@ -53,7 +53,7 @@ namespace BattleCruisers.Targets.TargetProviders
 
         private void OnFriendLost(object sender, TargetEventArgs args)
         {
-            Logging.Log(Tags.TARGET_PROVIDERS, "OnFriendLost()");
+            Logging.LogDefault(Tags.TARGET_PROVIDERS);
 
             if (ReferenceEquals(Target, args.Target))
             {

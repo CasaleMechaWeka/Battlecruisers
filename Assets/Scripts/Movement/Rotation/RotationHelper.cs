@@ -19,7 +19,7 @@ namespace BattleCruisers.Movement.Rotation
             float distance = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
             float directionMultiplier = FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees, distance);
 
-            Logging.Log(Tags.ROTATION_HELPER, "FindDirectionMultiplier()  currentAngle: " + currentAngleInDegrees + "  desiredAngle: " + desiredAngleInDegrees + "  direction: " + directionMultiplier);
+            Logging.Log(Tags.ROTATION_HELPER, $"currentAngle: {currentAngleInDegrees}  desiredAngle: {desiredAngleInDegrees}  direction: {directionMultiplier}");
             return directionMultiplier;
         }
 

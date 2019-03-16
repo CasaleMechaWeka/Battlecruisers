@@ -62,7 +62,7 @@ namespace BattleCruisers.Scenes
 
         private IEnumerator LoadScene(string sceneName)
         {
-            Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Start loading:  " + sceneName);
+            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
 
             AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
 
@@ -72,7 +72,7 @@ namespace BattleCruisers.Scenes
                 yield return null;
             }
 			
-            Logging.Log(Tags.SCENE_NAVIGATION, "LoadScene():  Finished loading:  " + sceneName);
+            Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
         }
     }
 }

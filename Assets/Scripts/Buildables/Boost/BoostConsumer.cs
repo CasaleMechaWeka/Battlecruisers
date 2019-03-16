@@ -39,7 +39,7 @@ namespace BattleCruisers.Buildables.Boost
 
         public void AddBoostProvider(IBoostProvider boostProvider)
         {
-            Logging.Log(Tags.BOOST, "BoostConsumer.AddBoostProvider()");
+            Logging.LogDefault(Tags.BOOST);
 
             Assert.IsFalse(_boostProviders.Contains(boostProvider));
             _boostProviders.Add(boostProvider);
@@ -48,7 +48,7 @@ namespace BattleCruisers.Buildables.Boost
 		
 		public void RemoveBoostProvider(IBoostProvider boostProvider)
 		{
-            Logging.Log(Tags.BOOST, "BoostConsumer.RemoveBoostProvider()");
+            Logging.LogDefault(Tags.BOOST);
 
             Assert.IsTrue(_boostProviders.Contains(boostProvider));
             _boostProviders.Remove(boostProvider);

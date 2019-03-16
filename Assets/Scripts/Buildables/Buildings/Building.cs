@@ -72,7 +72,7 @@ namespace BattleCruisers.Buildables.Buildings
 
         protected override void OnSingleClick()
         {
-            Logging.Log(Tags.BUILDING, "OnSingleClick()");
+            Logging.LogDefault(Tags.BUILDING);
             _uiManager.SelectBuilding(this);
         }
 

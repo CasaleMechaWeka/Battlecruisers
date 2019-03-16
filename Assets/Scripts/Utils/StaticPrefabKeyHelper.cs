@@ -99,7 +99,7 @@ namespace BattleCruisers.Utils
 
         private static TKey GetPrefabKey<TKey>(Type type, string keyName) where TKey : IPrefabKey
         {
-            Logging.Log(Tags.PREFAB_KEY_HELPER, "StaticPrefabKeyHelper.GetPrefabKey(): " + keyName);
+            Logging.Log(Tags.PREFAB_KEY_HELPER, keyName);
 
             return
                 (TKey)type

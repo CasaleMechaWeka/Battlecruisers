@@ -49,8 +49,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
                 float velocityX = Mathf.Cos(angleInRadians) * _maxVelocityProvider.VelocityInMPerS;
                 float velocityY = Mathf.Sin(angleInRadians) * _maxVelocityProvider.VelocityInMPerS;
-                Logging.Log(Tags.MOVEMENT, string.Format("FighterController.FindDesiredVelocity()  angleInDegrees: {0}  velocityX: {1}  velocityY: {2}",
-                    angleInDegrees, velocityX, velocityY));
+                Logging.Log(Tags.MOVEMENT, $"angleInDegrees: {angleInDegrees}  velocityX: {velocityX}  velocityY: {velocityY}");
 
                 if (sourcePosition.x > targetPosition.x)
                 {
@@ -68,7 +67,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
                 desiredVelocity.y = velocityY;
             }
 
-            Logging.Log(Tags.MOVEMENT, "FighterController.FindDesiredVelocity() " + desiredVelocity);
+            Logging.Log(Tags.MOVEMENT, desiredVelocity.ToString());
             return desiredVelocity;
         }
 

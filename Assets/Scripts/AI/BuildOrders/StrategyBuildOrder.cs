@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.BuildOrders
             private set
             {
                 _current = value;
-                Logging.Log(Tags.AI_BUILD_ORDERS, this + ".Current = " + _current);
+                Logging.Log(Tags.AI_BUILD_ORDERS, $"{this}.Current = {_current}");
             }
         }
 
@@ -33,8 +33,8 @@ namespace BattleCruisers.AI.BuildOrders
         {
             while (_baseBuildOrder.MoveNext())
             {
-                Logging.Log(Tags.AI_BUILD_ORDERS, this + ".MoveNext()  _baseBuildOrder.Current: " + _baseBuildOrder.Current 
-                    + "  _baseBuildOrder.Current.HasKey: " + _baseBuildOrder.Current.HasKey);
+                Logging.Log(Tags.AI_BUILD_ORDERS, $"{this}.MoveNext()  _baseBuildOrder.Current: {_baseBuildOrder.Current}  " +
+                    $"_baseBuildOrder.Current.HasKey: {_baseBuildOrder.Current.HasKey}");
 
                 if (_baseBuildOrder.Current.HasKey 
                     && _levelInfo.CanConstructBuilding(_baseBuildOrder.Current.Key))

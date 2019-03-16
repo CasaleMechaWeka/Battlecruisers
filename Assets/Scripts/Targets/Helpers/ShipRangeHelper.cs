@@ -26,7 +26,7 @@ namespace BattleCruisers.Targets.Helpers
             float distanceCenterToEdge = distanceCenterToCenter - target.Size.x / 2;
             float adjustedDistanceToTarget = distanceCenterToEdge - IN_RANGE_LEEWAY_IN_M;
 
-            Logging.Log(Tags.TARGET_RANGE_HELPER, "Target: " + target + "  Distance: " + adjustedDistanceToTarget + "  Range: " + _ship.OptimalArmamentRangeInM);
+            Logging.Log(Tags.TARGET_RANGE_HELPER, $"Target: {target}  Distance: {adjustedDistanceToTarget}  Range: {_ship.OptimalArmamentRangeInM}");
 
             return adjustedDistanceToTarget <= _ship.OptimalArmamentRangeInM;            
         }

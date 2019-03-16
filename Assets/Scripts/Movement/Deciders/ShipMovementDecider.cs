@@ -63,13 +63,13 @@ namespace BattleCruisers.Movement.Deciders
 
         private void TriggerDecideMovement(object sender, EventArgs args)
         {
-            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "TriggerDecideMovement()");
+            Logging.LogDefault(Tags.SHIP_MOVEMENT_DECIDER);
             DecideMovement();
         }
 
         private void DecideMovement()
         {
-            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, "DecideMovement()  enemy:  " + _blockingEnemyProvider.Target + "  friend: " + _blockingFriendlyProvider.Target + "  target: " + _highestPriorityTarget);
+            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, $"enemy:  {_blockingEnemyProvider.Target}  friend: {_blockingFriendlyProvider.Target}  target:  { _highestPriorityTarget}");
 
             if (!_ship.IsMoving)
             {

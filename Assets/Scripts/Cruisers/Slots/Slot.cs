@@ -105,7 +105,7 @@ namespace BattleCruisers.Cruisers.Slots
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-            Logging.Log(Tags.SLOTS, "OnPointerClick()");
+            Logging.LogDefault(Tags.SLOTS);
 
             if (IsVisible && IsFree)
             {

@@ -159,12 +159,12 @@ namespace BattleCruisers.Scenes
 
         private IEnumerator GoToLoadoutScreenAsync()
         {
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "GoToLoadoutScreenAsync()  START");
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             yield return loadoutScreen.Initialise(this, _dataProvider, _prefabFactory);
             yield return GoToScreenAsync(loadoutScreen);
 
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "GoToLoadoutScreenAsync()  END");
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
         public void GoToSettingsScreen()
@@ -190,7 +190,7 @@ namespace BattleCruisers.Scenes
 
 		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "GoToScreen()  START  current: " + _currentScreen + "  destination: " + destinationScreen);
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
             Assert.AreNotEqual(_currentScreen, destinationScreen);
 

@@ -75,7 +75,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
                 }
             }
 
-            Logging.Log(Tags.ANGLE_CALCULATORS, "AngleCalculator.FindDesiredAngle() " + desiredAngleInDegrees + "*");
+            Logging.Log(Tags.ANGLE_CALCULATORS, desiredAngleInDegrees + "*");
             return desiredAngleInDegrees;
         }
     }

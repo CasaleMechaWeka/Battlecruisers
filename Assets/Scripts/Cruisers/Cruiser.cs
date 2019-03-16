@@ -158,7 +158,7 @@ namespace BattleCruisers.Cruisers
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
-            Logging.Log(Tags.CRUISER, "_clickHandler_SingleClick");
+            Logging.LogDefault(Tags.CRUISER);
 
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
@@ -176,7 +176,7 @@ namespace BattleCruisers.Cruisers
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
         {
-            Logging.Log(Tags.CRUISER, "ConstructBuilding() " + buildingPrefab.Buildable.Name);
+            Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
 			SelectedBuildingPrefab = buildingPrefab;
 			return ConstructSelectedBuilding(slot);

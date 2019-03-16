@@ -32,8 +32,7 @@ namespace BattleCruisers.Projectiles.Spawners
 			float velocityX = velocityInMPerS * Mathf.Cos(angleInRadians) * xDirectionMultiplier;
 			float velocityY = velocityInMPerS * Mathf.Sin(angleInRadians);
 
-			Logging.Log(Tags.SHELL_SPAWNER, string.Format("angleInDegrees: {0}  isSourceMirrored: {1}  =>  velocityX: {2}  velocityY: {3}",
-				angleInDegrees, isSourceMirrored, velocityX, velocityY));
+            Logging.Log(Tags.SHELL_SPAWNER, $"angleInDegrees: {angleInDegrees}  isSourceMirrored: {isSourceMirrored}  =>  velocityX: {velocityX}  velocityY: {velocityY}");
 
 			return new Vector2(velocityX, velocityY);
 		}

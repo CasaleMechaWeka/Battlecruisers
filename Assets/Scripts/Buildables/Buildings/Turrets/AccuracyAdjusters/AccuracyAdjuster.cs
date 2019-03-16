@@ -41,12 +41,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
             float angleForCloserTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Min, isSourceMirrored);
             float angleForFurtherTarget = _angleCalculator.FindDesiredAngle(sourcePosition, onTargetBounds.Max, isSourceMirrored);
 
-            Logging.Log(Tags.ACCURACY_ADJUSTERS, "angleForCloserTarget: " + angleForCloserTarget + "  angleForFurtherTarget: " + angleForFurtherTarget);
+            Logging.Log(Tags.ACCURACY_ADJUSTERS, $"angleForCloserTarget: {angleForCloserTarget}  angleForFurtherTarget: {angleForFurtherTarget}");
 
             IRange<float> onTargetAngleRange = new OrderedRange(angleForCloserTarget, angleForFurtherTarget);
             IRange<float> fireAngleRange = _angleRangeFinder.FindFireAngleRange(onTargetAngleRange, _turretStats.Accuracy);
 
-            Logging.Log(Tags.ACCURACY_ADJUSTERS, "fireAngleRange: " + fireAngleRange.Min + " - " + fireAngleRange.Max);
+            Logging.Log(Tags.ACCURACY_ADJUSTERS, $"fireAngleRange: {fireAngleRange.Min} - {fireAngleRange.Max}");
 
             return _random.Range(fireAngleRange.Min, fireAngleRange.Max);
         }

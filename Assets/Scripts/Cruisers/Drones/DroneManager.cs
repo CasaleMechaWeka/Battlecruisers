@@ -28,9 +28,8 @@ namespace BattleCruisers.Cruisers.Drones
             get { return _numOfDrones; }
             set
             {
-                Logging.Log(Tags.DRONE_MANAGER, string.Format("NumOfDrones: {0} > {1}    NumOfDroneConsumers: {2}", _numOfDrones, value, _droneConsumers.Count));
-
-                Assert.IsTrue(value >= MIN_NUM_OF_DRONES, string.Format("Invalid num of drones {0}.  Must be at least {1}", value, MIN_NUM_OF_DRONES));
+                Logging.Log(Tags.DRONE_MANAGER, $"NumOfDrones: {_numOfDrones} > {value}    NumOfDroneConsumers: {_droneConsumers.Count}");
+                Assert.IsTrue(value >= MIN_NUM_OF_DRONES, $"Invalid num of drones {value}.  Must be at least {MIN_NUM_OF_DRONES}");
 
                 if (_numOfDrones != value)
                 {
@@ -93,7 +92,7 @@ namespace BattleCruisers.Cruisers.Drones
         /// </summary>
         public void AddDroneConsumer(IDroneConsumer consumerToAdd)
         {
-            Logging.Log(Tags.DRONE_MANAGER, "AddDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
+            Logging.Log(Tags.DRONE_MANAGER, "NumOfDroneConsumers: " + _droneConsumers.Count);
 
             Assert.IsTrue(CanSupportDroneConsumer(consumerToAdd.NumOfDronesRequired), "Not enough drones to support drone consumer :/");
             Assert.IsFalse(_droneConsumers.Contains(consumerToAdd), "Drone consumer has already been added.  Should not be added again!");
@@ -110,7 +109,7 @@ namespace BattleCruisers.Cruisers.Drones
                     && focusedConsumer.NumOfSpareDrones >= consumerToAdd.NumOfDronesRequired)
                 || AllConsumersAreIdle())
             {
-                Logging.Log(Tags.DRONE_MANAGER, "AddDroneConsumer()  Immediately provide required drones :)");
+                Logging.Log(Tags.DRONE_MANAGER, "Immediately provide required drones :)");
                 ProvideRequiredDrones(consumerToAdd);
             }
         }
@@ -134,7 +133,7 @@ namespace BattleCruisers.Cruisers.Drones
 		/// </summary>
         public void RemoveDroneConsumer(IDroneConsumer consumerToRemove)
 		{
-			Logging.Log(Tags.DRONE_MANAGER, "RemoveDroneConsumer()  NumOfDroneConsumers: " + _droneConsumers.Count);
+			Logging.Log(Tags.DRONE_MANAGER, "NumOfDroneConsumers: " + _droneConsumers.Count);
 
 			bool wasRemoved = _droneConsumers.Remove(consumerToRemove);
             Assert.IsTrue(wasRemoved, "Tried to remove consumer that was not first added.");
@@ -159,7 +158,7 @@ namespace BattleCruisers.Cruisers.Drones
 		/// </summary>
 		public void ToggleDroneConsumerFocus(IDroneConsumer droneConsumer)
 		{
-			Logging.Log(Tags.DRONE_MANAGER, "ToggleDroneConsumerFocus()  NumOfDroneConsumers: " + _droneConsumers.Count);
+			Logging.Log(Tags.DRONE_MANAGER, "NumOfDroneConsumers: " + _droneConsumers.Count);
 
 			if (NumOfDrones < droneConsumer.NumOfDronesRequired)
 			{
@@ -388,7 +387,7 @@ namespace BattleCruisers.Cruisers.Drones
 				}
 			}
 
-            Logging.Log(Tags.DRONE_MANAGER, "DroneManager.FreeUpDrones() numOfDesiredDrones: " + minDronesToFree + "  numOfFreedDrones: " + numOfFreedDrones);
+            Logging.Log(Tags.DRONE_MANAGER, $"numOfDesiredDrones: {minDronesToFree}  numOfFreedDrones: {numOfFreedDrones}");
 
 			Assert.IsTrue(numOfFreedDrones >= minDronesToFree);
 			return numOfFreedDrones;

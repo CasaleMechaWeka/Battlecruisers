@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{ 
 			private set	
 			{
-				Logging.Log(Tags.FACTORY, "set_UnitWrapper: " + _unitWrapper + " > " + value);
+				Logging.Log(Tags.FACTORY, $"{_unitWrapper} > {value}");
 				Assert.AreEqual(BuildableState.Completed, BuildableState);
 
                 if (!ReferenceEquals(_unitWrapper, value))
@@ -135,7 +135,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		
 		private void StartBuildingUnit()
 		{
-			Logging.Log(Tags.FACTORY, "StartBuildingUnit()");
+            Logging.LogDefault(Tags.FACTORY);
 
 			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper);
 			UnitUnderConstruction.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
@@ -199,7 +199,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override void OnDestroyed()
 		{
-			Logging.Log(Tags.FACTORY, "OnDestroyed()");
+            Logging.LogDefault(Tags.FACTORY);
 
 			base.OnDestroyed();
 			DestroyUnitUnderConstruction();

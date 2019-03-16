@@ -172,7 +172,16 @@ namespace BattleCruisers.Utils
             return tagsToActiveness;
 		}
 
-		public static void Log(
+        public static void LogDefault(
+            string tag,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Log(LoggingLevel.Normal, tag, CreateMessage(string.Empty, memberName, sourceFilePath, sourceLineNumber));
+        }
+
+        public static void Log(
             string tag, 
             string message,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
@@ -214,7 +223,7 @@ namespace BattleCruisers.Utils
 				&& (TagsToActiveness[tag] || LOG_ALL))
 			{
 				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
-				string fullMsg = $"{timestamp} -  {tag}:  {message}";
+				string fullMsg = $"{timestamp} - {tag}:  {message}";
 
 				if (logLevel == LoggingLevel.Warning)
 				{

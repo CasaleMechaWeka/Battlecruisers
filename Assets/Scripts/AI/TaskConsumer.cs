@@ -35,7 +35,7 @@ namespace BattleCruisers.AI
 
                 if (_currentTask != null)
                 {
-                    Logging.Log(Tags.AI, "set_CurrentTask: " + _currentTask);
+                    Logging.Log(Tags.AI, _currentTask.ToString());
                     _currentTask.Completed += _currentTask_Completed;
                     _currentTask.Start();
                 }

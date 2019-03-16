@@ -31,7 +31,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void _targetFinder_TargetFound(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetFound() " + e.Target);
+            Logging.Log(Tags.TARGET_TRACKER, e.Target.ToString());
 
             // Should always be the case but defensive programming because rarely it is 
             // NOT the case :/
@@ -44,7 +44,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void _targetFinder_TargetLost(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.TARGET_TRACKER, "_targetFinder_TargetLost() " + e.Target);
+            Logging.Log(Tags.TARGET_TRACKER, e.Target.ToString());
 
             // Should always be the case but defensive programming because rarely it is 
             // NOT the case :/

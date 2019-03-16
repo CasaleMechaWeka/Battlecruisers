@@ -59,7 +59,7 @@ namespace BattleCruisers.Buildables.Repairables
         {
             IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
 
-            Logging.Log(Tags.REPAIR_MANAGER, "RepairCommand_CanExecuteChanged() " + repairable + "  repairable.RepairCommand.CanExecute: " + repairable.RepairCommand.CanExecute);
+            Logging.Log(Tags.REPAIR_MANAGER, $"{repairable}  repairable.RepairCommand.CanExecute: {repairable.RepairCommand.CanExecute}");
 
             Assert.IsTrue(_repairableToDroneNum.ContainsKey(repairable));
             IDroneConsumer droneConsumer = _repairableToDroneNum[repairable].DroneConsumer;
@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Repairables
 
         private void AddRepairable(IRepairable repairable)
         {
-            Logging.Log(Tags.REPAIR_MANAGER, "AddRepairable(): repairable: " + repairable);
+            Logging.Log(Tags.REPAIR_MANAGER, "repairable: " + repairable);
 
             Assert.IsFalse(_repairableToDroneNum.ContainsKey(repairable));
 
@@ -130,7 +130,7 @@ namespace BattleCruisers.Buildables.Repairables
 
         private void RemoveRepairable(IRepairable repairable)
         {
-            Logging.Log(Tags.REPAIR_MANAGER, "RemoveRepairable(): repairable: " + repairable);
+            Logging.Log(Tags.REPAIR_MANAGER, "repairable: " + repairable);
 
             Assert.IsTrue(_repairableToDroneNum.ContainsKey(repairable));
 

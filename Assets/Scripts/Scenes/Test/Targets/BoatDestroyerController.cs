@@ -12,12 +12,12 @@ namespace BattleCruisers.Scenes.Test.Targets
 
         void Start()
         {
-            Logging.Log(Tags.SHIPS, "BoatDestroyerController.Start()");
+            Logging.LogDefault(Tags.SHIPS);
         }
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            Logging.Log(Tags.SHIPS, "BoatDestroyerController.OnTriggerEnter2D()");
+            Logging.LogDefault(Tags.SHIPS);
 
             _ship = collider.gameObject.GetComponent<AttackBoatController>();
             Assert.IsNotNull(_ship);
@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.Test.Targets
         {
             if (_ship != null)
             {
-                Logging.Log(Tags.SHIPS, "BoatDestroyerController.FixedUpdate()  Destroy ship :D");
+                Logging.Log(Tags.SHIPS, "Destroy ship :D");
                 _ship.TakeDamage(_ship.MaxHealth, damageSource: null);
             }
         }

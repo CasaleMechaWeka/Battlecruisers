@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Finders
             ICameraTarget aiCruiserTarget = FindCruiserTarget(camera, cameraCalculator, aiCruiser);
             _cornerToTarget.Add(CameraCorner.AICruiser, aiCruiserTarget);
 
-            Logging.Log(Tags.CAMERA, "CornerCameraTargetProvider:  overview: " + overviewTarget + "  player cruiser: " + playerCruiserTarget + "  ai cruiser: " + aiCruiserTarget);
+            Logging.Log(Tags.CAMERA, $"overview: {overviewTarget}  player cruiser: {playerCruiserTarget}  ai cruiser: {aiCruiserTarget}");
         }
 
         private ICameraTarget FindOverviewTarget(ICamera camera, ICameraCalculator cameraCalculator, ICameraCalculatorSettings cameraCalculatorSettings)

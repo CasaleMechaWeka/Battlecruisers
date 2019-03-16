@@ -289,14 +289,14 @@ namespace BattleCruisers.Buildables
             IGlobalBoostProviders globalBoostProviders, 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            Logging.Log(Tags.BOOST, "Buildable.AddBuildRateBoostProviders()  " + this);
+            Logging.Log(Tags.BOOST, this.ToString());
         }
 
         protected virtual void OnInitialised() { }
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
         {
-            Logging.Log(Tags.BUILDABLE, "ClickHandler_SingleClick()  " + this);
+            Logging.Log(Tags.BUILDABLE, this.ToString());
 
             if (DeleteCountdown.IsInProgress)
             {
@@ -317,7 +317,7 @@ namespace BattleCruisers.Buildables
 
         private void ClickHandler_DoubleClick(object sender, EventArgs e)
         {
-            Logging.Log(Tags.BUILDABLE, "ClickHandler_DoubleClick()  " + this);
+            Logging.Log(Tags.BUILDABLE, this.ToString());
             OnDoubleClick();
         }
 
@@ -457,7 +457,7 @@ namespace BattleCruisers.Buildables
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 
-            Logging.Log(Tags.BUILDABLE, buildableName + "  SetupDroneConsumer()  numOfDrones: " + numOfDrones + "  DroneConsumer.NumOfDrones: " + DroneConsumer.NumOfDrones);
+            Logging.Log(Tags.BUILDABLE, $"{buildableName}  numOfDrones: {numOfDrones}  DroneConsumer.NumOfDrones: {DroneConsumer.NumOfDrones}");
         }
 
         protected void CleanUpDroneConsumer()

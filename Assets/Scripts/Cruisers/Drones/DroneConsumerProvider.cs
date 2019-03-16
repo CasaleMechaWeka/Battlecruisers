@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers.Drones
 
 		public void ActivateDroneConsumer(IDroneConsumer droneConsumer)
 		{
-            Logging.Log(Tags.DRONE_CONSUMER_PROVIDER, "ActivateDroneConsumer()");
+            Logging.LogDefault(Tags.DRONE_CONSUMER_PROVIDER);
 
 			Assert.IsTrue(_droneManager.CanSupportDroneConsumer(droneConsumer.NumOfDronesRequired));
             Assert.IsFalse(_droneManager.HasDroneConsumer(droneConsumer));
@@ -30,7 +30,7 @@ namespace BattleCruisers.Cruisers.Drones
 
 		public void ReleaseDroneConsumer(IDroneConsumer droneConsumer)
 		{
-            Logging.Log(Tags.DRONE_CONSUMER_PROVIDER, "ReleaseDroneConsumer()");
+            Logging.LogDefault(Tags.DRONE_CONSUMER_PROVIDER);
 
             if (_droneManager.HasDroneConsumer(droneConsumer))
             {

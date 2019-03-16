@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnBuildableCompleted();
 
-            Logging.Log(Tags.LOCAL_BOOSTER, "About to boost " + _parentSlot.NeighbouringSlots.Count + " slots :D");
+            Logging.Log(Tags.LOCAL_BOOSTER, $"About to boost {_parentSlot.NeighbouringSlots.Count} slots :D");
 
             foreach (ISlot slot in _parentSlot.NeighbouringSlots)
             {

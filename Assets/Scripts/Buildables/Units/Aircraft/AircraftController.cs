@@ -51,7 +51,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             get { return _activeMovementController; }
             set
             {
-                Logging.Log(Tags.AIRCRAFT, "ActiveMovementController_set: " + ActiveMovementController + " => " + value);
+                Logging.Log(Tags.AIRCRAFT, $"{ActiveMovementController}  => {value}");
                 Assert.IsNotNull(value);
 
                 if (ReferenceEquals(ActiveMovementController, value))
@@ -134,7 +134,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            Logging.Log(Tags.AIRCRAFT, "AircraftController.OnFixedUpdate()  Adjusting velocity");
+            Logging.Log(Tags.AIRCRAFT, "Adjusting velocity");
 
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
@@ -212,7 +212,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.OnDeathWhileCompleted();
 
-            Logging.Log(Tags.AIRCRAFT, "AircraftController.OnDeathWhileCompleted()");
+            Logging.LogDefault(Tags.AIRCRAFT);
 
             // Pass on current velocity
             rigidBody.AddForce(Velocity, ForceMode2D.Impulse);

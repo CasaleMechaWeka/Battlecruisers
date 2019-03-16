@@ -105,7 +105,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)
         {
-            Logging.Log(Tags.AIRCRAFT, "GunshipController._hoverRangeTargetTracker_TargetsChanged()");
+            Logging.LogDefault(Tags.AIRCRAFT);
             UpdateMovementController();
         }
 

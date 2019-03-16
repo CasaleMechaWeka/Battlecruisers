@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
                     FindCameraYPosition(orthographicSize), 
                     zValue);
 
-            Logging.Log(Tags.CAMERA_CALCULATOR, "Cruiser position: " + cruiser.Position + "   Camera position: " + cameraPosition);
+            Logging.Log(Tags.CAMERA_CALCULATOR, $"Cruiser position: {cruiser.Position}  Camera position: {cameraPosition}");
 
             return cameraPosition;
         }

@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 		public void Initialise(IDamagable damagable, bool followDamagable = false)
 		{
-			Logging.Log(Tags.PROGRESS_BARS, "Initialise()  " + damagable);
+			Logging.LogDefault(Tags.PROGRESS_BARS, damagable.ToString());
 
 			Assert.IsNotNull(damagable);
 			Assert.IsTrue(damagable.Health > 0);

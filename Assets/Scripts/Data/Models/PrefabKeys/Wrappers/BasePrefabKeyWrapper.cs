@@ -29,7 +29,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
                     }
                 }
 
-                Logging.Log(Tags.AI_BUILD_ORDERS, this + ".get_HasKey: " + _hasKey + "  Key: " + Key);
+                Logging.Log(Tags.AI_BUILD_ORDERS, $"HasKey: {_hasKey}  Key: {Key}");
 
                 return _hasKey;
             }

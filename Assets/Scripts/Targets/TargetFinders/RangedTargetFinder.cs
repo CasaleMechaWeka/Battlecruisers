@@ -32,7 +32,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyEntered(object sender, TargetEventArgs args)
 		{
-			Logging.Log(Tags.TARGET_FINDER, "OnEnemyEntered()  " + args.Target);
+            Logging.Log(Tags.TARGET_FINDER, args.Target.ToString());
 
             if (!args.Target.IsDestroyed
                 && _targetFilter.IsMatch(args.Target) 
@@ -46,7 +46,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyExited(object sender, TargetEventArgs args)
 		{
-            Logging.Log(Tags.TARGET_FINDER, "OnEnemyExited()  " + args.Target);
+            Logging.Log(Tags.TARGET_FINDER, args.Target.ToString());
 
 			if (_targetFilter.IsMatch(args.Target) && TargetLost != null)
 			{

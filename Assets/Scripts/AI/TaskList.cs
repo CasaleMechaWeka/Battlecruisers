@@ -33,7 +33,7 @@ namespace BattleCruisers.AI
 
         public void Add(IPrioritisedTask taskToAdd)
         {
-            Logging.Log(Tags.AI, "TaskList.Add(): " + taskToAdd);
+            Logging.Log(Tags.AI, taskToAdd.ToString());
             Assert.IsFalse(_tasks.Contains(taskToAdd));
 
             bool wasEmpty = IsEmpty;
@@ -52,7 +52,7 @@ namespace BattleCruisers.AI
 
             if (ReferenceEquals(taskToAdd, HighestPriorityTask))
             {
-                Logging.Log(Tags.AI, "TaskList.Add():  Added highest priority task, emit highest priority changed event");
+                Logging.Log(Tags.AI, "Added highest priority task, emit highest priority changed event");
                 EmitHighestPriorityTaskChangedEvent();
             }
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.AI
 
         public void Remove(IPrioritisedTask taskToRemove)
         {
-            Logging.Log(Tags.AI, "TaskList.Remove(): " + taskToRemove);
+            Logging.Log(Tags.AI, taskToRemove.ToString());
             Assert.IsTrue(_tasks.Contains(taskToRemove));
 
             bool wasHighestPriorityTask = ReferenceEquals(taskToRemove, HighestPriorityTask);
@@ -73,7 +73,7 @@ namespace BattleCruisers.AI
 
             if (wasHighestPriorityTask)
             {
-                Logging.Log(Tags.AI, "TaskList.Remove():  Removed highest priority task, emit highest priority changed event");
+                Logging.Log(Tags.AI, "Removed highest priority task, emit highest priority changed event");
                 EmitHighestPriorityTaskChangedEvent();
             }
 
