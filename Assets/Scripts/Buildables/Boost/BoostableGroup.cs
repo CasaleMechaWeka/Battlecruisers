@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleCruisers.Utils.DataStrctures;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Boost
@@ -15,7 +16,7 @@ namespace BattleCruisers.Buildables.Boost
         // 1. List of local boosters for building
         // 2. List of global boosters that apply to building (eg, cruiser benefit
         //      that improves all turrets).
-        private readonly IList<IObservableCollection<IBoostProvider>> _boostProviders;
+        private readonly IList<ObservableCollection<IBoostProvider>> _boostProviders;
 
         public event EventHandler BoostChanged;
 
@@ -25,7 +26,7 @@ namespace BattleCruisers.Buildables.Boost
 
             _boostConsumer = boostFactory.CreateBoostConsumer();
             _boostables = new List<IBoostable>();
-            _boostProviders = new List<IObservableCollection<IBoostProvider>>();
+            _boostProviders = new List<ObservableCollection<IBoostProvider>>();
             _isCleanedUp = false;
 
             _boostConsumer.BoostChanged += _boostConsumer_BoostChanged;
@@ -58,45 +59,47 @@ namespace BattleCruisers.Buildables.Boost
             return _boostables.Remove(boostable);
 		}
 
-        public void AddBoostProvidersList(IObservableCollection<IBoostProvider> boostProviders)
+        public void AddBoostProvidersList(ObservableCollection<IBoostProvider> boostProviders)
         {
             Assert.IsFalse(_boostProviders.Contains(boostProviders));
             _boostProviders.Add(boostProviders);
 
-            foreach (IBoostProvider provider in boostProviders.Items)
+            foreach (IBoostProvider provider in boostProviders)
             {
                 provider.AddBoostConsumer(_boostConsumer);
             }
 
-            boostProviders.Changed += BoostProviders_Changed;
+            boostProviders.CollectionChanged += BoostProviders_CollectionChanged;
         }
 
-        private void BoostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
+        private void BoostProviders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-			switch (e.Type)
+			switch (e.Action)
 			{
-				case ChangeType.Add:
-					e.Item.AddBoostConsumer(_boostConsumer);
+                case NotifyCollectionChangedAction.Add:
+                    Assert.AreEqual(1, e.NewItems.Count);
+					((IBoostProvider)e.NewItems[0]).AddBoostConsumer(_boostConsumer);
 					break;
 
-				case ChangeType.Remove:
-					e.Item.RemoveBoostConsumer(_boostConsumer);
+				case NotifyCollectionChangedAction.Remove:
+                    Assert.AreEqual(1, e.OldItems.Count);
+                    ((IBoostProvider)e.OldItems[0]).RemoveBoostConsumer(_boostConsumer);
 					break;
 			}
-		}
+        }
 
 		public void CleanUp()
 		{
             Assert.IsFalse(_isCleanedUp, "CleanUp() should only be called once.");
 
-            foreach (IObservableCollection<IBoostProvider> boostProviders in _boostProviders)
+            foreach (ObservableCollection<IBoostProvider> boostProviders in _boostProviders)
             {
-                foreach (IBoostProvider provider in boostProviders.Items)
+                foreach (IBoostProvider provider in boostProviders)
                 {
                     provider.RemoveBoostConsumer(_boostConsumer);
                 }
 
-                boostProviders.Changed -= BoostProviders_Changed;
+                boostProviders.CollectionChanged -= BoostProviders_CollectionChanged;
 			}
 
 			_boostConsumer.BoostChanged -= _boostConsumer_BoostChanged;

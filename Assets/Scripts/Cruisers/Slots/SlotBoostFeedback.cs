@@ -1,15 +1,16 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace BattleCruisers.Cruisers.Slots
 {
     public class SlotBoostFeedback
     {
         private readonly ITextMesh _textMesh;
-        private readonly IObservableCollection<IBoostProvider> _boostProviders;
+        private readonly ObservableCollection<IBoostProvider> _boostProviders;
 
         private int NumOfBoosters
         {
@@ -37,7 +38,7 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotBoostFeedback(ITextMesh textMesh, IObservableCollection<IBoostProvider> boostProviders)
+        public SlotBoostFeedback(ITextMesh textMesh, ObservableCollection<IBoostProvider> boostProviders)
         {
             Helper.AssertIsNotNull(textMesh, boostProviders);
 
@@ -45,12 +46,12 @@ namespace BattleCruisers.Cruisers.Slots
             _boostProviders = boostProviders;
 
             NumOfBoosters = 0;
-            _boostProviders.Changed += _boostProviders_Changed;
+            _boostProviders.CollectionChanged += _boostProviders_CollectionChanged;
         }
 
-        private void _boostProviders_Changed(object sender, CollectionChangedEventArgs<IBoostProvider> e)
+        private void _boostProviders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            NumOfBoosters = _boostProviders.Items.Count;
+            NumOfBoosters = _boostProviders.Count;
         }
     }
 }

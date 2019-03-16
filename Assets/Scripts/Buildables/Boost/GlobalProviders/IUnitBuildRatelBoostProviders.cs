@@ -1,10 +1,10 @@
-﻿using BattleCruisers.Utils.DataStrctures;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public interface IUnitBuildRatelBoostProviders
     {
-        IObservableCollection<IBoostProvider> AircraftProviders { get; }
-        IObservableCollection<IBoostProvider> ShipProviders { get; }
+        ObservableCollection<IBoostProvider> AircraftProviders { get; }
+        ObservableCollection<IBoostProvider> ShipProviders { get; }
     }
 }

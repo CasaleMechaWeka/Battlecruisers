@@ -8,8 +8,8 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         IFactoryProvider FactoryProvider { get; }
         ITarget Parent { get; }
         ISoundKey SpawnerSoundKey { get; }
-        IObservableCollection<IBoostProvider> LocalBoostProviders { get; }
-        IObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
+        ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
     }
 }

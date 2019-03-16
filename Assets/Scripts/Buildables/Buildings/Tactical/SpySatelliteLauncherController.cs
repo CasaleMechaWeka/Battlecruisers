@@ -2,8 +2,8 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
-            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders);

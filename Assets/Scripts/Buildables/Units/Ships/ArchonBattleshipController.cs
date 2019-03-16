@@ -4,8 +4,8 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
-            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);

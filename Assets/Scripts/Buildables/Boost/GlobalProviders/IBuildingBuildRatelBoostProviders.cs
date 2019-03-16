@@ -1,17 +1,17 @@
-﻿using BattleCruisers.Utils.DataStrctures;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public interface IBuildingBuildRatelBoostProviders
     {
-        IObservableCollection<IBoostProvider> DefensivesProviders { get; }
-        IObservableCollection<IBoostProvider> OffensivesProviders { get; }
-        IObservableCollection<IBoostProvider> TacticalsProviders { get; }
-        IObservableCollection<IBoostProvider> ShieldsProviders { get; }
-        IObservableCollection<IBoostProvider> UltrasProviders { get; }
-        IObservableCollection<IBoostProvider> AirFactoryProviders { get; }
-        IObservableCollection<IBoostProvider> NavalFactoryProviders { get; }
+        ObservableCollection<IBoostProvider> DefensivesProviders { get; }
+        ObservableCollection<IBoostProvider> OffensivesProviders { get; }
+        ObservableCollection<IBoostProvider> TacticalsProviders { get; }
+        ObservableCollection<IBoostProvider> ShieldsProviders { get; }
+        ObservableCollection<IBoostProvider> UltrasProviders { get; }
+        ObservableCollection<IBoostProvider> AirFactoryProviders { get; }
+        ObservableCollection<IBoostProvider> NavalFactoryProviders { get; }
         // Drone stations and Ultralisks
-        IObservableCollection<IBoostProvider> DroneBuildingsProviders { get; }
+        ObservableCollection<IBoostProvider> DroneBuildingsProviders { get; }
     }
 }

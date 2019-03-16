@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         protected TStats _baseStats;
         protected IBoostFactory _boostFactory;
         protected IGlobalBoostProviders _globalBoostProviders;
-        protected IObservableCollection<IBoostProvider> _localBoostProviders;
+        protected ObservableCollection<IBoostProvider> _localBoostProviders;
         protected IBoostable _boostable;
         protected IBoostableGroup _boostableGroup;
 

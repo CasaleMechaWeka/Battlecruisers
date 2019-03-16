@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
@@ -47,7 +46,7 @@ namespace BattleCruisers.Cruisers.Slots
         BuildingFunction BuildingFunctionAffinity { get; }
         Direction Direction { get; }
         IBuilding Building { get; set; }
-        IObservableCollection<IBoostProvider> BoostProviders { get; }
+        ObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
         Vector2 Position { get; }
         ITransform Transform { get; }

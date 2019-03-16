@@ -16,7 +16,6 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Timers;
@@ -142,7 +141,7 @@ namespace BattleCruisers.Buildables
 
         public bool IsInitialised { get { return BuildProgressBoostable != null; } }
 
-        protected virtual IObservableCollection<IBoostProvider> TurretFireRateBoostProviders
+        protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {
             get
             {
@@ -272,10 +271,10 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup.AddBoostable(BuildProgressBoostable);
 
-            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<IObservableCollection<IBoostProvider>>();
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
             AddBuildRateBoostProviders(_factoryProvider.GlobalBoostProviders, buildRateBoostProvidersList);
             
-            foreach (IObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
+            foreach (ObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
             {
                 _buildRateBoostableGroup.AddBoostProvidersList(buildRateBoostProviders);
             }
@@ -288,7 +287,7 @@ namespace BattleCruisers.Buildables
         /// </summary>
         protected virtual void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders, 
-            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, "Buildable.AddBuildRateBoostProviders()  " + this);
         }

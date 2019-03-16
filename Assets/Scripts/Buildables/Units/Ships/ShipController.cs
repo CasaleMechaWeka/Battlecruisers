@@ -9,8 +9,8 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -125,7 +125,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders, 
-            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.ShipProviders);

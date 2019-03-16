@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Utils.DataStrctures;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing
@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
     /// </summary>
     public class OffensiveVsOffensiveTest : BuildableVsBuildableTest
     {
-        private IObservableCollection<ITarget> _targetsOnLeft, _targetsOnRight;
+        private ObservableCollection<ITarget> _targetsOnLeft, _targetsOnRight;
 
         protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition)
         {

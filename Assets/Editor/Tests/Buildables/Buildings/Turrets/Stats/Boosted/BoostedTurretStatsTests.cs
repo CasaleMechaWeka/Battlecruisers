@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted;
-using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
     public class BoostedTurretStatsTests : BoostedTurretStatsTestsBase<ITurretStats>
     {
         private ITurretStats _boostedStats;
-        private IObservableCollection<IBoostProvider> _localBoostProviders, _fireRateGlobalBoostProviders;
+        private ObservableCollection<IBoostProvider> _localBoostProviders, _fireRateGlobalBoostProviders;
 
         [SetUp]
         public override void SetuUp()

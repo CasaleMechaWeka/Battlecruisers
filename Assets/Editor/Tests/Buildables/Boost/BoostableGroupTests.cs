@@ -1,17 +1,17 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.ObjectModel;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables.Boost
 {
-	public class BoostableGroupTests
+    public class BoostableGroupTests
 	{
         private IBoostableGroup _group;
         private IBoostConsumer _consumer;
         private IBoostable _boostable1, _boostable2;
-        private IObservableCollection<IBoostProvider> _providers1, _providers2;
+        private ObservableCollection<IBoostProvider> _providers1, _providers2;
         private IBoostProvider _provider1, _provider2;
         private IBoostFactory _factory;
 

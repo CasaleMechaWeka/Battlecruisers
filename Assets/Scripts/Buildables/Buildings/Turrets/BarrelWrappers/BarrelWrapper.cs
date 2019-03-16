@@ -13,9 +13,9 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -103,8 +103,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IFactoryProvider factoryProvider, 
             Faction enemyFaction,
             ISoundKey firingSound = null,
-            IObservableCollection<IBoostProvider> localBoostProviders = null,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProviders = null)
+            ObservableCollection<IBoostProvider> localBoostProviders = null,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null)
         {
             Helper.AssertIsNotNull(parent, factoryProvider);
 
@@ -152,8 +152,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IAngleCalculator angleCalculator,
             IAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
-            IObservableCollection<IBoostProvider> localBoostProviders,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProvider)
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProvider)
         {
             return new BarrelControllerArgs(
                 targetFilter,

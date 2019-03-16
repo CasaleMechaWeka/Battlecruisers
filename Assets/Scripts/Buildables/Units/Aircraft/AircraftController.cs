@@ -7,9 +7,9 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -117,7 +117,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders, 
-            IList<IObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.AircraftProviders);

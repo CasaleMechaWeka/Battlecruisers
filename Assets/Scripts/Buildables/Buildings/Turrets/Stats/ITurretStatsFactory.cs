@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Utils.DataStrctures;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
     {
         ITurretStats CreateBoostedTurretStats(
             ITurretStats baseTurretStats, 
-            IObservableCollection<IBoostProvider> localBoostProviders,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProviders);
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders);
     }
 }

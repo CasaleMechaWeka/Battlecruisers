@@ -24,8 +24,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public BoostedBasicTurretStats(
             TStats baseStats,
             IBoostFactory boostFactory,
-            IObservableCollection<IBoostProvider> localBoostProviders,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProviders)
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
             Helper.AssertIsNotNull(baseStats, boostFactory, localBoostProviders, globalFireRateBoostProviders);
 

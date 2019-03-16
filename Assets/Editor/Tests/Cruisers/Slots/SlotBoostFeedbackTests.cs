@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Tests.Cruisers.Slots
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         private SlotBoostFeedback _slotBoostFeedback;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private ITextMesh _textMesh;
-        private IObservableCollection<IBoostProvider> _boostProviders;
+        private ObservableCollection<IBoostProvider> _boostProviders;
         private IBoostProvider _boostProvider;
 
         [SetUp]

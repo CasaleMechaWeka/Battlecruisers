@@ -1,17 +1,17 @@
-﻿using BattleCruisers.Utils.DataStrctures;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public class BuildingBuildRatelBoostProviders : IBuildingBuildRatelBoostProviders
     {
-        public IObservableCollection<IBoostProvider> DefensivesProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> OffensivesProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> TacticalsProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> ShieldsProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> UltrasProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> AirFactoryProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> NavalFactoryProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> DroneBuildingsProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> DefensivesProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> OffensivesProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> TacticalsProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> ShieldsProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> UltrasProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> AirFactoryProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> NavalFactoryProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> DroneBuildingsProviders { get; private set; }
 
         public BuildingBuildRatelBoostProviders()
         {

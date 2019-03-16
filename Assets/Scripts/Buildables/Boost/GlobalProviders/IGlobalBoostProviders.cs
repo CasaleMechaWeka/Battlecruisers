@@ -1,20 +1,20 @@
-﻿using BattleCruisers.Utils.DataStrctures;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public interface IGlobalBoostProviders
     {
-        IObservableCollection<IBoostProvider> DummyBoostProviders { get; }
+        ObservableCollection<IBoostProvider> DummyBoostProviders { get; }
 
-        IObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
+        ObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
 
-        IObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
-        IObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
         // Currently affects ALL turrets (ships, gunship, buildings).  
         // That's ok though, because only used in tutorial to improve artillery accuracy :)
-        IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
+        ObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
 
-        IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
+        ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
 
         IBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
         IUnitBuildRatelBoostProviders UnitBuildRate { get; }

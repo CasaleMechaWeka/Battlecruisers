@@ -41,7 +41,9 @@ using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -286,23 +288,26 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         /// <summary>
-        /// Use IObservableCollection so that targets do not need to be known right now.
+        /// Use ObservableCollection so that targets do not need to be known right now.
         /// Targets can be added later, once they are know, and the target finder
         /// will emit appropriate target found events.
         /// </summary>
-        public ITargetFactoriesProvider CreateTargetFactories(IObservableCollection<ITarget> targets)
+        public ITargetFactoriesProvider CreateTargetFactories(ObservableCollection<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
 
             ITargetFactoriesProvider targetFactories = CreateTargetFactories(targetFinder);
 
             // Emit target found events AFTER targets factory (target processor) is created
-            targets.Changed += (sender, e) =>
+            targets.CollectionChanged += (sender, e) =>
             {
-                if (e.Type == ChangeType.Add)
+                if (e.Action == NotifyCollectionChangedAction.Add)
                 {
-                    e.Item.Destroyed += (target, args) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(e.Item));
-                    targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(e.Item));
+                    Assert.AreEqual(1, e.NewItems.Count);
+                    ITarget newTarget = e.NewItems[0] as ITarget;
+                    Assert.IsNotNull(newTarget);
+                    newTarget.Destroyed += (target, args) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(newTarget));
+                    targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(newTarget));
                 }                    
             };
 
@@ -445,8 +450,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		{
 			ISlot parentSlot = Substitute.For<ISlot>();
 
-            ReadOnlyCollection<IBoostProvider> boostProviders = new ReadOnlyCollection<IBoostProvider>(new List<IBoostProvider>());
-			parentSlot.BoostProviders.Items.Returns(boostProviders);
+            ObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>();
+			parentSlot.BoostProviders.Returns(boostProviders);
 
 			ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
 			parentSlot.NeighbouringSlots.Returns(neighbouringSlots);
@@ -466,7 +471,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFactoryProvider factoryProvider = null,
             ITarget parent = null,
             ISoundKey firingSound = null,
-            IObservableCollection<IBoostProvider> localBoostProviders = null,
+            ObservableCollection<IBoostProvider> localBoostProviders = null,
             IAttackablePositionFinder attackablePositionFinder = null)
         {
             return
@@ -481,8 +486,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
                     parent ?? Substitute.For<ITarget>(),
-                    localBoostProviders ?? new DummyObservableCollection<IBoostProvider>(),
-                    new DummyObservableCollection<IBoostProvider>(),
+                    localBoostProviders ?? new ObservableCollection<IBoostProvider>(),
+                    new ObservableCollection<IBoostProvider>(),
                     firingSound ?? SoundKeys.Firing.BigCannon);
         }
 
@@ -513,16 +518,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             IGlobalBoostProviders globalBoostProviders = Substitute.For<IGlobalBoostProviders>();
 
-            IObservableCollection<IBoostProvider> aircraftBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            ObservableCollection<IBoostProvider> aircraftBoostProviders = Substitute.For<ObservableCollection<IBoostProvider>>();
             globalBoostProviders.AircraftBoostProviders.Returns(aircraftBoostProviders);
 
-            IObservableCollection<IBoostProvider> turretAccuracyBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            ObservableCollection<IBoostProvider> turretAccuracyBoostProviders = Substitute.For<ObservableCollection<IBoostProvider>>();
             globalBoostProviders.TurretAccuracyBoostProviders.Returns(turretAccuracyBoostProviders);
 
-            IObservableCollection<IBoostProvider> offenseFireRateBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            ObservableCollection<IBoostProvider> offenseFireRateBoostProviders = Substitute.For<ObservableCollection<IBoostProvider>>();
             globalBoostProviders.OffenseFireRateBoostProviders.Returns(offenseFireRateBoostProviders);
 
-            IObservableCollection<IBoostProvider> defenseFireRateBoostProviders = Substitute.For<IObservableCollection<IBoostProvider>>();
+            ObservableCollection<IBoostProvider> defenseFireRateBoostProviders = Substitute.For<ObservableCollection<IBoostProvider>>();
             globalBoostProviders.DefenseFireRateBoostProviders.Returns(defenseFireRateBoostProviders);
 
             return globalBoostProviders;

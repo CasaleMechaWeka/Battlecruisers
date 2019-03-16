@@ -3,8 +3,8 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Units
 {
@@ -27,6 +27,6 @@ namespace BattleCruisers.Buildables.Units
         bool IsUltra { get; }
 
 		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider);
-        void AddBuildRateBoostProviders(IObservableCollection<IBoostProvider> boostProviders);
+        void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
 	}
 }

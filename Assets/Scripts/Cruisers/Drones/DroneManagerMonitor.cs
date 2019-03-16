@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Threading;
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace BattleCruisers.Cruisers.Drones
@@ -56,7 +56,7 @@ namespace BattleCruisers.Cruisers.Drones
             _areDronesIdle = false;
 
             _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
-            _droneManager.DroneConsumers.Changed += DroneConsumers_Changed;
+            ((INotifyCollectionChanged)_droneManager.DroneConsumers).CollectionChanged += DroneManagerMonitor_CollectionChanged;
         }
 
         private void _droneManager_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
@@ -72,7 +72,8 @@ namespace BattleCruisers.Cruisers.Drones
             _previousNumOfDrones = e.NewNumOfDrones;
         }
 
-        private void DroneConsumers_Changed(object sender, CollectionChangedEventArgs<IDroneConsumer> e)
+
+        private void DroneManagerMonitor_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             DeferCheckForIdleDrones();
         }
@@ -95,14 +96,14 @@ namespace BattleCruisers.Cruisers.Drones
         private bool AreAllDroneConsumersIdle()
         {
             return
-                _droneManager.DroneConsumers.Items
+                _droneManager.DroneConsumers
                     .All(droneConsumer => droneConsumer.State == DroneConsumerState.Idle);
         }
 
         public void DisposeManagedState()
         {
             _droneManager.DroneNumChanged -= _droneManager_DroneNumChanged;
-            _droneManager.DroneConsumers.Changed -= DroneConsumers_Changed;
+            ((INotifyCollectionChanged)_droneManager.DroneConsumers).CollectionChanged -= DroneManagerMonitor_CollectionChanged;
         }
     }
 }

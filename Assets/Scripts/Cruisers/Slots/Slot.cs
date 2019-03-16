@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
@@ -39,7 +38,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         private Vector2 Size { get { return new Vector2(_collider.radius * 2, _collider.radius * 2); } }
         public bool IsFree { get { return Building == null; } }
-        public IObservableCollection<IBoostProvider> BoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         public Vector3 BuildingPlacementPoint { get; private set; }

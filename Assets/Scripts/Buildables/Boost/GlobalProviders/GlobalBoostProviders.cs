@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.DataStrctures;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
@@ -6,16 +6,16 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
     {
         // The BoostableGroup does not allow the same IBoostProviders collection
         // to be added twice, even if it is just the same DummyBoostProviders :/
-        // Hence create fresh instead of returning the same instance.
-        public IObservableCollection<IBoostProvider> DummyBoostProviders { get { return new DummyObservableCollection<IBoostProvider>(); } }
+        // Hence create fresh instance instead of returning the same instance.
+        public ObservableCollection<IBoostProvider> DummyBoostProviders { get { return new ObservableCollection<IBoostProvider>(); } }
 
-        public IObservableCollection<IBoostProvider> AircraftBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> AircraftBoostProviders { get; private set; }
 
-        public IObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; private set; }
         
-        public IObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; private set; }
 
         public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; private set; }
         public IUnitBuildRatelBoostProviders UnitBuildRate { get; private set; }

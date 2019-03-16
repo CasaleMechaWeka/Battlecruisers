@@ -6,10 +6,10 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -158,7 +158,7 @@ namespace BattleCruisers.Buildables.Units
             base.InternalDestroy();
         }
 
-        public void AddBuildRateBoostProviders(IObservableCollection<IBoostProvider> boostProviders)
+        public void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders)
         {
             _buildRateBoostableGroup.AddBoostProvidersList(boostProviders);
         }

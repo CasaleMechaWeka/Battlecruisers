@@ -9,8 +9,8 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -26,8 +26,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITargetPositionValidator TargetPositionValidator { get; private set; }
         public IAngleLimiter AngleLimiter { get; private set; }
         public ITarget Parent { get; private set; }
-        public IObservableCollection<IBoostProvider> LocalBoostProviders { get; private set; }
-        public IObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> LocalBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; private set; }
         public ISoundKey SpawnerSoundKey { get; private set; }
 
         public BarrelControllerArgs(
@@ -41,8 +41,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IAngleLimiter angleLimiter,
             IFactoryProvider factoryProvider,
             ITarget parent,
-            IObservableCollection<IBoostProvider> localBoostProviders,
-            IObservableCollection<IBoostProvider> globalFireRateBoostProvider,
+            ObservableCollection<IBoostProvider> localBoostProviders,
+            ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             ISoundKey firingSound = null)
         {
             Helper.AssertIsNotNull(
