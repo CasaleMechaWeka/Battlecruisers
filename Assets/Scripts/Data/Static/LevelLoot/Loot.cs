@@ -8,7 +8,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
 {
     public class Loot : ILoot
     {
-        public ReadOnlyCollection<ILootItem> Items { get; private set; }
+        public ReadOnlyCollection<ILootItem> Items { get; }
 
         public Loot(
             IList<HullKey> hullKeys,

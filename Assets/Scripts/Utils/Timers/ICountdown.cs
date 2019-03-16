@@ -4,7 +4,7 @@ namespace BattleCruisers.Utils.Timers
 {
     public class CountdownEventArgs : EventArgs
     {
-        public int SecondsRemaining { get; private set; }
+        public int SecondsRemaining { get; }
 
         public CountdownEventArgs(int secondsReamining)
         {

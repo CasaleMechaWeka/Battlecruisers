@@ -4,9 +4,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class CloudStats : ICloudStats
     {
-        public float HorizontalMovementSpeedInMPerS { get; private set; }
-        public float DisappearLineInM { get; private set; }
-        public float ReappaerLineInM { get; private set; }
+        public float HorizontalMovementSpeedInMPerS { get; }
+        public float DisappearLineInM { get; }
+        public float ReappaerLineInM { get; }
 
         public CloudStats(ICloudGenerationStats generationStats)
         {

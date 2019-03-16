@@ -2,8 +2,8 @@
 {
     public class ExplosionStats : IExplosionStats
     {
-        public ExplosionSize Size { get; private set; }
-        public bool ShowTrails { get; private set; }
+        public ExplosionSize Size { get; }
+        public bool ShowTrails { get; }
 
         public ExplosionStats(ExplosionSize size, bool showTrails)
         {

@@ -4,10 +4,10 @@ namespace BattleCruisers.Utils.DataStrctures
 {
     public class Rectangle
     {
-        public float MinX { get; private set; }
-        public float MaxX { get; private set; }
-        public float MinY { get; private set; }
-        public float MaxY { get; private set; }
+        public float MinX { get; }
+        public float MaxX { get; }
+        public float MinY { get; }
+        public float MaxY { get; }
 
 		public Rectangle(float minX, float maxX, float minY, float maxY)
         {

@@ -24,8 +24,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             public static Color WORSE = Color.white;
         }
 
-		public Color BackgroundColor { get; private set; }
-        public Color ForegroundColor { get; private set; }
+		public Color BackgroundColor { get; }
+        public Color ForegroundColor { get; }
 
         protected ComparisonResult(Color backgroundColor, Color textColor)
 		{

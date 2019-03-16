@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         private readonly IComparableItemDetails<TItem> _leftDetails, _rightDetails;
 
         private ISettableBroadcastingProperty<TItem> _selectedItem;
-        public IBroadcastingProperty<TItem> SelectedItem { get; private set; }
+        public IBroadcastingProperty<TItem> SelectedItem { get; }
 
         public ItemDetailsDisplayer(IComparableItemDetails<TItem> leftDetails, IComparableItemDetails<TItem> rightDetails)
         {

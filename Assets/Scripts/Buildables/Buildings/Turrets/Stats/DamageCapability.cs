@@ -6,8 +6,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public class DamageCapability : IDamageCapability
     {
-        public float DamagePerS { get; private set; }
-        public IList<TargetType> AttackCapabilities { get; private set; }
+        public float DamagePerS { get; }
+        public IList<TargetType> AttackCapabilities { get; }
 
         public DamageCapability(float damagePerS, IList<TargetType> attackCapabilities)
         {

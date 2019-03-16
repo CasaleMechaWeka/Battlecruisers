@@ -8,23 +8,23 @@ namespace BattleCruisers.Data.Static
         {
             public static class Buildings
             {
-                public static PrioritisedSoundKey Building { get; private set; }
-                public static PrioritisedSoundKey AirFactory { get; private set; }
-                public static PrioritisedSoundKey AntiAirTurret { get; private set; }
-                public static PrioritisedSoundKey AntiShipTurret { get; private set; }
-                public static PrioritisedSoundKey Artillery { get; private set; }
-                public static PrioritisedSoundKey Booster { get; private set; }
-                public static PrioritisedSoundKey DroneStation { get; private set; }
-                public static PrioritisedSoundKey ControlTower { get; private set; }
-                public static PrioritisedSoundKey Mortar { get; private set; }
-                public static PrioritisedSoundKey NavalFactory { get; private set; }
-                public static PrioritisedSoundKey Railgun { get; private set; }
-                public static PrioritisedSoundKey RocketLauncher { get; private set; }
-                public static PrioritisedSoundKey SamSite { get; private set; }
-                public static PrioritisedSoundKey SpySatellite { get; private set; }
-                public static PrioritisedSoundKey Shields { get; private set; }
-                public static PrioritisedSoundKey StealthGenerator { get; private set; }
-                public static PrioritisedSoundKey TeslaCoil { get; private set; }
+                public static PrioritisedSoundKey Building { get; }
+                public static PrioritisedSoundKey AirFactory { get; }
+                public static PrioritisedSoundKey AntiAirTurret { get; }
+                public static PrioritisedSoundKey AntiShipTurret { get; }
+                public static PrioritisedSoundKey Artillery { get; }
+                public static PrioritisedSoundKey Booster { get; }
+                public static PrioritisedSoundKey DroneStation { get; }
+                public static PrioritisedSoundKey ControlTower { get; }
+                public static PrioritisedSoundKey Mortar { get; }
+                public static PrioritisedSoundKey NavalFactory { get; }
+                public static PrioritisedSoundKey Railgun { get; }
+                public static PrioritisedSoundKey RocketLauncher { get; }
+                public static PrioritisedSoundKey SamSite { get; }
+                public static PrioritisedSoundKey SpySatellite { get; }
+                public static PrioritisedSoundKey Shields { get; }
+                public static PrioritisedSoundKey StealthGenerator { get; }
+                public static PrioritisedSoundKey TeslaCoil { get; }
 
                 static Buildings()
                 {
@@ -49,13 +49,13 @@ namespace BattleCruisers.Data.Static
 
             public static class Units
             {
-                public static PrioritisedSoundKey AttackBoat { get; private set; }
-                public static PrioritisedSoundKey Frigate { get; private set; }
-                public static PrioritisedSoundKey Destroyer { get; private set; }
-                public static PrioritisedSoundKey Bomber { get; private set; }
-                public static PrioritisedSoundKey Gunship { get; private set; }
-                public static PrioritisedSoundKey Fighter { get; private set; }
-                public static PrioritisedSoundKey Satellite { get; private set; }
+                public static PrioritisedSoundKey AttackBoat { get; }
+                public static PrioritisedSoundKey Frigate { get; }
+                public static PrioritisedSoundKey Destroyer { get; }
+                public static PrioritisedSoundKey Bomber { get; }
+                public static PrioritisedSoundKey Gunship { get; }
+                public static PrioritisedSoundKey Fighter { get; }
+                public static PrioritisedSoundKey Satellite { get; }
 
                 static Units()
                 {
@@ -69,7 +69,7 @@ namespace BattleCruisers.Data.Static
                 }
             }
 
-            public static PrioritisedSoundKey Ultra { get; private set; }
+            public static PrioritisedSoundKey Ultra { get; }
 
             static Completed()
             {
@@ -81,8 +81,8 @@ namespace BattleCruisers.Data.Static
         {
             public static class Cruiser
             {
-                public static PrioritisedSoundKey UnderAttack { get; private set; }
-                public static PrioritisedSoundKey SignificantlyDamaged { get; private set; }
+                public static PrioritisedSoundKey UnderAttack { get; }
+                public static PrioritisedSoundKey SignificantlyDamaged { get; }
 
                 static Cruiser()
                 {
@@ -93,13 +93,13 @@ namespace BattleCruisers.Data.Static
 
             public static class Drones
             {
-                public static PrioritisedSoundKey NewDronesReady { get; private set; }
-                public static PrioritisedSoundKey Idle { get; private set; }
-                public static PrioritisedSoundKey NotEnoughDronesToBuild { get; private set; }
-                public static PrioritisedSoundKey NotEnoughDronesToFocus { get; private set; }
-                public static PrioritisedSoundKey Focusing { get; private set; }
-                public static PrioritisedSoundKey AllFocused { get; private set; }
-                public static PrioritisedSoundKey Dispersing { get; private set; }
+                public static PrioritisedSoundKey NewDronesReady { get; }
+                public static PrioritisedSoundKey Idle { get; }
+                public static PrioritisedSoundKey NotEnoughDronesToBuild { get; }
+                public static PrioritisedSoundKey NotEnoughDronesToFocus { get; }
+                public static PrioritisedSoundKey Focusing { get; }
+                public static PrioritisedSoundKey AllFocused { get; }
+                public static PrioritisedSoundKey Dispersing { get; }
 
                 static Drones()
                 {
@@ -115,8 +115,8 @@ namespace BattleCruisers.Data.Static
 
             public static class Targetting
             {
-                public static PrioritisedSoundKey NewTarget { get; private set; }
-                public static PrioritisedSoundKey TargetCleared { get; private set; }
+                public static PrioritisedSoundKey NewTarget { get; }
+                public static PrioritisedSoundKey TargetCleared { get; }
             
                 static Targetting()
                 {
@@ -125,8 +125,8 @@ namespace BattleCruisers.Data.Static
                 }
             }
 
-            public static PrioritisedSoundKey EnemyStartedUltra { get; private set; }
-            public static PrioritisedSoundKey ShieldsDown { get; private set; }
+            public static PrioritisedSoundKey EnemyStartedUltra { get; }
+            public static PrioritisedSoundKey ShieldsDown { get; }
 
             static Events()
             {

@@ -8,9 +8,9 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class PickerTestCase
     {
-        public DroneConsumerState PreFocusState { get; private set; }
-        public DroneConsumerState PostFocusState { get; private set; }
-        public PrioritisedSoundKey ExpectedSound { get; private set; }
+        public DroneConsumerState PreFocusState { get; }
+        public DroneConsumerState PostFocusState { get; }
+        public PrioritisedSoundKey ExpectedSound { get; }
 
         public PickerTestCase(DroneConsumerState preFocusState, DroneConsumerState postFocusState, PrioritisedSoundKey expectedSound)
         {

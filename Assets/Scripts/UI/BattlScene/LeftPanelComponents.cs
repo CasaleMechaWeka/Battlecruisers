@@ -6,9 +6,9 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class LeftPanelComponents
     {
-        public IMaskHighlightable HealthDialHighlightable { get; private set; }
-        public IMaskHighlightable NumberOfDronesHighlightable { get; private set; }
-        public IBuildMenu BuildMenu { get; private set; }
+        public IMaskHighlightable HealthDialHighlightable { get; }
+        public IMaskHighlightable NumberOfDronesHighlightable { get; }
+        public IBuildMenu BuildMenu { get; }
 
         public LeftPanelComponents(
             IMaskHighlightable healthDialHighlightable, 

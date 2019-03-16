@@ -10,9 +10,9 @@
         /// </summary>
         public static class Small
         {
-            public static SmokeStats WeakSmoke { get; private set; }
-            public static SmokeStats NormalSmoke { get; private set; }
-            public static SmokeStats StrongSmoke { get; private set; }
+            public static SmokeStats WeakSmoke { get; }
+            public static SmokeStats NormalSmoke { get; }
+            public static SmokeStats StrongSmoke { get; }
 
             static Small()
             {
@@ -28,9 +28,9 @@
         /// </summary>
         public static class Normal
         {
-            public static SmokeStats WeakSmoke { get; private set; }
-            public static SmokeStats NormalSmoke { get; private set; }
-            public static SmokeStats StrongSmoke { get; private set; }
+            public static SmokeStats WeakSmoke { get; }
+            public static SmokeStats NormalSmoke { get; }
+            public static SmokeStats StrongSmoke { get; }
 
             static Normal()
             {
@@ -46,9 +46,9 @@
         /// </summary>
         public static class Big
         {
-            public static SmokeStats WeakSmoke { get; private set; }
-            public static SmokeStats NormalSmoke { get; private set; }
-            public static SmokeStats StrongSmoke { get; private set; }
+            public static SmokeStats WeakSmoke { get; }
+            public static SmokeStats NormalSmoke { get; }
+            public static SmokeStats StrongSmoke { get; }
 
             static Big()
             {

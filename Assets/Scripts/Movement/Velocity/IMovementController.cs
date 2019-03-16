@@ -6,7 +6,7 @@ namespace BattleCruisers.Movement.Velocity
 {
     public class XDirectionChangeEventArgs : EventArgs
 	{
-		public Direction NewDirection { get; private set; }
+		public Direction NewDirection { get; }
 
 		public XDirectionChangeEventArgs(Direction newDirection)
 		{

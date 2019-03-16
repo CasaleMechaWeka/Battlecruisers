@@ -9,11 +9,11 @@ namespace BattleCruisers.Utils.Factories
 {
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
-        public ISoundFetcher SoundFetcher { get; private set; }
-        public ISoundPlayer SoundPlayer { get; private set; }
-        public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; private set; }
-        public ISoundPlayerFactory SoundPlayerFactory { get; private set; }
-        public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; private set; }
+        public ISoundFetcher SoundFetcher { get; }
+        public ISoundPlayer SoundPlayer { get; }
+        public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
+        public ISoundPlayerFactory SoundPlayerFactory { get; }
+        public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
 
         public SoundFactoryProvider(IVariableDelayDeferrer deferrer, ICamera soleCamera, bool isPlayerCruiser, IAudioSource audioSource)
 		{

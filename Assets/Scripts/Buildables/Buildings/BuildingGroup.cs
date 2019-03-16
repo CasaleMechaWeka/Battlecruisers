@@ -5,10 +5,10 @@ namespace BattleCruisers.Buildables.Buildings
 {
     public class BuildingGroup : IBuildingGroup
 	{
-        public IList<IBuildableWrapper<IBuilding>> Buildings { get; private set; }
-		public BuildingCategory BuildingCategory { get; private set; }
-		public string BuildingGroupName { get; private set; }
-		public string Description { get; private set; }
+        public IList<IBuildableWrapper<IBuilding>> Buildings { get; }
+		public BuildingCategory BuildingCategory { get; }
+		public string BuildingGroupName { get; }
+		public string Description { get; }
 
 		private int MIN_NUM_OF_BUILDINGS = 0;
 		private int MAX_NUM_OF_BUILDINGS = 5;

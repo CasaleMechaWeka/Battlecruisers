@@ -4,7 +4,7 @@ namespace BattleCruisers.Targets.TargetProviders
 {
     public class StaticTargetProvider : ITargetProvider
     {
-        public ITarget Target { get; private set; }
+        public ITarget Target { get; }
 
         public StaticTargetProvider(ITarget target)
         {

@@ -2,8 +2,8 @@
 {
     public class Range<T> : IRange<T>
     {
-        public T Min { get; private set; }
-        public T Max { get; private set; }
+        public T Min { get; }
+        public T Max { get; }
 
         public Range(T min, T max)
         {

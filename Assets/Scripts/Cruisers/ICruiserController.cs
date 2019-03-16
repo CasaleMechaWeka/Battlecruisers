@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers
 {
     public abstract class BuildableConstructionEventArgs<TBuildable> : EventArgs where TBuildable : IBuildable
     {
-		public TBuildable Buildable { get; private set; }
+		public TBuildable Buildable { get; }
 
 		protected BuildableConstructionEventArgs(TBuildable buildable)
 		{
@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers
 
     public class BuildingDestroyedEventArgs : EventArgs
     {
-        public IBuilding DestroyedBuilding { get; private set; }
+        public IBuilding DestroyedBuilding { get; }
 
         public BuildingDestroyedEventArgs(IBuilding destroyedBuilding)
         {

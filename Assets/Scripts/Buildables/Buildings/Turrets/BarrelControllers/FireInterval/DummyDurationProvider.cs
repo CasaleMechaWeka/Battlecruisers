@@ -2,7 +2,7 @@
 {
     public class DummyDurationProvider : IDurationProvider
 	{
-        public float DurationInS { get; private set; }
+        public float DurationInS { get; }
 
         public DummyDurationProvider(float durationInS)
         {

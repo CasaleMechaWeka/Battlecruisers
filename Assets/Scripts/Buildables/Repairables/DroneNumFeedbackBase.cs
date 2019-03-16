@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Repairables
     {
         protected readonly ITextMesh _textMesh;
 
-        public IDroneConsumer DroneConsumer { get; private set; }
+        public IDroneConsumer DroneConsumer { get; }
 
         public DroneNumFeedbackBase(IDroneConsumer droneConsumer, ITextMesh textMesh)
         {

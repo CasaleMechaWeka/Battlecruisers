@@ -9,16 +9,16 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         // Hence create fresh instance instead of returning the same instance.
         public ObservableCollection<IBoostProvider> DummyBoostProviders { get { return new ObservableCollection<IBoostProvider>(); } }
 
-        public ObservableCollection<IBoostProvider> AircraftBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> AircraftBoostProviders { get; }
 
-        public ObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> TurretAccuracyBoostProviders { get; }
+        public ObservableCollection<IBoostProvider> DefenseFireRateBoostProviders { get; }
+        public ObservableCollection<IBoostProvider> OffenseFireRateBoostProviders { get; }
         
-        public ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> ShieldRechargeRateBoostProviders { get; }
 
-        public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; private set; }
-        public IUnitBuildRatelBoostProviders UnitBuildRate { get; private set; }
+        public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
+        public IUnitBuildRatelBoostProviders UnitBuildRate { get; }
 
         public GlobalBoostProviders()
         {

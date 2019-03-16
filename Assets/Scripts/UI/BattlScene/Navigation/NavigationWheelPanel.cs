@@ -7,8 +7,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class NavigationWheelPanel : INavigationWheelPanel
     {
-        public INavigationWheel NavigationWheel { get; private set; }
-        public IPyramid PanelArea { get; private set; }
+        public INavigationWheel NavigationWheel { get; }
+        public IPyramid PanelArea { get; }
 
         public NavigationWheelPanel(IPyramid panelArea, INavigationWheel navigationWheel)
         {

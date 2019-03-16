@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         public ItemFamily? SelectedItemFamily { get; private set; }
 
         private readonly ISettableBroadcastingProperty<int> _numOfDetailsShown;
-        public IBroadcastingProperty<int> NumOfDetailsShown { get; private set; }
+        public IBroadcastingProperty<int> NumOfDetailsShown { get; }
 
         public ItemDetailsManager(
             IItemDetailsDisplayer<IBuilding> buildingDetails,

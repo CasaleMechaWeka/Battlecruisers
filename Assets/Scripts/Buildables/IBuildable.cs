@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables
 
 	public class BuildProgressEventArgs : EventArgs
 	{
-		public IBuildable Buildable { get; private set; }
+		public IBuildable Buildable { get; }
 
 		public BuildProgressEventArgs(IBuildable buildable)
 		{

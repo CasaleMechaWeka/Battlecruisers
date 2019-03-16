@@ -14,10 +14,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         /// 
         /// Rect cloudArea = new Rect(-80, 25, 160, 35);
         /// </summary>
-        public Rect CloudSpawnArea { get; private set; }
+        public Rect CloudSpawnArea { get; }
 
-        public float CloudDensityAsFraction { get; private set; }
-        public float CloudHorizontalMovementSpeedInS { get; private set; }
+        public float CloudDensityAsFraction { get; }
+        public float CloudHorizontalMovementSpeedInS { get; }
 
         public CloudGenerationStats(
             Rect cloudSpawnArea,

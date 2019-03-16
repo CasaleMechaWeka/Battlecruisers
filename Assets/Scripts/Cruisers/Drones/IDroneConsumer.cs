@@ -11,7 +11,7 @@ namespace BattleCruisers.Cruisers.Drones
 
 	public class DroneNumChangedEventArgs : EventArgs
 	{
-		public int NewNumOfDrones { get; private set; }
+		public int NewNumOfDrones { get; }
 
 		public DroneNumChangedEventArgs(int newNumOfDrones)
 		{
@@ -21,8 +21,8 @@ namespace BattleCruisers.Cruisers.Drones
 
 	public class DroneStateChangedEventArgs : EventArgs
 	{
-		public DroneConsumerState OldState { get; private set; }
-		public DroneConsumerState NewState { get; private set; }
+		public DroneConsumerState OldState { get; }
+		public DroneConsumerState NewState { get; }
 
 		public DroneStateChangedEventArgs(DroneConsumerState oldState, DroneConsumerState newState)
 		{

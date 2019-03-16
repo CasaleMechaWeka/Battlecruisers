@@ -4,8 +4,8 @@ namespace BattleCruisers.UI.Sound
 {
     public class SoundKey : ISoundKey
     {
-        public SoundType Type { get; private set; }
-        public string Name { get; private set; }
+        public SoundType Type { get; }
+        public string Name { get; }
 
         public SoundKey(SoundType type, string name)
         {

@@ -5,8 +5,8 @@ namespace BattleCruisers.UI.Cameras.Targets
 {
     public class CameraTarget : ICameraTarget
     {
-		public Vector3 Position { get; private set; } 
-		public float OrthographicSize { get; private set; }
+		public Vector3 Position { get; } 
+		public float OrthographicSize { get; }
 
 		public CameraTarget(Vector3 position, float orthographicSize)
 		{

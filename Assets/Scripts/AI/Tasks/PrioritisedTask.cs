@@ -19,7 +19,7 @@ namespace BattleCruisers.AI.Tasks
         private readonly ITask _task;
         private IState _currentState;
 
-        public TaskPriority Priority { get; private set; }
+        public TaskPriority Priority { get; }
 
         public event EventHandler<EventArgs> Completed;
 

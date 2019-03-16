@@ -2,8 +2,8 @@
 {
 	public class FlightPointsProviderFactory : IFlightPointsProviderFactory
 	{
-		public IFlightPointsProvider RocketFlightPointsProvider { get; private set; }
-		public IFlightPointsProvider NukeFlightPointsProvider { get; private set; }
+		public IFlightPointsProvider RocketFlightPointsProvider { get; }
+		public IFlightPointsProvider NukeFlightPointsProvider { get; }
 
 		public FlightPointsProviderFactory()
 		{

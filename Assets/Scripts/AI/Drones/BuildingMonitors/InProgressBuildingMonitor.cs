@@ -14,7 +14,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
         private readonly ICruiserController _cruiser;
         private readonly IList<IBuilding> _inProgressBuildings;
 
-        public ReadOnlyCollection<IBuilding> InProgressBuildings { get; private set; }
+        public ReadOnlyCollection<IBuilding> InProgressBuildings { get; }
 
         public InProgressBuildingMonitor(ICruiserController cruiser)
         {

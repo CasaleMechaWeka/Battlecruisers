@@ -26,7 +26,7 @@ namespace BattleCruisers.Cruisers.Slots
 
     public class SlotBuildingDestroyedEventArgs : EventArgs
     {
-        public ISlot BuildingParent { get; private set; }
+        public ISlot BuildingParent { get; }
 
         public SlotBuildingDestroyedEventArgs(ISlot buildingParent)
         {

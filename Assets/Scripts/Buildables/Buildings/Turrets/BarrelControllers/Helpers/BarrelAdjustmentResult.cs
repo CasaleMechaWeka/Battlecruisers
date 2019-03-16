@@ -5,9 +5,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
     public class BarrelAdjustmentResult
     {
-        public bool IsOnTarget { get; private set; }
-        public float DesiredAngleInDegrees { get; private set; }
-        public Vector2 PredictedTargetPosition { get; private set; }
+        public bool IsOnTarget { get; }
+        public float DesiredAngleInDegrees { get; }
+        public Vector2 PredictedTargetPosition { get; }
 
         public BarrelAdjustmentResult(
             bool isOnTarget,

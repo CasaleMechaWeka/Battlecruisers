@@ -13,9 +13,9 @@ namespace BattleCruisers.AI
 		private readonly IStaticData _staticData;
 		private readonly IPrefabFactory _prefabFactory;
         
-        public int LevelNum { get; private set; }
-		public ICruiserController AICruiser { get; private set; }
-		public ICruiserController PlayerCruiser { get; private set; }
+        public int LevelNum { get; }
+		public ICruiserController AICruiser { get; }
+		public ICruiserController PlayerCruiser { get; }
 
         public LevelInfo(
             ICruiserController aiCruiser,

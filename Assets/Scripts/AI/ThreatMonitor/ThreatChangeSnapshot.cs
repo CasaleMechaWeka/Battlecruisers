@@ -4,8 +4,8 @@ namespace BattleCruisers.AI.ThreatMonitors
 {
     public class ThreatChangeSnapshot
     {
-        public ThreatLevel ThreatLevel { get; private set; }
-        public float ChangeTimeSinceGameStartInS { get; private set; }
+        public ThreatLevel ThreatLevel { get; }
+        public float ChangeTimeSinceGameStartInS { get; }
 
         public ThreatChangeSnapshot(ThreatLevel threatLevel, float changeTimeSinceGameStartInS)
         {

@@ -16,22 +16,22 @@ namespace BattleCruisers.Cruisers
 {
     public class CruiserArgs : ICruiserArgs
     {
-        public Faction Faction { get; private set; }
-        public ICruiser EnemyCruiser { get; private set; }
-        public IUIManager UiManager { get; private set; }
-        public IDroneManager DroneManager { get; private set; }
-        public IDroneFocuser DroneFocuser { get; private set; }
-        public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
-        public IFactoryProvider FactoryProvider { get; private set; }
-        public Direction FacingDirection { get; private set; }
-        public RepairManager RepairManager { get; private set; }
-        public FogStrength FogStrength { get; private set; }
-        public ICruiserHelper Helper { get; private set; }
-        public ISlotFilter HighlightableFilter { get; private set; }
-        public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
-        public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; private set; }
-        public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; private set; }
-        public FogOfWarManager FogOfWarManager { get; private set; }
+        public Faction Faction { get; }
+        public ICruiser EnemyCruiser { get; }
+        public IUIManager UiManager { get; }
+        public IDroneManager DroneManager { get; }
+        public IDroneFocuser DroneFocuser { get; }
+        public IDroneConsumerProvider DroneConsumerProvider { get; }
+        public IFactoryProvider FactoryProvider { get; }
+        public Direction FacingDirection { get; }
+        public RepairManager RepairManager { get; }
+        public FogStrength FogStrength { get; }
+        public ICruiserHelper Helper { get; }
+        public ISlotFilter HighlightableFilter { get; }
+        public IBuildProgressCalculator BuildProgressCalculator { get; }
+        public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
+        public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
+        public FogOfWarManager FogOfWarManager { get; }
 
         public CruiserArgs(
             Faction faction, 

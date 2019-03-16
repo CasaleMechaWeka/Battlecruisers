@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly ICruiserDetails _cruiserDetails;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
-        public IBroadcastingProperty<ITarget> SelectedItem { get; private set; }
+        public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
         public ItemDetailsManager(IInformatorPanel informator)
         {

@@ -23,14 +23,14 @@ namespace BattleCruisers.Data.Static
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
 
-		public GameModel InitialGameModel { get; private set; }
-        public ReadOnlyCollection<ILevel> Levels { get; private set; }
-		public ReadOnlyCollection<HullKey> HullKeys { get; private set; }
-		public ReadOnlyCollection<UnitKey> UnitKeys { get; private set; }
-        public ReadOnlyCollection<BuildingKey> BuildingKeys { get; private set; }
-        public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; private set; }
+		public GameModel InitialGameModel { get; }
+        public ReadOnlyCollection<ILevel> Levels { get; }
+		public ReadOnlyCollection<HullKey> HullKeys { get; }
+		public ReadOnlyCollection<UnitKey> UnitKeys { get; }
+        public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
+        public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         public int LastLevelWithLoot { get { return 20; } }
-        public ILevelStrategies Strategies { get; private set; }
+        public ILevelStrategies Strategies { get; }
 
         public StaticData()
 		{

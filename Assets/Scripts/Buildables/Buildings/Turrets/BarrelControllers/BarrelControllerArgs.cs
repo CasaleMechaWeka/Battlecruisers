@@ -16,19 +16,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class BarrelControllerArgs : IBarrelControllerArgs
     {
-        public ITargetFilter TargetFilter { get; private set; }
-        public ITargetPositionPredictor TargetPositionPredictor { get; private set; }
-        public IAngleCalculator AngleCalculator { get; private set; }
-        public IAttackablePositionFinder AttackablePositionFinder { get; private set; }
-        public IAccuracyAdjuster AccuracyAdjuster { get; private set; }
-        public IRotationMovementController RotationMovementController { get; private set; }
-        public IFactoryProvider FactoryProvider { get; private set; }
-        public ITargetPositionValidator TargetPositionValidator { get; private set; }
-        public IAngleLimiter AngleLimiter { get; private set; }
-        public ITarget Parent { get; private set; }
-        public ObservableCollection<IBoostProvider> LocalBoostProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; private set; }
-        public ISoundKey SpawnerSoundKey { get; private set; }
+        public ITargetFilter TargetFilter { get; }
+        public ITargetPositionPredictor TargetPositionPredictor { get; }
+        public IAngleCalculator AngleCalculator { get; }
+        public IAttackablePositionFinder AttackablePositionFinder { get; }
+        public IAccuracyAdjuster AccuracyAdjuster { get; }
+        public IRotationMovementController RotationMovementController { get; }
+        public IFactoryProvider FactoryProvider { get; }
+        public ITargetPositionValidator TargetPositionValidator { get; }
+        public IAngleLimiter AngleLimiter { get; }
+        public ITarget Parent { get; }
+        public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
+        public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
+        public ISoundKey SpawnerSoundKey { get; }
 
         public BarrelControllerArgs(
             ITargetFilter targetFilter,

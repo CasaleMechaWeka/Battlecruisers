@@ -9,7 +9,7 @@ namespace BattleCruisers.Utils.DataStrctures
 		private IList<T> _items;
 		private int _index;
 
-		public ReadOnlyCollection<T> Items { get; private set; }
+		public ReadOnlyCollection<T> Items { get; }
 
         public CircularList(T[] items) : this(new List<T>(items)) { }
         

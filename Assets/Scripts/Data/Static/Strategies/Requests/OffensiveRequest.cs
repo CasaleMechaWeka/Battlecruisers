@@ -4,8 +4,8 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
 {
     public class OffensiveRequest : IOffensiveRequest
     {
-		public OffensiveType Type { get; private set; }
-		public OffensiveFocus Focus { get; private set; }
+		public OffensiveType Type { get; }
+		public OffensiveFocus Focus { get; }
 		public int NumOfSlotsToUse { get; set; }
 
         public OffensiveRequest(OffensiveType type, OffensiveFocus focus)

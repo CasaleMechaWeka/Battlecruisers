@@ -34,8 +34,8 @@ namespace BattleCruisers.Targets.Factories
             globalTargetFinder.EmitCruiserAsGlobalTarget();
 		}
 
-        public ITargetProcessor BomberTargetProcessor { get; private set; }
-        public ITargetProcessor OffensiveBuildableTargetProcessor { get; private set; }
+        public ITargetProcessor BomberTargetProcessor { get; }
+        public ITargetProcessor OffensiveBuildableTargetProcessor { get; }
 
         public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker)
 		{

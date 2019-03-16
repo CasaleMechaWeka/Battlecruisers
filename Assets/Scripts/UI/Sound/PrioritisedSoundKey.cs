@@ -11,8 +11,8 @@
 
     public class PrioritisedSoundKey
     {
-        public ISoundKey Key { get; private set; }
-        public SoundPriority Priority { get; private set; }
+        public ISoundKey Key { get; }
+        public SoundPriority Priority { get; }
 
         public PrioritisedSoundKey(ISoundKey key, SoundPriority priority)
         {

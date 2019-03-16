@@ -17,9 +17,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
     {
         private readonly IList<IBuildable> _aliveBuildables;
 
-        public IPrefabKey BuildableKey { get; private set; }
-        public int NumOfBuildables { get; private set; }
-        public ReadOnlyCollection<IBuildable> Buildables { get; private set; }
+        public IPrefabKey BuildableKey { get; }
+        public int NumOfBuildables { get; }
+        public ReadOnlyCollection<IBuildable> Buildables { get; }
 
         public event EventHandler BuildablesDestroyed;
 

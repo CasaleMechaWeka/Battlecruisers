@@ -7,8 +7,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class FactoryStepsResult
     {
-        public IList<ITutorialStep> Steps { get; private set; }
-        public IItemProvider<IFactory> FactoryProvider { get; private set; }
+        public IList<ITutorialStep> Steps { get; }
+        public IItemProvider<IFactory> FactoryProvider { get; }
 
         public FactoryStepsResult(IList<ITutorialStep> steps, IItemProvider<IFactory> factoryProvider)
         {

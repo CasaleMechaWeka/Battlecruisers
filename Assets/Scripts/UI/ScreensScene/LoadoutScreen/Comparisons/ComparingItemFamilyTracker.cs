@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
     public class ComparingItemFamilyTracker : IComparingItemFamilyTracker
     {
         private ISettableBroadcastingProperty<ItemFamily?> _comparingFamily;
-        public IBroadcastingProperty<ItemFamily?> ComparingFamily { get; private set; }
+        public IBroadcastingProperty<ItemFamily?> ComparingFamily { get; }
 
         public ComparingItemFamilyTracker()
         {

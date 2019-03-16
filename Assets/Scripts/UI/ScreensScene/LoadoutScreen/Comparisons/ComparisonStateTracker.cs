@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
         private readonly IItemDetailsManager _itemDetailsManager;
 
         private readonly ISettableBroadcastingProperty<ComparisonState> _state;
-        public IBroadcastingProperty<ComparisonState> State { get; private set; }
+        public IBroadcastingProperty<ComparisonState> State { get; }
 
         public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
         {

@@ -20,21 +20,21 @@ namespace BattleCruisers.Utils.Factories
 {
     public class FactoryProvider : IFactoryProvider
 	{
-        public ITurretFactoryProvider Turrets { get; private set; }
-        public ISoundFactoryProvider Sound { get; private set; }
-        public IAircraftProvider AircraftProvider { get; private set; }
-        public IBoostFactory BoostFactory { get; private set; }
-        public IDamageApplierFactory DamageApplierFactory { get; private set; }
-        public IDeferrerProvider DeferrerProvider { get; private set; }
-        public IExplosionManager ExplosionManager { get; private set; }
-        public IFlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
-        public IGlobalBoostProviders GlobalBoostProviders { get; private set; }
-        public IMovementControllerFactory MovementControllerFactory { get; private set; }
-        public IPrefabFactory PrefabFactory { get; private set; }
-        public ISpriteChooserFactory SpriteChooserFactory { get; private set; }
-        public ITargetFactoriesProvider TargetFactories { get; private set; }
-        public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; private set; }
-        public ITrackerFactory TrackerFactory { get; private set; }
+        public ITurretFactoryProvider Turrets { get; }
+        public ISoundFactoryProvider Sound { get; }
+        public IAircraftProvider AircraftProvider { get; }
+        public IBoostFactory BoostFactory { get; }
+        public IDamageApplierFactory DamageApplierFactory { get; }
+        public IDeferrerProvider DeferrerProvider { get; }
+        public IExplosionManager ExplosionManager { get; }
+        public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
+        public IGlobalBoostProviders GlobalBoostProviders { get; }
+        public IMovementControllerFactory MovementControllerFactory { get; }
+        public IPrefabFactory PrefabFactory { get; }
+        public ISpriteChooserFactory SpriteChooserFactory { get; }
+        public ITargetFactoriesProvider TargetFactories { get; }
+        public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        public ITrackerFactory TrackerFactory { get; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 

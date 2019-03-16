@@ -12,9 +12,9 @@
     /// </summary>
     public class ResponsiveStrategy : IDroneFocusingStrategy
 	{
-        public bool EvaluateWhenBuildingStarted { get; private set; }
-		public bool EvaluateWhenUnitStarted { get; private set; }
-		public bool ForceInProgressBuildingToFocused { get; private set; }
+        public bool EvaluateWhenBuildingStarted { get; }
+		public bool EvaluateWhenUnitStarted { get; }
+		public bool ForceInProgressBuildingToFocused { get; }
 
         public ResponsiveStrategy()
         {

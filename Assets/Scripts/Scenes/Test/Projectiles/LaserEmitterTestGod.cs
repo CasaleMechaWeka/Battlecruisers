@@ -13,9 +13,9 @@ namespace BattleCruisers.Scenes.Test
 {
     public class LaserStats
     {
-		public LaserEmitter Laser { get; private set; }
-		public float AngleInDegrees { get; private set; }
-		public bool IsSourceMirrored { get; private set; }
+		public LaserEmitter Laser { get; }
+		public float AngleInDegrees { get; }
+		public bool IsSourceMirrored { get; }
 
 		public LaserStats(LaserEmitter laser, float angleInDegrees, bool isSourceMirrored)
 		{
@@ -27,8 +27,8 @@ namespace BattleCruisers.Scenes.Test
 
     public class LaserTest<T> where T : class, IBuildable
 	{
-        public LaserStats LaserStats { get; private set; }
-		public T Target { get; private set; }
+        public LaserStats LaserStats { get; }
+		public T Target { get; }
 
 		public LaserTest(LaserEmitter laser, T target, float angleInDegrees, bool isSourceMirrored)
 		{

@@ -9,11 +9,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class NavigationWheelPositionProvider : INavigationWheelPositionProvider
     {
-        public Vector2 PlayerCruiserPosition { get; private set; }
-        public Vector2 AICruiserPosition { get; private set; }
-        public Vector2 MidLeftPosition { get; private set; }
-        public Vector2 AINavalFactoryPosition { get; private set; }
-        public Vector2 PlayerNavalFactoryPosition { get; private set; }
+        public Vector2 PlayerCruiserPosition { get; }
+        public Vector2 AICruiserPosition { get; }
+        public Vector2 MidLeftPosition { get; }
+        public Vector2 AINavalFactoryPosition { get; }
+        public Vector2 PlayerNavalFactoryPosition { get; }
 
         public NavigationWheelPositionProvider(
             IPyramid navigationPanelArea, 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Data
     /// </summary>
     public static class ApplicationModelProvider
     {
-        public static IApplicationModel ApplicationModel { get; private set; }
+        public static IApplicationModel ApplicationModel { get; }
 
         static ApplicationModelProvider()
 		{

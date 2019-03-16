@@ -7,10 +7,10 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraComponents : ICameraComponents
     {
-        public ICameraAdjuster CameraAdjuster { get; private set; }
-        public INavigationWheel NavigationWheel { get; private set; }
-        public ICameraFocuser CameraFocuser { get; private set; }
-        public Skybox Skybox { get; private set; }
+        public ICameraAdjuster CameraAdjuster { get; }
+        public INavigationWheel NavigationWheel { get; }
+        public ICameraFocuser CameraFocuser { get; }
+        public Skybox Skybox { get; }
 
         public CameraComponents(
             ICameraAdjuster cameraAdjuster,

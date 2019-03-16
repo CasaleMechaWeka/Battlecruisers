@@ -11,9 +11,9 @@
         // The largest orthographic size I can get to via the navigation wheel is 37.6 (32.7)
         public const float DEFAULT_OVERVIEW_ORTHOGRAPHIC_SIZE_CUTOFF = 34;
 
-        public float PlayerCruiserCornerXPositionCutoff { get; private set; }
-        public float AICruiserCornerXPositionCutoff { get; private set; }
-        public float OverviewOrthographicSizeCutoff { get; private set; }
+        public float PlayerCruiserCornerXPositionCutoff { get; }
+        public float AICruiserCornerXPositionCutoff { get; }
+        public float OverviewOrthographicSizeCutoff { get; }
 
         public CornerCutoffProvider(float cameraAspectRatio)
         {

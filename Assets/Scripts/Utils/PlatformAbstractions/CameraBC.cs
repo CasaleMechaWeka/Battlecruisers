@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         public float Aspect { get { return _platfromCamera.aspect; } }
         public float PixelWidth { get { return _platfromCamera.pixelWidth; } }
         public float PixelHeight { get { return _platfromCamera.pixelHeight; } }
-        public ITransform Transform { get; private set; }
+        public ITransform Transform { get; }
 
         public CameraBC(Camera platformCamera)
 		{

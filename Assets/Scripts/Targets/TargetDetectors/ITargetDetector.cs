@@ -10,7 +10,7 @@ namespace BattleCruisers.Targets.TargetDetectors
             Target = target;
         }
 
-        public ITarget Target { get; private set; }
+        public ITarget Target { get; }
     }
 
     public interface ITargetDetector

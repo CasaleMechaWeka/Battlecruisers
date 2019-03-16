@@ -8,12 +8,12 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public class TargetProcessorArgs : ITargetProcessorArgs
     {
-        public ITargetFactoriesProvider TargetFactories { get; private set; }
-        public Faction EnemyFaction { get; private set; }
-        public IList<TargetType> AttackCapabilities { get; private set; }
-        public float MaxRangeInM { get; private set; }
-        public float MinRangeInM { get; private set; }
-        public ITarget ParentTarget { get; private set; }
+        public ITargetFactoriesProvider TargetFactories { get; }
+        public Faction EnemyFaction { get; }
+        public IList<TargetType> AttackCapabilities { get; }
+        public float MaxRangeInM { get; }
+        public float MinRangeInM { get; }
+        public ITarget ParentTarget { get; }
 
         public TargetProcessorArgs(
             ITargetFactoriesProvider targetFactories,

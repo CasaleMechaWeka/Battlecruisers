@@ -7,12 +7,12 @@ namespace BattleCruisers.Data
 {
     public class Level : ILevel
     {
-		public int Num { get; private set; }
-        public string Name { get; private set; }
-        public IPrefabKey Hull { get; private set; }
-        public ISoundKey MusicKey { get; private set; }
-        public string SkyMaterialName { get; private set; }
-        public ICloudGenerationStats CloudStats { get; private set; }
+		public int Num { get; }
+        public string Name { get; }
+        public IPrefabKey Hull { get; }
+        public ISoundKey MusicKey { get; }
+        public string SkyMaterialName { get; }
+        public ICloudGenerationStats CloudStats { get; }
 
         public Level(
             int num, 

@@ -1,12 +1,10 @@
 ﻿using BattleCruisers.Movement.Rotation;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
 {
-	public class SiloHalfController : RotatingController
+    public class SiloHalfController : RotatingController
 	{
 		public SpriteRenderer Renderer { get; private set; }
 

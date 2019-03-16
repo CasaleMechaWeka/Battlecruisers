@@ -4,7 +4,7 @@ namespace BattleCruisers.Utils.Timers
 {
     public class TimerEventArgs : EventArgs
     {
-        public int SecondsElapsed { get; private set; }
+        public int SecondsElapsed { get; }
 
         public TimerEventArgs(int secondsElapsed)
         {

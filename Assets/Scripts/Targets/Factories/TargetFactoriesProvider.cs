@@ -5,13 +5,13 @@ namespace BattleCruisers.Targets.Factories
 {
     public class TargetFactoriesProvider : ITargetFactoriesProvider
     {
-        public ITargetProcessorFactory ProcessorFactory { get; private set; }
-        public ITargetFinderFactory FinderFactory { get; private set; }
-        public ITargetTrackerFactory TrackerFactory { get; private set; }
-        public ITargetFilterFactory FilterFactory { get; private set; }
-        public ITargetRankerFactory RankerFactory { get; private set; }
-        public ITargetProviderFactory ProviderFactory { get; private set; }
-        public ITargetHelperFactory HelperFactory { get; private set; }
+        public ITargetProcessorFactory ProcessorFactory { get; }
+        public ITargetFinderFactory FinderFactory { get; }
+        public ITargetTrackerFactory TrackerFactory { get; }
+        public ITargetFilterFactory FilterFactory { get; }
+        public ITargetRankerFactory RankerFactory { get; }
+        public ITargetProviderFactory ProviderFactory { get; }
+        public ITargetHelperFactory HelperFactory { get; }
 
         public TargetFactoriesProvider(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
         {

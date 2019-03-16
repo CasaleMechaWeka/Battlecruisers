@@ -12,10 +12,10 @@ namespace BattleCruisers.Data
 	{
 		private readonly ISerializer _serializer;
 		
-        public IStaticData StaticData { get; private set; }
+        public IStaticData StaticData { get; }
 		public IList<ILevel> Levels { get { return StaticData.Levels; } }
-        public ISettingsManager SettingsManager { get; private set; }
-		public ILockedInformation LockedInfo { get; private set; }
+        public ISettingsManager SettingsManager { get; }
+		public ILockedInformation LockedInfo { get; }
 
         private readonly GameModel _gameModel;
         public IGameModel GameModel { get { return _gameModel; } }

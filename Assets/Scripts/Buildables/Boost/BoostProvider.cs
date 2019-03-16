@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Boost
     {
         private readonly IList<IBoostConsumer> _boostConsumers;
 
-        public float BoostMultiplier { get; private set; }
+        public float BoostMultiplier { get; }
 
         public BoostProvider(float boostMultiplier)
         {

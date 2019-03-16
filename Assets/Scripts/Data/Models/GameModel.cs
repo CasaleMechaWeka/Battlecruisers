@@ -55,10 +55,10 @@ namespace BattleCruisers.Data.Models
             set { _lastBattleResult = value; }
 		}
 
-        public ReadOnlyCollection<HullKey> UnlockedHulls { get; private set; }
-        public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; private set; }
-        public ReadOnlyCollection<UnitKey> UnlockedUnits { get; private set; }
-        public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; private set; }
+        public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
+        public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
+        public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
+        public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
 
         public GameModel()
 		{

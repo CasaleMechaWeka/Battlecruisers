@@ -7,10 +7,10 @@ namespace BattleCruisers.Projectiles.Spawners
 {
     public class ProjectileSpawnerArgs : IProjectileSpawnerArgs
     {
-        public ITarget Parent { get; private set; }
-        public IProjectileStats ProjectileStats { get; private set; }
-        public int BurstSize { get; private set; }
-        public IFactoryProvider FactoryProvider { get; private set; }
+        public ITarget Parent { get; }
+        public IProjectileStats ProjectileStats { get; }
+        public int BurstSize { get; }
+        public IFactoryProvider FactoryProvider { get; }
 
         public ProjectileSpawnerArgs(
             ITarget parent, 

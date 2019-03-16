@@ -4,9 +4,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelInfo
     {
-        public int Num { get; private set; }
-        public string Name { get; private set; }
-        public Difficulty? DifficultyCompleted { get; private set; }
+        public int Num { get; }
+        public string Name { get; }
+        public Difficulty? DifficultyCompleted { get; }
 
         public LevelInfo(int num, string name, Difficulty? difficultyCompleted)
         {

@@ -2,7 +2,7 @@
 {
     public class AttackablePositionFinderFactory : IAttackablePositionFinderFactory
     {
-        public IAttackablePositionFinder DummyPositionFinder { get; private set; }
+        public IAttackablePositionFinder DummyPositionFinder { get; }
 
         public AttackablePositionFinderFactory()
         {

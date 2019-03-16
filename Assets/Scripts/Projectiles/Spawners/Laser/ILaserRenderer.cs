@@ -5,7 +5,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 {
     public class LaserVisibilityChangedEventArgs : EventArgs
     {
-        public bool IsLaserVisible { get; private set; }
+        public bool IsLaserVisible { get; }
 
         public LaserVisibilityChangedEventArgs(bool isLaserVisible)
         {

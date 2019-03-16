@@ -7,10 +7,10 @@ namespace BattleCruisers.Tutorial.Steps
 {
     public class TutorialStepArgs : ITutorialStepArgs
     {
-        public IHighlighter Highlighter { get; private set; }
-        public string TextToDisplay { get; private set; }
-        public ITextDisplayer Displayer { get; private set; }
-		public IItemProvider<IMaskHighlightable> HighlightableProvider { get; private set; }
+        public IHighlighter Highlighter { get; }
+        public string TextToDisplay { get; }
+        public ITextDisplayer Displayer { get; }
+		public IItemProvider<IMaskHighlightable> HighlightableProvider { get; }
 
         public TutorialStepArgs(
             IHighlighter highlighter,

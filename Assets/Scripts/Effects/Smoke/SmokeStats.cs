@@ -2,10 +2,10 @@
 {
     public class SmokeStats
     {
-        public float StartLifetimeMin { get; private set; }
-        public float StartLifetimeMax { get; private set; }
-        public float EmissionRatePerS { get; private set; }
-        public int MaxNumberOfParticles { get; private set; }
+        public float StartLifetimeMin { get; }
+        public float StartLifetimeMax { get; }
+        public float EmissionRatePerS { get; }
+        public int MaxNumberOfParticles { get; }
 
         public SmokeStats(
             float startLifetimeMin,

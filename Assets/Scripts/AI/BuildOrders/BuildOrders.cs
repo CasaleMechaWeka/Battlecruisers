@@ -2,9 +2,9 @@
 {
     public class BuildOrders : IBuildOrders
 	{
-        public IDynamicBuildOrder OffensiveBuildOrder { get; private set; }
-        public IDynamicBuildOrder AntiAirBuildOrder { get; private set; }
-        public IDynamicBuildOrder AntiNavalBuildOrder { get; private set; }
+        public IDynamicBuildOrder OffensiveBuildOrder { get; }
+        public IDynamicBuildOrder AntiAirBuildOrder { get; }
+        public IDynamicBuildOrder AntiNavalBuildOrder { get; }
 
         public BuildOrders(
             IDynamicBuildOrder offensiveBuildOrder,

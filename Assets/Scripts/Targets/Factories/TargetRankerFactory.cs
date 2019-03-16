@@ -11,9 +11,9 @@ namespace BattleCruisers.Targets.Factories
             OffensiveBuildableTargetRanker = new OffensiveBuildableTargetRanker();
 		}
 
-        public ITargetRanker EqualTargetRanker { get; private set; }
-        public ITargetRanker ShipTargetRanker { get; private set; }
-        public ITargetRanker OffensiveBuildableTargetRanker { get; private set; }
+        public ITargetRanker EqualTargetRanker { get; }
+        public ITargetRanker ShipTargetRanker { get; }
+        public ITargetRanker OffensiveBuildableTargetRanker { get; }
 
         public ITargetRanker CreateBoostedRanker(ITargetRanker baseRanker, int rankBoost)
         {

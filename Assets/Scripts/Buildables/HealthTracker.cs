@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables
     {
         public const float MIN_HEALTH = 1;
 
-        public float MaxHealth { get; private set; }
+        public float MaxHealth { get; }
         public HealthTrackerState State { private get; set; }
 
         private float _health;

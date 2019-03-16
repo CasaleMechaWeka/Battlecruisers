@@ -11,16 +11,16 @@ namespace BattleCruisers.Tutorial
 {
     public class TutorialArgs : ITutorialArgs
     {
-        public ICruiser PlayerCruiser { get; private set; }
-        public ICruiser AICruiser { get; private set; }
-        public ITutorialProvider TutorialProvider { get; private set; }
-        public IPrefabFactory PrefabFactory { get; private set; }
-        public IBattleSceneGodComponents Components { get; private set; }
-        public ICameraComponents CameraComponents { get; private set; }
-        public LeftPanelComponents LeftPanelComponents { get; private set; }
-        public RightPanelComponents RightPanelComponents { get; private set; }
-        public IUIManager UIManager { get; private set; }
-        public IBattleCompletionHandler BattleCompletionHandler { get; private set; }
+        public ICruiser PlayerCruiser { get; }
+        public ICruiser AICruiser { get; }
+        public ITutorialProvider TutorialProvider { get; }
+        public IPrefabFactory PrefabFactory { get; }
+        public IBattleSceneGodComponents Components { get; }
+        public ICameraComponents CameraComponents { get; }
+        public LeftPanelComponents LeftPanelComponents { get; }
+        public RightPanelComponents RightPanelComponents { get; }
+        public IUIManager UIManager { get; }
+        public IBattleCompletionHandler BattleCompletionHandler { get; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 

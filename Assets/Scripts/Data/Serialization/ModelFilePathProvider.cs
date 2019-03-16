@@ -12,6 +12,6 @@ namespace BattleCruisers.Data.Serialization
 			GameModelFilePath = Application.persistentDataPath + "/" + GAME_MODEL_FILE_NAME + "." + GAME_MODEL_FILE_EXTENSION;
 		}
 
-		public string GameModelFilePath { get; private set; }
+		public string GameModelFilePath { get; }
 	}
 }

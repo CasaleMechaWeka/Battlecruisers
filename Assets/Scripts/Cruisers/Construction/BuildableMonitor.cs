@@ -13,8 +13,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         //public IReadOnlyCollection
 
-        public ReadOnlyCollection<IBuilding> AliveBuildings { get; private set; }
-        public ReadOnlyCollection<IUnit> AliveUnits { get; private set; }
+        public ReadOnlyCollection<IBuilding> AliveBuildings { get; }
+        public ReadOnlyCollection<IUnit> AliveUnits { get; }
 
         public BuildableMonitor(ICruiserController cruiser)
         {

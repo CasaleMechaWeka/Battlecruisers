@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.Filters
 {
     public class StaticBroadcastingFilter : IBroadcastingFilter
     {
-        public bool IsMatch { get; private set; }
+        public bool IsMatch { get; }
 
 #pragma warning disable 67  // Unused event
         public event EventHandler PotentialMatchChange;

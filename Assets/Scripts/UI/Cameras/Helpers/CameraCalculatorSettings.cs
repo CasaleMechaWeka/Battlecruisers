@@ -24,8 +24,8 @@ namespace BattleCruisers.UI.Cameras.Helpers
         public float ScrollSpeedConstant { get { return 2.86f; } }  // 20/7
         public float ScrollSpeed { get { return _settingsManager.ScrollSpeed; } }
 
-        public IRange<float> ValidOrthographicSizes { get; private set; }
-        public IRange<float> CameraVisibleXRange { get; private set; }
+        public IRange<float> ValidOrthographicSizes { get; }
+        public IRange<float> CameraVisibleXRange { get; }
 
         public CameraCalculatorSettings(ISettingsManager settingsManager, float cameraAspectRatio)
         {

@@ -10,7 +10,7 @@ namespace BattleCruisers.Data
         public int SelectedLevel { get; set; }
         public bool ShowPostBattleScreen { get; set; }
         public bool IsTutorial { get; set; }
-        public IDataProvider DataProvider { get; private set; }
+        public IDataProvider DataProvider { get; }
 
         public ApplicationModel(IDataProvider dataProvider)
         {

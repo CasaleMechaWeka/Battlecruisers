@@ -33,11 +33,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class BuildableInitialisationArgs
     {
-        public IUIManager UiManager { get; private set; }
-        public ICruiser ParentCruiser { get; private set; }
-        public ICruiser EnemyCruiser { get; private set; }
-        public IFactoryProvider FactoryProvider { get; private set; }
-        public Direction ParentCruiserFacingDirection { get; private set; }
+        public IUIManager UiManager { get; }
+        public ICruiser ParentCruiser { get; }
+        public ICruiser EnemyCruiser { get; }
+        public IFactoryProvider FactoryProvider { get; }
+        public Direction ParentCruiserFacingDirection { get; }
 
         public BuildableInitialisationArgs(
             Helper helper,

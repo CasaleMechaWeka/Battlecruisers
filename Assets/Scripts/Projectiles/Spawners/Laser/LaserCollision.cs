@@ -5,8 +5,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 {
     public class LaserCollision : ILaserCollision
     {
-        public ITarget Target { get; private set; }
-        public Vector2 CollisionPoint { get; private set; }
+        public ITarget Target { get; }
+        public Vector2 CollisionPoint { get; }
 
         public LaserCollision(ITarget target, Vector2 collisionPoint)
         {

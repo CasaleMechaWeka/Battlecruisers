@@ -2,8 +2,8 @@
 {
     public class DamageStats : IDamageStats
     {
-        public float Damage { get; private set; }
-        public float DamageRadiusInM { get; private set; }
+        public float Damage { get; }
+        public float DamageRadiusInM { get; }
 
         public DamageStats(float damage, float damageRadiusInM)
         {

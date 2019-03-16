@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
         private bool IsEnemyToTheRight { get { return _enemyCruiserPosition.x > _parentCruiserPosition.x; } }
-		public Rectangle FighterSafeZone { get; private set; }
+		public Rectangle FighterSafeZone { get; }
 
 		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition, IRandomGenerator random)
 		{

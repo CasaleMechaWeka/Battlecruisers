@@ -9,7 +9,7 @@ namespace BattleCruisers.Targets.Factories
 {
     public class TargetTrackerFactory : ITargetTrackerFactory
     {
-        public IRankedTargetTracker UserChosenTargetTracker { get; private set; }
+        public IRankedTargetTracker UserChosenTargetTracker { get; }
 
         public TargetTrackerFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
         {

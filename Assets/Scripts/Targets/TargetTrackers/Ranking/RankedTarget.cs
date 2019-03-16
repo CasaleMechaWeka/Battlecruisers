@@ -5,14 +5,14 @@ namespace BattleCruisers.Targets.TargetTrackers.Ranking
 {
     public class RankedTarget
     {
-        public ITarget Target { get; private set; }
+        public ITarget Target { get; }
 
         /// <summary>
         /// Bigger numbers indicate higher priority.
         /// 
         /// The lowest priority is 0.  There is no upper limit.
         /// </summary>
-        public int Rank { get; private set; }
+        public int Rank { get; }
 
         public RankedTarget(ITarget target, int rank)
         {

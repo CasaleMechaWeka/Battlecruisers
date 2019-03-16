@@ -11,12 +11,12 @@ namespace BattleCruisers.Utils.Factories
 {
     public class TurretFactoryProvider : ITurretFactoryProvider
     {
-        public IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; private set; }
-        public IAngleCalculatorFactory AngleCalculatorFactory { get; private set; }
-        public IAngleLimiterFactory AngleLimiterFactory { get; private set; }
-        public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; private set; }
-        public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; private set; }
-        public ITurretStatsFactory TurretStatsFactory { get; private set; }
+        public IAccuracyAdjusterFactory AccuracyAdjusterFactory { get; }
+        public IAngleCalculatorFactory AngleCalculatorFactory { get; }
+        public IAngleLimiterFactory AngleLimiterFactory { get; }
+        public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
+        public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
+        public ITurretStatsFactory TurretStatsFactory { get; }
 
         public TurretFactoryProvider(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
         {

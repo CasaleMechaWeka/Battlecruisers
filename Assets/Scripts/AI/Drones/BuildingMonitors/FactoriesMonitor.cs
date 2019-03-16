@@ -15,7 +15,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
         private readonly IFactoryMonitorFactory _monitorFactory;
         private readonly IList<IFactoryMonitor> _completedFactories;
 
-        public ReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; private set; }
+        public ReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
 
         public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory)
         {

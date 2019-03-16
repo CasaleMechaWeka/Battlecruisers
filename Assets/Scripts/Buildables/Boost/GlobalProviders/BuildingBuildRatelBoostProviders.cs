@@ -4,14 +4,14 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public class BuildingBuildRatelBoostProviders : IBuildingBuildRatelBoostProviders
     {
-        public ObservableCollection<IBoostProvider> DefensivesProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> OffensivesProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> TacticalsProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> ShieldsProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> UltrasProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> AirFactoryProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> NavalFactoryProviders { get; private set; }
-        public ObservableCollection<IBoostProvider> DroneBuildingsProviders { get; private set; }
+        public ObservableCollection<IBoostProvider> DefensivesProviders { get; }
+        public ObservableCollection<IBoostProvider> OffensivesProviders { get; }
+        public ObservableCollection<IBoostProvider> TacticalsProviders { get; }
+        public ObservableCollection<IBoostProvider> ShieldsProviders { get; }
+        public ObservableCollection<IBoostProvider> UltrasProviders { get; }
+        public ObservableCollection<IBoostProvider> AirFactoryProviders { get; }
+        public ObservableCollection<IBoostProvider> NavalFactoryProviders { get; }
+        public ObservableCollection<IBoostProvider> DroneBuildingsProviders { get; }
 
         public BuildingBuildRatelBoostProviders()
         {

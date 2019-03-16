@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
         private int _numOfCompletedUnits;
 
         public bool HasFactoryBuiltDesiredNumOfUnits { get { return _numOfCompletedUnits >= _desiredNumOfUnits; } }
-        public IFactory Factory { get; private set; }
+        public IFactory Factory { get; }
 
         public FactoryMonitor(IFactory factory, int desiredNumOfUnits)
         {

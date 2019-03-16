@@ -5,8 +5,8 @@ namespace BattleCruisers.Tutorial
 {
     public class BuildableInfo
     {
-        public IPrefabKey Key { get; private set; }
-        public string Name { get; private set; }
+        public IPrefabKey Key { get; }
+        public string Name { get; }
 
         public BuildableInfo(IPrefabKey key, string name)
         {

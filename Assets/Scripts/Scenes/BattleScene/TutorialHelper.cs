@@ -32,19 +32,19 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildingCategoryPermitter BuildingCategoryPermitter { get { return _buildingCategoryFilter; } }
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get { return _buildingNameFilter; } }
         public IBuildingPermitter BuildingPermitter { get { return _buildingNameFilter; } }
-        public BroadcastingFilter BackButtonPermitter { get; private set; }
-        public BroadcastingFilter SpeedButtonsPermitter { get; private set; }
+        public BroadcastingFilter BackButtonPermitter { get; }
+        public BroadcastingFilter SpeedButtonsPermitter { get; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
-        public BroadcastingFilter NavigationPermitter { get; private set; }
+        public BroadcastingFilter NavigationPermitter { get; }
 
-        public ISingleBuildableProvider SingleAircraftProvider { get; private set; }
-        public ISingleBuildableProvider SingleShipProvider { get; private set; }
-        public ISingleBuildableProvider SingleOffensiveProvider { get; private set; }
+        public ISingleBuildableProvider SingleAircraftProvider { get; }
+        public ISingleBuildableProvider SingleShipProvider { get; }
+        public ISingleBuildableProvider SingleOffensiveProvider { get; }
 
-        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
-		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; private set; }
-        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
-        public IBuildSpeedController AICruiserBuildSpeedController { get; private set; }
+        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
+		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
+        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
+        public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)

@@ -4,9 +4,9 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public class  SlotSpecification
     {
-        public SlotType SlotType { get; private set; }
-        public BuildingFunction BuildingFunction { get; private set; }
-        public bool PreferFromFront { get; private set; }
+        public SlotType SlotType { get; }
+        public BuildingFunction BuildingFunction { get; }
+        public bool PreferFromFront { get; }
 
         public SlotSpecification(SlotType slotType, BuildingFunction buildingFunction, bool preferCruiserFront)
         {

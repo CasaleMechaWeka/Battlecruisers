@@ -9,16 +9,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class TutorialStepsFactoriesProvider
     {
-        public ITutorialStepsFactory YourCruiserStepsFactory { get; private set; }
-        public ITutorialStepsFactory NavigationWheelStepsFactory { get; private set; }
-        public ITutorialStepsFactory EnemyCruiserStepsFactory { get; private set; }
-        public ITutorialStepsFactory PlayerCruiserWidgetsStepsFactory { get; private set; }
-        public ITutorialStepsFactory ConstructDroneStationStepsFactory { get; private set; }
-        public ITutorialStepsFactory EnemyBomberStepsFactory { get; private set; }
-        public ITutorialStepsFactory EnemyShipStepsFactory { get; private set; }
-        public ITutorialStepsFactory DroneFocusStepsFactory { get; private set; }
-        public ITutorialStepsFactory GameSpeedStepsFactory { get; private set; }
-        public ITutorialStepsFactory EndgameStepsFactory { get; private set; }
+        public ITutorialStepsFactory YourCruiserStepsFactory { get; }
+        public ITutorialStepsFactory NavigationWheelStepsFactory { get; }
+        public ITutorialStepsFactory EnemyCruiserStepsFactory { get; }
+        public ITutorialStepsFactory PlayerCruiserWidgetsStepsFactory { get; }
+        public ITutorialStepsFactory ConstructDroneStationStepsFactory { get; }
+        public ITutorialStepsFactory EnemyBomberStepsFactory { get; }
+        public ITutorialStepsFactory EnemyShipStepsFactory { get; }
+        public ITutorialStepsFactory DroneFocusStepsFactory { get; }
+        public ITutorialStepsFactory GameSpeedStepsFactory { get; }
+        public ITutorialStepsFactory EndgameStepsFactory { get; }
 
         public TutorialStepsFactoriesProvider(
             IHighlighter highlighter,

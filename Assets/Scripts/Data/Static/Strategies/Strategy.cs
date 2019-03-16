@@ -8,8 +8,8 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class Strategy : IStrategy
     {
-        public IBaseStrategy BaseStrategy { get; private set; }
-        public IEnumerable<IOffensiveRequest> Offensives { get; private set; }
+        public IBaseStrategy BaseStrategy { get; }
+        public IEnumerable<IOffensiveRequest> Offensives { get; }
 
         public Strategy(IBaseStrategy baseStrategy, IOffensiveRequest[] offensives)
         {

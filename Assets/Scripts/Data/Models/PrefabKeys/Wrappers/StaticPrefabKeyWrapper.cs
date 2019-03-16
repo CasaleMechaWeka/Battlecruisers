@@ -6,7 +6,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
     public class StaticPrefabKeyWrapper : IPrefabKeyWrapper
 	{
         public bool HasKey { get { return true; } }
-        public BuildingKey Key { get; private set; }
+        public BuildingKey Key { get; }
 
         public StaticPrefabKeyWrapper(BuildingKey key)
         {

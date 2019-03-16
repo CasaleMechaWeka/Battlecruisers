@@ -6,8 +6,8 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class RightPanelComponents
     {
-        public IInformatorPanel InformatorPanel { get; private set; }
-        public IMaskHighlightable SpeedButtonPanel { get; private set; }
+        public IInformatorPanel InformatorPanel { get; }
+        public IMaskHighlightable SpeedButtonPanel { get; }
 
         public RightPanelComponents(IInformatorPanel informatorPanel, IMaskHighlightable speedButtonPanel)
         {

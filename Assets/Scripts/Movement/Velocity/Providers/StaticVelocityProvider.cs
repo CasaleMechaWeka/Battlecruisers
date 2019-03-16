@@ -2,7 +2,7 @@
 {
     public class StaticVelocityProvider : IVelocityProvider
     {
-        public float VelocityInMPerS { get; private set; }
+        public float VelocityInMPerS { get; }
 
         public StaticVelocityProvider(float velocityInMPerS)
         {

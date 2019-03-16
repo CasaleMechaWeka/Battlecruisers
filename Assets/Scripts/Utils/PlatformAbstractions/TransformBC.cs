@@ -5,7 +5,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 {
     public class TransformBC : ITransform
     {
-        public Transform PlatformObject { get; private set; }
+        public Transform PlatformObject { get; }
 
         public Vector3 Position
         {

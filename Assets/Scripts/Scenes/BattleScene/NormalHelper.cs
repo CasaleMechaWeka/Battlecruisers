@@ -28,8 +28,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private UIManager _uiManager;
 
-        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; private set; }
-        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; private set; }
+        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
+        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
         public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
         {

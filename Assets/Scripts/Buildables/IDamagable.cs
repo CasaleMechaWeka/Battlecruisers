@@ -5,7 +5,7 @@ namespace BattleCruisers.Buildables
 {
     public class DestroyedEventArgs : EventArgs
 	{
-		public ITarget DestroyedTarget { get; private set; }
+		public ITarget DestroyedTarget { get; }
 
 		public DestroyedEventArgs(ITarget destroyedTarget)
 		{
@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables
 
     public class DamagedEventArgs : EventArgs
     {
-        public ITarget DamageSource { get; private set; }
+        public ITarget DamageSource { get; }
 
         public DamagedEventArgs(ITarget damageSource)
         {
