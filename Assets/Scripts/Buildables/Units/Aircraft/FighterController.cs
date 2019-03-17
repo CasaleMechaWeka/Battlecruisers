@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			get { return _target; }
 			set 
 			{
-                Logging.Log(Tags.FIGHTER, value.ToString());
+                Logging.Log(Tags.FIGHTER, string.Empty + value);
 
 				_target = value;
 
