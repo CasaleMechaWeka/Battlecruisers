@@ -433,9 +433,6 @@ namespace BattleCruisers.Buildables
 
             _localBoosterBoostableGroup.CleanUp();
 
-            // FELIX  Kamikaze Balancing Test:  
-            // MissingReferenceException: The object of type 'BomberController' has been destroyed but you are still trying to access it.
-            // Your script should either check if it is null or you should not destroy the object.
             _factoryProvider.Sound.SoundPlayer.PlaySound(DeathSoundKey, transform.position);
         }
 
