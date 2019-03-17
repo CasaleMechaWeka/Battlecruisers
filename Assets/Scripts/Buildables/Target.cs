@@ -194,9 +194,9 @@ namespace BattleCruisers.Buildables
             return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
         }
 
-        protected virtual IList<Renderer> GetInGameRenderers()
+        protected virtual List<SpriteRenderer> GetInGameRenderers()
         {
-            return new List<Renderer>();
+            return new List<SpriteRenderer>();
         }
     }
 }

@@ -229,7 +229,7 @@ namespace BattleCruisers.Buildables
             return _numOfDronesText.NumOfDronesText;
         }
 
-        protected virtual List<SpriteRenderer> GetInGameRenderers()
+        protected override List<SpriteRenderer> GetInGameRenderers()
         {
             SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(mainRenderer);
