@@ -8,10 +8,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class ShipDeathsTestGod : MonoBehaviour
     {
-        public VariableDelayDeferrer deferrer;
+        private IVariableDelayDeferrer _deferrer;
 
         void Start()
         {
+            _deferrer = new VariableDelayDeferrer();
             Helper helper = new Helper();
             ShipController[] ships = FindObjectsOfType<ShipController>();
 
@@ -28,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             // Ship turrets are initialised when ship completes building, but this
             // event handler is called first.  Hence wait for turrets to be initialised
             // before destroying ship.
-            deferrer.Defer(() => (sender as ShipController).Destroy(), delayInS: 0.1f);
+            _deferrer.Defer(() => (sender as ShipController).Destroy(), delayInS: 0.1f);
         }
     }
 }

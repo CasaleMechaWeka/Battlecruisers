@@ -21,9 +21,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 		void Start() 
 		{
-            IVariableDelayDeferrer variableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
-            Assert.IsNotNull(variableDelayDeferrer);
-
+            IVariableDelayDeferrer variableDelayDeferrer = new VariableDelayDeferrer();
 			Helper helper = new Helper(variableDelayDeferrer: variableDelayDeferrer);
 
 

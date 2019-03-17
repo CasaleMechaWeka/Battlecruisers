@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     {
         private IKillCountController _leftKillCount, _rightKillCount;
         private IList<ITarget> _completedUnits;
-        private VariableDelayDeferrer _deferrer;
+        private IVariableDelayDeferrer _deferrer;
         private IPrefabFactory _prefabFactory;
 
 		protected IFactory _leftFactory, _rightFactory;
@@ -34,13 +34,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Assert.IsNotNull(prefabFactory);
             Assert.IsTrue(numOfDrones > 0);
 
-
-			_prefabFactory = prefabFactory;
+            _deferrer = new VariableDelayDeferrer();
+            _prefabFactory = prefabFactory;
             _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT);
             _completedUnits = new List<ITarget>();
-
-            _deferrer = GetComponent<VariableDelayDeferrer>();
-            Assert.IsNotNull(_deferrer);
 
             IPrefabKey leftUnitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(leftUnitKeyName);
             IPrefabKey rightUnitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(rightUnitKeyName);
