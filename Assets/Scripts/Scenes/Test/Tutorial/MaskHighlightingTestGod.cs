@@ -2,7 +2,6 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -19,14 +18,12 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public ConstDelayDeferrer deferrer;
         public MaskHighlighter maskHighlighter;
 
         void Start()
         {
             _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
 
-            deferrer.StaticInitialise(delayInMs: 2000);
             maskHighlighter.Initialise();
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();

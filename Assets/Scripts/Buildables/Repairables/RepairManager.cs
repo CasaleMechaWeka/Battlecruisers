@@ -101,6 +101,7 @@ namespace BattleCruisers.Buildables.Repairables
                     Assert.IsTrue(repairable.RepairCommand.CanExecute);
                     float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * BuildSpeedMultipliers.DEFAULT;
 
+                    // FELIX  Code smell.  Surely there is a better way :P
                     // Defer, as this may bring the repairable to full health, which 
                     // sets its DroneConsumer to null, which modifies this enumerable :)
                     _deferrer.Defer(() => repairable.RepairCommand.Execute(healthGained));

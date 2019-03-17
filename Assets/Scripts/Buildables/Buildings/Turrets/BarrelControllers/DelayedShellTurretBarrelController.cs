@@ -1,27 +1,22 @@
 ﻿using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class DelayedShellTurretBarrelController : ShellTurretBarrelController
 	{
-        private IDeferrer _deferrer;
+        private IVariableDelayDeferrer _deferrer;
 
 		public float delayInMs;
 
 		public override void StaticInitialise()
         {
             base.StaticInitialise();
-
-            ConstDelayDeferrer constDelayDeferrer = GetComponent<ConstDelayDeferrer>();
-            Assert.IsNotNull(constDelayDeferrer);
-            constDelayDeferrer.StaticInitialise(delayInMs);
-            _deferrer = constDelayDeferrer;
+            _deferrer = new VariableDelayDeferrer();
         }
 
         public override void Fire(float angleInDegrees)
 		{
-            _deferrer.Defer(() => base.Fire(angleInDegrees));
+            _deferrer.Defer(() => base.Fire(angleInDegrees), delayInMs / 1000);
 		}
 	}
 }
