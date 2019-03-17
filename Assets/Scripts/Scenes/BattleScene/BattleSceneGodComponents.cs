@@ -21,11 +21,11 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void Initialise()
         {
+            // FELIX  Just create :P
             Deferrer = GetComponent<IDeferrer>();
             Assert.IsNotNull(Deferrer);
 
-            VariableDelayDeferrer = GetComponent<IVariableDelayDeferrer>();
-            Assert.IsNotNull(VariableDelayDeferrer);
+            VariableDelayDeferrer = new VariableDelayDeferrer();
 
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);

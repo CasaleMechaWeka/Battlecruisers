@@ -7,7 +7,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Groups
 {
-    public abstract class BuildableGroupController : MonoBehaviour 
+    public abstract class BuildableGroupController : MonoBehaviour
     {
         public BCUtils.PrefabKeyName prefabKeyName;
         public int numOfBuildables;
@@ -27,9 +27,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             BuildableInitialisationArgs args,
             Vector2 spawnPosition)
         {
-            IPrefabKey buildableKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(prefabKeyName);
+            IPrefabKey buildableKey = GetBuildableKey(prefabKeyName);
             return CreateGroup(buildableKey, prefabFactory, helper, args, spawnPosition);
         }
+
+        protected abstract IPrefabKey GetBuildableKey(BCUtils.PrefabKeyName prefabKeyName);
 
         protected abstract IBuildableGroup CreateGroup(
             IPrefabKey buildableKey,
