@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace BattleCruisers.AI.Drones
     public class DroneConsumerFocusManager : IManagedDisposable
     {
         private readonly IDroneFocusingStrategy _strategy;
-        private readonly ICruiserController _aiCruiser;
+        private readonly ICruiserBuildingMonitor _aiBuildingMonitor;
         private readonly IDroneManager _droneManager;
         private readonly IList<IFactory> _completedFactories;
         private readonly IDroneConsumerFocusHelper _focusHelper;
@@ -38,17 +39,17 @@ namespace BattleCruisers.AI.Drones
             Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, focusHelper);
 
             _strategy = strategy;
-            _aiCruiser = aiCruiser;
-            _droneManager = _aiCruiser.DroneManager;
+            _aiBuildingMonitor = aiCruiser.BuildingMonitor;
+            _droneManager = aiCruiser.DroneManager;
             _focusHelper = focusHelper;
 
             _completedFactories = new List<IFactory>();
 
-            _aiCruiser.BuildingStarted += _aiCruiser_BuildingStarted;
-            _aiCruiser.BuildingCompleted += _aiCruiser_BuildingCompleted;
+            _aiBuildingMonitor.BuildingStarted += _aiBuildingMonitor_BuildingStarted;
+            _aiBuildingMonitor.BuildingCompleted += _aiBuildingMonitor_BuildingCompleted;
         }
 
-        private void _aiCruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void _aiBuildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -64,7 +65,7 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
-        private void _aiCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _aiBuildingMonitor_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             if (_strategy.EvaluateWhenBuildingStarted)
             {
@@ -108,8 +109,8 @@ namespace BattleCruisers.AI.Drones
 
         public void DisposeManagedState()
         {
-            _aiCruiser.BuildingStarted -= _aiCruiser_BuildingStarted;
-            _aiCruiser.BuildingCompleted -= _aiCruiser_BuildingCompleted;
+            _aiBuildingMonitor.BuildingStarted -= _aiBuildingMonitor_BuildingStarted;
+            _aiBuildingMonitor.BuildingCompleted -= _aiBuildingMonitor_BuildingCompleted;
 
             foreach (IFactory factory in _completedFactories)
             {
