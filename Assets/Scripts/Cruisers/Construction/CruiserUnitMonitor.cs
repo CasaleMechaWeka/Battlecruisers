@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Cruisers.Construction
 {
     // FELIX  Update test :)
-    public class UnitConstructionMonitor : IUnitConstructionMonitor, IManagedDisposable
+    public class CruiserUnitMonitor : ICruiserUnitMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Cruisers.Construction
         public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
         public event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
 
-        public UnitConstructionMonitor(ICruiserController cruiser)
+        public CruiserUnitMonitor(ICruiserController cruiser)
         {
             Assert.IsNotNull(cruiser);
 

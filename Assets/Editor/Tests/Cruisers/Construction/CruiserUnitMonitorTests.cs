@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Cruisers.Construction
 {
-    public class UnitConstructionMonitorTests
+    public class CruiserUnitMonitorTests
     {
-        private UnitConstructionMonitor _monitor;
+        private CruiserUnitMonitor _monitor;
         private ICruiserController _cruiser;
         private IFactory _factory;
         private StartedUnitConstructionEventArgs _lastStartedEventArgs;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         public void TestSetup()
         {
             _cruiser = Substitute.For<ICruiserController>();
-            _monitor = new UnitConstructionMonitor(_cruiser);
+            _monitor = new CruiserUnitMonitor(_cruiser);
 
             _factory = Substitute.For<IFactory>();
             _lastStartedEventArgs = null;

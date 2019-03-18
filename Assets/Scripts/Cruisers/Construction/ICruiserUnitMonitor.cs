@@ -15,7 +15,7 @@ namespace BattleCruisers.Cruisers.Construction
         }
     }
 
-    public interface IUnitConstructionMonitor
+    public interface ICruiserUnitMonitor
     {
         // FELIX  Uncomment!!!
         //IReadOnlyCollection<IUnit> AliveUnits { get; }

@@ -39,7 +39,7 @@ namespace BattleCruisers.Cruisers
         }
     }
 
-	public interface ICruiserController : IUnitConstructionMonitor
+	public interface ICruiserController : ICruiserUnitMonitor
 	{
         bool IsAlive { get; }
         ISlotAccessor SlotAccessor { get; }
@@ -48,6 +48,7 @@ namespace BattleCruisers.Cruisers
 		IDroneManager DroneManager { get; }
         IDroneFocuser DroneFocuser { get; }
 
+        // FELIX  Replace with ICruiserBuildingMonitor getter :)
         event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
 		event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
 		event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
