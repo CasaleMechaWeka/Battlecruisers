@@ -44,10 +44,6 @@ namespace BattleCruisers.Cruisers
         ICruiserUnitMonitor UnitMonitor { get; }
 
         event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
-        
-        // FELIX  Replace with ICruiserBuildingMonitor getter :)
-		event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
-		event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
 	}
