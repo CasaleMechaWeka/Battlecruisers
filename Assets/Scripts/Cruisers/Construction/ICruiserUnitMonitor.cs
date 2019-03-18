@@ -17,11 +17,13 @@ namespace BattleCruisers.Cruisers.Construction
 
     public interface ICruiserUnitMonitor
     {
-        // FELIX  Uncomment!!!
-        //IReadOnlyCollection<IUnit> AliveUnits { get; }
+        /// <summary>
+        /// Units that have been completed but not destroyed.
+        /// </summary>
+        IReadOnlyCollection<IUnit> AliveUnits { get; }
 
         event EventHandler<StartedUnitConstructionEventArgs> UnitStarted;
         event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
-        //event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
+        event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
     }
 }

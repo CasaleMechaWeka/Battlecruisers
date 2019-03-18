@@ -13,12 +13,14 @@ namespace BattleCruisers.Cruisers.Construction
     {
         private readonly ICruiserController _cruiser;
 
-        public IReadOnlyCollection<IUnit> AliveUnits => throw new NotImplementedException();
+        private readonly HashSet<IUnit> _aliveUnits;
+        public IReadOnlyCollection<IUnit> AliveUnits => _aliveUnits;
 
         public event EventHandler<StartedUnitConstructionEventArgs> UnitStarted;
         public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
         public event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
 
+        // FELIX  Will have to replace with ICruiserBuildingMonitor :)
         public CruiserUnitMonitor(ICruiserController cruiser)
         {
             Assert.IsNotNull(cruiser);
@@ -47,6 +49,21 @@ namespace BattleCruisers.Cruisers.Construction
         private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
         {
             UnitCompleted?.Invoke(this, e);
+
+            Assert.IsFalse(_aliveUnits.Contains(e.Buildable));
+            _aliveUnits.Add(e.Buildable);
+            e.Buildable.Destroyed += Unit_Destroyed;
+        }
+
+        private void Unit_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            IUnit destroyedUnit = e.DestroyedTarget.Parse<IUnit>();
+
+            Assert.IsTrue(_aliveUnits.Contains(destroyedUnit));
+            _aliveUnits.Remove(destroyedUnit);
+            destroyedUnit.Destroyed -= Unit_Destroyed;
+
+            UnitDestroyed?.Invoke(this, new UnitDestroyedEventArgs(destroyedUnit));
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
