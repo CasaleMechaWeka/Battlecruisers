@@ -42,33 +42,33 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [Test]
         public void Started()
         {
-            _playerBuildingMonitor.StartConstructingBuilding(_building1);
+            _playerBuildingMonitor.EmitBuildingStarted(_building1);
             AssertItem(_building1);
         }
 
         [Test]
         public void Started_Completed()
         {
-            _playerBuildingMonitor.StartConstructingBuilding(_building1);
+            _playerBuildingMonitor.EmitBuildingStarted(_building1);
             AssertItem(_building1);
 
-            _playerBuildingMonitor.CompleteConstructingBuliding(_building1);
+            _playerBuildingMonitor.EmitBuildingCompleted(_building1);
             AssertNoItem();
         }
 
         [Test]
         public void Started_Started_Completed_Completed()
         {
-            _playerBuildingMonitor.StartConstructingBuilding(_building1);
+            _playerBuildingMonitor.EmitBuildingStarted(_building1);
             AssertItem(_building1);
 
-            _playerBuildingMonitor.StartConstructingBuilding(_building2);
+            _playerBuildingMonitor.EmitBuildingStarted(_building2);
             AssertItem(_building2);
 
-            _playerBuildingMonitor.CompleteConstructingBuliding(_building2);
+            _playerBuildingMonitor.EmitBuildingCompleted(_building2);
             AssertItem(_building1);
 
-            _playerBuildingMonitor.CompleteConstructingBuliding(_building1);
+            _playerBuildingMonitor.EmitBuildingCompleted(_building1);
             AssertNoItem();
         }
 

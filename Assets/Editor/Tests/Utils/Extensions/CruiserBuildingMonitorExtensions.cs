@@ -7,12 +7,12 @@ namespace BattleCruisers.Tests.Utils.Extensions
 {
     public static class CruiserBuildingMonitorExtensions
     {
-        public static void StartConstructingBuilding(this ICruiserBuildingMonitor buildingMonitor, IBuilding buildingToStart)
+        public static void EmitBuildingStarted(this ICruiserBuildingMonitor buildingMonitor, IBuilding buildingToStart)
         {
             buildingMonitor.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(buildingToStart));
         }
 
-        public static void CompleteConstructingBuliding(this ICruiserBuildingMonitor buildingMonitor, IBuilding buildingToComplete)
+        public static void EmitBuildingCompleted(this ICruiserBuildingMonitor buildingMonitor, IBuilding buildingToComplete)
         {
 			buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(buildingToComplete));
         }

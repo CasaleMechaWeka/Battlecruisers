@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayerCruiser_BuildingCompleted_Ultra_EmitsEvent()
         {
             _buildingCompleted.Category.Returns(BuildingCategory.Ultra);
-            _playerCruiser.BuildingMonitor.CompleteConstructingBuliding(_buildingCompleted);
+            _playerCruiser.BuildingMonitor.EmitBuildingCompleted(_buildingCompleted);
             Assert.AreEqual(1, _dangerEventCount);
         }
 
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayerCruiser_BuildingCompleted_Offensive_EmitsEvent()
         {
             _buildingCompleted.Category.Returns(BuildingCategory.Offence);
-            _playerCruiser.BuildingMonitor.CompleteConstructingBuliding(_buildingCompleted);
+            _playerCruiser.BuildingMonitor.EmitBuildingCompleted(_buildingCompleted);
             Assert.AreEqual(1, _dangerEventCount);
         }
 
@@ -56,7 +56,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayerCruiser_BuildingCompleted_NotOffensiveOrUltra_DoesNotEmitEvent()
         {
             _buildingCompleted.Category.Returns(BuildingCategory.Defence);
-            _playerCruiser.BuildingMonitor.CompleteConstructingBuliding(_buildingCompleted);
+            _playerCruiser.BuildingMonitor.EmitBuildingCompleted(_buildingCompleted);
             Assert.AreEqual(0, _dangerEventCount);
         }
 
@@ -98,7 +98,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void AICruiser_BuildingCompleted_Ultra_EmitsEvent()
         {
             _buildingCompleted.Category.Returns(BuildingCategory.Ultra);
-            _aiCruiser.BuildingMonitor.CompleteConstructingBuliding(_buildingCompleted);
+            _aiCruiser.BuildingMonitor.EmitBuildingCompleted(_buildingCompleted);
             Assert.AreEqual(1, _dangerEventCount);
         }
 
@@ -106,7 +106,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void AICruiser_BuildingCompleted_Offensive_EmitsEvent()
         {
             _buildingCompleted.Category.Returns(BuildingCategory.Offence);
-            _aiCruiser.BuildingMonitor.CompleteConstructingBuliding(_buildingCompleted);
+            _aiCruiser.BuildingMonitor.EmitBuildingCompleted(_buildingCompleted);
             Assert.AreEqual(1, _dangerEventCount);
         }
 
@@ -114,7 +114,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void AICruiser_BuildingCompleted_NotOffensiveOrUltra_DoesNotEmitEvent()
         {
             _buildingCompleted.Category.Returns(BuildingCategory.Defence);
-            _aiCruiser.BuildingMonitor.CompleteConstructingBuliding(_buildingCompleted);
+            _aiCruiser.BuildingMonitor.EmitBuildingCompleted(_buildingCompleted);
             Assert.AreEqual(0, _dangerEventCount);
         }
 
