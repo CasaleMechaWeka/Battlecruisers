@@ -40,6 +40,7 @@ namespace BattleCruisers.Cruisers
         ISlotNumProvider SlotNumProvider { get; }
 		IDroneManager DroneManager { get; }
         IDroneFocuser DroneFocuser { get; }
+        ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
 
         event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;

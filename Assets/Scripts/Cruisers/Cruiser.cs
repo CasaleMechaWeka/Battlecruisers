@@ -75,6 +75,7 @@ namespace BattleCruisers.Cruisers
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneFocuser DroneFocuser { get; private set; }
+        public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
         public ICruiserUnitMonitor UnitMonitor { get; private set; }
 
         public event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
@@ -137,7 +138,8 @@ namespace BattleCruisers.Cruisers
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, this);
 
-            UnitMonitor = new CruiserUnitMonitor(this);
+            BuildingMonitor = new CruiserBuildingMonitor(this);
+            UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
 
             _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
 

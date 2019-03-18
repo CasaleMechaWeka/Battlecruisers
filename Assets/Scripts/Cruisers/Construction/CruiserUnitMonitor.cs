@@ -8,10 +8,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Update test :)
     public class CruiserUnitMonitor : ICruiserUnitMonitor, IManagedDisposable
     {
-        private readonly ICruiserController _cruiser;
+        private readonly ICruiserBuildingMonitor _buildingMonitor;
 
         private readonly HashSet<IUnit> _aliveUnits;
         public IReadOnlyCollection<IUnit> AliveUnits => _aliveUnits;
@@ -20,16 +19,17 @@ namespace BattleCruisers.Cruisers.Construction
         public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
         public event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
 
-        // FELIX  Will have to replace with ICruiserBuildingMonitor :)
-        public CruiserUnitMonitor(ICruiserController cruiser)
+        public CruiserUnitMonitor(ICruiserBuildingMonitor buildingMonitor)
         {
-            Assert.IsNotNull(cruiser);
+            Assert.IsNotNull(buildingMonitor);
 
-            _cruiser = cruiser;
-            _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
+            _buildingMonitor = buildingMonitor;
+            _buildingMonitor.BuildingCompleted += _buildingMonitor_BuildingCompleted;
+
+            _aliveUnits = new HashSet<IUnit>();
         }
 
-        private void _cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void _buildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -78,7 +78,7 @@ namespace BattleCruisers.Cruisers.Construction
 
         public void DisposeManagedState()
         {
-            _cruiser.BuildingCompleted -= _cruiser_BuildingCompleted;
+            _buildingMonitor.BuildingCompleted -= _buildingMonitor_BuildingCompleted;
         }
     }
 }
