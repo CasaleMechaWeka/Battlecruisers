@@ -45,7 +45,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void _enemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
 		{
-			IBuilding building = e.Buildable;
+			IBuilding building = e.StartedBuilding;
 
 			building.BuildableProgress += Buildable_BuildableProgress;
 			building.Destroyed += Building_Destroyed;

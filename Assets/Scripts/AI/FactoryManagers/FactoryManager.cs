@@ -41,7 +41,7 @@ namespace BattleCruisers.AI.FactoryManagers
 
         private void _friendlyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            IFactory factory = e.Buildable as IFactory;
+            IFactory factory = e.StartedBuilding as IFactory;
 
             if (factory != null && factory.UnitCategory == _factoryUnitCategory)
             {

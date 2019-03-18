@@ -36,12 +36,12 @@ namespace BattleCruisers.Tutorial.Steps.Providers
 
         private void playerBuildingMonitor_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            _incompleteBuildables.Add(e.Buildable);
+            _incompleteBuildables.Add(e.StartedBuilding);
         }
 
         private void playerBuildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
-            _incompleteBuildables.Remove(e.Buildable);
+            _incompleteBuildables.Remove(e.CompletedBuilding);
         }
 
         public IBuildable FindItem()

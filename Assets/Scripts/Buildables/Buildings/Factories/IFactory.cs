@@ -1,21 +1,29 @@
 ﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Utils.DataStrctures;
 using System;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-    public class UnitStartedEventArgs : BuildableConstructionEventArgs<IUnit>
+    // FELIX  Move to ICruiserUnitMonitor :)
+    public class UnitStartedEventArgs : EventArgs
     {
-        public UnitStartedEventArgs(IUnit unit)
-            : base(unit) { }
+        public IUnit StartedUnit { get; }
+
+        public UnitStartedEventArgs(IUnit startedUnit)
+        {
+            StartedUnit = startedUnit;
+        }
     }
 
-    public class UnitCompletedEventArgs : BuildableConstructionEventArgs<IUnit>
+    public class UnitCompletedEventArgs : EventArgs
     {
-        public UnitCompletedEventArgs(IUnit unit)
-            : base(unit) { }
+        public IUnit CompletedUnit { get; }
+
+        public UnitCompletedEventArgs(IUnit completedUnit)
+        {
+            CompletedUnit = completedUnit;
+        }
     }
 
     public interface IFactory : IBuilding

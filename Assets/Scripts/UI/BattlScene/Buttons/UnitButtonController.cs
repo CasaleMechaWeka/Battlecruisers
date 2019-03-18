@@ -76,7 +76,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         private void _currentFactory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
-            ShowBuildProgressIfNecessary(e.Buildable);
+            ShowBuildProgressIfNecessary(e.StartedUnit);
         }
 
         private void _currentFactory_NewUnitChosen(object sender, EventArgs e)

@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void _buildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
-            IFactory factory = e.Buildable as IFactory;
+            IFactory factory = e.CompletedBuilding as IFactory;
 
             if (factory != null)
             {
@@ -44,15 +44,15 @@ namespace BattleCruisers.Cruisers.Construction
         private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             UnitStarted?.Invoke(this, e);
-            e.Buildable.Destroyed += Unit_Destroyed;
+            e.StartedUnit.Destroyed += Unit_Destroyed;
         }
 
         private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
             UnitCompleted?.Invoke(this, e);
 
-            Assert.IsFalse(_aliveUnits.Contains(e.Buildable));
-            _aliveUnits.Add(e.Buildable);
+            Assert.IsFalse(_aliveUnits.Contains(e.CompletedUnit));
+            _aliveUnits.Add(e.CompletedUnit);
         }
 
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)

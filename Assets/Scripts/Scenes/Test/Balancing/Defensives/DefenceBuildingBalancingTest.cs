@@ -158,8 +158,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         private void Factory_CompletedUnit(object sender, UnitCompletedEventArgs e)
         {
-            _completedOffensiveUnits.Add(e.Buildable);
-            e.Buildable.Destroyed += Unit_Destroyed;
+            _completedOffensiveUnits.Add(e.CompletedUnit);
+            e.CompletedUnit.Destroyed += Unit_Destroyed;
         }
 
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)

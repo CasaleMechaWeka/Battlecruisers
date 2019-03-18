@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers.Damage
 
         private void BuildingMonitor_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            e.Buildable.Damaged += OnCruiserOrBuildingDamaged;
+            e.StartedBuilding.Damaged += OnCruiserOrBuildingDamaged;
         }
 
         private void BuildingMonitor_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)

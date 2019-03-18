@@ -28,7 +28,7 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            if (e.Buildable.Category == BuildingCategory.Ultra)
+            if (e.StartedBuilding.Category == BuildingCategory.Ultra)
             {
                 _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
             }
@@ -36,7 +36,7 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void _unitConstructionMonitor_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
-            if (e.Buildable.IsUltra)
+            if (e.StartedUnit.IsUltra)
             {
                 _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
             }

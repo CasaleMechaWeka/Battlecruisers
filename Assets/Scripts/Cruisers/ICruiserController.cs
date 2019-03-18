@@ -7,28 +7,25 @@ using System;
 
 namespace BattleCruisers.Cruisers
 {
-    // FELIX  Remove.  Benefit is minimal :P
-    public abstract class BuildableConstructionEventArgs<TBuildable> : EventArgs where TBuildable : IBuildable
-    {
-		public TBuildable Buildable { get; }
-
-		protected BuildableConstructionEventArgs(TBuildable buildable)
-		{
-			Buildable = buildable;
-		}
-    }
-
     // FELIX  Move to ICruiserBuildingMonitor
-    public class BuildingStartedEventArgs : BuildableConstructionEventArgs<IBuilding>
+    public class BuildingStartedEventArgs : EventArgs
     {
-        public BuildingStartedEventArgs(IBuilding building)
-            : base(building) { }
+        public IBuilding StartedBuilding { get; }
+
+        public BuildingStartedEventArgs(IBuilding startedBuilding)
+        {
+            StartedBuilding = startedBuilding;
+        }
     }
 
-    public class BuildingCompletedEventArgs : BuildableConstructionEventArgs<IBuilding>
+    public class BuildingCompletedEventArgs : EventArgs
     {
-        public BuildingCompletedEventArgs(IBuilding building)
-            : base(building) { }
+        public IBuilding CompletedBuilding { get; }
+
+        public BuildingCompletedEventArgs(IBuilding completedBuilding)
+        {
+            CompletedBuilding = completedBuilding;
+        }
     }
 
 	public interface ICruiserController

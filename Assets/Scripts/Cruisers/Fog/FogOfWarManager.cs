@@ -44,7 +44,7 @@ namespace BattleCruisers.Cruisers.Fog
         private void _friendlyBuildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
             // Look for stealth generators
-            AddBuilding(_friendlyIStealthGenerators, e.Buildable, IStealthGenerator_Destroyed);
+            AddBuilding(_friendlyIStealthGenerators, e.CompletedBuilding, IStealthGenerator_Destroyed);
         }
 
         private void IStealthGenerator_Destroyed(object sender, DestroyedEventArgs e)
@@ -55,7 +55,7 @@ namespace BattleCruisers.Cruisers.Fog
         private void _enemyBuildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
             // Look for spy satellite launchers
-            AddBuilding(_enemySpySatellites, e.Buildable, SatelliteLauncher_Destroyed);
+            AddBuilding(_enemySpySatellites, e.CompletedBuilding, SatelliteLauncher_Destroyed);
         }
 
         private void SatelliteLauncher_Destroyed(object sender, DestroyedEventArgs e)

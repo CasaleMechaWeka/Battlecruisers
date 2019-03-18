@@ -51,7 +51,7 @@ namespace BattleCruisers.AI.Drones
 
         private void _aiBuildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
-            IFactory factory = e.Buildable as IFactory;
+            IFactory factory = e.CompletedBuilding as IFactory;
 
             if (factory != null)
             {

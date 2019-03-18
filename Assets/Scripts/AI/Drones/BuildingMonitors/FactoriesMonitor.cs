@@ -32,7 +32,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
 
         private void _buildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
-            IFactory factory = e.Buildable as IFactory;
+            IFactory factory = e.CompletedBuilding as IFactory;
 
             if (factory != null)
             {

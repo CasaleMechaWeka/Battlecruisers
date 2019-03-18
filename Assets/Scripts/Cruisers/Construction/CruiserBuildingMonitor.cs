@@ -30,10 +30,10 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            e.Buildable.CompletedBuildable += Buildable_CompletedBuildable;
-            e.Buildable.Destroyed += Buildable_Destroyed;
+            e.StartedBuilding.CompletedBuildable += Buildable_CompletedBuildable;
+            e.StartedBuilding.Destroyed += Buildable_Destroyed;
 
-            BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(e.Buildable));
+            BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(e.StartedBuilding));
         }
 
         private void Buildable_CompletedBuildable(object sender, EventArgs e)

@@ -44,8 +44,8 @@ namespace BattleCruisers.UI.Music
 
         private void Cruiser_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
-            if (e.Buildable.Category == BuildingCategory.Offence
-                || e.Buildable.Category == BuildingCategory.Ultra)
+            if (e.CompletedBuilding.Category == BuildingCategory.Offence
+                || e.CompletedBuilding.Category == BuildingCategory.Ultra)
             {
                 EmitDanger();
             }
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.Music
 
         private void Cruiser_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
-            if (e.Buildable.IsUltra)
+            if (e.CompletedUnit.IsUltra)
             {
                 EmitDanger();
             }

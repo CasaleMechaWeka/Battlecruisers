@@ -33,7 +33,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 
         private void EnemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            TBuilding building = e.Buildable as TBuilding;
+            TBuilding building = e.StartedBuilding as TBuilding;
 
             if (building != null)
             {

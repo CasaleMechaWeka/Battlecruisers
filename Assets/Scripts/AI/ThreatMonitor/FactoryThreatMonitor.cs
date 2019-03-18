@@ -34,7 +34,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 
         private void _enemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
-            IFactory factory = e.Buildable as IFactory;
+            IFactory factory = e.StartedBuilding as IFactory;
 
             if (factory != null 
                 && factory.UnitCategory == _threatCategory)
