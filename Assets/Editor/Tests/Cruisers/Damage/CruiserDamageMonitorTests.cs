@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         [Test]
         public void BuildingDamaged_EmitsEvent()
         {
-            _cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(_building));
+            _cruiser.BuildingMonitor.EmitBuildingStarted(_building);
             _building.Damaged += Raise.EventWith(new DamagedEventArgs(null));
 
             Assert.AreEqual(1, _eventCount);
@@ -47,10 +47,10 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         public void BuildingDestroyed_Unsubsribes()
         {
             // Subscribe to Damaged event
-            _cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(_building));
+            _cruiser.BuildingMonitor.EmitBuildingStarted(_building);
 
             // Unsubscribe from Damaged event
-            _cruiser.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(_building));
+            _cruiser.BuildingMonitor.EmitBuildingDestroyed(_building);
 
             // Damaged event should be ignored
             _building.Damaged += Raise.EventWith(new DamagedEventArgs(null));
@@ -65,7 +65,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             _cruiser.Damaged += Raise.EventWith(new DamagedEventArgs(null));
             Assert.AreEqual(0, _eventCount);
 
-            _cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(_building));
+            _cruiser.BuildingMonitor.EmitBuildingStarted(_building);
             _building.Damaged += Raise.EventWith(new DamagedEventArgs(null));
             Assert.AreEqual(0, _eventCount);
         }

@@ -18,16 +18,16 @@ namespace BattleCruisers.Cruisers.Damage
 
             _cruiser = cruiser;
             _cruiser.Damaged += OnCruiserOrBuildingDamaged;
-            _cruiser.BuildingStarted += _cruiser_BuildingStarted;
-            _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
+            _cruiser.BuildingMonitor.BuildingStarted += BuildingMonitor_BuildingStarted;
+            _cruiser.BuildingMonitor.BuildingDestroyed += BuildingMonitor_BuildingDestroyed;
         }
 
-        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void BuildingMonitor_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             e.Buildable.Damaged += OnCruiserOrBuildingDamaged;
         }
 
-        private void _cruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
+        private void BuildingMonitor_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
         {
             e.DestroyedBuilding.Damaged -= OnCruiserOrBuildingDamaged;
         }
@@ -40,8 +40,8 @@ namespace BattleCruisers.Cruisers.Damage
         public void DisposeManagedState()
         {
             _cruiser.Damaged -= OnCruiserOrBuildingDamaged;
-            _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
-            _cruiser.BuildingDestroyed -= _cruiser_BuildingDestroyed;
+            _cruiser.BuildingMonitor.BuildingStarted -= BuildingMonitor_BuildingStarted;
+            _cruiser.BuildingMonitor.BuildingDestroyed -= BuildingMonitor_BuildingDestroyed;
         }
     }
 }
