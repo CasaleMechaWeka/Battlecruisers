@@ -20,23 +20,23 @@ namespace BattleCruisers.AI
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
-        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
+        private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
 		private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IVariableDelayDeferrer variableDelayDeferrer, ICruiserController playerCruiser)
+        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer, ICruiserController playerCruiser)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider, variableDelayDeferrer, playerCruiser);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
-            _variableDelayDeferrer = variableDelayDeferrer;
+            _deferrer = deferrer;
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-            _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, new TimeBC(), variableDelayDeferrer);
+            _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, new TimeBC(), deferrer);
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
@@ -52,7 +52,7 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo);
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo);
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _variableDelayDeferrer);
+            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 
                 = new TaskProducerFactory(
                     levelInfo.AICruiser, 

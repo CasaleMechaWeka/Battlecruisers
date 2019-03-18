@@ -24,20 +24,20 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private readonly IDataProvider _dataProvider;
         private readonly IPrefabFactory _prefabFactory;
-        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
+        private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
 
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
-        public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
+        public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, variableDelayDeferrer);
+            Helper.AssertIsNotNull(dataProvider, prefabFactory, deferrer);
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
-            _variableDelayDeferrer = variableDelayDeferrer;
+            _deferrer = deferrer;
 
             PlayerCruiserBuildProgressCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT);
             AICruiserBuildProgressCalculator = new LinearCalculator(FindBuildSpeedMultiplier(_dataProvider.SettingsManager));
@@ -69,7 +69,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.StaticData, _prefabFactory, currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, _dataProvider, _variableDelayDeferrer, playerCruiser);
+            IAIManager aiManager = new AIManager(_prefabFactory, _dataProvider, _deferrer, playerCruiser);
             return aiManager.CreateAI(levelInfo);
 		}
 		
@@ -92,7 +92,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new BroadcastingFilter(isMatch: false));
         }
 
-        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)
+        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
         {
             return
                 new DroneEventSoundPlayer(

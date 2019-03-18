@@ -7,9 +7,9 @@ namespace BattleCruisers.Tests.Mock
 {
     public static class SubstituteFactory
     {
-        public static IVariableDelayDeferrer CreateVariableDelayDeferrer()
+        public static IDeferrer CreateDeferrer()
         {
-            IVariableDelayDeferrer deferrer = Substitute.For<IVariableDelayDeferrer>();
+            IDeferrer deferrer = Substitute.For<IDeferrer>();
 
             // Call deferred action immediately
             deferrer

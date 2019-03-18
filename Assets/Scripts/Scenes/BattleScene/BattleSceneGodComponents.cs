@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGodComponents : MonoBehaviour, IBattleSceneGodComponents
     {
-        public IVariableDelayDeferrer VariableDelayDeferrer { get; private set; }
+        public IDeferrer Deferrer { get; private set; }
         public IAudioSource AudioSource { get; private set; }
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void Initialise()
         {
-            VariableDelayDeferrer = new VariableDelayDeferrer();
+            Deferrer = new Deferrer();
 
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);

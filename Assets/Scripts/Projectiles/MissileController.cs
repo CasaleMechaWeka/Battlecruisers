@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles
 {
     public class MissileController : ProjectileController, ITargetProvider
 	{
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Projectiles
             base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider, parent);
 
 			Target = target;
-            _deferrer = factoryProvider.DeferrerProvider.VariableDelayDeferrer;
+            _deferrer = factoryProvider.DeferrerProvider.Deferrer;
 
             IVelocityProvider maxVelocityProvider = factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(missileStats.MaxVelocityInMPerS);
 			ITargetProvider targetProvider = this;

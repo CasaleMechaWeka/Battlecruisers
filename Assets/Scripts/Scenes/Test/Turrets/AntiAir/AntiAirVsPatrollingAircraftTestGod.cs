@@ -17,8 +17,8 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 		void Start () 
 		{
-            IVariableDelayDeferrer deferrer = new VariableDelayDeferrer();
-            Helper helper = new Helper(variableDelayDeferrer: deferrer);
+            IDeferrer deferrer = new Deferrer();
+            Helper helper = new Helper(deferrer: deferrer);
 
             // Setup turret
             _turret = FindObjectOfType<TurretController>();

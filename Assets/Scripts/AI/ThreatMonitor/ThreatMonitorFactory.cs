@@ -12,14 +12,14 @@ namespace BattleCruisers.AI.ThreatMonitors
     {
         private readonly ICruiserController _playerCruiser;
         private readonly ITime _time;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
         private const int AIR_HIGH_THREAT_DRONE_NUM = 6;
 		private const int NAVAL_HIGH_THREAT_DRONE_NUM = 6;
 		private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
 		private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
-        public ThreatMonitorFactory(ICruiserController playerCruiser, ITime time, IVariableDelayDeferrer deferrer)
+        public ThreatMonitorFactory(ICruiserController playerCruiser, ITime time, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(playerCruiser, time, deferrer);
 

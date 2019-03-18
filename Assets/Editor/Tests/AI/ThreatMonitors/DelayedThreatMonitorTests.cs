@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
     {
         private IThreatMonitor _delayedMonitor, _coreMonitor;
         private ITime _time;
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private float _delayInS;
         private int _threatChangeCount;
         private IList<Action> _deferredActions;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
         {
             _coreMonitor = Substitute.For<IThreatMonitor>();
             _time = Substitute.For<ITime>();
-            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _deferrer = Substitute.For<IDeferrer>();
             _delayInS = 4.32f;
 
             _delayedMonitor = new DelayedThreatMonitor(_coreMonitor, _time, _deferrer, _delayInS);

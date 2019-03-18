@@ -20,7 +20,7 @@ namespace BattleCruisers.AI.ThreatMonitors
     {
         private readonly IThreatMonitor _coreThreatMonitor;
         private readonly ITime _time;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly float _delayInS;
 
         private ThreatChangeSnapshot _lastThreatChange;
@@ -28,7 +28,7 @@ namespace BattleCruisers.AI.ThreatMonitors
         private const float DEFAULT_DELAY_IN_S = 5;
         private const float MIN_DELAY_IN_S = 0;
 
-        public DelayedThreatMonitor(IThreatMonitor coreThreatMonitor, ITime time, IVariableDelayDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
+        public DelayedThreatMonitor(IThreatMonitor coreThreatMonitor, ITime time, IDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
         {
             Helper.AssertIsNotNull(coreThreatMonitor, time, deferrer);
             Assert.IsTrue(delayInS >= MIN_DELAY_IN_S);

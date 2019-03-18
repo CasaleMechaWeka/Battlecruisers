@@ -62,7 +62,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ISoundFetcher soundFetcher = null,
             ISoundPlayer soundPlayer = null,
             ISpriteChooserFactory spriteChooserFactory = null,
-            IVariableDelayDeferrer variableDelayDeferrer = null,
+            IDeferrer deferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             IExplosionManager explosionManager = null,
             ITrackerFactory trackerFactory = null)
@@ -75,7 +75,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactories = targetFactories ?? new TargetFactoriesProvider(EnemyCruiser, userChosenTargetManager);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
-            variableDelayDeferrer = variableDelayDeferrer ?? Substitute.For<IVariableDelayDeferrer>();
+            deferrer = deferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
             boostFactory = boostFactory ?? new BoostFactory();
             explosionManager = explosionManager ?? new ExplosionManager(prefabFactory);
@@ -100,10 +100,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
                         new SpriteChooserFactory(
                             new AssignerFactory(),
                             new SpriteProvider(new SpriteFetcher())),
-                    new SoundPlayerFactory(soundFetcher, variableDelayDeferrer),
+                    new SoundPlayerFactory(soundFetcher, deferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
-                    new DeferrerProvider(variableDelayDeferrer),
+                    new DeferrerProvider(deferrer),
                     explosionManager,
                     trackerFactory ?? Substitute.For<ITrackerFactory>(),
                     targetFactories);

@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
     public class DelayWaitStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private float _waitTimeInS;
 
         [SetUp]
@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
         {
             base.SetuUp();
 
-            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _deferrer = Substitute.For<IDeferrer>();
             _waitTimeInS = 12;
             _tutorialStep = new DelayWaitStep(_args, _deferrer, _waitTimeInS);
         }

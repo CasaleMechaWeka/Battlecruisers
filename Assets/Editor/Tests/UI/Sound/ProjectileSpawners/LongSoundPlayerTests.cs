@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Sound.ProjectileSpawners
 {
     public class LongSoundPlayerTests : ProjectileSpawnerSoundPlayerTestsBase
     {
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private int _burstSize;
         private float _burstEndDelayInS;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.UI.Sound.ProjectileSpawners
         {
             base.TestSetup();
 
-            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _deferrer = Substitute.For<IDeferrer>();
             _burstSize = 3;
             _burstEndDelayInS = 99.32f;
 

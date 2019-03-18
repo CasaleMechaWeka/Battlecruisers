@@ -6,7 +6,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
     public class KamikazeBalancingTestGod : BuildableVsBuildableTestGod
     {
         private float _cumulativeDelayInS;
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
 
         public float scenarioDelayInS;
 
@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             base.Initialise();
 
             Assert.IsTrue(scenarioDelayInS >= 0);
-            _deferrer = new VariableDelayDeferrer();
+            _deferrer = new Deferrer();
         }
 
         protected override void InitialiseScenario(BuildableVsBuildableTest scenario)

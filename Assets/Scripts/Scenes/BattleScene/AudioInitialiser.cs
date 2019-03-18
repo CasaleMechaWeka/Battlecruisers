@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IMusicPlayer musicPlayer,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IVariableDelayDeferrer deferrer,
+            IDeferrer deferrer,
             ITime time)
         {
             Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time);
@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IMusicPlayer musicPlayer,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IVariableDelayDeferrer deferrer)
+            IDeferrer deferrer)
         {
             return
                 new DangerMusicPlayer(

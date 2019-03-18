@@ -4,12 +4,12 @@ namespace BattleCruisers.Utils.Threading
 {
     public class DeferrerProvider : IDeferrerProvider
     {
-        public IVariableDelayDeferrer VariableDelayDeferrer { get; }
+        public IDeferrer Deferrer { get; }
 
-        public DeferrerProvider(IVariableDelayDeferrer variableDelayDeferrer)
+        public DeferrerProvider(IDeferrer deferrer)
         {
-            Assert.IsNotNull(variableDelayDeferrer);
-            VariableDelayDeferrer = variableDelayDeferrer;
+            Assert.IsNotNull(deferrer);
+            Deferrer = deferrer;
         }
     }
 }

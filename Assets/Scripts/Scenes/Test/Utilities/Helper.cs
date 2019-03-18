@@ -51,18 +51,18 @@ namespace BattleCruisers.Scenes.Test.Utilities
 	{
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
-        private readonly IVariableDelayDeferrer _variableDelayDeferrer;
+        private readonly IDeferrer _deferrer;
 
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
         public Helper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES, 
             float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
-            IVariableDelayDeferrer variableDelayDeferrer = null)
+            IDeferrer deferrer = null)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
-            _variableDelayDeferrer = variableDelayDeferrer;
+            _deferrer = deferrer;
 		}
 
         public void InitialiseBuilding(
@@ -107,7 +107,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parentCruiserDirection,
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
-                    variableDelayDeferrer: _variableDelayDeferrer,
+                    deferrer: _deferrer,
                     trackerFactory: trackerFactory);
 
             InitialiseBuilding(building, args, parentSlot);

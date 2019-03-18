@@ -2,6 +2,6 @@
 {
     public interface IDeferrerProvider
     {
-        IVariableDelayDeferrer VariableDelayDeferrer { get; }
+        IDeferrer Deferrer { get; }
     }
 }

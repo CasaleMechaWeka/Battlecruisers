@@ -8,11 +8,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class ShipDeathsTestGod : MonoBehaviour
     {
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
 
         void Start()
         {
-            _deferrer = new VariableDelayDeferrer();
+            _deferrer = new Deferrer();
             Helper helper = new Helper();
             ShipController[] ships = FindObjectsOfType<ShipController>();
 

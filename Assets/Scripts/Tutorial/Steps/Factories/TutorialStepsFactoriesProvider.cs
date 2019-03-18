@@ -23,7 +23,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public TutorialStepsFactoriesProvider(
             IHighlighter highlighter,
             IExplanationPanel explanationPanel,
-            IVariableDelayDeferrer deferrer,
+            IDeferrer deferrer,
             ITutorialArgs tutorialArgs)
         {
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);

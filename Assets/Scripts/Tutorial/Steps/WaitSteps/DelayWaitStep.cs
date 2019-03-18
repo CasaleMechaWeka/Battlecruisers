@@ -9,12 +9,12 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// </summary>
     public class DelayWaitStep : TutorialStep
     {
-        private readonly IVariableDelayDeferrer _defferer;
+        private readonly IDeferrer _defferer;
         private readonly float _waitTimeInS;
 
         private const int MIN_WAIT_TIME_IN_S = 0;
 
-        public DelayWaitStep(ITutorialStepArgs args, IVariableDelayDeferrer defferer, float waitTimeInS)
+        public DelayWaitStep(ITutorialStepArgs args, IDeferrer defferer, float waitTimeInS)
             : base(args)
         {
             Assert.IsNotNull(defferer);

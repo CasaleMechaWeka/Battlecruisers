@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.Cruisers
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBattleCompletionHandler battleCompletionHandler,
-            IVariableDelayDeferrer deferrer)
+            IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser, battleCompletionHandler, deferrer);
 

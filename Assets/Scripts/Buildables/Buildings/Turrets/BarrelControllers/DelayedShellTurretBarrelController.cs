@@ -4,14 +4,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class DelayedShellTurretBarrelController : ShellTurretBarrelController
 	{
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
 
 		public float delayInMs;
 
 		public override void StaticInitialise()
         {
             base.StaticInitialise();
-            _deferrer = new VariableDelayDeferrer();
+            _deferrer = new Deferrer();
         }
 
         public override void Fire(float angleInDegrees)

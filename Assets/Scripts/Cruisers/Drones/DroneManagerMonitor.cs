@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers.Drones
     public class DroneManagerMonitor : IDroneManagerMonitor, IManagedDisposable
     {
         private readonly IDroneManager _droneManager;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private int _previousNumOfDrones;
 
         private const float IDLE_DRONE_CHECK_DEFERRAL_TIME_IN_S = 0.1f;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Cruisers.Drones
         public event EventHandler IdleDronesStarted;
         public event EventHandler IdleDronesEnded;
 
-        public DroneManagerMonitor(IDroneManager droneManager, IVariableDelayDeferrer deferrer)
+        public DroneManagerMonitor(IDroneManager droneManager, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(droneManager, deferrer);
 

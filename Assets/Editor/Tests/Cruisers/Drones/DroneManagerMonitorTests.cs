@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     {
         private IDroneManagerMonitor _monitor;
         private IDroneManager _droneManager;
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private ObservableCollection<IDroneConsumer> _droneConsumers;
         private IDroneConsumer _idleDroneConsumer, _activeDroneConsumer;
         private int _droneNumIncreasedEventCount, _idleDronesStartedEventCount, _idleDronesEndedEventCount;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             ReadOnlyObservableCollection<IDroneConsumer> readonlyDroneConsumers = new ReadOnlyObservableCollection<IDroneConsumer>(_droneConsumers);
             _droneManager.DroneConsumers.Returns(readonlyDroneConsumers);
 
-            _deferrer = SubstituteFactory.CreateVariableDelayDeferrer();
+            _deferrer = SubstituteFactory.CreateDeferrer();
 
             _monitor = new DroneManagerMonitor(_droneManager, _deferrer);
 

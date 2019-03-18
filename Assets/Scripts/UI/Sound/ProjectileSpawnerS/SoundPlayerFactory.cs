@@ -8,9 +8,9 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     public class SoundPlayerFactory : ISoundPlayerFactory
     {
         private readonly ISoundFetcher _soundFetcher;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
-        public SoundPlayerFactory(ISoundFetcher soundFetcher, IVariableDelayDeferrer deferrer)
+        public SoundPlayerFactory(ISoundFetcher soundFetcher, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(soundFetcher, deferrer);
 

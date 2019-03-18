@@ -2,8 +2,7 @@
 
 namespace BattleCruisers.Utils.Threading
 {
-    // FELIX  Rename to IDeferrer :)
-    public interface IVariableDelayDeferrer
+    public interface IDeferrer
     {
         void Defer(Action action, float delayInS);
     }

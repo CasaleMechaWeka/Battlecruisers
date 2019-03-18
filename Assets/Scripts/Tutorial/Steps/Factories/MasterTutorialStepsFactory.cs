@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public MasterTutorialStepsFactory(
             IHighlighter highlighter,
             IExplanationPanel explanationPanel,
-            IVariableDelayDeferrer deferrer,
+            IDeferrer deferrer,
             ITutorialArgs tutorialArgs)
         {
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);

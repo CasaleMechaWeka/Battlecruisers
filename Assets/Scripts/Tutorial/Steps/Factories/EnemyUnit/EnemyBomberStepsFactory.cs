@@ -16,7 +16,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
     public class EnemyBomberStepsFactory : EnemyUnitDefenceStepsFactory
     {
         private readonly ICruiser _aiCruiser;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
         protected override IPrefabKey FactoryKey => StaticPrefabKeys.Buildings.AirFactory;
         protected override CameraFocuserTarget UnitCameraFocusTarget => CameraFocuserTarget.AICruiser;
@@ -37,7 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             ITutorialStepArgsFactory argsFactory,
             EnemyUnitArgs enemyUnitArgs,
             ICruiser aiCruiser,
-            IVariableDelayDeferrer deferrer,
+            IDeferrer deferrer,
             ISingleBuildableProvider unitBuiltProvider)
             : base(argsFactory, enemyUnitArgs)
         {

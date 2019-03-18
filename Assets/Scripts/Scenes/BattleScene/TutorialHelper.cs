@@ -115,7 +115,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new BroadcastingFilter(isMatch: false));
         }
 
-        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer)
+        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
         {
             return new DummyManagedDisposable();
         }

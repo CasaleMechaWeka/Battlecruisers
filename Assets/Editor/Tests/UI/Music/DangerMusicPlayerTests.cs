@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Music
 #pragma warning restore CS0414  // Variable is assigned but never used
         private IMusicPlayer _musicPlayer;
         private IDangerMonitor _dangerMonitor;
-        private IVariableDelayDeferrer _deferrer;
+        private IDeferrer _deferrer;
         private IList<Action> _deferredActions;
         private const float EXPECTED_DEFER_TIME_IN_S = 15;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.UI.Music
         {
             _musicPlayer = Substitute.For<IMusicPlayer>();
             _dangerMonitor = Substitute.For<IDangerMonitor>();
-            _deferrer = Substitute.For<IVariableDelayDeferrer>();
+            _deferrer = Substitute.For<IDeferrer>();
 
             _dangerMusicPlayer = new DangerMusicPlayer(_musicPlayer, _dangerMonitor, _deferrer);
 

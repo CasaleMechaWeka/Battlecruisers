@@ -10,9 +10,9 @@ namespace BattleCruisers.AI.Tasks
 	{
         private readonly IPrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
 
-        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IVariableDelayDeferrer deferrer)
+        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer);
 

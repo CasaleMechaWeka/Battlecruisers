@@ -41,7 +41,7 @@ namespace BattleCruisers.Utils.Factories
             ICruiser friendlyCruiser, 
             ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
-            IVariableDelayDeferrer deferrer,
+            IDeferrer deferrer,
             IRankedTargetTracker userChosenTargetTracker,
             ICamera soleCamera,
             bool isPlayerCruiser,

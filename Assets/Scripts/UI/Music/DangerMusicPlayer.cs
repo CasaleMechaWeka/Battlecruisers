@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Music
     {
         private readonly IMusicPlayer _musicPlayer;
         private readonly IDangerMonitor _dangerMonitor;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private int _currentDangerCount;
 
         private const float DANGER_MUSIC_PLAY_TIME_IN_S = 15;
@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Music
         public DangerMusicPlayer(
             IMusicPlayer musicPlayer,
             IDangerMonitor dangerMonitor,
-            IVariableDelayDeferrer deferrer)
+            IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(musicPlayer, dangerMonitor, deferrer);
 

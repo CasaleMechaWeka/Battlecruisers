@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();
         IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
-        IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IVariableDelayDeferrer deferrer);
+        IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         IBroadcastingFilter CreateNavigationWheelEnabledFilter();
         IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer);

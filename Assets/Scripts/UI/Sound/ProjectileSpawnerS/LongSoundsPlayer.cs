@@ -13,13 +13,13 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     public class LongSoundPlayer : ProjectileSpawnerSoundPlayer
     {
         private readonly int _burstSize;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly float _burstEndDelayInS;
         private int _burstIndex;
 
         private const int MIN_BURST_SIZE = 2;
 
-        public LongSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource, IVariableDelayDeferrer deferrer, int burstSize, float burstEndDelayInS)
+        public LongSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource, IDeferrer deferrer, int burstSize, float burstEndDelayInS)
             : base(audioClip, audioSource)
         {
             Helper.AssertIsNotNull(deferrer);

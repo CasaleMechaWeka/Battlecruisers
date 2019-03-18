@@ -27,7 +27,7 @@ namespace BattleCruisers.AI.Tasks
     public class DeferredPrioritisedTask : IPrioritisedTask
     {
         private readonly IPrioritisedTask _baseTask;
-        private readonly IVariableDelayDeferrer _deferrer;
+        private readonly IDeferrer _deferrer;
         private readonly float _delayInS;
 
         public const float DEFAULT_DELAY_IN_S = 1;
@@ -41,7 +41,7 @@ namespace BattleCruisers.AI.Tasks
             remove { _baseTask.Completed -= value; }
         }
 
-        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IVariableDelayDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
+        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer, float delayInS = DEFAULT_DELAY_IN_S)
         {
             Helper.AssertIsNotNull(baseTask, deferrer);
             Assert.IsTrue(delayInS >= MIN_DELAY_IN_S);

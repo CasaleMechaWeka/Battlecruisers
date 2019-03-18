@@ -72,7 +72,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.VariableDelayDeferrer);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
@@ -131,7 +131,7 @@ namespace BattleCruisers.Scenes.BattleScene
             LeftPanelComponents leftPanelComponents 
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
-                    new DroneManagerMonitor(playerCruiser.DroneManager, components.VariableDelayDeferrer),
+                    new DroneManagerMonitor(playerCruiser.DroneManager, components.Deferrer),
                     uiManager,
                     helper.GetPlayerLoadout(),
                     prefabFactory,
@@ -173,14 +173,14 @@ namespace BattleCruisers.Scenes.BattleScene
                     musicPlayer,
                     playerCruiser,
                     aiCruiser,
-                    components.VariableDelayDeferrer,
+                    components.Deferrer,
                     time);
 
             // Other
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
-            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, _battleCompletionHandler, components.VariableDelayDeferrer);
+            _cruiserDestroyedMonitor = new CruiserDestroyedMonitor(playerCruiser, aiCruiser, _battleCompletionHandler, components.Deferrer);
 
             StartTutorialIfNecessary(
                 prefabFactory, 
@@ -194,7 +194,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 uiManager);
         }
 
-        private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IVariableDelayDeferrer variableDelayDeferrer)
+        private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IDeferrer deferrer)
         {
             if (applicationModel.IsTutorial)
             {
@@ -204,7 +204,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
             else
             {
-                return new NormalHelper(applicationModel.DataProvider, prefabFactory, variableDelayDeferrer);
+                return new NormalHelper(applicationModel.DataProvider, prefabFactory, deferrer);
             }
         }
 

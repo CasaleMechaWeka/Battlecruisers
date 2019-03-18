@@ -178,7 +178,7 @@ namespace BattleCruisers.Cruisers
                     cruiser, 
                     enemyCruiser, 
                     _spriteProvider, 
-                    _components.VariableDelayDeferrer,
+                    _components.Deferrer,
                     userChosenTargetTracker, 
                     _soleCamera, 
                     isPlayerCruiser, 
