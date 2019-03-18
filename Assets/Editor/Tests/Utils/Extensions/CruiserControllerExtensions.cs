@@ -11,6 +11,7 @@ namespace BattleCruisers.Tests.Utils.Extensions
             cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(buildingToStart));
         }
 
+        // FELIX  Remove :)
         public static void CompleteConstructingBuliding(this ICruiserController cruiser, IBuilding buildingToComplete)
         {
 			cruiser.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(buildingToComplete));
