@@ -6,17 +6,15 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
-    // FELIX  Rename
-    public class StartedUnitConstructionEventArgs : BuildableConstructionEventArgs<IUnit>
+    public class UnitStartedEventArgs : BuildableConstructionEventArgs<IUnit>
     {
-        public StartedUnitConstructionEventArgs(IUnit unit)
+        public UnitStartedEventArgs(IUnit unit)
             : base(unit) { }
     }
 
-    // FELIX  Rename
-    public class CompletedUnitConstructionEventArgs : BuildableConstructionEventArgs<IUnit>
+    public class UnitCompletedEventArgs : BuildableConstructionEventArgs<IUnit>
     {
-        public CompletedUnitConstructionEventArgs(IUnit unit)
+        public UnitCompletedEventArgs(IUnit unit)
             : base(unit) { }
     }
 
@@ -34,8 +32,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         void PauseBuildingUnit();
         void ResumeBuildingUnit();
 
-        event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
-		event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+        event EventHandler<UnitStartedEventArgs> StartedBuildingUnit;
+		event EventHandler<UnitCompletedEventArgs> CompletedBuildingUnit;
         event EventHandler NewUnitChosen;
 	}
 }

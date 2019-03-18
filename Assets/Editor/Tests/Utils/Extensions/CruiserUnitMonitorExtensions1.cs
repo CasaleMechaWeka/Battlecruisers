@@ -9,12 +9,12 @@ namespace BattleCruisers.Tests.Utils.Extensions
     {
         public static void StartConstructingUnit(this ICruiserUnitMonitor unitMonitor, IUnit buildingToStart)
         {
-            unitMonitor.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(buildingToStart));
+            unitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(buildingToStart));
         }
 
         public static void CompleteConstructingBuliding(this ICruiserUnitMonitor unitMonitor, IUnit buildingToComplete)
         {
-			unitMonitor.UnitCompleted += Raise.EventWith(new CompletedUnitConstructionEventArgs(buildingToComplete));
+			unitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(buildingToComplete));
         }
     }
 }

@@ -22,8 +22,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
 
-		public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
-        public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+		public event EventHandler<UnitStartedEventArgs> StartedBuildingUnit;
+        public event EventHandler<UnitCompletedEventArgs> CompletedBuildingUnit;
         public event EventHandler NewUnitChosen;
 
         #region Properties
@@ -157,12 +157,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             IUnit unit = sender.Parse<IUnit>();
 
-            StartedBuildingUnit?.Invoke(this, new StartedUnitConstructionEventArgs(unit));
+            StartedBuildingUnit?.Invoke(this, new UnitStartedEventArgs(unit));
 		}
 
 		private void Unit_CompletedBuildable(object sender, EventArgs e)
 		{
-			CompletedBuildingUnit?.Invoke(this, new CompletedUnitConstructionEventArgs(UnitUnderConstruction));
+			CompletedBuildingUnit?.Invoke(this, new UnitCompletedEventArgs(UnitUnderConstruction));
 
             CleanUpUnitUnderConstruction();
 		}

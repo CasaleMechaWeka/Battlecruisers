@@ -22,8 +22,8 @@ namespace BattleCruisers.Cruisers.Construction
         /// </summary>
         IReadOnlyCollection<IUnit> AliveUnits { get; }
 
-        event EventHandler<StartedUnitConstructionEventArgs> UnitStarted;
-        event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
+        event EventHandler<UnitStartedEventArgs> UnitStarted;
+        event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
     }
 }

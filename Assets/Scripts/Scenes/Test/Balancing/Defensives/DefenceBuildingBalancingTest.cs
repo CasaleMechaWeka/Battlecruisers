@@ -156,7 +156,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         protected abstract IFactory CreateFactory(IList<ITarget> defenceBuildings);
 
-        private void Factory_CompletedUnit(object sender, CompletedUnitConstructionEventArgs e)
+        private void Factory_CompletedUnit(object sender, UnitCompletedEventArgs e)
         {
             _completedOffensiveUnits.Add(e.Buildable);
             e.Buildable.Destroyed += Unit_Destroyed;

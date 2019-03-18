@@ -43,7 +43,7 @@ namespace BattleCruisers.Targets.TargetFinders
             InvokeTargetLostEvent(_enemyCruiser);
         }
 
-		private void _enemyCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+		private void _enemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
 		{
 			IBuilding building = e.Buildable;
 

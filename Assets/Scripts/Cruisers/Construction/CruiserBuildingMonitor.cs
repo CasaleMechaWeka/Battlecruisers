@@ -14,8 +14,8 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly HashSet<IBuilding> _aliveBuildings;
         public IReadOnlyCollection<IBuilding> AliveBuildings => _aliveBuildings;
 
-        public event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
-        public event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
+        public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
+        public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
         public CruiserBuildingMonitor(ICruiserController cruiser)
@@ -28,12 +28,12 @@ namespace BattleCruisers.Cruisers.Construction
             _aliveBuildings = new HashSet<IBuilding>();
         }
 
-        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             e.Buildable.CompletedBuildable += Buildable_CompletedBuildable;
             e.Buildable.Destroyed += Buildable_Destroyed;
 
-            BuildingStarted?.Invoke(this, new StartedBuildingConstructionEventArgs(e.Buildable));
+            BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(e.Buildable));
         }
 
         private void Buildable_CompletedBuildable(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace BattleCruisers.Cruisers.Construction
             Assert.IsFalse(_aliveBuildings.Contains(completedBuilding));
             _aliveBuildings.Add(completedBuilding);
 
-            BuildingCompleted?.Invoke(this, new CompletedBuildingConstructionEventArgs(completedBuilding));
+            BuildingCompleted?.Invoke(this, new BuildingCompletedEventArgs(completedBuilding));
         }
 
         private void Buildable_Destroyed(object sender, DestroyedEventArgs e)

@@ -70,7 +70,7 @@ namespace BattleCruisers.Buildables.Repairables
             }
         }
 
-        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             AddRepairable(e.Buildable);
         }

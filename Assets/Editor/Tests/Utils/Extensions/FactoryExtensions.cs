@@ -8,12 +8,12 @@ namespace BattleCruisers.Tests.Utils.Extensions
     {
         public static void StartBuildingUnit(this IFactory factory, IUnit unitToStart)
         {
-            factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(unitToStart));
+            factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(unitToStart));
         }
 
         public static void CompleteBuildingUnit(this IFactory factory, IUnit unitToComplete)
         {
-            factory.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(unitToComplete));
+            factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(unitToComplete));
         }
     }
 }

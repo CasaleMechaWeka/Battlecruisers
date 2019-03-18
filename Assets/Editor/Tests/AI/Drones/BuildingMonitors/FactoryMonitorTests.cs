@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         [Test]
         public void HasFactoryBuiltDesiredNumOfUnits_True()
         {
-            _factory.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(unit: null));
+            _factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(unit: null));
             Assert.IsTrue(_monitor.HasFactoryBuiltDesiredNumOfUnits);
         }
     }

@@ -37,10 +37,10 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Factories.Spawning
         [Test]
         public void UnitCompleted_ResetsTimer_AndUnsubscribesFromDestroyedEvent()
         {
-            _factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_unit));
+            _factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(_unit));
 
             _time.TimeSinceGameStartInS.Returns(1);
-            _factory.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unit));
+            _factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(_unit));
 
             Assert.AreEqual(0, _unitSpawnTimer.TimeSinceFactoryWasClearInS);
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Factories.Spawning
         [Test]
         public void UnitDestroyed_ResetsTimer_AndUnsubscribesFromDestroyedEvent()
         {
-            _factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_unit));
+            _factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(_unit));
 
             _time.TimeSinceGameStartInS.Returns(1);
             _unit.Destroyed += Raise.EventWith(new DestroyedEventArgs(_unit));

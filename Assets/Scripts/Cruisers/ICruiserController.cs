@@ -7,6 +7,7 @@ using System;
 
 namespace BattleCruisers.Cruisers
 {
+    // FELIX  Remove.  Benefit is minimal :P
     public abstract class BuildableConstructionEventArgs<TBuildable> : EventArgs where TBuildable : IBuildable
     {
 		public TBuildable Buildable { get; }
@@ -17,18 +18,16 @@ namespace BattleCruisers.Cruisers
 		}
     }
 
-    // FELIX  Rename to StartedBuildingEventArgs :)
-    public class StartedBuildingConstructionEventArgs : BuildableConstructionEventArgs<IBuilding>
+    // FELIX  Move to ICruiserBuildingMonitor
+    public class BuildingStartedEventArgs : BuildableConstructionEventArgs<IBuilding>
     {
-        public StartedBuildingConstructionEventArgs(IBuilding building)
+        public BuildingStartedEventArgs(IBuilding building)
             : base(building) { }
     }
 
-    // FELIX  Move to ICruiserBuildingMonitor
-    // FELIX  Rename to BuildingCompletedEventArgs :)
-    public class CompletedBuildingConstructionEventArgs : BuildableConstructionEventArgs<IBuilding>
+    public class BuildingCompletedEventArgs : BuildableConstructionEventArgs<IBuilding>
     {
-        public CompletedBuildingConstructionEventArgs(IBuilding building)
+        public BuildingCompletedEventArgs(IBuilding building)
             : base(building) { }
     }
 
@@ -43,7 +42,7 @@ namespace BattleCruisers.Cruisers
         ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
 
-        event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
+        event EventHandler<BuildingStartedEventArgs> BuildingStarted;
 
         IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
 	}

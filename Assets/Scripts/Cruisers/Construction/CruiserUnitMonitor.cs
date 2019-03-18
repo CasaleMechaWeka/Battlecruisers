@@ -15,8 +15,8 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly HashSet<IUnit> _aliveUnits;
         public IReadOnlyCollection<IUnit> AliveUnits => _aliveUnits;
 
-        public event EventHandler<StartedUnitConstructionEventArgs> UnitStarted;
-        public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
+        public event EventHandler<UnitStartedEventArgs> UnitStarted;
+        public event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         public event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
 
         public CruiserUnitMonitor(ICruiserBuildingMonitor buildingMonitor)
@@ -29,7 +29,7 @@ namespace BattleCruisers.Cruisers.Construction
             _aliveUnits = new HashSet<IUnit>();
         }
 
-        private void _buildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void _buildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -41,13 +41,13 @@ namespace BattleCruisers.Cruisers.Construction
             }
         }
 
-        private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
+        private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             UnitStarted?.Invoke(this, e);
             e.Buildable.Destroyed += Unit_Destroyed;
         }
 
-        private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
+        private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
             UnitCompleted?.Invoke(this, e);
 

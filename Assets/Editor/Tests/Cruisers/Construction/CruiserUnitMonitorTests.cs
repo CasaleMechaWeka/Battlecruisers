@@ -15,8 +15,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         private CruiserUnitMonitor _unitMonitor;
         private ICruiserBuildingMonitor _buildingMonitor;
         private IFactory _factory;
-        private StartedUnitConstructionEventArgs _lastStartedEventArgs;
-        private CompletedUnitConstructionEventArgs _lastCompletedEventArgs;
+        private UnitStartedEventArgs _lastStartedEventArgs;
+        private UnitCompletedEventArgs _lastCompletedEventArgs;
         private int _destroyedCount;
         private IUnit _unit;
 
@@ -50,8 +50,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void FactoryStartsUnit_EmitsEvent()
         {
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
-            StartedUnitConstructionEventArgs eventArgs = new StartedUnitConstructionEventArgs(_unit);
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
+            UnitStartedEventArgs eventArgs = new UnitStartedEventArgs(_unit);
             _factory.StartedBuildingUnit += Raise.EventWith(eventArgs);
 
             Assert.AreSame(eventArgs, _lastStartedEventArgs);
@@ -61,8 +61,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void UnitDestroyed_AfterStarted_BeforeCompleted_EmitsEvent()
         {
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
-            _factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_unit));
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
+            _factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(_unit));
             _unit.Destroyed += Raise.EventWith(new DestroyedEventArgs(_unit));
 
             Assert.AreEqual(1, _destroyedCount);
@@ -75,12 +75,12 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void FactoryCompletesUnit_EmitsEvent()
         {
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
 
-            StartedUnitConstructionEventArgs startedEventArgs = new StartedUnitConstructionEventArgs(_unit);
+            UnitStartedEventArgs startedEventArgs = new UnitStartedEventArgs(_unit);
             _factory.StartedBuildingUnit += Raise.EventWith(startedEventArgs);
 
-            CompletedUnitConstructionEventArgs completedEventArgs = new CompletedUnitConstructionEventArgs(_unit);
+            UnitCompletedEventArgs completedEventArgs = new UnitCompletedEventArgs(_unit);
             _factory.CompletedBuildingUnit += Raise.EventWith(completedEventArgs);
 
             Assert.AreSame(completedEventArgs, _lastCompletedEventArgs);
@@ -91,10 +91,10 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void FactoryCompletesUnit_UnitPreviouslyCompleted_Throws()
         {
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
 
             // Unit completes
-            CompletedUnitConstructionEventArgs completedEventArgs = new CompletedUnitConstructionEventArgs(_unit);
+            UnitCompletedEventArgs completedEventArgs = new UnitCompletedEventArgs(_unit);
             _factory.CompletedBuildingUnit += Raise.EventWith(completedEventArgs);
 
             // Same unit completes again
@@ -104,9 +104,9 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void UnitDestroyed_AfterCompleted_RemovesUnit_EmitsEvent()
         {
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
-            _factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_unit));
-            _factory.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unit));
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
+            _factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(_unit));
+            _factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(_unit));
 
             _unit.Destroyed += Raise.EventWith(new DestroyedEventArgs(_unit));
 
@@ -122,15 +122,15 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         public void FactoryDestroyed_UnsubsribesFromFactory()
         {
             // Subcribe to factory event
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
             
             // Unsubscribe from factory event
             _factory.Destroyed += Raise.EventWith(new DestroyedEventArgs(_factory));
 
             // Assert event is no longer subscribed to
-            _factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_unit));
+            _factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(_unit));
             Assert.IsNull(_lastStartedEventArgs);
-            _factory.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unit));
+            _factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(_unit));
             Assert.IsNull(_lastCompletedEventArgs);
         }
 
@@ -140,12 +140,12 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _unitMonitor.DisposeManagedState();
 
             // This should no longer be listend to
-            _buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(_factory));
+            _buildingMonitor.BuildingCompleted += Raise.EventWith(new BuildingCompletedEventArgs(_factory));
             
             // Assert event is no longer subscribed to
-            _factory.StartedBuildingUnit += Raise.EventWith(new StartedUnitConstructionEventArgs(_unit));
+            _factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(_unit));
             Assert.IsNull(_lastStartedEventArgs);
-            _factory.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unit));
+            _factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(_unit));
             Assert.IsNull(_lastCompletedEventArgs);
         }
     }

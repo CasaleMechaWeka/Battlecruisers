@@ -71,7 +71,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 			Assert.AreNotSame(_unit2, _navalFactory.UnitWrapper);
 
             // Unit completed
-            _navalFactory.CompletedBuildingUnit += Raise.EventWith(_navalFactory, new CompletedUnitConstructionEventArgs(_unit.Buildable));
+            _navalFactory.CompletedBuildingUnit += Raise.EventWith(_navalFactory, new UnitCompletedEventArgs(_unit.Buildable));
             _navalFactory.Received().StartBuildingUnit(_unit2);
 		}
 

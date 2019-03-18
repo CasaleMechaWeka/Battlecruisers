@@ -39,7 +39,7 @@ namespace BattleCruisers.AI.FactoryManagers
             _unitChooser.ChosenUnitChanged += _unitChooser_ChosenUnitChanged;
         }
 
-        private void _friendlyCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _friendlyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -62,7 +62,7 @@ namespace BattleCruisers.AI.FactoryManagers
             factory.StartBuildingUnit(_unitChooser.ChosenUnit);
         }
 
-        private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
+        private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
 			IFactory factory = sender.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(factory));

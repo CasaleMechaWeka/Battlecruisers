@@ -21,7 +21,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
             Factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
         }
 
-        private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
+        private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
             _numOfCompletedUnits++;
         }

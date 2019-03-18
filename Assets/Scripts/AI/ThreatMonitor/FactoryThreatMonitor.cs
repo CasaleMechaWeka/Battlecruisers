@@ -32,7 +32,7 @@ namespace BattleCruisers.AI.ThreatMonitors
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
         }
 
-        private void _enemyCruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _enemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 

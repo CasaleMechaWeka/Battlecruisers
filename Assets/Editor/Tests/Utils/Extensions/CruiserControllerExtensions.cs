@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Utils.Extensions
     {
         public static void StartConstructingBuilding(this ICruiserController cruiser, IBuilding buildingToStart)
         {
-            cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(buildingToStart));
+            cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(buildingToStart));
         }
     }
 }

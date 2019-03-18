@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             factory.NewUnitChosen += Factory_NewUnitChosen;
         }
 
-        private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
+        private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             e.Buildable.Destroyed += Buildable_Destroyed;
         }
@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             FactoryCleared(e.DestroyedTarget.Parse<IUnit>());
         }
 
-        private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
+        private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
             FactoryCleared(e.Buildable);
         }

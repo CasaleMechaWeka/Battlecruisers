@@ -3,7 +3,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Tests.AI.FactoryManagers
 {
-    internal class StartedConstructionEventArgs : StartedBuildingConstructionEventArgs
+    internal class StartedConstructionEventArgs : BuildingStartedEventArgs
     {
         public StartedConstructionEventArgs(IBuilding building) : base(building)
         {

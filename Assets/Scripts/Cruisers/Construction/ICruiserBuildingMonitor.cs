@@ -21,8 +21,8 @@ namespace BattleCruisers.Cruisers.Construction
         /// </summary>
         IReadOnlyCollection<IBuilding> AliveBuildings { get; }
 
-        event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
-        event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
+        event EventHandler<BuildingStartedEventArgs> BuildingStarted;
+        event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
     }
 }

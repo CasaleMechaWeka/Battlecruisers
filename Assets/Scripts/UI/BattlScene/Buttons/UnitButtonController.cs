@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             TriggerPotentialMatchChange();
 		}
 
-        private void _currentFactory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
+        private void _currentFactory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             ShowBuildProgressIfNecessary(e.Buildable);
         }

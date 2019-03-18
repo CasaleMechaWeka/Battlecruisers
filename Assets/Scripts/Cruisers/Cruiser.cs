@@ -78,8 +78,8 @@ namespace BattleCruisers.Cruisers
         public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
         public ICruiserUnitMonitor UnitMonitor { get; private set; }
 
-        public event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
-        public event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
+        public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
+        public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
@@ -186,7 +186,7 @@ namespace BattleCruisers.Cruisers
 
 			building.StartConstruction();
 
-			BuildingStarted?.Invoke(this, new StartedBuildingConstructionEventArgs(building));
+			BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
 
 			return building;
 		}
@@ -196,7 +196,7 @@ namespace BattleCruisers.Cruisers
             IBuilding completedBuilding = sender.Parse<IBuilding>();
             completedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
-            BuildingCompleted?.Invoke(this, new CompletedBuildingConstructionEventArgs(completedBuilding));
+            BuildingCompleted?.Invoke(this, new BuildingCompletedEventArgs(completedBuilding));
         }
 
         private void Building_Destroyed(object sender, DestroyedEventArgs e)

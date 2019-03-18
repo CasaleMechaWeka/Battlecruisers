@@ -26,7 +26,7 @@ namespace BattleCruisers.Cruisers.Construction
             _cruiserUnitMonitor.UnitStarted += _unitConstructionMonitor_StartedBuildingUnit;
         }
 
-        private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             if (e.Buildable.Category == BuildingCategory.Ultra)
             {
@@ -34,7 +34,7 @@ namespace BattleCruisers.Cruisers.Construction
             }
         }
 
-        private void _unitConstructionMonitor_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
+        private void _unitConstructionMonitor_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             if (e.Buildable.IsUltra)
             {

@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.Music
             _aiCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;
         }
 
-        private void Cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void Cruiser_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
         {
             if (e.Buildable.Category == BuildingCategory.Offence
                 || e.Buildable.Category == BuildingCategory.Ultra)
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.Music
             }
         }
 
-        private void Cruiser_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
+        private void Cruiser_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
             if (e.Buildable.IsUltra)
             {
