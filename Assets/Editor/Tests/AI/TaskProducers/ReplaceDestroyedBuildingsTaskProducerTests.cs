@@ -2,9 +2,9 @@
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -72,26 +72,21 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         [Test]
 		public void BuildingDestroyed_NotDronesStation_CreatesNormalPriorityTask()
 		{
-            BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_normalBuilding);
-            _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs);
-
+            _cruiser.BuildingMonitor.EmitBuildingDestroyed(_normalBuilding);
 			_tasks.Received().Add(_normalRebuildTask);
 		}
 
         [Test]
         public void BuildingDestroyed_DronesStation_CreatesHighPriorityTask()
         {
-            BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_droneStation);
-            _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs);
-
+            _cruiser.BuildingMonitor.EmitBuildingDestroyed(_droneStation);
             _tasks.Received().Add(_highPriorityRebuildTask);
         }
 
         [Test]
 		public void BuildingDestroyed_NoPrefabKey_Throws()
 		{
-            BuildingDestroyedEventArgs eventArgs = new BuildingDestroyedEventArgs(_buildingWithoutKey);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.BuildingDestroyed += Raise.EventWith(_cruiser, eventArgs));
-		}
-	}
+            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.BuildingMonitor.EmitBuildingDestroyed(_buildingWithoutKey));
+        }
+    }
 }

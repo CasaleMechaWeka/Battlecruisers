@@ -40,7 +40,7 @@ namespace BattleCruisers.AI.TaskProducers
         private const float TASK_DELAY_IN_S = 1;
 
         public ReplaceDestroyedBuildingsTaskProducer(
-            ITaskList tasks, 
+            ITaskList tasks,
             ICruiserController cruiser, 
             IPrefabFactory prefabFactory, 
             ITaskFactory taskFactory, 
@@ -49,7 +49,7 @@ namespace BattleCruisers.AI.TaskProducers
         {
             _buildingNamesToKeys = CreateMap(buildingKeys);
 
-            _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
+            _cruiser.BuildingMonitor.BuildingDestroyed += _cruiser_BuildingDestroyed;
         }
 
         private IDictionary<string, BuildingKey> CreateMap(IList<BuildingKey> buildingKeys)
@@ -79,7 +79,7 @@ namespace BattleCruisers.AI.TaskProducers
 
         public override void DisposeManagedState()
         {
-            _cruiser.BuildingDestroyed -= _cruiser_BuildingDestroyed;
+            _cruiser.BuildingMonitor.BuildingDestroyed -= _cruiser_BuildingDestroyed;
             base.DisposeManagedState();
         }
     }
