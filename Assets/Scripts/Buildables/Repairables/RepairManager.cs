@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Repairables
@@ -23,7 +22,6 @@ namespace BattleCruisers.Buildables.Repairables
     /// </summary>
     public class RepairManager : IRepairManager
     {
-        private readonly IDeferrer _deferrer;
         private readonly IDroneNumFeedbackFactory _feedbackFactory;
         private ICruiser _cruiser;
         private IDroneConsumerProvider _droneConsumerProvider;
@@ -31,11 +29,9 @@ namespace BattleCruisers.Buildables.Repairables
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
-        public RepairManager(IDeferrer deferrer, IDroneNumFeedbackFactory feedbackFactory)
+        public RepairManager(IDroneNumFeedbackFactory feedbackFactory)
         {
-            Helper.AssertIsNotNull(deferrer, feedbackFactory);
-
-            _deferrer = deferrer;
+            Assert.IsNotNull(feedbackFactory);
             _feedbackFactory = feedbackFactory;
         }
 
@@ -100,11 +96,7 @@ namespace BattleCruisers.Buildables.Repairables
 
                     Assert.IsTrue(repairable.RepairCommand.CanExecute);
                     float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * BuildSpeedMultipliers.DEFAULT;
-
-                    // FELIX  Code smell.  Surely there is a better way :P
-                    // Defer, as this may bring the repairable to full health, which 
-                    // sets its DroneConsumer to null, which modifies this enumerable :)
-                    _deferrer.Defer(() => repairable.RepairCommand.Execute(healthGained));
+                    repairable.RepairCommand.Execute(healthGained);
                 }
             }
         }

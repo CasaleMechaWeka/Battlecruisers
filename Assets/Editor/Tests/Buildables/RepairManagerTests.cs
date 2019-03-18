@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Tests.Mock;
 using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -67,7 +66,7 @@ namespace BattleCruisers.Tests.Buildables
 
             _repairAmount = DELTA_TIME_IN_S * _cruiserDroneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S * BuildSpeedMultipliers.DEFAULT;
 
-            _repairManager = new RepairManager(new DummyDeferrer(), _feedbackFactory);
+            _repairManager = new RepairManager(_feedbackFactory);
 
 			UnityAsserts.Assert.raiseExceptions = true;
 		}

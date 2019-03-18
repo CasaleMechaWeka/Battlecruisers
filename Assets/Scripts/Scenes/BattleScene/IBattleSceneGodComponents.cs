@@ -7,7 +7,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public interface IBattleSceneGodComponents
     {
-        IDeferrer Deferrer { get; }
         IVariableDelayDeferrer VariableDelayDeferrer { get; }
         IAudioSource AudioSource { get; }
         ICamera Camera { get; }
