@@ -44,6 +44,7 @@ namespace BattleCruisers.Cruisers.Construction
         private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
         {
             UnitStarted?.Invoke(this, e);
+            e.Buildable.Destroyed += Unit_Destroyed;
         }
 
         private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
@@ -52,16 +53,17 @@ namespace BattleCruisers.Cruisers.Construction
 
             Assert.IsFalse(_aliveUnits.Contains(e.Buildable));
             _aliveUnits.Add(e.Buildable);
-            e.Buildable.Destroyed += Unit_Destroyed;
         }
 
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)
         {
             IUnit destroyedUnit = e.DestroyedTarget.Parse<IUnit>();
-
-            Assert.IsTrue(_aliveUnits.Contains(destroyedUnit));
-            _aliveUnits.Remove(destroyedUnit);
             destroyedUnit.Destroyed -= Unit_Destroyed;
+
+            if (_aliveUnits.Contains(destroyedUnit))
+            {
+                _aliveUnits.Remove(destroyedUnit);
+            }
 
             UnitDestroyed?.Invoke(this, new UnitDestroyedEventArgs(destroyedUnit));
         }

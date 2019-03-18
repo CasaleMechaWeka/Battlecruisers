@@ -17,26 +17,19 @@ namespace BattleCruisers.Cruisers
 		}
     }
 
+    // FELIX  Rename to StartedBuildingEventArgs :)
     public class StartedBuildingConstructionEventArgs : BuildableConstructionEventArgs<IBuilding>
     {
         public StartedBuildingConstructionEventArgs(IBuilding building)
             : base(building) { }
     }
 
+    // FELIX  Move to ICruiserBuildingMonitor
+    // FELIX  Rename to BuildingCompletedEventArgs :)
     public class CompletedBuildingConstructionEventArgs : BuildableConstructionEventArgs<IBuilding>
     {
         public CompletedBuildingConstructionEventArgs(IBuilding building)
             : base(building) { }
-    }
-
-    public class BuildingDestroyedEventArgs : EventArgs
-    {
-        public IBuilding DestroyedBuilding { get; }
-
-        public BuildingDestroyedEventArgs(IBuilding destroyedBuilding)
-        {
-            DestroyedBuilding = destroyedBuilding;
-        }
     }
 
 	public interface ICruiserController
@@ -49,8 +42,9 @@ namespace BattleCruisers.Cruisers
         IDroneFocuser DroneFocuser { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
 
-        // FELIX  Replace with ICruiserBuildingMonitor getter :)
         event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
+        
+        // FELIX  Replace with ICruiserBuildingMonitor getter :)
 		event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
 		event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
 
