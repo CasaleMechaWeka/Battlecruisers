@@ -1,17 +1,23 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update test :)
     public class UnitConstructionMonitor : IUnitConstructionMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
 
+        public IReadOnlyCollection<IUnit> AliveUnits => throw new NotImplementedException();
+
         public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
         public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+        public event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
 
         public UnitConstructionMonitor(ICruiserController cruiser)
         {
