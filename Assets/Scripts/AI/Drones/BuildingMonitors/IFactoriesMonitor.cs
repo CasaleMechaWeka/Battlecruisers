@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     public interface IFactoriesMonitor
     {
-        ReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
+        IReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,25 +12,25 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
     public class FactoriesMonitor : IFactoriesMonitor, IManagedDisposable
     {
-        private readonly ICruiserController _cruiser;
+        private readonly ICruiserBuildingMonitor _bulidingMonitor;
         private readonly IFactoryMonitorFactory _monitorFactory;
         private readonly IList<IFactoryMonitor> _completedFactories;
 
-        public ReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
+        public IReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
 
-        public FactoriesMonitor(ICruiserController cruiser, IFactoryMonitorFactory monitorFactory)
+        public FactoriesMonitor(ICruiserBuildingMonitor buildingMonitor, IFactoryMonitorFactory monitorFactory)
         {
-            Helper.AssertIsNotNull(cruiser, monitorFactory);
+            Helper.AssertIsNotNull(buildingMonitor, monitorFactory);
 
-            _cruiser = cruiser;
+            _bulidingMonitor = buildingMonitor;
             _monitorFactory = monitorFactory;
             _completedFactories = new List<IFactoryMonitor>();
             CompletedFactories = new ReadOnlyCollection<IFactoryMonitor>(_completedFactories);
 
-            _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
+            _bulidingMonitor.BuildingCompleted += _buildingMonitor_BuildingCompleted;
         }
 
-        private void _cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void _buildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             IFactory factory = e.Buildable as IFactory;
 
@@ -68,7 +69,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
             }
             _completedFactories.Clear();
 
-            _cruiser.BuildingCompleted -= _cruiser_BuildingCompleted;
+            _bulidingMonitor.BuildingCompleted -= _buildingMonitor_BuildingCompleted;
         }
     }
 }

@@ -99,7 +99,7 @@ namespace BattleCruisers.AI
         {
             IFactoryAnalyzer factoryAnalyzer
                 = new FactoryAnalyzer(
-                    new FactoriesMonitor(levelInfo.AICruiser, _factoryMonitorFactory),
+                    new FactoriesMonitor(levelInfo.AICruiser.BuildingMonitor, _factoryMonitorFactory),
                     new FactoryWastingDronesFilter());
 
             IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(levelInfo.AICruiser);
