@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
-using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 	{
 		private IGameObject _fog;
         private IFogVisibilityDecider _visibilityDecider;
-		private ICruiserController _friendlyCruiser, _enemyCruiser;
+		private ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private ISpySatelliteLauncher _satelliteLauncher;
         private IStealthGenerator _stealthGenerator;
         private IBuilding _randomBuilding;
@@ -27,13 +27,13 @@ namespace BattleCruisers.Tests.Cruisers.Fog
    
             _fog = Substitute.For<IGameObject>();
             _visibilityDecider = Substitute.For<IFogVisibilityDecider>();
-            _friendlyCruiser = Substitute.For<ICruiserController>();
-            _enemyCruiser = Substitute.For<ICruiserController>();
+            _friendlyBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
+            _enemyBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
             _satelliteLauncher = Substitute.For<ISpySatelliteLauncher>();
             _stealthGenerator = Substitute.For<IStealthGenerator>();
             _randomBuilding = Substitute.For<IBuilding>();
 
-            new FogOfWarManager(_fog, _visibilityDecider, _friendlyCruiser, _enemyCruiser);
+            new FogOfWarManager(_fog, _visibilityDecider, _friendlyBuildingMonitor, _enemyBuildingMonitor);
 		}
 
         #region Friendly cruiser building completed
@@ -69,7 +69,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
         [Test]
 		public void RandomFriendlyBuildingBuilt()
 		{
-            _friendlyCruiser.CompleteConstructingBuliding(_randomBuilding);
+            _friendlyBuildingMonitor.CompleteConstructingBuliding(_randomBuilding);
             _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default, default);
 		}
 		#endregion Friendly cruiser building completed
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 		[Test]
 		public void RandomEnemyBuildingBuilt()
 		{
-            _enemyCruiser.CompleteConstructingBuliding(_randomBuilding);
+            _enemyBuildingMonitor.CompleteConstructingBuliding(_randomBuilding);
             _visibilityDecider.DidNotReceiveWithAnyArgs().ShouldFogBeVisible(default, default);
 		}
 		#endregion Enemy cruiser building completed
@@ -172,7 +172,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 
         private void BuildStealthGenerator()
         {
-            _friendlyCruiser.CompleteConstructingBuliding(_stealthGenerator);
+            _friendlyBuildingMonitor.CompleteConstructingBuliding(_stealthGenerator);
         }
 
         private void DestroyStealthGenerator()
@@ -182,7 +182,7 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 
 		private void BuildSpySatellite()
 		{
-            _enemyCruiser.CompleteConstructingBuliding(_satelliteLauncher);
+            _enemyBuildingMonitor.CompleteConstructingBuliding(_satelliteLauncher);
 		}
 
         private void DestroySpySatellite()

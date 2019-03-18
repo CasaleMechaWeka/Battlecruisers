@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Tactical;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -16,31 +17,31 @@ namespace BattleCruisers.Cruisers.Fog
     {
         private readonly IGameObject _fog;
         private readonly IFogVisibilityDecider _visibilityDecider;
-        private readonly ICruiserController _friendlyCruiser, _enemyCruiser;
+        private readonly ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly IList<IStealthGenerator> _friendlyIStealthGenerators;
         private readonly IList<ISpySatelliteLauncher> _enemySpySatellites;
 
         public FogOfWarManager(
             IGameObject fog, 
             IFogVisibilityDecider visibilityDecider,
-            ICruiserController friendlyCruiser, 
-            ICruiserController enemyCruiser)
+            ICruiserBuildingMonitor friendlyBuildingMonitor,
+            ICruiserBuildingMonitor enemyBuildingMonitor)
         {
-            Helper.AssertIsNotNull(fog, visibilityDecider, friendlyCruiser, enemyCruiser);
+            Helper.AssertIsNotNull(fog, visibilityDecider, friendlyBuildingMonitor, enemyBuildingMonitor);
 
             _fog = fog;
             _visibilityDecider = visibilityDecider;
-            _friendlyCruiser = friendlyCruiser;
-            _enemyCruiser = enemyCruiser;
+            _friendlyBuildingMonitor = friendlyBuildingMonitor;
+            _enemyBuildingMonitor = enemyBuildingMonitor;
 
-            _friendlyCruiser.BuildingCompleted += _friendlyCruiser_BuildingCompleted;
-            _enemyCruiser.BuildingCompleted += _enemyCruiser_BuildingCompleted;
+            _friendlyBuildingMonitor.BuildingCompleted += _friendlyBuildingMonitor_BuildingCompleted;
+            _enemyBuildingMonitor.BuildingCompleted += _enemyBuildingMonitor_BuildingCompleted;
 
             _friendlyIStealthGenerators = new List<IStealthGenerator>();
             _enemySpySatellites = new List<ISpySatelliteLauncher>();
         }
 
-        private void _friendlyCruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void _friendlyBuildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             // Look for stealth generators
             AddBuilding(_friendlyIStealthGenerators, e.Buildable, IStealthGenerator_Destroyed);
@@ -51,7 +52,7 @@ namespace BattleCruisers.Cruisers.Fog
             RemoveBuilding(_friendlyIStealthGenerators, e.DestroyedTarget, IStealthGenerator_Destroyed);
 		}
 
-        private void _enemyCruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void _enemyBuildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             // Look for spy satellite launchers
             AddBuilding(_enemySpySatellites, e.Buildable, SatelliteLauncher_Destroyed);
@@ -96,8 +97,8 @@ namespace BattleCruisers.Cruisers.Fog
 
         public void DisposeManagedState()
         {
-            _friendlyCruiser.BuildingCompleted -= _friendlyCruiser_BuildingCompleted;
-            _enemyCruiser.BuildingCompleted -= _enemyCruiser_BuildingCompleted;
+            _friendlyBuildingMonitor.BuildingCompleted -= _friendlyBuildingMonitor_BuildingCompleted;
+            _enemyBuildingMonitor.BuildingCompleted -= _enemyBuildingMonitor_BuildingCompleted;
         }
     }
 }
