@@ -23,11 +23,21 @@ namespace BattleCruisers.Cruisers.Construction
             Assert.IsNotNull(cruiser);
 
             _cruiser = cruiser;
+
             _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
+            _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
+
             _cruiser.CompletedBuildingUnit += _cruiser_CompletedBuildingUnit;
+            // FELIX
+            //_cruiser.UnitD
 
             _aliveBuildings = new HashSet<IBuilding>();
             _aliveUnits = new HashSet<IUnit>();
+        }
+
+        private void _cruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void _cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
