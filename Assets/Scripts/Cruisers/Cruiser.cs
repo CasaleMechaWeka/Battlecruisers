@@ -82,15 +82,15 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit
+        public event EventHandler<StartedUnitConstructionEventArgs> UnitStarted
         {
-            add { _unitConstructionMonitor.StartedBuildingUnit += value; }
-            remove { _unitConstructionMonitor.StartedBuildingUnit -= value; }
+            add { _unitConstructionMonitor.UnitStarted += value; }
+            remove { _unitConstructionMonitor.UnitStarted -= value; }
         }
-        public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit
+        public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted
         {
-            add { _unitConstructionMonitor.CompletedBuildingUnit += value; }
-            remove { _unitConstructionMonitor.CompletedBuildingUnit -= value; }
+            add { _unitConstructionMonitor.UnitCompleted += value; }
+            remove { _unitConstructionMonitor.UnitCompleted -= value; }
         }
 
         protected override void OnStaticInitialised()

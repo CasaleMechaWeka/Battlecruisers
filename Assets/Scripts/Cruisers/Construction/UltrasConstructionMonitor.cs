@@ -19,7 +19,7 @@ namespace BattleCruisers.Cruisers.Construction
             _soundPlayer = soundPlayer;
 
             _cruiser.BuildingStarted += _cruiser_BuildingStarted;
-            _cruiser.StartedBuildingUnit += _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiser.UnitStarted += _unitConstructionMonitor_StartedBuildingUnit;
         }
 
         private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
@@ -41,7 +41,7 @@ namespace BattleCruisers.Cruisers.Construction
         public void DisposeManagedState()
         {
             _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
-            _cruiser.StartedBuildingUnit -= _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiser.UnitStarted -= _unitConstructionMonitor_StartedBuildingUnit;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayerCruiser_UnitComlpeted_Ultra_EmitsEvent()
         {
             _unitCompleted.IsUltra.Returns(true);
-            _playerCruiser.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
+            _playerCruiser.UnitCompleted += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
             Assert.AreEqual(1, _dangerEventCount);
         }
 
@@ -71,7 +71,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayerCruiser_UnitComlpeted_NotUltra_DoesNotEmitEvent()
         {
             _unitCompleted.IsUltra.Returns(false);
-            _playerCruiser.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
+            _playerCruiser.UnitCompleted += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
             Assert.AreEqual(0, _dangerEventCount);
         }
 
@@ -121,7 +121,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void AICruiser_UnitComlpeted_Ultra_EmitsEvent()
         {
             _unitCompleted.IsUltra.Returns(true);
-            _aiCruiser.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
+            _aiCruiser.UnitCompleted += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
             Assert.AreEqual(1, _dangerEventCount);
         }
 
@@ -129,7 +129,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void AICruiser_UnitComlpeted_NotUltra_DoesNotEmitEvent()
         {
             _unitCompleted.IsUltra.Returns(false);
-            _aiCruiser.CompletedBuildingUnit += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
+            _aiCruiser.UnitCompleted += Raise.EventWith(new CompletedUnitConstructionEventArgs(_unitCompleted));
             Assert.AreEqual(0, _dangerEventCount);
         }
 

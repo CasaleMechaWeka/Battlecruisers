@@ -15,8 +15,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         public IReadOnlyCollection<IUnit> AliveUnits => throw new NotImplementedException();
 
-        public event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
-        public event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+        public event EventHandler<StartedUnitConstructionEventArgs> UnitStarted;
+        public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
         public event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
 
         public UnitConstructionMonitor(ICruiserController cruiser)
@@ -41,12 +41,12 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void Factory_StartedBuildingUnit(object sender, StartedUnitConstructionEventArgs e)
         {
-            StartedBuildingUnit?.Invoke(this, e);
+            UnitStarted?.Invoke(this, e);
         }
 
         private void Factory_CompletedBuildingUnit(object sender, CompletedUnitConstructionEventArgs e)
         {
-            CompletedBuildingUnit?.Invoke(this, e);
+            UnitCompleted?.Invoke(this, e);
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)

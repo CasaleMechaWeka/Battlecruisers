@@ -27,7 +27,7 @@ namespace BattleCruisers.Cruisers.Construction
             _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
 
-            _cruiser.CompletedBuildingUnit += _cruiser_CompletedBuildingUnit;
+            _cruiser.UnitCompleted += _cruiser_CompletedBuildingUnit;
             // FELIX
             //_cruiser.UnitD
 

@@ -25,8 +25,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _lastStartedEventArgs = null;
             _lastCompletedEventArgs = null;
 
-            _monitor.StartedBuildingUnit += (sender, e) => _lastStartedEventArgs = e;
-            _monitor.CompletedBuildingUnit += (sender, e) => _lastCompletedEventArgs = e;
+            _monitor.UnitStarted += (sender, e) => _lastStartedEventArgs = e;
+            _monitor.UnitCompleted += (sender, e) => _lastCompletedEventArgs = e;
         }
 
         [Test]

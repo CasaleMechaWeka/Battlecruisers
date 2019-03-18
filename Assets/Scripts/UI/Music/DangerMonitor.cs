@@ -34,9 +34,9 @@ namespace BattleCruisers.UI.Music
             _aiCruiserHealthMonitor = aiCruiserHealthMonitor;
 
             _playerCruiser.BuildingCompleted += Cruiser_BuildingCompleted;
-            _playerCruiser.CompletedBuildingUnit += Cruiser_CompletedBuildingUnit;
+            _playerCruiser.UnitCompleted += Cruiser_CompletedBuildingUnit;
             _aiCruiser.BuildingCompleted += Cruiser_BuildingCompleted;
-            _aiCruiser.CompletedBuildingUnit += Cruiser_CompletedBuildingUnit;
+            _aiCruiser.UnitCompleted += Cruiser_CompletedBuildingUnit;
 
             _playerCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;
             _aiCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;

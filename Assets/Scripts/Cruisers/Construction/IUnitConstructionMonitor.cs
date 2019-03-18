@@ -20,10 +20,8 @@ namespace BattleCruisers.Cruisers.Construction
         // FELIX  Uncomment!!!
         //IReadOnlyCollection<IUnit> AliveUnits { get; }
 
-        // FELIX  Rename to UnitStarted
-        event EventHandler<StartedUnitConstructionEventArgs> StartedBuildingUnit;
-        // FELIX  Rename to UnitCompleted
-        event EventHandler<CompletedUnitConstructionEventArgs> CompletedBuildingUnit;
+        event EventHandler<StartedUnitConstructionEventArgs> UnitStarted;
+        event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted;
         //event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
     }
 }
