@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Test, use :)
     public class CruiserBuildingMonitor : ICruiserBuildingMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
@@ -52,6 +51,7 @@ namespace BattleCruisers.Cruisers.Construction
         {
             IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
             destroyedBuilding.Destroyed -= Buildable_Destroyed;
+            destroyedBuilding.CompletedBuildable -= Buildable_CompletedBuildable;
 
             if (_aliveBuildings.Contains(destroyedBuilding))
             {
