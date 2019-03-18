@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
@@ -16,14 +16,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         private IItemProvider<IBuildable> _buildableProvider;
         private IItemProvider<IMaskHighlightable> _highlightableProvider;
         private IItemProvider<IClickableEmitter> _clickableProvider;
-        private ICruiserController _cruiser;
+        private ICruiserBuildingMonitor _playerBuildingMonitor;
         private IBuilding _building1, _building2;
 
         [SetUp]
         public void SetuUp()
         {
-            _cruiser = Substitute.For<ICruiserController>();
-            LastIncompleteBuildingStartedProvider provider = new LastIncompleteBuildingStartedProvider(_cruiser);
+            _playerBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
+            LastIncompleteBuildingStartedProvider provider = new LastIncompleteBuildingStartedProvider(_playerBuildingMonitor);
 
             _buildableProvider = provider;
             _highlightableProvider = provider;
@@ -42,33 +42,33 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         [Test]
         public void Started()
         {
-            _cruiser.StartConstructingBuilding(_building1);
+            _playerBuildingMonitor.StartConstructingBuilding(_building1);
             AssertItem(_building1);
         }
 
         [Test]
         public void Started_Completed()
         {
-            _cruiser.StartConstructingBuilding(_building1);
+            _playerBuildingMonitor.StartConstructingBuilding(_building1);
             AssertItem(_building1);
 
-            _cruiser.CompleteConstructingBuliding(_building1);
+            _playerBuildingMonitor.CompleteConstructingBuliding(_building1);
             AssertNoItem();
         }
 
         [Test]
         public void Started_Started_Completed_Completed()
         {
-            _cruiser.StartConstructingBuilding(_building1);
+            _playerBuildingMonitor.StartConstructingBuilding(_building1);
             AssertItem(_building1);
 
-            _cruiser.StartConstructingBuilding(_building2);
+            _playerBuildingMonitor.StartConstructingBuilding(_building2);
             AssertItem(_building2);
 
-            _cruiser.CompleteConstructingBuliding(_building2);
+            _playerBuildingMonitor.CompleteConstructingBuliding(_building2);
             AssertItem(_building1);
 
-            _cruiser.CompleteConstructingBuliding(_building1);
+            _playerBuildingMonitor.CompleteConstructingBuliding(_building1);
             AssertNoItem();
         }
 

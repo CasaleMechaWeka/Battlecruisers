@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.UI;
@@ -23,22 +24,22 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             }
         }
 
-        public LastIncompleteBuildingStartedProvider(ICruiserController cruiser)
+        public LastIncompleteBuildingStartedProvider(ICruiserBuildingMonitor playerBuildingMonitor)
         {
-            Assert.IsNotNull(cruiser);
+            Assert.IsNotNull(playerBuildingMonitor);
 
             _incompleteBuildables = new List<IBuildable>();
 
-            cruiser.BuildingStarted += cruiser_BuildingStarted;
-            cruiser.BuildingCompleted += cruiser_BuildingCompleted;
+            playerBuildingMonitor.BuildingStarted += playerBuildingMonitor_BuildingStarted;
+            playerBuildingMonitor.BuildingCompleted += playerBuildingMonitor_BuildingCompleted;
         }
 
-        private void cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
+        private void playerBuildingMonitor_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
         {
             _incompleteBuildables.Add(e.Buildable);
         }
 
-        private void cruiser_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
+        private void playerBuildingMonitor_BuildingCompleted(object sender, CompletedBuildingConstructionEventArgs e)
         {
             _incompleteBuildables.Remove(e.Buildable);
         }

@@ -94,7 +94,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
         {
-            return new LastIncompleteBuildingStartedProvider(cruiser);
+            return new LastIncompleteBuildingStartedProvider(cruiser.BuildingMonitor);
         }
 
         public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
