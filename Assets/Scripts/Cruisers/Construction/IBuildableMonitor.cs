@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Cruisers.Construction
 {
     public interface IBuildableMonitor
     {
-        ReadOnlyCollection<IBuilding> AliveBuildings { get; }
-        ReadOnlyCollection<IUnit> AliveUnits { get; }
+        IReadOnlyCollection<IBuilding> AliveBuildings { get; }
+        IReadOnlyCollection<IUnit> AliveUnits { get; }
     }
 }
