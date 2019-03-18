@@ -56,14 +56,14 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void UltraUnitStarted_PlaysSound()
         {
-            _cruiser.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
+            _cruiser.UnitMonitor.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
         }
 
         [Test]
         public void NormalUnitStarted_DoesNotPlaySound()
         {
-            _cruiser.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(_normalUnit));
+            _cruiser.UnitMonitor.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(_normalUnit));
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
         }
 
@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         {
             _monitor.DisposeManagedState();
 
-            _cruiser.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
+            _cruiser.UnitMonitor.UnitStarted += Raise.EventWith(new StartedUnitConstructionEventArgs(_ultraUnit));
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
 
             _cruiser.BuildingStarted += Raise.EventWith(new StartedBuildingConstructionEventArgs(_ultraBuilding));

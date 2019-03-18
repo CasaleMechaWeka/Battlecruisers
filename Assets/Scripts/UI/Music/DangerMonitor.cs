@@ -13,6 +13,7 @@ namespace BattleCruisers.UI.Music
     /// + An ultra is completed
     /// + A cruiser drops below 1/3 health
     /// </summary>
+    /// FELIX  Update test :)
     public class DangerMonitor : IDangerMonitor
     {
         private readonly ICruiserController _playerCruiser, _aiCruiser;
@@ -34,9 +35,9 @@ namespace BattleCruisers.UI.Music
             _aiCruiserHealthMonitor = aiCruiserHealthMonitor;
 
             _playerCruiser.BuildingCompleted += Cruiser_BuildingCompleted;
-            _playerCruiser.UnitCompleted += Cruiser_CompletedBuildingUnit;
+            _playerCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
             _aiCruiser.BuildingCompleted += Cruiser_BuildingCompleted;
-            _aiCruiser.UnitCompleted += Cruiser_CompletedBuildingUnit;
+            _aiCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
 
             _playerCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;
             _aiCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;

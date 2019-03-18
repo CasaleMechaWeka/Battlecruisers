@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Delete class :D  Use Creuiser-IUnit/-IBuilding-Monitors instead :D
     // FELIX  Test, use :)
     public class BuildableMonitor : IBuildableMonitor
     {
@@ -27,7 +28,7 @@ namespace BattleCruisers.Cruisers.Construction
             _cruiser.BuildingCompleted += _cruiser_BuildingCompleted;
             _cruiser.BuildingDestroyed += _cruiser_BuildingDestroyed;
 
-            _cruiser.UnitCompleted += _cruiser_CompletedBuildingUnit;
+            //_cruiser.UnitCompleted += _cruiser_CompletedBuildingUnit;
             // FELIX
             //_cruiser.UnitD
 

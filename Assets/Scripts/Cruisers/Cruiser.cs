@@ -34,7 +34,6 @@ namespace BattleCruisers.Cruisers
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
-        private ICruiserUnitMonitor _unitMonitor;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private FogOfWarManager _fogOfWarManager;
@@ -76,22 +75,12 @@ namespace BattleCruisers.Cruisers
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneFocuser DroneFocuser { get; private set; }
+        public ICruiserUnitMonitor UnitMonitor { get; private set; }
 
         public event EventHandler<StartedBuildingConstructionEventArgs> BuildingStarted;
         public event EventHandler<CompletedBuildingConstructionEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
-
-        public event EventHandler<StartedUnitConstructionEventArgs> UnitStarted
-        {
-            add { _unitMonitor.UnitStarted += value; }
-            remove { _unitMonitor.UnitStarted -= value; }
-        }
-        public event EventHandler<CompletedUnitConstructionEventArgs> UnitCompleted
-        {
-            add { _unitMonitor.UnitCompleted += value; }
-            remove { _unitMonitor.UnitCompleted -= value; }
-        }
 
         protected override void OnStaticInitialised()
 		{
@@ -148,7 +137,7 @@ namespace BattleCruisers.Cruisers
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, this);
 
-            _unitMonitor = new CruiserUnitMonitor(this);
+            UnitMonitor = new CruiserUnitMonitor(this);
 
             _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
 

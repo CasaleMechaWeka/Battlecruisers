@@ -6,9 +6,12 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update tests :)
     public class UltrasConstructionMonitor : IManagedDisposable
     {
+        // FELIX  Replace with ICruiserBuildingMonitor (once it exists :P)
         private readonly ICruiserController _cruiser;
+        private readonly ICruiserUnitMonitor _cruiserUnitMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
 
         public UltrasConstructionMonitor(ICruiserController cruiser, IPrioritisedSoundPlayer soundPlayer)
@@ -16,10 +19,11 @@ namespace BattleCruisers.Cruisers.Construction
             Helper.AssertIsNotNull(cruiser, soundPlayer);
 
             _cruiser = cruiser;
+            _cruiserUnitMonitor = cruiser.UnitMonitor;
             _soundPlayer = soundPlayer;
 
             _cruiser.BuildingStarted += _cruiser_BuildingStarted;
-            _cruiser.UnitStarted += _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiserUnitMonitor.UnitStarted += _unitConstructionMonitor_StartedBuildingUnit;
         }
 
         private void _cruiser_BuildingStarted(object sender, StartedBuildingConstructionEventArgs e)
@@ -41,7 +45,7 @@ namespace BattleCruisers.Cruisers.Construction
         public void DisposeManagedState()
         {
             _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
-            _cruiser.UnitStarted -= _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiserUnitMonitor.UnitStarted -= _unitConstructionMonitor_StartedBuildingUnit;
         }
     }
 }
