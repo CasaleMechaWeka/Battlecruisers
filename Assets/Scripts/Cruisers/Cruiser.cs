@@ -135,11 +135,11 @@ namespace BattleCruisers.Cruisers
 
             _fog.Initialise(args.FogStrength);
 
-            SlotAccessor = _slotWrapperController.Initialise(this);
-            SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, this);
-
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
+
+            SlotAccessor = _slotWrapperController.Initialise(this);
+            SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
 
             _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
 

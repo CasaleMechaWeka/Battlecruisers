@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         private ISlotHighlighter _slotHighlighter;
         private ISlotAccessor _slotAccessor;
         private ISlotFilter _highlightableFilter;
-        private ICruiserController _parentCruiser;
+        private ICruiserBuildingMonitor _parentCruiserBuildingMonitor;
         private ISlot _slot1, _slot2;
         private ReadOnlyCollection<ISlot> _slotsToReturn1, _slotsToReturn2;
         private IList<ISlot> _mutableSlotsToReturn1, _mutableSlotsToReturn2;
@@ -28,9 +28,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             _slotAccessor = Substitute.For<ISlotAccessor>();
             _highlightableFilter = Substitute.For<ISlotFilter>();
-            _parentCruiser = Substitute.For<ICruiserController>();
+            _parentCruiserBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
 
-            _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, _parentCruiser);
+            _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, _parentCruiserBuildingMonitor);
 
             _slot1 = Substitute.For<ISlot>();
             _slot1.Type.Returns(SlotType.Deck);
@@ -155,7 +155,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             // Building destroyed
             _slot2.ClearReceivedCalls();
-            _parentCruiser.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(null));
+            _parentCruiserBuildingMonitor.EmitBuildingDestroyed(null);
 
             // Received highlight refresh
             _slot2.Received().IsVisible = false;
@@ -171,7 +171,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _highlightableFilter.IsMatch(_slot2).Returns(true);
 
             // Building destroyed
-            _parentCruiser.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(null));
+            _parentCruiserBuildingMonitor.EmitBuildingDestroyed(null);
 
             // Received no highlight refresh
             _slot2.DidNotReceiveWithAnyArgs().IsVisible = default;

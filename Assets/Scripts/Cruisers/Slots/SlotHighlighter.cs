@@ -31,14 +31,14 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotHighlighter(ISlotAccessor slotAccessor, ISlotFilter highlightableFilter, ICruiserController parentCruiser)
+        public SlotHighlighter(ISlotAccessor slotAccessor, ISlotFilter highlightableFilter, ICruiserBuildingMonitor parentCruiserBuildingMonitor)
 		{
-            Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiser);
+            Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);
 
             _slotAccessor = slotAccessor;
             _highlightableFilter = highlightableFilter;
 
-            parentCruiser.BuildingDestroyed += ParentCruiser_BuildingDestroyed;
+            parentCruiserBuildingMonitor.BuildingDestroyed += ParentCruiser_BuildingDestroyed;
         }
 
         private void ParentCruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)

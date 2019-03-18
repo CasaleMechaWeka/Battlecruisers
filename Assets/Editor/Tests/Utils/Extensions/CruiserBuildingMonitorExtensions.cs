@@ -16,5 +16,10 @@ namespace BattleCruisers.Tests.Utils.Extensions
         {
 			buildingMonitor.BuildingCompleted += Raise.EventWith(new CompletedBuildingConstructionEventArgs(buildingToComplete));
         }
+
+        public static void EmitBuildingDestroyed(this ICruiserBuildingMonitor buildingMonitor, IBuilding buildingToDestroy)
+        {
+            buildingMonitor.BuildingDestroyed += Raise.EventWith(new BuildingDestroyedEventArgs(buildingToDestroy));
+        }
     }
 }
