@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Update tests :)
     public class CruiserUnitMonitor : ICruiserUnitMonitor, IManagedDisposable
     {
         private readonly ICruiserBuildingMonitor _buildingMonitor;
