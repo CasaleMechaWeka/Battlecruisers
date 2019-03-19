@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
@@ -16,6 +17,7 @@ namespace BattleCruisers.Cruisers
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
         private readonly ICameraFocuser _cameraFocuser;
+        private readonly BroadcastingFilter _navigationPermitter;
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
 
@@ -24,15 +26,17 @@ namespace BattleCruisers.Cruisers
             ICruiser aiCruiser,
             IBattleCompletionHandler battleCompletionHandler,
             IDeferrer deferrer,
-            ICameraFocuser cameraFocuser)
+            ICameraFocuser cameraFocuser,
+            BroadcastingFilter navigationPermitter)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, battleCompletionHandler, deferrer, cameraFocuser);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, battleCompletionHandler, deferrer, cameraFocuser, navigationPermitter);
 
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _battleCompletionHandler = battleCompletionHandler;
             _deferrer = deferrer;
             _cameraFocuser = cameraFocuser;
+            _navigationPermitter = navigationPermitter;
 
             _playerCruiser.Destroyed += _playerCruiser_Destroyed;
             _aiCruiser.Destroyed += _aiCruiser_Destroyed;
@@ -61,6 +65,7 @@ namespace BattleCruisers.Cruisers
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
             victoryCruiser.MakeInvincible();
+            _navigationPermitter.IsMatch = false;
             FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
 

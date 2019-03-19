@@ -189,7 +189,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser, 
                     _battleCompletionHandler, 
                     components.Deferrer, 
-                    cameraComponents.CameraFocuser);
+                    cameraComponents.CameraFocuser,
+                    navigationPermitter);
 
             StartTutorialIfNecessary(
                 prefabFactory, 
