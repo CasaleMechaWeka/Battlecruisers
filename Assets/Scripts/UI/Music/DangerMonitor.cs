@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Utils;
 using System;

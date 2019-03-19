@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Cruisers.Construction;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors

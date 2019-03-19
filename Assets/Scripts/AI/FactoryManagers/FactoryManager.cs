@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;

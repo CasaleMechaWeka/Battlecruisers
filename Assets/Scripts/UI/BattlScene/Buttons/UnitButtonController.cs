@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;

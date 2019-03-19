@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using NSubstitute;
 
 namespace BattleCruisers.Tests.Utils.Extensions

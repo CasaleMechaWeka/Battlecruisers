@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.UI.Music;

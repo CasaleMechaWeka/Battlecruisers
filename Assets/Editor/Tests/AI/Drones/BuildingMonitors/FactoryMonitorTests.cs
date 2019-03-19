@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using NSubstitute;
 using NUnit.Framework;
 

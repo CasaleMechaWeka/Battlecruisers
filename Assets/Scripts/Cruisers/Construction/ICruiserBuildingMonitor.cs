@@ -4,6 +4,26 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    public class BuildingStartedEventArgs : EventArgs
+    {
+        public IBuilding StartedBuilding { get; }
+
+        public BuildingStartedEventArgs(IBuilding startedBuilding)
+        {
+            StartedBuilding = startedBuilding;
+        }
+    }
+
+    public class BuildingCompletedEventArgs : EventArgs
+    {
+        public IBuilding CompletedBuilding { get; }
+
+        public BuildingCompletedEventArgs(IBuilding completedBuilding)
+        {
+            CompletedBuilding = completedBuilding;
+        }
+    }
+
     public class BuildingDestroyedEventArgs : EventArgs
     {
         public IBuilding DestroyedBuilding { get; }

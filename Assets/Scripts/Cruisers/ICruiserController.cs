@@ -7,27 +7,6 @@ using System;
 
 namespace BattleCruisers.Cruisers
 {
-    // FELIX  Move to ICruiserBuildingMonitor
-    public class BuildingStartedEventArgs : EventArgs
-    {
-        public IBuilding StartedBuilding { get; }
-
-        public BuildingStartedEventArgs(IBuilding startedBuilding)
-        {
-            StartedBuilding = startedBuilding;
-        }
-    }
-
-    public class BuildingCompletedEventArgs : EventArgs
-    {
-        public IBuilding CompletedBuilding { get; }
-
-        public BuildingCompletedEventArgs(IBuilding completedBuilding)
-        {
-            CompletedBuilding = completedBuilding;
-        }
-    }
-
 	public interface ICruiserController
 	{
         bool IsAlive { get; }
