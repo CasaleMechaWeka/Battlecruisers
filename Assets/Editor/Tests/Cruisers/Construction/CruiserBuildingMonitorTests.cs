@@ -43,54 +43,36 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         }
 
         [Test]
-        public void BuildingStarted_ForwardsEvent()
+        public void BuildingStarted_AddsBuilding_ForwardsEvent()
         {
             _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
 
             Assert.AreEqual(1, _startedCount);
-            Assert.AreEqual(0, _buildingMonitor.AliveBuildings.Count);
+            Assert.AreEqual(1, _buildingMonitor.AliveBuildings.Count);
+            Assert.AreSame(_building, _buildingMonitor.AliveBuildings.First());
         }
 
         [Test]
-        public void BuildingDestroyed_AfterStarted_BeforeCompleted_EmitsEvent()
+        public void SameBuildingStartedAgain_Throws()
         {
             _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
-            _building.Destroyed += Raise.EventWith(new DestroyedEventArgs(_building));
-
-            Assert.AreEqual(1, _destroyedCount);
-
-            CheckEventsAreUnsubscribed();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building)));
         }
 
         [Test]
-        public void BuildingCompleted_AddsBuilding_EmitsEvent()
+        public void BuildingCompleted_EmitsEvent()
         {
             _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
             _building.CompletedBuildable += Raise.Event();
 
-            Assert.AreEqual(1, _buildingMonitor.AliveBuildings.Count);
-            Assert.AreSame(_building, _buildingMonitor.AliveBuildings.First());
             Assert.AreEqual(1, _completedCount);
         }
 
         [Test]
-        public void SameBuildingCompletedAgain_Throws()
+        public void BuildingDestroyed_RemovesBuilding_EmitsEvent()
         {
-            // Start and complete building
+            // Start building
             _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
-            _building.CompletedBuildable += Raise.Event();
-
-            // Start and complete SAME building
-            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
-            Assert.Throws<UnityAsserts.AssertionException>(() => _building.CompletedBuildable += Raise.Event());
-        }
-
-        [Test]
-        public void BuildingDestroyed_AfterCompleted_RemovesBuilding_EmitsEvent()
-        {
-            // Complete building
-            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
-            _building.CompletedBuildable += Raise.Event();
             Assert.AreEqual(1, _buildingMonitor.AliveBuildings.Count);
             Assert.AreSame(_building, _buildingMonitor.AliveBuildings.First());
 
