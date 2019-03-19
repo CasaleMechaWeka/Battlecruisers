@@ -18,6 +18,9 @@ namespace BattleCruisers.Cruisers
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
         private readonly ICameraFocuser _cameraFocuser;
+        // FELIX Actually, I don't think I want to disable navigation :P
+        // => Test what happens when victory while navigating
+        // => Potentially revert commit :)
         private readonly BroadcastingFilter _navigationPermitter;
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
@@ -49,9 +52,9 @@ namespace BattleCruisers.Cruisers
         // + Destroy all Losing Cruiser (LC) buildables
         // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
         // + Disable navigation wheel :P
-        // FELIX  NEXT :D
         // + Handle VC unit movement
         //      + Ships => Stop them from moving :)
+        // FELIX  NEXT :D
         // + Implement sinking animation :P
         private void _playerCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
@@ -66,11 +69,8 @@ namespace BattleCruisers.Cruisers
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
             victoryCruiser.MakeInvincible();
-
-            // FELIX  Uncomment :P
-            //_navigationPermitter.IsMatch = false;
-            //FocusOnLosingCruiser(losingCruiser);
-
+            _navigationPermitter.IsMatch = false;
+            FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
 
