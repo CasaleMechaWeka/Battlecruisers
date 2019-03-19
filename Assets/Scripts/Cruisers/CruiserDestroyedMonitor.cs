@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Cruisers
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
+        private readonly ICameraFocuser _cameraFocuser;
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
 
@@ -21,14 +23,16 @@ namespace BattleCruisers.Cruisers
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBattleCompletionHandler battleCompletionHandler,
-            IDeferrer deferrer)
+            IDeferrer deferrer,
+            ICameraFocuser cameraFocuser)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, battleCompletionHandler, deferrer);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, battleCompletionHandler, deferrer, cameraFocuser);
 
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _battleCompletionHandler = battleCompletionHandler;
             _deferrer = deferrer;
+            _cameraFocuser = cameraFocuser;
 
             _playerCruiser.Destroyed += _playerCruiser_Destroyed;
             _aiCruiser.Destroyed += _aiCruiser_Destroyed;
@@ -57,9 +61,22 @@ namespace BattleCruisers.Cruisers
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
             victoryCruiser.MakeInvincible();
+            FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
 
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasVictory), POST_GAME_WAIT_TIME_IN_S);
+        }
+
+        private void FocusOnLosingCruiser(ICruiser losingCruiser)
+        {
+            if (losingCruiser.IsPlayerCruiser)
+            {
+                _cameraFocuser.FocusOnPlayerCruiser();
+            }
+            else
+            {
+                _cameraFocuser.FocusOnAICruiser();
+            }
         }
 
         private void DestroyCruiserBuildables(ICruiser cruiser)
