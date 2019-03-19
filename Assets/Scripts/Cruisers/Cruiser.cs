@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
@@ -104,6 +103,9 @@ namespace BattleCruisers.Cruisers
 
             _smokeGroup = GetComponentInChildren<SmokeGroupInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeGroup);
+
+            BuildingMonitor = new CruiserBuildingMonitor(this);
+            UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
         }
 
         protected override ITextMesh GetRepairDroneNumText()
@@ -134,9 +136,6 @@ namespace BattleCruisers.Cruisers
             RepairManager = args.RepairManager;
 
             _fog.Initialise(args.FogStrength);
-
-            BuildingMonitor = new CruiserBuildingMonitor(this);
-            UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
