@@ -105,11 +105,6 @@ namespace BattleCruisers.Scenes.BattleScene
             return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
 
-        public IBroadcastingFilter CreateNavigationWheelEnabledFilter()
-        {
-            return new StaticBroadcastingFilter(isMatch: true);
-        }
-
         public IUIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");

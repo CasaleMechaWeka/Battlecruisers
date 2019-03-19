@@ -12,6 +12,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
@@ -72,7 +73,9 @@ namespace BattleCruisers.Scenes.BattleScene
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer);
+            BroadcastingFilter navigationPermitter = new BroadcastingFilter(isMatch: true);
+
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitter);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
@@ -104,7 +107,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     dataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
-                    helper.CreateNavigationWheelEnabledFilter());
+                    navigationPermitter);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
@@ -200,11 +203,11 @@ namespace BattleCruisers.Scenes.BattleScene
                 uiManager);
         }
 
-        private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IDeferrer deferrer)
+        private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IDeferrer deferrer, BroadcastingFilter navigationPermitter)
         {
             if (applicationModel.IsTutorial)
             {
-                TutorialHelper helper = new TutorialHelper(applicationModel.DataProvider, prefabFactory);
+                TutorialHelper helper = new TutorialHelper(applicationModel.DataProvider, prefabFactory, navigationPermitter);
                 _tutorialProvider = helper;
                 return helper;
             }

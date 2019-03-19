@@ -47,11 +47,12 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
-        public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, BroadcastingFilter navigationPermitter)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
+            NavigationPermitter = navigationPermitter;
 
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
@@ -60,7 +61,6 @@ namespace BattleCruisers.Scenes.BattleScene
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
             SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
-            NavigationPermitter = new BroadcastingFilter(isMatch: false);
             SpeedButtonsPermitter = new BroadcastingFilter(isMatch: false);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
@@ -123,11 +123,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
         {
             return new DummySoundPlayer();
-        }
-
-        public IBroadcastingFilter CreateNavigationWheelEnabledFilter()
-        {
-            return NavigationPermitter;
         }
 
         public IUIManager CreateUIManager()
