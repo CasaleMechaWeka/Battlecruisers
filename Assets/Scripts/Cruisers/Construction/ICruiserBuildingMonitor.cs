@@ -32,12 +32,12 @@ namespace BattleCruisers.Cruisers.Construction
         {
             DestroyedBuilding = destroyedBuilding;
         }
-    }
+   }
 
     public interface ICruiserBuildingMonitor
     {
         /// <summary>
-        /// Buildings that have been completed but not destroyed.
+        /// Buildings that have been started and not destroyed.
         /// </summary>
         IReadOnlyCollection<IBuilding> AliveBuildings { get; }
 

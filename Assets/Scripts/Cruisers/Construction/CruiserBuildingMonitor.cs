@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update tests :)
     public class CruiserBuildingMonitor : ICruiserBuildingMonitor, IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
@@ -30,6 +31,9 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
+            Assert.IsFalse(_aliveBuildings.Contains(e.StartedBuilding));
+            _aliveBuildings.Add(e.StartedBuilding);
+
             e.StartedBuilding.CompletedBuildable += Buildable_CompletedBuildable;
             e.StartedBuilding.Destroyed += Buildable_Destroyed;
 
@@ -41,9 +45,6 @@ namespace BattleCruisers.Cruisers.Construction
             IBuilding completedBuilding = sender.Parse<IBuilding>();
             completedBuilding.CompletedBuildable -= Buildable_CompletedBuildable;
 
-            Assert.IsFalse(_aliveBuildings.Contains(completedBuilding));
-            _aliveBuildings.Add(completedBuilding);
-
             BuildingCompleted?.Invoke(this, new BuildingCompletedEventArgs(completedBuilding));
         }
 
@@ -53,10 +54,8 @@ namespace BattleCruisers.Cruisers.Construction
             destroyedBuilding.Destroyed -= Buildable_Destroyed;
             destroyedBuilding.CompletedBuildable -= Buildable_CompletedBuildable;
 
-            if (_aliveBuildings.Contains(destroyedBuilding))
-            {
-                _aliveBuildings.Remove(destroyedBuilding);
-            }
+            Assert.IsTrue(_aliveBuildings.Contains(destroyedBuilding));
+            _aliveBuildings.Remove(destroyedBuilding);
 
             BuildingDestroyed?.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
         }

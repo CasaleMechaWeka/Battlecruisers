@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update tests :)
     public class CruiserUnitMonitor : ICruiserUnitMonitor, IManagedDisposable
     {
         private readonly ICruiserBuildingMonitor _buildingMonitor;
@@ -43,16 +44,17 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
-            UnitStarted?.Invoke(this, e);
+            Assert.IsFalse(_aliveUnits.Contains(e.StartedUnit));
+            _aliveUnits.Add(e.StartedUnit);
+
             e.StartedUnit.Destroyed += Unit_Destroyed;
+
+            UnitStarted?.Invoke(this, e);
         }
 
         private void Factory_CompletedBuildingUnit(object sender, UnitCompletedEventArgs e)
         {
             UnitCompleted?.Invoke(this, e);
-
-            Assert.IsFalse(_aliveUnits.Contains(e.CompletedUnit));
-            _aliveUnits.Add(e.CompletedUnit);
         }
 
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)
@@ -60,10 +62,8 @@ namespace BattleCruisers.Cruisers.Construction
             IUnit destroyedUnit = e.DestroyedTarget.Parse<IUnit>();
             destroyedUnit.Destroyed -= Unit_Destroyed;
 
-            if (_aliveUnits.Contains(destroyedUnit))
-            {
-                _aliveUnits.Remove(destroyedUnit);
-            }
+            Assert.IsTrue(_aliveUnits.Contains(destroyedUnit));
+            _aliveUnits.Remove(destroyedUnit);
 
             UnitDestroyed?.Invoke(this, new UnitDestroyedEventArgs(destroyedUnit));
         }

@@ -37,7 +37,7 @@ namespace BattleCruisers.Cruisers.Construction
     public interface ICruiserUnitMonitor
     {
         /// <summary>
-        /// Units that have been completed but not destroyed.
+        /// Units that have been started and not destroyed.
         /// </summary>
         IReadOnlyCollection<IUnit> AliveUnits { get; }
 
