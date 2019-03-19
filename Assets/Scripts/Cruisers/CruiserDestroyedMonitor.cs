@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
@@ -53,8 +54,18 @@ namespace BattleCruisers.Cruisers
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
             victoryCruiser.MakeInvincible();
+            DestroyCruiserBuildables(losingCruiser);
 
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasVictory), POST_GAME_WAIT_TIME_IN_S);
+        }
+
+        private void DestroyCruiserBuildables(ICruiser cruiser)
+        {
+            // FELIX  Complete :)
+            foreach (IBuilding building in cruiser.BuildingMonitor.AliveBuildings)
+            {
+
+            }
         }
     }
 }
