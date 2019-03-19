@@ -37,9 +37,10 @@ namespace BattleCruisers.Cruisers
         // FELIX:
         // + Make Victory Cruiser (VC) invincible (so in flight projectiles cannot destroy it)
         // + After watching sinking animation, go to post battle screen :)
-        
         // + Destroy all Losing Cruiser (LC) buildables
+        // FELIX  NEXT :D
         // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
+        // + Disable navigation wheel :P
         // + Handle VC unit movement
         //      + Ships => Stop them from moving :)
         // + Implement sinking animation :P
