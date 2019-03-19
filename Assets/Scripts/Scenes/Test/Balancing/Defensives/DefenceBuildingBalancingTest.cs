@@ -147,7 +147,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                 _offensiveFactory.CompletedBuildable += (factory, eventArgs) =>
                 {
                     _offensiveFactory.StartBuildingUnit(_prefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
-                    _offensiveFactory.CompletedBuildingUnit += Factory_CompletedUnit;
+                    _offensiveFactory.UnitCompleted += Factory_CompletedUnit;
                 };
 
                 _offensiveFactory.StartConstruction();

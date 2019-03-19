@@ -20,8 +20,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         void PauseBuildingUnit();
         void ResumeBuildingUnit();
 
-        event EventHandler<UnitStartedEventArgs> StartedBuildingUnit;
-		event EventHandler<UnitCompletedEventArgs> CompletedBuildingUnit;
+        event EventHandler<UnitStartedEventArgs> UnitStarted;
+		event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         event EventHandler NewUnitChosen;
 	}
 }

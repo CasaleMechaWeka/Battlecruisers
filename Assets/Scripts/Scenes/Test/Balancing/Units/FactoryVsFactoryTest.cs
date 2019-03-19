@@ -131,7 +131,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         {
             _deferrer.Defer(() => factory.StartBuildingUnit(unitToBuild), waitTimeInS);
 
-            factory.CompletedBuildingUnit += (sender, e) => OnFactoryCompletedUnit(e.CompletedUnit, killCounter);
+            factory.UnitCompleted += (sender, e) => OnFactoryCompletedUnit(e.CompletedUnit, killCounter);
         }
 
         private void OnFactoryCompletedUnit(IBuildable completedUnit, IKillCountController killCounter)

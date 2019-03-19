@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 				_currentFactory.CompletedBuildable += _factory_CompletedBuildable;
 			}
 
-            _currentFactory.StartedBuildingUnit += _currentFactory_StartedBuildingUnit;
+            _currentFactory.UnitStarted += _currentFactory_StartedBuildingUnit;
             _currentFactory.NewUnitChosen += _currentFactory_NewUnitChosen;
 
             ShowBuildProgressIfNecessary(_currentFactory.UnitUnderConstruction);
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             _buildProgressFeedback.HideBuildProgress();
 			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
-            _currentFactory.StartedBuildingUnit -= _currentFactory_StartedBuildingUnit;
+            _currentFactory.UnitStarted -= _currentFactory_StartedBuildingUnit;
             _currentFactory.NewUnitChosen -= _currentFactory_NewUnitChosen;
 			_currentFactory = null;
 		}

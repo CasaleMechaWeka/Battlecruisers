@@ -35,8 +35,8 @@ namespace BattleCruisers.Cruisers.Construction
 
             if (factory != null)
             {
-                factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
-                factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
+                factory.UnitStarted += Factory_StartedBuildingUnit;
+                factory.UnitCompleted += Factory_CompletedBuildingUnit;
                 factory.Destroyed += Factory_Destroyed;
             }
         }
@@ -70,8 +70,8 @@ namespace BattleCruisers.Cruisers.Construction
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
         {
             IFactory factory = e.DestroyedTarget.Parse<IFactory>();
-            factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
-            factory.CompletedBuildingUnit -= Factory_CompletedBuildingUnit;
+            factory.UnitStarted -= Factory_StartedBuildingUnit;
+            factory.UnitCompleted -= Factory_CompletedBuildingUnit;
             factory.Destroyed -= Factory_Destroyed;
         }
 

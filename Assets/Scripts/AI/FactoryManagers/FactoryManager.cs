@@ -50,7 +50,7 @@ namespace BattleCruisers.AI.FactoryManagers
                 _factories.Add(factory);
 
                 factory.CompletedBuildable += Factory_CompletedBuildable;
-                factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
+                factory.UnitCompleted += Factory_CompletedBuildingUnit;
                 factory.Destroyed += Factory_Destroyed;
             }
         }
@@ -84,7 +84,7 @@ namespace BattleCruisers.AI.FactoryManagers
         {
             factory.CompletedBuildable -= Factory_CompletedBuildable;
             factory.Destroyed -= Factory_Destroyed;
-            factory.CompletedBuildingUnit -= Factory_CompletedBuildingUnit;
+            factory.UnitCompleted -= Factory_CompletedBuildingUnit;
             _unitChooser.ChosenUnitChanged -= _unitChooser_ChosenUnitChanged;
         }
 

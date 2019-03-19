@@ -20,8 +20,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             _timeWhenFactoryWasClearInS = float.MinValue;
             _timeWhenUnitWasChosenInS = float.MinValue;
 
-            factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
-            factory.CompletedBuildingUnit += Factory_CompletedBuildingUnit;
+            factory.UnitStarted += Factory_StartedBuildingUnit;
+            factory.UnitCompleted += Factory_CompletedBuildingUnit;
             factory.NewUnitChosen += Factory_NewUnitChosen;
         }
 

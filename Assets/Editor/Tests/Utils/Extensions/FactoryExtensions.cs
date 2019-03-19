@@ -7,15 +7,14 @@ namespace BattleCruisers.Tests.Utils.Extensions
 {
     public static class FactoryExtensions
     {
-        // FELIX  Rename :D
-        public static void StartBuildingUnit(this IFactory factory, IUnit unitToStart)
+        public static void EmitUnitStarted(this IFactory factory, IUnit unitToStart)
         {
-            factory.StartedBuildingUnit += Raise.EventWith(new UnitStartedEventArgs(unitToStart));
+            factory.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(unitToStart));
         }
 
-        public static void CompleteBuildingUnit(this IFactory factory, IUnit unitToComplete)
+        public static void EmitUnitCompleted(this IFactory factory, IUnit unitToComplete)
         {
-            factory.CompletedBuildingUnit += Raise.EventWith(new UnitCompletedEventArgs(unitToComplete));
+            factory.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unitToComplete));
         }
     }
 }

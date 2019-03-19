@@ -154,7 +154,7 @@ namespace BattleCruisers.Tests.AI.Drones
 
         private void BuildUnit()
         {
-            _factory.StartBuildingUnit(unitToStart: null);
+            _factory.EmitUnitStarted(unitToStart: null);
         }
     }
 }

@@ -55,12 +55,12 @@ namespace BattleCruisers.AI.Drones
 
             if (factory != null)
             {
-                factory.StartedBuildingUnit += Factory_StartedBuildingFirstUnit;
+                factory.UnitStarted += Factory_StartedBuildingFirstUnit;
 
                 Assert.IsFalse(_completedFactories.Contains(factory));
                 _completedFactories.Add(factory);
 
-                factory.StartedBuildingUnit += Factory_StartedBuildingUnit;
+                factory.UnitStarted += Factory_StartedBuildingUnit;
                 factory.Destroyed += Factory_Destroyed;
             }
         }
@@ -81,7 +81,7 @@ namespace BattleCruisers.AI.Drones
         private void Factory_StartedBuildingFirstUnit(object sender, UnitStartedEventArgs e)
         {
             IFactory factory = sender.Parse<IFactory>();
-            factory.StartedBuildingUnit -= Factory_StartedBuildingFirstUnit;
+            factory.UnitStarted -= Factory_StartedBuildingFirstUnit;
 
             Assert.IsNotNull(factory.DroneConsumer);
             _droneManager.ToggleDroneConsumerFocus(factory.DroneConsumer);
@@ -121,8 +121,8 @@ namespace BattleCruisers.AI.Drones
 
         private void UnsubscribeFromFactoryEvents(IFactory factory)
         {
-            factory.StartedBuildingUnit -= Factory_StartedBuildingUnit;
-            factory.StartedBuildingUnit -= Factory_StartedBuildingFirstUnit;
+            factory.UnitStarted -= Factory_StartedBuildingUnit;
+            factory.UnitStarted -= Factory_StartedBuildingFirstUnit;
             factory.Destroyed -= Factory_Destroyed;
         }
     }

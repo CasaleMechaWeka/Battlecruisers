@@ -114,7 +114,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, IKillCountController killCounter)
         {
             factory.StartBuildingUnit(unitToBuild);
-            factory.CompletedBuildingUnit += (sender, e) => OnFactoryCompletedUnit(e.CompletedUnit, killCounter);
+            factory.UnitCompleted += (sender, e) => OnFactoryCompletedUnit(e.CompletedUnit, killCounter);
         }
 
         private void OnFactoryCompletedUnit(IBuildable completedUnit, IKillCountController killCounter)
