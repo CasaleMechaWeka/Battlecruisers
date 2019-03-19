@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
+using System.Linq;
 
 namespace BattleCruisers.Cruisers
 {
@@ -61,10 +63,20 @@ namespace BattleCruisers.Cruisers
 
         private void DestroyCruiserBuildables(ICruiser cruiser)
         {
-            // FELIX  Complete :)
-            foreach (IBuilding building in cruiser.BuildingMonitor.AliveBuildings)
+            foreach (IBuilding building in cruiser.BuildingMonitor.AliveBuildings.ToList())
             {
+                if (!building.IsDestroyed)
+                {
+                    building.Destroy();
+                }
+            }
 
+            foreach (IUnit unit in cruiser.UnitMonitor.AliveUnits.ToList())
+            {
+                if (!unit.IsDestroyed)
+                {
+                    unit.Destroy();
+                }
             }
         }
     }
