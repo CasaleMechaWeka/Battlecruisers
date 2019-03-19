@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.UI.Sound;
 using NSubstitute;
 using NUnit.Framework;
@@ -42,28 +42,28 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void UltraBuildingStarted_PlaysSound()
         {
-            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_ultraBuilding));
+            _cruiser.BuildingMonitor.EmitBuildingStarted(_ultraBuilding);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
         }
 
         [Test]
         public void NormalBuildingStarted_DoesNotPlaySound()
         {
-            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_normalBuilding));
+            _cruiser.BuildingMonitor.EmitBuildingStarted(_normalBuilding);
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
         }
 
         [Test]
         public void UltraUnitStarted_PlaysSound()
         {
-            _cruiser.UnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ultraUnit));
+            _cruiser.UnitMonitor.EmitUnitStarted(_ultraUnit);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
         }
 
         [Test]
         public void NormalUnitStarted_DoesNotPlaySound()
         {
-            _cruiser.UnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_normalUnit));
+            _cruiser.UnitMonitor.EmitUnitStarted(_normalUnit);
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
         }
 
@@ -72,10 +72,10 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         {
             _monitor.DisposeManagedState();
 
-            _cruiser.UnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ultraUnit));
+            _cruiser.BuildingMonitor.EmitBuildingStarted(_ultraBuilding);
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
 
-            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_ultraBuilding));
+            _cruiser.UnitMonitor.EmitUnitStarted(_ultraUnit);
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
         }
     }

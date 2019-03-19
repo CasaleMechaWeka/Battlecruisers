@@ -1,16 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Update tests :)
     public class UltrasConstructionMonitor : IManagedDisposable
     {
-        // FELIX  Replace with ICruiserBuildingMonitor (once it exists :P)
-        private readonly ICruiserController _cruiser;
+        private readonly ICruiserBuildingMonitor _cruiserBuildingMonitor;
         private readonly ICruiserUnitMonitor _cruiserUnitMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
 
@@ -18,15 +15,15 @@ namespace BattleCruisers.Cruisers.Construction
         {
             Helper.AssertIsNotNull(cruiser, soundPlayer);
 
-            _cruiser = cruiser;
+            _cruiserBuildingMonitor = cruiser.BuildingMonitor;
             _cruiserUnitMonitor = cruiser.UnitMonitor;
             _soundPlayer = soundPlayer;
 
-            _cruiser.BuildingStarted += _cruiser_BuildingStarted;
-            _cruiserUnitMonitor.UnitStarted += _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiserBuildingMonitor.BuildingStarted += _buildingMonitor_BuildingStarted;
+            _cruiserUnitMonitor.UnitStarted += _unitMonitor_StartedBuildingUnit;
         }
 
-        private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
+        private void _buildingMonitor_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             if (e.StartedBuilding.Category == BuildingCategory.Ultra)
             {
@@ -34,7 +31,7 @@ namespace BattleCruisers.Cruisers.Construction
             }
         }
 
-        private void _unitConstructionMonitor_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
+        private void _unitMonitor_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             if (e.StartedUnit.IsUltra)
             {
@@ -44,8 +41,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         public void DisposeManagedState()
         {
-            _cruiser.BuildingStarted -= _cruiser_BuildingStarted;
-            _cruiserUnitMonitor.UnitStarted -= _unitConstructionMonitor_StartedBuildingUnit;
+            _cruiserBuildingMonitor.BuildingStarted -= _buildingMonitor_BuildingStarted;
+            _cruiserUnitMonitor.UnitStarted -= _unitMonitor_StartedBuildingUnit;
         }
     }
 }
