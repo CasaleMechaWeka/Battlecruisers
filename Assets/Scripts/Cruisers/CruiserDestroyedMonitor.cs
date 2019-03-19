@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
@@ -46,9 +47,9 @@ namespace BattleCruisers.Cruisers
         // + Make Victory Cruiser (VC) invincible (so in flight projectiles cannot destroy it)
         // + After watching sinking animation, go to post battle screen :)
         // + Destroy all Losing Cruiser (LC) buildables
-        // FELIX  NEXT :D
         // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
         // + Disable navigation wheel :P
+        // FELIX  NEXT :D
         // + Handle VC unit movement
         //      + Ships => Stop them from moving :)
         // + Implement sinking animation :P
@@ -65,9 +66,13 @@ namespace BattleCruisers.Cruisers
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
             victoryCruiser.MakeInvincible();
-            _navigationPermitter.IsMatch = false;
-            FocusOnLosingCruiser(losingCruiser);
+
+            // FELIX  Uncomment :P
+            //_navigationPermitter.IsMatch = false;
+            //FocusOnLosingCruiser(losingCruiser);
+
             DestroyCruiserBuildables(losingCruiser);
+            StopAllShips(victoryCruiser);
 
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasVictory), POST_GAME_WAIT_TIME_IN_S);
         }
@@ -99,6 +104,23 @@ namespace BattleCruisers.Cruisers
                 if (!unit.IsDestroyed)
                 {
                     unit.Destroy();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prevent ships from moving, otherwise they will happily move into the
+        /// sinking cruiser.  Can disregard the losing cruiser's ships, as they
+        /// have been automatically destroyed.
+        /// </summary>
+        private void StopAllShips(ICruiser victoryCruiser)
+        {
+            foreach (IUnit unit in victoryCruiser.UnitMonitor.AliveUnits)
+            {
+                if (unit is IShip ship)
+                {
+                    ship.DisableMovement();
+                    ship.StopMoving();
                 }
             }
         }

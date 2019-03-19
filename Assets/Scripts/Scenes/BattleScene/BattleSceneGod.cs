@@ -204,7 +204,11 @@ namespace BattleCruisers.Scenes.BattleScene
                 uiManager);
         }
 
-        private IBattleSceneHelper CreateHelper(IApplicationModel applicationModel, IPrefabFactory prefabFactory, IDeferrer deferrer, BroadcastingFilter navigationPermitter)
+        private IBattleSceneHelper CreateHelper(
+            IApplicationModel applicationModel, 
+            IPrefabFactory prefabFactory, 
+            IDeferrer deferrer, 
+            BroadcastingFilter navigationPermitter)
         {
             if (applicationModel.IsTutorial)
             {

@@ -50,22 +50,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// </summary>
         public abstract float OptimalArmamentRangeInM { get; }
 
-        private float FriendDetectionRangeInM
-        {
-            get
-            {
-                return FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
-            }
-        }
-
-		private float EnemyDetectionRangeInM
-        {
-            get
-            {
-                return ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
-            }
-        }
-
+        private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
+		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
 
         protected override void OnStaticInitialised()
@@ -182,18 +168,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void OnDestroyed()
         {
-			if (_movementDecider != null)
-			{
-				_movementDecider.DisposeManagedState();
-			}
-
-            if (_movementTargetProcessor != null)
-            {
-                _movementTargetProcessor.DisposeManagedState();
-            }
-
+            DisposeMovement();
             base.OnDestroyed();
-		}
+        }
 
         protected override void OnDeathWhileCompleted()
         {
@@ -221,6 +198,26 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
 
             return renderers;
+        }
+
+        public void DisableMovement()
+        {
+            DisposeMovement();
+        }
+
+        private void DisposeMovement()
+        {
+            if (_movementDecider != null)
+            {
+                _movementDecider.DisposeManagedState();
+                _movementDecider = null;
+            }
+
+            if (_movementTargetProcessor != null)
+            {
+                _movementTargetProcessor.DisposeManagedState();
+                _movementTargetProcessor = null;
+            }
         }
     }
 }
