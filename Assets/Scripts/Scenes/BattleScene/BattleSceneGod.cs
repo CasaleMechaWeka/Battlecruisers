@@ -201,8 +201,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 cameraComponents, 
                 leftPanelComponents, 
                 rightPanelComponents, 
-                uiManager,
-                battleCompletionHandler);
+                uiManager);
         }
 
         private IBattleSceneHelper CreateHelper(
@@ -232,8 +231,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ICameraComponents cameraComponents,
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
-            IUIManager uiManager,
-            IBattleCompletionHandler battleCompletionHandler)
+            IUIManager uiManager)
         {
             if (applicationModel.IsTutorial)
             {
@@ -251,7 +249,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         leftPanelComponents,
                         rightPanelComponents,
                         uiManager,
-                        battleCompletionHandler);
+                        _gameEndMonitor);
 
                 TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);

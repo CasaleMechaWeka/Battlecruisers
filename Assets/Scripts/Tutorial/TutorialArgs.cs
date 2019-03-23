@@ -20,7 +20,7 @@ namespace BattleCruisers.Tutorial
         public LeftPanelComponents LeftPanelComponents { get; }
         public RightPanelComponents RightPanelComponents { get; }
         public IUIManager UIManager { get; }
-        public IBattleCompletionHandler BattleCompletionHandler { get; }
+        public IGameEndMonitor GameEndMonitor { get; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager,
-            IBattleCompletionHandler battleCompletionHandler)
+            IGameEndMonitor gameEndMonitor)
         {
             Helper.AssertIsNotNull(
                 playerCruiser, 
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tutorial
                 leftPanelComponents, 
                 rightPanelComponents,
                 uiManager,
-                battleCompletionHandler);
+                gameEndMonitor);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -55,7 +55,7 @@ namespace BattleCruisers.Tutorial
             LeftPanelComponents = leftPanelComponents;
             RightPanelComponents = rightPanelComponents;
             UIManager = uiManager;
-            BattleCompletionHandler = battleCompletionHandler;
+            GameEndMonitor = gameEndMonitor;
         }
     }
 }

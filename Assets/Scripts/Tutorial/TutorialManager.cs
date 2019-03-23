@@ -3,6 +3,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.Factories;
+using BattleCruisers.Utils.BattleScene;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,7 @@ namespace BattleCruisers.Tutorial
     {
         private ITutorialStepConsumer _consumer;
         private IExplanationPanel _explanationPanel;
-
-        public event EventHandler TutorialCompleted;
+        private IGameEndMonitor _gameEndMonitor;
 
         public void Initialise(ITutorialArgs tutorialArgs)
         {
@@ -44,21 +44,21 @@ namespace BattleCruisers.Tutorial
 
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>(stepsFactory.CreateSteps());
             _consumer = new TutorialStepConsumer(steps);
-
             _consumer.Completed += _consumer_Completed;
 
-            tutorialArgs.BattleCompletionHandler.BattleCompleted += BattleCompletionHandler_BattleCompleted;
+            _gameEndMonitor = tutorialArgs.GameEndMonitor;
+            _gameEndMonitor.GameEnded += GameEndMonitor_GameEnded;
         }
 
         private void _consumer_Completed(object sender, EventArgs e)
         {
             _consumer.Completed -= _consumer_Completed;
-
-            TutorialCompleted?.Invoke(this, EventArgs.Empty);
+            _explanationPanel.IsVisible = false;
         }
 
-        private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
+        private void GameEndMonitor_GameEnded(object sender, EventArgs e)
         {
+            _gameEndMonitor.GameEnded -= GameEndMonitor_GameEnded;
             _explanationPanel.IsVisible = false;
         }
 

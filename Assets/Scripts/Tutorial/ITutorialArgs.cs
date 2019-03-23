@@ -19,6 +19,6 @@ namespace BattleCruisers.Tutorial
         LeftPanelComponents LeftPanelComponents { get; }
         RightPanelComponents RightPanelComponents { get; }
         IUIManager UIManager { get; }
-        IBattleCompletionHandler BattleCompletionHandler { get; }
+        IGameEndMonitor GameEndMonitor { get; }
     }
 }
