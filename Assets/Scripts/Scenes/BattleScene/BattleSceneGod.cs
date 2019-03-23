@@ -33,6 +33,7 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGod : MonoBehaviour
     {
         private AudioInitialiser _audioInitialiser;
+        // FELIX  Doesn't need to be a field :)
         private IArtificialIntelligence _ai;
         private ITutorialProvider _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
@@ -181,17 +182,11 @@ namespace BattleCruisers.Scenes.BattleScene
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
-            CruiserDestroyedMonitor cruiserDestroyedMonitor
-                = new CruiserDestroyedMonitor(
-                    playerCruiser, 
-                    aiCruiser, 
-                    battleCompletionHandler, 
-                    components.Deferrer, 
-                    cameraComponents.CameraFocuser,
-                    navigationPermitter);
             _gameEndMonitor 
                 = new GameEndMonitor(
-                    cruiserDestroyedMonitor, 
+                    new CruiserDestroyedMonitor(
+                        playerCruiser,
+                        aiCruiser),
                     battleCompletionHandler,
                     new GameEndHandler(
                         playerCruiser,
@@ -269,6 +264,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
+        // FELIX  Remove :)
         private void _gameEndMonitor_GameEnded(object sender, EventArgs e)
         {
             _gameEndMonitor.GameEnded -= _gameEndMonitor_GameEnded;
