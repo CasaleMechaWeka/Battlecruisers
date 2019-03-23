@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BCUtils = BattleCruisers.Utils;
 
@@ -31,7 +32,7 @@ namespace BattleCruisers.Cruisers
         public IBuildProgressCalculator BuildProgressCalculator { get; }
         public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
-        public FogOfWarManager FogOfWarManager { get; }
+        public IManagedDisposable FogOfWarManager { get; }
 
         public CruiserArgs(
             Faction faction, 
@@ -49,7 +50,7 @@ namespace BattleCruisers.Cruisers
             IBuildProgressCalculator buildProgressCalculator,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
-            FogOfWarManager fogOfWarManager)
+            IManagedDisposable fogOfWarManager)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser, 

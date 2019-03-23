@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Cruisers
@@ -30,6 +31,6 @@ namespace BattleCruisers.Cruisers
         IBuildProgressCalculator BuildProgressCalculator { get; }
         IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
-        FogOfWarManager FogOfWarManager { get; }
+        IManagedDisposable FogOfWarManager { get; }
     }
 }

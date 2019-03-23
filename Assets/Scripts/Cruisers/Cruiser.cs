@@ -35,7 +35,7 @@ namespace BattleCruisers.Cruisers
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private FogOfWarManager _fogOfWarManager;
+        private IManagedDisposable _fogOfWarManager;
         private SmokeGroupInitialiser _smokeGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
