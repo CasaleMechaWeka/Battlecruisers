@@ -49,6 +49,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
             cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);
+            cruiser.Destroy();
         }
     }
 }
