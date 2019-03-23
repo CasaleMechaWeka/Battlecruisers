@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
         public IDroneConsumerProvider DroneConsumerProvider { get; }
         public IFactoryProvider FactoryProvider { get; }
         public Direction FacingDirection { get; }
-        public RepairManager RepairManager { get; }
+        public IRepairManager RepairManager { get; }
         public FogStrength FogStrength { get; }
         public ICruiserHelper Helper { get; }
         public ISlotFilter HighlightableFilter { get; }
@@ -42,7 +42,7 @@ namespace BattleCruisers.Cruisers
             IDroneConsumerProvider droneConsumerProvider,
             IFactoryProvider factoryProvider, 
             Direction facingDirection, 
-            RepairManager repairManager, 
+            IRepairManager repairManager, 
             FogStrength fogStrength,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
