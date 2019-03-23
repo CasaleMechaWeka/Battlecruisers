@@ -106,8 +106,8 @@ namespace BattleCruisers.Cruisers
             _smokeGroup = GetComponentInChildren<SmokeGroupInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeGroup);
 
-            // FELIX  Assert this is not null once all cruisers have this :)
             _rigidBody = GetComponent<Rigidbody2D>();
+            Assert.IsNotNull(_rigidBody);
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
