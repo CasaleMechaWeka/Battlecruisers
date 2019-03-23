@@ -11,7 +11,7 @@ namespace BattleCruisers.Cruisers
 
         public CruiserDestroyedEventArgs(bool wasPlayerVictory)
         {
-            WasPlayerVictory = WasPlayerVictory;
+            WasPlayerVictory = wasPlayerVictory;
         }
     }
 
