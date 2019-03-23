@@ -26,7 +26,7 @@ namespace BattleCruisers.Cruisers
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
 
-        public event EventHandler CruiserDestroyed;
+        public event EventHandler<CruiserDestroyedEventArgs> CruiserDestroyed;
 
         public CruiserDestroyedMonitor(
             ICruiser playerCruiser,
@@ -61,7 +61,7 @@ namespace BattleCruisers.Cruisers
 
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
-            CruiserDestroyed?.Invoke(this, EventArgs.Empty);
+            CruiserDestroyed?.Invoke(this, new CruiserDestroyedEventArgs(wasVictory));
 
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;

@@ -189,7 +189,18 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.Deferrer, 
                     cameraComponents.CameraFocuser,
                     navigationPermitter);
-            _gameEndMonitor = new GameEndMonitor(cruiserDestroyedMonitor, battleCompletionHandler);
+            _gameEndMonitor 
+                = new GameEndMonitor(
+                    cruiserDestroyedMonitor, 
+                    battleCompletionHandler,
+                    new EndGameHandler(
+                        playerCruiser,
+                        aiCruiser,
+                        _ai,
+                        battleCompletionHandler,
+                        components.Deferrer,
+                        cameraComponents.CameraFocuser,
+                        navigationPermitter));
             _gameEndMonitor.GameEnded += _gameEndMonitor_GameEnded;
 
             StartTutorialIfNecessary(
