@@ -52,6 +52,18 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             ReceivedCommonCompletion();
         }
 
+        [Test]
+        public void CompleteBattle_SecondTime_DoesNothing()
+        {
+            _battleCompletionHandler.CompleteBattle(default);
+            Assert.AreEqual(1, _battleCompletedCount);
+
+            _sceneNavigator.ClearReceivedCalls();
+            _battleCompletionHandler.CompleteBattle(default);
+            Assert.AreEqual(1, _battleCompletedCount);
+            _sceneNavigator.DidNotReceiveWithAnyArgs().GoToScene(default);
+        }
+
         private void ReceivedCommonCompletion()
         {
             Assert.AreEqual(1, _battleCompletedCount);

@@ -9,6 +9,7 @@ namespace BattleCruisers.Utils.BattleScene
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
+        private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
@@ -18,10 +19,18 @@ namespace BattleCruisers.Utils.BattleScene
 
             _applicationModel = applicationModel;
             _sceneNavigator = sceneNavigator;
+            _isCompleted = false;
         }
 
         public void CompleteBattle(bool wasVictory)
         {
+            if (_isCompleted)
+            {
+                // Battle should only be completed once
+                return;
+            }
+            _isCompleted = true;
+
             BattleCompleted?.Invoke(this, EventArgs.Empty);
 
             BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
