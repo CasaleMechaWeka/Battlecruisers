@@ -34,10 +34,9 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private AudioInitialiser _audioInitialiser;
         private IArtificialIntelligence _ai;
-        private CruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private ITutorialProvider _tutorialProvider;
-        private IBattleCompletionHandler _battleCompletionHandler;
         private UserTargetTracker _userTargetTracker;
+        private IGameEndMonitor _gameEndMonitor;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -67,8 +66,7 @@ namespace BattleCruisers.Scenes.BattleScene
             //applicationModel.IsTutorial = true;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
-            _battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
-            _battleCompletionHandler.BattleCompleted += BattleCompletionHandler_BattleCompleted;
+            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
@@ -154,7 +152,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
                     pauseGameManager,
-                    _battleCompletionHandler);
+                    battleCompletionHandler);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargetsColourChanger());
@@ -183,14 +181,16 @@ namespace BattleCruisers.Scenes.BattleScene
             _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
-            _cruiserDestroyedMonitor 
+            CruiserDestroyedMonitor cruiserDestroyedMonitor
                 = new CruiserDestroyedMonitor(
                     playerCruiser, 
                     aiCruiser, 
-                    _battleCompletionHandler, 
+                    battleCompletionHandler, 
                     components.Deferrer, 
                     cameraComponents.CameraFocuser,
                     navigationPermitter);
+            _gameEndMonitor = new GameEndMonitor(cruiserDestroyedMonitor, battleCompletionHandler);
+            _gameEndMonitor.GameEnded += _gameEndMonitor_GameEnded;
 
             StartTutorialIfNecessary(
                 prefabFactory, 
@@ -201,7 +201,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 cameraComponents, 
                 leftPanelComponents, 
                 rightPanelComponents, 
-                uiManager);
+                uiManager,
+                battleCompletionHandler);
         }
 
         private IBattleSceneHelper CreateHelper(
@@ -231,7 +232,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ICameraComponents cameraComponents,
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
-            IUIManager uiManager)
+            IUIManager uiManager,
+            IBattleCompletionHandler battleCompletionHandler)
         {
             if (applicationModel.IsTutorial)
             {
@@ -249,7 +251,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         leftPanelComponents,
                         rightPanelComponents,
                         uiManager,
-                        _battleCompletionHandler);
+                        battleCompletionHandler);
 
                 TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
                 Assert.IsNotNull(tutorialManager);
@@ -258,9 +260,9 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
-        private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
+        private void _gameEndMonitor_GameEnded(object sender, EventArgs e)
         {
-            _battleCompletionHandler.BattleCompleted -= BattleCompletionHandler_BattleCompleted;
+            _gameEndMonitor.GameEnded -= _gameEndMonitor_GameEnded;
             _ai.DisposeManagedState();
         }
     }

@@ -7,12 +7,13 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
+using System;
 using System.Linq;
 
 namespace BattleCruisers.Cruisers
 {
     // FELIX  Update tests :)
-    public class CruiserDestroyedMonitor
+    public class CruiserDestroyedMonitor : ICruiserDestroyedMonitor
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
@@ -24,6 +25,8 @@ namespace BattleCruisers.Cruisers
         private readonly BroadcastingFilter _navigationPermitter;
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
+
+        public event EventHandler CruiserDestroyed;
 
         public CruiserDestroyedMonitor(
             ICruiser playerCruiser,
@@ -46,16 +49,6 @@ namespace BattleCruisers.Cruisers
             _aiCruiser.Destroyed += _aiCruiser_Destroyed;
         }
 
-        // FELIX:
-        // + Make Victory Cruiser (VC) invincible (so in flight projectiles cannot destroy it)
-        // + After watching sinking animation, go to post battle screen :)
-        // + Destroy all Losing Cruiser (LC) buildables
-        // + Auto navigate to LC, to watch sinking (and maybe nuke explosion) animation
-        // + Disable navigation wheel :P
-        // + Handle VC unit movement
-        //      + Ships => Stop them from moving :)
-        // FELIX  NEXT :D
-        // + Implement sinking animation :P
         private void _playerCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             OnCruiserDestroyed(false, _aiCruiser, _playerCruiser);
@@ -68,6 +61,8 @@ namespace BattleCruisers.Cruisers
 
         private void OnCruiserDestroyed(bool wasVictory, ICruiser victoryCruiser, ICruiser losingCruiser)
         {
+            CruiserDestroyed?.Invoke(this, EventArgs.Empty);
+
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;
             FocusOnLosingCruiser(losingCruiser);
