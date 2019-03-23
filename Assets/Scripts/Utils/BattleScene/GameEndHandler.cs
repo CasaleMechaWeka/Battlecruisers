@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    public class EndGameHandler : IEndGameHandler
+    public class GameEndHandler : IGameEndHandler
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly IArtificialIntelligence _ai;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Utils.BattleScene
 
         private const float POST_GAME_WAIT_TIME_IN_S = 5;
 
-        public EndGameHandler(
+        public GameEndHandler(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             IArtificialIntelligence ai, 

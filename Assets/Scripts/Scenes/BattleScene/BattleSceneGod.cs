@@ -193,7 +193,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 = new GameEndMonitor(
                     cruiserDestroyedMonitor, 
                     battleCompletionHandler,
-                    new EndGameHandler(
+                    new GameEndHandler(
                         playerCruiser,
                         aiCruiser,
                         _ai,

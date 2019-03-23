@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Utils.BattleScene
 {
-    public interface IEndGameHandler
+    public interface IGameEndHandler
     {
         void HandleCruiserDestroyed(bool wasPlayerVictory);
         void HandleGameEnd();

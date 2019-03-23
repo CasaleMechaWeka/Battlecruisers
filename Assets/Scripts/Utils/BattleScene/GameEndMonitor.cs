@@ -13,16 +13,16 @@ namespace BattleCruisers.Utils.BattleScene
     {
         private readonly ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
-        private readonly IEndGameHandler _endGameHandler;
+        private readonly IGameEndHandler _gameEndHandler;
 
         public event EventHandler GameEnded;
 
         public GameEndMonitor(
             ICruiserDestroyedMonitor cruiserDestroyedMonitor, 
             IBattleCompletionHandler battleCompletionHandler,
-            IEndGameHandler endGameHandler)
+            IGameEndHandler gameEndHandler)
         {
-            Helper.AssertIsNotNull(cruiserDestroyedMonitor, battleCompletionHandler, endGameHandler);
+            Helper.AssertIsNotNull(cruiserDestroyedMonitor, battleCompletionHandler, gameEndHandler);
 
             _cruiserDestroyedMonitor = cruiserDestroyedMonitor;
             _cruiserDestroyedMonitor.CruiserDestroyed += _cruiserDestroyedMonitor_CruiserDestroyed;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.BattleScene
             _battleCompletionHandler = battleCompletionHandler;
             _battleCompletionHandler.BattleCompleted += _battleCompletionHandler_BattleCompleted;
 
-            _endGameHandler = endGameHandler;
+            _gameEndHandler = gameEndHandler;
         }
 
         // May or may not happen
@@ -38,7 +38,7 @@ namespace BattleCruisers.Utils.BattleScene
         {
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
 
-            _endGameHandler.HandleCruiserDestroyed(e.WasPlayerVictory);
+            _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory);
 
             GameEnded?.Invoke(this, EventArgs.Empty);
         }
