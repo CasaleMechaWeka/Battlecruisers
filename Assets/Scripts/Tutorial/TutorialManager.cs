@@ -56,6 +56,7 @@ namespace BattleCruisers.Tutorial
             _explanationPanel.IsVisible = false;
         }
 
+        // FELIX  The only reason the GameEndMonitor is needed???
         private void GameEndMonitor_GameEnded(object sender, EventArgs e)
         {
             _gameEndMonitor.GameEnded -= GameEndMonitor_GameEnded;
