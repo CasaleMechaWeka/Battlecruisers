@@ -24,25 +24,24 @@ namespace BattleCruisers.Buildables.Repairables
     public class RepairManager : IRepairManager
     {
         private readonly IDroneNumFeedbackFactory _feedbackFactory;
-        private ICruiser _cruiser;
-        private IDroneConsumerProvider _droneConsumerProvider;
-        private IDictionary<IRepairable, IDroneNumFeedback> _repairableToDroneNum;
+        private readonly IDroneConsumerProvider _droneConsumerProvider;
+        private readonly ICruiser _cruiser;
+        private readonly IDictionary<IRepairable, IDroneNumFeedback> _repairableToDroneNum;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
-        public RepairManager(IDroneNumFeedbackFactory feedbackFactory)
+        // Code smell :D  ICruiser contains DroneConsumerProvider property, but this is not set
+        // unit cruiser has been initialised.  Hence directly pass drone consumer provider.
+        public RepairManager(
+            IDroneNumFeedbackFactory feedbackFactory,
+            IDroneConsumerProvider droneConsumerProvider,
+            ICruiser cruiser)
         {
-            Assert.IsNotNull(feedbackFactory);
+            Helper.AssertIsNotNull(feedbackFactory, droneConsumerProvider, cruiser);
+
             _feedbackFactory = feedbackFactory;
-        }
-
-        // Not constructor because of circular dependency between Cruiser and RepairManager
-        public void Initialise(ICruiser cruiser)
-        {
-            Helper.AssertIsNotNull(cruiser, cruiser.DroneConsumerProvider);
-
+            _droneConsumerProvider = droneConsumerProvider;
             _cruiser = cruiser;
-            _droneConsumerProvider = _cruiser.DroneConsumerProvider;
 
             _repairableToDroneNum = new Dictionary<IRepairable, IDroneNumFeedback>();
 

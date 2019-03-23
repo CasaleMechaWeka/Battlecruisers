@@ -131,8 +131,6 @@ namespace BattleCruisers.Cruisers
             _buildingDoubleClickHandler = args.BuildingDoubleClickHandler;
             _cruiserDoubleClickHandler = args.CruiserDoubleClickHandler;
             _fogOfWarManager = args.FogOfWarManager;
-
-            args.RepairManager.Initialise(this);
             RepairManager = args.RepairManager;
 
             _fog.Initialise(args.FogStrength);
