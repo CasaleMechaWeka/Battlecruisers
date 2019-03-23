@@ -11,6 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
+    // FELIX  Test :)
     public class GameEndHandler : IGameEndHandler
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
@@ -57,6 +58,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
+            _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;
             FocusOnLosingCruiser(losingCruiser);
@@ -119,7 +121,7 @@ namespace BattleCruisers.Utils.BattleScene
             Assert.IsFalse(_handledGameEnd, "Should only be called once.");
             _handledGameEnd = true;
 
-            if (_handledCruiserDeath)
+            if (!_handledCruiserDeath)
             {
                 _ai.DisposeManagedState();
                 // FELIX  Remove cruisers from scene?
