@@ -19,7 +19,6 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -33,8 +32,6 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGod : MonoBehaviour
     {
         private AudioInitialiser _audioInitialiser;
-        // FELIX  Doesn't need to be a field :)
-        private IArtificialIntelligence _ai;
         private ITutorialProvider _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
         private IGameEndMonitor _gameEndMonitor;
@@ -179,7 +176,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     time);
 
             // Other
-            _ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+            IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _gameEndMonitor 
@@ -191,12 +188,11 @@ namespace BattleCruisers.Scenes.BattleScene
                     new GameEndHandler(
                         playerCruiser,
                         aiCruiser,
-                        _ai,
+                        ai,
                         battleCompletionHandler,
                         components.Deferrer,
                         cameraComponents.CameraFocuser,
                         navigationPermitter));
-            _gameEndMonitor.GameEnded += _gameEndMonitor_GameEnded;
 
             StartTutorialIfNecessary(
                 prefabFactory, 
@@ -262,13 +258,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 tutorialManager.Initialise(tutorialArgs);
                 tutorialManager.StartTutorial();
             }
-        }
-
-        // FELIX  Remove :)
-        private void _gameEndMonitor_GameEnded(object sender, EventArgs e)
-        {
-            _gameEndMonitor.GameEnded -= _gameEndMonitor_GameEnded;
-            _ai.DisposeManagedState();
         }
     }
 }
