@@ -11,7 +11,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
 {
-    // FELIX  Test :)
     public class GameEndHandler : IGameEndHandler
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
@@ -19,9 +18,6 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
         private readonly ICameraFocuser _cameraFocuser;
-        // FELIX Actually, I don't think I want to disable navigation :P
-        // => Test what happens when victory while navigating
-        // => Potentially revert commit :)
         private readonly BroadcastingFilter _navigationPermitter;
 
         private bool _handledCruiserDeath, _handledGameEnd;
@@ -124,8 +120,6 @@ namespace BattleCruisers.Utils.BattleScene
             if (!_handledCruiserDeath)
             {
                 _ai.DisposeManagedState();
-                // FELIX  Remove cruisers from scene?
-                //_aiCruiser.
             }
         }
     }
