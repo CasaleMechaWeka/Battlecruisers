@@ -31,10 +31,11 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
     {
+        private IGameEndMonitor _gameEndMonitor;
+        // Hold references to avoid garbage collection
         private AudioInitialiser _audioInitialiser;
         private ITutorialProvider _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
-        private IGameEndMonitor _gameEndMonitor;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
