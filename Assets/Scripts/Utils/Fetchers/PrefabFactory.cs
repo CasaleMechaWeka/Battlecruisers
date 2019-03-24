@@ -101,7 +101,7 @@ namespace BattleCruisers.Utils.Fetchers
                     return StaticPrefabKeys.Explosions.CartoonExplosion150;
 
                 case ExplosionSize.Giant:
-                    return StaticPrefabKeys.Explosions.CartoonExplosion1000;
+                    return StaticPrefabKeys.Explosions.CartoonExplosion500;
 
                 default:
                     throw new System.ArgumentException();
