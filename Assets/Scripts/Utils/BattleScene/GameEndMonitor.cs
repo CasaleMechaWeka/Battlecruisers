@@ -8,7 +8,6 @@ namespace BattleCruisers.Utils.BattleScene
     /// 1. A cruiser is destroyed
     /// 2. The user quits
     /// </summary>
-    /// FELIX  Test
     public class GameEndMonitor : IGameEndMonitor
     {
         private readonly ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
@@ -48,6 +47,8 @@ namespace BattleCruisers.Utils.BattleScene
         {
             _battleCompletionHandler.BattleCompleted -= _battleCompletionHandler_BattleCompleted;
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
+
+            _gameEndHandler.HandleGameEnd();
 
             GameEnded?.Invoke(this, EventArgs.Empty);
         }
