@@ -63,9 +63,8 @@ namespace BattleCruisers.Buildables
 
         public bool AddHealth(float amountToAdd)
         {
-            Assert.IsTrue(amountToAdd > 0);
-
-            if (Health < MaxHealth
+            if (amountToAdd > 0
+                && Health < MaxHealth
                 && State == HealthTrackerState.Mutable)
             {
                 Health += amountToAdd;
