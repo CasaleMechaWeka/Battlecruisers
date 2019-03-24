@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.Cruisers
 {
-    // FELIX  Update tests :)
     public class CruiserDestroyedMonitor : ICruiserDestroyedMonitor
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
