@@ -191,7 +191,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         aiCruiser,
                         ai,
                         battleCompletionHandler,
-                        components.Deferrer,
+                        components.TimeScaleDeferrer,
                         cameraComponents.CameraFocuser,
                         navigationPermitter));
 
