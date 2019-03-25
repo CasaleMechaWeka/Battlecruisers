@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.Loading
 {
     public interface ILoadingScreen
     {
