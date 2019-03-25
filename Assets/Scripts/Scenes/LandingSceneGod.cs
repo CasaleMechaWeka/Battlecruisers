@@ -54,7 +54,7 @@ namespace BattleCruisers.Scenes
                         audioSource));
         }
 
-        public void GoToScene(string sceneName)
+        public void GoToScene(string sceneName, string loadingScreenHint = null)
         {
             IEnumerator loadScene = LoadScene(sceneName);
             StartCoroutine(LoadingScreen.PerformLongOperation(loadScene));

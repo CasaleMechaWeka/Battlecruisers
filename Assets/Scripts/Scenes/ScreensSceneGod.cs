@@ -179,6 +179,9 @@ namespace BattleCruisers.Scenes
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			_applicationModel.SelectedLevel = levelNum;
+
+            // FELIX  Create loading screen hint here :)
+
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
 		}
 
