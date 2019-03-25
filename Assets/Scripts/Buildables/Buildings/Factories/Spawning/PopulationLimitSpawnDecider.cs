@@ -7,21 +7,21 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
     // FELIX  Test :)
     public class PopulationLimitSpawnDecider : IUnitSpawnDecider
     {
-        private readonly ICruiserBuildingMonitor _buildingMonitor;
+        private readonly ICruiserUnitMonitor _unitMonitor;
         private readonly int _populationLimit;
 
-        public PopulationLimitSpawnDecider(ICruiserBuildingMonitor buildingMonitor, int populationLimit)
+        public PopulationLimitSpawnDecider(ICruiserUnitMonitor unitMonitor, int populationLimit)
         {
-            Assert.IsNotNull(buildingMonitor);
+            Assert.IsNotNull(unitMonitor);
             Assert.IsTrue(populationLimit > 0);
 
-            _buildingMonitor = buildingMonitor;
+            _unitMonitor = unitMonitor;
             _populationLimit = populationLimit;
         }
 
         public bool CanSpawnUnit(IUnit unitToSpawn)
         {
-            return _buildingMonitor.AliveBuildings.Count < _populationLimit;
+            return _unitMonitor.AliveUnits.Count < _populationLimit;
         }
     }
 }

@@ -6,6 +6,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
     {
         private readonly ITime _time;
 
+        private const int POPULATION_LIMIT = 50;
+
         public SpawnDeciderFactory()
         {
             _time = new TimeBC();
@@ -25,13 +27,16 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
         {
             return
                 new CompositeSpawnDecider(
-                    new SpaceSpawnDecider(
-                        factory,
-                        spawnPositionFinder),
                     new CooldownSpawnDecider(
                         new UnitSpawnTimer(
                             factory,
-                            _time)));
+                            _time)),
+                    new SpaceSpawnDecider(
+                        factory,
+                        spawnPositionFinder),
+                    new PopulationLimitSpawnDecider(
+                        factory.ParentCruiser.UnitMonitor,
+                        POPULATION_LIMIT));
         }
     }
 }
