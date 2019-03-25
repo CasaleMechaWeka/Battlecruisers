@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
@@ -31,6 +32,7 @@ namespace BattleCruisers.Utils.Factories
         public IGlobalBoostProviders GlobalBoostProviders { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
         public IPrefabFactory PrefabFactory { get; }
+        public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
         public ITargetFactoriesProvider TargetFactories { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
@@ -69,6 +71,7 @@ namespace BattleCruisers.Utils.Factories
             Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
             DeferrerProvider = new DeferrerProvider(deferrer);
             TrackerFactory = new TrackerFactory(markerFactory, soleCamera);
+            SpawnDeciderFactory = new SpawnDeciderFactory();
         }
 	}
 }

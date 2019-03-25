@@ -4,6 +4,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
     public class SpawnDeciderFactory : ISpawnDeciderFactory
     {
+        private readonly ITime _time;
+
+        public SpawnDeciderFactory()
+        {
+            _time = new TimeBC();
+        }
+
         public IUnitSpawnDecider CreateAircraftSpawnDecider(IFactory factory)
         {
             return CreateSpawnDecider(factory, new AirFactorySpawnPositionFinder(factory));
@@ -24,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
                     new CooldownSpawnDecider(
                         new UnitSpawnTimer(
                             factory,
-                            new TimeBC())));
+                            _time)));
         }
     }
 }

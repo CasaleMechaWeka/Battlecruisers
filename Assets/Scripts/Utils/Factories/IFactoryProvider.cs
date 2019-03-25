@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Effects.Explosions;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Utils.Factories
         IGlobalBoostProviders GlobalBoostProviders { get; }
         IMovementControllerFactory MovementControllerFactory { get; }
         IPrefabFactory PrefabFactory { get; }
+        ISpawnDeciderFactory SpawnDeciderFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ITargetFactoriesProvider TargetFactories { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
