@@ -11,17 +11,17 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
             _time = new TimeBC();
         }
 
-        public IUnitSpawnDecider CreateAircraftSpawnDecider(IFactory factory)
+        public IUnitSpawnPositionFinder CreateAircraftSpawnPositionFinder(IFactory factory)
         {
-            return CreateSpawnDecider(factory, new AirFactorySpawnPositionFinder(factory));
+            return new AirFactorySpawnPositionFinder(factory);
         }
 
-        public IUnitSpawnDecider CreateNavalSpawnDecider(IFactory factory)
+        public IUnitSpawnPositionFinder CreateNavalSpawnPositionFinder(IFactory factory)
         {
-            return CreateSpawnDecider(factory, new NavalFactorySpawnPositionFinder(factory));
+            return new NavalFactorySpawnPositionFinder(factory);
         }
 
-        private IUnitSpawnDecider CreateSpawnDecider(IFactory factory, IUnitSpawnPositionFinder spawnPositionFinder)
+        public IUnitSpawnDecider CreateSpawnDecider(IFactory factory, IUnitSpawnPositionFinder spawnPositionFinder)
         {
             return
                 new CompositeSpawnDecider(

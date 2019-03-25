@@ -2,7 +2,8 @@
 {
     public interface ISpawnDeciderFactory
     {
-        IUnitSpawnDecider CreateAircraftSpawnDecider(IFactory factory);
-        IUnitSpawnDecider CreateNavalSpawnDecider(IFactory factory);
+        IUnitSpawnPositionFinder CreateAircraftSpawnPositionFinder(IFactory factory);
+        IUnitSpawnPositionFinder CreateNavalSpawnPositionFinder(IFactory factory);
+        IUnitSpawnDecider CreateSpawnDecider(IFactory factory, IUnitSpawnPositionFinder spawnPositionFinder);
     }
 }
