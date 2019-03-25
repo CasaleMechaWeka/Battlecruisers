@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
-            return new AirFactorySpawnPositionFinder(this);
+            return _factoryProvider.SpawnDeciderFactory.CreateAircraftSpawnPositionFinder(this);
         }
     }
 }
