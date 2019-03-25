@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
-    // FELIX  Test :)
     public class CompositeSpawnDecider : IUnitSpawnDecider
     {
         private readonly IUnitSpawnDecider[] _spawnDeciders;
