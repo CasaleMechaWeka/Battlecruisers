@@ -10,7 +10,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
     /// by instantly respawning in progress units.  Ignore if the unit under 
     /// construction was recently changed.
     /// </summary>
-    /// FELIX  Test :)
     public class CooldownSpawnDecider : IUnitSpawnDecider
     {
         private readonly IUnitSpawnTimer _unitSpawnTimer;
@@ -25,9 +24,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
         public bool CanSpawnUnit(IUnit unitToSpawn)
         {
-            Helper.AssertIsNotNull(unitToSpawn);
-
-            Logging.Verbose(Tags.FACTORY, $"{unitToSpawn}  Time since chosen: {_unitSpawnTimer.TimeSinceUnitWasChosenInS}  " +
+            Logging.Verbose(Tags.FACTORY, 
+                $"Time since chosen: {_unitSpawnTimer.TimeSinceUnitWasChosenInS}  " +
                 $"Time since clear:  {_unitSpawnTimer.TimeSinceFactoryWasClearInS}");
 
             if (_unitSpawnTimer.TimeSinceUnitWasChosenInS >= MIN_BUILD_BREAK_IN_S
