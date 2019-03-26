@@ -3,28 +3,31 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Loading
 {
+    // FELIX  Test :)
     public class CompositeHintProvider : IHintProvider
     {
         private readonly IHintProvider _basicHints, _advancedHints;
         private readonly IGameModel _gameModel;
+        private readonly IRandomGenerator _random;
 
         public const int ADVANCED_HINT_LEVEL_REQUIREMENT = 7;
 
-        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, IGameModel gameModel)
+        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, IGameModel gameModel, IRandomGenerator random)
         {
-            Helper.AssertIsNotNull(basicHints, advancedHints, gameModel);
+            Helper.AssertIsNotNull(basicHints, advancedHints, gameModel, random);
 
             _basicHints = basicHints;
             _advancedHints = advancedHints;
             _gameModel = gameModel;
+            _random = random;
         }
 
         public string GetHint()
         {
-            if (_gameModel.NumOfLevelsCompleted > ADVANCED_HINT_LEVEL_REQUIREMENT)
+            if (_gameModel.NumOfLevelsCompleted > ADVANCED_HINT_LEVEL_REQUIREMENT
+                && _random.NextBool())
             {
-                // FELIX :D  Randomly choose between basic and advanced hints
-                return "";
+                return _advancedHints.GetHint();
             }
             else
             {
