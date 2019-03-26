@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.HomeScreen;
@@ -28,6 +29,7 @@ namespace BattleCruisers.Scenes
 		private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
+        private IHintProvider _hintProvider;
 
 		public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
@@ -45,7 +47,9 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
-
+            IRandomGenerator random = new RandomGenerator();
+            HintProviders hintProviders = new HintProviders(random);
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, _gameModel, random);
 
             // TEMP  For showing PostBattleScreen :)
             //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
@@ -180,9 +184,7 @@ namespace BattleCruisers.Scenes
 
 			_applicationModel.SelectedLevel = levelNum;
 
-            // FELIX  Create loading screen hint here :)
-
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, _hintProvider.GetHint());
 		}
 
         private IEnumerator GoToScreenAsync(ScreenController destinationScreen)

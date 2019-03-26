@@ -57,7 +57,7 @@ namespace BattleCruisers.Scenes
         public void GoToScene(string sceneName, string loadingScreenHint = null)
         {
             IEnumerator loadScene = LoadScene(sceneName);
-            StartCoroutine(LoadingScreen.PerformLongOperation(loadScene));
+            StartCoroutine(LoadingScreen.PerformLongOperation(loadScene, loadingScreenHint));
         }
 
         private IEnumerator LoadScene(string sceneName)
