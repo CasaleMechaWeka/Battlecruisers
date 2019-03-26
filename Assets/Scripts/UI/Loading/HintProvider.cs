@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Loading
 {
-    // FELIX  Test :)
     public class HintProvider : IHintProvider
     {
         private readonly IList<string> _hints;
