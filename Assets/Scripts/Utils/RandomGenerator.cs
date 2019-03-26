@@ -34,5 +34,10 @@ namespace BattleCruisers.Utils
 
             return Range(floor, ceiling);
         }
+
+        public bool NextBool()
+        {
+            return Random.value > 0.5f;
+        }
     }
 }
