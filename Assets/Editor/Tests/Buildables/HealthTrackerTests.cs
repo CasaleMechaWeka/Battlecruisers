@@ -84,9 +84,11 @@ namespace BattleCruisers.Tests.Buildables
 
         #region AddHealth()
         [Test]
-        public void AddHealth_NonPositveAmount_Throws()
+        public void AddHealth_NonPositveAmount()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _healthTracker.AddHealth(0));
+            Assert.IsFalse(_healthTracker.AddHealth(-1));
+            Assert.AreEqual(MAX_HEALTH, _healthTracker.Health);
+            Assert.AreEqual(0, _healthChangedCounter);
         }
 
         [Test]
