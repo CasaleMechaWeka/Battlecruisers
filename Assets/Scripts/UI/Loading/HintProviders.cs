@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Loading
             Assert.IsNotNull(random);
 
             BasicHints = new HintProvider(CreateBasicHints(), random);
-            AdvancedHints = new HintProvider(CreateBasicHints(), random);
+            AdvancedHints = new HintProvider(CreateAdvancedHints(), random);
         }
 
         private IList<string> CreateBasicHints()
