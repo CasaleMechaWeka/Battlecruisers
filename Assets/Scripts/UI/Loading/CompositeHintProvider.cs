@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Loading
 {
-    // FELIX  Test :)
     public class CompositeHintProvider : IHintProvider
     {
         private readonly IHintProvider _basicHints, _advancedHints;
