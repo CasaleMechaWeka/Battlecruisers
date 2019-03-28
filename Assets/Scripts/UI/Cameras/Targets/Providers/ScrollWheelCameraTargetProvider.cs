@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IUpdater _updater;
 
         // FELIX  Adjust?
-        private const float SCROLL_SCALE = 0.1f;
+        private const float SCROLL_SCALE = 1;
 
         private ICameraTarget _target;
         public ICameraTarget Target
@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             float scrollDelta = Mathf.Abs(_input.MouseScrollDelta.y) * SCROLL_SCALE;
 
-            if (_input.MouseScrollDelta.y > 0)
+            if (_input.MouseScrollDelta.y < 0)
             {
                 Target = ZoomOut(scrollDelta);
             }
@@ -79,17 +79,22 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private ICameraTarget ZoomOut(float scrollDelta)
         {
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"scrollDelta: {scrollDelta}");
+
             // Find target camera orthographic size
             float targetOrthographicSize = _camera.OrthographicSize + scrollDelta;
             targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
 
             // Find target camera x position
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
             // FELIX  Check passing Min & Max = 0 does not throw for Clamp() :P
             float targetXPosition = Mathf.Clamp(_camera.Transform.Position.x, validXPositions.Min, validXPositions.Max);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
             // Find target camera y position
             float targetYPosition = _cameraCalculator.FindCameraYPosition(targetOrthographicSize);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
 
             return
                 new CameraTarget(
@@ -99,16 +104,22 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private ICameraTarget ZoomIn(float scrollDelta)
         {
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"scrollDelta: {scrollDelta}");
+
             // Find target camera orthographic size
             float targetOrthographicSize = _camera.OrthographicSize - scrollDelta;
             targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
 
             // Find target camera x position, zoom towards mouse
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
-            float targetXPosition = Mathf.Clamp(_input.MousePosition.x, validXPositions.Min, validXPositions.Max);
+            Vector3 mousePosition = _camera.ScreenToWorldPoint(_input.MousePosition);
+            float targetXPosition = Mathf.Clamp(mousePosition.x, validXPositions.Min, validXPositions.Max);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
             // Find target camera y position
             float targetYPosition = _cameraCalculator.FindCameraYPosition(targetOrthographicSize);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
 
             return
                 new CameraTarget(

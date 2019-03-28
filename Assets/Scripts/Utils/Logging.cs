@@ -67,6 +67,7 @@ namespace BattleCruisers.Utils
         // Camera
         public const string CAMERA = "Camera";
         public const string CAMERA_CALCULATOR = "CameraCalculator";
+        public const string SCROLL_WHEEL_NAVIGATION = "ScrollWheelNavigation";
 
         // Other
         public const string BOOST = "Boost";
@@ -156,6 +157,9 @@ namespace BattleCruisers.Utils
             // Camera
             tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, true);
+            //tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, false);
 
             // Other
             tagsToActiveness.Add(Tags.BOOST, false);
