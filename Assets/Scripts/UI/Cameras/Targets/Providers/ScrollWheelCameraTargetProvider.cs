@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -7,18 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Implement :P
-    public interface IMagic
-    {
-
-    }
-
-    // FELIX  Implement :P
-    public interface IUpdater
-    {
-        event EventHandler Update;
-    }
-
     // FELIX  Use
     // FELIX  Test
     // FELIX  Avoid duplicate code with NavigationWheelCameraTargetProvider :)  (Target property :P)
