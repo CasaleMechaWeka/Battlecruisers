@@ -7,6 +7,7 @@ using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -31,6 +32,9 @@ namespace BattleCruisers.UI.Cameras
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
+            IUpdater updater = GetComponent<IUpdater>();
+            Assert.IsNotNull(updater);
+
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
 
@@ -48,6 +52,16 @@ namespace BattleCruisers.UI.Cameras
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
             ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+
+            // FELIX  Create CompositeCameraTargetProvider
+            ICameraTargetProvider scrollWheelCameraTargetProvider
+                = new ScrollWheelCameraTargetProvider(
+                    camera,
+                    cameraCalculator,
+                    new InputBC(),
+                    settings.ValidOrthographicSizes,
+                    updater);
+            cameraTargetProvider = scrollWheelCameraTargetProvider;
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(

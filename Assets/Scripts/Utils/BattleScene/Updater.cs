@@ -5,11 +5,11 @@ namespace BattleCruisers.Utils.BattleScene
 {
     public class Updater : MonoBehaviour, IUpdater
     {
-        public event EventHandler Update;
+        public event EventHandler Updated;
 
-        void Start()
+        void Update()
         {
-            Update?.Invoke(this, EventArgs.Empty);
+            Updated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

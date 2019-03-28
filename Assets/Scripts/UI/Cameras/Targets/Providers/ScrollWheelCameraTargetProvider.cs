@@ -53,7 +53,9 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _validOrthographicSizes = validOrthographicSizes;
             _updater = updater;
 
-            _updater.Update += _updater_Updated;
+            _updater.Updated += _updater_Updated;
+
+            Target = new CameraTarget(camera.Transform.Position, camera.OrthographicSize);
         }
 
         private void _updater_Updated(object sender, EventArgs e)
@@ -79,10 +81,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             // Find target camera orthographic size
             float targetOrthographicSize = _camera.OrthographicSize + scrollDelta;
-            if (targetOrthographicSize > _validOrthographicSizes.Max)
-            {
-                targetOrthographicSize = _validOrthographicSizes.Max;
-            }
+            targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
 
             // Find target camera x position
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
@@ -102,10 +101,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             // Find target camera orthographic size
             float targetOrthographicSize = _camera.OrthographicSize - scrollDelta;
-            if (targetOrthographicSize > _validOrthographicSizes.Min)
-            {
-                targetOrthographicSize = _validOrthographicSizes.Min;
-            }
+            targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
 
             // Find target camera x position, zoom towards mouse
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
