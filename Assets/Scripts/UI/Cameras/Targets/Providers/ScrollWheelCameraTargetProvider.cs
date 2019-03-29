@@ -65,7 +65,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 return;
             }
 
-            float scrollDelta = Mathf.Abs(_input.MouseScrollDelta.y) * SCROLL_SCALE;
+        //            // Originally did not take time delta into consideration.  So multiply
+        //            // by this constant so zoom is roughly the same when time delta is normal.
+        //private const float ZOOM_SPEED_MULTIPLIER = 30;
+        // newOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
+        float scrollDelta = Mathf.Abs(_input.MouseScrollDelta.y) * SCROLL_SCALE;
 
             if (_input.MouseScrollDelta.y < 0)
             {
@@ -112,9 +116,18 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
 
             // Find target camera x position, zoom towards mouse
+            Vector3 mouseWorldPosition = _camera.ScreenToWorldPoint(_input.MousePosition);
+            Vector3 mouseZoomPosition
+                = _cameraCalculator.FindZoomingCameraPosition(
+                    mouseWorldPosition,
+                    _camera.WorldToViewportPoint(mouseWorldPosition),
+                    targetOrthographicSize,
+                    _camera.Aspect,
+                    _camera.Transform.Position.z);
+            Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"mouseWorldPosition: {mouseWorldPosition}  mouseZoomPosition: {mouseZoomPosition}");
+
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
-            Vector3 mousePosition = _camera.ScreenToWorldPoint(_input.MousePosition);
-            float targetXPosition = Mathf.Clamp(mousePosition.x, validXPositions.Min, validXPositions.Max);
+            float targetXPosition = Mathf.Clamp(mouseZoomPosition.x, validXPositions.Min, validXPositions.Max);
             Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
             // Find target camera y position
@@ -122,18 +135,20 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
 
             // Want zoom target to remain in the same location in the viewport
-            Vector2 cameraTargetPosition = new Vector2(targetXPosition, targetYPosition);
-            Vector3 zoomTargetPosition
-                = _cameraCalculator.FindZoomingCameraPosition(
-                    cameraTargetPosition,
-                    _camera.WorldToViewportPoint(cameraTargetPosition),
-                    targetOrthographicSize,
-                    _camera.Aspect,
-                    _camera.Transform.Position.z);
+            //Vector2 cameraTargetPosition = new Vector2(targetXPosition, targetYPosition);
+            //Vector3 zoomTargetPosition
+            //    = _cameraCalculator.FindZoomingCameraPosition(
+            //        cameraTargetPosition,
+            //        _camera.WorldToViewportPoint(cameraTargetPosition),
+            //        targetOrthographicSize,
+            //        _camera.Aspect,
+            //        _camera.Transform.Position.z);
+            //Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"cameraTargetPosition: {cameraTargetPosition}  zoomTargetPosition: {zoomTargetPosition}");
 
             return
                 new CameraTarget(
-                    cameraTargetPosition,
+                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    //zoomTargetPosition,
                     targetOrthographicSize);
         }
     }
