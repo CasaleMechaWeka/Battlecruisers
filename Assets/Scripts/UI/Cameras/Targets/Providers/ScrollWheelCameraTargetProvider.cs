@@ -18,10 +18,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IInput _input;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly IUpdater _updater;
-        private readonly IDeltaTimeProvider _deltaTimeProvider;
-
-        // FELIX  Adjust?
-        private const float SCROLL_SCALE = 2400;
+        private readonly IZoomCalculator _zoomCalculator;
 
         private ICameraTarget _target;
         public ICameraTarget Target
@@ -45,16 +42,16 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             IInput input, 
             IRange<float> validOrthographicSizes, 
             IUpdater updater,
-            IDeltaTimeProvider deltaTimeProvider)
+            IZoomCalculator zoomCalculator)
         {
-            Helper.AssertIsNotNull(camera, cameraCalculator, input, validOrthographicSizes, updater, deltaTimeProvider);
+            Helper.AssertIsNotNull(camera, cameraCalculator, input, validOrthographicSizes, updater, zoomCalculator);
 
             _camera = camera;
             _cameraCalculator = cameraCalculator;
             _input = input;
             _validOrthographicSizes = validOrthographicSizes;
             _updater = updater;
-            _deltaTimeProvider = deltaTimeProvider;
+            _zoomCalculator = zoomCalculator;
 
             _updater.Updated += _updater_Updated;
 
@@ -68,9 +65,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 return;
             }
 
-            // FELIX  Abstract?
-            float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
-            float scrollDelta = Mathf.Abs(_input.MouseScrollDelta.y) * orthographicProportion * SCROLL_SCALE * _deltaTimeProvider.UnscaledDeltaTime;
+            float scrollDelta = _zoomCalculator.FindZoomDelta(_input.MouseScrollDelta.y);
 
             if (_input.MouseScrollDelta.y < 0)
             {

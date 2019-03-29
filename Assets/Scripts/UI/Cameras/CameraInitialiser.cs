@@ -61,7 +61,10 @@ namespace BattleCruisers.UI.Cameras
                     new InputBC(),
                     settings.ValidOrthographicSizes,
                     updater,
-                    new TimeBC());
+                    new ZoomCalculator(
+                        camera,
+                        new TimeBC(),
+                        settings.ValidOrthographicSizes));
             cameraTargetProvider = scrollWheelCameraTargetProvider;
 
             _cameraAdjuster
