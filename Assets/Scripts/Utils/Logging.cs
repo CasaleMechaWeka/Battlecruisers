@@ -158,9 +158,7 @@ namespace BattleCruisers.Utils
             // Camera
             tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, true);
-            //tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, false);
+            tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, false);
             tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, false);
 
             // Other
