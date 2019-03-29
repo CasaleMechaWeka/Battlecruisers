@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Use
     // FELIX  Test
     // FELIX  Avoid duplicate code with NavigationWheelCameraTargetProvider :)  (Target property :P)
     public class ScrollWheelCameraTargetProvider : ICameraTargetProvider
@@ -88,7 +87,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             // Find target camera x position
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
-            // FELIX  Check passing Min & Max = 0 does not throw for Clamp() :P
             float targetXPosition = Mathf.Clamp(_camera.Transform.Position.x, validXPositions.Min, validXPositions.Max);
             Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
@@ -130,21 +128,9 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             float targetYPosition = _cameraCalculator.FindCameraYPosition(targetOrthographicSize);
             Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
 
-            // Want zoom target to remain in the same location in the viewport
-            //Vector2 cameraTargetPosition = new Vector2(targetXPosition, targetYPosition);
-            //Vector3 zoomTargetPosition
-            //    = _cameraCalculator.FindZoomingCameraPosition(
-            //        cameraTargetPosition,
-            //        _camera.WorldToViewportPoint(cameraTargetPosition),
-            //        targetOrthographicSize,
-            //        _camera.Aspect,
-            //        _camera.Transform.Position.z);
-            //Logging.Log(Tags.SCROLL_WHEEL_NAVIGATION, $"cameraTargetPosition: {cameraTargetPosition}  zoomTargetPosition: {zoomTargetPosition}");
-
             return
                 new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
-                    //zoomTargetPosition,
                     targetOrthographicSize);
         }
     }
