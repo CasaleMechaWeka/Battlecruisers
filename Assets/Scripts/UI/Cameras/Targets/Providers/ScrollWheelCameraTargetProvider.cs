@@ -18,9 +18,10 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IInput _input;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly IUpdater _updater;
+        private readonly IDeltaTimeProvider _deltaTimeProvider;
 
         // FELIX  Adjust?
-        private const float SCROLL_SCALE = 1;
+        private const float SCROLL_SCALE = 2400;
 
         private ICameraTarget _target;
         public ICameraTarget Target
@@ -43,15 +44,17 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             ICameraCalculator cameraCalculator,
             IInput input, 
             IRange<float> validOrthographicSizes, 
-            IUpdater updater)
+            IUpdater updater,
+            IDeltaTimeProvider deltaTimeProvider)
         {
-            Helper.AssertIsNotNull(camera, cameraCalculator, input, validOrthographicSizes, updater);
+            Helper.AssertIsNotNull(camera, cameraCalculator, input, validOrthographicSizes, updater, deltaTimeProvider);
 
             _camera = camera;
             _cameraCalculator = cameraCalculator;
             _input = input;
             _validOrthographicSizes = validOrthographicSizes;
             _updater = updater;
+            _deltaTimeProvider = deltaTimeProvider;
 
             _updater.Updated += _updater_Updated;
 
@@ -65,11 +68,9 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 return;
             }
 
-        //            // Originally did not take time delta into consideration.  So multiply
-        //            // by this constant so zoom is roughly the same when time delta is normal.
-        //private const float ZOOM_SPEED_MULTIPLIER = 30;
-        // newOrthographicSize -= _settingsManager.ZoomSpeed * yMouseScrollDelta * ZOOM_SPEED_MULTIPLIER * _deltaTimeProvider.UnscaledDeltaTime;
-        float scrollDelta = Mathf.Abs(_input.MouseScrollDelta.y) * SCROLL_SCALE;
+            // FELIX  Abstract?
+            float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
+            float scrollDelta = Mathf.Abs(_input.MouseScrollDelta.y) * orthographicProportion * SCROLL_SCALE * _deltaTimeProvider.UnscaledDeltaTime;
 
             if (_input.MouseScrollDelta.y < 0)
             {
