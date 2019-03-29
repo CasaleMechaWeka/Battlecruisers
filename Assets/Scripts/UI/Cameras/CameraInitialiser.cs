@@ -26,15 +26,17 @@ namespace BattleCruisers.UI.Cameras
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
-            IBroadcastingFilter navigationWheelEnabledFilter)
+            IBroadcastingFilter navigationWheelEnabledFilter,
+            IBroadcastingFilter scrollWheelEnabledFilter)
         {
-            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter);
+            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, scrollWheelEnabledFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
-            IUpdater updater = GetComponent<IUpdater>();
+            TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
+            updater.Initialise(scrollWheelEnabledFilter);
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);

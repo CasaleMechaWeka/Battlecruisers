@@ -104,6 +104,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     dataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
+                    navigationPermitter,
                     navigationPermitter);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
