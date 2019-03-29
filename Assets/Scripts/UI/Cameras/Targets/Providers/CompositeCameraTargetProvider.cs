@@ -27,6 +27,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                     return;
                 }
 
+                _activeTargetProvider = value;
+
                 // To avoid jumping to old navigation wheel location
                 _navigationWheel.CenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
             }
@@ -58,6 +60,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private void TargetProvider_TargetChanged(object sender, EventArgs e)
         {
+            Logging.Log(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, sender.ToString());
+
             ICameraTargetProvider targetProvider = sender.Parse<ICameraTargetProvider>();
             ActiveTargetProvider = targetProvider;
             TargetChanged?.Invoke(this, EventArgs.Empty);

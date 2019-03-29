@@ -54,9 +54,8 @@ namespace BattleCruisers.UI.Cameras
                     new CornerIdentifier(
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
-            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+            ICameraTargetProvider navigationWheelCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
-            // FELIX  Create CompositeCameraTargetProvider
             ICameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(
                     camera,
@@ -68,11 +67,17 @@ namespace BattleCruisers.UI.Cameras
                         camera,
                         new TimeBC(),
                         settings.ValidOrthographicSizes));
-            cameraTargetProvider = scrollWheelCameraTargetProvider;
+
+            ICameraTargetProvider compositeCameraTargetProvider
+                = new CompositeCameraTargetProvider(
+                    navigationWheelPanel.NavigationWheel,
+                    cameraNavigationWheelCalculator,
+                    navigationWheelCameraTargetProvider,
+                    scrollWheelCameraTargetProvider);
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
-                    cameraTargetProvider,
+                    compositeCameraTargetProvider,
                     new SmoothZoomAdjuster(camera, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
 
