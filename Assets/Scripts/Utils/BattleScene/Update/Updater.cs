@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BattleCruisers.Utils.BattleScene
+namespace BattleCruisers.Utils.BattleScene.Update
 {
     public class Updater : MonoBehaviour, IUpdater
     {

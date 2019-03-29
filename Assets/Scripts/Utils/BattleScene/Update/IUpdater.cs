@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Utils.BattleScene
+namespace BattleCruisers.Utils.BattleScene.Update
 {
     public interface IUpdater
     {
