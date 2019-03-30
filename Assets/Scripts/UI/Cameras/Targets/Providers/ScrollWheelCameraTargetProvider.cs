@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    public class ScrollWheelCameraTargetProvider : CameraTargetProvider
+    public class ScrollWheelCameraTargetProvider : CameraTargetProvider, IScrollWheelCameraTargetProvider
     {
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
@@ -16,6 +16,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IRange<float> _validOrthographicSizes;
         private readonly IUpdater _updater;
         private readonly IZoomCalculator _zoomCalculator;
+        private bool _duringUserInput;
+
+        // FELIX  Update tests :)
+        public event EventHandler UserInputStarted;
+        public event EventHandler UserInputEnded;
 
         public ScrollWheelCameraTargetProvider(
             ICamera camera,
@@ -33,6 +38,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _validOrthographicSizes = validOrthographicSizes;
             _updater = updater;
             _zoomCalculator = zoomCalculator;
+            _duringUserInput = false;
 
             _updater.Updated += _updater_Updated;
 
@@ -43,7 +49,19 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             if (_input.MouseScrollDelta.y == 0)
             {
+                if (_duringUserInput)
+                {
+                    _duringUserInput = false;
+                    UserInputEnded?.Invoke(this, EventArgs.Empty);
+                }
+
                 return;
+            }
+
+            if (!_duringUserInput)
+            {
+                _duringUserInput = true;
+                UserInputStarted?.Invoke(this, EventArgs.Empty);
             }
 
             float zoomDelta = _zoomCalculator.FindZoomDelta(_input.MouseScrollDelta.y);

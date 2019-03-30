@@ -9,7 +9,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     // FELIX  Test :D
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
-        private readonly ICameraTargetProvider[] _targetProviders;
+        private readonly ICameraTargetProvider _navigationWheelTargetProvider;
+        private readonly IScrollWheelCameraTargetProvider _scrollWheelTargetProvider;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
 
@@ -20,17 +21,15 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             set
             {
                 Assert.IsNotNull(value);
+                Assert.IsFalse(ReferenceEquals(_activeTargetProvider, value));
 
-                if (ReferenceEquals(_activeTargetProvider, value))
+                if (_activeTargetProvider != null)
                 {
-                    return;
+                    _activeTargetProvider.TargetChanged += _activeTargetProvider_TargetChanged;
                 }
 
                 _activeTargetProvider = value;
-
-                // To avoid jumping to old navigation wheel location
-                Logging.Log(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, $"_activeTargetProvider.Target: {_activeTargetProvider.Target}");
-                _navigationWheel.CenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
+                _activeTargetProvider.TargetChanged += _activeTargetProvider_TargetChanged;
             }
         }
 
@@ -39,32 +38,38 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
-            INavigationWheel navigationWheel, 
-            ICameraNavigationWheelCalculator navigationWheelCalculator,
-            params ICameraTargetProvider[] targetProviders)
+            ICameraTargetProvider navigationWheelTargetProvider,
+            IScrollWheelCameraTargetProvider scrollWheelTargetProvider,
+            INavigationWheel navigationWheel,
+            ICameraNavigationWheelCalculator navigationWheelCalculator)
         {
-            Helper.AssertIsNotNull(navigationWheel, navigationWheelCalculator, targetProviders);
-            Assert.IsTrue(targetProviders.Length > 0);
+            Helper.AssertIsNotNull(navigationWheelTargetProvider, scrollWheelTargetProvider, navigationWheel, navigationWheelCalculator);
 
-            _targetProviders = targetProviders;
+            _navigationWheelTargetProvider = navigationWheelTargetProvider;
+            _scrollWheelTargetProvider = scrollWheelTargetProvider;
             _navigationWheel = navigationWheel;
             _navigationWheelCalculator = navigationWheelCalculator;
 
-            _activeTargetProvider = targetProviders[0];
+            ActiveTargetProvider = navigationWheelTargetProvider;
 
-            foreach (ICameraTargetProvider targetProvider in targetProviders)
-            {
-                targetProvider.TargetChanged += TargetProvider_TargetChanged;
-            }
+            scrollWheelTargetProvider.UserInputStarted += ScrollWheelTargetProvider_UserInputStarted;
+            scrollWheelTargetProvider.UserInputEnded += ScrollWheelTargetProvider_UserInputEnded;
         }
 
-        private void TargetProvider_TargetChanged(object sender, EventArgs e)
+        private void ScrollWheelTargetProvider_UserInputStarted(object sender, EventArgs e)
         {
-            Logging.Log(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, sender.ToString());
+            ActiveTargetProvider = _scrollWheelTargetProvider;
+        }
 
-            ICameraTargetProvider targetProvider = sender.Parse<ICameraTargetProvider>();
-            ActiveTargetProvider = targetProvider;
-            TargetChanged?.Invoke(this, EventArgs.Empty);
+        private void ScrollWheelTargetProvider_UserInputEnded(object sender, EventArgs e)
+        {
+            _navigationWheel.CenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
+            ActiveTargetProvider = _navigationWheelTargetProvider;
+        }
+
+        private void _activeTargetProvider_TargetChanged(object sender, EventArgs e)
+        {
+            TargetChanged?.Invoke(sender, e);
         }
     }
 }

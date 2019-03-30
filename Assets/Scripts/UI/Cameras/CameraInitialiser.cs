@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.Cameras
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
             ICameraTargetProvider navigationWheelCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
-            ICameraTargetProvider scrollWheelCameraTargetProvider
+            IScrollWheelCameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(
                     camera,
                     cameraCalculator,
@@ -70,10 +70,10 @@ namespace BattleCruisers.UI.Cameras
 
             ICameraTargetProvider compositeCameraTargetProvider
                 = new CompositeCameraTargetProvider(
-                    navigationWheelPanel.NavigationWheel,
-                    cameraNavigationWheelCalculator,
                     navigationWheelCameraTargetProvider,
-                    scrollWheelCameraTargetProvider);
+                    scrollWheelCameraTargetProvider,
+                    navigationWheelPanel.NavigationWheel,
+                    cameraNavigationWheelCalculator);
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
