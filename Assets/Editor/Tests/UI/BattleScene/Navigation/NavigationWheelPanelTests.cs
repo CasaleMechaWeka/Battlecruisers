@@ -100,6 +100,20 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             float expectedProportion = (_navigationWheel.CenterPosition.x - globalXRangeAtHeight.Min) / (globalXRangeAtHeight.Max - globalXRangeAtHeight.Min);
             Assert.AreEqual(expectedProportion, _wheelPanel.FindXProportion());
         }
+
+        [Test]
+        public void FindXProportion_XRangeIs0()
+        {
+            _navigationWheel.CenterPosition.Returns(new Vector2(1.25f, 3));
+            _panelArea.BottomLeftVertex.Returns(new Vector2(0, 0));
+            _panelArea.Height.Returns(4);
+            float localYPosition = _navigationWheel.CenterPosition.y - _panelArea.BottomLeftVertex.y;
+
+            IRange<float> globalXRangeAtHeight = new Range<float>(min: 0, max: 0);
+            _panelArea.FindGlobalXRange(localYPosition).Returns(globalXRangeAtHeight);
+
+            Assert.AreEqual(0, _wheelPanel.FindXProportion());
+        }
         #endregion FindXProportion
 
         [Test]

@@ -29,7 +29,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             return PanelArea.BottomLeftVertex.y + yFromPanelBase;
         }
 
-        // FELIX  Update test :D
         public float FindXProportion()
         {
             float localYPosition = FindLocalY(NavigationWheel.CenterPosition.y);
