@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Test
     public class ScrollWheelCameraTargetProvider : CameraTargetProvider
     {
         private readonly ICamera _camera;
@@ -47,15 +46,15 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 return;
             }
 
-            float scrollDelta = _zoomCalculator.FindZoomDelta(_input.MouseScrollDelta.y);
+            float zoomDelta = _zoomCalculator.FindZoomDelta(_input.MouseScrollDelta.y);
 
             if (_input.MouseScrollDelta.y < 0)
             {
-                Target = ZoomOut(scrollDelta);
+                Target = ZoomOut(zoomDelta);
             }
             else
             {
-                Target = ZoomIn(scrollDelta);
+                Target = ZoomIn(zoomDelta);
             }
         }
 
@@ -94,10 +93,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             // Find target camera x position, zoom towards mouse
             Vector3 mouseWorldPosition = _camera.ScreenToWorldPoint(_input.MousePosition);
+            Vector3 mouseViewportPosition = _camera.WorldToViewportPoint(mouseWorldPosition);
             Vector3 mouseZoomPosition
                 = _cameraCalculator.FindZoomingCameraPosition(
                     mouseWorldPosition,
-                    _camera.WorldToViewportPoint(mouseWorldPosition),
+                    mouseViewportPosition,
                     targetOrthographicSize,
                     _camera.Aspect,
                     _camera.Transform.Position.z);
