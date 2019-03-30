@@ -7,7 +7,6 @@ using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -34,10 +33,6 @@ namespace BattleCruisers.UI.Cameras
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
-            TogglableUpdater updater = GetComponent<TogglableUpdater>();
-            Assert.IsNotNull(updater);
-            updater.Initialise(scrollWheelEnabledFilter);
-
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
 
@@ -47,6 +42,57 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator, 
                     settings.ValidOrthographicSizes,
                     new ProportionCalculator());
+
+            ICameraTargetProvider cameraTargetProvider
+                = CreateCameraTargetProvider(
+                    camera,
+                    cameraCalculator,
+                    cameraNavigationWheelCalculator,
+                    settings,
+                    navigationWheelPanel,
+                    playerCruiser,
+                    aiCruiser,
+                    scrollWheelEnabledFilter);
+
+            _cameraAdjuster
+                = new SmoothCameraAdjuster(
+                    cameraTargetProvider,
+                    new SmoothZoomAdjuster(camera, cameraSmoothTime),
+                    new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
+
+            INavigationWheelPositionProvider navigationWheelPositionProvider 
+                = new NavigationWheelPositionProvider(
+                    navigationWheelPanel.PanelArea,
+                    cameraNavigationWheelCalculator,
+                    settings.ValidOrthographicSizes,
+                    playerCruiser,
+                    aiCruiser);
+
+            Skybox skybox = GetComponent<Skybox>();
+            Assert.IsNotNull(skybox);
+
+            return
+                new CameraComponents(
+                    _cameraAdjuster,
+                    navigationWheelPanel.NavigationWheel,
+                    new CameraFocuser(navigationWheelPositionProvider, navigationWheelPanel.NavigationWheel),
+                    skybox);
+        }
+
+        private ICameraTargetProvider CreateCameraTargetProvider(
+            ICamera camera,
+            ICameraCalculator cameraCalculator,
+            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator,
+            ICameraCalculatorSettings settings,
+            INavigationWheelPanel navigationWheelPanel,
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBroadcastingFilter scrollWheelEnabledFilter)
+        {
+            TogglableUpdater updater = GetComponent<TogglableUpdater>();
+            Assert.IsNotNull(updater);
+            updater.Initialise(scrollWheelEnabledFilter);
+
             ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetFinder cornerCameraTargetFinder
                 = new NavigationWheelCornersCameraTargetFinder(
@@ -55,6 +101,14 @@ namespace BattleCruisers.UI.Cameras
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
             ICameraTargetProvider navigationWheelCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+
+            ISystemInfo systemInfo = new SystemInfoBC();
+
+            if (systemInfo.DeviceType == DeviceType.Handheld)
+            {
+                // Handhelds have no mouse or scroll wheel, so ignore that navigation method
+                return navigationWheelCameraTargetProvider;
+            }
 
             IScrollWheelCameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(
@@ -68,36 +122,12 @@ namespace BattleCruisers.UI.Cameras
                         new TimeBC(),
                         settings.ValidOrthographicSizes));
 
-            ICameraTargetProvider compositeCameraTargetProvider
-                = new CompositeCameraTargetProvider(
+            return
+                new CompositeCameraTargetProvider(
                     navigationWheelCameraTargetProvider,
                     scrollWheelCameraTargetProvider,
                     navigationWheelPanel.NavigationWheel,
                     cameraNavigationWheelCalculator);
-
-            _cameraAdjuster
-                = new SmoothCameraAdjuster(
-                    compositeCameraTargetProvider,
-                    new SmoothZoomAdjuster(camera, cameraSmoothTime),
-                    new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
-
-            Skybox skybox = GetComponent<Skybox>();
-            Assert.IsNotNull(skybox);
-
-            INavigationWheelPositionProvider navigationWheelPositionProvider 
-                = new NavigationWheelPositionProvider(
-                    navigationWheelPanel.PanelArea,
-                    cameraNavigationWheelCalculator,
-                    settings.ValidOrthographicSizes,
-                    playerCruiser,
-                    aiCruiser);
-
-            return
-                new CameraComponents(
-                    _cameraAdjuster,
-                    navigationWheelPanel.NavigationWheel,
-                    new CameraFocuser(navigationWheelPositionProvider, navigationWheelPanel.NavigationWheel),
-                    skybox);
         }
 
         public void Update()
