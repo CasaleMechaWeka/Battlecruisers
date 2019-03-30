@@ -6,7 +6,6 @@ namespace BattleCruisers.UI.Cameras.Helpers
 {
     public class ProportionCalculator : IProportionCalculator
     {
-        // FELIX  Update test :D
         public float FindProportion(float value, IRange<float> valueRange)
         {
             Assert.IsNotNull(valueRange);

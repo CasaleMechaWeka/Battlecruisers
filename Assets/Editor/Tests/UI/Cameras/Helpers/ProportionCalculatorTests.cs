@@ -42,6 +42,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
+        public void FindProportion_0Range()
+        {
+            float value = 9;
+            IRange<float> valueRange = new Range<float>(0, 0);
+
+            Assert.AreEqual(0, _calculator.FindProportion(value, valueRange));
+        }
+
+        [Test]
         public void FindProportionalValue()
         {
             float proportion = 0.5f;
