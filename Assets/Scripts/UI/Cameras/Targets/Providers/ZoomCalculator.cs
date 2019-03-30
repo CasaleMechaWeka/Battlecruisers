@@ -5,14 +5,13 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Test :)
     public class ZoomCalculator : IZoomCalculator
     {
         private readonly ICamera _camera;
         private readonly IDeltaTimeProvider _deltaTimeProvider;
         private readonly IRange<float> _validOrthographicSizes;
 
-        private const float ZOOM_SCALE = 2400;
+        public const float ZOOM_SCALE = 2400;
 
         public ZoomCalculator(ICamera camera, IDeltaTimeProvider deltaTimeProvider, IRange<float> validOrthographicSizes)
         {
