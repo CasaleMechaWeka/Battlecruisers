@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -10,8 +9,7 @@ using UnityEngine;
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     // FELIX  Test
-    // FELIX  Avoid duplicate code with NavigationWheelCameraTargetProvider :)  (Target property :P)
-    public class ScrollWheelCameraTargetProvider : ICameraTargetProvider
+    public class ScrollWheelCameraTargetProvider : CameraTargetProvider
     {
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
@@ -19,22 +17,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IRange<float> _validOrthographicSizes;
         private readonly IUpdater _updater;
         private readonly IZoomCalculator _zoomCalculator;
-
-        private ICameraTarget _target;
-        public ICameraTarget Target
-        {
-            get { return _target; }
-            set
-            {
-                if (_target != value)
-                {
-                    _target = value;
-
-                    TargetChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-        public event EventHandler TargetChanged;
 
         public ScrollWheelCameraTargetProvider(
             ICamera camera,
