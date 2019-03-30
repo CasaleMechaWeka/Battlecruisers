@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class ScrollWheelCameraTargetProviderTests
     {
-        private ICameraTargetProvider _cameraTargetProvider;
+        private IScrollWheelCameraTargetProvider _cameraTargetProvider;
 
         private ICamera _camera;
         private ICameraCalculator _cameraCalculator;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         private IUpdater _updater;
         private IZoomCalculator _zoomCalculator;
 
-        private int _targetChangedCount;
+        private int _targetChangedCount, _userInputStartedCount, _userInputEndedCount;
         private float _zoomDelta;
 
         [SetUp]
@@ -50,6 +50,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _targetChangedCount = 0;
             _cameraTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;
 
+            _userInputStartedCount = 0;
+            _cameraTargetProvider.UserInputStarted += (sender, e) => _userInputStartedCount++;
+
+            _userInputEndedCount = 0;
+            _cameraTargetProvider.UserInputEnded += (sender, e) => _userInputEndedCount++;
+
             _zoomDelta = 5;
             _zoomCalculator.FindZoomDelta(default).ReturnsForAnyArgs(_zoomDelta);
 
@@ -64,11 +70,50 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         }
 
         [Test]
-        public void Update_NoZoom()
+        public void Update_StarteUserInput()
+        {
+            _input.MouseScrollDelta.Returns(new Vector2(0, 1));
+            _updater.Updated += Raise.Event();
+            Assert.AreEqual(1, _userInputStartedCount);
+        }
+
+        [Test]
+        public void Update_UserInput_DuringUserInput()
+        {
+            // First user input
+            _input.MouseScrollDelta.Returns(new Vector2(0, 1));
+            _updater.Updated += Raise.Event();
+            Assert.AreEqual(1, _userInputStartedCount);
+
+            // Second user input, event not raised again
+            _input.MouseScrollDelta.Returns(new Vector2(0, 1));
+            _updater.Updated += Raise.Event();
+            Assert.AreEqual(1, _userInputStartedCount);
+        }
+
+        [Test]
+        public void Update_NoUserInput()
         {
             _input.MouseScrollDelta.Returns(new Vector2(0, 0));
+
             _updater.Updated += Raise.Event();
+
             Assert.AreEqual(0, _targetChangedCount);
+            Assert.AreEqual(0, _userInputEndedCount);
+        }
+
+        [Test]
+        public void Update_NoUserInput_DuringUserInput()
+        {
+            // Start user input
+            _input.MouseScrollDelta.Returns(new Vector2(0, 1));
+            _updater.Updated += Raise.Event();
+            Assert.AreEqual(1, _userInputStartedCount);
+
+            // End user input
+            _input.MouseScrollDelta.Returns(new Vector2(0, 0));
+            _updater.Updated += Raise.Event();
+            Assert.AreEqual(1, _userInputEndedCount);
         }
 
         [Test]

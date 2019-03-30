@@ -18,7 +18,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IZoomCalculator _zoomCalculator;
         private bool _duringUserInput;
 
-        // FELIX  Update tests :)
         public event EventHandler UserInputStarted;
         public event EventHandler UserInputEnded;
 
