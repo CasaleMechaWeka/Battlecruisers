@@ -29,6 +29,7 @@ namespace BattleCruisers.Utils.DataStrctures
 
         public float FindMaxY(float globalXPosition)
         {
+            Logging.Log(Tags.PYRAMID, $"globalXPosition: {globalXPosition}  BottomLeftVertex.x: {BottomLeftVertex.x}  BottomRightVertex.x): {BottomRightVertex.x}");
             Assert.IsTrue(globalXPosition >= BottomLeftVertex.x);
             Assert.IsTrue(globalXPosition <= BottomRightVertex.x);
 

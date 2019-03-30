@@ -6,13 +6,14 @@ namespace BattleCruisers.UI.Cameras.Helpers
 {
     public class ProportionCalculator : IProportionCalculator
     {
+        // FELIX  Update test :D
         public float FindProportion(float value, IRange<float> valueRange)
         {
             Assert.IsNotNull(valueRange);
 
             float clampedValue = Mathf.Clamp(value, valueRange.Min, valueRange.Max);
             float range = valueRange.Max - valueRange.Min;
-            return (clampedValue - valueRange.Min) / range;
+            return range != 0 ? (clampedValue - valueRange.Min) / range : 0;
         }
 
         public float FindProportionalValue(float proportion, IRange<float> valueRange)

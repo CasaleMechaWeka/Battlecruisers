@@ -59,7 +59,15 @@ namespace BattleCruisers.UI.Cameras.Helpers
             float xPositionProportion = _proportionCalculator.FindProportion(cameraTarget.Position.x, validCameraXPositions);
             float navigationWheelXPosition = _navigationWheelPanel.FindXPosition(xPositionProportion, navigationWheelYPosition);
 
-            return new Vector2(navigationWheelXPosition, navigationWheelYPosition);
+            // FELIX  TEMP :P
+            if (float.IsNaN(navigationWheelXPosition))
+            {
+                var a = "yo";
+            }
+
+            Vector2 navigationWheelPosition = new Vector2(navigationWheelXPosition, navigationWheelYPosition);
+            Logging.Log(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, $"cameraTarget: {cameraTarget}  navigationWheelPosition: {navigationWheelPosition}");
+            return navigationWheelPosition;
         }
     }
 }

@@ -67,6 +67,7 @@ namespace BattleCruisers.Utils
         // Camera
         public const string CAMERA = "Camera";
         public const string CAMERA_CALCULATOR = "CameraCalculator";
+        public const string CAMERA_NAVIGATION_WHEEL_CALCULATOR = "CameraNavigationWheelCalculator";
         public const string COMPOSITE_CAMERA_TARGET_PROVIDER = "CompositeCameraTargetProvider";
         public const string SCROLL_WHEEL_NAVIGATION = "ScrollWheelNavigation";
 
@@ -76,6 +77,7 @@ namespace BattleCruisers.Utils
         public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
         public const string PREDICTORS = "TargetPositionPredictors";
+        public const string PYRAMID = "Pyramid";
         public const string REPAIR_MANAGER = "RepairManager";
         public const string SCENE_NAVIGATION = "SceneNavigation";
         public const string SLOTS = "Slots";
@@ -158,7 +160,12 @@ namespace BattleCruisers.Utils
             // Camera
             tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
-            tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, true);
+            //tagsToActiveness.Add(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, true);
+            //tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, false);
             tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, false);
 
             // Other
@@ -167,6 +174,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.PYRAMID, true);
+            //tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
