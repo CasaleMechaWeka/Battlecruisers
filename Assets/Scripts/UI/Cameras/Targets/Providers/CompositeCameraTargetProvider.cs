@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Test :D
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly ICameraTargetProvider _navigationWheelTargetProvider;
@@ -25,7 +24,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
                 if (_activeTargetProvider != null)
                 {
-                    _activeTargetProvider.TargetChanged += _activeTargetProvider_TargetChanged;
+                    _activeTargetProvider.TargetChanged -= _activeTargetProvider_TargetChanged;
                 }
 
                 _activeTargetProvider = value;
