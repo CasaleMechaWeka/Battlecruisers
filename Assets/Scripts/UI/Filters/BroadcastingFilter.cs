@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Filters
 {
-    public class BroadcastingFilter : IBroadcastingFilter
+    public class BroadcastingFilter : IBroadcastingFilter, IPermitter
     {
         private bool _isMatch;
         public bool IsMatch
@@ -13,9 +13,12 @@ namespace BattleCruisers.UI.Filters
             }
             set
             {
-                _isMatch = value;
-
-                PotentialMatchChange?.Invoke(this, EventArgs.Empty);
+                    // FELIX  Update test :P
+                if (_isMatch != value)
+                {
+                    _isMatch = value;
+                    PotentialMatchChange?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
