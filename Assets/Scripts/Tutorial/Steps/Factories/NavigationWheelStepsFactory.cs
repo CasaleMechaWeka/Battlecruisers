@@ -8,14 +8,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class NavigationWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
-        private readonly BroadcastingFilter _navigationPermitter;
+        private readonly IPermitter _navigationPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ICameraComponents _cameraComponents;
 
         public NavigationWheelStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
-            BroadcastingFilter navigationPermitter,
+            IPermitter navigationPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             ICameraComponents cameraComponents) 
             : base(argsFactory)

@@ -33,9 +33,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
         public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
-        public BroadcastingFilter SpeedButtonsPermitter { get; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
-        public BroadcastingFilter NavigationPermitter { get; }
+        public IPermitter NavigationPermitter { get; }
+
+        private BroadcastingFilter _speedButtonsFilter;
+        public IPermitter SpeedButtonsPermitter => _speedButtonsFilter;
 
         public ISingleBuildableProvider SingleAircraftProvider { get; }
         public ISingleBuildableProvider SingleShipProvider { get; }
@@ -61,7 +63,7 @@ namespace BattleCruisers.Scenes.BattleScene
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
             SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
-            SpeedButtonsPermitter = new BroadcastingFilter(isMatch: false);
+            _speedButtonsFilter = new BroadcastingFilter(isMatch: false);
 
 			IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
             IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL);
@@ -111,7 +113,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new StaticFilter<ITarget>(isMatch: false),
                     new StaticFilter<ITarget>(isMatch: false),
                     _backButtonPermitter,
-                    SpeedButtonsPermitter,
+                    _speedButtonsFilter,
                     new BroadcastingFilter(isMatch: false));
         }
 
