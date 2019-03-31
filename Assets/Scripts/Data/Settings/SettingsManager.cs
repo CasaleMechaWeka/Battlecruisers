@@ -13,7 +13,7 @@ namespace BattleCruisers.Data.Settings
             public const string ScrollSpeed = "ScrollSpeed";
         }
 
-        private const float DEFAULT_ZOOM_SPEED = 2;
+        private const float DEFAULT_ZOOM_SPEED = 1;
         public const float MIN_ZOOM_SPEED = 0.1f;
         public const float MAX_ZOOM_SPEED = 3.9f;
 
