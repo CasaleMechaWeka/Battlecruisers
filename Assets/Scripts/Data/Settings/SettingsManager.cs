@@ -15,7 +15,7 @@ namespace BattleCruisers.Data.Settings
 
         private const int DEFAULT_ZOOM_SPEED_LEVEL = 5;
         public const int MIN_ZOOM_SPEED_LEVEL = 1;
-        public const int MAX_ZOOM_SPEED = 9;
+        public const int MAX_ZOOM_SPEED_LEVEL = 9;
 
 		private const float DEFAULT_SCROLL_SPEED = 2;
 		public const float MIN_SCROLL_SPEED = 0.1f;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Data.Settings
             set
             {
                 Assert.IsTrue(value >= MIN_ZOOM_SPEED_LEVEL);
-                Assert.IsTrue(value <= MAX_ZOOM_SPEED);
+                Assert.IsTrue(value <= MAX_ZOOM_SPEED_LEVEL);
                 PlayerPrefs.SetInt(Keys.ZoomSpeedLevel, value);
             }
         }

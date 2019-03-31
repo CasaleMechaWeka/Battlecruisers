@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             _slider.value = selectedZoomSpeed;
             _slider.minValue = SettingsManager.MIN_ZOOM_SPEED_LEVEL;
-            _slider.maxValue = SettingsManager.MAX_ZOOM_SPEED;
+            _slider.maxValue = SettingsManager.MAX_ZOOM_SPEED_LEVEL;
             _slider.onValueChanged.AddListener(OnZoomSpeedChanged);
         }
 
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private void AssertIsValidZoomSpeed(int zoomSpeed)
         {
             Assert.IsTrue(zoomSpeed >= SettingsManager.MIN_ZOOM_SPEED_LEVEL);
-            Assert.IsTrue(zoomSpeed <= SettingsManager.MAX_ZOOM_SPEED);
+            Assert.IsTrue(zoomSpeed <= SettingsManager.MAX_ZOOM_SPEED_LEVEL);
         }
     }
 }
