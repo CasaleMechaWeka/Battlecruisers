@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private readonly IDeltaTimeProvider _deltaTimeProvider;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
+        private readonly IZoomConverter _zoomConverter;
 
         public const float ZOOM_SCALE = 2400;
 
@@ -19,14 +20,16 @@ namespace BattleCruisers.UI.Cameras.Helpers
             ICamera camera, 
             IDeltaTimeProvider deltaTimeProvider, 
             IRange<float> validOrthographicSizes,
-            ISettingsManager settingsManager)
+            ISettingsManager settingsManager,
+            IZoomConverter zoomConverter)
         {
-            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager);
+            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
 
             _camera = camera;
             _deltaTimeProvider = deltaTimeProvider;
             _validOrthographicSizes = validOrthographicSizes;
             _settingsManager = settingsManager;
+            _zoomConverter = zoomConverter;
         }
 
         public float FindZoomDelta(float mouseScrollDeltaY)
@@ -37,7 +40,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
                 orthographicProportion *
                 ZOOM_SCALE *
                 _deltaTimeProvider.UnscaledDeltaTime *
-                _settingsManager.ZoomSpeedLevel;
+                _zoomConverter.LevelToSpeed(_settingsManager.ZoomSpeedLevel);
         }
     }
 }

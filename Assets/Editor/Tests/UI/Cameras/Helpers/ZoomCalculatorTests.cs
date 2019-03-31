@@ -15,6 +15,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         private IDeltaTimeProvider _deltaTimeProvider;
         private IRange<float> _validOrthographicSizes;
         private ISettingsManager _settingsManager;
+        private IZoomConverter _zoomConverter;
+        private float _zoomDeltaMultiplier;
 
         [SetUp]
         public void TestSetup()
@@ -23,12 +25,21 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _deltaTimeProvider = Substitute.For<IDeltaTimeProvider>();
             _validOrthographicSizes = new Range<float>(5, 40);
             _settingsManager = Substitute.For<ISettingsManager>();
+            _zoomConverter = Substitute.For<IZoomConverter>();
 
-            _calculator = new ZoomCalculator(_camera, _deltaTimeProvider, _validOrthographicSizes, _settingsManager);
+            _calculator = new ZoomCalculator(_camera, _deltaTimeProvider, _validOrthographicSizes, _settingsManager, _zoomConverter);
 
             _camera.OrthographicSize.Returns(20);
             _deltaTimeProvider.UnscaledDeltaTime.Returns(0.1f);
             _settingsManager.ZoomSpeedLevel.Returns(2);
+            _zoomConverter.LevelToSpeed(_settingsManager.ZoomSpeedLevel).Returns(0.25f);
+
+            float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
+            _zoomDeltaMultiplier
+                = orthographicProportion *
+                    ZoomCalculator.ZOOM_SCALE *
+                    _deltaTimeProvider.UnscaledDeltaTime *
+                    _zoomConverter.LevelToSpeed(_settingsManager.ZoomSpeedLevel);
         }
 
         [Test]
@@ -36,12 +47,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         {
             float mouseScrollDeltaY = -1;
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
-            float expectedZoomDelta 
-                = Mathf.Abs(mouseScrollDeltaY) * 
-                    orthographicProportion * 
-                    ZoomCalculator.ZOOM_SCALE * 
-                    _deltaTimeProvider.UnscaledDeltaTime *
-                    _settingsManager.ZoomSpeedLevel;
+            float expectedZoomDelta = Mathf.Abs(mouseScrollDeltaY) * _zoomDeltaMultiplier;
 
             Assert.AreEqual(expectedZoomDelta, _calculator.FindZoomDelta(mouseScrollDeltaY));
         }
@@ -51,12 +57,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         {
             float mouseScrollDeltaY = 1;
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
-            float expectedZoomDelta 
-                = Mathf.Abs(mouseScrollDeltaY) * 
-                    orthographicProportion * 
-                    ZoomCalculator.ZOOM_SCALE * 
-                    _deltaTimeProvider.UnscaledDeltaTime *
-                    _settingsManager.ZoomSpeedLevel;
+            float expectedZoomDelta = Mathf.Abs(mouseScrollDeltaY) * _zoomDeltaMultiplier;
 
             Assert.AreEqual(expectedZoomDelta, _calculator.FindZoomDelta(mouseScrollDeltaY));
         }

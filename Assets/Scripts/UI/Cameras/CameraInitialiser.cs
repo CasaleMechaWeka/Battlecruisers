@@ -123,7 +123,8 @@ namespace BattleCruisers.UI.Cameras
                         camera,
                         new TimeBC(),
                         settings.ValidOrthographicSizes,
-                        settingsManager));
+                        settingsManager,
+                        new ZoomConverter()));
 
             return
                 new CompositeCameraTargetProvider(
