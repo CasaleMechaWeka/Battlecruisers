@@ -3,8 +3,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.Filters
 {
-    // FELIX  Rename, to match class under test :P
-    public class BasicFilterTests
+    public class BroadcastingFilterTests
     {
         private BroadcastingFilter _filter;
 
