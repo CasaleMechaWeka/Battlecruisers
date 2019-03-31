@@ -35,6 +35,7 @@ namespace BattleCruisers.UI.Filters
             Assert.IsNotNull(filters);
             Assert.IsTrue(filters.Length > 1);
 
+            _filters = filters;
             IsMatch = isMatch;
         }
     }
