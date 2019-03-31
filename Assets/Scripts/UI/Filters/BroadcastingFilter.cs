@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.Filters
             }
             set
             {
-                    // FELIX  Update test :P
                 if (_isMatch != value)
                 {
                     _isMatch = value;
