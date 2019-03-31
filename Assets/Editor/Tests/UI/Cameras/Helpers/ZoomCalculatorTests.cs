@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _camera.OrthographicSize.Returns(20);
             _deltaTimeProvider.UnscaledDeltaTime.Returns(0.1f);
-            _settingsManager.ZoomSpeed.Returns(2);
+            _settingsManager.ZoomSpeedLevel.Returns(2);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
                     orthographicProportion * 
                     ZoomCalculator.ZOOM_SCALE * 
                     _deltaTimeProvider.UnscaledDeltaTime *
-                    _settingsManager.ZoomSpeed;
+                    _settingsManager.ZoomSpeedLevel;
 
             Assert.AreEqual(expectedZoomDelta, _calculator.FindZoomDelta(mouseScrollDeltaY));
         }
@@ -56,7 +56,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
                     orthographicProportion * 
                     ZoomCalculator.ZOOM_SCALE * 
                     _deltaTimeProvider.UnscaledDeltaTime *
-                    _settingsManager.ZoomSpeed;
+                    _settingsManager.ZoomSpeedLevel;
 
             Assert.AreEqual(expectedZoomDelta, _calculator.FindZoomDelta(mouseScrollDeltaY));
         }

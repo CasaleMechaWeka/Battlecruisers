@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
                 orthographicProportion *
                 ZOOM_SCALE *
                 _deltaTimeProvider.UnscaledDeltaTime *
-                _settingsManager.ZoomSpeed;
+                _settingsManager.ZoomSpeedLevel;
         }
     }
 }

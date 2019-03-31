@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
-        private IBroadcastingProperty<float> _zoomSpeed;
+        private IBroadcastingProperty<int> _zoomSpeed;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(
             ISettingsManager settingsManager, 
             IDifficultyDropdown difficultyDropdown,
-            IBroadcastingProperty<float> zoomSpeed)
+            IBroadcastingProperty<int> zoomSpeed)
         {
             Helper.AssertIsNotNull(settingsManager, difficultyDropdown, zoomSpeed);
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Assert.IsTrue(ShouldBeEnabled());
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
-            _settingsManager.ZoomSpeed = _zoomSpeed.Value;
+            _settingsManager.ZoomSpeedLevel = _zoomSpeed.Value;
             _settingsManager.Save();
 
             UpdateEnabledStatus();
@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             return
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
-                || _zoomSpeed.Value != _settingsManager.ZoomSpeed;
+                || _zoomSpeed.Value != _settingsManager.ZoomSpeedLevel;
         }
     }
 }

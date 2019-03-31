@@ -9,13 +9,13 @@ namespace BattleCruisers.Data.Settings
         private static class Keys
         {
             public const string Difficulty = "Difficulty";
-			public const string ZoomSpeed = "ZoomSpeed";
+			public const string ZoomSpeedLevel = "ZoomSpeed";
             public const string ScrollSpeed = "ScrollSpeed";
         }
 
-        private const float DEFAULT_ZOOM_SPEED = 1;
-        public const float MIN_ZOOM_SPEED = 0.1f;
-        public const float MAX_ZOOM_SPEED = 3.9f;
+        private const int DEFAULT_ZOOM_SPEED_LEVEL = 5;
+        public const int MIN_ZOOM_SPEED_LEVEL = 1;
+        public const int MAX_ZOOM_SPEED = 9;
 
 		private const float DEFAULT_SCROLL_SPEED = 2;
 		public const float MIN_SCROLL_SPEED = 0.1f;
@@ -33,17 +33,17 @@ namespace BattleCruisers.Data.Settings
             }
         }
 
-        public float ZoomSpeed
+        public int ZoomSpeedLevel
         {
             get
             {
-                return PlayerPrefs.GetFloat(Keys.ZoomSpeed);
+                return PlayerPrefs.GetInt(Keys.ZoomSpeedLevel);
             }
             set
             {
-                Assert.IsTrue(value >= MIN_ZOOM_SPEED);
+                Assert.IsTrue(value >= MIN_ZOOM_SPEED_LEVEL);
                 Assert.IsTrue(value <= MAX_ZOOM_SPEED);
-                PlayerPrefs.SetFloat(Keys.ZoomSpeed, value);
+                PlayerPrefs.SetInt(Keys.ZoomSpeedLevel, value);
             }
         }
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Data.Settings
         public SettingsManager()
         {
             if (!PlayerPrefs.HasKey(Keys.Difficulty)
-                || !PlayerPrefs.HasKey(Keys.ZoomSpeed)
+                || !PlayerPrefs.HasKey(Keys.ZoomSpeedLevel)
                 || !PlayerPrefs.HasKey(Keys.ScrollSpeed))
             {
                 CreateSettings();
@@ -74,7 +74,7 @@ namespace BattleCruisers.Data.Settings
         private void CreateSettings()
         {
             AIDifficulty = Difficulty.Normal;
-            ZoomSpeed = DEFAULT_ZOOM_SPEED;
+            ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
 			ScrollSpeed = DEFAULT_SCROLL_SPEED;
 
             Save();

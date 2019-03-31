@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             ZoomSlider zoomSlider = GetComponentInChildren<ZoomSlider>();
             Assert.IsNotNull(zoomSlider);
-            zoomSlider.Initialise(settingsManager.ZoomSpeed);
+            zoomSlider.Initialise(settingsManager.ZoomSpeedLevel);
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
