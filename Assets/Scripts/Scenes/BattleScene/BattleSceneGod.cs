@@ -13,7 +13,6 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
@@ -63,7 +62,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
             // TEMP  Force  tutorial
-            //applicationModel.IsTutorial = true;
+            applicationModel.IsTutorial = true;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);

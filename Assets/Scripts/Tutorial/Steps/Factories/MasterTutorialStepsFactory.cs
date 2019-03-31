@@ -34,35 +34,35 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // 1. Player cruiser
-            steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
+            //// 1. Player cruiser
+            //steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
 
-            // 2. Navigation wheel
-            steps.AddRange(_factoriesProvider.NavigationWheelStepsFactory.CreateSteps());
+            //// 2. Navigation wheel
+            //steps.AddRange(_factoriesProvider.NavigationWheelStepsFactory.CreateSteps());
 
-            // 2.5 Scroll wheel
-            if (_systemInfo.DeviceType != DeviceType.Handheld)
-            {
-                // FELIX  Add scroll wheel steps :D
-            }
+            //// 2.5 Scroll wheel
+            //if (_systemInfo.DeviceType != DeviceType.Handheld)
+            //{
+            //    // FELIX  Add scroll wheel steps :D
+            //}
 
-            // 3. Enemy cruiser
-            steps.AddRange(_factoriesProvider.EnemyCruiserStepsFactory.CreateSteps());
+            //// 3. Enemy cruiser
+            //steps.AddRange(_factoriesProvider.EnemyCruiserStepsFactory.CreateSteps());
 
-            // 4. Player cruiser widgets
-            steps.AddRange(_factoriesProvider.PlayerCruiserWidgetsStepsFactory.CreateSteps());
+            //// 4. Player cruiser widgets
+            //steps.AddRange(_factoriesProvider.PlayerCruiserWidgetsStepsFactory.CreateSteps());
 
-            // 5. Construct drone station
-            steps.AddRange(_factoriesProvider.ConstructDroneStationStepsFactory.CreateSteps());
+            //// 5. Construct drone station
+            //steps.AddRange(_factoriesProvider.ConstructDroneStationStepsFactory.CreateSteps());
 
-            // 6. Enemy ship
-            steps.AddRange(_factoriesProvider.EnemyShipStepsFactory.CreateSteps());
+            //// 6. Enemy ship
+            //steps.AddRange(_factoriesProvider.EnemyShipStepsFactory.CreateSteps());
 
-            // 7. Enemy bomber
-            steps.AddRange(_factoriesProvider.EnemyBomberStepsFactory.CreateSteps());
+            //// 7. Enemy bomber
+            //steps.AddRange(_factoriesProvider.EnemyBomberStepsFactory.CreateSteps());
 
-            // 8. Drone focus
-            steps.AddRange(_factoriesProvider.DroneFocusStepsFactory.CreateSteps());
+            //// 8. Drone focus
+            //steps.AddRange(_factoriesProvider.DroneFocusStepsFactory.CreateSteps());
 
             // 9. Game speed
             steps.AddRange(_factoriesProvider.GameSpeedStepsFactory.CreateSteps());

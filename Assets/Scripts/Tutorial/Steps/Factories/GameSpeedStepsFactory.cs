@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
-        private readonly IPermitter _gameSpeedPermitter, _navigationPermitter;
+        private readonly IPermitter _gameSpeedPermitter, _navigationWheelPermitter, _scrollWheelPermitter;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly IUIManager _uiManager;
 
@@ -19,7 +19,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IExplanationDismissableStepFactory explanationDismissableStepFactory, 
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter gameSpeedPermitter, 
-            IPermitter navigationPermitter, 
+            IPermitter navigationWheelPermitter, 
+            IPermitter scrollWheelPermitter, 
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
             : base(argsFactory)
@@ -28,14 +29,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 explanationDismissableStepFactory, 
                 featurePermitterStepFactory, 
                 gameSpeedPermitter, 
-                navigationPermitter, 
+                navigationWheelPermitter, 
+                scrollWheelPermitter,
                 rightPanelComponents, 
                 uiManager);
 
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
             _featurePermitterStepFactory = featurePermitterStepFactory;
             _gameSpeedPermitter = gameSpeedPermitter;
-            _navigationPermitter = navigationPermitter;
+            _navigationWheelPermitter = navigationWheelPermitter;
+            _scrollWheelPermitter = scrollWheelPermitter;
             _rightPanelComponents = rightPanelComponents;
             _uiManager = uiManager;
         }
@@ -53,7 +56,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Enable speed buttons and navgiation wheel (before explanation so game speed
             // buttons aren't semi-transparent :P)
             steps.Add(_featurePermitterStepFactory.CreateStep(_gameSpeedPermitter, enableFeature: true));
-            steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: true));
+            steps.Add(_featurePermitterStepFactory.CreateStep(_navigationWheelPermitter, enableFeature: true));
+            steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: true));
 
             // Explain game speed buttons
             steps.Add(

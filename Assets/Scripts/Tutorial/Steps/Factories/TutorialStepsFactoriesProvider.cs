@@ -131,6 +131,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.SpeedButtonsPermitter,
                     tutorialArgs.TutorialProvider.NavigationWheelPermitter,
+                    tutorialArgs.TutorialProvider.ScrollWheelPermitter,
                     tutorialArgs.RightPanelComponents,
                     tutorialArgs.UIManager);
 
