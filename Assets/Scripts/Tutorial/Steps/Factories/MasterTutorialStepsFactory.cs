@@ -1,14 +1,17 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class MasterTutorialStepsFactory : ITutorialStepsFactory
     {
         private readonly TutorialStepsFactoriesProvider _factoriesProvider;
+        private readonly ISystemInfo _systemInfo;
 
         public MasterTutorialStepsFactory(
             IHighlighter highlighter,
@@ -24,6 +27,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     explanationPanel,
                     deferrer,
                     tutorialArgs);
+            _systemInfo = new SystemInfoBC();
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -35,6 +39,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // 2. Navigation wheel
             steps.AddRange(_factoriesProvider.NavigationWheelStepsFactory.CreateSteps());
+
+            // 2.5 Scroll wheel
+            if (_systemInfo.DeviceType != DeviceType.Handheld)
+            {
+                // FELIX  Add scroll wheel steps :D
+            }
 
             // 3. Enemy cruiser
             steps.AddRange(_factoriesProvider.EnemyCruiserStepsFactory.CreateSteps());
