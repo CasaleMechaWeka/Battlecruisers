@@ -11,6 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         public ITutorialStepsFactory YourCruiserStepsFactory { get; }
         public ITutorialStepsFactory NavigationWheelStepsFactory { get; }
+        public ITutorialStepsFactory ScrollWheelStepsFactory { get; }
         public ITutorialStepsFactory EnemyCruiserStepsFactory { get; }
         public ITutorialStepsFactory PlayerCruiserWidgetsStepsFactory { get; }
         public ITutorialStepsFactory ConstructDroneStationStepsFactory { get; }
@@ -60,6 +61,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     tutorialArgs.TutorialProvider.NavigationWheelPermitter,
                     explanationDismissableStepFactory,
                     tutorialArgs.CameraComponents);
+
+            ScrollWheelStepsFactory
+                = new ScrollWheelStepsFactory(
+                    argsFactory,
+                    featurePermitterStepFactory,
+                    tutorialArgs.TutorialProvider.ScrollWheelPermitter,
+                    explanationDismissableStepFactory);
 
             EnemyCruiserStepsFactory
                 = new EnemyCruiserStepsFactory(

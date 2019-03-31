@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.Cameras;
-using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -10,22 +9,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _scrollWheelPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly ICameraComponents _cameraComponents;
 
         public ScrollWheelStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter scrollWheelPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            ICameraComponents cameraComponents) 
+            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(featurePermitterStepFactory, scrollWheelPermitter, explanationDismissableStepFactory, cameraComponents);
+            Helper.AssertIsNotNull(featurePermitterStepFactory, scrollWheelPermitter, explanationDismissableStepFactory);
 
             _featurePermitterStepFactory = featurePermitterStepFactory;
             _scrollWheelPermitter = scrollWheelPermitter;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
-            _cameraComponents = cameraComponents;
         }
 
         public IList<ITutorialStep> CreateSteps()
