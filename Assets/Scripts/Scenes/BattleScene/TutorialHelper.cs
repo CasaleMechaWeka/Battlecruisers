@@ -26,13 +26,13 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly SpecificSlotsFilter _slotFilter;
         private readonly BuildingNameFilter _buildingNameFilter;
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
+        private readonly BroadcastingFilter _backButtonPermitter;
         private LimitableUIManager _uiManager;
 
         public ISlotPermitter SlotPermitter => _slotFilter;
         public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
         public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
-        public BroadcastingFilter BackButtonPermitter { get; }
         public BroadcastingFilter SpeedButtonsPermitter { get; }
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
         public BroadcastingFilter NavigationPermitter { get; }
@@ -57,7 +57,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();
-            BackButtonPermitter = new BroadcastingFilter(isMatch: false);
+            _backButtonPermitter = new BroadcastingFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
             SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
             SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
@@ -110,7 +110,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     _buildingCategoryFilter,
                     new StaticFilter<ITarget>(isMatch: false),
                     new StaticFilter<ITarget>(isMatch: false),
-                    BackButtonPermitter,
+                    _backButtonPermitter,
                     SpeedButtonsPermitter,
                     new BroadcastingFilter(isMatch: false));
         }
