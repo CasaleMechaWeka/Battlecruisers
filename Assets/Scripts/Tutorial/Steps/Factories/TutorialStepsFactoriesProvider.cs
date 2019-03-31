@@ -57,7 +57,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new NavigationWheelStepsFactory(
                     argsFactory,
                     featurePermitterStepFactory,
-                    tutorialArgs.TutorialProvider.NavigationPermitter,
+                    tutorialArgs.TutorialProvider.NavigationWheelPermitter,
                     explanationDismissableStepFactory,
                     tutorialArgs.CameraComponents);
 
@@ -130,7 +130,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     explanationDismissableStepFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.SpeedButtonsPermitter,
-                    tutorialArgs.TutorialProvider.NavigationPermitter,
+                    tutorialArgs.TutorialProvider.NavigationWheelPermitter,
                     tutorialArgs.RightPanelComponents,
                     tutorialArgs.UIManager);
 
