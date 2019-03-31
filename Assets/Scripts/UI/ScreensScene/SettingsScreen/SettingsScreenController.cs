@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
-            saveButton.Initialise(difficultyDropdown, settingsManager);
+            saveButton.Initialise(settingsManager, difficultyDropdown, zoomSlider.SliderValue);
 
             CancelButton cancelButton = GetComponentInChildren<CancelButton>();
             Assert.IsNotNull(cancelButton);
