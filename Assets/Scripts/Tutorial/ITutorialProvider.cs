@@ -18,6 +18,7 @@ namespace BattleCruisers.Tutorial
         IBuildingPermitter BuildingPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
         IPermitter NavigationWheelPermitter { get; }
+        IPermitter ScrollWheelPermitter { get; }
         IPermitter SpeedButtonsPermitter { get; }
         IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; }
 

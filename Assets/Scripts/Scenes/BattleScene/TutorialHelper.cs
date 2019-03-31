@@ -36,6 +36,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
         public IPermitter NavigationWheelPermitter { get; }
+        public IPermitter ScrollWheelPermitter { get; }
 
         private BroadcastingFilter _speedButtonsFilter;
         public IPermitter SpeedButtonsPermitter => _speedButtonsFilter;
@@ -55,8 +56,8 @@ namespace BattleCruisers.Scenes.BattleScene
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
-            // FELIX  NEXT  Scroll wheel permitter!  Rename this
             NavigationWheelPermitter = navigationPermitters.NavigationWheelFilter;
+            ScrollWheelPermitter = navigationPermitters.ScrollWheelFilter;
 
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
