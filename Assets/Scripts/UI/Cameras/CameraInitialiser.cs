@@ -48,6 +48,7 @@ namespace BattleCruisers.UI.Cameras
                     camera,
                     cameraCalculator,
                     cameraNavigationWheelCalculator,
+                    settingsManager,
                     settings,
                     navigationWheelPanel,
                     playerCruiser,
@@ -83,6 +84,7 @@ namespace BattleCruisers.UI.Cameras
             ICamera camera,
             ICameraCalculator cameraCalculator,
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator,
+            ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             INavigationWheelPanel navigationWheelPanel,
             ICruiser playerCruiser,
@@ -120,7 +122,8 @@ namespace BattleCruisers.UI.Cameras
                     new ZoomCalculator(
                         camera,
                         new TimeBC(),
-                        settings.ValidOrthographicSizes));
+                        settings.ValidOrthographicSizes,
+                        settingsManager));
 
             return
                 new CompositeCameraTargetProvider(
