@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects.Laser;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -16,6 +17,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         private ILaserSoundPlayer _laserSoundPlayer;
 		private float _damagePerS;
         private ITarget _parent;
+        private LaserImpact _laserImpact;
 
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
@@ -27,6 +29,10 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             AudioSource audioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(audioSource);
 			_audioSource = new AudioSourceBC(audioSource);
+
+            _laserImpact = GetComponentInChildren<LaserImpact>();
+            Assert.IsNotNull(_laserImpact);
+            _laserImpact.Initialise();
         }
 
         public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent, ISoundFetcher soundFetcher)
@@ -55,6 +61,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 			if (collision != null)
 			{
                 _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
+                _laserImpact.Show(collision.CollisionPoint);
 
 				float damage = Time.deltaTime * _damagePerS;
                 collision.Target.TakeDamage(damage, _parent);
@@ -64,6 +71,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 		public void StopLaser()
 		{
             _laserRenderer.HideLaser();
+            _laserImpact.Hide();
 		}
 
         public void DisposeManagedState()

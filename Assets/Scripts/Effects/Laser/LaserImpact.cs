@@ -21,7 +21,7 @@ namespace BattleCruisers.Effects.Laser
 
         public void Hide()
         {
-            _glow.Pause();
+            _glow.Stop();
         }
     }
 }
