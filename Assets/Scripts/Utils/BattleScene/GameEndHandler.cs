@@ -18,7 +18,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
         private readonly ICameraFocuser _cameraFocuser;
-        private readonly BroadcastingFilter _navigationPermitter;
+        private readonly IPermitter _navigationPermitter;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -31,7 +31,7 @@ namespace BattleCruisers.Utils.BattleScene
             IBattleCompletionHandler battleCompletionHandler, 
             IDeferrer deferrer, 
             ICameraFocuser cameraFocuser, 
-            BroadcastingFilter navigationPermitter)
+            IPermitter navigationPermitter)
         {
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;

@@ -9,6 +9,7 @@ using BattleCruisers.Tutorial;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -70,9 +71,9 @@ namespace BattleCruisers.Scenes.BattleScene
             // Common setup
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            BroadcastingFilter navigationPermitter = new BroadcastingFilter(isMatch: true);
+            NavigationPermitters navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitter);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = new TimeBC();
@@ -104,8 +105,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     dataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
-                    navigationPermitter,
-                    navigationPermitter);
+                    navigationPermitters.NavigationWheelFilter,
+                    navigationPermitters.ScrollWheelFilter);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
@@ -194,7 +195,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         battleCompletionHandler,
                         components.TimeScaleDeferrer,
                         cameraComponents.CameraFocuser,
-                        navigationPermitter));
+                        navigationPermitters.NavigationFilter));
 
             StartTutorialIfNecessary(
                 prefabFactory, 
@@ -211,12 +212,12 @@ namespace BattleCruisers.Scenes.BattleScene
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel, 
             IPrefabFactory prefabFactory, 
-            IDeferrer deferrer, 
-            BroadcastingFilter navigationPermitter)
+            IDeferrer deferrer,
+            NavigationPermitters navigationPermitters)
         {
             if (applicationModel.IsTutorial)
             {
-                TutorialHelper helper = new TutorialHelper(applicationModel.DataProvider, prefabFactory, navigationPermitter);
+                TutorialHelper helper = new TutorialHelper(applicationModel.DataProvider, prefabFactory, navigationPermitters);
                 _tutorialProvider = helper;
                 return helper;
             }

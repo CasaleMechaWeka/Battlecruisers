@@ -11,6 +11,7 @@ using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -49,12 +50,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
-        public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, BroadcastingFilter navigationPermitter)
+        public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, NavigationPermitters navigationPermitters)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
-            NavigationPermitter = navigationPermitter;
+            // FELIX  NEXT  Scroll wheel permitter!  Rename this
+            NavigationPermitter = navigationPermitters.NavigationWheelFilter;
 
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
