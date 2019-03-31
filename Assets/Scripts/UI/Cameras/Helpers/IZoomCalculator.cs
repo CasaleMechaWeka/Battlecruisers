@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI.Cameras.Targets.Providers
+﻿namespace BattleCruisers.UI.Cameras.Helpers
 {
     public interface IZoomCalculator
     {

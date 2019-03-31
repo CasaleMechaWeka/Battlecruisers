@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Cameras.Targets.Providers;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
+namespace BattleCruisers.Tests.UI.Cameras.Helpers
 {
     public class ZoomCalculatorTests
     {

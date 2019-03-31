@@ -4,7 +4,7 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras.Targets.Providers
+namespace BattleCruisers.UI.Cameras.Helpers
 {
     public class ZoomCalculator : IZoomCalculator
     {
