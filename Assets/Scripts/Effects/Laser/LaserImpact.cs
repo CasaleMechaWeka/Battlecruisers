@@ -1,15 +1,27 @@
-﻿namespace BattleCruisers.Effects.Laser
+﻿using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Effects.Laser
 {
-    public class LaserImpact : ILaserImpact
+    public class LaserImpact : MonoBehaviour, ILaserImpact
     {
-        public void Hide()
+        private ParticleSystem _glow;
+
+        public void Initialise()
         {
-            throw new System.NotImplementedException();
+            _glow = GetComponent<ParticleSystem>();
+            Assert.IsNotNull(_glow);
         }
 
-        public void Show()
+        public void Show(Vector3 postion)
         {
-            throw new System.NotImplementedException();
+            transform.position = postion;
+            _glow.Play();
+        }
+
+        public void Hide()
+        {
+            _glow.Pause();
         }
     }
 }

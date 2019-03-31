@@ -1,8 +1,10 @@
-﻿namespace BattleCruisers.Effects.Laser
+﻿using UnityEngine;
+
+namespace BattleCruisers.Effects.Laser
 {
     public interface ILaserImpact
     {
-        void Show();
+        void Show(Vector3 postion);
         void Hide();
     }
 }
