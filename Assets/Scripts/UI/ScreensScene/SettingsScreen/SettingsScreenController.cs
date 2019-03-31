@@ -16,6 +16,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Assert.IsNotNull(difficultyDropdown);
             difficultyDropdown.Initialise(settingsManager.AIDifficulty);
 
+            ZoomSlider zoomSlider = GetComponentInChildren<ZoomSlider>();
+            Assert.IsNotNull(zoomSlider);
+            zoomSlider.Initialise(settingsManager.ZoomSpeed);
+
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
             saveButton.Initialise(difficultyDropdown, settingsManager);
