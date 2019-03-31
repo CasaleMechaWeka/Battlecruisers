@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Filters
 {
-    // FELIX  Test :)
     public class CompositeBroadcastingFilter : IBroadcastingFilter, IPermitter
     {
         private readonly BroadcastingFilter[] _filters;
