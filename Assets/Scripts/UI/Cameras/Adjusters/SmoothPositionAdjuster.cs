@@ -8,18 +8,21 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 	public class SmoothPositionAdjuster : ISmoothPositionAdjuster
     {
 		private readonly ITransform _cameraTransform;
-		private readonly float _smoothTime;
+        private readonly IDeltaTimeProvider _deltaTimeProvider;
+        private readonly float _smoothTime;
 		private Vector3 _cameraPositionChangeVelocity;
         
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float MIN_SMOOTH_TIME = 0;
+		private const float MAX_SPEED = 1000;
 
-		public SmoothPositionAdjuster(ITransform cameraTransform, float smoothTime)
+        public SmoothPositionAdjuster(ITransform cameraTransform, IDeltaTimeProvider deltaTimeProvider, float smoothTime)
 		{
-			Assert.IsNotNull(cameraTransform);
+            Helper.AssertIsNotNull(cameraTransform, deltaTimeProvider);
 			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
 
 			_cameraTransform = cameraTransform;
+            _deltaTimeProvider = deltaTimeProvider;
 			_smoothTime = smoothTime;
 			_cameraPositionChangeVelocity = Vector3.zero;
 		}
@@ -30,7 +33,14 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
             if (!isInPosition)
             {
-                _cameraTransform.Position = Vector3.SmoothDamp(_cameraTransform.Position, targetPosition, ref _cameraPositionChangeVelocity, _smoothTime);
+                _cameraTransform.Position 
+                    = Vector3.SmoothDamp(
+                        _cameraTransform.Position, 
+                        targetPosition, 
+                        ref _cameraPositionChangeVelocity, 
+                        _smoothTime, 
+                        MAX_SPEED, 
+                        _deltaTimeProvider.UnscaledDeltaTime);
             }
             else
             {

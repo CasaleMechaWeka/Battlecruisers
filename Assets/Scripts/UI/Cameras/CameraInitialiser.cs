@@ -55,11 +55,13 @@ namespace BattleCruisers.UI.Cameras
                     aiCruiser,
                     scrollWheelEnabledFilter);
 
+            IDeltaTimeProvider deltaTimeProvider = new TimeBC();
+
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
-                    new SmoothZoomAdjuster(camera, cameraSmoothTime),
-                    new SmoothPositionAdjuster(camera.Transform, cameraSmoothTime));
+                    new SmoothZoomAdjuster(camera, deltaTimeProvider, cameraSmoothTime),
+                    new SmoothPositionAdjuster(camera.Transform, deltaTimeProvider, cameraSmoothTime));
 
             INavigationWheelPositionProvider navigationWheelPositionProvider 
                 = new NavigationWheelPositionProvider(

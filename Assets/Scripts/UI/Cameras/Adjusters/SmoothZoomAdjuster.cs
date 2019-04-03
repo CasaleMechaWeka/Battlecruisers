@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -7,18 +8,21 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 	public class SmoothZoomAdjuster : ISmoothZoomAdjuster
 	{
 		private readonly ICamera _camera;
-		private readonly float _smoothTime;
+        private readonly IDeltaTimeProvider _deltaTimeProvider;
+        private readonly float _smoothTime;
 		private float _cameraOrthographicSizeChangeVelocity;
         
 		private const float ORTHOGRAPHIC_SIZE_EQUALITY_MARGIN = 0.1f;
 		private const float MIN_SMOOTH_TIME = 0;
+        private const float MAX_SPEED = 1000;
 
-		public SmoothZoomAdjuster(ICamera camera, float smoothTime)
+        public SmoothZoomAdjuster(ICamera camera, IDeltaTimeProvider deltaTimeProvider, float smoothTime)
 		{
-			Assert.IsNotNull(camera);
+            Helper.AssertIsNotNull(camera, deltaTimeProvider);
 			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
 
 			_camera = camera;
+            _deltaTimeProvider = deltaTimeProvider;
 			_smoothTime = smoothTime;
 			_cameraOrthographicSizeChangeVelocity = 0;
 		}
@@ -29,7 +33,14 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
             if (!isRightOrthographicSize)
             {
-				_camera.OrthographicSize = Mathf.SmoothDamp(_camera.OrthographicSize, targetOrthographicSize, ref _cameraOrthographicSizeChangeVelocity, _smoothTime);
+				_camera.OrthographicSize 
+                    = Mathf.SmoothDamp(
+                        _camera.OrthographicSize, 
+                        targetOrthographicSize, 
+                        ref _cameraOrthographicSizeChangeVelocity, 
+                        _smoothTime, 
+                        MAX_SPEED,
+                        _deltaTimeProvider.UnscaledDeltaTime);
             }
             else
             {
