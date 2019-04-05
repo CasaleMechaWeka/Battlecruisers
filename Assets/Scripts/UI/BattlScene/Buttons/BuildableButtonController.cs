@@ -33,6 +33,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override bool Disable => false;
 
         public virtual bool IsMatch => _shouldBeEnabledFilter.IsMatch(Buildable);
+        public Color Color { set => buildableImage.color = value; }
 
         public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
