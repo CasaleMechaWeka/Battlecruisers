@@ -7,7 +7,12 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // FELIX  Test
+    public class ButtonColour
+    {
+        public static Color Default = Color.black;
+        public static Color Selected = Color.white;
+    }
+
     public class BuildableButtonColourController
     {
         private readonly IBroadcastingProperty<ITarget> _selectedItem;
@@ -20,14 +25,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             {
                 if (_selectedButton != null)
                 {
-                    _selectedButton.Color = Color.black;
+                    _selectedButton.Color = ButtonColour.Default;
                 }
 
                 _selectedButton = value;
 
                 if (_selectedButton != null)
                 {
-                    _selectedButton.Color = Color.white;
+                    _selectedButton.Color = ButtonColour.Selected;
                 }
             }
         }
