@@ -7,6 +7,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -36,6 +37,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private AudioInitialiser _audioInitialiser;
         private ITutorialProvider _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
+        private BuildableButtonColourController _buildableButtonColourController;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -154,9 +156,10 @@ namespace BattleCruisers.Scenes.BattleScene
                     pauseGameManager,
                     battleCompletionHandler);
 
-            // FELIX  Need this manager to initialise left panel, so will need to switch things up :P
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargetsColourChanger());
+            _buildableButtonColourController = new BuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
+
             ManagerArgs args
                 = new ManagerArgs(
                     playerCruiser,
