@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -15,6 +16,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         where TMenu : MonoBehaviour, IBuildablesMenu
     {
         private IDictionary<TCategories, IBuildablesMenu> _buildableCategoryToMenus;
+
+        public IReadOnlyCollection<IBuildablesMenu> Menus { get; private set; }
 
         public void Initialise(
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
@@ -49,6 +52,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
                 i++;
             }
+
+            Menus = new ReadOnlyCollection<IBuildablesMenu>(_buildableCategoryToMenus.Values.ToList());
         }
 
         protected abstract void InitialiseMenu(
