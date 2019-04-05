@@ -8,6 +8,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
 {
@@ -20,24 +21,47 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         private IBuildableMenus<UnitCategory> _unitMenus;
         private IBuildablesMenu _buildablesMenu1, _buildablesMenu2;
         private BuildingCategory _buildingCategory1, _buildingCategory2;
+        private IBuildableButton _button1, _button2;
 
         [SetUp]
         public void TestSetup()
         {
-            _selectorPanel = Substitute.For<IPanel>();
-            _buildingCategoriesMenu = Substitute.For<IBuildingCategoriesMenu>();
             _buildingMenus = Substitute.For<IBuildableMenus<BuildingCategory>>();
-            _unitMenus = Substitute.For<IBuildableMenus<UnitCategory>>();
 
-            _buildMenu = new BuildMenu(_selectorPanel, _buildingCategoriesMenu, _buildingMenus, _unitMenus);
-
+            // Menu 1
             _buildablesMenu1 = Substitute.For<IBuildablesMenu>();
             _buildingCategory1 = BuildingCategory.Ultra;
             _buildingMenus.GetBuildablesMenu(_buildingCategory1).Returns(_buildablesMenu1);
+            _button1 = Substitute.For<IBuildableButton>();
+            IReadOnlyCollection<IBuildableButton> menu1Buttons = new List<IBuildableButton>() { _button1 }.AsReadOnly();
+            _buildablesMenu1.BuildableButtons.Returns(menu1Buttons);
 
+            IReadOnlyCollection<IBuildablesMenu> buildingMenus = new List<IBuildablesMenu>() { _buildablesMenu1 }.AsReadOnly();
+            _buildingMenus.Menus.Returns(buildingMenus);
+
+            // Menu 2
             _buildablesMenu2 = Substitute.For<IBuildablesMenu>();
             _buildingCategory2 = BuildingCategory.Offence;
             _buildingMenus.GetBuildablesMenu(_buildingCategory2).Returns(_buildablesMenu2);
+            _button2 = Substitute.For<IBuildableButton>();
+            IReadOnlyCollection<IBuildableButton> menu2Buttons = new List<IBuildableButton>() { _button2 }.AsReadOnly();
+            _buildablesMenu2.BuildableButtons.Returns(menu2Buttons);
+            _unitMenus = Substitute.For<IBuildableMenus<UnitCategory>>();
+            IReadOnlyCollection<IBuildablesMenu> unitMenus = new List<IBuildablesMenu>() { _buildablesMenu2 }.AsReadOnly();
+            _unitMenus.Menus.Returns(unitMenus);
+
+            _selectorPanel = Substitute.For<IPanel>();
+            _buildingCategoriesMenu = Substitute.For<IBuildingCategoriesMenu>();
+
+            _buildMenu = new BuildMenu(_selectorPanel, _buildingCategoriesMenu, _buildingMenus, _unitMenus);
+        }
+
+        [Test]
+        public void BuildableButtons()
+        {
+            Assert.AreEqual(2, _buildMenu.BuildableButtons.Count);
+            Assert.IsTrue(_buildMenu.BuildableButtons.Contains(_button1));
+            Assert.IsTrue(_buildMenu.BuildableButtons.Contains(_button2));
         }
 
         [Test]

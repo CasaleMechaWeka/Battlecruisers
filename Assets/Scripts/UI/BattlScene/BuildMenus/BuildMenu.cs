@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    // FELIX  UPdate tests :)
     public class BuildMenu : IBuildMenu
 	{
         private readonly IPanel _selectorPanel;
