@@ -86,23 +86,23 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         }
 
         [Test]
-        public void GetCategoryButton()
+        public void GetBuildingCategoryButton()
         {
             IBuildingCategoryButton buildingCategoryButton = Substitute.For<IBuildingCategoryButton>();
             _buildingCategoriesMenu.GetCategoryButton(_buildingCategory1).Returns(buildingCategoryButton);
 
-            IBuildingCategoryButton returnedButton = _buildMenu.GetCategoryButton(_buildingCategory1);
+            IBuildingCategoryButton returnedButton = _buildMenu.GetBuildingCategoryButton(_buildingCategory1);
 
             Assert.AreSame(buildingCategoryButton, returnedButton);
         }
 
         [Test]
-        public void GetBuildableButtons()
+        public void GetBuildingButtons()
         {
             ReadOnlyCollection<IBuildableButton> buildableButtons = new ReadOnlyCollection<IBuildableButton>(new List<IBuildableButton>());
             _buildablesMenu1.BuildableButtons.Returns(buildableButtons);
 
-            ReadOnlyCollection<IBuildableButton> returnedButtons = _buildMenu.GetBuildableButtons(_buildingCategory1);
+            ReadOnlyCollection<IBuildableButton> returnedButtons = _buildMenu.GetBuildingButtons(_buildingCategory1);
 
             Assert.AreSame(buildableButtons, returnedButtons);
         }

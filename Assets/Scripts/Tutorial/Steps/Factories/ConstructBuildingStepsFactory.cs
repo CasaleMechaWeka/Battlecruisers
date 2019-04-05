@@ -48,7 +48,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
 
             // Select building category
-            IBuildingCategoryButton buildingCategoryButton = _leftPanelComponents.BuildMenu.GetCategoryButton(buildingCategory);
+            IBuildingCategoryButton buildingCategoryButton = _leftPanelComponents.BuildMenu.GetBuildingCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
             ITutorialStepArgs buildingCategoryArgs = _argsFactory.CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialProvider.BuildingCategoryPermitter));
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             _tutorialProvider.BuildingPermitter.PermittedBuilding = buildingKey;
 
-            ReadOnlyCollection<IBuildableButton> categoryButtons = _leftPanelComponents.BuildMenu.GetBuildableButtons(buildingCategory);
+            ReadOnlyCollection<IBuildableButton> categoryButtons = _leftPanelComponents.BuildMenu.GetBuildingButtons(buildingCategory);
 
             IBuildableButton buildableButton
                 = categoryButtons

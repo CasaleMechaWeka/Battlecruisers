@@ -90,12 +90,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			}
         }
 
-        public IBuildingCategoryButton GetCategoryButton(BuildingCategory category)
+        public IBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category)
         {
             return _buildingCategoriesMenu.GetCategoryButton(category);
         }
 
-        public ReadOnlyCollection<IBuildableButton> GetBuildableButtons(BuildingCategory category)
+        public ReadOnlyCollection<IBuildableButton> GetBuildingButtons(BuildingCategory category)
         {
             IBuildablesMenu buildMenuForCategory = _buildingMenus.GetBuildablesMenu(category);
             return buildMenuForCategory.BuildableButtons;

@@ -9,8 +9,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     {
         IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
 
-        // FELIX  Rename to make clear these are for buildings :)
-        IBuildingCategoryButton GetCategoryButton(BuildingCategory category);
-        ReadOnlyCollection<IBuildableButton> GetBuildableButtons(BuildingCategory category);
+        IBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category);
+        ReadOnlyCollection<IBuildableButton> GetBuildingButtons(BuildingCategory category);
     }
 }
