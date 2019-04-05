@@ -3,10 +3,12 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
+    // FELIX  UPdate tests :)
     public class BuildMenu : IBuildMenu
 	{
         private readonly IPanel _selectorPanel;
@@ -15,7 +17,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private readonly IBuildableMenus<UnitCategory> _unitMenus;
         private IMenu _currentMenu;
 
-		public BuildMenu(
+        public IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
+
+        public BuildMenu(
 			IPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IBuildableMenus<BuildingCategory> buildingMenus,
@@ -27,6 +31,24 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _buildingCategoriesMenu = buildingCategoriesMenu;
             _buildingMenus = buildingMenus;
             _unitMenus = unitMenus;
+            BuildableButtons = FindBuildableButtons();
+        }
+
+        private IReadOnlyCollection<IBuildableButton> FindBuildableButtons()
+        {
+            List<IBuildableButton> buttons = new List<IBuildableButton>();
+
+            foreach (IBuildablesMenu menu in _buildingMenus.Menus)
+            {
+                buttons.AddRange(menu.BuildableButtons);
+            }
+
+            foreach (IBuildablesMenu menu in _unitMenus.Menus)
+            {
+                buttons.AddRange(menu.BuildableButtons);
+            }
+
+            return buttons;
         }
 
 		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
