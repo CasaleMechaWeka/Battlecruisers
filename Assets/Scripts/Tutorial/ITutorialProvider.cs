@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 
 namespace BattleCruisers.Tutorial
@@ -17,8 +18,7 @@ namespace BattleCruisers.Tutorial
         IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
-        IPermitter NavigationWheelPermitter { get; }
-        IPermitter ScrollWheelPermitter { get; }
+        NavigationPermitters NavigationPermitters { get; }
         IPermitter SpeedButtonsPermitter { get; }
         IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; }
 

@@ -48,17 +48,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     lastPlayerIncompleteBuildingStartedProvider);
 
             YourCruiserStepsFactory
-                = new YourCruiserStepsFactory(
+                = new 
+                YourCruiserStepsFactory(
                     argsFactory,
                     tutorialArgs.PlayerCruiser,
                     cameraAdjustmentWaitStepFactory,
-                    explanationDismissableStepFactory);
+                    explanationDismissableStepFactory,
+                    featurePermitterStepFactory,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.NavigationFilter);
 
             NavigationWheelStepsFactory
                 = new NavigationWheelStepsFactory(
                     argsFactory,
                     featurePermitterStepFactory,
-                    tutorialArgs.TutorialProvider.NavigationWheelPermitter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.NavigationWheelFilter,
                     explanationDismissableStepFactory,
                     tutorialArgs.CameraComponents);
 
@@ -66,7 +69,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new ScrollWheelStepsFactory(
                     argsFactory,
                     featurePermitterStepFactory,
-                    tutorialArgs.TutorialProvider.ScrollWheelPermitter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelFilter,
                     explanationDismissableStepFactory);
 
             EnemyCruiserStepsFactory
@@ -138,8 +141,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     explanationDismissableStepFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.SpeedButtonsPermitter,
-                    tutorialArgs.TutorialProvider.NavigationWheelPermitter,
-                    tutorialArgs.TutorialProvider.ScrollWheelPermitter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.NavigationFilter,
                     tutorialArgs.RightPanelComponents,
                     tutorialArgs.UIManager);
 
