@@ -184,7 +184,8 @@ namespace BattleCruisers.Scenes
 
 			_applicationModel.SelectedLevel = levelNum;
 
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, _hintProvider.GetHint());
+            string hint = !_applicationModel.IsTutorial ? _hintProvider.GetHint() : null;
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, hint);
 		}
 
         private IEnumerator GoToScreenAsync(ScreenController destinationScreen)
