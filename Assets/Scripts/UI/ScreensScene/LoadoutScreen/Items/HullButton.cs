@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private Image _selectedFeedback;
 
         public Cruiser cruiser;
+        public override IComparableItem Item => cruiser;
 
         public void Initialise(
             IItemDetailsManager itemDetailsManager, 

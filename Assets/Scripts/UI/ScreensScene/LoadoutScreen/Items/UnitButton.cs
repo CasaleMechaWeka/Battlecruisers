@@ -9,6 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public class UnitButton : ItemButton
     {
         public UnitWrapper unit;
+        public override IComparableItem Item => unit.Buildable;
 
         public override void Initialise(IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingItemFamily)
         {
