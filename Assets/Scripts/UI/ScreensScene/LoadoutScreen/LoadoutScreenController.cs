@@ -10,6 +10,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
@@ -78,7 +79,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel, selectCruiserButton.SelectedHull);
+            IList<IItemButton> itemButtons = itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel, selectCruiserButton.SelectedHull);
+
+            // FELIX  Create LoadoutItemColourController :)
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);

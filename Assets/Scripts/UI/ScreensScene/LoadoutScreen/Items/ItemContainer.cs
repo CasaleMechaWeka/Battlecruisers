@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     /// </summary>
     public abstract class ItemContainer : MonoBehaviour
     {
-        public bool Initialise(
+        public IItemButton Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
             IGameModel gameModel,
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
 
-            return isItemUnlocked;
+            return itemButton;
         }
 
         protected virtual ItemButton InitialiseItemButton(

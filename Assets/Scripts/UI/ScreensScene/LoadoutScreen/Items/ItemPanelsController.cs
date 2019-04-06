@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public event EventHandler PotentialMatchChange;
 
-        public void Initialise(
+        public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager, 
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
@@ -51,10 +51,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
 
             ItemsPanel[] panels = GetComponentsInChildren<ItemsPanel>(includeInactive: true);
+            List<IItemButton> allItemButtons = new List<IItemButton>();
 
             foreach (ItemsPanel panel in panels)
             {
-                panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull);
+                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull);
+                allItemButtons.AddRange(panelItemButtons);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();
 
@@ -63,6 +65,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     CurrentlyShownPanel = panel;
                 }
             }
+
+            return allItemButtons;
         }
 
         public void ShowItemsPanel(ItemType itemType)

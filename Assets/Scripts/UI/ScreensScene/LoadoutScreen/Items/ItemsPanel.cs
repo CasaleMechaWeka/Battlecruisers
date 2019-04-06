@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -14,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public bool HasUnlockedItem { get; private set; }
 
-        public void Initialise(
+        public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
@@ -23,14 +24,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull);
 
             ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
+            IList<IItemButton> buttons = new List<IItemButton>();
 
             HasUnlockedItem = false;
 
             foreach (ItemContainer itemContainer in itemContainers)
             {
-                bool isItemUnlocked = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull);
-                HasUnlockedItem = HasUnlockedItem || isItemUnlocked;
+                IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull);
+                buttons.Add(button);
+                HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
             }
+
+            return buttons;
         }
     }
 }
