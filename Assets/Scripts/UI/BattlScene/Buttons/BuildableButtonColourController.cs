@@ -13,6 +13,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public static Color Selected = Color.white;
     }
 
+    /// <summary>
+    /// Highlights (changes the colour of) a buildable button while this buttons'
+    /// buildable is being displayed in the informator.
+    /// </summary>
     public class BuildableButtonColourController
     {
         private readonly IBroadcastingProperty<ITarget> _selectedItem;

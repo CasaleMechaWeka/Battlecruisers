@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IPrefabFactory _prefabFactory;
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
+        private LoadoutItemColourController _loadoutItemColourController;
 
         public IEnumerator Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -81,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(itemPanels);
             IList<IItemButton> itemButtons = itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel, selectCruiserButton.SelectedHull);
 
-            // FELIX  Create LoadoutItemColourController :)
+            _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
 
             CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
             Assert.IsNotNull(categoryButtonsPanel);
