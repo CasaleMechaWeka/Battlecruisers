@@ -55,6 +55,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             BuildableButtons
                 = buildableButtons
+                    .Where(button => button.Buildable != null)
                     .Select(button => (IBuildableButton)button)
                     .ToList()
                     .AsReadOnly();
