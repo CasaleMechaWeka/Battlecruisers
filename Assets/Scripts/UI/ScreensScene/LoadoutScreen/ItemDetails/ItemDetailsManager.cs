@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         private readonly ISettableBroadcastingProperty<int> _numOfDetailsShown;
         public IBroadcastingProperty<int> NumOfDetailsShown { get; }
 
-        // FELIX  Update tests :)
         private readonly ISettableBroadcastingProperty<IComparableItem> _selectedItem;
         public IBroadcastingProperty<IComparableItem> SelectedItem { get; }
 

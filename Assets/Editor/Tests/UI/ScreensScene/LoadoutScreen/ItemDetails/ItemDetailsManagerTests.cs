@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using NSubstitute;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
         private IBuilding _building;
         private IUnit _unit;
         private ICruiser _cruiser;
-        private int _numOfDetailsShownChangeCount;
+        private int _numOfDetailsShownChangeCount, _selectedItemChangeCount, _comparingItemChangeCount;
 
         [SetUp]
         public void TestSetup()
@@ -37,6 +37,12 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
             _numOfDetailsShownChangeCount = 0;
             _itemDetailsManager.NumOfDetailsShown.ValueChanged += (sender, e) => _numOfDetailsShownChangeCount++;
 
+            _selectedItemChangeCount = 0;
+            _itemDetailsManager.SelectedItem.ValueChanged += (sender, e) => _selectedItemChangeCount++;
+
+            _comparingItemChangeCount = 0;
+            _itemDetailsManager.ComparingItem.ValueChanged += (sender, e) => _comparingItemChangeCount++;
+
             UnityAsserts.Assert.raiseExceptions = true;
         }
 
@@ -45,6 +51,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
         {
             Assert.IsNull(_itemDetailsManager.SelectedItemFamily);
             Assert.AreEqual(0, _itemDetailsManager.NumOfDetailsShown.Value);
+            Assert.IsNull(_itemDetailsManager.SelectedItem.Value);
+            Assert.IsNull(_itemDetailsManager.ComparingItem.Value);
         }
 
         [Test]
@@ -55,8 +63,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
             ReceivedHideDetails();
             Assert.AreEqual(ItemFamily.Buildings, _itemDetailsManager.SelectedItemFamily);
             _buildingDetails.Received().SelectItem(_building);
-            Assert.AreEqual(1, _numOfDetailsShownChangeCount);
-            Assert.AreEqual(1, _itemDetailsManager.NumOfDetailsShown.Value);
+            AssertShowDetailsEvents(_building);
         }
 
         [Test]
@@ -67,8 +74,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
             ReceivedHideDetails();
             Assert.AreEqual(ItemFamily.Units, _itemDetailsManager.SelectedItemFamily);
             _unitDetails.Received().SelectItem(_unit);
-            Assert.AreEqual(1, _numOfDetailsShownChangeCount);
-            Assert.AreEqual(1, _itemDetailsManager.NumOfDetailsShown.Value);
+            AssertShowDetailsEvents(_unit);
         }
 
         [Test]
@@ -79,8 +85,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
             ReceivedHideDetails();
             Assert.AreEqual(ItemFamily.Hulls, _itemDetailsManager.SelectedItemFamily);
             _cruiserDetails.Received().SelectItem(_cruiser);
-            Assert.AreEqual(1, _numOfDetailsShownChangeCount);
-            Assert.AreEqual(1, _itemDetailsManager.NumOfDetailsShown.Value);
+            AssertShowDetailsEvents(_cruiser);
         }
 
         [Test]
@@ -90,8 +95,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 
             _itemDetailsManager.CompareWithSelectedItem(_building);
             _buildingDetails.Received().CompareWithSelectedItem(_building);
-            Assert.AreEqual(2, _numOfDetailsShownChangeCount);
-            Assert.AreEqual(2, _itemDetailsManager.NumOfDetailsShown.Value);
+            AssertCompareEvents(_building);
         }
 
         [Test]
@@ -101,8 +105,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 
             _itemDetailsManager.CompareWithSelectedItem(_unit);
             _unitDetails.Received().CompareWithSelectedItem(_unit);
-            Assert.AreEqual(2, _numOfDetailsShownChangeCount);
-            Assert.AreEqual(2, _itemDetailsManager.NumOfDetailsShown.Value);
+            AssertCompareEvents(_unit);
         }
 
         [Test]
@@ -112,8 +115,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 
             _itemDetailsManager.CompareWithSelectedItem(_cruiser);
             _cruiserDetails.Received().CompareWithSelectedItem(_cruiser);
-            Assert.AreEqual(2, _numOfDetailsShownChangeCount);
-            Assert.AreEqual(2, _itemDetailsManager.NumOfDetailsShown.Value);
+            AssertCompareEvents(_cruiser);
         }
 
         [Test]
@@ -145,6 +147,22 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
             _buildingDetails.Received().HideDetails();
             _unitDetails.Received().HideDetails();
             _cruiserDetails.Received().HideDetails();
+        }
+
+        private void AssertShowDetailsEvents(IComparableItem shownItem)
+        {
+            Assert.AreEqual(1, _numOfDetailsShownChangeCount);
+            Assert.AreEqual(1, _itemDetailsManager.NumOfDetailsShown.Value);
+            Assert.AreSame(shownItem, _itemDetailsManager.SelectedItem.Value);
+            Assert.AreEqual(1, _selectedItemChangeCount);
+        }
+
+        private void AssertCompareEvents(IComparableItem comparedItem)
+        {
+            Assert.AreEqual(2, _numOfDetailsShownChangeCount);
+            Assert.AreEqual(2, _itemDetailsManager.NumOfDetailsShown.Value);
+            Assert.AreSame(comparedItem, _itemDetailsManager.ComparingItem.Value);
+            Assert.AreEqual(1, _comparingItemChangeCount);
         }
     }
 }
