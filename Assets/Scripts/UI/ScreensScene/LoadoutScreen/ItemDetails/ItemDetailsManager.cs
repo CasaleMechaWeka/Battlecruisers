@@ -20,6 +20,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         private readonly ISettableBroadcastingProperty<int> _numOfDetailsShown;
         public IBroadcastingProperty<int> NumOfDetailsShown { get; }
 
+        // FELIX  Update tests :)
+        private readonly ISettableBroadcastingProperty<IComparableItem> _selectedItem;
+        public IBroadcastingProperty<IComparableItem> SelectedItem { get; }
+
+        private readonly ISettableBroadcastingProperty<IComparableItem> _comparingItem;
+        public IBroadcastingProperty<IComparableItem> ComparingItem { get; }
+
         public ItemDetailsManager(
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IItemDetailsDisplayer<IUnit> unitDetails,
@@ -35,6 +42,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 
             _numOfDetailsShown = new SettableBroadcastingProperty<int>(initialValue: 0);
             NumOfDetailsShown = new BroadcastingProperty<int>(_numOfDetailsShown);
+
+            _selectedItem = new SettableBroadcastingProperty<IComparableItem>(initialValue: null);
+            SelectedItem = new BroadcastingProperty<IComparableItem>(_selectedItem);
+
+            _comparingItem = new SettableBroadcastingProperty<IComparableItem>(initialValue: null);
+            ComparingItem = new BroadcastingProperty<IComparableItem>(_comparingItem);
         }
 
         public void ShowDetails(IBuilding building)
@@ -61,6 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             HideDetails();
             SelectedItemFamily = itemFamily;
             itemDetails.SelectItem(item);
+            _selectedItem.Value = item;
             _numOfDetailsShown.Value = 1;
         }
 
@@ -87,6 +101,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             Assert.AreEqual(SelectedItemFamily, itemFamily);
 
             itemDetails.CompareWithSelectedItem(item);
+            _comparingItem.Value = item;
             _numOfDetailsShown.Value = 2;
         }
 
@@ -95,6 +110,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             _buildingDetails.HideDetails();
             _unitDetails.HideDetails();
             _cruiserDetails.HideDetails();
+            _selectedItem.Value = null;
+            _comparingItem.Value = null;
             _numOfDetailsShown.Value = 0;
         }
     }
