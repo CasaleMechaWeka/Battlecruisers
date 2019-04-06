@@ -40,9 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             _itemDetailsManager = itemDetailsManager;
             _comparingFamiltyTracker = comparingFamiltyTracker;
-
-            _itemImage = GetComponentInChildren<Image>();
-            Assert.IsNotNull(_itemImage);
+            _itemImage = transform.FindNamedComponent<Image>("ItemImage");
 
             _itemName = GetComponentInChildren<Text>();
             Assert.IsNotNull(_itemName);
