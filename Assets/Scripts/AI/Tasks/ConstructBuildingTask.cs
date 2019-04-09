@@ -33,15 +33,15 @@ namespace BattleCruisers.AI.Tasks
         {
             IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
-            Assert.IsTrue(buildingWrapperPrefab.Buildable.NumOfDronesRequired <= _parentCruiser.DroneManager.NumOfDrones, 
-                "Cannot afford to construct building " + buildingWrapperPrefab.Buildable.Name + " need " +
-                buildingWrapperPrefab.Buildable.NumOfDronesRequired + " but only have " + _parentCruiser.DroneManager.NumOfDrones);
-
             bool haveStartedTask = false;
 
             if (_parentCruiser.IsAlive
                 && _parentCruiser.SlotAccessor.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotSpecification))
             {
+                Assert.IsTrue(buildingWrapperPrefab.Buildable.NumOfDronesRequired <= _parentCruiser.DroneManager.NumOfDrones, 
+                    "Cannot afford to construct building " + buildingWrapperPrefab.Buildable.Name + " need " +
+                    buildingWrapperPrefab.Buildable.NumOfDronesRequired + " but only have " + _parentCruiser.DroneManager.NumOfDrones);
+
                 ISlot slot = _parentCruiser.SlotAccessor.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
 				Assert.IsNotNull(slot);
 				
