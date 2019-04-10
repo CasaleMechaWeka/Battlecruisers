@@ -70,6 +70,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Start_CannotAffordBuilding_Throws()
         {
+            _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _building.NumOfDronesRequired.Returns(4);
             IDroneManager droneManager = Substitute.For<IDroneManager>();
