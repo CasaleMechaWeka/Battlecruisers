@@ -17,9 +17,9 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 

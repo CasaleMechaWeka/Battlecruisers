@@ -27,6 +27,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
+using UnityCommon.PlatformAbstractions;
 using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities

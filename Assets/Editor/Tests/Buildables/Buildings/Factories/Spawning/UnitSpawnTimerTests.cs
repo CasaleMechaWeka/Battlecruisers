@@ -3,9 +3,9 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Factories.Spawning
 {

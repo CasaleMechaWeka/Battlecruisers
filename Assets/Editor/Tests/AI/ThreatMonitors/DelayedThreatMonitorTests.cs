@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.AI.ThreatMonitors;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Tests.AI.ThreatMonitors
 {

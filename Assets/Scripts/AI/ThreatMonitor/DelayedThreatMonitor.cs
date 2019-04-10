@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.ThreatMonitors

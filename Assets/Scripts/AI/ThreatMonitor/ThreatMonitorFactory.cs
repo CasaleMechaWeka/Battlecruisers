@@ -3,8 +3,8 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {

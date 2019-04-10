@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
-	public class SmoothZoomAdjuster : ISmoothZoomAdjuster
+    public class SmoothZoomAdjuster : ISmoothZoomAdjuster
 	{
 		private readonly ICamera _camera;
         private readonly IDeltaTimeProvider _deltaTimeProvider;

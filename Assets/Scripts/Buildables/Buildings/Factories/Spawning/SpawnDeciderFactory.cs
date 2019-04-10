@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
+﻿using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {

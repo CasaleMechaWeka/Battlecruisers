@@ -3,8 +3,8 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
 using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Damage

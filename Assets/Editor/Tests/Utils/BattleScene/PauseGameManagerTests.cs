@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Tests.Utils.BattleScene
 {
