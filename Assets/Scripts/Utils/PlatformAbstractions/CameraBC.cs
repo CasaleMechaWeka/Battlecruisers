@@ -1,10 +1,11 @@
 ﻿using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.PlatformAbstractions
 {
-	public class CameraBC : ICamera
+    public class CameraBC : ICamera
     {
 		private readonly Camera _platfromCamera;
 

@@ -1,9 +1,10 @@
 ﻿using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Utils.PlatformAbstractions
 {
-	public interface ICamera
+    public interface ICamera
 	{
         event EventHandler OrthographicSizeChanged;
 

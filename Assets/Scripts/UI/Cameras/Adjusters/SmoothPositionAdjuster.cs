@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
-	public class SmoothPositionAdjuster : ISmoothPositionAdjuster
+    public class SmoothPositionAdjuster : ISmoothPositionAdjuster
     {
 		private readonly ITransform _cameraTransform;
         private readonly IDeltaTimeProvider _deltaTimeProvider;

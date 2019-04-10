@@ -2,6 +2,7 @@
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.Movement.Rotation

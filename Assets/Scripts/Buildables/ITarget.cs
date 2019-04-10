@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting.Masked;
-using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.ObjectModel;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables
