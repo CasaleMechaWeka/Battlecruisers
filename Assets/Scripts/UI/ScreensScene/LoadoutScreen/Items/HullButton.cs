@@ -3,7 +3,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

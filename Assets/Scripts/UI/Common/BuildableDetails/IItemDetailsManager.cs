@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {

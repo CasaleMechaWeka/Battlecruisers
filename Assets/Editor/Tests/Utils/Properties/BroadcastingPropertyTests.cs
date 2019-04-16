@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.Properties;
+﻿using UnityCommon.Properties;
 using NSubstitute;
 using NUnit.Framework;
 using System;

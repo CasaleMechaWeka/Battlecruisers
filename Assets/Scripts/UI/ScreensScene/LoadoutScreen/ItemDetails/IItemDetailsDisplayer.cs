@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {

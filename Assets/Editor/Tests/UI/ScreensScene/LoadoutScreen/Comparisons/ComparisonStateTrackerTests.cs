@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 using NSubstitute;
 using NUnit.Framework;
 

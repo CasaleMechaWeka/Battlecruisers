@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 using System;
 
 namespace BattleCruisers.Buildables.Colours

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;

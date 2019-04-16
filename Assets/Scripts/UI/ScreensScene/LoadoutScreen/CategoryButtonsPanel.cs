@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen

@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
-using BattleCruisers.Utils.Properties;
+using UnityCommon.Properties;
 using NSubstitute;
 using NUnit.Framework;
 
