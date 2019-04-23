@@ -104,13 +104,13 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
-            List<SpriteRenderer> renderers = base.GetInGameRenderers();
-
-            renderers.Add(_spinner.Renderer);
-            renderers.Add(leftSiloHalf.Renderer);
-            renderers.Add(rightSiloHalf.Renderer);
-
-            return renderers;
+            return new List<SpriteRenderer>()
+            {
+                transform.FindNamedComponent<SpriteRenderer>("Base"),
+                _spinner.Renderer,
+                leftSiloHalf.Renderer,
+                rightSiloHalf.Renderer
+            };
         }
 	}
 }
