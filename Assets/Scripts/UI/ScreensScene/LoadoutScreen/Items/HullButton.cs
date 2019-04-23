@@ -3,10 +3,10 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
-using UnityCommon.Properties;
 using System;
+using UnityCommon.Properties;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         private HullKey _hullKey;
         private IBroadcastingProperty<HullKey> _selectedHull;
-        private Image _selectedFeedback;
+        private RectTransform _selectedFeedback;
 
         public Cruiser cruiser;
         public override IComparableItem Item => cruiser;
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             _hullKey = hullKey;
             _selectedHull = selectedHull;
-            _selectedFeedback = transform.FindNamedComponent<Image>("SelectedFeedback");
+            _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
             cruiser.StaticInitialise();
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
