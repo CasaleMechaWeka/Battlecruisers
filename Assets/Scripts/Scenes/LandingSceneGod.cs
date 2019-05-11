@@ -23,6 +23,8 @@ namespace BattleCruisers.Scenes
         {
             if (!_isInitialised)
             {
+                Assert.raiseExceptions = true;
+
                 LoadingScreenController loadingScreen = GetComponent<LoadingScreenController>();
                 Assert.IsNotNull(loadingScreen);
                 loadingScreen.Initialise();

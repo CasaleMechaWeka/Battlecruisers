@@ -39,6 +39,7 @@ namespace BattleCruisers.Scenes
 
 		void Start()
 		{
+            Assert.raiseExceptions = true;
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
 
 			_prefabFactory = new PrefabFactory(new PrefabFetcher());
