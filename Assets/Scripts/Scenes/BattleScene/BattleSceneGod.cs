@@ -131,7 +131,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             TopPanelInitialiser topPanelInitialiser = FindObjectOfType<TopPanelInitialiser>();
             Assert.IsNotNull(topPanelInitialiser);
-            topPanelInitialiser.Initialise(playerCruiser, aiCruiser);
+            TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser);
 
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
@@ -211,6 +211,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 aiCruiser, 
                 components, 
                 cameraComponents, 
+                topPanelComponents,
                 leftPanelComponents, 
                 rightPanelComponents, 
                 uiManager);
@@ -241,6 +242,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser aiCruiser,
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
+            TopPanelComponents topPanelComponents,
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
@@ -258,6 +260,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         prefabFactory,
                         battleSceneGodComponents,
                         cameraComponents,
+                        topPanelComponents,
                         leftPanelComponents,
                         rightPanelComponents,
                         uiManager,

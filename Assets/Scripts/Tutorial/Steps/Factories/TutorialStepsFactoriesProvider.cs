@@ -82,7 +82,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             PlayerCruiserWidgetsStepsFactory
                 = new PlayerCruiserWidgetsStepsFactory(
                     argsFactory,
-                    tutorialArgs.LeftPanelComponents,
+                    tutorialArgs.TopPanelComponents.PlayerCruiserHealthBar,
+                    tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable,
                     autoNavigationStepFactory,
                     explanationDismissableStepFactory);
 

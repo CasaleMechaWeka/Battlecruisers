@@ -36,6 +36,7 @@ namespace BattleCruisers.UI.BattleScene
         private FilterToggler _helpLabelsVisibilityToggler;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
+        // FELIX  Don't initialise player cruiser health bar :)
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,

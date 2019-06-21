@@ -16,6 +16,7 @@ namespace BattleCruisers.Tutorial
         IPrefabFactory PrefabFactory { get; }
         IBattleSceneGodComponents Components { get; }
         ICameraComponents CameraComponents { get; }
+        TopPanelComponents TopPanelComponents { get; }
         LeftPanelComponents LeftPanelComponents { get; }
         RightPanelComponents RightPanelComponents { get; }
         IUIManager UIManager { get; }

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene;
+﻿using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -6,20 +6,22 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class PlayerCruiserWidgetsStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly LeftPanelComponents _leftPanelComponents;
+        private readonly IMaskHighlightable _playerCruiserHealthBar, _numOfDrones;
         private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public PlayerCruiserWidgetsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            LeftPanelComponents leftPanelComponents,
+            IMaskHighlightable playerCruiserHealthBar,
+            IMaskHighlightable numOfDrones,
             IAutoNavigationStepFactory autoNavigationStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(leftPanelComponents, autoNavigationStepFactory, explanationDismissableStepFactory);
+            Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory);
 
-            _leftPanelComponents = leftPanelComponents;
+            _playerCruiserHealthBar = playerCruiserHealthBar;
+            _numOfDrones = numOfDrones;
             _autNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
@@ -33,8 +35,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Health dial
             ITutorialStepArgs healthDialArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is your cruiser's health dial.",
-                    _leftPanelComponents.HealthDialHighlightable);
+                    "This is your cruiser's health.",
+                    _playerCruiserHealthBar);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(healthDialArgs));
 
@@ -42,7 +44,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialStepArgs droneNumberArgs
                 = _argsFactory.CreateTutorialStepArgs(
                     "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
-                    _leftPanelComponents.NumberOfDronesHighlightable);
+                    _numOfDrones);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(droneNumberArgs));
 

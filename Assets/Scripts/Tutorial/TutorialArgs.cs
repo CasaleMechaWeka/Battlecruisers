@@ -17,6 +17,7 @@ namespace BattleCruisers.Tutorial
         public IPrefabFactory PrefabFactory { get; }
         public IBattleSceneGodComponents Components { get; }
         public ICameraComponents CameraComponents { get; }
+        public TopPanelComponents TopPanelComponents { get; }
         public LeftPanelComponents LeftPanelComponents { get; }
         public RightPanelComponents RightPanelComponents { get; }
         public IUIManager UIManager { get; }
@@ -29,6 +30,7 @@ namespace BattleCruisers.Tutorial
             IPrefabFactory prefabFactory,
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
+            TopPanelComponents topPanelComponents,
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager,
@@ -41,6 +43,7 @@ namespace BattleCruisers.Tutorial
                 prefabFactory, 
                 battleSceneGodComponents, 
                 cameraComponents, 
+                topPanelComponents,
                 leftPanelComponents, 
                 rightPanelComponents,
                 uiManager,
@@ -52,6 +55,7 @@ namespace BattleCruisers.Tutorial
             PrefabFactory = prefabFactory;
             Components = battleSceneGodComponents;
             CameraComponents = cameraComponents;
+            TopPanelComponents = topPanelComponents;
             LeftPanelComponents = leftPanelComponents;
             RightPanelComponents = rightPanelComponents;
             UIManager = uiManager;
