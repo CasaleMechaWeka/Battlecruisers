@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Tutorial.Highlighting.Masked;
@@ -10,7 +9,6 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
@@ -36,7 +34,6 @@ namespace BattleCruisers.UI.BattleScene
         private FilterToggler _helpLabelsVisibilityToggler;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        // FELIX  Don't initialise player cruiser health bar :)
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,
@@ -46,8 +43,7 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer soundPlayer,
-            ICruiser playerCruiser)
+            IPrioritisedSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(
                 droneManager, 
@@ -58,15 +54,13 @@ namespace BattleCruisers.UI.BattleScene
                 spriteProvider,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
-                soundPlayer,
-                playerCruiser);
+                soundPlayer);
 
             IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
-            IMaskHighlightable healthDialHighlightable = SetupHealthDial(playerCruiser);
             IBuildMenu buildMenu = SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
-            return new LeftPanelComponents(healthDialHighlightable, numberOfDronesHighlightable, buildMenu);
+            return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu);
         }
 
         private IMaskHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
@@ -74,13 +68,6 @@ namespace BattleCruisers.UI.BattleScene
             DronesPanelInitialiser dronesPanelInitialiser = FindObjectOfType<DronesPanelInitialiser>();
             Assert.IsNotNull(dronesPanelInitialiser);
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
-        }
-
-        private IMaskHighlightable SetupHealthDial(ICruiser playerCruiser)
-        {
-            PlayerCruiserHealthDialInitialiser dialInitialiser = GetComponentInChildren<PlayerCruiserHealthDialInitialiser>();
-            Assert.IsNotNull(dialInitialiser);
-            return dialInitialiser.Initialise(playerCruiser);
         }
 
         private IBuildMenu SetupBuildMenuController(

@@ -6,18 +6,13 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class LeftPanelComponents
     {
-        public IMaskHighlightable HealthDialHighlightable { get; }
         public IMaskHighlightable NumberOfDronesHighlightable { get; }
         public IBuildMenu BuildMenu { get; }
 
-        public LeftPanelComponents(
-            IMaskHighlightable healthDialHighlightable, 
-            IMaskHighlightable numberOfDronesHighlightable, 
-            IBuildMenu buildMenu)
+        public LeftPanelComponents(IMaskHighlightable numberOfDronesHighlightable, IBuildMenu buildMenu)
         {
-            Helper.AssertIsNotNull(healthDialHighlightable, numberOfDronesHighlightable, buildMenu);
+            Helper.AssertIsNotNull(numberOfDronesHighlightable, buildMenu);
 
-            HealthDialHighlightable = healthDialHighlightable;
             NumberOfDronesHighlightable = numberOfDronesHighlightable;
             BuildMenu = buildMenu;
         }
