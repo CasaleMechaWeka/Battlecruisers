@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
+    // FELIX  Rename, remove "Player" prefix :)
     public class PlayerCruiserHealthDialInitialiser : MonoBehaviour
     {
         private Image _lowHealthFeedback;

@@ -13,11 +13,13 @@ namespace BattleCruisers.UI.BattleScene
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser);
 
-            PlayerCruiserHealthDialInitialiser dialInitialiser = GetComponentInChildren<PlayerCruiserHealthDialInitialiser>();
-            Assert.IsNotNull(dialInitialiser);
-            dialInitialiser.Initialise(playerCruiser);
+            PlayerCruiserHealthDialInitialiser playerHealthInitialiser = transform.FindNamedComponent<PlayerCruiserHealthDialInitialiser>("PlayerCruiserHealth/Foreground");
+            Assert.IsNotNull(playerHealthInitialiser);
+            playerHealthInitialiser.Initialise(playerCruiser);
 
-            // FELIX  Initialise aiCruiser health bar :)
+            PlayerCruiserHealthDialInitialiser aiHealthInitialiser = transform.FindNamedComponent<PlayerCruiserHealthDialInitialiser>("AICruiserHealth/Foreground");
+            Assert.IsNotNull(aiHealthInitialiser);
+            aiHealthInitialiser.Initialise(aiCruiser);
         }
     }
 }
