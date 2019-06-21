@@ -30,6 +30,16 @@ namespace BattleCruisers.Utils.Debugging
                     aiCruiser.TakeDamage(aiCruiser.MaxHealth, null);
                 }
             }
+            // L = Loss
+            else if (Input.GetKeyUp(KeyCode.L))
+            {
+                ICruiser playerCruiser = FindCruiser(Faction.Blues);
+
+                if (playerCruiser != null)
+                {
+                    playerCruiser.TakeDamage(playerCruiser.MaxHealth, null);
+                }
+            }
             // B = Builders
             else if (Input.GetKeyUp(KeyCode.B))
             {
