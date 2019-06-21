@@ -25,9 +25,11 @@ namespace BattleCruisers.Scenes
             {
                 Assert.raiseExceptions = true;
 
+                MusicPlayer = CreateMusicPlayer();
+
                 LoadingScreenController loadingScreen = GetComponent<LoadingScreenController>();
                 Assert.IsNotNull(loadingScreen);
-                loadingScreen.Initialise();
+                loadingScreen.Initialise(MusicPlayer);
                 LoadingScreen = loadingScreen;
 
                 // Persist this game object across scenes
@@ -36,7 +38,6 @@ namespace BattleCruisers.Scenes
 
                 SceneNavigator = this;
 
-                MusicPlayer = CreateMusicPlayer();
 
                 // Game starts with the screens scene
                 GoToScene(SceneNames.SCREENS_SCENE);

@@ -105,6 +105,7 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Danger => new SoundKey(SoundType.Music, "danger");
             public static ISoundKey Victory => new SoundKey(SoundType.Music, "victory");
             public static ISoundKey Defeat => new SoundKey(SoundType.Music, "defeat");
+            public static ISoundKey Loading => new SoundKey(SoundType.Music, "loading");
             
             public static class Background
             {

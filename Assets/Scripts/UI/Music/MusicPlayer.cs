@@ -46,6 +46,11 @@ namespace BattleCruisers.UI.Music
             PlayMusic(SoundKeys.Music.Defeat, loop: false);
         }
 
+        public void PlayLoadingMusic()
+        {
+            PlayMusic(SoundKeys.Music.Loading);
+        }
+
         private void PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)
         {
             if (!soundKeyToPlay.Equals(_currentlyPlaying))
