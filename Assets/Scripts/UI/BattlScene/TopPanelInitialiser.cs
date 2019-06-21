@@ -13,11 +13,11 @@ namespace BattleCruisers.UI.BattleScene
         {
             Helper.AssertIsNotNull(playerCruiser, aiCruiser);
 
-            PlayerCruiserHealthDialInitialiser playerHealthInitialiser = transform.FindNamedComponent<PlayerCruiserHealthDialInitialiser>("PlayerCruiserHealth/Foreground");
+            CruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
             Assert.IsNotNull(playerHealthInitialiser);
             IMaskHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser);
 
-            PlayerCruiserHealthDialInitialiser aiHealthInitialiser = transform.FindNamedComponent<PlayerCruiserHealthDialInitialiser>("AICruiserHealth/Foreground");
+            CruiserHealthBarInitialiser aiHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("AICruiserHealth/Foreground");
             Assert.IsNotNull(aiHealthInitialiser);
             IMaskHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser);
 
