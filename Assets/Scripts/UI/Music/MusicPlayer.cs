@@ -38,14 +38,19 @@ namespace BattleCruisers.UI.Music
 
         public void PlayVictoryMusic()
         {
-            PlayMusic(SoundKeys.Music.Victory);
+            PlayMusic(SoundKeys.Music.Victory, loop: false);
         }
 
-        private void PlayMusic(ISoundKey soundKeyToPlay)
+        public void PlayDefeatMusic()
+        {
+            PlayMusic(SoundKeys.Music.Defeat, loop: false);
+        }
+
+        private void PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)
         {
             if (!soundKeyToPlay.Equals(_currentlyPlaying))
             {
-                _soundPlayer.PlaySound(soundKeyToPlay, loop: true);
+                _soundPlayer.PlaySound(soundKeyToPlay, loop);
                 _currentlyPlaying = soundKeyToPlay;
             }
         }

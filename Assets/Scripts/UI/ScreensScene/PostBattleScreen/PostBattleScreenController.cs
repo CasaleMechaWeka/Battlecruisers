@@ -100,6 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 {
                     title.text = LOSS_TITLE;
                     defeatMessage.SetActive(true);
+                    musicPlayer.PlayDefeatMusic();
                 }
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels

@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.Music
         void PlayBattleSceneMusic();
         void PlayDangerMusic();
         void PlayVictoryMusic();
+        void PlayDefeatMusic();
         void Stop();
     }
 }
