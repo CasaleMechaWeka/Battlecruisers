@@ -1,4 +1,5 @@
-﻿namespace BattleCruisers.Utils.PlatformAbstractions.UI
+﻿// FELIX  Remove :D
+namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     /// <summary>
     /// Uses a subset of an underlying fillable image.  For example,

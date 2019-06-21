@@ -129,6 +129,10 @@ namespace BattleCruisers.Scenes.BattleScene
             // UI
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
 
+            TopPanelInitialiser topPanelInitialiser = FindObjectOfType<TopPanelInitialiser>();
+            Assert.IsNotNull(topPanelInitialiser);
+            topPanelInitialiser.Initialise(playerCruiser, aiCruiser);
+
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);
             LeftPanelComponents leftPanelComponents 
