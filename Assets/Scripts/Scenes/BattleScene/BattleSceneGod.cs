@@ -131,7 +131,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             TopPanelInitialiser topPanelInitialiser = FindObjectOfType<TopPanelInitialiser>();
             Assert.IsNotNull(topPanelInitialiser);
-            TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser);
+            TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
             Assert.IsNotNull(leftPanelInitialiser);

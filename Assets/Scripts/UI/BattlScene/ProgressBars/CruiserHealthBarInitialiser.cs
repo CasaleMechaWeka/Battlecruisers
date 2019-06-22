@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -16,10 +17,30 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         private Image _lowHealthFeedback;
         private IHealthStateMonitor _cruiserHealthMonitor;
 
-        public IMaskHighlightable Initialise(ICruiser playerCruiser)
-        {
-            Assert.IsNotNull(playerCruiser);
+        // Keep reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private FilterToggler _helpLabelsVisibilityToggler;
+#pragma warning restore CS0414  // Variable is assigned but never used
 
+        public HelpLabel helpLabel;
+
+        public IMaskHighlightable Initialise(ICruiser cruiser, IBroadcastingFilter helpLabelVisibilityFilter)
+        {
+            Helper.AssertIsNotNull(cruiser, helpLabelVisibilityFilter);
+
+            SetupHelpLabel(helpLabelVisibilityFilter);
+            return SetupHealthBar(cruiser);
+        }
+
+        private void SetupHelpLabel(IBroadcastingFilter helpLabelVisibilityFilter)
+        {
+            Assert.IsNotNull(helpLabel);
+            helpLabel.Initialise();
+            _helpLabelsVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
+        }
+
+        private MaskHighlightable SetupHealthBar(ICruiser cruiser)
+        {
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
             IFillableImage fillableImage = new FillableImage(platformFillableImage);
@@ -27,11 +48,11 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             IFilter<ICruiser> visibilityFilter = new StaticFilter<ICruiser>(isMatch: true);
 
             IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(fillableImage, visibilityFilter);
-            healthDial.Damagable = playerCruiser;
+            healthDial.Damagable = cruiser;
 
             _lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
 
-            _cruiserHealthMonitor = new HealthStateMonitor(playerCruiser);
+            _cruiserHealthMonitor = new HealthStateMonitor(cruiser);
             _cruiserHealthMonitor.HealthStateChanged += CruiserHealthMonitor_HealthStateChanged;
 
             MaskHighlightable highlightable = GetComponent<MaskHighlightable>();
