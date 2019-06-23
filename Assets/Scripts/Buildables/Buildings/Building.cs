@@ -31,9 +31,6 @@ namespace BattleCruisers.Buildables.Buildings
         public BuildingCategory category;
         public BuildingCategory Category => category;
 
-        // FELIX  Remove :)
-        public Transform tempPuzzleRootPoint;
-
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building1;
 
         protected override HealthBarController HealthBarController
@@ -54,12 +51,8 @@ namespace BattleCruisers.Buildables.Buildings
 
             SlotSpecification = new SlotSpecification(slotType, function, preferCruiserFront);
 
-            // FELIX  Avoid if, once all prefabs have this :)
-            //Transform puzzleRootPoint = transform.FindNamedComponent<Transform>("PuzzleRootPoint");
-            if (tempPuzzleRootPoint != null)
-            {
-                PuzzleRootPoint = tempPuzzleRootPoint.position;
-            }
+            Transform puzzleRootPoint = transform.FindNamedComponent<Transform>("PuzzleRootPoint");
+            PuzzleRootPoint = puzzleRootPoint.position;
         }
 
         public void Initialise(
