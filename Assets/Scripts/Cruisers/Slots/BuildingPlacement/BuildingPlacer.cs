@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
 {
-    // FELIX  UPdate tests :)
     public class BuildingPlacer : IBuildingPlacer
     {
         public void PlaceBuilding(IBuilding buildingToPlace, ISlot parentSlot)
