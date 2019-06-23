@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils.Factories;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings
 {
@@ -27,6 +28,7 @@ namespace BattleCruisers.Buildables.Buildings
     {
         BuildingCategory Category { get; }
         SlotSpecification SlotSpecification { get; }
+        Vector3 PuzzleRootPoint { get; }
 
         void Initialise(
             ICruiser parentCruiser, 

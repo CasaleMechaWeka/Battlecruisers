@@ -26,9 +26,13 @@ namespace BattleCruisers.Buildables.Buildings
         public override TargetType TargetType => TargetType.Buildings;
         public override Vector2 Size => _collider.size;
         public SlotSpecification SlotSpecification { get; private set; }
+        public Vector3 PuzzleRootPoint { get; private set; }
 
         public BuildingCategory category;
         public BuildingCategory Category => category;
+
+        // FELIX  Remove :)
+        public Transform tempPuzzleRootPoint;
 
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building1;
 
@@ -49,6 +53,13 @@ namespace BattleCruisers.Buildables.Buildings
             Assert.IsNotNull(_collider);
 
             SlotSpecification = new SlotSpecification(slotType, function, preferCruiserFront);
+
+            // FELIX  Avoid if, once all prefabs have this :)
+            //Transform puzzleRootPoint = transform.FindNamedComponent<Transform>("PuzzleRootPoint");
+            if (tempPuzzleRootPoint != null)
+            {
+                PuzzleRootPoint = tempPuzzleRootPoint.position;
+            }
         }
 
         public void Initialise(

@@ -68,6 +68,8 @@ namespace BattleCruisers.AI
                 case Difficulty.Easy:
                 case Difficulty.Normal:
                 case Difficulty.Hard:
+                    // FELIX  TEMP
+                    return new DummyArtificialIntelligence();
                     return aiFactory.CreateBasicAI(levelInfo);
 
                 case Difficulty.Harder:
