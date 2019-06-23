@@ -23,15 +23,24 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
         {
             switch (parentSlot.Direction)
             {
+                // FELIX  Can collapse these 2 switches?  Are identical???
                 case Direction.Right:
-                    // Naval factory
-                    float horizontalChange = buildingToPlace.Position.x - buildingToPlace.PuzzleRootPoint.x;
-                    return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.Right * horizontalChange);
+                    {
+                        // Naval factory
+                        // FELIX  Also handle y change
+                        float horizontalChange = buildingToPlace.Position.x - buildingToPlace.PuzzleRootPoint.x;
+                        return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.Right * horizontalChange);
+                    }
 
                 case Direction.Up:
-                    // All other buildings
-                    float verticalChange = buildingToPlace.Position.y - buildingToPlace.PuzzleRootPoint.y;
-                    return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.Up * verticalChange);
+                    {
+                        // All other buildings
+                        float verticalChange = buildingToPlace.Position.y - buildingToPlace.PuzzleRootPoint.y;
+                        float horizontalChange = buildingToPlace.Position.x - buildingToPlace.PuzzleRootPoint.x;
+                        return parentSlot.BuildingPlacementPoint
+                            + (parentSlot.Transform.Up * verticalChange)
+                            + (parentSlot.Transform.Right * horizontalChange);
+                    }
 
                 default:
                     throw new ArgumentException("Invalid slot direction");
