@@ -25,13 +25,11 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
             {
                 case Direction.Right:
                     // Naval factory
-                    // FELIX  Update :)
-                    float horizontalChange = buildingToPlace.Size.x / 2;
+                    float horizontalChange = buildingToPlace.Position.x - buildingToPlace.PuzzleRootPoint.x;
                     return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.Right * horizontalChange);
 
                 case Direction.Up:
                     // All other buildings
-                    //float verticalChange = buildingToPlace.Size.y / 2;
                     float verticalChange = buildingToPlace.Position.y - buildingToPlace.PuzzleRootPoint.y;
                     return parentSlot.BuildingPlacementPoint + (parentSlot.Transform.Up * verticalChange);
 
