@@ -25,7 +25,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private IExactMatchTargetFilter _exactMatchTargetFilter;
 		private IMovementController _figherMovementController;
         private BarrelController _barrelController;
-        private IAngleHelper _angleHelper;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Fighter;
 
@@ -73,6 +72,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
             AddDamageStats(_barrelController.DamageCapability);
+
+            _faceVelocityDirection = true;
 		}
 
 		protected override void OnInitialised()
@@ -85,8 +86,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     maxVelocityProvider: this,
                     targetProvider: this, 
                     safeZone: _aircraftProvider.FighterSafeZone);
-
-            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
 		}
 
 		protected override void OnBuildableCompleted()
@@ -161,23 +160,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			return Helper.ConvertVectorsToPatrolPoints(_aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM));
 		}
-
-		protected override void OnFixedUpdate()
-		{
-			base.OnFixedUpdate();
-            FaceVelocityDirection();
-		}
-
-        private void FaceVelocityDirection()
-        {
-            if (Velocity != Vector2.zero)
-            {
-                float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
-                Quaternion rotation = rigidBody.transform.rotation;
-                rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
-                rigidBody.transform.rotation = rotation;
-            }
-        }
 
 		protected override void OnDestroyed()
 		{

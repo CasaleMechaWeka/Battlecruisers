@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
@@ -24,8 +25,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
+        private IAngleHelper _angleHelper;
 
         protected ISpriteChooser _spriteChooser;
+        protected bool _faceVelocityDirection = false;
 
         public float cruisingAltitudeInM;
 
@@ -107,9 +110,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ActiveMovementController = DummyMovementController;
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
-		}
+            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
+        }
 
-		protected override void OnBuildableCompleted()
+        protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
@@ -140,7 +144,23 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			ActiveMovementController.AdjustVelocity();
 
             _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
+
+            if (_faceVelocityDirection)
+            {
+                FaceVelocityDirection();
+            }
 		}
+
+        private void FaceVelocityDirection()
+        {
+            if (Velocity != Vector2.zero)
+            {
+                float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
+                Quaternion rotation = rigidBody.transform.rotation;
+                rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
+                rigidBody.transform.rotation = rotation;
+            }
+        }
 
         public void Kamikaze(ITarget kamikazeTarget)
         {
@@ -159,6 +179,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             UpdateFaction(kamikazeTarget);
 
             OnKamikaze();
+
+            _faceVelocityDirection = true;
         }
 
         private void UpdateFaction(ITarget kamikazeTarget)
