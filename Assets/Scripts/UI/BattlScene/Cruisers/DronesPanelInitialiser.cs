@@ -15,11 +15,12 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
         private DronesDisplayer _dronesDisplayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
+        public Image highlight;
+
         public IMaskHighlightable Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
-            Helper.AssertIsNotNull(droneManager, droneManagerMonitor);
+            Helper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 
-            Image highlight = transform.FindNamedComponent<Image>("Highlight");
             IGameObject highlightGameObject = new GameObjectBC(highlight.gameObject);
 
             NumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<NumOfDronesPanelInitialiser>();
