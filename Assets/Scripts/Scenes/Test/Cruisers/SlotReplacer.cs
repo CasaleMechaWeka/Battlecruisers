@@ -27,6 +27,8 @@ namespace BattleCruisers.Scenes.Test.Cruisers
 
                 Slot newSlot = Instantiate(prefab, oldSlot.transform.parent);
                 newSlot.index = oldSlot.index;
+                newSlot.buildingFunctionAffinity = oldSlot.buildingFunctionAffinity;
+                newSlot.direction = oldSlot.direction;
                 newSlot.transform.SetPositionAndRotation(oldSlot.transform.position, oldSlot.transform.rotation);
 
                 // Remove old slot
