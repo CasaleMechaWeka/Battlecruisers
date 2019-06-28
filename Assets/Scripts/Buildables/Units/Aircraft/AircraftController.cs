@@ -16,10 +16,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public abstract class AircraftController : 
-        Unit, 
-        IVelocityProvider, 
-        IPatrollingVelocityProvider
+    public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider
 	{
         private KamikazeController _kamikazeController;
 		private SpriteRenderer _spriteRenderer;
