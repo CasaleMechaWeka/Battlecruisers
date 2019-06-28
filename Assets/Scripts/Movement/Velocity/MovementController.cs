@@ -30,11 +30,11 @@ namespace BattleCruisers.Movement.Velocity
 			{
 				Direction? newDirection = null;
 
-				if (oldVelocity.x > 0 && currentVelocity.x < 0)
+				if (oldVelocity.x >= 0 && currentVelocity.x < 0)
 				{
 					newDirection = Direction.Left;
 				}
-				else if (oldVelocity.x < 0 && currentVelocity.x > 0)
+				else if (oldVelocity.x <= 0 && currentVelocity.x > 0)
 				{
 					newDirection = Direction.Right;
 				}
