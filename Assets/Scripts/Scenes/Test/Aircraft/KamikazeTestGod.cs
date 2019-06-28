@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Tactical;
@@ -14,7 +15,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class KamikazeTestGod : MonoBehaviour
     {
-        void Start()
+        public int kamikaziDelayInS = 1;
+
+        async Task Start()
         {
             Helper helper = new Helper();
 
@@ -46,6 +49,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             // Setup kamikaze signal.  When completed, aircraft switches to patrol movement controller.
             KamikazeSignal kamikazeSignal = FindObjectOfType<KamikazeSignal>();
             helper.InitialiseBuilding(kamikazeSignal, enemyCruiser: enemyCruiser);
+
+            await Task.Delay(kamikaziDelayInS * 1000);
+
             kamikazeSignal.StartConstruction();
         }
     }
