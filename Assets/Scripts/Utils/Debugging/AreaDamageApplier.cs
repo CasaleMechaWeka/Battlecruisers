@@ -16,6 +16,7 @@ namespace BattleCruisers.Utils.Debugging
 
         public float damage;
         public float damageRadiusInM;
+        public KeyCode hotkey;
 
         void Start()
         {
@@ -33,7 +34,7 @@ namespace BattleCruisers.Utils.Debugging
 
         void Update()
         {
-            if (Input.GetKeyUp(KeyCode.D))
+            if (Input.GetKeyUp(hotkey))
             {
                 Vector2 collisionPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
