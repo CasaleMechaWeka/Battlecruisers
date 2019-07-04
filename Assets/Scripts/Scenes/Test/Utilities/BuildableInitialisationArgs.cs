@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -107,7 +108,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new DeferrerProvider(deferrer),
                     explosionManager,
                     trackerFactory ?? Substitute.For<ITrackerFactory>(),
-                    targetFactories);
+                    targetFactories,
+                    new SpawnDeciderFactory());
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -132,7 +134,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrerProvider deferrerProvider,
             IExplosionManager explosionManager,
             ITrackerFactory trackerFactory,
-            ITargetFactoriesProvider targetFactories)
+            ITargetFactoriesProvider targetFactories,
+            ISpawnDeciderFactory spawnDeciderFactory)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -143,12 +146,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.ExplosionManager.Returns(explosionManager);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
-            factoryProvider.TrackerFactory.Returns(trackerFactory);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
+            factoryProvider.SpawnDeciderFactory.Returns(spawnDeciderFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.TargetFactories.Returns(targetFactories);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
+            factoryProvider.TrackerFactory.Returns(trackerFactory);
 
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();
