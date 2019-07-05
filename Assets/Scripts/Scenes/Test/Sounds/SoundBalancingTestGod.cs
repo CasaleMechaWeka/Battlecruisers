@@ -33,9 +33,14 @@ namespace BattleCruisers.Scenes.Test.Sounds
                         audioSource));
         }
 
-        public void PlayMusic()
+        public void PlayBackgroundMusic()
         {
             _musicPlayer.PlayBattleSceneMusic();
+        }
+
+        public void PlayDangerMusic()
+        {
+            _musicPlayer.PlayDangerMusic();
         }
 
         public void StopMusic()
