@@ -82,7 +82,7 @@ namespace BattleCruisers.Scenes.Test
             return cruiser;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             _cameraAdjuster.AdjustCamera();
             //Debug.Log("Camera position: " + _camera.Transform.Position + "  Orthographic size: " + _camera.OrthographicSize);

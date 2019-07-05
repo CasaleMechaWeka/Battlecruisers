@@ -13,6 +13,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
     public class SoundBalancingTestGod : NavigationTestGod
     {
         private IMusicPlayer _musicPlayer;
+        private AudioListener _audioListener;
 
         protected override void Start()
         {
@@ -22,6 +23,9 @@ namespace BattleCruisers.Scenes.Test.Sounds
             _musicPlayer.LevelMusicKey = SoundKeys.Music.Background.Kentient;
 
             SetupSoundPlayerObjects();
+
+            _audioListener = Camera.main.GetComponent<AudioListener>();
+            Assert.IsNotNull(_audioListener);
         }
 
         private void SetupSoundPlayerObjects()
@@ -66,6 +70,13 @@ namespace BattleCruisers.Scenes.Test.Sounds
         public void StopMusic()
         {
             _musicPlayer.Stop();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            Debug.Log($"Audio listener position: {_audioListener.transform.position}");
         }
     }
 }
