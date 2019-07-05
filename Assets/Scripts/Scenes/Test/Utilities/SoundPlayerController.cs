@@ -20,6 +20,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             _soundPlayer = soundPlayer;
             _soundKey = new SoundKey(soundType, soundName);
+
+            TextMesh nameTextMesh = GetComponentInChildren<TextMesh>();
+            Assert.IsNotNull(nameTextMesh);
+            nameTextMesh.text = soundName;
         }
 
         public void OnPointerClick(PointerEventData eventData)
