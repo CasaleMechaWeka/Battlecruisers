@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
                 transform.position = clampedBottomLeftPosition;
 
-                Logging.Log(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
+                Logging.Log(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedCenterPosition: {clampedCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
 
                 CenterPositionChanged?.Invoke(this, EventArgs.Empty);
             }
