@@ -12,7 +12,7 @@ namespace BattleCruisers.UI
         private const float DEFAULT_HIGHLIGHT_SIZE_MULTIPLIER = 1;
 
         protected virtual bool Disable => true;
-        protected virtual Image Image => null;
+        protected virtual MaskableGraphic Graphic => null;
         protected virtual CanvasGroup CanvasGroup => null;
         protected virtual bool ToggleVisibility => false;
 
@@ -43,11 +43,11 @@ namespace BattleCruisers.UI
 
         protected void SetAlpha(float alpha)
         {
-            if (Image != null)
+            if (Graphic != null)
             {
-                Color color = Image.color;
+                Color color = Graphic.color;
                 color.a = alpha;
-                Image.color = color;
+                Graphic.color = color;
             }
 
             if (CanvasGroup != null)
@@ -58,6 +58,7 @@ namespace BattleCruisers.UI
 
         public virtual void Initialise()
         {
+            _enabled = true;
             _rectTransform = transform.Parse<RectTransform>();
 
             if (highlightSizeMultiplier == default)

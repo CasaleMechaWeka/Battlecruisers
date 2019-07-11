@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         }
 
         private Image _wheel;
-        protected override Image Image => _wheel;
+        protected override MaskableGraphic Graphic => _wheel;
 
         public event EventHandler CenterPositionChanged;
 
