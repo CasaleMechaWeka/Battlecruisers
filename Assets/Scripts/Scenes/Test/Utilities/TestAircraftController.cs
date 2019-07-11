@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 	{
 		private TargetType _targetType;
 
-		// IList is not picked up by the Unit inspector
+		// IList is not picked up by the Unity inspector
 		public List<Vector2> patrolPoints;
 		public IList<Vector2> PatrolPoints
 		{
