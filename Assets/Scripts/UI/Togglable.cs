@@ -18,31 +18,41 @@ namespace BattleCruisers.UI
 
         public float highlightSizeMultiplier;
 
+        private bool _enabled;
         public bool Enabled
         {
+            get => _enabled;
             set
             {
+                _enabled = value;
+
                 if (Disable)
                 {
                     enabled = value;
                 }
 
-                if (Image != null)
-                {
-                    Color color = Image.color;
-                    color.a = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
-                    Image.color = color;
-                }
-
-                if (CanvasGroup != null)
-                {
-                    CanvasGroup.alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
-                }
+                float alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
+                SetAlpha(alpha);
 
                 if (ToggleVisibility)
                 {
                     gameObject.SetActive(value);
                 }
+            }
+        }
+
+        protected void SetAlpha(float alpha)
+        {
+            if (Image != null)
+            {
+                Color color = Image.color;
+                color.a = alpha;
+                Image.color = color;
+            }
+
+            if (CanvasGroup != null)
+            {
+                CanvasGroup.alpha = alpha;
             }
         }
 
