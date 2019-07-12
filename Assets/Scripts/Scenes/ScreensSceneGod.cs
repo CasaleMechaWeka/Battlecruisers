@@ -83,8 +83,8 @@ namespace BattleCruisers.Scenes
 
 
             // TEMP  Go to specific screen :)
-            //GoToSettingsScreen();
-            GoToLevelsScreen();
+            GoToSettingsScreen();
+            //GoToLevelsScreen();
             //GoToLoadoutScreen();
         }
         

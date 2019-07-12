@@ -1,20 +1,21 @@
 ﻿using BattleCruisers.Scenes;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class CancelButton : Togglable, IPointerClickHandler
+    public class CancelButton : TextButton
     {
         private IScreensSceneGod _screensSceneGod;
 
         public void Initialise(IScreensSceneGod screensSceneGod)
         {
+            base.Initialise();
+
             Assert.IsNotNull(screensSceneGod);
             _screensSceneGod = screensSceneGod;
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _screensSceneGod.GoToHomeScreen();
         }
