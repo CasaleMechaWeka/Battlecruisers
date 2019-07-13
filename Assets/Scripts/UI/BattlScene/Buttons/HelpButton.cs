@@ -1,19 +1,19 @@
 ﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class HelpButton : MonoBehaviour, IPointerClickHandler
+    public class HelpButton : CanvasGroupButton
     {
         private BroadcastingFilter _helpLabelsVisibilityFilter;
         private Image _leverOff, _leverOn;
 
         public void Initialise(BroadcastingFilter helpLabelsVisibilityFilter)
         {
+            base.Initialise();
+
             Assert.IsNotNull(helpLabelsVisibilityFilter);
             _helpLabelsVisibilityFilter = helpLabelsVisibilityFilter;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             UpdateLeverVisibility(_helpLabelsVisibilityFilter.IsMatch);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _helpLabelsVisibilityFilter.IsMatch = !_helpLabelsVisibilityFilter.IsMatch;
             UpdateLeverVisibility(_helpLabelsVisibilityFilter.IsMatch);
