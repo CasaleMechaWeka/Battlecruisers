@@ -5,15 +5,11 @@ using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : PresentableController, 
-        IBuildableButton, 
-        IBroadcastingFilter,
-        IPointerClickHandler
+    public abstract class BuildableButtonController : PresentableController, IBuildableButton, IBroadcastingFilter
 	{
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
         private FilterToggler _isEnabledToggler;
@@ -74,13 +70,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }
 
-        protected abstract void HandleClick(bool isButtonEnabled);
-
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             HandleClick(IsMatch);
 
             Clicked?.Invoke(this, EventArgs.Empty);
         }
+
+        protected abstract void HandleClick(bool isButtonEnabled);
     }
 }

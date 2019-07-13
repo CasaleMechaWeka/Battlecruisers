@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    public abstract class PresentableController : Togglable, IPresentable
+    public abstract class PresentableController : ClickableTogglable, IPresentable
 	{
         private IPresentableComponent _presentableComponent;
 
@@ -27,5 +27,10 @@
         {
             _presentableComponent.AddChildPresentable(presentableToAdd);
         }
-	}
+
+        protected override void OnClicked()
+        {
+            // Empty, do not force child classes to implement
+        }
+    }
 }
