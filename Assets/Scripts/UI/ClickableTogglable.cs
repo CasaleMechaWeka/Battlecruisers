@@ -19,7 +19,7 @@ namespace BattleCruisers.UI
         {
             if (Enabled)
             {
-                SetAlpha(Constants.PRESSED_UI_ALPHA);
+                SetAlpha(Alpha.PRESSED);
             }
         }
 
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI
         {
             if (Enabled)
             {
-                SetAlpha(Constants.ENABLED_UI_ALPHA);
+                SetAlpha(Alpha.ENABLED);
             }
         }
     }

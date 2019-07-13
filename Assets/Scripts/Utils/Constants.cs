@@ -5,14 +5,17 @@
 		public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
 		public const float PI = 3.14f;
 		public const int MS_PER_S = 1000;
-
-		public const float DISABLED_UI_ALPHA = 0.5f;
-        public const float PRESSED_UI_ALPHA = 0.75f;
-        public const float ENABLED_UI_ALPHA = 1.0f;
 		
         public const float MAX_ACCURACY = 1;
 
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
+    }
+
+    public static class Alpha
+    {
+		public const float DISABLED = 0.5f;
+        public const float PRESSED = 0.75f;
+        public const float ENABLED = 1.0f;
     }
 
     public static class BuildSpeedMultipliers

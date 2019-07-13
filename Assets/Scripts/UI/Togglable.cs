@@ -31,7 +31,7 @@ namespace BattleCruisers.UI
                     enabled = value;
                 }
 
-                float alpha = value ? Constants.ENABLED_UI_ALPHA : Constants.DISABLED_UI_ALPHA;
+                float alpha = value ? Alpha.ENABLED : Alpha.DISABLED;
                 SetAlpha(alpha);
 
                 if (ToggleVisibility)
