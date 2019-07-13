@@ -6,7 +6,6 @@ using BattleCruisers.Utils;
 using System;
 using UnityCommon.Properties;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -49,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _selectedFeedback.gameObject.SetActive(_hullKey.Equals(_selectedHull.Value));
         }
 
-        public override void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {

@@ -2,7 +2,6 @@
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -19,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             unit.Initialise();
         }
 
-        public override void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {

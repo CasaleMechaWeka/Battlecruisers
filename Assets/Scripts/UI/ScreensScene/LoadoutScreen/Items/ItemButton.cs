@@ -4,12 +4,11 @@ using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public abstract class ItemButton : Togglable, IPointerClickHandler, IItemButton
+    public abstract class ItemButton : ClickableTogglable, IItemButton
     {
         private Image _itemImage;
         private Text _itemName;
@@ -36,6 +35,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public virtual void Initialise(IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
 
             _itemDetailsManager = itemDetailsManager;
@@ -57,7 +58,5 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 = _comparingFamiltyTracker.ComparingFamily.Value == null
                     || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
         }
-
-        public abstract void OnPointerClick(PointerEventData eventData);
     }
 }
