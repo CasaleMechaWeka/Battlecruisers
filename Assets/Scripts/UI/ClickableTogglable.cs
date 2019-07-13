@@ -11,6 +11,7 @@ namespace BattleCruisers.UI
         IPointerExitHandler
     {
         private bool _isPressed = false;
+        private bool _isHover = false;
 
         protected virtual bool ShowPressedFeedback => true;
         protected virtual bool ShowHoverFeedback => true;
@@ -36,16 +37,26 @@ namespace BattleCruisers.UI
         {
             _isPressed = false;
 
-            // FELIX  Not hover
             if (Enabled && ShowPressedFeedback)
             {
-                SetAlpha(Alpha.ENABLED);
+                if (_isHover)
+                {
+                    SetAlpha(Alpha.HOVER);
+                }
+                else
+                {
+                    SetAlpha(Alpha.ENABLED);
+                }
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (Enabled && ShowHoverFeedback)
+            _isHover = true;
+
+            if (Enabled 
+                && ShowHoverFeedback
+                && !_isPressed)
             {
                 SetAlpha(Alpha.HOVER);
             }
@@ -53,6 +64,8 @@ namespace BattleCruisers.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            _isHover = false;
+
             if (Enabled 
                 && ShowHoverFeedback
                 && !_isPressed)
