@@ -13,8 +13,9 @@
 
     public static class Alpha
     {
-		public const float DISABLED = 0.5f;
-        public const float PRESSED = 0.75f;
+		public const float DISABLED = 0.4f;
+        public const float PRESSED = 0.6f;
+        public const float HOVER = 0.8f;
         public const float ENABLED = 1.0f;
     }
 
