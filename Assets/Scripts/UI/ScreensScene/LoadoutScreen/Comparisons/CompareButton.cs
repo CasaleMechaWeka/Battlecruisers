@@ -1,11 +1,10 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
 {
-    public class CompareButton : Togglable, IPointerClickHandler
+    public class CompareButton : CanvasGroupButton
     {
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
@@ -34,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
             Enabled = _comparisonStateTracker.State.Value == ComparisonState.NotComparing;
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _comparingFamilyTracker.SetComparingFamily(_itemDetailsManager.SelectedItemFamily);
         }

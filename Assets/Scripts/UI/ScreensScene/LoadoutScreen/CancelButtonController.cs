@@ -1,14 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class CancelButtonController : ClickableTogglable
+    public class CancelButtonController : CanvasGroupButton
     {
         private ICancellable _cancellable;
-
-        private CanvasGroup _canvasGroup;
-        protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(ICancellable cancellable)
         {
@@ -16,9 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             Assert.IsNotNull(cancellable);
             _cancellable = cancellable;
-
-            _canvasGroup = GetComponent<CanvasGroup>();
-            Assert.IsNotNull(_canvasGroup);
         }
 
         protected override void OnClicked()

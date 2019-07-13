@@ -5,14 +5,13 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
-using UnityCommon.Properties;
 using System;
+using UnityCommon.Properties;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class SelectCruiserButton : Togglable, IPointerClickHandler
+    public class SelectCruiserButton : CanvasGroupButton
     {
         private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
         private IComparisonStateTracker _comparisonStateTracker;
@@ -59,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Enabled = ShouldBeEnabled();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
             Assert.IsNotNull(displayedCruiser);
