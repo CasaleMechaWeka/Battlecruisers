@@ -74,11 +74,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }
 
-        protected abstract void OnClicked(bool isButtonEnabled);
+        protected abstract void HandleClick(bool isButtonEnabled);
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            OnClicked(IsMatch);
+            HandleClick(IsMatch);
 
             Clicked?.Invoke(this, EventArgs.Empty);
         }

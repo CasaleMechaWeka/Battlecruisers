@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _clickHandler = clickHandler;
 		}
 
-        protected override void OnClicked(bool isButtonEnabled)
+        protected override void HandleClick(bool isButtonEnabled)
         {
             _clickHandler.HandleClick(isButtonEnabled, _buildingWrapper);
 		}
