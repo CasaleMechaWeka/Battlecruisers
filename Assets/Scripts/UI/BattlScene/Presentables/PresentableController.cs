@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    public class PresentableController : Togglable, IPresentable
+    public abstract class PresentableController : Togglable, IPresentable
 	{
         private IPresentableComponent _presentableComponent;
 
