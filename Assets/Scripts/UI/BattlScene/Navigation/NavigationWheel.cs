@@ -10,16 +10,14 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationWheel : Togglable, 
-        INavigationWheel, 
-        IDragHandler, 
-        IPointerDownHandler,
-        IPointerUpHandler
+    public class NavigationWheel : ClickableTogglable, INavigationWheel, IDragHandler
     {
         private IPositionClamper _positionClamper;
         private Vector2 _halfSize;
         private IList<GameObject> _activeFeedbacks;
         private FilterToggler _filterToggler;
+
+        protected override bool ShowPressedFeedback => false;
 
         private Vector2 _centerPosition;
         public Vector2 CenterPosition
@@ -83,13 +81,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             CenterPosition = desiredBottomLeftPosition + _halfSize;
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public override void OnPointerDown(PointerEventData eventData)
         {
+            base.OnPointerDown(eventData);
             SetFeedbackVisibility(isVisible: true);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public override void OnPointerUp(PointerEventData eventData)
         {
+            base.OnPointerUp(eventData);
             SetFeedbackVisibility(isVisible: false);
         }
 
@@ -99,6 +99,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             {
                 feedback.gameObject.SetActive(isVisible);
             }
+        }
+
+        protected override void OnClicked()
+        {
+            // empty
         }
     }
 }

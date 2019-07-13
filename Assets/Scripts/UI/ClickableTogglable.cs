@@ -23,7 +23,7 @@ namespace BattleCruisers.UI
 
         protected abstract void OnClicked();
 
-        public void OnPointerDown(PointerEventData eventData)
+        public virtual void OnPointerDown(PointerEventData eventData)
         {
             _isPressed = true;
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.UI
             }
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public virtual void OnPointerUp(PointerEventData eventData)
         {
             _isPressed = false;
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public virtual void OnPointerEnter(PointerEventData eventData)
         {
             _isHover = true;
 
@@ -62,7 +62,7 @@ namespace BattleCruisers.UI
             }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public virtual void OnPointerExit(PointerEventData eventData)
         {
             _isHover = false;
 
