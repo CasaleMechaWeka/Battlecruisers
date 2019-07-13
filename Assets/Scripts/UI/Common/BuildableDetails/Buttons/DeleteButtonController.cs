@@ -3,14 +3,12 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class DeleteButtonController : MonoBehaviour, IPointerClickHandler
+    public class DeleteButtonController : ClickableTogglable
     {
         private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
@@ -18,6 +16,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 #pragma warning disable CS0414  // Variable is assigned but never used
         private FilterToggler _helpLabelsVisibilityToggler;
 #pragma warning restore CS0414  // Variable is assigned but never used
+
+        private Image _buttonImage;
+        protected override MaskableGraphic Graphic => _buttonImage;
 
         private IBuildable _buildable;
         public IBuildable Buildable
@@ -35,10 +36,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             IFilter<ITarget> buttonVisibilityFilter,
             IBroadcastingFilter helpLabelVisibilityFilter)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilter);
 
             _uiManager = uiManager;
             _buttonVisibilityFilter = buttonVisibilityFilter;
+
+            _buttonImage = GetComponent<Image>();
+            Assert.IsNotNull(_buttonImage);
 
             HelpLabel helpLabel = GetComponentInChildren<HelpLabel>();
             Assert.IsNotNull(helpLabel);
@@ -46,7 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _helpLabelsVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             Buildable.InitiateDelete();
             _uiManager.HideItemDetails();
