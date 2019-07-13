@@ -4,21 +4,18 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingCategoryButton : Togglable, 
-        IBuildingCategoryButton, 
-        IBroadcastingFilter, 
-        IPointerClickHandler
+    public class BuildingCategoryButton : CanvasGroupButton, IBuildingCategoryButton, IBroadcastingFilter
 	{
         private IUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
         private FilterToggler _filterToggler, _helpLabelToggler;
 
         public Image activeFeedback;
+        protected override MaskableGraphic Graphic => activeFeedback;
 
         public event EventHandler Clicked;
 
@@ -31,8 +28,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public BuildingCategory category;
         public BuildingCategory Category => category;
 
-        private Image _buttonImage;
-        protected override MaskableGraphic Graphic => _buttonImage;
 
         public bool IsMatch => _shouldBeEnabledFilter.IsMatch(Category);
         public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }
@@ -51,9 +46,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
 
-            _buttonImage = GetComponent<Image>();
-            Assert.IsNotNull(_buttonImage);
-
             _filterToggler = new FilterToggler(this, this);
 
             Togglable helpLabel = transform.FindNamedComponent<Togglable>("HelpLabel");
@@ -66,7 +58,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Destroy(activeFeedback);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _uiManager.SelectBuildingGroup(Category);
 

@@ -15,11 +15,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         private const float DEFAULT_TIME_SCALE = 1;
 
         public float timeScale;
+
         public Image selectedFeedback;
+        protected override MaskableGraphic Graphic => selectedFeedback;
 
         public event EventHandler Clicked;
-
-        protected override MaskableGraphic Graphic => selectedFeedback;
 
         public bool IsSelected
         {
