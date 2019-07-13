@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class LoadoutScreenController : ScreenController
+    public class LoadoutScreenController : ScreenController, ICancellable
     {
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
@@ -89,6 +89,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily);
 
             ShowPlayerHull();
+
+            CancelButtonController homeButton = GetComponentInChildren<CancelButtonController>();
+            Assert.IsNotNull(homeButton);
+            homeButton.Initialise(this);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
