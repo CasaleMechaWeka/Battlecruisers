@@ -1,17 +1,13 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
-using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
+using System;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class RepairButtonController : MonoBehaviour
+    public class RepairButtonController : CanvasGroupButton
     {
-        private Button _button;
         private IDroneFocuser _droneFocuser;
         private IRepairManager _repairManager;
 
@@ -49,17 +45,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         public void Initialise(IDroneFocuser droneFocuser, IRepairManager repairManager)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(droneFocuser, repairManager);
 
             _droneFocuser = droneFocuser;
             _repairManager = repairManager;
-
-            _button = GetComponent<Button>();
-            Assert.IsNotNull(_button);
-            _button.onClick.AddListener(ToggleRepairButton);
         }
 
-        private void ToggleRepairButton()
+        protected override void OnClicked()
         {
             IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
             _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);

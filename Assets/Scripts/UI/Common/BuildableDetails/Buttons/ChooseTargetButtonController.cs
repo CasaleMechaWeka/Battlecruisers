@@ -7,9 +7,8 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class ChooseTargetButtonController : Togglable, IButton
+    public class ChooseTargetButtonController : CanvasGroupButton, IButton
     {
-        private Button _button;
         private Text _buttonText;
         private IUserChosenTargetHelper _userChosenTargetHelper;
         private IFilter<ITarget> _buttonVisibilityFilter;
@@ -45,15 +44,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
             _userChosenTargetHelper.UserChosenTargetChanged += (sender, e) => UpdateButtonText();
 
-            _button = GetComponent<Button>();
-            Assert.IsNotNull(_button);
-            _button.onClick.AddListener(OnClick);
-
             _buttonText = GetComponentInChildren<Text>();
             Assert.IsNotNull(_buttonText);
         }
 
-        private void OnClick()
+        protected override void OnClicked()
         {
             _userChosenTargetHelper.ToggleChosenTarget(_target);
 
