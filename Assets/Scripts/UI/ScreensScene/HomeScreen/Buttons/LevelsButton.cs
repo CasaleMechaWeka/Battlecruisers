@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 {
     public class LevelsButton : HomeScreenButton
     {
-        public override void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _homeScreen.GoToLevelsScreen();
         }

@@ -2,12 +2,11 @@
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    public class LevelButtonController : Togglable, IPointerClickHandler
+    public class LevelButtonController : ClickableTogglable
     {
         private LevelInfo _level;
         private IScreensSceneGod _screensSceneGod;
@@ -36,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Enabled = numOfLevelsUnlocked >= level.Num;
 		}
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _screensSceneGod.LoadLevel(_level.Num);
         }

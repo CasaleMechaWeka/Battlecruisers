@@ -17,8 +17,8 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
-        private CircleCollider2D _collider;
         private IBuildingPlacer _buildingPlacer;
+        private Vector2 _size;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private SlotBoostFeedback _boostFeedback;
@@ -36,7 +36,6 @@ namespace BattleCruisers.Cruisers.Slots
         public float index;
         public float Index => index;
 
-        private Vector2 Size => new Vector2(_collider.radius * 2, _collider.radius * 2);
         public bool IsFree => Building == null;
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
@@ -91,8 +90,8 @@ namespace BattleCruisers.Cruisers.Slots
             Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
             BuildingPlacementPoint = buildingPlacementPoint.position;
 
-            _collider = GetComponent<CircleCollider2D>();
-            Assert.IsNotNull(_collider);
+            SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
+            _size = slotRenderer.bounds.size;
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
 
@@ -124,7 +123,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
-            return highlightArgsFactory.CreateForInGameObject(Transform.Position, Size);
+            return highlightArgsFactory.CreateForInGameObject(Transform.Position, _size);
         }
     }
 }

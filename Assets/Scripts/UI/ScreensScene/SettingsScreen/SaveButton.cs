@@ -1,14 +1,13 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
-using UnityCommon.Properties;
 using System;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class SaveButton : Togglable, IPointerClickHandler
+    public class SaveButton : ClickableTogglable
     {
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
@@ -22,6 +21,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeed)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(settingsManager, difficultyDropdown, zoomSpeed);
 
             _settingsManager = settingsManager;
@@ -47,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             UpdateEnabledStatus();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             Assert.IsTrue(ShouldBeEnabled());
 

@@ -34,14 +34,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
                 transform.position = clampedBottomLeftPosition;
 
-                Logging.Log(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
+                Logging.Log(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedCenterPosition: {clampedCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
 
                 CenterPositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         private Image _wheel;
-        protected override Image Image => _wheel;
+        protected override MaskableGraphic Graphic => _wheel;
 
         public event EventHandler CenterPositionChanged;
 

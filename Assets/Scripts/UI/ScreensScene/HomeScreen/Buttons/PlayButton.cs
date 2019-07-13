@@ -1,10 +1,8 @@
-﻿using UnityEngine.EventSystems;
-
-namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
+﻿namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 {
     public class PlayButton : HomeScreenButton
     {
-        public override void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             if (_gameModel.HasAttemptedTutorial)
             {

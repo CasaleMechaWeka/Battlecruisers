@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class ItemCategoryButton : Togglable, IPointerClickHandler
+    public class ItemCategoryButton : ClickableTogglable, IPointerClickHandler
     {
         private IItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
@@ -32,6 +32,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare);
 
             _itemPanels = itemPanels;
@@ -73,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IsSelected = _itemPanels.IsMatch(itemType);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _itemPanels.ShowItemsPanel(itemType);
         }

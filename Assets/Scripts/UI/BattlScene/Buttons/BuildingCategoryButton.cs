@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public BuildingCategory Category => category;
 
         private Image _buttonImage;
-        protected override Image Image => _buttonImage;
+        protected override MaskableGraphic Graphic => _buttonImage;
 
         public bool IsMatch => _shouldBeEnabledFilter.IsMatch(Category);
         public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }

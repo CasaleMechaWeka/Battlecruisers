@@ -232,7 +232,14 @@ namespace BattleCruisers.Cruisers
 
         private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            return new PlayerCruiserHelper(uiManager, cameraFocuser);
+            if (_applicationModel.IsTutorial)
+            {
+                return new TutorialPlayerCruiserHelper(uiManager, cameraFocuser);
+            }
+            else
+            {
+                return new PlayerCruiserHelper(uiManager, cameraFocuser);
+            }
         }
     }
 }
