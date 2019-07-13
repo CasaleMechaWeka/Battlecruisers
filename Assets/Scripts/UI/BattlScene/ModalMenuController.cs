@@ -1,20 +1,28 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene
 {
-	public class ModalMenuController : MonoBehaviour, IModalMenu
+    public class ModalMenuController : MonoBehaviour, IModalMenu
     {
+		private Canvas _canvas;
 		private MenuDismissed _onMenuDismissed;
-
-		public Canvas canvas;
-        public Button endGameButton, skipTutorialButton;
 
 		public void Initialise(bool isTutorial)
 		{
-            Helper.AssertIsNotNull(canvas, endGameButton, skipTutorialButton);
+            _canvas = GetComponent<Canvas>();
+            Assert.IsNotNull(_canvas);
+
+            ModalMenuButton endGameButton = transform.FindNamedComponent<ModalMenuButton>("ModalMenuPanel/EndGameButton");
+            endGameButton.Initialise(Quit);
+
+            ModalMenuButton skipTutorialButton = transform.FindNamedComponent<ModalMenuButton>("ModalMenuPanel/SkipTutorialButton");
+            skipTutorialButton.Initialise(Quit);
+
+            ModalMenuButton cancelButton = transform.FindNamedComponent<ModalMenuButton>("ModalMenuPanel/CancelButton");
+            cancelButton.Initialise(Cancel);
 
             if (isTutorial)
             {
@@ -31,7 +39,7 @@ namespace BattleCruisers.UI.BattleScene
 		public void ShowMenu(MenuDismissed onMenuDismissed)
 		{
 			_onMenuDismissed = onMenuDismissed;
-			canvas.gameObject.SetActive(true);
+			_canvas.gameObject.SetActive(true);
 		}
 
 		void Update()
@@ -63,7 +71,7 @@ namespace BattleCruisers.UI.BattleScene
 
 		private void HideMenu()
 		{
-			canvas.gameObject.SetActive(false);
+			_canvas.gameObject.SetActive(false);
 		}
 	}
 }

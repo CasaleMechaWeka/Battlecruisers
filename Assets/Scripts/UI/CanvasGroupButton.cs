@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.ScreensScene
+namespace BattleCruisers.UI
 {
     public abstract class CanvasGroupButton : ClickableTogglable
     {
