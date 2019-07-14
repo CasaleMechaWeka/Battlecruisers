@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         public SwipeCameraTargetProvider(ISwipeTracker swipeTracker)
         {
-            Assert.IsNotNull(_swipeTracker);
+            Assert.IsNotNull(swipeTracker);
 
             _swipeTracker = swipeTracker;
             _swipeTracker.Drag += _swipeTracker_Drag;

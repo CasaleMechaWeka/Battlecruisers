@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.Cameras
         private ICameraAdjuster _cameraAdjuster;
 
         public float cameraSmoothTime;
+        public SwipeTracker swipeTracker;
 
         public ICameraComponents Initialise(
             ICamera camera, 
@@ -29,7 +30,7 @@ namespace BattleCruisers.UI.Cameras
             IBroadcastingFilter navigationWheelEnabledFilter,
             IBroadcastingFilter scrollWheelEnabledFilter)
         {
-            Helper.AssertIsNotNull(camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, scrollWheelEnabledFilter);
+            Helper.AssertIsNotNull(swipeTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, scrollWheelEnabledFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
@@ -105,18 +106,38 @@ namespace BattleCruisers.UI.Cameras
                     new CornerIdentifier(
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
-            IUserInputCameraTargetProvider navigationWheelCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+            IUserInputCameraTargetProvider primaryCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
+            IUserInputCameraTargetProvider secondaryCameraTargetProvider = CreateSecondaryCameraTargetProvider(camera, cameraCalculator, settingsManager, settings, updater);
+
+            return
+                new CompositeCameraTargetProvider(
+                    primaryCameraTargetProvider,
+                    secondaryCameraTargetProvider,
+                    navigationWheelPanel.NavigationWheel,
+                    cameraNavigationWheelCalculator);
+        }
+
+        private IUserInputCameraTargetProvider CreateSecondaryCameraTargetProvider(
+            ICamera camera, 
+            ICameraCalculator cameraCalculator, 
+            ISettingsManager settingsManager, 
+            ICameraCalculatorSettings settings, 
+            TogglableUpdater updater)
+        {
             ISystemInfo systemInfo = new SystemInfoBC();
 
-            if (systemInfo.DeviceType == DeviceType.Handheld)
+            // FELIX  Update tutorial :)
+            // FELIX  TEMP  For testing :P
+            if (true)
+            //if (systemInfo.DeviceType == DeviceType.Handheld)
             {
-                // Handhelds have no mouse or scroll wheel, so ignore that navigation method
-                return navigationWheelCameraTargetProvider;
+                return new SwipeCameraTargetProvider(swipeTracker);
             }
-
-            IUserInputCameraTargetProvider scrollWheelCameraTargetProvider
-                = new ScrollWheelCameraTargetProvider(
+            else
+            {
+                return
+                    new ScrollWheelCameraTargetProvider(
                     camera,
                     cameraCalculator,
                     new InputBC(),
@@ -128,13 +149,7 @@ namespace BattleCruisers.UI.Cameras
                         settings.ValidOrthographicSizes,
                         settingsManager,
                         new ZoomConverter()));
-
-            return
-                new CompositeCameraTargetProvider(
-                    navigationWheelCameraTargetProvider,
-                    scrollWheelCameraTargetProvider,
-                    navigationWheelPanel.NavigationWheel,
-                    cameraNavigationWheelCalculator);
+            }
         }
 
         public void Update()
