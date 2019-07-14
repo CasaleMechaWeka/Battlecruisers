@@ -53,9 +53,9 @@ namespace BattleCruisers.Scenes
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, _gameModel, random);
 
             // TEMP  For showing PostBattleScreen :)
-            //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
-            ////_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
-            //_applicationModel.ShowPostBattleScreen = true;
+            _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
+            //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
+            _applicationModel.ShowPostBattleScreen = true;
 
 
             // TEMP  For when not coming from LandingScene :)

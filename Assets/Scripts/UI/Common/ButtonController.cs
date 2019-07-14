@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Commands;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -13,15 +14,25 @@ namespace BattleCruisers.UI.Common
         private Image _buttonImage;
         protected override MaskableGraphic Graphic => _buttonImage;
 
+        private CanvasGroup _canvasGroup;
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
+
         public void Initialise(ICommand command)
         {
+            base.Initialise();
+
             Assert.IsNotNull(command);
 			
             _command = command;
             _command.CanExecuteChanged += (sender, e) => UpdateVisibility();
 
-            _buttonImage = GetComponentInChildren<Image>();
-            Assert.IsNotNull(_buttonImage);
+            _canvasGroup = GetComponent<CanvasGroup>();
+
+            if (_canvasGroup == null)
+            {
+                _buttonImage = GetComponentInChildren<Image>();
+                Assert.IsNotNull(_buttonImage);
+            }
 
             UpdateVisibility();
         }
