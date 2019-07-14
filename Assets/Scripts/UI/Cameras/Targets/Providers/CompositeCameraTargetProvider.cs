@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private void SecondaryTargetProvider_UserInputEnded(object sender, EventArgs e)
         {
-            _navigationWheel.CenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
+            _navigationWheel.SetCenterPosition(_navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target));
             ActiveTargetProvider = _primaryTargetProvider;
         }
 

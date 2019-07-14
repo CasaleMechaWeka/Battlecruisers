@@ -99,7 +99,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _scrollWheelTargetProvider.UserInputEnded += Raise.Event();
 
             Assert.AreNotSame(_scrollWheelTarget, _compositeTargetProvider.Target);
-            _navigationWheel.Received().CenterPosition = navigationWheelPosition;
+            _navigationWheel.Received().SetCenterPosition(navigationWheelPosition);
         }
     }
 }

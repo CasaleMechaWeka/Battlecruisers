@@ -23,25 +23,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public Vector2 CenterPosition
         {
             get { return _centerPosition; }
-            set
-            {
-                Vector2 desiredCenterPosition = value;
-                Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);
-                _centerPosition = clampedCenterPosition;
-                Vector2 clampedBottomLeftPosition = clampedCenterPosition - _halfSize;
-
-                transform.position = clampedBottomLeftPosition;
-
-                Logging.Log(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedCenterPosition: {clampedCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
-
-                CenterPositionChanged?.Invoke(this, EventArgs.Empty);
-            }
+            private set { SetCenterPosition(value, PositionChangeSource.NavigationWhell); }
         }
 
         private Image _wheel;
         protected override MaskableGraphic Graphic => _wheel;
 
-        public event EventHandler CenterPositionChanged;
+        public event EventHandler<PositionChangedEventArgs> CenterPositionChanged;
 
         public void Initialise(
             IPositionClamper positionClamper, 
@@ -104,6 +92,25 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         protected override void OnClicked()
         {
             // empty
+        }
+
+        public void SetCenterPosition(Vector2 centerPosition)
+        {
+            SetCenterPosition(centerPosition, PositionChangeSource.Other);
+        }
+
+        private void SetCenterPosition(Vector2 centerPosition, PositionChangeSource source)
+        {
+            Vector2 desiredCenterPosition = centerPosition;
+            Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);
+            _centerPosition = clampedCenterPosition;
+            Vector2 clampedBottomLeftPosition = clampedCenterPosition - _halfSize;
+
+            transform.position = clampedBottomLeftPosition;
+
+            Logging.Log(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedCenterPosition: {clampedCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
+
+            CenterPositionChanged?.Invoke(this, new PositionChangedEventArgs(source));
         }
     }
 }

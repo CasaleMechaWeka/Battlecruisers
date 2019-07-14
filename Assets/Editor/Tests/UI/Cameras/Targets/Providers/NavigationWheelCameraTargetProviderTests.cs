@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         public void NavigationWheelCenterPositionChanged_FindsNewTarget()
         {
             _cameraTargetFinder.ClearReceivedCalls();
-            _navigationWheel.CenterPositionChanged += Raise.Event();
+            _navigationWheel.CenterPositionChanged += Raise.EventWith(new PositionChangedEventArgs(PositionChangeSource.Other));
 
             _cameraTargetFinder.Received().FindCameraTarget();
             Assert.AreSame(_target2, _cameraTargetProvider.Target);
