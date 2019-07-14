@@ -5,8 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Use in SwipeCTP
-    public class SwipeTracker : MonoBehaviour, IDragHandler, ISwipeTracker
+    public class DragTracker : MonoBehaviour, IDragHandler, IDragTracker
     {
         public event EventHandler<DragEventArgs> Drag;
 

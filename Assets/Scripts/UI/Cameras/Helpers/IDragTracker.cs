@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         }
     }
 
-    public interface ISwipeTracker
+    public interface IDragTracker
     {
         event EventHandler<DragEventArgs> Drag;
     }

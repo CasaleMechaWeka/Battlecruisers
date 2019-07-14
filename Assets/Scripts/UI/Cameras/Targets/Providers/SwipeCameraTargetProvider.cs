@@ -9,17 +9,17 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     // + Test :D
     public class SwipeCameraTargetProvider : UserInputCameraTargetProvider
     {
-        private readonly ISwipeTracker _swipeTracker;
+        private readonly IDragTracker _dragTracker;
 
-        public SwipeCameraTargetProvider(ISwipeTracker swipeTracker)
+        public SwipeCameraTargetProvider(IDragTracker dragTracker)
         {
-            Assert.IsNotNull(swipeTracker);
+            Assert.IsNotNull(dragTracker);
 
-            _swipeTracker = swipeTracker;
-            _swipeTracker.Drag += _swipeTracker_Drag;
+            _dragTracker = dragTracker;
+            _dragTracker.Drag += _dragTracker_Drag;
         }
 
-        private void _swipeTracker_Drag(object sender, DragEventArgs e)
+        private void _dragTracker_Drag(object sender, DragEventArgs e)
         {
             // 
         }

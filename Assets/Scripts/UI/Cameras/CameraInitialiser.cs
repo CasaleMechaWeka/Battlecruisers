@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Cameras
         private ICameraAdjuster _cameraAdjuster;
 
         public float cameraSmoothTime;
-        public SwipeTracker swipeTracker;
+        public DragTracker dragTracker;
 
         public ICameraComponents Initialise(
             ICamera camera, 
@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.Cameras
             IBroadcastingFilter navigationWheelEnabledFilter,
             IBroadcastingFilter scrollWheelEnabledFilter)
         {
-            Helper.AssertIsNotNull(swipeTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, scrollWheelEnabledFilter);
+            Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, scrollWheelEnabledFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
@@ -132,7 +132,7 @@ namespace BattleCruisers.UI.Cameras
             if (true)
             //if (systemInfo.DeviceType == DeviceType.Handheld)
             {
-                return new SwipeCameraTargetProvider(swipeTracker);
+                return new SwipeCameraTargetProvider(dragTracker);
             }
             else
             {
