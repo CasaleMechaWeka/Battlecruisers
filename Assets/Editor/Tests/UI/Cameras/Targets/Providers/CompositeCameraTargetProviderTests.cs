@@ -10,8 +10,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class CompositeCameraTargetProviderTests
     {
-        private ICameraTargetProvider _compositeTargetProvider, _navigationWheelTargetProvider;
-        private IScrollWheelCameraTargetProvider _scrollWheelTargetProvider;
+        private ICameraTargetProvider _compositeTargetProvider;
+        private IUserInputCameraTargetProvider _navigationWheelTargetProvider, _scrollWheelTargetProvider;
         private INavigationWheel _navigationWheel;
         private ICameraNavigationWheelCalculator _navigationWheelCalculator;
         private ICameraTarget _navigationWheelTarget, _scrollWheelTarget;
@@ -20,8 +20,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         [SetUp]
         public void TestSetup()
         {
-            _navigationWheelTargetProvider = Substitute.For<ICameraTargetProvider>();
-            _scrollWheelTargetProvider = Substitute.For<IScrollWheelCameraTargetProvider>();
+            _navigationWheelTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
+            _scrollWheelTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
             _navigationWheel = Substitute.For<INavigationWheel>();
             _navigationWheelCalculator = Substitute.For<ICameraNavigationWheelCalculator>();
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         }
 
         [Test]
-        public void ScrollWheelActive()
+        public void UserInputActive()
         {
             _scrollWheelTargetProvider.UserInputStarted += Raise.Event();
 
@@ -80,14 +80,14 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         }
 
         [Test]
-        public void ScrollWheelStarted_BecomesActive()
+        public void UserInputStarted_BecomesActive()
         {
             _scrollWheelTargetProvider.UserInputStarted += Raise.Event();
             Assert.AreSame(_scrollWheelTarget, _compositeTargetProvider.Target);
         }
 
         [Test]
-        public void ScrollWheelEnded_BecomesInactive()
+        public void UserInputEnded_BecomesInactive()
         {
             Vector2 navigationWheelPosition = new Vector2(12, 21);
             _navigationWheelCalculator.FindNavigationWheelPosition(_scrollWheelTarget).Returns(navigationWheelPosition);

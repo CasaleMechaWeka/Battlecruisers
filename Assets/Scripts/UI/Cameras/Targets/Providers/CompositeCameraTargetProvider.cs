@@ -6,15 +6,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
+    // FELIX  Update tests?  At least the naming :P
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
-        private readonly ICameraTargetProvider _navigationWheelTargetProvider;
-        private readonly IScrollWheelCameraTargetProvider _scrollWheelTargetProvider;
+        private readonly IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
 
-        private ICameraTargetProvider _activeTargetProvider;
-        private ICameraTargetProvider ActiveTargetProvider
+        private IUserInputCameraTargetProvider _activeTargetProvider;
+        private IUserInputCameraTargetProvider ActiveTargetProvider
         {
             get { return _activeTargetProvider; }
             set
@@ -37,33 +37,33 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
-            ICameraTargetProvider navigationWheelTargetProvider,
-            IScrollWheelCameraTargetProvider scrollWheelTargetProvider,
+            IUserInputCameraTargetProvider primaryTargetProvider,
+            IUserInputCameraTargetProvider secondaryTargetProvider,
             INavigationWheel navigationWheel,
             ICameraNavigationWheelCalculator navigationWheelCalculator)
         {
-            Helper.AssertIsNotNull(navigationWheelTargetProvider, scrollWheelTargetProvider, navigationWheel, navigationWheelCalculator);
+            Helper.AssertIsNotNull(primaryTargetProvider, secondaryTargetProvider, navigationWheel, navigationWheelCalculator);
 
-            _navigationWheelTargetProvider = navigationWheelTargetProvider;
-            _scrollWheelTargetProvider = scrollWheelTargetProvider;
+            _primaryTargetProvider = primaryTargetProvider;
+            _secondaryTargetProvider = secondaryTargetProvider;
             _navigationWheel = navigationWheel;
             _navigationWheelCalculator = navigationWheelCalculator;
 
-            ActiveTargetProvider = navigationWheelTargetProvider;
+            ActiveTargetProvider = primaryTargetProvider;
 
-            scrollWheelTargetProvider.UserInputStarted += ScrollWheelTargetProvider_UserInputStarted;
-            scrollWheelTargetProvider.UserInputEnded += ScrollWheelTargetProvider_UserInputEnded;
+            secondaryTargetProvider.UserInputStarted += SecondaryTargetProvider_UserInputStarted;
+            secondaryTargetProvider.UserInputEnded += SecondaryTargetProvider_UserInputEnded;
         }
 
-        private void ScrollWheelTargetProvider_UserInputStarted(object sender, EventArgs e)
+        private void SecondaryTargetProvider_UserInputStarted(object sender, EventArgs e)
         {
-            ActiveTargetProvider = _scrollWheelTargetProvider;
+            ActiveTargetProvider = _secondaryTargetProvider;
         }
 
-        private void ScrollWheelTargetProvider_UserInputEnded(object sender, EventArgs e)
+        private void SecondaryTargetProvider_UserInputEnded(object sender, EventArgs e)
         {
             _navigationWheel.CenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
-            ActiveTargetProvider = _navigationWheelTargetProvider;
+            ActiveTargetProvider = _primaryTargetProvider;
         }
 
         private void _activeTargetProvider_TargetChanged(object sender, EventArgs e)

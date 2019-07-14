@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
-    public class DummyCameraTargetProvider : CameraTargetProvider
+    public class DummyCameraTargetProvider : UserInputCameraTargetProvider
     {
         public void SetTarget(ICameraTarget target)
         {

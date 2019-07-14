@@ -105,7 +105,7 @@ namespace BattleCruisers.UI.Cameras
                     new CornerIdentifier(
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
-            ICameraTargetProvider navigationWheelCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+            IUserInputCameraTargetProvider navigationWheelCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
 
             ISystemInfo systemInfo = new SystemInfoBC();
 
@@ -115,7 +115,7 @@ namespace BattleCruisers.UI.Cameras
                 return navigationWheelCameraTargetProvider;
             }
 
-            IScrollWheelCameraTargetProvider scrollWheelCameraTargetProvider
+            IUserInputCameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(
                     camera,
                     cameraCalculator,

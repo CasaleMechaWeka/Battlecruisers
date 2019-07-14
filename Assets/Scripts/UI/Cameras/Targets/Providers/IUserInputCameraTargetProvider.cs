@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    public interface IScrollWheelCameraTargetProvider : ICameraTargetProvider
+    public interface IUserInputCameraTargetProvider : ICameraTargetProvider
     {
         event EventHandler UserInputStarted;
         event EventHandler UserInputEnded;

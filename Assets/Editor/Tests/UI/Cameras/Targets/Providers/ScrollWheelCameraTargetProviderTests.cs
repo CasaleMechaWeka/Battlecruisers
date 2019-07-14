@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class ScrollWheelCameraTargetProviderTests
     {
-        private IScrollWheelCameraTargetProvider _cameraTargetProvider;
+        private IUserInputCameraTargetProvider _cameraTargetProvider;
 
         private ICamera _camera;
         private ICameraCalculator _cameraCalculator;

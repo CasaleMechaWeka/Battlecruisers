@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// Only finds the camera target when it has changed.  Better than polling
     /// every time we want to know the current camera target.
     /// </summary>
-    public class NavigationWheelCameraTargetProvider : CameraTargetProvider
+    public class NavigationWheelCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraTargetFinder _navigationWheelCameraTargetFinder;

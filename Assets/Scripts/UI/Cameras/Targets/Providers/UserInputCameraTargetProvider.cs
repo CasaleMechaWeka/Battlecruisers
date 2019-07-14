@@ -3,7 +3,7 @@ using System;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    public abstract class CameraTargetProvider : ICameraTargetProvider
+    public abstract class UserInputCameraTargetProvider : IUserInputCameraTargetProvider
     {
         private ICameraTarget _target;
         public ICameraTarget Target
@@ -20,5 +20,17 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         }
 
         public event EventHandler TargetChanged;
+        public event EventHandler UserInputStarted;
+        public event EventHandler UserInputEnded;
+
+        protected void RaiseUserInputStarted()
+        {
+            UserInputStarted?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected void RaiseUserInputEnded()
+        {
+            UserInputEnded?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
