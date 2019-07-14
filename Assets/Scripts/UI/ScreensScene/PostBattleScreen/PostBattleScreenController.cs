@@ -2,7 +2,6 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
-using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
@@ -13,16 +12,15 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
-    public class PostBattleScreenController : ScreenController
-	{
+    public class PostBattleScreenController : ScreenController, IPostBattleScreen
+    {
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
         private ILootManager _lootManager;
 
 		public Text title;
 		public GameObject unlockedItemSection;
-		public ButtonController nextButton;
-        public GameObject postBattleButtonsPanel, postTutorialButtonsPanel;
+        public GameObject postTutorialButtonsPanel;
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage;
 
 		private const string VICTORY_TITLE = "Sweet as!";
@@ -41,8 +39,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(
                 title, 
                 unlockedItemSection, 
-                nextButton, 
-                postBattleButtonsPanel, 
                 postTutorialButtonsPanel, 
                 postTutorialMessage, 
                 completedGameMessage, 
@@ -66,10 +62,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else
             {
-                Assert.IsNotNull(BattleResult);
-
                 // User completed a level
-                postBattleButtonsPanel.SetActive(true);
+                Assert.IsNotNull(BattleResult);
 
                 if (BattleResult.WasVictory)
                 {
@@ -105,7 +99,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-                nextButton.Initialise(nextCommand);
+
+                PostBattleButtonsPanel postBattleButtonsPanel = GetComponentInChildren<PostBattleButtonsPanel>();
+                Assert.IsNotNull(postBattleButtonsPanel);
+                postBattleButtonsPanel.Initialise(this, nextCommand);
+                postBattleButtonsPanel.gameObject.SetActive(true);
             }
 		}
 
