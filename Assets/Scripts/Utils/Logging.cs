@@ -68,7 +68,7 @@ namespace BattleCruisers.Utils
         public const string CAMERA = "Camera";
         public const string CAMERA_CALCULATOR = "CameraCalculator";
         public const string CAMERA_NAVIGATION_WHEEL_CALCULATOR = "CameraNavigationWheelCalculator";
-        public const string COMPOSITE_CAMERA_TARGET_PROVIDER = "CompositeCameraTargetProvider";
+        public const string CAMERA_TARGET_PROVIDER = "CameraTargetProvider";
         public const string NAVIGATION_WHEEL = "NavigationWheel";
         public const string SCROLL_WHEEL_NAVIGATION = "ScrollWheelNavigation";
         public const string SWIPE_NAVIGATION = "SwipeNavigation";
@@ -163,7 +163,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
             tagsToActiveness.Add(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, false);
-            tagsToActiveness.Add(Tags.COMPOSITE_CAMERA_TARGET_PROVIDER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, true);
+            //tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, false);
             tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, false);
             tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, false);
             // FELIX
@@ -185,6 +187,15 @@ namespace BattleCruisers.Utils
 		}
 
         public static void LogDefault(
+            string tag,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Log(LoggingLevel.Normal, tag, CreateMessage(string.Empty, memberName, sourceFilePath, sourceLineNumber));
+        }
+
+        public static void LogMethod(
             string tag,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",

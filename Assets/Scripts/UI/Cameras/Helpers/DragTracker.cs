@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            Logging.LogMethod(Tags.SWIPE_NAVIGATION);
             DragStart?.Invoke(this, new DragEventArgs(eventData));
         }
 
@@ -28,6 +29,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            Logging.LogMethod(Tags.SWIPE_NAVIGATION);
             DragEnd?.Invoke(this, new DragEventArgs(eventData));
         }
     }
