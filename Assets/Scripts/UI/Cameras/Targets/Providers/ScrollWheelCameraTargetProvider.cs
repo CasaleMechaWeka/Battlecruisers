@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 if (_duringUserInput)
                 {
                     _duringUserInput = false;
-                    RaiseUserInputStarted();
+                    RaiseUserInputEnded();
                 }
 
                 return;
@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             if (!_duringUserInput)
             {
                 _duringUserInput = true;
-                RaiseUserInputEnded();
+                RaiseUserInputStarted();
             }
 
             float zoomDelta = _zoomCalculator.FindZoomDelta(_input.MouseScrollDelta.y);
