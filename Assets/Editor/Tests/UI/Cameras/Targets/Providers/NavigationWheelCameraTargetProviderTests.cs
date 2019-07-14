@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
     {
         private ICameraTargetProvider _cameraTargetProvider;
         private INavigationWheel _navigationWheel;
-        private ICameraTargetFinder _cameraTargetFinder;
+        private ICameraTargetFinder _cameraTargetFinder, _cornersCameraTargetFinder;
         private ICameraTarget _target1, _target2;
         private int _targetChangedCount;
 
@@ -25,8 +25,9 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
             _cameraTargetFinder = Substitute.For<ICameraTargetFinder>();
             _cameraTargetFinder.FindCameraTarget().Returns(_target1, _target2);
+            _cornersCameraTargetFinder = Substitute.For<ICameraTargetFinder>();
 
-            _cameraTargetProvider = new NavigationWheelCameraTargetProvider(_navigationWheel, _cameraTargetFinder);
+            _cameraTargetProvider = new NavigationWheelCameraTargetProvider(_navigationWheel, _cameraTargetFinder, _cornersCameraTargetFinder);
 
             _targetChangedCount = 0;
             _cameraTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;

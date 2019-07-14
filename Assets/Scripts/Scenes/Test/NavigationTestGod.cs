@@ -43,12 +43,13 @@ namespace BattleCruisers.Scenes.Test
                     new ProportionCalculator());
             ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, _camera);
 
+            ICameraTargetFinder cornersTargetFinder = cameraTargetFinder;
             if (useCorners)
             {
                 ICruiser playerCruiser = CreateCruiser(isPlayerCruiser: true);
                 ICruiser aiCruiser = CreateCruiser(isPlayerCruiser: false);
 
-                cameraTargetFinder
+                cornersTargetFinder
                     = new NavigationWheelCornersCameraTargetFinder(
                         cameraTargetFinder,
                         new CornerIdentifier(
@@ -56,7 +57,7 @@ namespace BattleCruisers.Scenes.Test
                         new CornerCameraTargetProvider(_camera, cameraCalculator, settings, playerCruiser, aiCruiser));
             }
 
-            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder);
+            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder, cornersTargetFinder);
 
             // Instant, jerky adjuster
             _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);

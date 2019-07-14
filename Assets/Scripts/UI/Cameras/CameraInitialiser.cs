@@ -106,7 +106,11 @@ namespace BattleCruisers.UI.Cameras
                     new CornerIdentifier(
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
-            IUserInputCameraTargetProvider primaryCameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cornerCameraTargetFinder);
+            IUserInputCameraTargetProvider primaryCameraTargetProvider 
+                = new NavigationWheelCameraTargetProvider(
+                    navigationWheelPanel.NavigationWheel, 
+                    coreCameraTargetFinder,
+                    cornerCameraTargetFinder);
 
             IUserInputCameraTargetProvider secondaryCameraTargetProvider = CreateSecondaryCameraTargetProvider(camera, cameraCalculator, settingsManager, settings, updater);
 

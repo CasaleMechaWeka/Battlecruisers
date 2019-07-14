@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.Utils;
-using System;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
@@ -13,30 +12,41 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     public class NavigationWheelCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly INavigationWheel _navigationWheel;
-        private readonly ICameraTargetFinder _navigationWheelCameraTargetFinder;
+        private readonly ICameraTargetFinder _navigationWheelCameraTargetFinder, _navigationWheelCornersCameraTargetFinder;
 
         public NavigationWheelCameraTargetProvider(
             INavigationWheel navigationWheel,
-            ICameraTargetFinder navigationWheelCameraTargetFinder)
+            ICameraTargetFinder navigationWheelCameraTargetFinder,
+            ICameraTargetFinder navigationWheelCornersCameraTargetFinder)
         {
-            Helper.AssertIsNotNull(navigationWheel, navigationWheelCameraTargetFinder);
+            Helper.AssertIsNotNull(navigationWheel, navigationWheelCameraTargetFinder, navigationWheelCornersCameraTargetFinder);
 
             _navigationWheel = navigationWheel;
             _navigationWheelCameraTargetFinder = navigationWheelCameraTargetFinder;
+            _navigationWheelCornersCameraTargetFinder = navigationWheelCornersCameraTargetFinder;
 
             _navigationWheel.CenterPositionChanged += _navigationWheel_CenterPositionChanged;
 
-            FindTarget();
+            FindTarget(PositionChangeSource.NavigationWhell);
         }
 
         private void _navigationWheel_CenterPositionChanged(object sender, PositionChangedEventArgs e)
         {
-            FindTarget();
+            FindTarget(e.Source);
         }
 
-        private void FindTarget()
+        private void FindTarget(PositionChangeSource source)
         {
-            Target = _navigationWheelCameraTargetFinder.FindCameraTarget();
+            if (source == PositionChangeSource.NavigationWhell)
+            {
+                Target = _navigationWheelCornersCameraTargetFinder.FindCameraTarget();
+            }
+            else
+            {
+                // Do not snap to corners of navigation wheel panel.  This is to allow
+                // fine grained camera movement via the mouse scroll wheel or touch swiping.
+                Target = _navigationWheelCameraTargetFinder.FindCameraTarget();
+            }
         }
     }
 }
