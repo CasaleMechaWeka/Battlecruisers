@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postTutorialMessage.SetActive(true);
                 musicPlayer.PlayVictoryMusic();
 
-                PostTutorialButtonsPanel postTutorialButtonsPanel = GetComponentInChildren<PostTutorialButtonsPanel>();
+                PostTutorialButtonsPanel postTutorialButtonsPanel = GetComponentInChildren<PostTutorialButtonsPanel>(includeInactive: true);
                 Assert.IsNotNull(postTutorialButtonsPanel);
                 postTutorialButtonsPanel.Initialise(this);
                 postTutorialButtonsPanel.gameObject.SetActive(true);
@@ -102,7 +102,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
 
-                PostBattleButtonsPanel postBattleButtonsPanel = GetComponentInChildren<PostBattleButtonsPanel>();
+                PostBattleButtonsPanel postBattleButtonsPanel = GetComponentInChildren<PostBattleButtonsPanel>(includeInactive: true);
                 Assert.IsNotNull(postBattleButtonsPanel);
                 postBattleButtonsPanel.Initialise(this, nextCommand);
                 postBattleButtonsPanel.gameObject.SetActive(true);
