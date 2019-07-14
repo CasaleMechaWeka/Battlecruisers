@@ -17,27 +17,27 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnPlayerCruiser()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.PlayerCruiserPosition);
+            _navigationWheel.SetCenterPosition(_positionProvider.PlayerCruiserPosition, PositionChangeSource.CameraFocuser);
         }
 
         public void FocusOnPlayerNavalFactory()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition);
+            _navigationWheel.SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, PositionChangeSource.CameraFocuser);
         }
 
         public void FocusOnAICruiser()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.AICruiserPosition);
+            _navigationWheel.SetCenterPosition(_positionProvider.AICruiserPosition, PositionChangeSource.CameraFocuser);
         }
 
         public void FocusOnAINavalFactory()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.AINavalFactoryPosition);
+            _navigationWheel.SetCenterPosition(_positionProvider.AINavalFactoryPosition, PositionChangeSource.CameraFocuser);
         }
 
         public void FocusMidLeft()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.MidLeftPosition);
+            _navigationWheel.SetCenterPosition(_positionProvider.MidLeftPosition, PositionChangeSource.CameraFocuser);
         }
     }
 }

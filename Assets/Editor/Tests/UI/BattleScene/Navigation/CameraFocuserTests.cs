@@ -29,35 +29,35 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiser()
         {
             _cameraFocuser.FocusOnPlayerCruiser();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserPosition);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserPosition, PositionChangeSource.CameraFocuser);
         }
 
         [Test]
         public void FocusOnPlayerNavalFactory()
         {
             _cameraFocuser.FocusOnPlayerNavalFactory();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, PositionChangeSource.CameraFocuser);
         }
 
         [Test]
         public void FocusOnAICruiser()
         {
             _cameraFocuser.FocusOnAICruiser();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserPosition);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserPosition, PositionChangeSource.CameraFocuser);
         }
 
         [Test]
         public void FocusOnAINavalFactory()
         {
             _cameraFocuser.FocusOnAINavalFactory();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AINavalFactoryPosition);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.AINavalFactoryPosition, PositionChangeSource.CameraFocuser);
         }
 
         [Test]
         public void FocusOnMideLeft()
         {
             _cameraFocuser.FocusMidLeft();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.MidLeftPosition);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.MidLeftPosition, PositionChangeSource.CameraFocuser);
         }
     }
 }

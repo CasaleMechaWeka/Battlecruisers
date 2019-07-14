@@ -7,6 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     public enum PositionChangeSource
     {
         NavigationWheel,
+        CameraFocuser,
         Other
     }
 
@@ -26,6 +27,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         event EventHandler<PositionChangedEventArgs> CenterPositionChanged;
 
-        void SetCenterPosition(Vector2 centerPosition);
+        void SetCenterPosition(Vector2 centerPosition, PositionChangeSource source);
     }
 }

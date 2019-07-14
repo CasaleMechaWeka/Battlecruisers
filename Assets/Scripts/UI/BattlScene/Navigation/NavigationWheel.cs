@@ -94,12 +94,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             // empty
         }
 
-        public void SetCenterPosition(Vector2 centerPosition)
-        {
-            SetCenterPosition(centerPosition, PositionChangeSource.Other);
-        }
-
-        private void SetCenterPosition(Vector2 centerPosition, PositionChangeSource source)
+        public void SetCenterPosition(Vector2 centerPosition, PositionChangeSource source)
         {
             Vector2 desiredCenterPosition = centerPosition;
             Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);

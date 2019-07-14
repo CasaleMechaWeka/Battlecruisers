@@ -2,6 +2,7 @@
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
@@ -62,7 +63,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private void SecondaryTargetProvider_UserInputEnded(object sender, EventArgs e)
         {
-            _navigationWheel.SetCenterPosition(_navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target));
+            Vector2 targetCenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
+            _navigationWheel.SetCenterPosition(targetCenterPosition, PositionChangeSource.Other);
             ActiveTargetProvider = _primaryTargetProvider;
         }
 

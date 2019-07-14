@@ -37,15 +37,15 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private void FindTarget(PositionChangeSource source)
         {
-            if (source == PositionChangeSource.NavigationWheel)
-            {
-                Target = _navigationWheelCornersCameraTargetFinder.FindCameraTarget();
-            }
-            else
+            if (source == PositionChangeSource.Other)
             {
                 // Do not snap to corners of navigation wheel panel.  This is to allow
                 // fine grained camera movement via the mouse scroll wheel or touch swiping.
                 Target = _navigationWheelCameraTargetFinder.FindCameraTarget();
+            }
+            else
+            {
+                Target = _navigationWheelCornersCameraTargetFinder.FindCameraTarget();
             }
         }
     }

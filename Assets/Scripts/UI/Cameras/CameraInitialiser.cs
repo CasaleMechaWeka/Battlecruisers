@@ -135,8 +135,8 @@ namespace BattleCruisers.UI.Cameras
             // FELIX  Add setting?
             // FELIX  Hide zoom setting when on handheld?  (ie, won't have scroll wheel)
             // FELIX  TEMP  For testing :P
-            //if (true)
-            if (systemInfo.DeviceType == DeviceType.Handheld)
+            if (true)
+            //if (systemInfo.DeviceType == DeviceType.Handheld)
             {
                 return 
                     new SwipeCameraTargetProvider(
