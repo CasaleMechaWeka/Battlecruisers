@@ -6,8 +6,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public enum PositionChangeSource
     {
-        // FELIX  Spelling, tsk tsk tsk
-        NavigationWhell,
+        NavigationWheel,
         Other
     }
 

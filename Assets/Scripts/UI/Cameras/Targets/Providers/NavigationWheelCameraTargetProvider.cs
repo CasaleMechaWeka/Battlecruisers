@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             _navigationWheel.CenterPositionChanged += _navigationWheel_CenterPositionChanged;
 
-            FindTarget(PositionChangeSource.NavigationWhell);
+            FindTarget(PositionChangeSource.NavigationWheel);
         }
 
         private void _navigationWheel_CenterPositionChanged(object sender, PositionChangedEventArgs e)
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private void FindTarget(PositionChangeSource source)
         {
-            if (source == PositionChangeSource.NavigationWhell)
+            if (source == PositionChangeSource.NavigationWheel)
             {
                 Target = _navigationWheelCornersCameraTargetFinder.FindCameraTarget();
             }

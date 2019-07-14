@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public Vector2 CenterPosition
         {
             get { return _centerPosition; }
-            private set { SetCenterPosition(value, PositionChangeSource.NavigationWhell); }
+            private set { SetCenterPosition(value, PositionChangeSource.NavigationWheel); }
         }
 
         private Image _wheel;
