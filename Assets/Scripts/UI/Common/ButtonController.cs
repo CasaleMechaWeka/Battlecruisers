@@ -1,12 +1,17 @@
 ﻿using BattleCruisers.UI.Commands;
-using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common
 {
-    public class ButtonController : MonoBehaviour
+    public class ButtonController : ClickableTogglable
     {
         private ICommand _command;
+
+        protected override bool ToggleVisibility => true;
+
+        private Image _buttonImage;
+        protected override MaskableGraphic Graphic => _buttonImage;
 
         public void Initialise(ICommand command)
         {
@@ -15,17 +20,20 @@ namespace BattleCruisers.UI.Common
             _command = command;
             _command.CanExecuteChanged += (sender, e) => UpdateVisibility();
 
-            UpdateVisibility();
-        }
+            _buttonImage = GetComponentInChildren<Image>();
+            Assert.IsNotNull(_buttonImage);
 
-        public void Execute()
-        {
-            _command.Execute();
+            UpdateVisibility();
         }
 
         private void UpdateVisibility()
         {
-            gameObject.SetActive(_command.CanExecute);
+            Enabled = _command.CanExecute;
+        }
+
+        protected override void OnClicked()
+        {
+            _command.Execute();
         }
     }
 }
