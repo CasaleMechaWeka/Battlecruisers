@@ -56,6 +56,7 @@ namespace BattleCruisers.Scenes
             _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
             //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
             _applicationModel.ShowPostBattleScreen = true;
+            _applicationModel.IsTutorial = true;
 
 
             // TEMP  For when not coming from LandingScene :)

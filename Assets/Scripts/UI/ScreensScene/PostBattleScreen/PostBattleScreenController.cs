@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public Text title;
 		public GameObject unlockedItemSection;
-        public GameObject postTutorialButtonsPanel;
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage;
 
 		private const string VICTORY_TITLE = "Sweet as!";
@@ -39,7 +38,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(
                 title, 
                 unlockedItemSection, 
-                postTutorialButtonsPanel, 
                 postTutorialMessage, 
                 completedGameMessage, 
                 defeatMessage,
@@ -57,8 +55,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // User completed (or rage quit) the tutorial
                 _applicationModel.IsTutorial = false;
                 postTutorialMessage.SetActive(true);
-                postTutorialButtonsPanel.SetActive(true);
                 musicPlayer.PlayVictoryMusic();
+
+                PostTutorialButtonsPanel postTutorialButtonsPanel = GetComponentInChildren<PostTutorialButtonsPanel>();
+                Assert.IsNotNull(postTutorialButtonsPanel);
+                postTutorialButtonsPanel.Initialise(this);
+                postTutorialButtonsPanel.gameObject.SetActive(true);
             }
             else
             {
