@@ -26,6 +26,13 @@ namespace BattleCruisers.UI.Common
             _command = command;
             _command.CanExecuteChanged += (sender, e) => UpdateVisibility();
 
+            GetAssets();
+
+            UpdateVisibility();
+        }
+
+        protected virtual void GetAssets()
+        {
             _canvasGroup = GetComponent<CanvasGroup>();
 
             if (_canvasGroup == null)
@@ -33,8 +40,6 @@ namespace BattleCruisers.UI.Common
                 _buttonImage = GetComponentInChildren<Image>();
                 Assert.IsNotNull(_buttonImage);
             }
-
-            UpdateVisibility();
         }
 
         private void UpdateVisibility()

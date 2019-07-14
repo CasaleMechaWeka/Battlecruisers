@@ -40,11 +40,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             Assert.IsNotNull(_gameSpeedText);
 
             _increaseSpeedCommand = new Command(IncreaseSpeedCommandExecute, CanIncreaseSpeedCommandExecute);
-            _increaseSpeedButton = transform.FindNamedComponent<ButtonController>("IncreaseSpeedButton");
+            _increaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("IncreaseSpeedButton");
             _increaseSpeedButton.Initialise(_increaseSpeedCommand);
 
             _decreaseSpeedCommand = new Command(DecreaseSpeedCommandExecute, CanDecreaseSpeedCommandExecute);
-            _decreaseSpeedButton = transform.FindNamedComponent<ButtonController>("DecreaseSpeedButton");
+            _decreaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("DecreaseSpeedButton");
             _decreaseSpeedButton.Initialise(_decreaseSpeedCommand);
         }
 
