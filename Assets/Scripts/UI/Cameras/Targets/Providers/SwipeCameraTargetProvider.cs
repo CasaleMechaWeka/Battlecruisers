@@ -17,11 +17,23 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             _dragTracker = dragTracker;
             _dragTracker.Drag += _dragTracker_Drag;
+            _dragTracker.DragStart += _dragTracker_DragStart;
+            _dragTracker.DragEnd += _dragTracker_DragEnd;
         }
 
         private void _dragTracker_Drag(object sender, DragEventArgs e)
         {
             // 
+        }
+
+        private void _dragTracker_DragStart(object sender, DragEventArgs e)
+        {
+            RaiseUserInputStarted();
+        }
+
+        private void _dragTracker_DragEnd(object sender, DragEventArgs e)
+        {
+            RaiseUserInputEnded();
         }
     }
 }
