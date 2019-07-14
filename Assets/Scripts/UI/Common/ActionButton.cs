@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.BattleScene.Buttons
+namespace BattleCruisers.UI
 {
-    public class ModalMenuButton : CanvasGroupButton
+    public class ActionButton : CanvasGroupButton
     {
         private Action _onClick;
 

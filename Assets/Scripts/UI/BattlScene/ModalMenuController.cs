@@ -15,13 +15,13 @@ namespace BattleCruisers.UI.BattleScene
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
-            ModalMenuButton endGameButton = transform.FindNamedComponent<ModalMenuButton>("ModalMenuPanel/EndGameButton");
+            ActionButton endGameButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/EndGameButton");
             endGameButton.Initialise(Quit);
 
-            ModalMenuButton skipTutorialButton = transform.FindNamedComponent<ModalMenuButton>("ModalMenuPanel/SkipTutorialButton");
+            ActionButton skipTutorialButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/SkipTutorialButton");
             skipTutorialButton.Initialise(Quit);
 
-            ModalMenuButton cancelButton = transform.FindNamedComponent<ModalMenuButton>("ModalMenuPanel/CancelButton");
+            ActionButton cancelButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/CancelButton");
             cancelButton.Initialise(Cancel);
 
             if (isTutorial)
