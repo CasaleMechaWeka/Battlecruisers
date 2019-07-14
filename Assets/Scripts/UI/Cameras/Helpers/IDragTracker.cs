@@ -17,6 +17,8 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
     public interface IDragTracker
     {
+        event EventHandler<DragEventArgs> DragStart;
         event EventHandler<DragEventArgs> Drag;
+        event EventHandler<DragEventArgs> DragEnd;
     }
 }
