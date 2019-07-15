@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         //private readonly ISettingsManager _settingsManager;
         //private readonly IScrollConverter _zoomConverter;
 
-        public const float SCROLL_SCALE = 1;
+        public const float SCROLL_SCALE = 4;
 
         // FELIX :P
         public ScrollCalculator(
