@@ -145,7 +145,8 @@ namespace BattleCruisers.UI.Cameras
                             camera,
                             new TimeBC(),
                             settings.ValidOrthographicSizes),
-                        camera);
+                        camera,
+                        cameraCalculator);
             }
             else
             {
