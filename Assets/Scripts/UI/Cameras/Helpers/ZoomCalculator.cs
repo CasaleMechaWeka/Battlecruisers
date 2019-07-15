@@ -35,7 +35,9 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public float FindZoomDelta(float mouseScrollDeltaY)
         {
+            // The more zoomed out the camera is, the greater our delta should be
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
+
             return
                 Mathf.Abs(mouseScrollDeltaY) *
                 orthographicProportion *

@@ -141,7 +141,10 @@ namespace BattleCruisers.UI.Cameras
                 return 
                     new SwipeCameraTargetProvider(
                         dragTracker,
-                        new ScrollCalculator(new TimeBC()),
+                        new ScrollCalculator(
+                            camera,
+                            new TimeBC(),
+                            settings.ValidOrthographicSizes),
                         camera);
             }
             else
