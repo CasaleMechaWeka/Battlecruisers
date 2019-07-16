@@ -38,14 +38,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _camera.OrthographicSize.Returns(17);
             _camera.Aspect.Returns(1.33f);
 
-            _cameraTargetProvider
-                = new ScrollWheelCameraTargetProvider(
-                    _camera,
-                    _cameraCalculator,
-                    _input,
-                    _validOrthographicSizes,
-                    _updater,
-                    _zoomCalculator);
+            // FELIX  Fix :P
+            //_cameraTargetProvider
+            //    = new ScrollWheelCameraTargetProvider(
+            //        _camera,
+            //        _cameraCalculator,
+            //        _input,
+            //        _validOrthographicSizes,
+            //        _updater,
+            //        _zoomCalculator);
 
             _targetChangedCount = 0;
             _cameraTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;

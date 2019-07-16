@@ -130,13 +130,18 @@ namespace BattleCruisers.UI.Cameras
             TogglableUpdater updater)
         {
             ISystemInfo systemInfo = new SystemInfoBC();
+            IDirectionalZoom directionalZoom
+                = new DirectionalZoom(
+                    camera,
+                    cameraCalculator,
+                    settings.ValidOrthographicSizes);
 
             // FELIX  Update tutorial :)
             // FELIX  Add setting?
             // FELIX  Hide zoom setting when on handheld?  (ie, won't have scroll wheel)
             // FELIX  TEMP  For testing :P
-            if (true)
-            //if (systemInfo.DeviceType == DeviceType.Handheld)
+            //if (true)
+            if (systemInfo.DeviceType == DeviceType.Handheld)
             {
                 return 
                     new SwipeCameraTargetProvider(
@@ -156,16 +161,15 @@ namespace BattleCruisers.UI.Cameras
                 return
                     new ScrollWheelCameraTargetProvider(
                     camera,
-                    cameraCalculator,
                     new InputBC(),
-                    settings.ValidOrthographicSizes,
                     updater,
                     new ZoomCalculator(
                         camera,
                         new TimeBC(),
                         settings.ValidOrthographicSizes,
                         settingsManager,
-                        new ZoomConverter()));
+                        new ZoomConverter()),
+                    directionalZoom);
             }
         }
 
