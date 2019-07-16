@@ -54,16 +54,17 @@ namespace BattleCruisers.UI.Cameras.Helpers
                 //_zoomConverter.LevelToSpeed(_settingsManager.ScrollSpeedLevel);
         }
 
+        // FELIX  Avoid duplication with ZoomCalculator :/  Inject ZOOM_MULTIPLIER?
         public float FindZoomDelta(float swipeDeltaY)
         {
             // The more zoomed out the camera is, the greater our delta should be
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
             // Direction should be inverted, so swiping left should move the screen right
-            float directionMultiplier = -1;
+            //float directionMultiplier = -1;
 
             return
-                swipeDeltaY *
-                directionMultiplier *
+                Mathf.Abs(swipeDeltaY) *
+                //directionMultiplier *
                 orthographicProportion *
                 ZOOM_SCALE *
                 _deltaTimeProvider.UnscaledDeltaTime *

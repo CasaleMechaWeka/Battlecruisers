@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IScrollCalculator _scrollCalculator;
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
-        private readonly IRange<float> _validOrthographicSizes;
+        private readonly IDirectionalZoom _directionalZoom;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel
@@ -26,59 +26,58 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             IScrollCalculator scrollCalculator, 
             ICamera camera,
             ICameraCalculator cameraCalculator,
-            IRange<float> validOrthographicSizes)
+            IDirectionalZoom directionalZoom)
         {
-            Helper.AssertIsNotNull(dragTracker, scrollCalculator, camera, cameraCalculator, validOrthographicSizes);
+            Helper.AssertIsNotNull(dragTracker, scrollCalculator, camera, cameraCalculator, directionalZoom);
 
             _dragTracker = dragTracker;
             _scrollCalculator = scrollCalculator;
             _camera = camera;
             _cameraCalculator = cameraCalculator;
-            _validOrthographicSizes = validOrthographicSizes;
+            _directionalZoom = directionalZoom;
 
             _dragTracker.Drag += _dragTracker_Drag;
             _dragTracker.DragStart += _dragTracker_DragStart;
             _dragTracker.DragEnd += _dragTracker_DragEnd;
         }
 
-        // FELIX  Handle zoom :)
         private void _dragTracker_Drag(object sender, DragEventArgs e)
         {
             Logging.Log(Tags.SWIPE_NAVIGATION, $"dragDelta: {e.PointerEventData.delta}");
 
-            float targetOrthographicSize = FindTargetOrthographicSize(e.PointerEventData.delta.y);
-            Logging.Log(Tags.SWIPE_NAVIGATION, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
+            if (Mathf.Abs(e.PointerEventData.delta.x) >= Mathf.Abs(e.PointerEventData.delta.y))
+            {
+                // Interpret as horizontal swipe => horizontal scrolling
+                float targetXPosition = FindTargetXPosition(e.PointerEventData.delta.x);
+                Logging.Log(Tags.SWIPE_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
-            float targetYPosition = FindTargetYPosition(targetOrthographicSize);
-            Logging.Log(Tags.SWIPE_NAVIGATION, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
+                Target
+                    = new CameraTarget(
+                        new Vector3(targetXPosition, _camera.Transform.Position.y, _camera.Transform.Position.z),
+                        _camera.OrthographicSize);
+            }
+            else
+            {
+                float orthographicSizeDelta = _scrollCalculator.FindZoomDelta(e.PointerEventData.delta.y);
 
-            float targetXPosition = FindTargetXPosition(e.PointerEventData.delta.x, targetOrthographicSize);
-            Logging.Log(Tags.SWIPE_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
-
-            Target 
-                = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
-                    targetOrthographicSize);
+                // Interpret as vertical swipe => directional zooming
+                if (e.PointerEventData.delta.y > 0)
+                {
+                    Target = _directionalZoom.ZoomIn(orthographicSizeDelta, e.PointerEventData.position);
+                }
+                else
+                {
+                    Target = _directionalZoom.ZoomOut(orthographicSizeDelta);
+                }
+            }
         }
 
-        private float FindTargetOrthographicSize(float dragDeltaY)
-        {
-            float orthograhpicSizeDelta = _scrollCalculator.FindZoomDelta(dragDeltaY);
-            float targetOrthographicSize = _camera.OrthographicSize + orthograhpicSizeDelta;
-            return Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
-        }
-
-        private float FindTargetYPosition(float targetOrthographicSize)
-        {
-            return _cameraCalculator.FindCameraYPosition(targetOrthographicSize);
-        }
-
-        private float FindTargetXPosition(float dragDeltaX, float targetOrthographicSize)
+        private float FindTargetXPosition(float dragDeltaX)
         {
             float cameraDeltaX = _scrollCalculator.FindScrollDelta(dragDeltaX);
             float targetXPosition = _camera.Transform.Position.x + cameraDeltaX;
 
-            IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
+            IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize);
             return
                 Mathf.Clamp(
                     targetXPosition,
