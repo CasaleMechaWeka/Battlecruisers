@@ -11,6 +11,12 @@
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
     }
 
+    public static class ZoomScale
+    {
+        public const float SCROLL_WHEEL = 2400;
+        public const float SWIPE = 120;
+    }
+
     public static class Alpha
     {
 		public const float DISABLED = 0.4f;

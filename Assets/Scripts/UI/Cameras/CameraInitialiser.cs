@@ -137,12 +137,23 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator,
                     settings.ValidOrthographicSizes);
 
+            // FELIX  TEMP  For testing :P
+            bool hasTouch = true;
+            //bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
+
+            float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
+            ZoomCalculator zoomCalculator 
+                = new ZoomCalculator(
+                    camera,
+                    new TimeBC(),
+                    settings.ValidOrthographicSizes,
+                    settingsManager,
+                    new ZoomConverter(),
+                    zoomScale);
             // FELIX  Update tutorial :)
             // FELIX  Add setting?
             // FELIX  Hide zoom setting when on handheld?  (ie, won't have scroll wheel)
-            // FELIX  TEMP  For testing :P
-            if (true)
-            //if (systemInfo.DeviceType == DeviceType.Handheld)
+            if (hasTouch)
             {
                 return 
                     new SwipeCameraTargetProvider(
@@ -150,9 +161,8 @@ namespace BattleCruisers.UI.Cameras
                         new ScrollCalculator(
                             camera,
                             new TimeBC(),
-                            settings.ValidOrthographicSizes,
-                            settingsManager,
-                            new ZoomConverter()),
+                            settings.ValidOrthographicSizes),
+                        zoomCalculator,
                         camera,
                         cameraCalculator,
                         directionalZoom,
@@ -165,12 +175,7 @@ namespace BattleCruisers.UI.Cameras
                     camera,
                     new InputBC(),
                     updater,
-                    new ZoomCalculator(
-                        camera,
-                        new TimeBC(),
-                        settings.ValidOrthographicSizes,
-                        settingsManager,
-                        new ZoomConverter()),
+                    zoomCalculator,
                     directionalZoom);
             }
         }

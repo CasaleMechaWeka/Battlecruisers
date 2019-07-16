@@ -4,6 +4,7 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
@@ -14,23 +15,25 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
         private readonly IZoomConverter _zoomConverter;
-
-        public const float ZOOM_SCALE = 2400;
+        private readonly float _zoomScale;
 
         public ZoomCalculator(
             ICamera camera, 
             IDeltaTimeProvider deltaTimeProvider, 
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
-            IZoomConverter zoomConverter)
+            IZoomConverter zoomConverter,
+            float zoomScale)
         {
             Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
+            Assert.IsTrue(zoomScale > 0);
 
             _camera = camera;
             _deltaTimeProvider = deltaTimeProvider;
             _validOrthographicSizes = validOrthographicSizes;
             _settingsManager = settingsManager;
             _zoomConverter = zoomConverter;
+            _zoomScale = zoomScale;
         }
 
         public float FindZoomDelta(float mouseScrollDeltaY)
@@ -41,7 +44,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             return
                 Mathf.Abs(mouseScrollDeltaY) *
                 orthographicProportion *
-                ZOOM_SCALE *
+                _zoomScale *
                 _deltaTimeProvider.UnscaledDeltaTime *
                 _zoomConverter.LevelToSpeed(_settingsManager.ZoomSpeedLevel);
         }

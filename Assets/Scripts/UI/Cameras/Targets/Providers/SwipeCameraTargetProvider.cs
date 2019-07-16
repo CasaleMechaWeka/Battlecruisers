@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     {
         private readonly IDragTracker _dragTracker;
         private readonly IScrollCalculator _scrollCalculator;
+        private readonly IZoomCalculator _zoomCalculator;
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
@@ -26,15 +27,17 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         public SwipeCameraTargetProvider(
             IDragTracker dragTracker, 
             IScrollCalculator scrollCalculator, 
+            IZoomCalculator zoomCalculator,
             ICamera camera,
             ICameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
             IScrollRecogniser scrollRecogniser)
         {
-            Helper.AssertIsNotNull(dragTracker, scrollCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser);
+            Helper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser);
 
             _dragTracker = dragTracker;
             _scrollCalculator = scrollCalculator;
+            _zoomCalculator = zoomCalculator;
             _camera = camera;
             _cameraCalculator = cameraCalculator;
             _directionalZoom = directionalZoom;
@@ -62,7 +65,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
             else
             {
-                float orthographicSizeDelta = _scrollCalculator.FindZoomDelta(e.PointerEventData.delta.y);
+                float orthographicSizeDelta = _zoomCalculator.FindZoomDelta(e.PointerEventData.delta.y);
 
                 // Interpret as vertical swipe => directional zooming
                 if (e.PointerEventData.delta.y > 0)
