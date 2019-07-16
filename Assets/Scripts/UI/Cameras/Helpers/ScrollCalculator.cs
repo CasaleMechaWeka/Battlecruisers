@@ -4,7 +4,6 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
@@ -19,7 +18,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         // FELIX  Respect setting for swipe speed:)
 
         public const float SCROLL_SCALE = 16;
-        public const float ZOOM_SCALE = 240;
+        public const float ZOOM_SCALE = 120;
 
         public ScrollCalculator(
             ICamera camera,
