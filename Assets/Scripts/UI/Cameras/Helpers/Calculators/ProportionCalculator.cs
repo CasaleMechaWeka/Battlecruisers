@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Cameras.Helpers
+namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
     public class ProportionCalculator : IProportionCalculator
     {

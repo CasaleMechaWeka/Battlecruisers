@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils.DataStrctures;
 
-namespace BattleCruisers.UI.Cameras.Helpers
+namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
     public interface IProportionCalculator
     {

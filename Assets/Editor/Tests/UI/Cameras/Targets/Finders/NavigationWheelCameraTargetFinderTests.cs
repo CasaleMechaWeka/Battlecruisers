@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Cameras.Helpers;
+﻿using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.Utils.PlatformAbstractions;

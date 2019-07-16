@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Cameras.Helpers;
+﻿using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 

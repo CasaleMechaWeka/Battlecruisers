@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.UI.Cameras.Targets;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras.Helpers
+namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
     public interface ICameraNavigationWheelCalculator
     {

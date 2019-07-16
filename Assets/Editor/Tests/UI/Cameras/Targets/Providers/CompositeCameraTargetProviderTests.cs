@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;

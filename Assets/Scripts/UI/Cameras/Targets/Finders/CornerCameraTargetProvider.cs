@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Cameras.Helpers;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 

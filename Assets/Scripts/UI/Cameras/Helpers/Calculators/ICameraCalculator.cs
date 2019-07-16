@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras.Helpers
+namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
     public interface ICameraCalculator
     {

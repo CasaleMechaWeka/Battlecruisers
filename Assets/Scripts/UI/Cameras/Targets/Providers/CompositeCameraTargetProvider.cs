@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
