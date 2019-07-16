@@ -144,9 +144,12 @@ namespace BattleCruisers.UI.Cameras
                         new ScrollCalculator(
                             camera,
                             new TimeBC(),
-                            settings.ValidOrthographicSizes),
+                            settings.ValidOrthographicSizes,
+                            settingsManager,
+                            new ZoomConverter()),
                         camera,
-                        cameraCalculator);
+                        cameraCalculator,
+                        settings.ValidOrthographicSizes);
             }
             else
             {

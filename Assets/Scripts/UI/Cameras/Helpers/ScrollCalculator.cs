@@ -14,29 +14,28 @@ namespace BattleCruisers.UI.Cameras.Helpers
         private readonly ICamera _camera;
         private readonly IDeltaTimeProvider _deltaTimeProvider;
         private readonly IRange<float> _validOrthographicSizes;
-        // FELIX  Respect setting :)
-        //private readonly ISettingsManager _settingsManager;
-        //private readonly IScrollConverter _zoomConverter;
+        private readonly ISettingsManager _settingsManager;
+        private readonly IZoomConverter _zoomConverter;
+        // FELIX  Respect setting for swipe speed:)
 
         public const float SCROLL_SCALE = 16;
+        public const float ZOOM_SCALE = 240;
 
-        // FELIX :P
         public ScrollCalculator(
             ICamera camera,
             IDeltaTimeProvider deltaTimeProvider,
-            IRange<float> validOrthographicSizes
-            //ISettingsManager settingsManager,
-            //IScrollConverter zoomConverter
+            IRange<float> validOrthographicSizes,
+            ISettingsManager settingsManager,
+            IZoomConverter zoomConverter
             )
         {
-            //Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
-            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes);
+            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
 
             _camera = camera;
             _deltaTimeProvider = deltaTimeProvider;
             _validOrthographicSizes = validOrthographicSizes;
-            //_settingsManager = settingsManager;
-            //_zoomConverter = zoomConverter;
+            _settingsManager = settingsManager;
+            _zoomConverter = zoomConverter;
         }
 
         public float FindScrollDelta(float swipeDeltaX)
@@ -53,6 +52,22 @@ namespace BattleCruisers.UI.Cameras.Helpers
                 SCROLL_SCALE *
                 _deltaTimeProvider.UnscaledDeltaTime;
                 //_zoomConverter.LevelToSpeed(_settingsManager.ScrollSpeedLevel);
+        }
+
+        public float FindZoomDelta(float swipeDeltaY)
+        {
+            // The more zoomed out the camera is, the greater our delta should be
+            float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
+            // Direction should be inverted, so swiping left should move the screen right
+            float directionMultiplier = -1;
+
+            return
+                swipeDeltaY *
+                directionMultiplier *
+                orthographicProportion *
+                ZOOM_SCALE *
+                _deltaTimeProvider.UnscaledDeltaTime *
+                _zoomConverter.LevelToSpeed(_settingsManager.ZoomSpeedLevel);
         }
     }
 }
