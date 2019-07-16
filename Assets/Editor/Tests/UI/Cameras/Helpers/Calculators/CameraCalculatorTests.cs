@@ -8,7 +8,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
-namespace BattleCruisers.Tests.UI.Cameras.Helpers
+namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class CameraCalculatorTests
     {

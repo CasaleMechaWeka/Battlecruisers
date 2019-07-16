@@ -8,7 +8,7 @@ using NUnit.Framework;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 
-namespace BattleCruisers.Tests.UI.Cameras.Helpers
+namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class ZoomCalculatorTests
     {

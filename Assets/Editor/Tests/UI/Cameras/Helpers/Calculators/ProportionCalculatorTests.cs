@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.Cameras.Helpers
+namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class ProportionCalculatorTests
     {
