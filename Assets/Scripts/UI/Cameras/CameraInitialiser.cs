@@ -154,7 +154,8 @@ namespace BattleCruisers.UI.Cameras
                             new ZoomConverter()),
                         camera,
                         cameraCalculator,
-                        directionalZoom);
+                        directionalZoom,
+                        new ScrollRecogniser());
             }
             else
             {

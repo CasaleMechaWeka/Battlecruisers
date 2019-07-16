@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
+        private readonly IScrollRecogniser _scrollRecogniser;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel
@@ -26,15 +27,17 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             IScrollCalculator scrollCalculator, 
             ICamera camera,
             ICameraCalculator cameraCalculator,
-            IDirectionalZoom directionalZoom)
+            IDirectionalZoom directionalZoom,
+            IScrollRecogniser scrollRecogniser)
         {
-            Helper.AssertIsNotNull(dragTracker, scrollCalculator, camera, cameraCalculator, directionalZoom);
+            Helper.AssertIsNotNull(dragTracker, scrollCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser);
 
             _dragTracker = dragTracker;
             _scrollCalculator = scrollCalculator;
             _camera = camera;
             _cameraCalculator = cameraCalculator;
             _directionalZoom = directionalZoom;
+            _scrollRecogniser = scrollRecogniser;
 
             _dragTracker.Drag += _dragTracker_Drag;
             _dragTracker.DragStart += _dragTracker_DragStart;
@@ -45,7 +48,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             Logging.Log(Tags.SWIPE_NAVIGATION, $"dragDelta: {e.PointerEventData.delta}");
 
-            if (Mathf.Abs(e.PointerEventData.delta.x) >= Mathf.Abs(e.PointerEventData.delta.y))
+            if (_scrollRecogniser.IsScroll(e.PointerEventData.delta))
             {
                 // Interpret as horizontal swipe => horizontal scrolling
                 float targetXPosition = FindTargetXPosition(e.PointerEventData.delta.x);
