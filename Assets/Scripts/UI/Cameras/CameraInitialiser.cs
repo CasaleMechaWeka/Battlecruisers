@@ -9,6 +9,7 @@ using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
@@ -19,6 +20,12 @@ namespace BattleCruisers.UI.Cameras
     public class CameraInitialiser : MonoBehaviour
     {
         private ICameraAdjuster _cameraAdjuster;
+
+        // Allows camera to be moved into invalid position up to this amount,
+        // with camera snapping back into valid range when the navigation wheel
+        // takes back over, which does not have this buffer.  Creates a nice
+        // "springy" effect, instead of a hard stop of the swipe doing nothing.
+        private const float CAMERA_X_POSITION_BUFFER_IN_M = 2;
 
         public float cameraSmoothTime;
         public DragTracker dragTracker;
@@ -165,7 +172,8 @@ namespace BattleCruisers.UI.Cameras
                         camera,
                         cameraCalculator,
                         directionalZoom,
-                        new ScrollRecogniser());
+                        new ScrollRecogniser(),
+                        new BufferClamper(CAMERA_X_POSITION_BUFFER_IN_M));
             }
             else
             {

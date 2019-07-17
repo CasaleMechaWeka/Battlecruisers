@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -17,12 +18,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly ICameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IScrollRecogniser _scrollRecogniser;
-
-        // Allows camera to be moved into invalid position up to this amount,
-        // with camera snapping back into valid range when the navigation wheel
-        // takes back over, which does not have this buffer.  Creates a nice
-        // "springy" effect, instead of a hard stop of the swipe doing nothing.
-        public const float CAMERA_X_POSITION_BUFFER_IN_M = 2;
+        private readonly IClamper _cameraXPositionClamper;
 
         public SwipeCameraTargetProvider(
             IDragTracker dragTracker, 
@@ -31,9 +27,10 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             ICamera camera,
             ICameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
-            IScrollRecogniser scrollRecogniser)
+            IScrollRecogniser scrollRecogniser,
+            IClamper cameraXPositionClamper)
         {
-            Helper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser);
+            Helper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser, cameraXPositionClamper);
 
             _dragTracker = dragTracker;
             _scrollCalculator = scrollCalculator;
@@ -42,6 +39,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _cameraCalculator = cameraCalculator;
             _directionalZoom = directionalZoom;
             _scrollRecogniser = scrollRecogniser;
+            _cameraXPositionClamper = cameraXPositionClamper;
 
             _dragTracker.Drag += _dragTracker_Drag;
             _dragTracker.DragStart += _dragTracker_DragStart;
@@ -85,11 +83,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             float targetXPosition = _camera.Transform.Position.x + cameraDeltaX;
 
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize);
-            return
-                Mathf.Clamp(
-                    targetXPosition,
-                    validXPositions.Min - CAMERA_X_POSITION_BUFFER_IN_M,
-                    validXPositions.Max + CAMERA_X_POSITION_BUFFER_IN_M);
+            return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);
         }
 
         private void _dragTracker_DragStart(object sender, DragEventArgs e)
