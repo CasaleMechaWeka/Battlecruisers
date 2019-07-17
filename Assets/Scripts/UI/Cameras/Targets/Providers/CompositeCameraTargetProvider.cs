@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Update tests?  At least the naming :P
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
