@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
             else
             {
-                float orthographicSizeDelta = _zoomCalculator.FindZoomDelta(e.PointerEventData.delta.y);
+                float orthographicSizeDelta = _zoomCalculator.FindOrthographicSizeDelta(e.PointerEventData.delta.y);
 
                 // Interpret as vertical swipe => directional zooming
                 if (e.PointerEventData.delta.y > 0)
