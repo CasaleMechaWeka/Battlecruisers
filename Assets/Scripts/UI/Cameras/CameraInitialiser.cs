@@ -152,7 +152,6 @@ namespace BattleCruisers.UI.Cameras
                     zoomScale);
             // FELIX  Update tutorial :)
             // FELIX  Add setting?
-            // FELIX  Hide zoom setting when on handheld?  (ie, won't have scroll wheel)
             if (hasTouch)
             {
                 return 
