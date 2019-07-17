@@ -13,27 +13,25 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly IDeltaTimeProvider _deltaTimeProvider;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
-        //private readonly IZoomConverter _zoomConverter;
-        // FELIX  Respect setting for swipe speed:)
+        // FELIX  Use ScrollConverter, or rename ZoomConverter :)
+        private readonly IZoomConverter _zoomConverter;
 
         public const float SCROLL_SCALE = 16;
 
         public ScrollCalculator(
             ICamera camera,
             IDeltaTimeProvider deltaTimeProvider,
-            IRange<float> validOrthographicSizes
-            //ISettingsManager settingsManager,
-            //IZoomConverter zoomConverter
-            )
+            IRange<float> validOrthographicSizes,
+            ISettingsManager settingsManager,
+            IZoomConverter zoomConverter)
         {
-            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes);
-            //Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
+            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
 
             _camera = camera;
             _deltaTimeProvider = deltaTimeProvider;
             _validOrthographicSizes = validOrthographicSizes;
-            //_settingsManager = settingsManager;
-            //_zoomConverter = zoomConverter;
+            _settingsManager = settingsManager;
+            _zoomConverter = zoomConverter;
         }
 
         public float FindScrollDelta(float swipeDeltaX)
@@ -48,8 +46,8 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 directionMultiplier *
                 orthographicProportion *
                 SCROLL_SCALE *
-                _deltaTimeProvider.UnscaledDeltaTime;
-                //_zoomConverter.LevelToSpeed(_settingsManager.ScrollSpeedLevel);
+                _deltaTimeProvider.UnscaledDeltaTime *
+                _zoomConverter.LevelToSpeed(_settingsManager.ScrollSpeedLevel);
         }
     }
 }

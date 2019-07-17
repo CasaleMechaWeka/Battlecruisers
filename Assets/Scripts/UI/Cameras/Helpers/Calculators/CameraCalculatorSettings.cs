@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         // Based off the two points:  (5, 10) and (33, 50)
         public float ScrollSpeedGradient => 1.43f;  // 10/7
         public float ScrollSpeedConstant => 2.86f;  // 20/7
-        public float ScrollSpeed => _settingsManager.ScrollSpeed;
+        public float ScrollSpeed => _settingsManager.ScrollSpeedLevel;
 
         public IRange<float> ValidOrthographicSizes { get; }
         public IRange<float> CameraVisibleXRange { get; }

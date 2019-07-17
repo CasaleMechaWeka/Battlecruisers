@@ -9,7 +9,7 @@
     {
         Difficulty AIDifficulty { get; set; }
 		int ZoomSpeedLevel { get; set; }
-        float ScrollSpeed { get; set; }
+        int ScrollSpeedLevel { get; set; }
 
         void Save();
     }

@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _camera.Aspect.Returns(1.333333f);  // 4/3
 
             ISettingsManager settingsManager = Substitute.For<ISettingsManager>();
-            settingsManager.ScrollSpeed.Returns(3);
+            settingsManager.ScrollSpeedLevel.Returns(3);
 
             _settings = new CameraCalculatorSettings(settingsManager, _camera.Aspect);
 

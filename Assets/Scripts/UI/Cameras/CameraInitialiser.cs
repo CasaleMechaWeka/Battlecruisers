@@ -157,8 +157,8 @@ namespace BattleCruisers.UI.Cameras
                     settingsManager,
                     new ZoomConverter(),
                     zoomScale);
+            
             // FELIX  Update tutorial :)
-            // FELIX  Add setting?
             if (hasTouch)
             {
                 return 
@@ -167,7 +167,9 @@ namespace BattleCruisers.UI.Cameras
                         new ScrollCalculator(
                             camera,
                             new TimeBC(),
-                            settings.ValidOrthographicSizes),
+                            settings.ValidOrthographicSizes,
+                            settingsManager,
+                            new ZoomConverter()),
                         zoomCalculator,
                         camera,
                         cameraCalculator,
