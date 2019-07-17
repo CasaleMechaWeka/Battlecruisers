@@ -7,7 +7,6 @@ namespace BattleCruisers.UI.Cameras.Helpers
         /// <returns>
         /// True if the delta represents a swipe, false if the delta represents a zoom.
         /// </returns>
-        /// FELIX  Test :P
         public bool IsScroll(Vector2 delta)
         {
             // Heavily weighted towards choosing vertical change (zoom)
