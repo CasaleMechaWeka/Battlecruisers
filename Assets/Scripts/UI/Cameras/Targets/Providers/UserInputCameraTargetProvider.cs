@@ -3,7 +3,6 @@ using System;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Test :)
     public abstract class UserInputCameraTargetProvider : IUserInputCameraTargetProvider
     {
         private ICameraTarget _target;
