@@ -1,12 +1,14 @@
-﻿using NUnit.Framework;
-using NSubstitute;
-using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
-using BattleCruisers.UI.Cameras.Targets.Providers;
-using BattleCruisers.UI.Cameras.Helpers;
+﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.Clamping;
+using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
+using NSubstitute;
+using NUnit.Framework;
+using UnityCommon.PlatformAbstractions;
+using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
@@ -24,6 +26,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         private IClamper _cameraXPositionClamper;
 
         private int _inputStartedCount, _inputEndedCount;
+        private IPointerEventData _pointerEventData;
+        private DragEventArgs _dragEventArgs;
 
         [SetUp]
         public void TestSetup()
@@ -53,33 +57,89 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
             _inputEndedCount = 0;
             _targetProvider.UserInputEnded += (sender, e) => _inputEndedCount++;
+
+            _camera.Transform.Position.Returns(new Vector3(4, 8, 12));
+            _camera.OrthographicSize.Returns(-17.3f);
+
+            _pointerEventData = Substitute.For<IPointerEventData>();
+            _pointerEventData.Delta.Returns(new Vector2(1.2f, 2.1f));
+            _pointerEventData.Position.Returns(new Vector2(71.9f, 91.7f));
+
+            _dragEventArgs = new DragEventArgs(_pointerEventData);
         }
 
         [Test]
         public void DragStart_RaisesEvent()
         {
-            // FELIX :P
-            //_dragTracker.DragStart += Raise.EventWith(new DragEventArgs(new UnityEngine.EventSystems.PointerEventData()))
+            _dragTracker.DragStart += Raise.EventWith(_dragEventArgs);
+            Assert.AreEqual(1, _inputStartedCount);
         }
 
         [Test]
         public void DragEnd_RaisesEvent()
         {
+            _dragTracker.DragEnd += Raise.EventWith(_dragEventArgs);
+            Assert.AreEqual(1, _inputEndedCount);
         }
 
         [Test]
         public void Drag_IsScroll()
         {
+            _scrollRecogniser.IsScroll(_pointerEventData.Delta).Returns(true);
+
+            float cameraDeltaX = -7.7f;
+            _scrollCalculator.FindScrollDelta(_pointerEventData.Delta.x).Returns(cameraDeltaX);
+
+            float targetXPosition = _camera.Transform.Position.x + cameraDeltaX;
+
+            IRange<float> validXPositions = new Range<float>(17, 71);
+            _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize).Returns(validXPositions);
+
+            float clampedXPosition = 33.77f;
+            _cameraXPositionClamper.Clamp(targetXPosition, validXPositions).Returns(clampedXPosition);
+
+            ICameraTarget expectedTarget
+                = new CameraTarget(
+                    new Vector3(clampedXPosition, _camera.Transform.Position.y, _camera.Transform.Position.z),
+                    _camera.OrthographicSize);
+
+            _dragTracker.Drag += Raise.EventWith(_dragEventArgs);
+
+            Assert.AreEqual(expectedTarget, _targetProvider.Target);
         }
 
         [Test]
         public void Drag_IsZoom_ZoomIn()
         {
+            _pointerEventData.Delta.Returns(new Vector2(0, 1));
+            _scrollRecogniser.IsScroll(_pointerEventData.Delta).Returns(false);
+
+            float orthographicSizeDelta = 48.5f;
+            _zoomCalculator.FindOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
+
+            ICameraTarget zoomInTarget = Substitute.For<ICameraTarget>();
+            _directionalZoom.ZoomIn(orthographicSizeDelta, _pointerEventData.Position).Returns(zoomInTarget);
+
+            _dragTracker.Drag += Raise.EventWith(_dragEventArgs);
+
+            Assert.AreSame(zoomInTarget, _targetProvider.Target);
         }
 
         [Test]
         public void Drag_IsZoom_ZoomOut()
         {
+            _pointerEventData.Delta.Returns(new Vector2(0, -1));
+            _scrollRecogniser.IsScroll(_pointerEventData.Delta).Returns(false);
+
+            float orthographicSizeDelta = 48.5f;
+            _zoomCalculator.FindOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
+
+            ICameraTarget zoomOutTarget = Substitute.For<ICameraTarget>();
+            _directionalZoom.ZoomOut(orthographicSizeDelta).Returns(zoomOutTarget);
+
+            _dragTracker.Drag += Raise.EventWith(_dragEventArgs);
+
+            Assert.AreSame(zoomOutTarget, _targetProvider.Target);
         }
     }
 }

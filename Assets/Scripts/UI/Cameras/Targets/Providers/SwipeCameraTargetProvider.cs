@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX Test :D
     public class SwipeCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IDragTracker _dragTracker;
