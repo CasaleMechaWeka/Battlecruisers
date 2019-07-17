@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Update tessts
     public class DirectionalZoom : IDirectionalZoom
     {
         private readonly ICamera _camera;
