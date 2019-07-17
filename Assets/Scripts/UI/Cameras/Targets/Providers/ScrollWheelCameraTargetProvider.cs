@@ -7,7 +7,6 @@ using System;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Update tests :)
     public class ScrollWheelCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IInput _input;
@@ -17,13 +16,12 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private bool _duringUserInput;
 
         public ScrollWheelCameraTargetProvider(
-            ICamera camera,
             IInput input, 
             IUpdater updater,
             IZoomCalculator zoomCalculator,
             IDirectionalZoom directionalZoom)
         {
-            Helper.AssertIsNotNull(camera, input, updater, zoomCalculator, directionalZoom);
+            Helper.AssertIsNotNull(input, updater, zoomCalculator, directionalZoom);
 
             _input = input;
             _updater = updater;
@@ -32,8 +30,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _directionalZoom = directionalZoom;
 
             _updater.Updated += _updater_Updated;
-
-            Target = new CameraTarget(camera.Transform.Position, camera.OrthographicSize);
         }
 
         private void _updater_Updated(object sender, EventArgs e)
@@ -55,15 +51,15 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 RaiseUserInputStarted();
             }
 
-            float zoomDelta = _zoomCalculator.FindOrthographicSizeDelta(_input.MouseScrollDelta.y);
+            float orthographicSizeDelta = _zoomCalculator.FindOrthographicSizeDelta(_input.MouseScrollDelta.y);
 
             if (_input.MouseScrollDelta.y < 0)
             {
-                Target = _directionalZoom.ZoomOut(zoomDelta);
+                Target = _directionalZoom.ZoomOut(orthographicSizeDelta);
             }
             else
             {
-                Target = _directionalZoom.ZoomIn(zoomDelta, _input.MousePosition);
+                Target = _directionalZoom.ZoomIn(orthographicSizeDelta, _input.MousePosition);
             }
         }
     }

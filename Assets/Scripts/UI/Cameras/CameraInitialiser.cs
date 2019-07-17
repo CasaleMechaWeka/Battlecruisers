@@ -137,9 +137,9 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator,
                     settings.ValidOrthographicSizes);
 
+            bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
             // FELIX  TEMP  For testing :P
-            bool hasTouch = true;
-            //bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
+            hasTouch = true;
 
             float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             ZoomCalculator zoomCalculator 
@@ -171,11 +171,10 @@ namespace BattleCruisers.UI.Cameras
             {
                 return
                     new ScrollWheelCameraTargetProvider(
-                    camera,
-                    new InputBC(),
-                    updater,
-                    zoomCalculator,
-                    directionalZoom);
+                        new InputBC(),
+                        updater,
+                        zoomCalculator,
+                        directionalZoom);
             }
         }
 
