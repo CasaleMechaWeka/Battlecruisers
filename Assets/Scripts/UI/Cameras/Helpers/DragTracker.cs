@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,19 +19,19 @@ namespace BattleCruisers.UI.Cameras.Helpers
         public void OnBeginDrag(PointerEventData eventData)
         {
             Logging.LogMethod(Tags.SWIPE_NAVIGATION);
-            DragStart?.Invoke(this, new DragEventArgs(eventData));
+            DragStart?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             Logging.Log(Tags.SWIPE_NAVIGATION, $"delta: {eventData.delta}");
-            Drag?.Invoke(this, new DragEventArgs(eventData));
+            Drag?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             Logging.LogMethod(Tags.SWIPE_NAVIGATION);
-            DragEnd?.Invoke(this, new DragEventArgs(eventData));
+            DragEnd?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
         }
     }
 }

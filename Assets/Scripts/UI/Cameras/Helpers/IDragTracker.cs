@@ -1,14 +1,14 @@
 ﻿using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
     public class DragEventArgs : EventArgs
     {
-        public PointerEventData PointerEventData { get; }
+        public IPointerEventData PointerEventData { get; }
 
-        public DragEventArgs(PointerEventData pointerEventData)
+        public DragEventArgs(IPointerEventData pointerEventData)
         {
             Assert.IsNotNull(pointerEventData);
             PointerEventData = pointerEventData;

@@ -48,12 +48,12 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
         private void _dragTracker_Drag(object sender, DragEventArgs e)
         {
-            Logging.Log(Tags.SWIPE_NAVIGATION, $"dragDelta: {e.PointerEventData.delta}");
+            Logging.Log(Tags.SWIPE_NAVIGATION, $"dragDelta: {e.PointerEventData.Delta}");
 
-            if (_scrollRecogniser.IsScroll(e.PointerEventData.delta))
+            if (_scrollRecogniser.IsScroll(e.PointerEventData.Delta))
             {
                 // Interpret as horizontal swipe => horizontal scrolling
-                float targetXPosition = FindTargetXPosition(e.PointerEventData.delta.x);
+                float targetXPosition = FindTargetXPosition(e.PointerEventData.Delta.x);
                 Logging.Log(Tags.SWIPE_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
                 Target
@@ -63,12 +63,12 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
             else
             {
-                float orthographicSizeDelta = _zoomCalculator.FindOrthographicSizeDelta(e.PointerEventData.delta.y);
+                float orthographicSizeDelta = _zoomCalculator.FindOrthographicSizeDelta(e.PointerEventData.Delta.y);
 
                 // Interpret as vertical swipe => directional zooming
-                if (e.PointerEventData.delta.y > 0)
+                if (e.PointerEventData.Delta.y > 0)
                 {
-                    Target = _directionalZoom.ZoomIn(orthographicSizeDelta, e.PointerEventData.position);
+                    Target = _directionalZoom.ZoomIn(orthographicSizeDelta, e.PointerEventData.Position);
                 }
                 else
                 {
