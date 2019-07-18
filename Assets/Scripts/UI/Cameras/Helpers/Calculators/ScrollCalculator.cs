@@ -6,7 +6,6 @@ using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    // FELIX  Test :)
     public class ScrollCalculator : IScrollCalculator
     {
         private readonly ICamera _camera;
