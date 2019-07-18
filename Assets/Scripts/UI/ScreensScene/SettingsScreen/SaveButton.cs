@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using System;
 using UnityCommon.Properties;
@@ -9,6 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SaveButton : ClickableTogglable
     {
+        private IScreensSceneGod _screensSceneGod;
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
@@ -17,6 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
+            IScreensSceneGod screensSceneGod,
             ISettingsManager settingsManager, 
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
@@ -24,8 +27,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel);
 
+            _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
             _difficultyDropdown = difficultyDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
@@ -66,6 +70,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.Save();
 
             UpdateEnabledStatus();
+
+            _screensSceneGod.GoToHomeScreen();
         }
 
         private void UpdateEnabledStatus()
