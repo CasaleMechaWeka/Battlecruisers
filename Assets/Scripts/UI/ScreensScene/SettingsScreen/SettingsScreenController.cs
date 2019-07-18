@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -24,13 +26,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Assert.IsNotNull(difficultyDropdown);
             difficultyDropdown.Initialise(settingsManager.AIDifficulty);
 
-            ZoomSlider zoomSlider = GetComponentInChildren<ZoomSlider>();
-            Assert.IsNotNull(zoomSlider);
-            zoomSlider.Initialise(settingsManager.ZoomSpeedLevel);
+            IRange<int> zoomlLevelRange = new Range<int>(SettingsManager.MIN_ZOOM_SPEED_LEVEL, SettingsManager.MAX_ZOOM_SPEED_LEVEL);
+            SliderController zoomSlider = transform.FindNamedComponent<SliderController>("SettingsContainer/ZoomSpeedRow/Slider");
+            zoomSlider.Initialise(settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
-            ScrollSlider scrollSlider = GetComponentInChildren<ScrollSlider>();
-            Assert.IsNotNull(scrollSlider);
-            scrollSlider.Initialise(settingsManager.ScrollSpeedLevel);
+            IRange<int> scrollLevelRange = new Range<int>(SettingsManager.MIN_SCROLL_SPEED_LEVEL, SettingsManager.MAX_SCROLL_SPEED_LEVEL);
+            SliderController scrollSlider = transform.FindNamedComponent<SliderController>("SettingsContainer/ScrollSpeedRow/Slider");
+            scrollSlider.Initialise(settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
