@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
         // FELIX  Use ScrollConverter, or rename ZoomConverter :)
-        private readonly IZoomConverter _zoomConverter;
+        private readonly ILevelToMultiplierConverter _zoomConverter;
 
         public const float SCROLL_SCALE = 16;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             IDeltaTimeProvider deltaTimeProvider,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
-            IZoomConverter zoomConverter)
+            ILevelToMultiplierConverter zoomConverter)
         {
             Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 orthographicProportion *
                 SCROLL_SCALE *
                 _deltaTimeProvider.UnscaledDeltaTime *
-                _zoomConverter.LevelToSpeed(_settingsManager.ScrollSpeedLevel);
+                _zoomConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
         }
     }
 }

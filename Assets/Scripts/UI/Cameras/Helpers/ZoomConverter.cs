@@ -4,10 +4,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    public class ZoomConverter : IZoomConverter
+    public class ZoomConverter : ILevelToMultiplierConverter
     {
         // Perhaps there is some fancy mathematical formula I could use :P
-        public float LevelToSpeed(int zoomLevel)
+        public float LevelToMultiplier(int zoomLevel)
         {
             Assert.IsTrue(zoomLevel >= SettingsManager.MIN_ZOOM_SPEED_LEVEL);
             Assert.IsTrue(zoomLevel <= SettingsManager.MAX_ZOOM_SPEED_LEVEL);
