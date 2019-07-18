@@ -13,25 +13,24 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly IDeltaTimeProvider _deltaTimeProvider;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
-        // FELIX  Use ScrollConverter, or rename ZoomConverter :)
-        private readonly ILevelToMultiplierConverter _zoomConverter;
+        private readonly ILevelToMultiplierConverter _scrollLevelConverter;
 
-        public const float SCROLL_SCALE = 16;
+        public const float SCROLL_SCALE = 32;
 
         public ScrollCalculator(
             ICamera camera,
             IDeltaTimeProvider deltaTimeProvider,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
-            ILevelToMultiplierConverter zoomConverter)
+            ILevelToMultiplierConverter scrollLevelConverter)
         {
-            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
+            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, scrollLevelConverter);
 
             _camera = camera;
             _deltaTimeProvider = deltaTimeProvider;
             _validOrthographicSizes = validOrthographicSizes;
             _settingsManager = settingsManager;
-            _zoomConverter = zoomConverter;
+            _scrollLevelConverter = scrollLevelConverter;
         }
 
         public float FindScrollDelta(float swipeDeltaX)
@@ -47,7 +46,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 orthographicProportion *
                 SCROLL_SCALE *
                 _deltaTimeProvider.UnscaledDeltaTime *
-                _zoomConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
+                _scrollLevelConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
         }
     }
 }

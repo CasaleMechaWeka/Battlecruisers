@@ -155,7 +155,7 @@ namespace BattleCruisers.UI.Cameras
                     new TimeBC(),
                     settings.ValidOrthographicSizes,
                     settingsManager,
-                    new ZoomConverter(),
+                    new ZoomLevelConverter(),
                     zoomScale);
             
             // FELIX  Update tutorial :)
@@ -169,7 +169,7 @@ namespace BattleCruisers.UI.Cameras
                             new TimeBC(),
                             settings.ValidOrthographicSizes,
                             settingsManager,
-                            new ZoomConverter()),
+                            new ScrollLevelConverter()),
                         zoomCalculator,
                         camera,
                         cameraCalculator,
