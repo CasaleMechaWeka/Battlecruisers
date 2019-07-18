@@ -17,7 +17,7 @@ namespace BattleCruisers.Data.Settings
         public const int MIN_ZOOM_SPEED_LEVEL = 1;
         public const int MAX_ZOOM_SPEED_LEVEL = 9;
 
-		private const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
+		public const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
 		public const int MIN_SCROLL_SPEED_LEVEL = 1;
 		public const int MAX_SCROLL_SPEED_LEVEL = 9;
 

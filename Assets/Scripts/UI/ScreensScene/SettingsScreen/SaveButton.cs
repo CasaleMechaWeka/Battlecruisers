@@ -11,7 +11,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
-        private IBroadcastingProperty<int> _zoomSpeed;
+        // FELIX  Rename, add level :)
+        private IBroadcastingProperty<int> _zoomSpeed, _scrollSpeedLevel;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
@@ -19,21 +20,24 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(
             ISettingsManager settingsManager, 
             IDifficultyDropdown difficultyDropdown,
-            IBroadcastingProperty<int> zoomSpeed)
+            IBroadcastingProperty<int> zoomSpeed,
+            IBroadcastingProperty<int> scrollSpeedLevel)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(settingsManager, difficultyDropdown, zoomSpeed);
+            Helper.AssertIsNotNull(settingsManager, difficultyDropdown, zoomSpeed, scrollSpeedLevel);
 
             _settingsManager = settingsManager;
             _difficultyDropdown = difficultyDropdown;
             _zoomSpeed = zoomSpeed;
+            _scrollSpeedLevel = scrollSpeedLevel;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
             _difficultyDropdown.DifficultyChanged += _difficultyDropdown_DifficultyChanged;
             _zoomSpeed.ValueChanged += _zoomSpeed_ValueChanged;
+            _scrollSpeedLevel.ValueChanged += _scrollSpeedLevel_ValueChanged;
 
             UpdateEnabledStatus();
         }
@@ -48,12 +52,18 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             UpdateEnabledStatus();
         }
 
+        private void _scrollSpeedLevel_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateEnabledStatus();
+        }
+
         protected override void OnClicked()
         {
             Assert.IsTrue(ShouldBeEnabled());
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.ZoomSpeedLevel = _zoomSpeed.Value;
+            _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.Save();
 
             UpdateEnabledStatus();
@@ -68,7 +78,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             return
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
-                || _zoomSpeed.Value != _settingsManager.ZoomSpeedLevel;
+                || _zoomSpeed.Value != _settingsManager.ZoomSpeedLevel
+                || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel;
         }
     }
 }
