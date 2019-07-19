@@ -152,8 +152,6 @@ namespace BattleCruisers.UI.Cameras
                     settings.ValidOrthographicSizes);
 
             bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
-            // FELIX  TEMP  For testing :P
-            hasTouch = true;
 
             float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             ZoomCalculator zoomCalculator 
@@ -165,7 +163,6 @@ namespace BattleCruisers.UI.Cameras
                     new ZoomLevelConverter(),
                     zoomScale);
             
-            // FELIX  Update tutorial :)
             if (hasTouch)
             {
                 return 

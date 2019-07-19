@@ -4,6 +4,8 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 {
     public class SystemInfoBC : ISystemInfo
     {
-        public DeviceType DeviceType => SystemInfo.deviceType;
+        // FELIX  TEMP  Test touch :)
+        public DeviceType DeviceType => DeviceType.Handheld;
+        //public DeviceType DeviceType => SystemInfo.deviceType;
     }
 }
