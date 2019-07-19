@@ -165,9 +165,10 @@ namespace BattleCruisers.UI.Cameras
             
             if (hasTouch)
             {
+                // FELIX  Create TogglableDragTracker :)
+
                 return 
                     new SwipeCameraTargetProvider(
-                        swipeEnabledFilter,
                         dragTracker,
                         new ScrollCalculator(
                             camera,

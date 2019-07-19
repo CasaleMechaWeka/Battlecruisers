@@ -33,8 +33,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         [SetUp]
         public void TestSetup()
         {
-            IBroadcastingFilter enabledFilter = Substitute.For<IBroadcastingFilter>();
-            enabledFilter.IsMatch.Returns(true);
             _dragTracker = Substitute.For<IDragTracker>();
             _scrollCalculator = Substitute.For<IScrollCalculator>();
             _zoomCalculator = Substitute.For<IZoomCalculator>();
@@ -46,7 +44,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
             _targetProvider
                 = new SwipeCameraTargetProvider(
-                    enabledFilter,
                     _dragTracker,
                     _scrollCalculator,
                     _zoomCalculator,

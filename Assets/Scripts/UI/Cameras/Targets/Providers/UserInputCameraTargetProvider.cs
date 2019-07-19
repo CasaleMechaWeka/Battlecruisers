@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     public abstract class UserInputCameraTargetProvider : IUserInputCameraTargetProvider
     {
         private ICameraTarget _target;
-        public virtual ICameraTarget Target
+        public ICameraTarget Target
         {
             get { return _target; }
             protected set
