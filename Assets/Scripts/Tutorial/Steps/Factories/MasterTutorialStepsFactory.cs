@@ -41,9 +41,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_factoriesProvider.NavigationWheelStepsFactory.CreateSteps());
 
             // 2.5 Scroll wheel
-            if (_systemInfo.DeviceType != DeviceType.Handheld)
+            // FELIX  TEMP  Testing :P
+            // FELIX  Use class, so only have to change in one place to test :)  (CameraInitialiser)
+            if (false)
+            //if (_systemInfo.DeviceType != DeviceType.Handheld)
             {
                 steps.AddRange(_factoriesProvider.ScrollWheelStepsFactory.CreateSteps());
+            }
+            else
+            {
+                steps.AddRange(_factoriesProvider.SwipeStepsFactory.CreateSteps());
             }
 
             // 3. Enemy cruiser
