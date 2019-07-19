@@ -10,9 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             Assert.IsNotNull(postBattleScreen);
 
-            ActionButton retryButton = transform.FindNamedComponent<ActionButton>("SmallButtons/RetryButton");
-            retryButton.Initialise(postBattleScreen.Retry);
-
             ActionButton homeButton = transform.FindNamedComponent<ActionButton>("SmallButtons/HomeButton");
             homeButton.Initialise(postBattleScreen.GoToHomeScreen);
         }

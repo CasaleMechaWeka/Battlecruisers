@@ -8,6 +8,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             base.Initialise(postBattleScreen);
 
+            ActionButton retryButton = transform.FindNamedComponent<ActionButton>("SmallButtons/RetryButton");
+            retryButton.Initialise(postBattleScreen.RetryTutorial);
+
             ActionButton nextButton = transform.FindNamedComponent<ActionButton>("NextButton");
             nextButton.Initialise(postBattleScreen.StartLevel1);
         }
