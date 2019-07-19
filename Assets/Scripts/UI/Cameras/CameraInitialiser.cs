@@ -35,13 +35,12 @@ namespace BattleCruisers.UI.Cameras
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
-            IBroadcastingFilter navigationWheelEnabledFilter,
-            IBroadcastingFilter scrollWheelEnabledFilter)
+            NavigationPermitters navigationPermitters)
         {
-            Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationWheelEnabledFilter, scrollWheelEnabledFilter);
+            Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationPermitters);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
-            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
+            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationPermitters.NavigationWheelFilter);
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
@@ -63,7 +62,7 @@ namespace BattleCruisers.UI.Cameras
                     navigationWheelPanel,
                     playerCruiser,
                     aiCruiser,
-                    scrollWheelEnabledFilter);
+                    navigationPermitters);
 
             IDeltaTimeProvider deltaTimeProvider = new TimeBC();
 
@@ -101,11 +100,11 @@ namespace BattleCruisers.UI.Cameras
             INavigationWheelPanel navigationWheelPanel,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IBroadcastingFilter scrollWheelEnabledFilter)
+            NavigationPermitters navigationPermitters)
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
-            updater.Initialise(scrollWheelEnabledFilter);
+            updater.Initialise(navigationPermitters.ScrollWheelFilter);
 
             ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetFinder cornerCameraTargetFinder
@@ -120,7 +119,14 @@ namespace BattleCruisers.UI.Cameras
                     coreCameraTargetFinder,
                     cornerCameraTargetFinder);
 
-            IUserInputCameraTargetProvider secondaryCameraTargetProvider = CreateSecondaryCameraTargetProvider(camera, cameraCalculator, settingsManager, settings, updater);
+            IUserInputCameraTargetProvider secondaryCameraTargetProvider 
+                = CreateSecondaryCameraTargetProvider(
+                    camera, 
+                    cameraCalculator, 
+                    settingsManager, 
+                    settings, 
+                    updater,
+                    navigationPermitters.SwipeFilter);
 
             return
                 new CompositeCameraTargetProvider(
@@ -135,7 +141,8 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculator cameraCalculator, 
             ISettingsManager settingsManager, 
             ICameraCalculatorSettings settings, 
-            TogglableUpdater updater)
+            TogglableUpdater updater,
+            IBroadcastingFilter swipeEnabledFilter)
         {
             ISystemInfo systemInfo = new SystemInfoBC();
             IDirectionalZoom directionalZoom
@@ -163,6 +170,7 @@ namespace BattleCruisers.UI.Cameras
             {
                 return 
                     new SwipeCameraTargetProvider(
+                        swipeEnabledFilter,
                         dragTracker,
                         new ScrollCalculator(
                             camera,

@@ -106,8 +106,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     dataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
-                    navigationPermitters.NavigationWheelFilter,
-                    navigationPermitters.ScrollWheelFilter);
+                    navigationPermitters);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser

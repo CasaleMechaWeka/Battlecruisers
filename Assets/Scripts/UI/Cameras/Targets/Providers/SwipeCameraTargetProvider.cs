@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    public class SwipeCameraTargetProvider : UserInputCameraTargetProvider
+    public class SwipeCameraTargetProvider : TogglableCameraTargetProvider
     {
         private readonly IDragTracker _dragTracker;
         private readonly IScrollCalculator _scrollCalculator;
@@ -20,14 +21,16 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IClamper _cameraXPositionClamper;
 
         public SwipeCameraTargetProvider(
-            IDragTracker dragTracker, 
-            IScrollCalculator scrollCalculator, 
+            IBroadcastingFilter enabledFilter,
+            IDragTracker dragTracker,
+            IScrollCalculator scrollCalculator,
             IZoomCalculator zoomCalculator,
             ICamera camera,
             ICameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
             IScrollRecogniser scrollRecogniser,
             IClamper cameraXPositionClamper)
+            : base(enabledFilter)
         {
             Helper.AssertIsNotNull(dragTracker, scrollCalculator, zoomCalculator, camera, cameraCalculator, directionalZoom, scrollRecogniser, cameraXPositionClamper);
 
