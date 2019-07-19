@@ -56,7 +56,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayVictoryMusic()
         {
             _musicPlayer.PlayVictoryMusic();
-            _soundPlayer.Received().PlaySound(SoundKeys.Music.Victory, loop: true);
+            _soundPlayer.Received().PlaySound(SoundKeys.Music.Victory, loop: false);
         }
 
         [Test]
