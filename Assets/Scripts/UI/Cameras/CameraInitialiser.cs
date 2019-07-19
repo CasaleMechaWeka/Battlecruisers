@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.Cameras
         private const float CAMERA_X_POSITION_BUFFER_IN_M = 2;
 
         public float cameraSmoothTime;
-        public DragTracker dragTracker;
+        public TogglableDragTracker dragTracker;
 
         public ICameraComponents Initialise(
             ICamera camera, 
@@ -38,6 +38,8 @@ namespace BattleCruisers.UI.Cameras
             NavigationPermitters navigationPermitters)
         {
             Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationPermitters);
+
+            dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationPermitters.NavigationWheelFilter);
@@ -165,8 +167,6 @@ namespace BattleCruisers.UI.Cameras
             
             if (hasTouch)
             {
-                // FELIX  Create TogglableDragTracker :)
-
                 return 
                     new SwipeCameraTargetProvider(
                         dragTracker,
