@@ -72,7 +72,7 @@ namespace BattleCruisers.Movement.Velocity
                         $"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
                         $"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +
                         $"Time.deltaTime: {Time.deltaTime}  _rigidBody.transform.rotation.eulerAngles: {_rigidBody.transform.rotation.eulerAngles}";
-                Logging.Log(Tags.MOVEMENT, logMessage);
+                Logging.Verbose(Tags.MOVEMENT, logMessage);
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
 			}

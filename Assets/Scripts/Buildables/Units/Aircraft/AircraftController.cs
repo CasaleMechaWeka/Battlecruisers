@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            Logging.Log(Tags.AIRCRAFT, "Adjusting velocity");
+            Logging.Verbose(Tags.AIRCRAFT, "Adjusting velocity");
 
 			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
