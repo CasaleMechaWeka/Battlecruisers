@@ -6,6 +6,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
     {
         private readonly ITime _time;
 
+        // FELIX  Reduce to 30?
         private const int POPULATION_LIMIT = 50;
 
         public SpawnDeciderFactory()
