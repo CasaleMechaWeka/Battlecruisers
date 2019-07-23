@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,27 +7,29 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    // FELIX  Test
     // FELIX  Use
     public class ProximityTargetDetector : ITargetDetector, IManualDetector
     {
         private readonly ITransform _parentTransform;
-        private readonly IReadOnlyCollection<IUnit> _potentialTargets;
+        private readonly IReadOnlyCollection<ITarget> _potentialTargets;
         private readonly float _detectionRange;
         private readonly ISet<ITarget> _currentInRangeTargets, _newInRangeTargets;
+        private readonly IList<ITarget> _exitedTargets;
 
         public event EventHandler<TargetEventArgs> TargetEntered;
         public event EventHandler<TargetEventArgs> TargetExited;
 
-        public ProximityTargetDetector(ITransform parentTransform, IReadOnlyCollection<IUnit> potentialTargets, float detectionRange)
+        public ProximityTargetDetector(ITransform parentTransform, IReadOnlyCollection<ITarget> potentialTargets, float detectionRange)
         {
             Helper.AssertIsNotNull(parentTransform, potentialTargets);
 
             _parentTransform = parentTransform;
             _potentialTargets = potentialTargets;
             _detectionRange = detectionRange;
+
             _currentInRangeTargets = new HashSet<ITarget>();
             _newInRangeTargets = new HashSet<ITarget>();
+            _exitedTargets = new List<ITarget>();
         }
 
         public void Detect()
@@ -36,19 +37,50 @@ namespace BattleCruisers.Targets.TargetDetectors
             ISet<ITarget> newInRangeTargets = FindInRangeTargets();
             Logging.Verbose(Tags.TARGET_DETECTOR, $"Current targets: {_currentInRangeTargets.Count}  new targets: {newInRangeTargets.Count}");
 
-            // Find targets that have left
+            IList<ITarget> exitedTargets = DetectExitedTargets(newInRangeTargets);
+            foreach (ITarget exitedTarget in exitedTargets)
+            {
+                Logging.Log(Tags.TARGET_DETECTOR, $"Lost target: {exitedTarget}");
+
+                _currentInRangeTargets.Remove(exitedTarget);
+                TargetExited?.Invoke(this, new TargetEventArgs(exitedTarget));
+            }
+
+            DetectEnteredTargets(newInRangeTargets);
+        }
+
+        private ISet<ITarget> FindInRangeTargets()
+        {
+            _newInRangeTargets.Clear();
+
+            foreach (ITarget potentialTarget in _potentialTargets)
+            {
+                if (Vector2.Distance(potentialTarget.Transform.Position, _parentTransform.Position) <= _detectionRange)
+                {
+                    _newInRangeTargets.Add(potentialTarget);
+                }
+            }
+
+            return _newInRangeTargets;
+        }
+
+        private IList<ITarget> DetectExitedTargets(ISet<ITarget> newInRangeTargets)
+        {
+            _exitedTargets.Clear();
+            
             foreach (ITarget currentInRangeTarget in _currentInRangeTargets)
             {
                 if (!newInRangeTargets.Contains(currentInRangeTarget))
                 {
-                    Logging.Log(Tags.TARGET_DETECTOR, $"Lost target: {currentInRangeTarget}");
-
-                    _currentInRangeTargets.Remove(currentInRangeTarget);
-                    TargetExited?.Invoke(this, new TargetEventArgs(currentInRangeTarget));
+                    _exitedTargets.Add(currentInRangeTarget);
                 }
             }
 
-            // Find targets that are new
+            return _exitedTargets;
+        }
+
+        private void DetectEnteredTargets(ISet<ITarget> newInRangeTargets)
+        {
             foreach (ITarget newInRangeTarget in newInRangeTargets)
             {
                 if (!_currentInRangeTargets.Contains(newInRangeTarget))
@@ -59,21 +91,6 @@ namespace BattleCruisers.Targets.TargetDetectors
                     TargetEntered?.Invoke(this, new TargetEventArgs(newInRangeTarget));
                 }
             }
-        }
-
-        private ISet<ITarget> FindInRangeTargets()
-        {
-            _newInRangeTargets.Clear();
-
-            foreach (IUnit potentialTarget in _potentialTargets)
-            {
-                if (Vector2.Distance(potentialTarget.Transform.Position, _parentTransform.Position) <= _detectionRange)
-                {
-                    _newInRangeTargets.Add(potentialTarget);
-                }
-            }
-
-            return _newInRangeTargets;
         }
 
         public void StartDetecting()
