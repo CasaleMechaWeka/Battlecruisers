@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,14 +13,14 @@ namespace BattleCruisers.Targets.TargetDetectors
     public class ProximityTargetDetector : ITargetDetector, IManualDetector
     {
         private readonly ITransform _parentTransform;
-        private readonly IUnitProvider _potentialTargets;
+        private readonly IReadOnlyCollection<IUnit> _potentialTargets;
         private readonly float _detectionRange;
         private readonly ISet<ITarget> _currentInRangeTargets, _newInRangeTargets;
 
         public event EventHandler<TargetEventArgs> TargetEntered;
         public event EventHandler<TargetEventArgs> TargetExited;
 
-        public ProximityTargetDetector(ITransform parentTransform, IUnitProvider potentialTargets, float detectionRange)
+        public ProximityTargetDetector(ITransform parentTransform, IReadOnlyCollection<IUnit> potentialTargets, float detectionRange)
         {
             Helper.AssertIsNotNull(parentTransform, potentialTargets);
 
@@ -66,7 +65,7 @@ namespace BattleCruisers.Targets.TargetDetectors
         {
             _newInRangeTargets.Clear();
 
-            foreach (IUnit potentialTarget in _potentialTargets.AliveUnits)
+            foreach (IUnit potentialTarget in _potentialTargets)
             {
                 if (Vector2.Distance(potentialTarget.Transform.Position, _parentTransform.Position) <= _detectionRange)
                 {
