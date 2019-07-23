@@ -34,8 +34,13 @@ namespace BattleCruisers.Cruisers.Construction
         }
     }
 
-    public interface ICruiserUnitMonitor : IUnitProvider
+    public interface ICruiserUnitMonitor
     {
+        /// <summary>
+        /// Units that have been started and not destroyed.
+        /// </summary>
+        IReadOnlyCollection<IUnit> AliveUnits { get; }
+
         event EventHandler<UnitStartedEventArgs> UnitStarted;
         event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         event EventHandler<UnitDestroyedEventArgs> UnitDestroyed;
