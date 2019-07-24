@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Test :)
     // FELIX  Use :D
     public class UnitTargets : IUnitTargets
     {
