@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Targets.TargetDetectors;
-using BattleCruisers.Utils.BattleScene.Update;
 using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Targets.Factories
@@ -9,6 +8,6 @@ namespace BattleCruisers.Targets.Factories
     public interface ITargetDetectorFactory
     {
         ITargetDetector CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange);
-        ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector, IUpdater updater);
+        ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector);
     }
 }

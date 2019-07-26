@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene.Update
 {
-    public class UpdaterProvider : MonoBehaviour
+    public class UpdaterProvider : MonoBehaviour, IUpdaterProvider
     {
         private IUpdater _perFrameUpdater;
 
