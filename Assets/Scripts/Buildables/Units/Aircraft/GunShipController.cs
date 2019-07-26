@@ -25,10 +25,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
+        // Hold reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private ManualDetectorPoller _detectorPoller;
+#pragma warning restore CS0414  // Variable is assigned but never used
 
-		private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
+        private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
 
-		public CircleTargetDetectorController hoverRangeEnemyDetector;
         public float enemyHoverRangeInM, enemyFollowRangeInM;
 
 		private ITarget _target;
@@ -51,8 +54,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override void OnStaticInitialised()
 		{
             base.OnStaticInitialised();
-
-            Assert.IsNotNull(hoverRangeEnemyDetector);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
@@ -96,8 +97,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
-            // FELIX  Replace this target detector
-            hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
+            IManualProximityTargetDetector hoverRangeEnemyDetector = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(Transform, enemyHoverRangeInM);
+            _detectorPoller = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateManualDetectorPoller(hoverRangeEnemyDetector);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _factoryProvider.TargetFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
