@@ -8,8 +8,7 @@ using UnityEngine;
 namespace BattleCruisers.Targets.TargetDetectors
 {
     // FELIX  Use
-    // FELIX  Rename to ManualProximityTD :P
-    public class ProximityTargetDetector : IManualProximityTargetDetector
+    public class ManualProximityTargetDetector : IManualProximityTargetDetector
     {
         private readonly ITransform _parentTransform;
         private readonly IReadOnlyCollection<ITarget> _potentialTargets;
@@ -20,7 +19,7 @@ namespace BattleCruisers.Targets.TargetDetectors
         public event EventHandler<TargetEventArgs> TargetEntered;
         public event EventHandler<TargetEventArgs> TargetExited;
 
-        public ProximityTargetDetector(ITransform parentTransform, IReadOnlyCollection<ITarget> potentialTargets, float detectionRange)
+        public ManualProximityTargetDetector(ITransform parentTransform, IReadOnlyCollection<ITarget> potentialTargets, float detectionRange)
         {
             Helper.AssertIsNotNull(parentTransform, potentialTargets);
 

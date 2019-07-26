@@ -21,7 +21,7 @@ namespace BattleCruisers.Targets.Factories
 
         public IManualProximityTargetDetector CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
         {
-            return new ProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange);
+            return new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange);
         }
 
         public ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector)

@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Tests.Targets.TargetDetectors
 {
-    public class ProximityTargetDetectorTests
+    public class ManualProximityTargetDetectorTests
     {
-        private ProximityTargetDetector _detector;
+        private ManualProximityTargetDetector _detector;
 
         private ITransform _parentTransform;
         private float _detectionRange = 7;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
             };
             IReadOnlyCollection<ITarget> readonlyTargets = targets.AsReadOnly();
 
-            _detector = new ProximityTargetDetector(_parentTransform, readonlyTargets, _detectionRange);
+            _detector = new ManualProximityTargetDetector(_parentTransform, readonlyTargets, _detectionRange);
 
             _enteredTargets = new List<ITarget>();
             _detector.TargetEntered += (sender, e) => _enteredTargets.Add(e.Target);
