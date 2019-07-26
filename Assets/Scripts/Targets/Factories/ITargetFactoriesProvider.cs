@@ -9,5 +9,6 @@
         ITargetRankerFactory RankerFactory { get; }
         ITargetProviderFactory ProviderFactory { get; }
         ITargetHelperFactory HelperFactory { get; }
+        ITargetDetectorFactory TargetDetectorFactory { get; }
     }
 }

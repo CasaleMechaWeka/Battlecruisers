@@ -12,6 +12,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -49,12 +50,13 @@ namespace BattleCruisers.Utils.Factories
             ICamera soleCamera,
             bool isPlayerCruiser,
             IAudioSource audioSource,
-            IMarkerFactory markerFactory)
+            IMarkerFactory markerFactory,
+            IUpdaterProvider updaterProvider)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, markerFactory);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, markerFactory, updaterProvider);
 
 			PrefabFactory = prefabFactory;
-            TargetFactories = new TargetFactoriesProvider(enemyCruiser, userChosenTargetTracker);
+            TargetFactories = new TargetFactoriesProvider(enemyCruiser, userChosenTargetTracker, updaterProvider);
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory(new TimeBC());
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());

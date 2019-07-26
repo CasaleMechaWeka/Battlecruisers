@@ -23,6 +23,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -67,14 +68,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer deferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             IExplosionManager explosionManager = null,
-            ITrackerFactory trackerFactory = null)
+            ITrackerFactory trackerFactory = null,
+            IUpdaterProvider updaterProvider = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
-            targetFactories = targetFactories ?? new TargetFactoriesProvider(EnemyCruiser, userChosenTargetManager);
+            updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
+            targetFactories = targetFactories ?? new TargetFactoriesProvider(EnemyCruiser, userChosenTargetManager, updaterProvider);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();

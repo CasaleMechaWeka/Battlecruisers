@@ -183,7 +183,8 @@ namespace BattleCruisers.Cruisers
                     _soleCamera, 
                     isPlayerCruiser, 
                     _components.AudioSource,
-                    _markerFactory);
+                    _markerFactory,
+                    _components.UpdaterProvider);
 
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);
