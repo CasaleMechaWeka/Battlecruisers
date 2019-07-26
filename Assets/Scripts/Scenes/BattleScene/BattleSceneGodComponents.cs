@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
@@ -18,6 +19,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public ICamera Camera { get; private set; }
         public IMarkerFactory MarkerFactory { get; private set; }
+
+        private UpdaterProvider _updaterProvider;
+        public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
         public void Initialise()
         {
@@ -42,6 +46,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
             MarkerFactory = GetComponent<MarkerFactory>();
             Assert.IsNotNull(MarkerFactory);
+
+            _updaterProvider = GetComponent<UpdaterProvider>();
+            Assert.IsNotNull(_updaterProvider);
+            _updaterProvider.Initialise();
         }
     }
 }
