@@ -42,8 +42,6 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-            // FELIX  This is where I can sub in my new detector :)
-            // => Create 2 child classes?  Each decides on the ITargetDetector?
 			CircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetectorController>();
 			Assert.IsNotNull(enemyDetector);
 			

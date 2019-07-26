@@ -19,7 +19,7 @@ namespace BattleCruisers.Targets.Factories
             _updaterProvider = updaterProvider;
         }
 
-        public ITargetDetector CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
+        public IManualProximityTargetDetector CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
         {
             return new ProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange);
         }
