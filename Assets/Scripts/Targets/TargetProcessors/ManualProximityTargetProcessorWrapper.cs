@@ -14,7 +14,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
-            Assert.IsNotNull(_detectorPoller, "Should only be called once.");
+            Assert.IsNull(_detectorPoller, "Should only be called once.");
 
             IManualProximityTargetDetector proximityTargetDetector = args.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(args.ParentTarget.Transform, args.MaxRangeInM);
             _detectorPoller = args.TargetFactories.TargetDetectorFactory.CreateManualDetectorPoller(proximityTargetDetector);

@@ -8,13 +8,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
-    public class GunshipsPerformanceTestGod : MonoBehaviour
+    public class GunshipsPerformanceTestGod : TestGodBase
     {
         public List<Vector2> gunshipPatrolPoints;
         public Vector2 spawnPosition;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+            
             Helper helper = new Helper();
 
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
@@ -22,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             BuildableGroupController gunshipsGroup = FindObjectOfType<BuildableGroupController>();
             Assert.IsNotNull(gunshipsGroup);
-            BuildableInitialisationArgs groupArgs = new BuildableInitialisationArgs(helper, aircraftProvider: aircraftProvider);
+            BuildableInitialisationArgs groupArgs = new BuildableInitialisationArgs(helper, aircraftProvider: aircraftProvider, updaterProvider: _updaterProvider);
             gunshipsGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
         }
     }

@@ -87,13 +87,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.TargetFactories,
                     enemyFaction,
                     AttackCapabilities,
-                    enemyFollowRangeInM);
+                    enemyFollowRangeInM,
+                    parentTarget: this);
 
-            TargetProcessorWrapper followingTargetProcessorWrapper = transform.FindNamedComponent<ProximityTargetProcessorWrapper>("FollowingTargetProcessor");
+            ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper = GetComponentInChildren<ManualProximityTargetProcessorWrapper>();
+            Assert.IsNotNull(followingTargetProcessorWrapper);
             _followingTargetProcessor = followingTargetProcessorWrapper.CreateTargetProcessor(args);
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
+            // FELIX  Replace this target detector
             hoverRangeEnemyDetector.Initialise(enemyHoverRangeInM);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
