@@ -1,18 +1,17 @@
-﻿using BattleCruisers.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions
 {
     public class AdvancedExplosion : MonoBehaviour
     {
-        public ParticleSystem leadingParticleSystem;
-        public ParticleSystem followingParticleSystem;
-
-        void Start()
+        public void Initialise()
         {
-            Helper.AssertIsNotNull(leadingParticleSystem, followingParticleSystem);
+            SynchronizedParticleSystemsController[] fireSmokePairs = FindObjectsOfType<SynchronizedParticleSystemsController>();
 
-            followingParticleSystem.randomSeed = leadingParticleSystem.randomSeed;
+            foreach (SynchronizedParticleSystemsController fireSmokePair in fireSmokePairs)
+            {
+                fireSmokePair.Initialise();
+            }
         }
     }
 }
