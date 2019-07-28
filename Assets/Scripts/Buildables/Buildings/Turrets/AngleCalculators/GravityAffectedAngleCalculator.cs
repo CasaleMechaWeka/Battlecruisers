@@ -52,7 +52,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             float angleInRadians = UseLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-            Logging.Log(Tags.ANGLE_CALCULATORS, angleInDegrees + "*");
+            Logging.Verbose(Tags.ANGLE_CALCULATORS, angleInDegrees + "*");
 
 			return angleInDegrees;
 		}

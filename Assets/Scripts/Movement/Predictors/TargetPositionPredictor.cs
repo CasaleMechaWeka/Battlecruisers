@@ -14,7 +14,7 @@ namespace BattleCruisers.Movement.Predictors
 			float projectedY = targetPositionToAttack.y + target.Velocity.y * timeToTargetEstimate;
 
 			Vector2 projectedPosition = new Vector2(projectedX, projectedY);
-            Logging.Log(Tags.PREDICTORS, $"target: {target}  projectedPosition: {projectedPosition}  targetVelocity: {target.Velocity}  timeToTargetEstimate: {timeToTargetEstimate}");
+            Logging.Verbose(Tags.PREDICTORS, $"target: {target}  projectedPosition: {projectedPosition}  targetVelocity: {target.Velocity}  timeToTargetEstimate: {timeToTargetEstimate}");
 			return projectedPosition;
 		}
 
