@@ -9,21 +9,21 @@ namespace BattleCruisers.Targets.Factories
 {
     public class TargetDetectorFactory : ITargetDetectorFactory
     {
-        private readonly IUnitTargets _unitTargets;
+        private readonly IUnitTargets _enemyTargets, _friendlyTargets;
         private readonly IUpdaterProvider _updaterProvider;
 
-        public TargetDetectorFactory(IUnitTargets unitTargets, IUpdaterProvider updaterProvider)
+        public TargetDetectorFactory(IUnitTargets enemyTargets, IUnitTargets friendlyTargets, IUpdaterProvider updaterProvider)
         {
-            Helper.AssertIsNotNull(unitTargets, updaterProvider);
+            Helper.AssertIsNotNull(enemyTargets, friendlyTargets, updaterProvider);
 
-            // FELIX  Also need friendly unit targets, for ships sensing blocking friendly units :P
-            _unitTargets = unitTargets;
+            _enemyTargets = enemyTargets;
+            _friendlyTargets = friendlyTargets;
             _updaterProvider = updaterProvider;
         }
 
         public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
         {
-            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange, rangeCalculator);
+            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _enemyTargets.Ships, detectionRange, rangeCalculator);
             ManualDetectorPoller poller = CreateManualDetectorPoller(targetDetector);
 
             return new ManualDetectorProvider(poller, targetDetector);

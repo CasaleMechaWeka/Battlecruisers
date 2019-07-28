@@ -18,9 +18,9 @@ namespace BattleCruisers.Targets.Factories
         public ITargetDetectorFactory TargetDetectorFactory { get; }
         public IRangeCalculatorProvider RangeCalculatorProvider { get; }
 
-        public TargetFactoriesProvider(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker, IUpdaterProvider updaterProvider)
+        public TargetFactoriesProvider(ICruiser parentCruiser, ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker, IUpdaterProvider updaterProvider)
         {
-            Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker, updaterProvider);
+            Helper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             FinderFactory = new TargetFinderFactory();
@@ -31,8 +31,10 @@ namespace BattleCruisers.Targets.Factories
             HelperFactory = new TargetHelperFactory();
             RangeCalculatorProvider = new RangeCalculatorProvider();
 
-            IUnitTargets unitTargets = new UnitTargets(enemyCruiser.UnitMonitor);
-            TargetDetectorFactory = new TargetDetectorFactory(unitTargets, updaterProvider);
+            // FELIX  Create in cruiser to avoid duplicates (this class is created for each cruiser)
+            IUnitTargets friendlyTargets = new UnitTargets(parentCruiser.UnitMonitor);
+            IUnitTargets enemyTargets = new UnitTargets(enemyCruiser.UnitMonitor);
+            TargetDetectorFactory = new TargetDetectorFactory(enemyTargets, friendlyTargets, updaterProvider);
         }
     }
 }
