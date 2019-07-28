@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
@@ -32,10 +33,14 @@ namespace BattleCruisers.Buildables.Units.Ships
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
 
+        // Hold reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
+#pragma warning restore CS0414  // Variable is assigned but never used
+
+
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
-
-		public CircleTargetDetectorController enemyDetector, friendDetector;
 
         public override TargetType TargetType => TargetType.Ships;
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Ship;
@@ -142,14 +147,25 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
-            enemyDetector.Initialise(EnemyDetectionRangeInM);
-            friendDetector.Initialise(FriendDetectionRangeInM);
+            // FELIX  Remove colliders from prefabs
+            // FELIX  Test all 4 boats :P
+            IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.SizeInclusiveCalculator;
+            _enemyDetectorProvider
+                = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                    Transform,
+                    EnemyDetectionRangeInM,
+                    rangeCalculator);
+            _friendDetectorProvider
+                = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateFriendlyShipTargetDetector(
+                    Transform,
+                    FriendDetectionRangeInM,
+                    rangeCalculator);
 
             return
                 _movementControllerFactory.CreateShipMovementDecider(
                     this,
-                    _targetFactories.ProviderFactory.CreateShipBlockingEnemyProvider(enemyDetector, this),
-                    _targetFactories.ProviderFactory.CreateShipBlockingFriendlyProvider(friendDetector, this),
+                    _targetFactories.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
+                    _targetFactories.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _targetFactories.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     _targetFactories.HelperFactory.CreateShipRangeHelper(this));
         }
