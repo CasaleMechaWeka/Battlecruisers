@@ -147,8 +147,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
-            // FELIX  Remove colliders from prefabs
-            // FELIX  Test all 4 boats :P
             IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
                 = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(
