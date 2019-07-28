@@ -216,6 +216,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			cruiser.Faction.Returns(faction);
             cruiser.BuildProgressCalculator.Returns(buildProgressCalculator);
             cruiser.Size.Returns(new Vector2(5, 2));
+            IUnitTargets unitTargets = new UnitTargets(cruiser.UnitMonitor);
+            cruiser.UnitTargets.Returns(unitTargets);
 
             float xPosition = facingDirection == Direction.Right ? -35 : 35;
             cruiser.Position.Returns(new Vector2(xPosition, 0));
