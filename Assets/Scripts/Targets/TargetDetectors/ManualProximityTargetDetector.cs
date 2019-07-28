@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using UnityCommon.PlatformAbstractions;
-using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
@@ -12,19 +12,25 @@ namespace BattleCruisers.Targets.TargetDetectors
         private readonly ITransform _parentTransform;
         private readonly IReadOnlyCollection<ITarget> _potentialTargets;
         private readonly float _detectionRange;
+        private readonly IRangeCalculator _rangeCalculator;
         private readonly ISet<ITarget> _currentInRangeTargets, _newInRangeTargets;
         private readonly IList<ITarget> _exitedTargets;
 
         public event EventHandler<TargetEventArgs> TargetEntered;
         public event EventHandler<TargetEventArgs> TargetExited;
 
-        public ManualProximityTargetDetector(ITransform parentTransform, IReadOnlyCollection<ITarget> potentialTargets, float detectionRange)
+        public ManualProximityTargetDetector(
+            ITransform parentTransform, 
+            IReadOnlyCollection<ITarget> potentialTargets, 
+            float detectionRange,
+            IRangeCalculator rangeCalculator)
         {
-            Helper.AssertIsNotNull(parentTransform, potentialTargets);
+            Helper.AssertIsNotNull(parentTransform, potentialTargets, rangeCalculator);
 
             _parentTransform = parentTransform;
             _potentialTargets = potentialTargets;
             _detectionRange = detectionRange;
+            _rangeCalculator = rangeCalculator;
 
             _currentInRangeTargets = new HashSet<ITarget>();
             _newInRangeTargets = new HashSet<ITarget>();
@@ -54,7 +60,7 @@ namespace BattleCruisers.Targets.TargetDetectors
 
             foreach (ITarget potentialTarget in _potentialTargets)
             {
-                if (Vector2.Distance(potentialTarget.Transform.Position, _parentTransform.Position) <= _detectionRange)
+                if (_rangeCalculator.IsInRange(_parentTransform, potentialTarget, _detectionRange))
                 {
                     _newInRangeTargets.Add(potentialTarget);
                 }

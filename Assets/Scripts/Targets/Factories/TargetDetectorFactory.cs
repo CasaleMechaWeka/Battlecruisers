@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -22,7 +23,8 @@ namespace BattleCruisers.Targets.Factories
 
         public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
         {
-            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange);
+            // FELIX  Inject.  Create TargetRangeCalculatorFactory :)
+            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange, new BasicCalculator());
             ManualDetectorPoller poller = CreateManualDetectorPoller(targetDetector);
 
             return new ManualDetectorProvider(poller, targetDetector);

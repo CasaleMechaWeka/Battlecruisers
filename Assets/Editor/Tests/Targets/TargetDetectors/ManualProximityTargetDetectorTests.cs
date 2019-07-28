@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityCommon.PlatformAbstractions;
-using UnityEngine;
 
 namespace BattleCruisers.Tests.Targets.TargetDetectors
 {
@@ -14,6 +14,7 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
 
         private ITransform _parentTransform;
         private float _detectionRange = 7;
+        private IRangeCalculator _rangeCalculator;
         private ITarget _target1, _target2;
         private IList<ITarget> _enteredTargets, _exitedTargets;
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
         public void TestSetup()
         {
             _parentTransform = Substitute.For<ITransform>();
-            _parentTransform.Position.Returns(new Vector3(0, 0, 0));
+            _rangeCalculator = Substitute.For<IRangeCalculator>();
 
             _target1 = Substitute.For<ITarget>();
             _target2 = Substitute.For<ITarget>();
@@ -33,7 +34,7 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
             };
             IReadOnlyCollection<ITarget> readonlyTargets = targets.AsReadOnly();
 
-            _detector = new ManualProximityTargetDetector(_parentTransform, readonlyTargets, _detectionRange);
+            _detector = new ManualProximityTargetDetector(_parentTransform, readonlyTargets, _detectionRange, _rangeCalculator);
 
             _enteredTargets = new List<ITarget>();
             _detector.TargetEntered += (sender, e) => _enteredTargets.Add(e.Target);
@@ -152,12 +153,12 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
 
         private void MakeTargetEnterRange(ITarget target)
         {
-            target.Transform.Position.Returns(new Vector3(_detectionRange, 0, 0));
+            _rangeCalculator.IsInRange(_parentTransform, target, _detectionRange).Returns(true);
         }
 
         private void MakeTargetLeaveRange(ITarget target)
         {
-            target.Transform.Position.Returns(new Vector3(_detectionRange + 0.01f, 0, 0));
+            _rangeCalculator.IsInRange(_parentTransform, target, _detectionRange).Returns(false);
         }
     }
 }
