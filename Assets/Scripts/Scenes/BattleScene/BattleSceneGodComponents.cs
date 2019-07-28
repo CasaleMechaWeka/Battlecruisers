@@ -47,7 +47,7 @@ namespace BattleCruisers.Scenes.BattleScene
             MarkerFactory = GetComponent<MarkerFactory>();
             Assert.IsNotNull(MarkerFactory);
 
-            _updaterProvider = GetComponent<UpdaterProvider>();
+            _updaterProvider = GetComponentInChildren<UpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
             _updaterProvider.Initialise();
         }
