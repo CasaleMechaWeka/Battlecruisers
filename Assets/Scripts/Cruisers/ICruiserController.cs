@@ -17,6 +17,7 @@ namespace BattleCruisers.Cruisers
         IDroneFocuser DroneFocuser { get; }
         ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
+        IUnitTargets UnitTargets { get; }
 
         event EventHandler<BuildingStartedEventArgs> BuildingStarted;
 

@@ -78,6 +78,7 @@ namespace BattleCruisers.Cruisers
         public IDroneFocuser DroneFocuser { get; private set; }
         public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
         public ICruiserUnitMonitor UnitMonitor { get; private set; }
+        public IUnitTargets UnitTargets { get; private set; }
 
         public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
@@ -111,6 +112,7 @@ namespace BattleCruisers.Cruisers
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
+            UnitTargets = new UnitTargets(UnitMonitor);
         }
 
         protected override ITextMesh GetRepairDroneNumText()

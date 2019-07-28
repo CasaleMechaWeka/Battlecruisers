@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -30,11 +29,7 @@ namespace BattleCruisers.Targets.Factories
             ProviderFactory = new TargetProviderFactory(this);
             HelperFactory = new TargetHelperFactory();
             RangeCalculatorProvider = new RangeCalculatorProvider();
-
-            // FELIX  Create in cruiser to avoid duplicates (this class is created for each cruiser)
-            IUnitTargets friendlyTargets = new UnitTargets(parentCruiser.UnitMonitor);
-            IUnitTargets enemyTargets = new UnitTargets(enemyCruiser.UnitMonitor);
-            TargetDetectorFactory = new TargetDetectorFactory(enemyTargets, friendlyTargets, updaterProvider);
+            TargetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
         }
     }
 }
