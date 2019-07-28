@@ -25,22 +25,24 @@ namespace BattleCruisers.Targets.Factories
 
         public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
         {
-            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.Ships);
+            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.Ships, _updaterProvider.SlowerUpdater);
         }
 
         public ManualDetectorProvider CreateFriendlyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
         {
-            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _friendlyTargets.Ships);
+            // Need per frame updater, otherwise friendly boats detect each other too slowly and overlap :)
+            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _friendlyTargets.Ships, _updaterProvider.PerFrameUpdater);
         }
 
         private ManualDetectorProvider CreateTargetDetector(
             ITransform parentTransform,
             float detectionRange,
             IRangeCalculator rangeCalculator,
-            IReadOnlyCollection<ITarget> potentialTargets)
+            IReadOnlyCollection<ITarget> potentialTargets,
+            IUpdater updater)
         {
             IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);
-            ManualDetectorPoller poller = new ManualDetectorPoller(targetDetector, _updaterProvider.SlowerUpdater);
+            ManualDetectorPoller poller = new ManualDetectorPoller(targetDetector, updater);
             return new ManualDetectorProvider(poller, targetDetector);
         }
     }

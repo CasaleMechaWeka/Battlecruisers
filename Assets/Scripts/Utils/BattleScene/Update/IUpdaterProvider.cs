@@ -2,6 +2,7 @@
 {
     public interface IUpdaterProvider
     {
+        IUpdater PerFrameUpdater { get; }
         IUpdater SlowerUpdater { get; }
     }
 }
