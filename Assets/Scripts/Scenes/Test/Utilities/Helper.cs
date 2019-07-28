@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
@@ -12,6 +13,7 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
@@ -537,6 +539,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
             globalBoostProviders.DefenseFireRateBoostProviders.Returns(defenseFireRateBoostProviders);
 
             return globalBoostProviders;
+        }
+
+        // So UnitTargets knows about ships, and ManualProximityTargetProcessor works.
+        public static void SetupFactoryForUnitMonitor(IFactory factory, ICruiser cruiserWithMonitor)
+        {
+            factory.UnitStarted += (sender, e) => SetupUnitForUnitMonitor(e.StartedUnit, cruiserWithMonitor);
+        }
+
+        // So UnitTargets knows about ships, and ManualProximityTargetProcessor works.
+        public static void SetupUnitForUnitMonitor(IUnit unit, ICruiser cruiserWithMonitor)
+        {
+            unit.CompletedBuildable += (sender, e) => cruiserWithMonitor.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unit));
+            unit.Destroyed += (sender, e) => cruiserWithMonitor.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(unit));
         }
 	}
 }

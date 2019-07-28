@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Scenes.Test.Utilities;
-using NSubstitute;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
@@ -36,10 +34,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             {
                 helper.InitialiseUnit(ship, Faction.Reds);
                 ship.StartConstruction();
-
-                // So UnitTargets knows about ships, and ManualProximityTargetProcessor works :)
-                ship.CompletedBuildable += (sender, e) => redCruiser.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(ship));
-                ship.Destroyed += (sender, e) => redCruiser.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(ship));
+                Helper.SetupUnitForUnitMonitor(ship, redCruiser);
 			}
         }
     }
