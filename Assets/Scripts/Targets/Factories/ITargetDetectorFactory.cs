@@ -7,5 +7,6 @@ namespace BattleCruisers.Targets.Factories
     public interface ITargetDetectorFactory
     {
         ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator);
+        ManualDetectorProvider CreateFriendlyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator);
     }
 }

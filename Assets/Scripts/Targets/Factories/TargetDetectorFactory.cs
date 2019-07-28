@@ -1,8 +1,10 @@
-﻿using BattleCruisers.Cruisers.Construction;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
+using System.Collections.Generic;
 using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Targets.Factories
@@ -23,15 +25,23 @@ namespace BattleCruisers.Targets.Factories
 
         public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
         {
-            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _enemyTargets.Ships, detectionRange, rangeCalculator);
-            ManualDetectorPoller poller = CreateManualDetectorPoller(targetDetector);
-
-            return new ManualDetectorProvider(poller, targetDetector);
+            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.Ships);
         }
 
-        private ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector)
+        public ManualDetectorProvider CreateFriendlyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
         {
-            return new ManualDetectorPoller(manualDetector, _updaterProvider.SlowerUpdater);
+            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _friendlyTargets.Ships);
+        }
+
+        private ManualDetectorProvider CreateTargetDetector(
+            ITransform parentTransform,
+            float detectionRange,
+            IRangeCalculator rangeCalculator,
+            IReadOnlyCollection<ITarget> potentialTargets)
+        {
+            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);
+            ManualDetectorPoller poller = new ManualDetectorPoller(targetDetector, _updaterProvider.SlowerUpdater);
+            return new ManualDetectorProvider(poller, targetDetector);
         }
     }
 }
