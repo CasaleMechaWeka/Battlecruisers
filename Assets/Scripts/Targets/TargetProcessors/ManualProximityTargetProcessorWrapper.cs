@@ -16,7 +16,11 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             Assert.IsNull(_manualDetectorProvider, "Should only be called once.");
 
-            ManualDetectorProvider manualDetector = args.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(args.ParentTarget.Transform, args.MaxRangeInM);
+            ManualDetectorProvider manualDetector 
+                = args.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                    args.ParentTarget.Transform,
+                    args.MaxRangeInM,
+                    args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
         }

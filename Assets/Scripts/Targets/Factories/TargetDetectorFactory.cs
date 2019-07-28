@@ -21,10 +21,9 @@ namespace BattleCruisers.Targets.Factories
             _updaterProvider = updaterProvider;
         }
 
-        public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
+        public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
         {
-            // FELIX  Inject.  Create TargetRangeCalculatorFactory :)
-            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange, new BasicCalculator());
+            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange, rangeCalculator);
             ManualDetectorPoller poller = CreateManualDetectorPoller(targetDetector);
 
             return new ManualDetectorProvider(poller, targetDetector);

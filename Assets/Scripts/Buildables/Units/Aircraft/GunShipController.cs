@@ -3,6 +3,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets;
+using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -97,7 +98,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
-            _hoverTargetDetectorProvider = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(Transform, enemyHoverRangeInM);
+            IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.BasicCalculator;
+            _hoverTargetDetectorProvider = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(Transform, enemyHoverRangeInM, rangeCalculator);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _factoryProvider.TargetFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
