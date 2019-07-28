@@ -26,8 +26,19 @@ namespace BattleCruisers.Scenes.Test.Factories
             ICruiser leftCruiser = helper.CreateCruiser(Direction.Right, FactoryFacingRightFaction);
             ICruiser rightCruiser = helper.CreateCruiser(Direction.Left, FactoryFacingLeftFaction);
 
-            helper.InitialiseBuilding(factoryFacingRight, FactoryFacingRightFaction, parentCruiserDirection: leftCruiser.Direction, enemyCruiser: rightCruiser);
-            helper.InitialiseBuilding(factoryFacingLeft, FactoryFacingLeftFaction, parentCruiserDirection: rightCruiser.Direction, enemyCruiser: leftCruiser);
+            helper.InitialiseBuilding(
+                factoryFacingRight, 
+                FactoryFacingRightFaction, 
+                parentCruiserDirection: leftCruiser.Direction, 
+                parentCruiser: leftCruiser,
+                enemyCruiser: rightCruiser);
+
+            helper.InitialiseBuilding(
+                factoryFacingLeft, 
+                FactoryFacingLeftFaction, 
+                parentCruiserDirection: rightCruiser.Direction, 
+                parentCruiser: rightCruiser,
+                enemyCruiser: leftCruiser);
 
 			factoryFacingRight.CompletedBuildable += Factory_CompletedBuildable;
 			factoryFacingLeft.CompletedBuildable += Factory_CompletedBuildable;
@@ -35,8 +46,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 			factoryFacingRight.StartConstruction();
 			factoryFacingLeft.StartConstruction();
 
-            Helper.SetupFactoryForUnitMonitor(factoryFacingRight, rightCruiser);
-            Helper.SetupFactoryForUnitMonitor(factoryFacingLeft, leftCruiser);
+            Helper.SetupFactoryForUnitMonitor(factoryFacingRight, leftCruiser);
+            Helper.SetupFactoryForUnitMonitor(factoryFacingLeft, rightCruiser);
 
             OnStart();
 		}

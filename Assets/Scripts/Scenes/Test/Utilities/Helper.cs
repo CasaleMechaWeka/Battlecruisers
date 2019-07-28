@@ -544,16 +544,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         // So UnitTargets knows about ships, and ManualProximityTargetProcessor works.
-        public static void SetupFactoryForUnitMonitor(IFactory factory, ICruiser cruiserWithMonitor)
+        public static void SetupFactoryForUnitMonitor(IFactory factory, ICruiser parentCruiser)
         {
-            factory.UnitStarted += (sender, e) => SetupUnitForUnitMonitor(e.StartedUnit, cruiserWithMonitor);
+            factory.UnitStarted += (sender, e) => SetupUnitForUnitMonitor(e.StartedUnit, parentCruiser);
         }
 
         // So UnitTargets knows about ships, and ManualProximityTargetProcessor works.
-        public static void SetupUnitForUnitMonitor(IUnit unit, ICruiser cruiserWithMonitor)
+        public static void SetupUnitForUnitMonitor(IUnit unit, ICruiser parentCruiser)
         {
-            unit.CompletedBuildable += (sender, e) => cruiserWithMonitor.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unit));
-            unit.Destroyed += (sender, e) => cruiserWithMonitor.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(unit));
+            unit.CompletedBuildable += (sender, e) => parentCruiser.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unit));
+            unit.Destroyed += (sender, e) => parentCruiser.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(unit));
         }
 	}
 }
