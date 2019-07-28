@@ -32,12 +32,12 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyEntered(object sender, TargetEventArgs args)
 		{
-            Logging.Log(Tags.TARGET_FINDER, args.Target.ToString());
+            Logging.Verbose(Tags.TARGET_FINDER, args.Target.ToString());
 
             if (!args.Target.IsDestroyed
                 && _targetFilter.IsMatch(args.Target))
 			{
-                Logging.Log(Tags.TARGET_FINDER, "Is Match!  " + args.Target);
+                Logging.Verbose(Tags.TARGET_FINDER, "Is Match!  " + args.Target);
 
 				TargetFound?.Invoke(this, args);
 			}
@@ -45,11 +45,11 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void OnEnemyExited(object sender, TargetEventArgs args)
 		{
-            Logging.Log(Tags.TARGET_FINDER, args.Target.ToString());
+            Logging.Verbose(Tags.TARGET_FINDER, args.Target.ToString());
 
 			if (_targetFilter.IsMatch(args.Target))
 			{
-                Logging.Log(Tags.TARGET_FINDER, "Is Match!  " + args.Target);
+                Logging.Verbose(Tags.TARGET_FINDER, "Is Match!  " + args.Target);
 				
                 TargetLost?.Invoke(this, args);
 			}

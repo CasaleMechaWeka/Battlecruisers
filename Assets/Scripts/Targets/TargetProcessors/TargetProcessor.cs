@@ -21,7 +21,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             get
             {
                 ITarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget?.Target;
-                Logging.Log(Tags.TARGET_PROCESSORS, string.Empty + highestPriorityTarget);
+                Logging.Verbose(Tags.TARGET_PROCESSORS, string.Empty + highestPriorityTarget);
                 return highestPriorityTarget;
             }
         }
@@ -36,7 +36,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         private void _rankedTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
-            Logging.Log(Tags.TARGET_PROCESSORS, $"Updating {_targetConsumers.Count} target consumers :)");
+            Logging.Verbose(Tags.TARGET_PROCESSORS, $"Updating {_targetConsumers.Count} target consumers :)");
 
             // PERF  Copying list to avoid modification while enumeration exception :P
             // Copy list to avoid Add-/Remove- TargetConsumer during this method 

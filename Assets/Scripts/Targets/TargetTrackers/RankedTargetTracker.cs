@@ -44,7 +44,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.RANKED_TARGET_TRACKER, e.Target.ToString());
+            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, e.Target.ToString());
 
             if (AreTrackingTarget(e.Target))
             {
@@ -93,7 +93,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
         {
-            Logging.Log(Tags.RANKED_TARGET_TRACKER, e.Target.ToString());
+            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, e.Target.ToString());
 
             if (!AreTrackingTarget(e.Target))
             {
