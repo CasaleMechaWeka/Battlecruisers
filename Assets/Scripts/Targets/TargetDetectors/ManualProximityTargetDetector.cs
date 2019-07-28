@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    // FELIX  Use
     public class ManualProximityTargetDetector : IManualProximityTargetDetector
     {
         private readonly ITransform _parentTransform;

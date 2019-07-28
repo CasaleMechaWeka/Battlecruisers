@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Use :D
     public class UnitTargets : IUnitTargets
     {
         private readonly HashSet<ITarget> _ships;

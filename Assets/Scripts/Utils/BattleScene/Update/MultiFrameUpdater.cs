@@ -7,7 +7,6 @@ namespace BattleCruisers.Utils.BattleScene.Update
     /// <summary>
     /// Emits the Updated event during the first frame after the specified amount of time.
     /// </summary>
-    /// FELIX  Use
     public class MultiFrameUpdater : IUpdater
     {
         private readonly IDeltaTimeProvider _timeProvider;
