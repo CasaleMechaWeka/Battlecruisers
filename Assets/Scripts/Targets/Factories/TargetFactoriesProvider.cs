@@ -16,6 +16,7 @@ namespace BattleCruisers.Targets.Factories
         public ITargetProviderFactory ProviderFactory { get; }
         public ITargetHelperFactory HelperFactory { get; }
         public ITargetDetectorFactory TargetDetectorFactory { get; }
+        public IRangeCalculatorProvider RangeCalculatorProvider { get; }
 
         public TargetFactoriesProvider(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker, IUpdaterProvider updaterProvider)
         {
@@ -28,6 +29,7 @@ namespace BattleCruisers.Targets.Factories
             RankerFactory = new TargetRankerFactory();
             ProviderFactory = new TargetProviderFactory(this);
             HelperFactory = new TargetHelperFactory();
+            RangeCalculatorProvider = new RangeCalculatorProvider();
 
             IUnitTargets unitTargets = new UnitTargets(enemyCruiser.UnitMonitor);
             TargetDetectorFactory = new TargetDetectorFactory(unitTargets, updaterProvider);

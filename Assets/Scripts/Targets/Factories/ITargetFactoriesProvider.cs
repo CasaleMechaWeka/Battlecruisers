@@ -10,5 +10,6 @@
         ITargetProviderFactory ProviderFactory { get; }
         ITargetHelperFactory HelperFactory { get; }
         ITargetDetectorFactory TargetDetectorFactory { get; }
+        IRangeCalculatorProvider RangeCalculatorProvider { get; }
     }
 }
