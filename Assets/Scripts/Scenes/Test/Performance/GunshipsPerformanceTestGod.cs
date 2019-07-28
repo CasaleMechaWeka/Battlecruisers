@@ -44,7 +44,11 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup naval factory
             Factory navalFactory = FindObjectOfType<Factory>();
-            Assert.IsNotNull(navalFactory);
+            if (navalFactory == null)
+            {
+                return;
+            }
+
             helper.InitialiseBuilding(navalFactory, Faction.Reds, parentCruiserDirection: Direction.Left);
             navalFactory.CompletedBuildable += Factory_CompletedBuildable;
             navalFactory.StartConstruction();
