@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Targets.Helpers
 {
-    // FELIX   Test :)
     public class BasicCalculator : IRangeCalculator
     {
         public bool IsInRange(ITransform parentTransform, ITarget target, float rangeInM)
