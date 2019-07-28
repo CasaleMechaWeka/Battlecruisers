@@ -33,6 +33,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
@@ -52,17 +53,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
         private readonly IDeferrer _deferrer;
+        private readonly IUpdaterProvider _updaterProvider;
 
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
         public Helper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES, 
             float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
-            IDeferrer deferrer = null)
+            IDeferrer deferrer = null,
+            IUpdaterProvider updaterProvider = null)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             _deferrer = deferrer;
+            _updaterProvider = updaterProvider;
 		}
 
         public void InitialiseBuilding(
@@ -108,7 +112,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
                     deferrer: _deferrer,
-                    trackerFactory: trackerFactory);
+                    trackerFactory: trackerFactory,
+                    updaterProvider: _updaterProvider);
 
             InitialiseBuilding(building, args, parentSlot);
         }
@@ -169,7 +174,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					parentCruiserDirection,
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
-                    trackerFactory: trackerFactory);
+                    trackerFactory: trackerFactory,
+                    updaterProvider: _updaterProvider);
 
             InitialiseUnit(unit, args);
 		}

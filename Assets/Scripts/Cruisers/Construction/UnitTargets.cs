@@ -39,7 +39,7 @@ namespace BattleCruisers.Cruisers.Construction
             }
         }
 
-        // May occur for uncompleted unti.
+        // May occur for uncompleted unit.
         private void CruiserUnitMonitor_UnitDestroyed(object sender, UnitDestroyedEventArgs e)
         {
             switch (e.DestroyedUnit.TargetType)
