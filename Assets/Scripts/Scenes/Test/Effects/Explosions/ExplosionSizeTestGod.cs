@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects.Explosions
@@ -8,10 +9,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
         void Start()
         {
             AdvancedExplosion[] explosions = GetComponentsInChildren<AdvancedExplosion>(includeInactive: true);
+            IRandomGenerator random = new RandomGenerator();
 
             foreach (AdvancedExplosion explosion in explosions)
             {
-                explosion.Initialise();
+                explosion.Initialise(random);
                 explosion.gameObject.SetActive(true);
             }
         }

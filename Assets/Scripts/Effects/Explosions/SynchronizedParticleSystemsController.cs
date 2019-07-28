@@ -1,16 +1,22 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
     public class SynchronizedParticleSystemsController : MonoBehaviour
     {
-        public void Initialise()
+        public void Initialise(IRandomGenerator randomGenerator)
         {
-            ParticleSystem[] particleSystems = GetComponentsInChildren<ParticleSystem>();
+            Assert.IsNotNull(randomGenerator);
+
+            int seed = randomGenerator.Range(0, int.MaxValue);
+
+            ParticleSystem[] particleSystems = GetComponentsInChildren<ParticleSystem>(includeInactive: true);
 
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                particleSystem.randomSeed = particleSystems[0].randomSeed;
+                particleSystem.randomSeed = (uint)seed;
             }
         }
     }
