@@ -9,7 +9,6 @@ using BattleCruisers.Utils.Fetchers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
@@ -24,35 +23,44 @@ namespace BattleCruisers.Scenes.Test.Performance
             base.Start();
 
             shipPrefab.Initialise();
-            Helper helper = new Helper();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
+
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
+            ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
             // Setup gunships
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
 
             BuildableGroupController gunshipsGroup = FindObjectOfType<BuildableGroupController>();
-            Assert.IsNotNull(gunshipsGroup);
-            BuildableInitialisationArgs groupArgs 
-                = new BuildableInitialisationArgs(
-                    helper, 
-                    Faction.Blues, 
-                    aircraftProvider: aircraftProvider, 
-                    updaterProvider: _updaterProvider,
-                    enemyCruiser: redCruiser);
-            gunshipsGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+            if (gunshipsGroup != null)
+            {
+                BuildableInitialisationArgs groupArgs
+                    = new BuildableInitialisationArgs(
+                        helper,
+                        Faction.Blues,
+                        aircraftProvider: aircraftProvider,
+                        updaterProvider: _updaterProvider,
+                        enemyCruiser: redCruiser,
+                        parentCruiser: blueCruiser);
+                gunshipsGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+            }
 
             // Setup naval factory
             Factory navalFactory = FindObjectOfType<Factory>();
-            if (navalFactory == null)
+            if (navalFactory != null)
             {
-                return;
+                helper.InitialiseBuilding(navalFactory, Faction.Reds, parentCruiserDirection: Direction.Left, parentCruiser: redCruiser, enemyCruiser: blueCruiser);
+                navalFactory.CompletedBuildable += Factory_CompletedBuildable;
+                navalFactory.StartConstruction();
+                Helper.SetupFactoryForUnitMonitor(navalFactory, redCruiser);
             }
 
-            helper.InitialiseBuilding(navalFactory, Faction.Reds, parentCruiserDirection: Direction.Left);
-            navalFactory.CompletedBuildable += Factory_CompletedBuildable;
-            navalFactory.StartConstruction();
-            Helper.SetupFactoryForUnitMonitor(navalFactory, redCruiser);
+            // Setup target (to keep attack boats on screen :P)
+            DroneStation target = FindObjectOfType<DroneStation>();
+            helper.InitialiseBuilding(target, Faction.Blues);
+            target.StartConstruction();
         }
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
