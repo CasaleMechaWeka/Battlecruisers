@@ -42,7 +42,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 				smoothTimeInS = MAX_VELOCITY_SMOOTH_TIME;
 			}
 
-			Logging.Log(Tags.MOVEMENT, "smoothTimeInS: " + smoothTimeInS);
+			Logging.Verbose(Tags.MOVEMENT, "smoothTimeInS: " + smoothTimeInS);
 			return smoothTimeInS;
 		}
 	}
