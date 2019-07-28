@@ -117,7 +117,7 @@ namespace BattleCruisers.Projectiles
 
         void OnTriggerEnter2D(Collider2D collider)
 		{
-            Logging.LogDefault(Tags.SHELLS);
+            Logging.LogMethod(Tags.SHELLS);
 
 			ITarget target = collider.gameObject.GetComponent<ITarget>();
 

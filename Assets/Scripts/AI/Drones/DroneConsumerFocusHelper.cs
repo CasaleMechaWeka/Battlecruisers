@@ -21,7 +21,7 @@ namespace BattleCruisers.AI.Drones
 
         public void FocusOnNonFactoryDroneConsumer(bool forceInProgressBuildingToFocused)
         {
-            Logging.LogDefault(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
+            Logging.LogMethod(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
 
             if (!_factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones)
             {

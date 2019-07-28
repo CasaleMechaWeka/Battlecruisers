@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		
 		private void StartBuildingUnit()
 		{
-            Logging.LogDefault(Tags.FACTORY);
+            Logging.LogMethod(Tags.FACTORY);
 
 			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper);
 			UnitUnderConstruction.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider);
@@ -189,7 +189,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override void OnDestroyed()
 		{
-            Logging.LogDefault(Tags.FACTORY);
+            Logging.LogMethod(Tags.FACTORY);
 
 			base.OnDestroyed();
 			DestroyUnitUnderConstruction();

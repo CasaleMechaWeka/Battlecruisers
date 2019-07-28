@@ -209,7 +209,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.OnDeathWhileCompleted();
 
-            Logging.LogDefault(Tags.AIRCRAFT);
+            Logging.LogMethod(Tags.AIRCRAFT);
 
             // Pass on current velocity
             rigidBody.AddForce(Velocity, ForceMode2D.Impulse);

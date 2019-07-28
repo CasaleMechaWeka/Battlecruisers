@@ -89,7 +89,7 @@ namespace BattleCruisers.AI.Drones
 
         private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
-			Logging.LogDefault(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
+			Logging.LogMethod(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
 
             if (_strategy.EvaluateWhenUnitStarted)
             {

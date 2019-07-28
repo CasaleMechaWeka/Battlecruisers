@@ -153,7 +153,7 @@ namespace BattleCruisers.Cruisers
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
-            Logging.LogDefault(Tags.CRUISER);
+            Logging.LogMethod(Tags.CRUISER);
 
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();

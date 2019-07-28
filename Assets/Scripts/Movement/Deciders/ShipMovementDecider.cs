@@ -63,7 +63,7 @@ namespace BattleCruisers.Movement.Deciders
 
         private void TriggerDecideMovement(object sender, EventArgs args)
         {
-            Logging.LogDefault(Tags.SHIP_MOVEMENT_DECIDER);
+            Logging.LogMethod(Tags.SHIP_MOVEMENT_DECIDER);
             DecideMovement();
         }
 

@@ -172,13 +172,13 @@ namespace BattleCruisers.Buildables.Units.Ships
 
 		public void StartMoving()
 		{
-			Logging.LogDefault(Tags.SHIPS);
+			Logging.LogMethod(Tags.SHIPS);
 			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
 		}
 
 		public void StopMoving()
 		{
-            Logging.LogDefault(Tags.SHIPS);
+            Logging.LogMethod(Tags.SHIPS);
 			rigidBody.velocity = new Vector2(0, 0);
 		}
 

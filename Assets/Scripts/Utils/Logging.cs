@@ -185,15 +185,6 @@ namespace BattleCruisers.Utils
             return tagsToActiveness;
 		}
 
-        public static void LogDefault(
-            string tag,
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
-        {
-            Log(LoggingLevel.Normal, tag, CreateMessage(string.Empty, memberName, sourceFilePath, sourceLineNumber));
-        }
-
         public static void LogMethod(
             string tag,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",

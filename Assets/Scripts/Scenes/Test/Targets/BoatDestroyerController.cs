@@ -12,12 +12,12 @@ namespace BattleCruisers.Scenes.Test.Targets
 
         void Start()
         {
-            Logging.LogDefault(Tags.SHIPS);
+            Logging.LogMethod(Tags.SHIPS);
         }
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            Logging.LogDefault(Tags.SHIPS);
+            Logging.LogMethod(Tags.SHIPS);
 
             _ship = collider.gameObject.GetComponent<AttackBoatController>();
             Assert.IsNotNull(_ship);
