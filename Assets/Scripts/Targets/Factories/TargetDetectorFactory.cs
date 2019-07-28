@@ -15,16 +15,20 @@ namespace BattleCruisers.Targets.Factories
         {
             Helper.AssertIsNotNull(unitTargets, updaterProvider);
 
+            // FELIX  Also need friendly unit targets, for ships sensing blocking friendly units :P
             _unitTargets = unitTargets;
             _updaterProvider = updaterProvider;
         }
 
-        public IManualProximityTargetDetector CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
+        public ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange)
         {
-            return new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange);
+            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, _unitTargets.Ships, detectionRange);
+            ManualDetectorPoller poller = CreateManualDetectorPoller(targetDetector);
+
+            return new ManualDetectorProvider(poller, targetDetector);
         }
 
-        public ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector)
+        private ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector)
         {
             return new ManualDetectorPoller(manualDetector, _updaterProvider.SlowerUpdater);
         }

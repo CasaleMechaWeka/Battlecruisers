@@ -5,7 +5,6 @@ namespace BattleCruisers.Targets.Factories
 {
     public interface ITargetDetectorFactory
     {
-        IManualProximityTargetDetector CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange);
-        ManualDetectorPoller CreateManualDetectorPoller(IManualDetector manualDetector);
+        ManualDetectorProvider CreateEnemyShipTargetDetector(ITransform parentTransform, float detectionRange);
     }
 }

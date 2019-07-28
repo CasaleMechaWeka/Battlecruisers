@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private bool _isAtCruisingHeight;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private ManualDetectorPoller _detectorPoller;
+        private ManualDetectorProvider _hoverTargetDetectorProvider;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
@@ -97,10 +97,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
-            IManualProximityTargetDetector hoverRangeEnemyDetector = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(Transform, enemyHoverRangeInM);
-            _detectorPoller = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateManualDetectorPoller(hoverRangeEnemyDetector);
+            _hoverTargetDetectorProvider = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(Transform, enemyHoverRangeInM);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(hoverRangeEnemyDetector, enemyDetectionFilter);
+            _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _factoryProvider.TargetFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
 
