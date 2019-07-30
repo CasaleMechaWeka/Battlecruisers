@@ -4,7 +4,7 @@ using System;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    public class ManualDetectorPoller
+    public class ManualDetectorPoller : IManagedDisposable
     {
         private readonly IManualDetector _manualDetector;
         private readonly IUpdater _updater;
@@ -22,6 +22,11 @@ namespace BattleCruisers.Targets.TargetDetectors
         private void _updater_Updated(object sender, EventArgs e)
         {
             _manualDetector.Detect();
+        }
+
+        public void DisposeManagedState()
+        {
+            _updater.Updated -= _updater_Updated;
         }
     }
 }

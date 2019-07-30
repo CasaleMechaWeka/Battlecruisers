@@ -26,5 +26,13 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
             _updater.Updated += Raise.Event();
             _manualDetector.Received().Detect();
         }
+
+        [Test]
+        public void DisposeManagedState()
+        {
+            _detectorPoller.DisposeManagedState();
+            _updater.Updated += Raise.Event();
+            _manualDetector.DidNotReceive().Detect();
+        }
     }
 }

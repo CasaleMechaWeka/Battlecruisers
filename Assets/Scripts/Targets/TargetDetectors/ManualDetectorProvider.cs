@@ -6,12 +6,9 @@ namespace BattleCruisers.Targets.TargetDetectors
     /// Manual target detection requires two components that always work together.
     /// This class groups those two components.
     /// </summary>
-    public class ManualDetectorProvider
+    public class ManualDetectorProvider : IManagedDisposable
     {
-        // Hold reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
         private readonly ManualDetectorPoller _detectorPoller;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
         public IManualProximityTargetDetector TargetDetector { get; }
 
@@ -21,6 +18,11 @@ namespace BattleCruisers.Targets.TargetDetectors
 
             _detectorPoller = detectorPoller;
             TargetDetector = targetDetector;
+        }
+
+        public void DisposeManagedState()
+        {
+            _detectorPoller.DisposeManagedState();
         }
     }
 }
