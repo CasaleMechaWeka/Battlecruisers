@@ -32,11 +32,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private ShipTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
-
-        // Hold reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
@@ -182,7 +178,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void OnDestroyed()
         {
-            DisposeMovement();
+            CleanUp();
             base.OnDestroyed();
         }
 
@@ -216,21 +212,24 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public void DisableMovement()
         {
-            DisposeMovement();
+            CleanUp();
         }
 
-        private void DisposeMovement()
+        private void CleanUp()
         {
-            if (_movementDecider != null)
+            if (BuildableState == BuildableState.Completed)
             {
                 _movementDecider.DisposeManagedState();
                 _movementDecider = null;
-            }
 
-            if (_movementTargetProcessor != null)
-            {
                 _movementTargetProcessor.DisposeManagedState();
                 _movementTargetProcessor = null;
+
+                _enemyDetectorProvider.DisposeManagedState();
+                _enemyDetectorProvider = null;
+
+                _friendDetectorProvider.DisposeManagedState();
+                _friendDetectorProvider = null;
             }
         }
     }

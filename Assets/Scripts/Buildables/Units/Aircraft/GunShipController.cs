@@ -26,10 +26,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
-        // Hold reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
         private ManualDetectorProvider _hoverTargetDetectorProvider;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
         private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
 
@@ -158,12 +155,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void CleanUp()
 		{
-            _followingTargetProcessor.DisposeManagedState();
+            if (BuildableState == BuildableState.Completed)
+            {
+                _followingTargetProcessor.DisposeManagedState();
+                _followingTargetProcessor = null;
 
-            _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
-            _inRangeTargetFinder.DisposeManagedState();
+                _inRangeTargetFinder.DisposeManagedState();
+                _inRangeTargetFinder = null;
 
-            _inRangeTargetTracker.DisposeManagedState();
+                _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
+                _inRangeTargetTracker.DisposeManagedState();
+                _inRangeTargetTracker = null;
+
+                _hoverTargetDetectorProvider.DisposeManagedState();
+                _hoverTargetDetectorProvider = null;
+            }
 		}
 
         protected override List<SpriteRenderer> GetInGameRenderers()
