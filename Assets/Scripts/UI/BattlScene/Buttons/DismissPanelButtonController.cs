@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private Image _closeImage;
         protected override MaskableGraphic Graphic => _closeImage;
 
-        public virtual void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
         {
             base.Initialise();
 
