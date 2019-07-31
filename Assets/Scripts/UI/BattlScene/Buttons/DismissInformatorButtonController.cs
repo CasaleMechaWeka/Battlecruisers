@@ -1,25 +1,21 @@
 ﻿using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class DismissInformatorButtonController : Togglable, IPointerClickHandler
+    public class DismissInformatorButtonController : DismissPanelButtonController
     {
-        private IUIManager _uiManager;
-        private FilterToggler _isEnabledToggler, _helpLabelVisibilityToggler;
+        private FilterToggler _helpLabelVisibilityToggler;
 
         public void Initialise(
             IUIManager uiManager, 
             IBroadcastingFilter shouldBeEnabledFilter, 
             IBroadcastingFilter helpLabelVisibilityFilter)
 		{
-            Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter, helpLabelVisibilityFilter);
+            base.Initialise(uiManager, shouldBeEnabledFilter);
 
-            _uiManager = uiManager;
-            _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
+            Assert.IsNotNull(helpLabelVisibilityFilter);
 
             HelpLabel helpLabel = GetComponentInChildren<HelpLabel>();
             Assert.IsNotNull(helpLabel);
@@ -27,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _helpLabelVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             _uiManager.HideItemDetails();
         }
