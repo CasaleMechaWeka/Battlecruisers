@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Common
 
             if (_canvasGroup == null)
             {
-                _buttonImage = GetComponentInChildren<Image>();
+                _buttonImage = GetComponentInChildren<Image>(includeInactive: true);
                 Assert.IsNotNull(_buttonImage);
             }
         }
