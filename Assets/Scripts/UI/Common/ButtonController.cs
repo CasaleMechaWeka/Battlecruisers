@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Common
 
         protected override bool ToggleVisibility => true;
 
-        private Image _buttonImage;
+        protected Image _buttonImage;
         protected override MaskableGraphic Graphic => _buttonImage;
 
         private CanvasGroup _canvasGroup;
