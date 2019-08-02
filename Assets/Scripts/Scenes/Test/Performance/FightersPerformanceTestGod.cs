@@ -15,6 +15,7 @@ namespace BattleCruisers.Scenes.Test.Performance
         public List<Vector2> patrolPoints;
         public Vector2 spawnPosition;
         public UnitWrapper shipPrefab;
+        public BuildableGroupController leftFighterGroup, rightFighterGroup;
 
         protected override void Start()
         {
@@ -31,19 +32,32 @@ namespace BattleCruisers.Scenes.Test.Performance
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
 
-            BuildableGroupController fightersGroup = FindObjectOfType<BuildableGroupController>();
-            if (fightersGroup != null)
+            InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, prefabFactory, leftFighterGroup);
+            InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, prefabFactory, rightFighterGroup);
+        }
+
+        private void InitialiseGroup(
+            Helper helper, 
+            ICruiser enemyCruiser, 
+            ICruiser parentCruiser, 
+            IAircraftProvider aircraftProvider,
+            IPrefabFactory prefabFactory,
+            BuildableGroupController fightersGroup)
+        {
+            if (fightersGroup == null)
             {
-                BuildableInitialisationArgs groupArgs
-                    = new BuildableInitialisationArgs(
-                        helper,
-                        Faction.Blues,
-                        aircraftProvider: aircraftProvider,
-                        updaterProvider: _updaterProvider,
-                        enemyCruiser: redCruiser,
-                        parentCruiser: blueCruiser);
-                fightersGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+                return;
             }
+
+            BuildableInitialisationArgs groupArgs
+                = new BuildableInitialisationArgs(
+                    helper,
+                    parentCruiser.Faction,
+                    aircraftProvider: aircraftProvider,
+                    updaterProvider: _updaterProvider,
+                    enemyCruiser: enemyCruiser,
+                    parentCruiser: parentCruiser);
+            fightersGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
         }
     }
 }
