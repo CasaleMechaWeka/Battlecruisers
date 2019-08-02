@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
 using BattleCruisers.Utils;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
     public class GameSpeedController : MonoBehaviour
     {
+        private ITime _time;
         private Text _gameSpeedText;
         private ICommand _increaseSpeedCommand, _decreaseSpeedCommand;
         private ButtonController _increaseSpeedButton, _decreaseSpeedButton;
@@ -23,10 +25,10 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private float GameSpeed
         {
-            get { return Time.timeScale; }
+            get { return _time.TimeScale; }
             set
             {
-                Time.timeScale = value;
+                _time.TimeScale = value;
                 _gameSpeedText.text = SPEED_PREFIX + value.ToString();
 
                 _increaseSpeedCommand.EmitCanExecuteChanged();
@@ -36,6 +38,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         void Start()
         {
+            _time = new TimeBC();
+
             _gameSpeedText = GetComponent<Text>();
             Assert.IsNotNull(_gameSpeedText);
 
