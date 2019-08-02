@@ -17,7 +17,7 @@ namespace BattleCruisers.Effects.Explosions
         // PERF  Cache explosions, instead of creating and destroying each explosion :P
         public void ShowExplosion(IExplosionStats explosionStats, Vector2 position)
         {
-            CartoonExplosion explosion = _prefabFactory.CreateCartoonExplosion(explosionStats);
+            IExplosion explosion = _prefabFactory.CreateExplosion(explosionStats);
             explosion.Show(position);
         }
     }

@@ -22,6 +22,6 @@ namespace BattleCruisers.Utils.Fetchers
 
         CountdownController CreateDeleteCountdown(Transform parent);
 
-        CartoonExplosion CreateCartoonExplosion(IExplosionStats explosionStats);
+        IExplosion CreateExplosion(IExplosionStats explosionStats);
 	}
 }

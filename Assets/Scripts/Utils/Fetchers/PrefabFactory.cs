@@ -7,6 +7,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers
 {
@@ -14,10 +15,14 @@ namespace BattleCruisers.Utils.Fetchers
     public class PrefabFactory : IPrefabFactory
 	{
 		private readonly PrefabFetcher _prefabFetcher;
+        private readonly IRandomGenerator _randomGenerator;
 
 		public PrefabFactory(PrefabFetcher prefabFetcher)
 		{
+            Assert.IsNotNull(prefabFetcher);
+
 			_prefabFetcher = prefabFetcher;
+            _randomGenerator = new RandomGenerator();
 		}
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
@@ -78,12 +83,12 @@ namespace BattleCruisers.Utils.Fetchers
             return newCountdown;
         }
 
-        public CartoonExplosion CreateCartoonExplosion(IExplosionStats explosionStats)
+        public IExplosion CreateExplosion(IExplosionStats explosionStats)
         {
             IPrefabKey explosionKey = GetExplosionKey(explosionStats.Size);
-            CartoonExplosion explosionPrefab = _prefabFetcher.GetPrefab<CartoonExplosion>(explosionKey);
-            CartoonExplosion newExplosion = Object.Instantiate(explosionPrefab);
-            newExplosion.Initialise(explosionStats.ShowTrails);
+            AdvancedExplosion explosionPrefab = _prefabFetcher.GetPrefab<AdvancedExplosion>(explosionKey);
+            AdvancedExplosion newExplosion = Object.Instantiate(explosionPrefab);
+            newExplosion.Initialise(_randomGenerator);
             return newExplosion;
         }
 
@@ -92,16 +97,16 @@ namespace BattleCruisers.Utils.Fetchers
             switch (explosionSize)
             {
                 case ExplosionSize.Small:
-                    return StaticPrefabKeys.Explosions.CartoonExplosion75;
+                    return StaticPrefabKeys.Explosions.HDExplosion75;
 
                 case ExplosionSize.Medium:
-                    return StaticPrefabKeys.Explosions.CartoonExplosion100;
+                    return StaticPrefabKeys.Explosions.HDExplosion100;
 
                 case ExplosionSize.Large:
-                    return StaticPrefabKeys.Explosions.CartoonExplosion150;
+                    return StaticPrefabKeys.Explosions.HDExplosion150;
 
                 case ExplosionSize.Giant:
-                    return StaticPrefabKeys.Explosions.CartoonExplosion500;
+                    return StaticPrefabKeys.Explosions.HDExplosion500;
 
                 default:
                     throw new System.ArgumentException();
