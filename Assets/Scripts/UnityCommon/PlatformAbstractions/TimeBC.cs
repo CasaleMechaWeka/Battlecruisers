@@ -4,10 +4,23 @@ namespace UnityCommon.PlatformAbstractions
 {
     public class TimeBC : ITime
     {
+        private readonly float _defaultFixedDeltaTime;
+
+        public TimeBC()
+        {
+            _defaultFixedDeltaTime = Time.fixedDeltaTime;
+        }
+
         public float TimeScale
         {
             get { return Time.timeScale; }
-            set { Time.timeScale = value; }
+            set
+            {
+                Time.timeScale = value;
+
+                // Also adjust physics time scale
+                Time.fixedDeltaTime = _defaultFixedDeltaTime * Time.timeScale;
+            }
         }
 
         public float TimeSinceGameStartInS => Time.time;
