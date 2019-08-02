@@ -12,9 +12,8 @@
     {
         ExplosionSize Size { get; }
 
-        // An explosion consists of 2 parts.  The core explosion, and the trails that
-        // shoot everywhere.  ShowTrails determines whether to show the second explosion
-        // part.
+        // PERF  This is currently unused.  May need to start using it to reduce explosion
+        // complexity for performance.
         bool ShowTrails { get; }
     }
 }

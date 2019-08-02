@@ -8,13 +8,13 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
     {
         void Start()
         {
-            AdvancedExplosion[] explosions = GetComponentsInChildren<AdvancedExplosion>(includeInactive: true);
+            AdvancedExplosion[] explosions = GetComponentsInChildren<AdvancedExplosion>();
             IRandomGenerator random = new RandomGenerator();
 
             foreach (AdvancedExplosion explosion in explosions)
             {
                 explosion.Initialise(random);
-                explosion.gameObject.SetActive(true);
+                explosion.Show(explosion.transform.position);
             }
         }
     }
