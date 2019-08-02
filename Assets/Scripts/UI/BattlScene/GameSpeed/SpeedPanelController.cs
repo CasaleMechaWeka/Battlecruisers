@@ -2,6 +2,7 @@
 using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.Filters;
 using System.Linq;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,10 +23,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
             GameSpeedButton[] speedButtons = GetComponentsInChildren<GameSpeedButton>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, speedButtons.Length);
-            
+            ITime time = new TimeBC();
+
             foreach (GameSpeedButton speedButton in speedButtons)
             {
-                speedButton.Initialise(shouldBeEnabledFilter);
+                speedButton.Initialise(shouldBeEnabledFilter, time);
             }
 
             _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>());

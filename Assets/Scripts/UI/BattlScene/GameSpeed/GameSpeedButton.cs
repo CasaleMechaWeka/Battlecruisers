@@ -2,7 +2,7 @@
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
     public class GameSpeedButton : CanvasGroupButton, IToggleButton
     {
+        private ITime _time;
         private FilterToggler _isEnabledToggler;
 
         private const float DEFAULT_TIME_SCALE = 1;
@@ -26,19 +27,21 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             set
             {
                 selectedFeedback.gameObject.SetActive(value);
-                Time.timeScale = value ? timeScale : DEFAULT_TIME_SCALE;
+
+                _time.TimeScale = value ? timeScale : DEFAULT_TIME_SCALE;
             }
         }
 
-        public void Initialise(IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(IBroadcastingFilter shouldBeEnabledFilter, ITime time)
         {
             base.Initialise();
 
             Assert.IsTrue(timeScale >= 0);
-            Helper.AssertIsNotNull(selectedFeedback, shouldBeEnabledFilter);
+            Helper.AssertIsNotNull(selectedFeedback, shouldBeEnabledFilter, time);
 
             IsSelected = false;
             _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
+            _time = time;
         }
 
         protected override void OnClicked()
