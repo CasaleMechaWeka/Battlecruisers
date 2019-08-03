@@ -34,6 +34,11 @@ namespace BattleCruisers.Targets.Factories
             return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _friendlyTargets.Ships, _updaterProvider.PhysicsUpdater);
         }
 
+        public ManualDetectorProvider CreateEnemyAircraftTargetDetector(ITransform parentTransform, float detectionRange, IRangeCalculator rangeCalculator)
+        {
+            return CreateTargetDetector(parentTransform, detectionRange, rangeCalculator, _enemyTargets.Aircraft, _updaterProvider.SlowerUpdater);
+        }
+
         private ManualDetectorProvider CreateTargetDetector(
             ITransform parentTransform,
             float detectionRange,
