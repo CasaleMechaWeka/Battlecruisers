@@ -123,22 +123,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             UpdateMovementController();
 		}
 
-		protected override void OnDestroyed()
-		{
-			base.OnDestroyed();
-
-			if (BuildableState == BuildableState.Completed
-				&& !IsInKamikazeMode)
-			{
-				CleanUp();
-			}
-		}
-
-		protected override void OnKamikaze()
-		{
-			CleanUp();
-		}
-
         private void UpdateMovementController()
         {
             ActiveMovementController = ChooseMovementController();
@@ -153,23 +137,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             return PatrollingMovementController;
         }
 
-		private void CleanUp()
+		protected override void CleanUp()
 		{
-            if (BuildableState == BuildableState.Completed)
-            {
-                _followingTargetProcessor.DisposeManagedState();
-                _followingTargetProcessor = null;
+            _followingTargetProcessor.DisposeManagedState();
+            _followingTargetProcessor = null;
 
-                _inRangeTargetFinder.DisposeManagedState();
-                _inRangeTargetFinder = null;
+            _inRangeTargetFinder.DisposeManagedState();
+            _inRangeTargetFinder = null;
 
-                _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
-                _inRangeTargetTracker.DisposeManagedState();
-                _inRangeTargetTracker = null;
+            _inRangeTargetTracker.TargetsChanged -= _hoverRangeTargetTracker_TargetsChanged;
+            _inRangeTargetTracker.DisposeManagedState();
+            _inRangeTargetTracker = null;
 
-                _hoverTargetDetectorProvider.DisposeManagedState();
-                _hoverTargetDetectorProvider = null;
-            }
+            _hoverTargetDetectorProvider.DisposeManagedState();
+            _hoverTargetDetectorProvider = null;
 		}
 
         protected override List<SpriteRenderer> GetInGameRenderers()

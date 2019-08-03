@@ -176,8 +176,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_kamikazeController.gameObject.SetActive(true);
         }
 
-        protected virtual void OnKamikaze() { }
-
         protected IList<IPatrolPoint> ProcessPatrolPoints(IList<Vector2> patrolPositions, Action onFirstPatrolPointReached)
         {
 			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
@@ -202,7 +200,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
+
             _localBoosterBoostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
+
+            if (BuildableState == BuildableState.Completed
+                && !IsInKamikazeMode)
+            {
+                CleanUp();
+            }
         }
 
         protected override void OnDeathWhileCompleted()
@@ -217,5 +222,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             // Make aircraft spin a bit for coolness
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
         }
+
+        private void OnKamikaze()
+        {
+            CleanUp();
+        }
+
+        protected virtual void CleanUp() { }
     }
 }

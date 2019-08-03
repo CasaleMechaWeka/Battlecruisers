@@ -256,15 +256,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			return new Vector2(xVelocity, 0);
         }
 
-		protected override void OnDestroyed()
-		{
-			base.OnDestroyed();
-
-			if (BuildableState == BuildableState.Completed)
-			{
-				_targetProcessor.RemoveTargetConsumer(this);
-				_targetProcessor = null;
-			}
-		}
-	}
+        protected override void CleanUp()
+        {
+			_targetProcessor.RemoveTargetConsumer(this);
+			_targetProcessor = null;
+        }
+    }
 }

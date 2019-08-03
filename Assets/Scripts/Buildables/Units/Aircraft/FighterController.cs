@@ -181,23 +181,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-		protected override void OnDestroyed()
-		{
-			base.OnDestroyed();
-
-			if (BuildableState == BuildableState.Completed
-                && !IsInKamikazeMode)
-            {
-                CleanUp();
-            }
-        }
-
-		protected override void OnKamikaze()
-        {
-            CleanUp();
-        }
-
-        private void CleanUp()
+        protected override void CleanUp()
         {
             _followableTargetProcessor.RemoveTargetConsumer(this);
             _followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
