@@ -30,6 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Fighter;
 
         // FELIX  Performance killers :)
+        // FELIX  Remove from prefabs :)
         // Detects enemies that come within following range
         public CircleTargetDetectorController followableEnemyDetector;
 		// Detects when the enemy being followed comes within shooting range
