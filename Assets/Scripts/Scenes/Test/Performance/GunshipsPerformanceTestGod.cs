@@ -16,13 +16,13 @@ namespace BattleCruisers.Scenes.Test.Performance
     {
         public List<Vector2> gunshipPatrolPoints;
         public Vector2 spawnPosition;
-        public UnitWrapper shipPrefab;
+        public UnitWrapper aircraftPrefab;
 
         protected override void Start()
         {
             base.Start();
 
-            shipPrefab.Initialise();
+            aircraftPrefab.Initialise();
 
             Helper helper = new Helper(updaterProvider: _updaterProvider);
 
@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
         {
-            ((Factory)sender).StartBuildingUnit(shipPrefab);
+            ((Factory)sender).StartBuildingUnit(aircraftPrefab);
         }
     }
 }
