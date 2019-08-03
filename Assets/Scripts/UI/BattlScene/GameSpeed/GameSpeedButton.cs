@@ -39,9 +39,9 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             Assert.IsTrue(timeScale >= 0);
             Helper.AssertIsNotNull(selectedFeedback, shouldBeEnabledFilter, time);
 
+            _time = time;
             IsSelected = false;
             _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
-            _time = time;
         }
 
         protected override void OnClicked()
