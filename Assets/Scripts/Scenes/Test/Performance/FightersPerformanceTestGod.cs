@@ -42,10 +42,10 @@ namespace BattleCruisers.Scenes.Test.Performance
             ICruiser parentCruiser, 
             IAircraftProvider aircraftProvider,
             IPrefabFactory prefabFactory,
-            BuildableGroupController fightersGroup,
+            BuildableGroupController fightersGroupController,
             Vector2 spawnPosition)
         {
-            if (fightersGroup == null)
+            if (fightersGroupController == null)
             {
                 return;
             }
@@ -58,7 +58,12 @@ namespace BattleCruisers.Scenes.Test.Performance
                     updaterProvider: _updaterProvider,
                     enemyCruiser: enemyCruiser,
                     parentCruiser: parentCruiser);
-            fightersGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+            IBuildableGroup fightersGroup = fightersGroupController.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+
+            foreach (IBuildable fighter in fightersGroup.Buildables)
+            {
+                Helper.SetupUnitForUnitMonitor((IUnit)fighter, parentCruiser);
+            }
         }
     }
 }
