@@ -26,15 +26,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private IMovementController _figherMovementController;
         private BarrelController _barrelController;
         private IAngleHelper _angleHelper;
+        private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Fighter;
-
-        // FELIX  Performance killers :)
-        // FELIX  Remove from prefabs :)
-        // Detects enemies that come within following range
-        public CircleTargetDetectorController followableEnemyDetector;
-		// Detects when the enemy being followed comes within shooting range
-		public CircleTargetDetectorController shootableEnemyDetector;
 
 		public float enemyFollowDetectionRangeInM;
 
@@ -69,8 +63,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
             base.OnStaticInitialised();
 
-			Assert.IsNotNull(followableEnemyDetector);
-			
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);
 			_barrelController.StaticInitialise();
@@ -133,12 +125,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		/// </summary>
 		private void SetupTargetDetection()
 		{
-			// Detect followable enemies
-			followableEnemyDetector.Initialise(enemyFollowDetectionRangeInM);
+            // Detect followable enemies
+            _followableEnemyDetectorProvider 
+                = _targetFactories.TargetDetectorFactory.CreateEnemyAircraftTargetDetector(
+                    Transform, 
+                    enemyFollowDetectionRangeInM, 
+                    _targetFactories.RangeCalculatorProvider.BasicCalculator);
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft };
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
-			_followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(followableEnemyDetector, targetFilter);
+			_followableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
 			
 			ITargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker followableTargetTracker = _targetFactories.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
@@ -149,9 +145,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			// Detect shootable enemies
 			_exactMatchTargetFilter = _targetFactories.FilterFactory.CreateMulitpleExactMatchTargetFilter();
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
-			
-			shootableEnemyDetector.Initialise(_barrelController.TurretStats.RangeInM);
-			_shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(shootableEnemyDetector, _exactMatchTargetFilter);
+
+            _shootableEnemeyDetectorProvider
+                = _targetFactories.TargetDetectorFactory.CreateEnemyAircraftTargetDetector(
+                    Transform,
+                    _barrelController.TurretStats.RangeInM,
+                    _targetFactories.RangeCalculatorProvider.BasicCalculator);
+			_shootableTargetFinder = _targetFactories.FinderFactory.CreateRangedTargetFinder(_shootableEnemeyDetectorProvider.TargetDetector, _exactMatchTargetFilter);
 			
 			ITargetRanker shootableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker shootableTargetTracker = _targetFactories.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
@@ -183,6 +183,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void CleanUp()
         {
+            _followableEnemyDetectorProvider.DisposeManagedState();
+            _followableEnemyDetectorProvider = null;
+
             _followableTargetProcessor.RemoveTargetConsumer(this);
             _followableTargetProcessor.RemoveTargetConsumer(_exactMatchTargetFilter);
             _followableTargetProcessor.DisposeManagedState();
@@ -190,6 +193,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _followableTargetFinder.DisposeManagedState();
             _followableTargetFinder = null;
+
+            _shootableEnemeyDetectorProvider.DisposeManagedState();
+            _shootableEnemeyDetectorProvider = null;
 
             _shootableTargetProcessor.RemoveTargetConsumer(_barrelController);
             _shootableTargetProcessor.DisposeManagedState();
