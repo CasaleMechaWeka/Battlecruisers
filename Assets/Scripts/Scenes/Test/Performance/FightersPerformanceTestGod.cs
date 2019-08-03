@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Performance
     public class FightersPerformanceTestGod : TestGodBase
     {
         public List<Vector2> patrolPoints;
-        public Vector2 spawnPosition;
+        public Vector2 leftSpawnPosition, rightSpawnPosition;
         public UnitWrapper shipPrefab;
         public BuildableGroupController leftFighterGroup, rightFighterGroup;
 
@@ -32,8 +32,8 @@ namespace BattleCruisers.Scenes.Test.Performance
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
             IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
 
-            InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, prefabFactory, leftFighterGroup);
-            InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, prefabFactory, rightFighterGroup);
+            InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, prefabFactory, leftFighterGroup, leftSpawnPosition);
+            InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, prefabFactory, rightFighterGroup, rightSpawnPosition);
         }
 
         private void InitialiseGroup(
@@ -42,7 +42,8 @@ namespace BattleCruisers.Scenes.Test.Performance
             ICruiser parentCruiser, 
             IAircraftProvider aircraftProvider,
             IPrefabFactory prefabFactory,
-            BuildableGroupController fightersGroup)
+            BuildableGroupController fightersGroup,
+            Vector2 spawnPosition)
         {
             if (fightersGroup == null)
             {
