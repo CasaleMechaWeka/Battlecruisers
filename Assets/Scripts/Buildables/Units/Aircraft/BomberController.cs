@@ -217,7 +217,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		/// 2. Assumes the target is stationary.
 		/// </summary>
 		/// <returns>>
-		/// The y distance before the target where the bomb needs to be dropped
+		/// The x distance before the target where the bomb needs to be dropped
 		/// for it to land on the target.
 		/// </returns>
 		private float FindLeadDistance(Vector2 planePosition, Vector2 targetPosition, float xVelocityInMPerS)
