@@ -57,6 +57,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Boost artillery accuracy and fire rate, so that enemy cruiser is destroyed more quickly :)
             steps.AddRange(CreateSteps_BoostArtillery());
 
+            // Zoom out so user can see artillery firing
+            steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.Overview));
+
             // Wait for enemy cruiser to be destroyed
             steps.Add(
                 new TargetDestroyedWaitStep(

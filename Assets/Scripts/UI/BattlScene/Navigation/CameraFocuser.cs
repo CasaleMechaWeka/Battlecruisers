@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // FELIX  Update tests :)
     public class CameraFocuser : ICameraFocuser
     {
         private readonly INavigationWheelPositionProvider _positionProvider;
@@ -17,27 +19,37 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnPlayerCruiser()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.PlayerCruiserPosition, PositionChangeSource.CameraFocuser);
+            FocusCamera(_positionProvider.PlayerCruiserPosition);
         }
 
         public void FocusOnPlayerNavalFactory()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, PositionChangeSource.CameraFocuser);
+            FocusCamera(_positionProvider.PlayerNavalFactoryPosition);
         }
 
         public void FocusOnAICruiser()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.AICruiserPosition, PositionChangeSource.CameraFocuser);
+            FocusCamera(_positionProvider.AICruiserPosition);
         }
 
         public void FocusOnAINavalFactory()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.AINavalFactoryPosition, PositionChangeSource.CameraFocuser);
+            FocusCamera(_positionProvider.AINavalFactoryPosition);
         }
 
         public void FocusMidLeft()
         {
-            _navigationWheel.SetCenterPosition(_positionProvider.MidLeftPosition, PositionChangeSource.CameraFocuser);
+            FocusCamera(_positionProvider.MidLeftPosition);
+        }
+
+        public void FocusOnOverview()
+        {
+            FocusCamera(_positionProvider.OverviewPosition);
+        }
+
+        private void FocusCamera(Vector2 centerPosition)
+        {
+            _navigationWheel.SetCenterPosition(centerPosition, PositionChangeSource.CameraFocuser);
         }
     }
 }

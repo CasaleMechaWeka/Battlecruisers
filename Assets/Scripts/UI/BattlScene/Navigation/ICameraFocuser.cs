@@ -7,5 +7,6 @@
         void FocusOnAICruiser();
         void FocusOnAINavalFactory();
         void FocusMidLeft();
+        void FocusOnOverview();
     }
 }

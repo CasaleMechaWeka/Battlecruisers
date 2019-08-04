@@ -9,5 +9,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         Vector2 AICruiserPosition { get; }
         Vector2 AINavalFactoryPosition { get; }
         Vector2 MidLeftPosition { get; }
+        Vector2 OverviewPosition { get; }
     }
 }
