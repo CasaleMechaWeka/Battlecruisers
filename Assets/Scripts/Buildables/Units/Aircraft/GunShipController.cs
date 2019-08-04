@@ -3,7 +3,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -27,6 +26,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
+        private ManualProximityTargetProcessorWrapper _followingTargetProcessorWrapper;
 
         private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
 
@@ -89,9 +89,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     enemyFollowRangeInM,
                     parentTarget: this);
 
-            ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper = GetComponentInChildren<ManualProximityTargetProcessorWrapper>();
-            Assert.IsNotNull(followingTargetProcessorWrapper);
-            _followingTargetProcessor = followingTargetProcessorWrapper.CreateTargetProcessor(args);
+            _followingTargetProcessorWrapper = GetComponentInChildren<ManualProximityTargetProcessorWrapper>();
+            Assert.IsNotNull(_followingTargetProcessorWrapper);
+            _followingTargetProcessor = _followingTargetProcessorWrapper.CreateTargetProcessor(args);
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
@@ -145,6 +145,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override void CleanUp()
 		{
+            _followingTargetProcessorWrapper.DisposeManagedState();
+            _followingTargetProcessorWrapper = null;
+
             _followingTargetProcessor.DisposeManagedState();
             _followingTargetProcessor = null;
 

@@ -1,16 +1,14 @@
 ﻿using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    public class ManualProximityTargetProcessorWrapper : ProximityTargetProcessorWrapper
+    public class ManualProximityTargetProcessorWrapper : ProximityTargetProcessorWrapper, IManagedDisposable
     {
-        // Hold reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
         private ManualDetectorProvider _manualDetectorProvider;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
         protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
         {
@@ -23,6 +21,15 @@ namespace BattleCruisers.Targets.TargetProcessors
                     args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
+        }
+
+        public void DisposeManagedState()
+        {
+            if (_manualDetectorProvider != null)
+            {
+                _manualDetectorProvider.DisposeManagedState();
+                _manualDetectorProvider = null;
+            }
         }
     }
 }
