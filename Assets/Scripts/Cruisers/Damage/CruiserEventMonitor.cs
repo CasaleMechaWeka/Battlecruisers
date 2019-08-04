@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 using System;
 
 namespace BattleCruisers.Cruisers.Damage
@@ -10,22 +11,26 @@ namespace BattleCruisers.Cruisers.Damage
     /// 1. The cruiser (or its buildings) are damaged
     /// 2. The cruiser reaches critical health (say a third)
     /// </summary>
+    /// FELIX  Update tests :)
     public class CruiserEventMonitor : IManagedDisposable
     {
         private readonly IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private readonly ICruiserDamageMonitor _cruiserDamageMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
+        private readonly IDebouncer _damagedDebouncer;
 
         public CruiserEventMonitor(
             IHealthThresholdMonitor cruiserHealthThresholdMonitor,
             ICruiserDamageMonitor cruiserDamageMonitor,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            IDebouncer damagedDebouncer)
         {
-            Helper.AssertIsNotNull(cruiserHealthThresholdMonitor, cruiserDamageMonitor, soundPlayer);
+            Helper.AssertIsNotNull(cruiserHealthThresholdMonitor, cruiserDamageMonitor, soundPlayer, damagedDebouncer);
 
             _cruiserHealthThresholdMonitor = cruiserHealthThresholdMonitor;
             _cruiserDamageMonitor = cruiserDamageMonitor;
             _soundPlayer = soundPlayer;
+            _damagedDebouncer = damagedDebouncer;
 
             _cruiserHealthThresholdMonitor.ThresholdReached += _cruiserHealthThresholdMonitor_ThresholdReached;
             _cruiserDamageMonitor.CruiserOrBuildingDamaged += _cruiserDamageMonitor_CruiserOrBuildingDamaged;
@@ -38,7 +43,7 @@ namespace BattleCruisers.Cruisers.Damage
 
         private void _cruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.UnderAttack);
+            _damagedDebouncer.Debounce(() => _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.UnderAttack));
         }
 
         public void DisposeManagedState()
