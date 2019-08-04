@@ -95,8 +95,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
-            IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.BasicCalculator;
-            _hoverTargetDetectorProvider = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(Transform, enemyHoverRangeInM, rangeCalculator);
+            _hoverTargetDetectorProvider 
+                = _factoryProvider.TargetFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                    Transform, 
+                    enemyHoverRangeInM,
+                    _factoryProvider.TargetFactories.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _factoryProvider.TargetFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
