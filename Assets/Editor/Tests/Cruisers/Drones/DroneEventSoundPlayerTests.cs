@@ -19,7 +19,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         {
             _droneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            _droneEventSoundPlayer = new DroneEventSoundPlayer(_droneManagerMonitor, _soundPlayer);
+            //FELIX   Fix ;)
+            _droneEventSoundPlayer = new DroneEventSoundPlayer(_droneManagerMonitor, _soundPlayer, null);
         }
 
         [Test]

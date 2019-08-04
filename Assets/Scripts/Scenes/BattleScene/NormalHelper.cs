@@ -16,6 +16,8 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.Timers;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -97,7 +99,8 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    new Debouncer(new TimeBC(), debounceTimeInS: 20));
         }
 
         public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
