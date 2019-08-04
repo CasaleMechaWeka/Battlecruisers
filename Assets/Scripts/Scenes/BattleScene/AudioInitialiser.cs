@@ -3,7 +3,9 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Events;
 using BattleCruisers.Utils.Threading;
+using System;
 using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -18,6 +20,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IManagedDisposable _droneEventSoundPlayer;
         private readonly CruiserEventMonitor _cruiserEventMonitor;
         private readonly UltrasConstructionMonitor _ultrasConstructionMonitor;
+        private Debouncer<EventArgs> _cruiserDamagedDebouncer;
 
         public AudioInitialiser(
             IBattleSceneHelper helper,
@@ -54,12 +57,15 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private CruiserEventMonitor CreateCruiserEventMonitor(ICruiser playerCruiser, ITime time)
         {
+            CruiserDamagedMonitorDebouncable cruiserDamagedMonitorDebouncable
+                = new CruiserDamagedMonitorDebouncable(
+                    new CruiserDamageMonitor(playerCruiser));
+            _cruiserDamagedDebouncer = new Debouncer<EventArgs>(cruiserDamagedMonitorDebouncable, time);
+
             return
                 new CruiserEventMonitor(
                     new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
-                    new CruiserDamagedMonitorDebouncer(
-                        new CruiserDamageMonitor(playerCruiser),
-                        time),
+                    cruiserDamagedMonitorDebouncable,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 
