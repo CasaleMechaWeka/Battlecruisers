@@ -17,13 +17,10 @@ namespace BattleCruisers.Scenes.Test.Performance
     {
         public List<Vector2> bomberPatrolPoints;
         public Vector2 spawnPosition;
-        public UnitWrapper aircraftPrefab;
 
         protected override void Start()
         {
             base.Start();
-
-            aircraftPrefab.Initialise();
 
             Helper helper = new Helper(updaterProvider: _updaterProvider);
 

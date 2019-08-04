@@ -14,14 +14,11 @@ namespace BattleCruisers.Scenes.Test.Performance
     {
         public List<Vector2> patrolPoints;
         public Vector2 leftSpawnPosition, rightSpawnPosition;
-        public UnitWrapper aircraftPrefab;
         public BuildableGroupController leftFighterGroup, rightFighterGroup;
 
         protected override void Start()
         {
             base.Start();
-
-            aircraftPrefab.Initialise();
 
             Helper helper = new Helper(updaterProvider: _updaterProvider);
 
