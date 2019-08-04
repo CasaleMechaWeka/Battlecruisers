@@ -56,5 +56,15 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             _cameraFocuser.Received().FocusMidLeft();
             Assert.AreEqual(1, _callbackCounter);
         }
+
+        [Test]
+        public void Start_OverviewTarget()
+        {
+            ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.Overview);
+            step.Start(_completionCallback);
+
+            _cameraFocuser.Received().FocusOnOverview();
+            Assert.AreEqual(1, _callbackCounter);
+        }
     }
 }

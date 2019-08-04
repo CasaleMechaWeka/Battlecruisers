@@ -45,7 +45,6 @@ namespace BattleCruisers.Tutorial.Steps
                     _cameraFocuser.FocusMidLeft();
                     break;
 
-                    // FELIX  Update tests :)
                 case CameraFocuserTarget.Overview:
                     _cameraFocuser.FocusOnOverview();
                     break;
