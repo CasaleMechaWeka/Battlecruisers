@@ -23,6 +23,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             _positionProvider.AICruiserPosition.Returns(new Vector2(-3, -3));
             _positionProvider.AINavalFactoryPosition.Returns(new Vector2(-9, 9));
             _positionProvider.MidLeftPosition.Returns(new Vector2(-1, 1));
+            _positionProvider.OverviewPosition.Returns(new Vector2(762, 681));
         }
 
         [Test]
@@ -54,10 +55,17 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         }
 
         [Test]
-        public void FocusOnMideLeft()
+        public void FocusOnMidLeft()
         {
             _cameraFocuser.FocusMidLeft();
             _navigationWheel.Received().SetCenterPosition(_positionProvider.MidLeftPosition, PositionChangeSource.CameraFocuser);
+        }
+
+        [Test]
+        public void FocusOnOverview()
+        {
+            _cameraFocuser.FocusOnOverview();
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.OverviewPosition, PositionChangeSource.CameraFocuser);
         }
     }
 }
