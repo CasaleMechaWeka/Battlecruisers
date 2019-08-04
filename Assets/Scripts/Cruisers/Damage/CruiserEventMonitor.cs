@@ -11,7 +11,6 @@ namespace BattleCruisers.Cruisers.Damage
     /// 1. The cruiser (or its buildings) are damaged
     /// 2. The cruiser reaches critical health (say a third)
     /// </summary>
-    /// FELIX  Update tests :)
     public class CruiserEventMonitor : IManagedDisposable
     {
         private readonly IHealthThresholdMonitor _cruiserHealthThresholdMonitor;

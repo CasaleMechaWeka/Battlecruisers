@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 
 namespace BattleCruisers.Tests.Cruisers.Damage
 {
@@ -14,6 +16,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         private IHealthThresholdMonitor _cruiserHealthThresholdMonitor;
         private ICruiserDamageMonitor _cruiserDamageMonitor;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private IDebouncer _debouncer;
 
         [SetUp]
         public void TestSetup()
@@ -21,9 +24,9 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             _cruiserHealthThresholdMonitor = Substitute.For<IHealthThresholdMonitor>();
             _cruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
+            _debouncer = Substitute.For<IDebouncer>();
 
-            // FELIX  Fix :P
-            _monitor = new CruiserEventMonitor(_cruiserHealthThresholdMonitor, _cruiserDamageMonitor, _soundPlayer, null);
+            _monitor = new CruiserEventMonitor(_cruiserHealthThresholdMonitor, _cruiserDamageMonitor, _soundPlayer, _debouncer);
         }
 
         [Test]
@@ -34,9 +37,15 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         }
 
         [Test]
-        public void CruiserDamaged_PlaysSound()
+        public void CruiserDamaged_Debounces()
         {
+            Action debouncedAction = null;
+            _debouncer.Debounce(Arg.Do<Action>(x => debouncedAction = x));
+
             _cruiserDamageMonitor.CruiserOrBuildingDamaged += Raise.Event();
+
+            Assert.IsNotNull(debouncedAction);
+            debouncedAction.Invoke();
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Cruiser.UnderAttack);
         }
     }
