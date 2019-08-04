@@ -4,8 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers
 {
-    // FELIX  Use
-    // FELIX  Test
     public class Debouncer : IDebouncer
     {
         private readonly ITime _time;
