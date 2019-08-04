@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace UnityCommon.PlatformAbstractions
 {
@@ -19,7 +20,10 @@ namespace UnityCommon.PlatformAbstractions
                 Time.timeScale = value;
 
                 // Also adjust physics time scale
+                // FELIX  Does this break our fancy water?  Yes :)
                 Time.fixedDeltaTime = _defaultFixedDeltaTime * Time.timeScale;
+
+                Logging.Log(Tags.TIME, $"time scale: {Time.timeScale}  fixed delta time: {Time.fixedDeltaTime}");
             }
         }
 

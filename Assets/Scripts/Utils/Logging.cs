@@ -84,6 +84,7 @@ namespace BattleCruisers.Utils
         public const string REPAIR_MANAGER = "RepairManager";
         public const string SCENE_NAVIGATION = "SceneNavigation";
         public const string SLOTS = "Slots";
+        public const string TIME = "Time";
     }
 	
 	public static class Logging
@@ -181,6 +182,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
+            tagsToActiveness.Add(Tags.TIME, false);
 
             return tagsToActiveness;
 		}
