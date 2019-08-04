@@ -137,7 +137,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
                 return _inRangeTargetTracker.ContainsTarget(Target) ? _inRangeMovementController : _outsideRangeMovementController;
 			}
-            return PatrollingMovementController;
+            else
+            {
+                return PatrollingMovementController;
+            }
         }
 
 		protected override void CleanUp()
