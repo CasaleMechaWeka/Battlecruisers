@@ -135,7 +135,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             if (_isAtCruisingHeight && Target != null)
 			{
-                return _inRangeTargetTracker.ContainsTarget(Target) ? _inRangeMovementController : _outsideRangeMovementController;
+                if (_inRangeTargetTracker.ContainsTarget(Target))
+                {
+                    Logging.Log(Tags.AIRCRAFT, "In range movement controller");
+                    return _inRangeMovementController;
+                }
+                else
+                {
+                    Logging.Log(Tags.AIRCRAFT, "Outside of range movement controller");
+                    return _outsideRangeMovementController;
+                }
 			}
             else
             {
