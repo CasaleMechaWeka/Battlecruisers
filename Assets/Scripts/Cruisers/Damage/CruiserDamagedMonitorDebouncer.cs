@@ -38,7 +38,7 @@ namespace BattleCruisers.Cruisers.Damage
                 _lastChangeTimestamp = _time.TimeSinceGameStartInS;
             }
         }
-        
+
         public void DisposeManagedState()
         {
             _monitor.CruiserOrBuildingDamaged -= _monitor_CruiserOrBuildingDamaged;
