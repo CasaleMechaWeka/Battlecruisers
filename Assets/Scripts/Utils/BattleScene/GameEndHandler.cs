@@ -7,6 +7,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
@@ -19,6 +20,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IDeferrer _deferrer;
         private readonly ICameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
+        private readonly ITime _time;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -31,8 +33,11 @@ namespace BattleCruisers.Utils.BattleScene
             IBattleCompletionHandler battleCompletionHandler, 
             IDeferrer deferrer, 
             ICameraFocuser cameraFocuser, 
-            IPermitter navigationPermitter)
+            IPermitter navigationPermitter,
+            ITime time)
         {
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, ai, battleCompletionHandler, deferrer, cameraFocuser, navigationPermitter, time);
+
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _ai = ai;
@@ -40,6 +45,7 @@ namespace BattleCruisers.Utils.BattleScene
             _deferrer = deferrer;
             _cameraFocuser = cameraFocuser;
             _navigationPermitter = navigationPermitter;
+            _time = time;
 
             _handledCruiserDeath = false;
             _handledGameEnd = false;
@@ -60,6 +66,9 @@ namespace BattleCruisers.Utils.BattleScene
             FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
+
+            // Want to play cruiser sinking animation in real time, regardless of time player has set
+            _time.TimeScale = 1;
 
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory), POST_GAME_WAIT_TIME_IN_S);
         }

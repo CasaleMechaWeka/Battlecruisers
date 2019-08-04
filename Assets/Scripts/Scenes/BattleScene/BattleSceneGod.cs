@@ -200,7 +200,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         battleCompletionHandler,
                         components.TimeScaleDeferrer,
                         cameraComponents.CameraFocuser,
-                        navigationPermitters.NavigationFilter));
+                        navigationPermitters.NavigationFilter,
+                        time));
 
             StartTutorialIfNecessary(
                 prefabFactory, 

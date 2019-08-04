@@ -11,6 +11,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using UnityCommon.PlatformAbstractions;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Utils.BattleScene
@@ -25,6 +26,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IDeferrer _deferrer;
         private ICameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
+        private ITime _time;
 
         private IBuilding _playerBuilding, _aiBuilding;
         private IShip _playerShip, _aiShip;
@@ -43,6 +45,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _deferrer = Substitute.For<IDeferrer>();
             _cameraFocuser = Substitute.For<ICameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
+            _time = Substitute.For<ITime>();
 
             _gameEndHandler
                 = new GameEndHandler(
@@ -52,7 +55,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _battleCompletionHandler,
                     _deferrer,
                     _cameraFocuser,
-                    _navigationPermitter);
+                    _navigationPermitter,
+                    _time);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
@@ -104,6 +108,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             _gameEndHandler.HandleCruiserDestroyed(wasPlayerVictory: true);
 
+            _time.Received().TimeScale = 1;
+
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
             Assert.IsFalse(_navigationPermitter.IsMatch);
@@ -130,6 +136,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             ICruiser losingCruiser = _playerCruiser;
 
             _gameEndHandler.HandleCruiserDestroyed(wasPlayerVictory: false);
+
+            _time.Received().TimeScale = 1;
 
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
