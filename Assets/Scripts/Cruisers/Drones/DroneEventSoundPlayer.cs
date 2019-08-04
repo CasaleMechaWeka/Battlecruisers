@@ -6,7 +6,6 @@ using System;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    // FELIX  Update tests :)
     public class DroneEventSoundPlayer : IManagedDisposable
     {
         private readonly IDroneManagerMonitor _droneManagerMonitor;

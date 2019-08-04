@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 
 namespace BattleCruisers.Tests.Cruisers.Drones
 {
@@ -13,14 +15,16 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 #pragma warning restore CS0414  // Variable is assigned but never used
         private IDroneManagerMonitor _droneManagerMonitor;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private IDebouncer _debouncer;
 
         [SetUp]
         public void TestSetup()
         {
             _droneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            //FELIX   Fix ;)
-            _droneEventSoundPlayer = new DroneEventSoundPlayer(_droneManagerMonitor, _soundPlayer, null);
+            _debouncer = Substitute.For<IDebouncer>();
+
+            _droneEventSoundPlayer = new DroneEventSoundPlayer(_droneManagerMonitor, _soundPlayer, _debouncer);
         }
 
         [Test]
@@ -31,9 +35,15 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         }
 
         [Test]
-        public void IdleDrones_PlaysSound()
+        public void IdleDrones_Debounces()
         {
+            Action debouncedAction = null;
+            _debouncer.Debounce(Arg.Do<Action>(x => debouncedAction = x));
+
             _droneManagerMonitor.IdleDronesStarted += Raise.Event();
+
+            Assert.IsNotNull(debouncedAction);
+            debouncedAction.Invoke();
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.Idle);
         }
     }
