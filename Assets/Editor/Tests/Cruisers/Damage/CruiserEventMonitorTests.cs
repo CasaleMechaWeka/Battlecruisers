@@ -22,7 +22,8 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             _cruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 
-            _monitor = new CruiserEventMonitor(_cruiserHealthThresholdMonitor, _cruiserDamageMonitor, _soundPlayer);
+            // FELIX  Fix :P
+            _monitor = new CruiserEventMonitor(_cruiserHealthThresholdMonitor, _cruiserDamageMonitor, _soundPlayer, null);
         }
 
         [Test]
