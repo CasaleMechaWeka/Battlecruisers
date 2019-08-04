@@ -14,10 +14,10 @@ namespace BattleCruisers.Scenes.BattleScene
     /// </summary>
     public class AudioInitialiser
     {
-        private DangerMusicPlayer _dangerMusicPlayer;
-        private IManagedDisposable _droneEventSoundPlayer;
+        private readonly DangerMusicPlayer _dangerMusicPlayer;
+        private readonly IManagedDisposable _droneEventSoundPlayer;
         private readonly CruiserEventMonitor _cruiserEventMonitor;
-        private UltrasConstructionMonitor _ultrasConstructionMonitor;
+        private readonly UltrasConstructionMonitor _ultrasConstructionMonitor;
 
         public AudioInitialiser(
             IBattleSceneHelper helper,
