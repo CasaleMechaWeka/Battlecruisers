@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
                 _cameraTransform.Position = targetPosition;
             }
 
-            Logging.Log(Tags.CAMERA, $"target: {targetPosition}  Actual: {_cameraTransform.Position}");
+            Logging.Verbose(Tags.CAMERA, $"target: {targetPosition}  Actual: {_cameraTransform.Position}");
 
             return isInPosition;
 		}
