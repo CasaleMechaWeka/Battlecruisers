@@ -147,7 +147,7 @@ namespace Game2DWaterKit
         bool waterIsVisible = false;
         Vector2 raycastDirection = Vector2.up;
 
-        private float _originalFixedDeltaTime;
+        private const float DEFAULT_FIXED_DELTA_TIME = 0.02f;
 
 #if UNITY_2017_1_OR_NEWER 
         static int refractionTextureID = Shader.PropertyToID("_RefractionTexture");
@@ -1290,8 +1290,6 @@ namespace Game2DWaterKit
 
         private void Awake()
         {
-            _originalFixedDeltaTime = Time.fixedDeltaTime;
-
             meshFilter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
 
@@ -1412,7 +1410,7 @@ namespace Game2DWaterKit
             {
                 updateWaterSimulation = false;
 
-                float deltaTime = _originalFixedDeltaTime;
+                float deltaTime = DEFAULT_FIXED_DELTA_TIME;
                 float dampingFactor = damping * 2f * stiffnessSquareRoot;
                 float spreadFactor = spread * subdivisionsCountPerUnit;
 
