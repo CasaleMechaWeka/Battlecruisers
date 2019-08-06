@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
         public SpawnDeciderFactory()
         {
-            _time = new TimeBC();
+            _time = TimeBC.Instance;
         }
 
         public IUnitSpawnPositionFinder CreateAircraftSpawnPositionFinder(IFactory factory)

@@ -63,7 +63,7 @@ namespace BattleCruisers.Scenes.Test
             _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
 
             // Smooth adjuster
-            IDeltaTimeProvider deltaTimeProvider = new TimeBC();
+            IDeltaTimeProvider deltaTimeProvider = TimeBC.Instance;
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,

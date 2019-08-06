@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         void Start()
         {
-            _time = new TimeBC();
+            _time = TimeBC.Instance;
 
             _gameSpeedText = GetComponent<Text>();
             Assert.IsNotNull(_gameSpeedText);

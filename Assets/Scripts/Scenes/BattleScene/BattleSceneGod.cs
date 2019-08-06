@@ -77,7 +77,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
-            ITime time = new TimeBC();
+            ITime time = TimeBC.Instance;
             IPauseGameManager pauseGameManager = new PauseGameManager(time);
             IUIManager uiManager = helper.CreateUIManager();
 

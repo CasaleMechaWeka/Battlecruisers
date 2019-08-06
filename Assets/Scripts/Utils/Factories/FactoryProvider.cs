@@ -58,7 +58,7 @@ namespace BattleCruisers.Utils.Factories
 			PrefabFactory = prefabFactory;
             TargetFactories = new TargetFactoriesProvider(friendlyCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
-			MovementControllerFactory = new MovementControllerFactory(new TimeBC());
+			MovementControllerFactory = new MovementControllerFactory(TimeBC.Instance);
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();

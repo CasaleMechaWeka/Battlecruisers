@@ -7,7 +7,20 @@ namespace UnityCommon.PlatformAbstractions
     {
         private readonly float _defaultFixedDeltaTime;
 
-        public TimeBC()
+        private static ITime _instance;
+        public static ITime Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new TimeBC();
+                }
+                return _instance;
+            }
+        }
+
+        private TimeBC()
         {
             _defaultFixedDeltaTime = Time.fixedDeltaTime;
         }

@@ -507,7 +507,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 new RotationMovementController(
                     new RotationHelper(),
                     new TransformBC(barrel.transform),
-                    new TimeBC(),
+                    TimeBC.Instance,
                     barrel.TurretStats.TurretRotateSpeedInDegrees);
         }
 

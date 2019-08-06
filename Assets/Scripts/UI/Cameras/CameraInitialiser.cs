@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.Cameras
                     aiCruiser,
                     navigationPermitters);
 
-            IDeltaTimeProvider deltaTimeProvider = new TimeBC();
+            IDeltaTimeProvider deltaTimeProvider = TimeBC.Instance;
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
@@ -159,7 +159,7 @@ namespace BattleCruisers.UI.Cameras
             ZoomCalculator zoomCalculator 
                 = new ZoomCalculator(
                     camera,
-                    new TimeBC(),
+                    TimeBC.Instance,
                     settings.ValidOrthographicSizes,
                     settingsManager,
                     new ZoomLevelConverter(),
@@ -172,7 +172,7 @@ namespace BattleCruisers.UI.Cameras
                         dragTracker,
                         new ScrollCalculator(
                             camera,
-                            new TimeBC(),
+                            TimeBC.Instance,
                             settings.ValidOrthographicSizes,
                             settingsManager,
                             new ScrollLevelConverter()),

@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
             GameSpeedButton[] speedButtons = GetComponentsInChildren<GameSpeedButton>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, speedButtons.Length);
-            ITime time = new TimeBC();
+            ITime time = TimeBC.Instance;
 
             foreach (GameSpeedButton speedButton in speedButtons)
             {

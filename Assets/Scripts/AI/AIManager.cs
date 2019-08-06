@@ -36,7 +36,7 @@ namespace BattleCruisers.AI
             _deferrer = deferrer;
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
-            _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, new TimeBC(), deferrer);
+            _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, TimeBC.Instance, deferrer);
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();

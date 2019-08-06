@@ -20,7 +20,7 @@ namespace BattleCruisers.Utils.BattleScene.Update
             PhysicsUpdater = GetComponent<PhysicsUpdater>();
             Assert.IsNotNull(PhysicsUpdater);
 
-            SlowerUpdater = new MultiFrameUpdater(PhysicsUpdater, new TimeBC(), SLOWER_UPDATER_INTERVAL_IN_S);
+            SlowerUpdater = new MultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, SLOWER_UPDATER_INTERVAL_IN_S);
         }
     }
 }

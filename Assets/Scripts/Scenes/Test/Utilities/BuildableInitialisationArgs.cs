@@ -88,7 +88,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             FactoryProvider
                 = CreateFactoryProvider(
                     prefabFactory,
-                    movementControllerFactory ?? new MovementControllerFactory(new TimeBC()),
+                    movementControllerFactory ?? new MovementControllerFactory(TimeBC.Instance),
                     angleCalculatorFactory ?? new AngleCalculatorFactory(),
                     targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),
                     aircraftProvider ?? helper.CreateAircraftProvider(),
