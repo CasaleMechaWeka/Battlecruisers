@@ -89,9 +89,8 @@ namespace BattleCruisers.Utils
 	
 	public static class Logging
 	{
-        // FELIX
-        private const bool LOG_ALL = true;
-        //private const bool LOG_ALL = false;
+        //private const bool LOG_ALL = true;
+        private const bool LOG_ALL = false;
         private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
         //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
