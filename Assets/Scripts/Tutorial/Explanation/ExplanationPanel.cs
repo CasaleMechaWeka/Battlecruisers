@@ -16,8 +16,13 @@ namespace BattleCruisers.Tutorial.Explanation
             textDisplayer.Initialise();
             TextDisplayer = textDisplayer;
 
-            OkButton = transform.FindNamedComponent<IExplanationDismissButton>("OkButton");
-            DoneButton = transform.FindNamedComponent<IExplanationDismissButton>("DoneButton");
+            ExplanationDismissButton okButton = transform.FindNamedComponent<ExplanationDismissButton>("OkButton");
+            okButton.Initialise();
+            OkButton = okButton;
+
+            ExplanationDismissButton doneButton = transform.FindNamedComponent<ExplanationDismissButton>("DoneButton");
+            doneButton.Initialise();
+            DoneButton = doneButton;
         }
     }
 }

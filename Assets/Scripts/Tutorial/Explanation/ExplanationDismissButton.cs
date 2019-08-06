@@ -1,16 +1,13 @@
 ﻿using BattleCruisers.UI;
 using System;
-using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    public class ExplanationDismissButton : Togglable, 
-        IExplanationDismissButton, 
-        IPointerClickHandler
+    public class ExplanationDismissButton : CanvasGroupButton, IExplanationDismissButton
     {
         public event EventHandler Clicked;
 
-        public void OnPointerClick(PointerEventData eventData)
+        protected override void OnClicked()
         {
             Clicked?.Invoke(this, EventArgs.Empty);
         }
