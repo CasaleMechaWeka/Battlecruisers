@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         public void Start_ShowsDismissButton()
         {
             _step.Start(_completionCallback);
-            _dismissButton.Received().IsVisible = true;
+            _dismissButton.Received().Enabled = true;
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             Start_ShowsDismissButton();
 
             _dismissButton.Clicked += Raise.Event();
-            _dismissButton.Received().IsVisible = false;
+            _dismissButton.Received().Enabled = false;
         }
     }
 }

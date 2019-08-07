@@ -3,7 +3,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    public interface IExplanationDismissButton : IGameObject, IClickableEmitter
+    public interface IExplanationDismissButton : ITogglable, IClickableEmitter
     {
         // empty
     }

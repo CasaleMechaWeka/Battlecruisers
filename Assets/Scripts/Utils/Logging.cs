@@ -46,6 +46,7 @@ namespace BattleCruisers.Utils
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
         public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
+        public const string UI = "UI";
 		public const string UI_MANAGER = "UIManager";
 
         // AI
@@ -145,6 +146,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.UI, true);
+            //tagsToActiveness.Add(Tags.UI, false);
 
             // AI
             tagsToActiveness.Add(Tags.AI, false);

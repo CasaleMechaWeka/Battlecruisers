@@ -18,15 +18,15 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
-            _dismissButton.IsVisible = true;
+            _dismissButton.Enabled = true;
         }
 
         protected override void OnCompleted()
         {
             // This needs to happen BEFORE base.OnCompleted(), because that will trigger the start
             // the next step which may enable the _dismissButton.  If this was after base.OnCompleted()
-            // the _dimissButton.IsVisible would be overridden.
-            _dismissButton.IsVisible = false;
+            // the _dimissButton.Enabled would be overridden.
+            _dismissButton.Enabled = false;
 
             base.OnCompleted();
         }
