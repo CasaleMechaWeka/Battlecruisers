@@ -95,7 +95,7 @@ namespace BattleCruisers.Utils
         private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
         //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
-		private static Dictionary<string, bool> _tagsToActiveness;
+        private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
 		{
 			get
@@ -128,7 +128,7 @@ namespace BattleCruisers.Utils
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
             tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
-			tagsToActiveness.Add(Tags.SHELLS, false);
+            tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
             tagsToActiveness.Add(Tags.TARGET, false);

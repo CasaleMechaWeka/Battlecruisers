@@ -101,16 +101,14 @@ namespace BattleCruisers.Projectiles
             if (_targetToDamage != null)
             {
                 _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
-
                 DestroyProjectile();
             }
 			else if (MovementController != null)
             {
                 MovementController.AdjustVelocity();
-
-
-                AdjustGameObjectDirection();
             }
+
+            AdjustGameObjectDirection();
 
             PositionChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -153,6 +151,8 @@ namespace BattleCruisers.Projectiles
 
         private void AdjustGameObjectDirection()
         {
+            Logging.Verbose(Tags.SHELLS, $"_rigidBody.velocity: {_rigidBody.velocity}");
+
             transform.right = _rigidBody.velocity;
         }
 
