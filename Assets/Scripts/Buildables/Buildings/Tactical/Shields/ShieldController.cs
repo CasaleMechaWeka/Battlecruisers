@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,10 +10,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
     public class ShieldController : Target
 	{
         private IPrioritisedSoundPlayer _soundPlayer;
-        private Ring _ring;
         private float _timeSinceDamageInS;
 
-        public LineRenderer lineRenderer;
+        public GameObject visuals;
         public CircleCollider2D circleCollider;
         public HealthBarController healthBar;
 
@@ -31,6 +31,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             base.OnStaticInitialised();
 
+            Helper.AssertIsNotNull(visuals, circleCollider, healthBar);
+
             Stats = GetComponent<IShieldStats>();
             Assert.IsNotNull(Stats);
 
@@ -43,7 +45,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			Faction = faction;
 
             _soundPlayer = soundPlayer;
-            _ring = new Ring(Stats.ShieldRadiusInM, NUM_OF_POINTS_IN_RING, lineRenderer);
 			_timeSinceDamageInS = 0;
 			circleCollider.radius = Stats.ShieldRadiusInM;
 
@@ -95,14 +96,14 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
 		private void EnableShield()
 		{
-			_ring.Enabled = true;
+            visuals.SetActive(true);
 			circleCollider.enabled = true;
 		}
 
 		private void DisableShield()
 		{
-			_ring.Enabled = false;
-			circleCollider.enabled = false;
+            visuals.SetActive(false);
+            circleCollider.enabled = false;
             _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.ShieldsDown);
 		}
 	}

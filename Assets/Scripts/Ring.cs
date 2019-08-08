@@ -2,6 +2,7 @@
 
 namespace BattleCruisers
 {
+    // FELIX  Unused?  Remove :)
     public class Ring
 	{
 		private readonly float _radiusInM;
