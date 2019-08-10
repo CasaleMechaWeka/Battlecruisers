@@ -4,6 +4,8 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,9 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IBarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
         private IFireIntervalManager _fireIntervalManager;
-        private bool _isCleanedUp;
+        private IUpdater _updater;
         protected ITargetFilter _targetFilter;
-		
+
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
 
@@ -31,8 +33,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public Transform Transform => transform;
         public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
 
-        private bool IsInitialised => _targetFilter != null;
-        private bool IsActive => IsInitialised && !_isCleanedUp;
         public SpriteRenderer[] Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
@@ -61,7 +61,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _baseTurretStats = SetupTurretStats();
             _turretStatsWrapper = new TurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
-            _isCleanedUp = false;
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
@@ -114,15 +113,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.AttackablePositionFinder);
 
             _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager);
+
+            _updater = args.Updater;
+            _updater.Updated += _updater_Updated;
         }
 
-		void FixedUpdate()
+        private void _updater_Updated(object sender, EventArgs e)
         {
-            if (!IsActive)
-            {
-                return;
-            }
-
             _fireIntervalManager.ProcessTimeInterval(Time.deltaTime);
             BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
@@ -139,7 +136,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public void CleanUp()
         {
-            _isCleanedUp = true;
+            _updater.Updated -= _updater_Updated;
         }
     }
 }

@@ -112,7 +112,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     explosionManager,
                     trackerFactory ?? Substitute.For<ITrackerFactory>(),
                     targetFactories,
-                    new SpawnDeciderFactory());
+                    new SpawnDeciderFactory(),
+                    updaterProvider);
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -138,7 +139,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IExplosionManager explosionManager,
             ITrackerFactory trackerFactory,
             ITargetFactoriesProvider targetFactories,
-            ISpawnDeciderFactory spawnDeciderFactory)
+            ISpawnDeciderFactory spawnDeciderFactory,
+            IUpdaterProvider updaterProvider)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -156,6 +158,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.TargetFactories.Returns(targetFactories);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
             factoryProvider.TrackerFactory.Returns(trackerFactory);
+            factoryProvider.UpdaterProvider.Returns(updaterProvider);
 
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();
