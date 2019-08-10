@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Performance
         {
             base.Initialise();
 
-            Helper helper = new Helper();
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
    
             // Initialise prefab
 			unitPrefab.Initialise();

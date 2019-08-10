@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public abstract class MultiCameraTestGod<TTest> : MonoBehaviour where TTest : MonoBehaviour, ITestScenario
+    public abstract class MultiCameraTestGod<TTest> : TestGodBase where TTest : MonoBehaviour, ITestScenario
     {
         private ICircularList<Camera> _cameras;
 
@@ -30,8 +30,10 @@ namespace BattleCruisers.Scenes.Test
             }
         }
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+
             Initialise();
 
             IList<Camera> cameras = new List<Camera>()
