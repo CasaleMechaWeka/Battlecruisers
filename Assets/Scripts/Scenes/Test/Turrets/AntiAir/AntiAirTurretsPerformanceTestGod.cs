@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
+using System;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
+namespace BattleCruisers.Scenes.Test.Performance
 {
-    public class AntiAirVsLotsOfAircraftTestGod : MonoBehaviour
+    public class AntiAirTurretsPerformanceTestGod : MonoBehaviour
 	{
 		public UnitWrapper unitPrefab;
 
