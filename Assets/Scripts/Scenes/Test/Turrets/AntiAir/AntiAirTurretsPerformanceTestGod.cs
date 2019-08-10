@@ -4,29 +4,27 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
 using System;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
-    public class AntiAirTurretsPerformanceTestGod : MonoBehaviour
+    public class AntiAirTurretsPerformanceTestGod : MultiCameraTestGod<CameraScenario>
 	{
 		public UnitWrapper unitPrefab;
 
-		void Start()
-		{
-			Helper helper = new Helper();
-   
+        protected override void Initialise()
+        {
+            base.Initialise();
 
+            Helper helper = new Helper();
+   
             // Initialise prefab
 			unitPrefab.Initialise();
-
 
             // Initialise air factory
             AirFactory factory = FindObjectOfType<AirFactory>();
             helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right);
             factory.CompletedBuildable += Factory_CompletedBuildable;
             factory.StartConstruction();
-
 
             // Initialise turrets
             TurretController[] turrets = FindObjectsOfType<TurretController>();
@@ -41,5 +39,10 @@ namespace BattleCruisers.Scenes.Test.Performance
 		{
             ((Factory)sender).StartBuildingUnit(unitPrefab);
 		}
-	}
+
+        protected override void InitialiseScenario(CameraScenario scenario)
+        {
+            scenario.Initialise();
+        }
+    }
 }

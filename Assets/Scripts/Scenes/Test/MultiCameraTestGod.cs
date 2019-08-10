@@ -50,6 +50,7 @@ namespace BattleCruisers.Scenes.Test
             {
                 InitialiseScenario(test);
                 cameras.Add(test.Camera);
+                test.Camera.enabled = false;
             }
 
             _cameras = new CircularList<Camera>(cameras);
