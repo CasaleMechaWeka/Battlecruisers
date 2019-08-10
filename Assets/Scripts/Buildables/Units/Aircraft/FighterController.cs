@@ -92,6 +92,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITarget parent = this;
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
+                    _factoryProvider.UpdaterProvider.PerFrameUpdater,
                     _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
                     _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),

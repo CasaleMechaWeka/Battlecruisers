@@ -13,6 +13,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -156,6 +157,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider)
         {
             return new BarrelControllerArgs(
+                ChooseUpdater(_factoryProvider.UpdaterProvider),
                 targetFilter,
                 CreateTargetPositionPredictor(),
                 angleCalculator,
@@ -225,6 +227,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected virtual IAngleLimiter CreateAngleLimiter()
         {
             return _factoryProvider.Turrets.AngleLimiterFactory.CreateFacingLimiter();
+        }
+
+        protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
+        {
+            return updaterProvider.PerFrameUpdater;
         }
 
         public void DisposeManagedState()

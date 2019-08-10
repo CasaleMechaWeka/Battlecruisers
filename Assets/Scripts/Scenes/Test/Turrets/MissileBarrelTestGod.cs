@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
-    public class MissileBarrelTestGod : MonoBehaviour 
+    public class MissileBarrelTestGod : TestGodBase 
     {
-	    void Start() 
+	    protected override void Start() 
         {
+            base.Start();
+
+
             Helper helper = new Helper();
 
 
@@ -33,6 +35,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     missileBarrel, 
+                    _updaterProvider.PerFrameUpdater,
                     targetFilter: targetFilter,
                     angleCalculator: new StaticAngleCalculator(new AngleHelper(), desiredAngleInDegrees: 90));
 

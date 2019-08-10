@@ -8,6 +8,7 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using System.Collections.ObjectModel;
 
@@ -15,6 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public interface IBarrelControllerArgs
     {
+        IUpdater Updater { get; }
         ITargetFilter TargetFilter { get; }
         ITargetPositionPredictor TargetPositionPredictor { get; }
         IAngleCalculator AngleCalculator { get; }

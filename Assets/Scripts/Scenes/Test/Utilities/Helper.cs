@@ -471,6 +471,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public IBarrelControllerArgs CreateBarrelControllerArgs(
             BarrelController barrel,
+            IUpdater updater,
             ITargetFilter targetFilter = null,
             ITargetPositionPredictor targetPositionPredictor = null,
             IAngleCalculator angleCalculator = null,
@@ -486,6 +487,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             return
                 new BarrelControllerArgs(
+                    updater,
                     targetFilter ?? Substitute.For<ITargetFilter>(),
                     targetPositionPredictor ?? new DummyTargetPositionpredictor(),
                     angleCalculator ?? new AngleCalculator(new AngleHelper()),

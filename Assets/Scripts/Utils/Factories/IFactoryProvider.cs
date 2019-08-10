@@ -10,6 +10,7 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
@@ -33,5 +34,6 @@ namespace BattleCruisers.Utils.Factories
         ITargetFactoriesProvider TargetFactories { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         ITrackerFactory TrackerFactory { get; }
+        IUpdaterProvider UpdaterProvider { get; }
     }
 }

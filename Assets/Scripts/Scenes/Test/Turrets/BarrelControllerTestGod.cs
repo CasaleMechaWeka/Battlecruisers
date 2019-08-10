@@ -8,12 +8,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public abstract class BarrelControllerTestGod : MonoBehaviour
+    public abstract class BarrelControllerTestGod : TestGodBase
 	{
 		public GameObject targetGameObject;
 
-		void Start()
-		{
+        protected override void Start()
+        {
+            base.Start();
+
             Helper helper = new Helper();
 
 			ITarget target = Substitute.For<ITarget>();
@@ -28,7 +30,10 @@ namespace BattleCruisers.Scenes.Test
 				barrel.Target = target;
 
                 IBarrelControllerArgs barrelControllerArgs
-                    = helper.CreateBarrelControllerArgs(barrel, angleCalculator: CreateAngleCalculator(barrel.ProjectileStats));
+                    = helper.CreateBarrelControllerArgs(
+                        barrel, 
+                        _updaterProvider.PerFrameUpdater,
+                        angleCalculator: CreateAngleCalculator(barrel.ProjectileStats));
 
                 barrel.Initialise(barrelControllerArgs);
 			}

@@ -3,14 +3,15 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
-    public class LaserTurretTestGod : MonoBehaviour 
+    public class LaserTurretTestGod : TestGodBase
     {
-	    void Start () 
+        protected override void Start()
         {
+            base.Start();
+
             Helper helper = new Helper();
 
 
@@ -21,6 +22,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     laserBarrel,
+                    _updaterProvider.PerFrameUpdater,
                     targetFilter: new DummyTargetFilter(isMatchResult: true),
                     rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 

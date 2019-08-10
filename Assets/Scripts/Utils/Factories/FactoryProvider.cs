@@ -39,6 +39,7 @@ namespace BattleCruisers.Utils.Factories
         public ITargetFactoriesProvider TargetFactories { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public ITrackerFactory TrackerFactory { get; }
+        public IUpdaterProvider UpdaterProvider { get; }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -75,6 +76,7 @@ namespace BattleCruisers.Utils.Factories
             DeferrerProvider = new DeferrerProvider(deferrer);
             TrackerFactory = new TrackerFactory(markerFactory, soleCamera);
             SpawnDeciderFactory = new SpawnDeciderFactory();
+            UpdaterProvider = updaterProvider;
         }
 	}
 }

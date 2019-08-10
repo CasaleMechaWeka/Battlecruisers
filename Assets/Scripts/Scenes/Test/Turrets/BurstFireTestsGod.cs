@@ -6,14 +6,16 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class BurstFireTestsGod : MonoBehaviour 
+    public class BurstFireTestsGod : TestGodBase
 	{
         private Helper _helper;
         public BarrelController barrel1, barrel2, barrel3;
 		public GameObject target1, target2, target3;
 
-		void Start()
-		{
+        protected override void Start()
+        {
+            base.Start();
+
             _helper = new Helper();
 
             InitialisePair(barrel1, target1);
@@ -30,7 +32,7 @@ namespace BattleCruisers.Scenes.Test
 			target.Position.Returns(targetPosition);
 			barrel.Target = target;
 			
-            IBarrelControllerArgs barrelControllerArgs = _helper.CreateBarrelControllerArgs(barrel);
+            IBarrelControllerArgs barrelControllerArgs = _helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
             barrel.Initialise(barrelControllerArgs);
 		}
 	}

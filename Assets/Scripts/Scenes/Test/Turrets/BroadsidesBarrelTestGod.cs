@@ -3,14 +3,15 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class BroadsidesBarrelTestGod : MonoBehaviour
+    public class BroadsidesBarrelTestGod : TestGodBase
 	{
-		void Start()
-		{
+        protected override void Start()
+        {
+            base.Start();
+
             // Initialise target
             Helper helper = new Helper();
             Factory target = FindObjectOfType<Factory>();
@@ -25,6 +26,7 @@ namespace BattleCruisers.Scenes.Test
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     doubleBarrel,
+                    _updaterProvider.PerFrameUpdater,
                     targetFilter: new ExactMatchTargetFilter() { Target = target },
                     angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), doubleBarrel.ProjectileStats));
 

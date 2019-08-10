@@ -11,10 +11,12 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
-    public class ShieldTestsGod : MonoBehaviour 
+    public class ShieldTestsGod : TestGodBase 
 	{
-		void Start () 
-		{
+        protected override void Start()
+        {
+            base.Start();
+
             // Setup shield
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
@@ -42,6 +44,7 @@ namespace BattleCruisers.Scenes.Test.Shields
                 = new Helper()
                     .CreateBarrelControllerArgs(
                     turret,
+                    _updaterProvider.PerFrameUpdater,
                     targetFilter);
 
             turret.Initialise(barrelControllerArgs);

@@ -9,6 +9,7 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using System.Collections.ObjectModel;
 
@@ -16,6 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class BarrelControllerArgs : IBarrelControllerArgs
     {
+        public IUpdater Updater { get; }
         public ITargetFilter TargetFilter { get; }
         public ITargetPositionPredictor TargetPositionPredictor { get; }
         public IAngleCalculator AngleCalculator { get; }
@@ -31,6 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ISoundKey SpawnerSoundKey { get; }
 
         public BarrelControllerArgs(
+            IUpdater updater,
             ITargetFilter targetFilter,
             ITargetPositionPredictor targetPositionPredictor,
             IAngleCalculator angleCalculator,
@@ -46,6 +49,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ISoundKey firingSound = null)
         {
             Helper.AssertIsNotNull(
+                updater,
                 targetFilter, 
                 targetPositionPredictor, 
                 angleCalculator, 
@@ -59,6 +63,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 localBoostProviders,
                 globalFireRateBoostProvider);
 
+            Updater = updater;
             TargetFilter = targetFilter;
             TargetPositionPredictor = targetPositionPredictor;
             AngleCalculator = angleCalculator;
