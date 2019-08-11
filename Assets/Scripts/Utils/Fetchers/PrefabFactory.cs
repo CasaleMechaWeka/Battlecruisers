@@ -83,6 +83,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newCountdown;
         }
 
+        // FELIX  Remove :)
         public IExplosion CreateExplosion(IExplosionStats explosionStats)
         {
             IPrefabKey explosionKey = GetExplosionKey(explosionStats.Size);
@@ -92,6 +93,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newExplosion;
         }
 
+        // FELIX  Remove :)
         private IPrefabKey GetExplosionKey(ExplosionSize explosionSize)
         {
             switch (explosionSize)
@@ -111,6 +113,14 @@ namespace BattleCruisers.Utils.Fetchers
                 default:
                     throw new System.ArgumentException();
             }
+        }
+
+        public IExplosion CreateExplosion(ExplosionKey explosionKey)
+        {
+            AdvancedExplosion explosionPrefab = _prefabFetcher.GetPrefab<AdvancedExplosion>(explosionKey);
+            AdvancedExplosion newExplosion = Object.Instantiate(explosionPrefab);
+            newExplosion.Initialise(_randomGenerator);
+            return newExplosion;
         }
     }
 }
