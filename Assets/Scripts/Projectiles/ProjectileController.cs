@@ -153,7 +153,10 @@ namespace BattleCruisers.Projectiles
         {
             Logging.Verbose(Tags.SHELLS, $"_rigidBody.velocity: {_rigidBody.velocity}");
 
-            transform.right = _rigidBody.velocity;
+            if (_rigidBody.velocity != Vector2.zero)
+            {
+                transform.right = _rigidBody.velocity;
+            }
         }
 
         public void RemoveFromScene()
