@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,7 +9,7 @@ namespace BattleCruisers.Movement.Rotation
 	{
 		private readonly IRotationHelper _rotationHelper;
         private readonly ITransform _transform;
-        private readonly ITime _time;
+        private readonly IDeltaTimeProvider _time;
         private readonly float _rotateSpeedInDegreesPerS;
 
 		public const float ROTATION_EQUALITY_MARGIN_IN_DEGREES = 1;
@@ -18,7 +17,7 @@ namespace BattleCruisers.Movement.Rotation
         public RotationMovementController(
             IRotationHelper rotationHelper, 
             ITransform transform,
-            ITime time,
+            IDeltaTimeProvider time,
             float rotateSpeedInDegreesPerS)
 		{
             Helper.AssertIsNotNull(rotationHelper, transform, time);

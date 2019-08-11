@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
     {
         private IZoomCalculator _calculator;
         private ICamera _camera;
-        private IDeltaTimeProvider _deltaTimeProvider;
+        private ITime _time;
         private IRange<float> _validOrthographicSizes;
         private ISettingsManager _settingsManager;
         private ILevelToMultiplierConverter _zoomConverter;
@@ -25,15 +25,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
         public void TestSetup()
         {
             _camera = Substitute.For<ICamera>();
-            _deltaTimeProvider = Substitute.For<IDeltaTimeProvider>();
+            _time = Substitute.For<ITime>();
             _validOrthographicSizes = new Range<float>(5, 40);
             _settingsManager = Substitute.For<ISettingsManager>();
             _zoomConverter = Substitute.For<ILevelToMultiplierConverter>();
 
-            _calculator = new ZoomCalculator(_camera, _deltaTimeProvider, _validOrthographicSizes, _settingsManager, _zoomConverter, _zoomScale);
+            _calculator = new ZoomCalculator(_camera, _time, _validOrthographicSizes, _settingsManager, _zoomConverter, _zoomScale);
 
             _camera.OrthographicSize.Returns(20);
-            _deltaTimeProvider.UnscaledDeltaTime.Returns(0.1f);
+            _time.UnscaledDeltaTime.Returns(0.1f);
             _settingsManager.ZoomSpeedLevel.Returns(2);
             _zoomConverter.LevelToMultiplier(_settingsManager.ZoomSpeedLevel).Returns(0.25f);
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _zoomDeltaMultiplier
                 = orthographicProportion *
                     _zoomScale *
-                    _deltaTimeProvider.UnscaledDeltaTime *
+                    _time.UnscaledDeltaTime *
                     _zoomConverter.LevelToMultiplier(_settingsManager.ZoomSpeedLevel);
         }
 

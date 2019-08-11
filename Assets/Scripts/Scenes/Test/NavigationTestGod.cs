@@ -63,12 +63,12 @@ namespace BattleCruisers.Scenes.Test
             _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
 
             // Smooth adjuster
-            IDeltaTimeProvider deltaTimeProvider = TimeBC.Instance;
+            ITime time = TimeBC.Instance;
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
-                    new SmoothZoomAdjuster(_camera, deltaTimeProvider, smoothTime),
-                    new SmoothPositionAdjuster(_camera.Transform, deltaTimeProvider, smoothTime));
+                    new SmoothZoomAdjuster(_camera, time, smoothTime),
+                    new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
         }
 
         private ICruiser CreateCruiser(bool isPlayerCruiser)

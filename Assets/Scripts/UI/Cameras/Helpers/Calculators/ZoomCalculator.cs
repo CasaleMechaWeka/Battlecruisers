@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
     public class ZoomCalculator : IZoomCalculator
     {
         private readonly ICamera _camera;
-        private readonly IDeltaTimeProvider _deltaTimeProvider;
+        private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _zoomConverter;
@@ -19,17 +19,17 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 
         public ZoomCalculator(
             ICamera camera, 
-            IDeltaTimeProvider deltaTimeProvider, 
+            ITime time, 
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
             ILevelToMultiplierConverter zoomConverter,
             float zoomScale)
         {
-            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, zoomConverter);
+            Helper.AssertIsNotNull(camera, time, validOrthographicSizes, settingsManager, zoomConverter);
             Assert.IsTrue(zoomScale > 0);
 
             _camera = camera;
-            _deltaTimeProvider = deltaTimeProvider;
+            _time = time;
             _validOrthographicSizes = validOrthographicSizes;
             _settingsManager = settingsManager;
             _zoomConverter = zoomConverter;
@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 Mathf.Abs(mouseScrollDeltaY) *
                 orthographicProportion *
                 _zoomScale *
-                _deltaTimeProvider.UnscaledDeltaTime *
+                _time.UnscaledDeltaTime *
                 _zoomConverter.LevelToMultiplier(_settingsManager.ZoomSpeedLevel);
         }
     }

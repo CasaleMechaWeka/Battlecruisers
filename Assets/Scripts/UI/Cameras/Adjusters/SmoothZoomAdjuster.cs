@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     public class SmoothZoomAdjuster : ISmoothZoomAdjuster
 	{
 		private readonly ICamera _camera;
-        private readonly IDeltaTimeProvider _deltaTimeProvider;
+        private readonly ITime _time;
         private readonly float _smoothTime;
 		private float _cameraOrthographicSizeChangeVelocity;
         
@@ -17,13 +17,13 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 		private const float MIN_SMOOTH_TIME = 0;
         private const float MAX_SPEED = 1000;
 
-        public SmoothZoomAdjuster(ICamera camera, IDeltaTimeProvider deltaTimeProvider, float smoothTime)
+        public SmoothZoomAdjuster(ICamera camera, ITime time, float smoothTime)
 		{
-            Helper.AssertIsNotNull(camera, deltaTimeProvider);
+            Helper.AssertIsNotNull(camera, time);
 			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
 
 			_camera = camera;
-            _deltaTimeProvider = deltaTimeProvider;
+            _time = time;
 			_smoothTime = smoothTime;
 			_cameraOrthographicSizeChangeVelocity = 0;
 		}
@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
                         ref _cameraOrthographicSizeChangeVelocity, 
                         _smoothTime, 
                         MAX_SPEED,
-                        _deltaTimeProvider.UnscaledDeltaTime);
+                        _time.UnscaledDeltaTime);
             }
             else
             {

@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
     public class ScrollCalculator : IScrollCalculator
     {
         private readonly ICamera _camera;
-        private readonly IDeltaTimeProvider _deltaTimeProvider;
+        private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
@@ -18,15 +18,15 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 
         public ScrollCalculator(
             ICamera camera,
-            IDeltaTimeProvider deltaTimeProvider,
+            ITime time,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
             ILevelToMultiplierConverter scrollLevelConverter)
         {
-            Helper.AssertIsNotNull(camera, deltaTimeProvider, validOrthographicSizes, settingsManager, scrollLevelConverter);
+            Helper.AssertIsNotNull(camera, time, validOrthographicSizes, settingsManager, scrollLevelConverter);
 
             _camera = camera;
-            _deltaTimeProvider = deltaTimeProvider;
+            _time = time;
             _validOrthographicSizes = validOrthographicSizes;
             _settingsManager = settingsManager;
             _scrollLevelConverter = scrollLevelConverter;
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 directionMultiplier *
                 orthographicProportion *
                 SCROLL_SCALE *
-                _deltaTimeProvider.UnscaledDeltaTime *
+                _time.UnscaledDeltaTime *
                 _scrollLevelConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
         }
     }
