@@ -12,11 +12,12 @@ namespace BattleCruisers.Effects.Explosions
 
             int seed = randomGenerator.Range(0, int.MaxValue);
 
-            ParticleSystem[] particleSystems = GetComponentsInChildren<ParticleSystem>(includeInactive: true);
+            BroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<BroadcastingParticleSystem>(includeInactive: true);
 
-            foreach (ParticleSystem particleSystem in particleSystems)
+            foreach (BroadcastingParticleSystem particleSystem in particleSystems)
             {
-                particleSystem.randomSeed = (uint)seed;
+                particleSystem.Initialise();
+                particleSystem.ParticleSystem.randomSeed = (uint)seed;
             }
         }
     }

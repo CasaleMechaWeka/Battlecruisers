@@ -6,13 +6,15 @@ namespace BattleCruisers.Effects
 {
     public class BroadcastingParticleSystem : MonoBehaviour, IBroadcastingParticleSystem
     {
+        public ParticleSystem ParticleSystem { get; private set; }
+
         public event EventHandler Stopped;
 
         public void Initialise()
         {
-            ParticleSystem particleSystem = GetComponent<ParticleSystem>();
-            Assert.IsNotNull(particleSystem);
-            ParticleSystem.MainModule mainModule = particleSystem.main;
+            ParticleSystem = GetComponent<ParticleSystem>();
+            Assert.IsNotNull(ParticleSystem);
+            ParticleSystem.MainModule mainModule = ParticleSystem.main;
             mainModule.stopAction = ParticleSystemStopAction.Callback;
         }
 
