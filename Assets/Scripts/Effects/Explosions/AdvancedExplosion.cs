@@ -20,17 +20,27 @@ namespace BattleCruisers.Effects.Explosions
             foreach (SynchronizedParticleSystemsController fireSmokePair in fireSmokePairs)
             {
                 fireSmokePair.Initialise(randomGenerator);
+                fireSmokePair.Stopped += FireSmokePair_Stopped;
             }
 
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
         }
 
-        public void Activate(Vector3 activationArgs)
+        // All fire and smoke pairs should complete at the same time, so deactivate
+        // when first pair completes.
+        private void FireSmokePair_Stopped(object sender, EventArgs e)
         {
-            // FELIX
-            throw new NotImplementedException();
+            gameObject.SetActive(false);
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
+        public void Activate(Vector3 activationArgs)
+        {
+            gameObject.SetActive(true);
+            Show(activationArgs);
+        }
+
+        // FELIX  Remove?
         public void Show(Vector3 position)
         {
             gameObject.transform.position = position;
