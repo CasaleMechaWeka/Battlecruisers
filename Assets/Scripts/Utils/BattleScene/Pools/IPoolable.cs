@@ -6,6 +6,6 @@ namespace BattleCruisers.Utils.BattleScene.Pools
     {
         event EventHandler Deactivated;
 
-        void Activate(TArgs initialisationArgs);
+        void Activate(TArgs activationArgs);
     }
 }

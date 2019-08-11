@@ -2,6 +2,6 @@
 {
     public interface IPool<TArgs>
     {
-        IPoolable<TArgs> GetItem(TArgs initialisationArgs);
+        IPoolable<TArgs> GetItem(TArgs activationArgs);
     }
 }

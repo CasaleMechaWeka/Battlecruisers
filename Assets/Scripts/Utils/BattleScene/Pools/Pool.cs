@@ -21,10 +21,10 @@ namespace BattleCruisers.Utils.BattleScene.Pools
             _items = new Stack<IPoolable<TArgs>>();
         }
 
-        public IPoolable<TArgs> GetItem(TArgs initialisationArgs)
+        public IPoolable<TArgs> GetItem(TArgs activationArgs)
         {
             IPoolable<TArgs> item = _items.Count != 0 ? _items.Pop() : CreateItem();
-            item.Activate(initialisationArgs);
+            item.Activate(activationArgs);
             return item;
         }
 
