@@ -77,12 +77,6 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey HDExplosion100 => new ExplosionKey("HDExplosion1.0");
             public static ExplosionKey HDExplosion150 => new ExplosionKey("HDExplosion1.5");
             public static ExplosionKey HDExplosion500 => new ExplosionKey("HDExplosion5.0");
-
-            // Legacy explosions
-            public static ExplosionKey CartoonExplosion75 => new ExplosionKey("CartoonExplosion0.75");
-            public static ExplosionKey CartoonExplosion100 => new ExplosionKey("CartoonExplosion1.0");
-            public static ExplosionKey CartoonExplosion150 => new ExplosionKey("CartoonExplosion1.5");
-            public static ExplosionKey CartoonExplosion500 => new ExplosionKey("CartoonExplosion5.0");
         }
 	}
 }
