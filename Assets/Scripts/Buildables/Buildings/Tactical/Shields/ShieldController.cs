@@ -68,7 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			// Eat into recharge delay
 			if (Health < maxHealth)
 			{
-				_timeSinceDamageInS += Time.deltaTime;
+				_timeSinceDamageInS += _time.DeltaTime;
 
 				// Heal
 				if (_timeSinceDamageInS >= Stats.ShieldRechargeDelayInS)
@@ -78,7 +78,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 						EnableShield();
 					}
 
-					RepairCommandExecute(Stats.ShieldRechargeRatePerS * Time.deltaTime);
+					RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
 				}
 			}
 		}

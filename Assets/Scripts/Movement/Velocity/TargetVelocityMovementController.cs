@@ -49,8 +49,8 @@ namespace BattleCruisers.Movement.Velocity
                         desiredVelocity, 
                         ref _velocity, 
                         velocitySmoothTime, 
-                        _maxVelocityProvider.VelocityInMPerS, 
-                        Time.deltaTime);
+                        _maxVelocityProvider.VelocityInMPerS,
+                        _time.DeltaTime);
 
                 HandleDirectionChange(oldVelocity, Velocity);
             }

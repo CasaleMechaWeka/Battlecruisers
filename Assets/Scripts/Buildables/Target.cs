@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables
     {
         protected IHealthTracker _healthTracker;
         protected IAudioSource _audioSource;
+        protected ITime _time;
 
         public float maxHealth;
 
@@ -99,6 +100,7 @@ namespace BattleCruisers.Buildables
             _healthTracker = new HealthTracker(maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
 
+            _time = TimeBC.Instance;
             _attackCapabilities = new List<TargetType>();
             AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);

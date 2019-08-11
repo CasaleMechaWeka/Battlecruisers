@@ -4,6 +4,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,6 +19,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 		private float _damagePerS;
         private ITarget _parent;
         private LaserImpact _laserImpact;
+        private ITime _time;
 
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
@@ -33,6 +35,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
             _laserImpact.Initialise();
+
+            _time = TimeBC.Instance;
         }
 
         public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent, ISoundFetcher soundFetcher)
@@ -63,7 +67,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
                 _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
                 _laserImpact.Show(collision.CollisionPoint);
 
-				float damage = Time.deltaTime * _damagePerS;
+				float damage = _time.DeltaTime * _damagePerS;
                 collision.Target.TakeDamage(damage, _parent);
 			}
 		}

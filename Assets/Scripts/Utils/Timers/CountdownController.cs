@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,6 +10,7 @@ namespace BattleCruisers.Utils.Timers
         private TextMesh _countdownText;
         private ICountdown _countdown;
 		private Action _onCompletion;
+        private ITime _time;
 
         public int durationInS;
 
@@ -23,6 +25,8 @@ namespace BattleCruisers.Utils.Timers
 
             _countdown = new Countdown();
             _countdown.OnSecondPassed += _countdown_OnSecondPassed;
+
+            _time = TimeBC.Instance;
 
             gameObject.SetActive(false);
         }
@@ -57,7 +61,7 @@ namespace BattleCruisers.Utils.Timers
 
         void Update()
         {
-            _countdown.OnUpdate(Time.deltaTime);
+            _countdown.OnUpdate(_time.DeltaTime);
         }
     }
 }

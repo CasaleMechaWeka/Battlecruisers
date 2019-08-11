@@ -215,7 +215,7 @@ namespace BattleCruisers.Cruisers
 
         void Update()
         {
-            RepairManager.Repair(Time.deltaTime);
+            RepairManager.Repair(_time.DeltaTime);
         }
 
         protected override void OnDestroyed()

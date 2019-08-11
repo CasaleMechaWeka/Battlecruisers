@@ -22,6 +22,7 @@ using BattleCruisers.Utils.Timers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -363,7 +364,7 @@ namespace BattleCruisers.Buildables
                 Assert.IsTrue(DroneConsumer.State != DroneConsumerState.Idle);
 
                 // Find build progress
-                float buildProgressInDroneS = ParentCruiser.BuildProgressCalculator.CalculateBuildProgressInDroneS(this, Time.deltaTime);
+                float buildProgressInDroneS = ParentCruiser.BuildProgressCalculator.CalculateBuildProgressInDroneS(this, _time.DeltaTime);
                 _cumulativeBuildProgressInDroneS += buildProgressInDroneS;
 
                 BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;

@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,6 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IBarrelFiringHelper _firingHelper;
         private IFireIntervalManager _fireIntervalManager;
         private IUpdater _updater;
+        private ITime _time;
         protected ITargetFilter _targetFilter;
 
         protected IProjectileStats _projectileStats;
@@ -61,6 +63,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _baseTurretStats = SetupTurretStats();
             _turretStatsWrapper = new TurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
+            _time = TimeBC.Instance;
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
@@ -120,7 +123,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         private void _updater_Updated(object sender, EventArgs e)
         {
-            _fireIntervalManager.ProcessTimeInterval(Time.deltaTime);
+            _fireIntervalManager.ProcessTimeInterval(_time.DeltaTime);
             BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
 

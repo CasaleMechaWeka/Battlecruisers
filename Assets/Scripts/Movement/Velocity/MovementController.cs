@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity.Providers;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,6 +10,7 @@ namespace BattleCruisers.Movement.Velocity
     public abstract class MovementController : IMovementController
 	{
         protected readonly IVelocityProvider _maxVelocityProvider;
+        protected readonly ITime _time;
 
 		public abstract Vector2 Velocity { get; set; } 
 
@@ -18,6 +20,7 @@ namespace BattleCruisers.Movement.Velocity
         {
             Assert.IsTrue(maxVelocityProvider.VelocityInMPerS > 0);
             _maxVelocityProvider = maxVelocityProvider;
+            _time = TimeBC.Instance;
         }
 
         public virtual void Activate() { }

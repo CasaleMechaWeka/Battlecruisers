@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityCommon.PlatformAbstractions;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers
@@ -8,6 +9,7 @@ namespace BattleCruisers.Utils.Timers
         private string _prefix, _suffix;
         private TextMesh _timerText;
         private ITimer _timer;
+        private ITime _time;
 
         private int TimeElapsed
         {
@@ -32,6 +34,8 @@ namespace BattleCruisers.Utils.Timers
 
             _timer = new Timer();
             _timer.OnSecondPassed += _timer_OnSecondPassed;
+
+            _time = TimeBC.Instance;
         }
 
         private void _timer_OnSecondPassed(object sender, TimerEventArgs e)
@@ -51,7 +55,7 @@ namespace BattleCruisers.Utils.Timers
 
         void Update()
         {
-            _timer.OnUpdate(Time.deltaTime);
+            _timer.OnUpdate(_time.DeltaTime);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace BattleCruisers.Movement.Velocity
                         ref _patrollingVelocity, 
                         DEFAULT_SMOOTH_TIME_IN_S, 
                         _maxVelocityProvider.VelocityInMPerS, 
-                        Time.deltaTime);
+                        _time.DeltaTime);
 
                 // NOTE:  Am not using _rigidBody.MovePosition(), because that reacts weirdly
                 // for fighters when the fighter's rigidBody.transform.rotation is being
@@ -71,7 +71,7 @@ namespace BattleCruisers.Movement.Velocity
                     = $"currentPosition:D {_rigidBody.transform.position}  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint.Position}  " +
                         $"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
                         $"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +
-                        $"Time.deltaTime: {Time.deltaTime}  _rigidBody.transform.rotation.eulerAngles: {_rigidBody.transform.rotation.eulerAngles}";
+                        $"_time.DeltaTime: {_time.DeltaTime}  _rigidBody.transform.rotation.eulerAngles: {_rigidBody.transform.rotation.eulerAngles}";
                 Logging.Verbose(Tags.MOVEMENT, logMessage);
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
