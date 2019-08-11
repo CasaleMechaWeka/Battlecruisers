@@ -7,11 +7,13 @@ namespace BattleCruisers.Utils.BattleScene.Update
     /// <summary>
     /// Emits the Updated event during the first frame after the specified amount of time.
     /// </summary>
+    /// FELIX  Update tests :)
     public class MultiFrameUpdater : IUpdater
     {
         private readonly IDeltaTimeProvider _timeProvider;
         private readonly float _intervalInS;
-        private float _timeSinceUpdateInS;
+
+        public float DeltaTime { get; private set; }
 
         public event EventHandler Updated;
 
@@ -22,19 +24,19 @@ namespace BattleCruisers.Utils.BattleScene.Update
 
             _timeProvider = timeProvider;
             _intervalInS = intervalInS;
-            _timeSinceUpdateInS = 0;
+            DeltaTime = 0;
 
             perFrameUpdater.Updated += PerFrameUpdater_Updated;
         }
 
         private void PerFrameUpdater_Updated(object sender, EventArgs e)
         {
-            _timeSinceUpdateInS += _timeProvider.DeltaTime;
+            DeltaTime += _timeProvider.DeltaTime;
 
-            if (_timeSinceUpdateInS >= _intervalInS)
+            if (DeltaTime >= _intervalInS)
             {
                 Updated?.Invoke(this, EventArgs.Empty);
-                _timeSinceUpdateInS = 0;
+                DeltaTime = 0;
             }
         }
     }

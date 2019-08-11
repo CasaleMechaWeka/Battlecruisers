@@ -45,7 +45,6 @@ namespace BattleCruisers.Movement.Rotation
 			float differenceInDegrees = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
             float directionMultiplier = _rotationHelper.FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees);
 
-            // FELIX  delta time!
             float rotationIncrement = _time.DeltaTime * _rotateSpeedInDegreesPerS;
 			if (rotationIncrement > differenceInDegrees)
 			{

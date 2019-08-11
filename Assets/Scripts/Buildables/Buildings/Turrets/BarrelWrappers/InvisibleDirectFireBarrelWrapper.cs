@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -10,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     /// </summary>
     public class InvisibleDirectFireBarrelWrapper : DirectFireBarrelWrapper
     {
-        protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
+        protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }

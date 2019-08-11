@@ -493,7 +493,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     angleCalculator ?? new AngleCalculator(new AngleHelper()),
                     attackablePositionFinder ?? new DummyPositionFinder(),
                     accuracyAdjuster ?? new DummyAccuracyAdjuster(),
-                    rotationMovementController ?? CreateRotationMovementController(barrel),
+                    rotationMovementController ?? CreateRotationMovementController(barrel, updater),
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
                     factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
@@ -503,13 +503,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     firingSound ?? SoundKeys.Firing.BigCannon);
         }
 
-        private IRotationMovementController CreateRotationMovementController(BarrelController barrel)
+        private IRotationMovementController CreateRotationMovementController(BarrelController barrel, IUpdater updater)
         {
             return
                 new RotationMovementController(
                     new RotationHelper(),
                     new TransformBC(barrel.transform),
-                    TimeBC.Instance,
+                    updater,
                     barrel.TurretStats.TurretRotateSpeedInDegrees);
         }
 

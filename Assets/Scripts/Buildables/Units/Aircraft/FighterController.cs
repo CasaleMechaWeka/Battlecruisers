@@ -15,6 +15,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -88,17 +89,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			base.OnBuildableCompleted();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-
             ITarget parent = this;
+            IUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
+
             IBarrelControllerArgs args
                 = new BarrelControllerArgs(
-                    _factoryProvider.UpdaterProvider.PerFrameUpdater,
+                    updater,
                     _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
                     _factoryProvider.TargetPositionPredictorFactory.CreateLinearPredictor(),
                     _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleCalculator(),
                     _factoryProvider.Turrets.AttackablePositionFinderFactory.DummyPositionFinder,
                     _factoryProvider.Turrets.AccuracyAdjusterFactory.CreateDummyAdjuster(),
-                    _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform),
+                    _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
                     _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,

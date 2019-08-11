@@ -9,6 +9,8 @@ namespace BattleCruisers.Utils.BattleScene.Update
     {
         private IBroadcastingFilter _enabledFilter;
 
+        public float DeltaTime => Time.deltaTime;
+
         public event EventHandler Updated;
 
         public void Initialise(IBroadcastingFilter enabledFilter)

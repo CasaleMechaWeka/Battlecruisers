@@ -10,6 +10,7 @@ using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Movement
@@ -38,7 +39,7 @@ namespace BattleCruisers.Movement
         IVelocityProvider CreatePatrollingVelocityProvider(IPatrollingVelocityProvider patrollingVelocityProvider);
 
         // Rotation
-        IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform);
+        IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform, IDeltaTimeProvider deltaTimeProvider);
         IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true);
         IConstantRotationController CreateConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform);
         IConstantRotationController CreateDummyConstantRotationController();

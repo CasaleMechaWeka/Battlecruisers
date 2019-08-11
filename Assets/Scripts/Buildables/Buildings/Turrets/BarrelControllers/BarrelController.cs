@@ -18,7 +18,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IBarrelFiringHelper _firingHelper;
         private IFireIntervalManager _fireIntervalManager;
         private IUpdater _updater;
-        private IDeltaTimeProvider _time;
         protected ITargetFilter _targetFilter;
 
         protected IProjectileStats _projectileStats;
@@ -63,7 +62,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _baseTurretStats = SetupTurretStats();
             _turretStatsWrapper = new TurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
-            _time = TimeBC.Instance;
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
@@ -123,8 +121,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         private void _updater_Updated(object sender, EventArgs e)
         {
-            // FELIX  delta time!
-            _fireIntervalManager.ProcessTimeInterval(_time.DeltaTime);
+            _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
             BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
 

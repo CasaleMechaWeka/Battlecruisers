@@ -1,15 +1,10 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Movement;
-using BattleCruisers.Movement.Rotation;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Rotation
 {
-	public class RotatingController : MonoBehaviour 
+    public class RotatingController : MonoBehaviour 
 	{
 		private IRotationMovementController _activeRotationController, _realRotationController, _dummyRotationController;
 		private float _targetAngleInDegrees;
@@ -19,7 +14,7 @@ namespace BattleCruisers.Movement.Rotation
 
 		public void Initialise(IMovementControllerFactory movementControllerFactory, float rotateSpeedInMPerS, float targetAngleInDegrees)
 		{
-			_realRotationController = movementControllerFactory.CreateRotationMovementController(rotateSpeedInMPerS, transform);
+			_realRotationController = movementControllerFactory.CreateRotationMovementController(rotateSpeedInMPerS, transform, TimeBC.Instance);
 			_dummyRotationController = movementControllerFactory.CreateDummyRotationMovementController(isOnTarget: false);
 			_activeRotationController = _dummyRotationController;
 

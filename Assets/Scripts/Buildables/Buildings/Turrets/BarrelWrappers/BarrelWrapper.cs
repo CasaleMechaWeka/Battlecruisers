@@ -18,6 +18,7 @@ using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -156,14 +157,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider)
         {
+            IUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
+
             return new BarrelControllerArgs(
-                ChooseUpdater(_factoryProvider.UpdaterProvider),
+                updater,
                 targetFilter,
                 CreateTargetPositionPredictor(),
                 angleCalculator,
                 attackablePositionFinder,
                 CreateAccuracyAdjuster(angleCalculator, barrel),
-                CreateRotationMovementController(barrel),
+                CreateRotationMovementController(barrel, updater),
                 CreatePositionValidator(),
                 CreateAngleLimiter(),
                 _factoryProvider,
@@ -204,12 +207,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             }
         }
 
-        protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
+        protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return 
                 _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
                     barrel.TurretStats.TurretRotateSpeedInDegrees, 
-                    barrel.Transform);
+                    barrel.Transform,
+                    deltaTimeProvider);
         }
 
         protected virtual IAccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)

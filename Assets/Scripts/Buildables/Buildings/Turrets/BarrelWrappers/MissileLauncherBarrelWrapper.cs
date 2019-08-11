@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
@@ -17,7 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 			_desiredAngleInDegrees = _barrels[0].transform.eulerAngles.z;
         }
 
-        protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel)
+        protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
         }
