@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene.Pools
@@ -21,15 +22,21 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         public IPoolable<TArgs> GetItem(TArgs initialisationArgs)
         {
-            IPoolable<TArgs> item = _items.Count != 0 ? _items.Pop() : _itemFactory.CreateItem();
+            IPoolable<TArgs> item = _items.Count != 0 ? _items.Pop() : CreateItem();
             item.Activate(initialisationArgs);
             return item;
         }
 
-        public void ReleaseItem(IPoolable<TArgs> itemToRelease)
+        private IPoolable<TArgs> CreateItem()
         {
-            itemToRelease.Deactivate();
-            _items.Push(itemToRelease);
+            IPoolable<TArgs> item = _itemFactory.CreateItem();
+            item.Deactivated += Item_Deactivated;
+            return item;
+        }
+
+        private void Item_Deactivated(object sender, EventArgs e)
+        {
+            _items.Push(sender.Parse<IPoolable<TArgs>>());
         }
     }
 }
