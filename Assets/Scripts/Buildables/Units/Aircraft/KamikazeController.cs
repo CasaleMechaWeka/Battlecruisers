@@ -67,6 +67,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 RemoveFromScene();
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
+
+                // FELIX  Use explosion pool :D
                 IExplosionStats explosionStats = new ExplosionStats(ExplosionSize.Small, showTrails: true);
                 _explosionManager.ShowExplosion(explosionStats, transform.position);
             }

@@ -8,6 +8,7 @@
         Giant   // Radius 5m    => Nuke
     }
 
+    // FELIX  Remove?  Just directly access different explosion pools?
     public interface IExplosionStats
     {
         ExplosionSize Size { get; }

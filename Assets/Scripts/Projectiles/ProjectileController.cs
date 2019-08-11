@@ -143,6 +143,8 @@ namespace BattleCruisers.Projectiles
 
         private void ShowExplosionIfNecessary()
         {
+            // FELIX  Use explosion pool :D
+            // FELIX  Hmmm, some projectiles don't show explosions.  Need DummyPool null object???  Hmmmm
             if (_explosionStats != null)
             {
                 _explosionManager.ShowExplosion(_explosionStats, transform.position);
