@@ -5,5 +5,6 @@
         IUpdater PerFrameUpdater { get; }
         IUpdater PhysicsUpdater { get; }
         IUpdater SlowerUpdater { get; }
+        IUpdater BarrelControllerUpdater { get; }
     }
 }

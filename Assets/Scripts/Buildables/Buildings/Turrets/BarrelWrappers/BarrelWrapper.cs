@@ -231,7 +231,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
         {
-            return updaterProvider.PerFrameUpdater;
+            return updaterProvider.BarrelControllerUpdater;
         }
 
         public void DisposeManagedState()

@@ -12,6 +12,9 @@ namespace BattleCruisers.Utils.BattleScene.Update
         private const float SLOWER_UPDATER_INTERVAL_IN_S = 0.2f;
         public IUpdater SlowerUpdater { get; private set; }
 
+        private const float BARREL_CONTROLLER_UPDATER_INTERVAL_IN_S = 0.1f;
+        public IUpdater BarrelControllerUpdater { get; private set; }
+
         public void Initialise()
         {
             PerFrameUpdater = GetComponent<PerFrameUpdater>();
@@ -21,6 +24,7 @@ namespace BattleCruisers.Utils.BattleScene.Update
             Assert.IsNotNull(PhysicsUpdater);
 
             SlowerUpdater = new MultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, SLOWER_UPDATER_INTERVAL_IN_S);
+            BarrelControllerUpdater = new MultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, BARREL_CONTROLLER_UPDATER_INTERVAL_IN_S);
         }
     }
 }
