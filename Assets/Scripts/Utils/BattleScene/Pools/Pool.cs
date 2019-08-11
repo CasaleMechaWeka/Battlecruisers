@@ -7,6 +7,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
     // FELIX  Use
     // FELIX  Test
     // FELIX  Have initial capacity?  Need to deactivate items...  But they have not been Activated/Initialised?
+    // FELIX  Play game and see what initial capacity should be :)  Eg, don't want pool for nuke explosion, will only happen once :P
     public class Pool<TArgs> : IPool<TArgs>
     {
         private readonly Stack<IPoolable<TArgs>> _items;
