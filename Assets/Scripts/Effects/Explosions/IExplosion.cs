@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.BattleScene.Pools;
+using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    public interface IExplosion
+    public interface IExplosion : IPoolable<Vector3>
     {
+        // FELIX  Remove?
         void Show(Vector3 position);
     }
 }

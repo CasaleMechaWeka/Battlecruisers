@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using System;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -7,6 +8,8 @@ namespace BattleCruisers.Effects.Explosions
     public class AdvancedExplosion : MonoBehaviour, IExplosion
     {
         private ParticleSystem[] _particleSystems;
+
+        public event EventHandler Deactivated;
 
         public void Initialise(IRandomGenerator randomGenerator)
         {
@@ -20,6 +23,12 @@ namespace BattleCruisers.Effects.Explosions
             }
 
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
+        }
+
+        public void Activate(Vector3 activationArgs)
+        {
+            // FELIX
+            throw new NotImplementedException();
         }
 
         public void Show(Vector3 position)
