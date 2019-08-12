@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Effects.Explosions;
+﻿using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IRemovable _parentAsRemovable;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
-        private IExplosionManager _explosionManager;
+        private IExplosionPoolProvider _explosionPoolProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     damageRadiusInM: parentAircraft.Size.x);
             _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
 
-            _explosionManager = factoryProvider.ExplosionManager;
+            _explosionPoolProvider = factoryProvider.ExplosionPoolProvider;
         }
 
 		private void OnTriggerEnter2D(Collider2D collider)
@@ -67,10 +67,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 RemoveFromScene();
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
-
-                // FELIX  Use explosion pool :D
-                IExplosionStats explosionStats = new ExplosionStats(ExplosionSize.Small, showTrails: true);
-                _explosionManager.ShowExplosion(explosionStats, transform.position);
+                _explosionPoolProvider.SmallExplosionsPool.GetItem(transform.position);
             }
         }
 
