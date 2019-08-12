@@ -5,7 +5,6 @@ namespace BattleCruisers.Effects.Explosions
 {
     public interface IExplosion : IPoolable<Vector3>
     {
-        // FELIX  Remove?
-        void Show(Vector3 position);
+        // empty
     }
 }

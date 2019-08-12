@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
             foreach (AdvancedExplosion explosion in explosions)
             {
                 explosion.Initialise(random);
-                explosion.Show(explosion.transform.position);
+                explosion.Activate(explosion.transform.position);
             }
         }
     }

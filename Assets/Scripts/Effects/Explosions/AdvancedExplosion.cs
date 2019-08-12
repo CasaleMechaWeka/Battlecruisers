@@ -34,15 +34,9 @@ namespace BattleCruisers.Effects.Explosions
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Activate(Vector3 activationArgs)
+        public void Activate(Vector3 position)
         {
             gameObject.SetActive(true);
-            Show(activationArgs);
-        }
-
-        // FELIX  Remove?
-        public void Show(Vector3 position)
-        {
             gameObject.transform.position = position;
            
             foreach (ParticleSystem particleSystem in _particleSystems)
