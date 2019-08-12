@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects.Explosions;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -8,24 +9,21 @@ namespace BattleCruisers.Scenes.Test.Performance
     public class ExplosionPerformanceTestGod : MonoBehaviour
     {
         private IPrefabFactory _prefabFactory;
-        private IExplosionStats _explosionStats;
         private IRandomGenerator _random;
 
-        public ExplosionSize explosionSize = ExplosionSize.Small;
         public float spawnRadiusXInM = 8;
         public float spawnRadiusYInM = 5;
 
         void Start()
         {
             _prefabFactory = new PrefabFactory(new PrefabFetcher());
-            _explosionStats = new ExplosionStats(explosionSize, showTrails: true);
             _random = new RandomGenerator();
         }
 
         private void Update()
         {
-            IExplosion explosion = _prefabFactory.CreateExplosion(_explosionStats);
-            explosion.Show(FindRandomSpawnPosition());
+            IExplosion explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.HDExplosion75);
+            explosion.Activate(FindRandomSpawnPosition());
         }
 
         private Vector3 FindRandomSpawnPosition()
