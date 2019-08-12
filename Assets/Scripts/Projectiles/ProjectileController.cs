@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
@@ -8,6 +8,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using System;
 using UnityEngine;
@@ -17,13 +18,12 @@ namespace BattleCruisers.Projectiles
 {
     public class ProjectileController : MonoBehaviour, IRemovable, ITrackable
     {
-        private IExplosionStats _explosionStats;
         private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
-        private IExplosionManager _explosionManager;
         private ITarget _parent;
         private ISoundPlayer _soundPlayer;
+        private IPool<Vector3> _explosionPool;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -72,7 +72,7 @@ namespace BattleCruisers.Projectiles
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
-            _explosionStats = GetComponent<IExplosionStats>();
+            _explosionPool = GetComponent<IExplosionPoolChooser>()?.ChoosePool(factoryProvider.ExplosionPoolProvider);
 
 			_projectileStats = projectileStats;
 			_targetFilter = targetFilter;
@@ -85,7 +85,6 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(factoryProvider.DamageApplierFactory);
-            _explosionManager = factoryProvider.ExplosionManager;
 		}
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory)
@@ -143,12 +142,7 @@ namespace BattleCruisers.Projectiles
 
         private void ShowExplosionIfNecessary()
         {
-            // FELIX  Use explosion pool :D
-            // FELIX  Hmmm, some projectiles don't show explosions.  Need DummyPool null object???  Hmmmm
-            if (_explosionStats != null)
-            {
-                _explosionManager.ShowExplosion(_explosionStats, transform.position);
-            }
+            _explosionPool?.GetItem(transform.position);
         }
 
         private void AdjustGameObjectDirection()

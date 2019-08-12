@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -25,6 +26,7 @@ namespace BattleCruisers.Utils.Factories
         IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
         IExplosionManager ExplosionManager { get; }
+        IExplosionPoolProvider ExplosionPoolProvider { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }
         IMovementControllerFactory MovementControllerFactory { get; }

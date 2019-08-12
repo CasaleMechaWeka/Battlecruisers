@@ -13,6 +13,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -29,7 +30,6 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
-using UnityCommon.PlatformAbstractions;
 using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -113,7 +113,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     trackerFactory ?? Substitute.For<ITrackerFactory>(),
                     targetFactories,
                     new SpawnDeciderFactory(),
-                    updaterProvider);
+                    updaterProvider,
+                    new ExplosionPoolProvider(prefabFactory));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -140,7 +141,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITrackerFactory trackerFactory,
             ITargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
-            IUpdaterProvider updaterProvider)
+            IUpdaterProvider updaterProvider,
+            IExplosionPoolProvider explosionPoolProvider)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -149,6 +151,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.ExplosionManager.Returns(explosionManager);
+            factoryProvider.ExplosionPoolProvider.Returns(explosionPoolProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
