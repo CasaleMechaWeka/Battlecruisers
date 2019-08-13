@@ -12,7 +12,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         private readonly IPrefabFactory _prefabFactory;
         private readonly ExplosionKey _explosionKey;
 
-        public  ExplosionFactory(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        public ExplosionFactory(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             Helper.AssertIsNotNull(prefabFactory, explosionKey);
 
