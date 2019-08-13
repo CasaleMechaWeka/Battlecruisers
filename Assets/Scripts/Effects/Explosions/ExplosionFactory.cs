@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    // FELIX  Test???  Ok :)
     public class ExplosionFactory : IPoolableFactory<Vector3>
     {
         private readonly IPrefabFactory _prefabFactory;
