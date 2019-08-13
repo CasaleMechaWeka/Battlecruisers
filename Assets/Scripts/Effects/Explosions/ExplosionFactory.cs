@@ -4,7 +4,7 @@ using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 
-namespace BattleCruisers.Effects.Explosions.Pools
+namespace BattleCruisers.Effects.Explosions
 {
     // FELIX  Test???  Ok :)
     public class ExplosionFactory : IPoolableFactory<Vector3>
