@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -32,9 +33,17 @@ namespace BattleCruisers.Scenes.Test
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
 
             ITarget parent = Substitute.For<ITarget>();
+            parent.Faction.Returns(Faction.Blues);
 
 			RocketController rocket = FindObjectOfType<RocketController>();
-            rocket.Initialise(rocketStats, initialVelocity, targetFilter, target, args.FactoryProvider, parent, Faction.Blues);
-		}
+            rocket.Initialise(args.FactoryProvider);
+            rocket.Activate(
+                new TargetProviderActivationArgs<ICruisingProjectileStats>(
+                    rocketStats,
+                    initialVelocity,
+                    targetFilter,
+                    parent,
+                    target));
+        }
 	}
 }

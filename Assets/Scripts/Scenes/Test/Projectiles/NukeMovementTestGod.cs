@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -33,8 +34,15 @@ namespace BattleCruisers.Scenes.Test
 
 			ITarget parent = Substitute.For<ITarget>();
 
-            nuke.Initialise(nukeStats, targetFilter, target, args.FactoryProvider, parent);
-			nuke.Launch();
+            nuke.Initialise(args.FactoryProvider);
+            nuke.Activate(
+                new TargetProviderActivationArgs<INukeStats>(
+                    nukeStats,
+                    Vector2.zero,
+                    targetFilter,
+                    parent,
+                    target));
+            nuke.Launch();
 		}
 	}
 }

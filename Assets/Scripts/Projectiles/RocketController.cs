@@ -1,10 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity.Providers;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
-using BattleCruisers.Utils.Factories;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
@@ -20,34 +18,27 @@ namespace BattleCruisers.Projectiles
 	{
 		public ITarget Target { get; private set; }
 
-		public void Initialise(
-            ICruisingProjectileStats rocketStats,
-            Vector2 initialVelocityInMPerS,
-            ITargetFilter targetFilter,
-            ITarget target,
-            IFactoryProvider factoryProvider, 
-            ITarget parent,
-            Faction faction)
-		{
-            base.Initialise(rocketStats, initialVelocityInMPerS, targetFilter, factoryProvider, parent);
+        public void Activate(TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs)
+        {
+            base.Activate(activationArgs);
 
-			Target = target;
+            Target = activationArgs.Target;
 
-            IVelocityProvider maxVelocityProvider = factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(rocketStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
 
-			MovementController 
-                = factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+            MovementController
+                = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
                     _rigidBody,
-                    maxVelocityProvider, 
-                    targetProvider, 
-                    rocketStats.CruisingAltitudeInM, 
-                    factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
+                    maxVelocityProvider,
+                    targetProvider,
+                    activationArgs.ProjectileStats.CruisingAltitudeInM,
+                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
 
-			RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
-			Assert.IsNotNull(rocketTarget);
+            RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
+            Assert.IsNotNull(rocketTarget);
 
-            rocketTarget.Initialise(faction, _rigidBody);
-		}
-	}
+            rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody);
+        }
+    }
 }

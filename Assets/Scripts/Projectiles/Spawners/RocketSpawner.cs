@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.Factories;
@@ -24,7 +25,14 @@ namespace BattleCruisers.Projectiles.Spawners
 		{
             RocketController rocket = Instantiate(rocketPrefab, transform.position, new Quaternion());
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            rocket.Initialise(_rocketStats, rocketVelocity, targetFilter, target, _factoryProvider, _parent, faction);
+            rocket.Initialise(_factoryProvider);
+            rocket.Activate(
+                new TargetProviderActivationArgs<ICruisingProjectileStats>(
+                    _rocketStats,
+                    rocketVelocity,
+                    targetFilter,
+                    _parent,
+                    target));
 		}
 	}
 }

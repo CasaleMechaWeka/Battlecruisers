@@ -17,7 +17,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    // FELIX  NEXT  Implement IPoolable<ProjectileActivtionArgs> :)
     public abstract class ProjectileControllerBase<TStats> : MonoBehaviour,
         IRemovable,
         ITrackable,
@@ -27,8 +26,8 @@ namespace BattleCruisers.Projectiles
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private ITarget _parent;
-        private ISoundPlayer _soundPlayer;
         private IPool<Vector3> _explosionPool;
+        protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -66,39 +65,40 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public void Initialise(
-            IProjectileStats projectileStats, 
-            Vector2 velocityInMPerS, 
-            ITargetFilter targetFilter, 
-            IFactoryProvider factoryProvider,
-            ITarget parent)
+        public void Initialise(IFactoryProvider factoryProvider)
 		{
-            Helper.AssertIsNotNull(projectileStats, targetFilter, factoryProvider, parent);
+            Assert.IsNotNull(factoryProvider);
+            _factoryProvider = factoryProvider;
 
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
             _explosionPool = GetComponent<IExplosionPoolChooser>()?.ChoosePool(factoryProvider.ExplosionPoolProvider);
+		}
 
-			_projectileStats = projectileStats;
-			_targetFilter = targetFilter;
-            _parent = parent;
-            _soundPlayer = factoryProvider.Sound.SoundPlayer;
-            _rigidBody.velocity = velocityInMPerS;
-            _rigidBody.gravityScale = _projectileStats.GravityScale;
+        public virtual void Activate(ProjectileActivationArgs<TStats> activationArgs)
+        {
+            gameObject.SetActive(true);
+
+			_projectileStats = activationArgs.ProjectileStats;
+			_targetFilter = activationArgs.TargetFilter;
+            _parent = activationArgs.Parent;
+
+            _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
+            _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
             _targetToDamage = null;
 
             AdjustGameObjectDirection();
 
-            _damageApplier = CreateDamageApplier(factoryProvider.DamageApplierFactory);
-		}
+            _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
+        }
 
-        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory)
+        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
         {
             return
-                _projectileStats.HasAreaOfEffectDamage ?
-                damageApplierFactory.CreateAreaOfDamageApplier(_projectileStats) :
-                damageApplierFactory.CreateSingleDamageApplier(_projectileStats);
+                projectileStats.HasAreaOfEffectDamage ?
+                damageApplierFactory.CreateAreaOfDamageApplier(projectileStats) :
+                damageApplierFactory.CreateSingleDamageApplier(projectileStats);
         }
 
 		void FixedUpdate()
@@ -139,7 +139,7 @@ namespace BattleCruisers.Projectiles
 
             if (ImpactSoundKey != null)
             {
-                _soundPlayer.PlaySound(ImpactSoundKey, transform.position);
+                _factoryProvider.Sound.SoundPlayer.PlaySound(ImpactSoundKey, transform.position);
             }
 
 			RemoveFromScene();
@@ -163,15 +163,10 @@ namespace BattleCruisers.Projectiles
 
         public void RemoveFromScene()
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
             Destroyed?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Activate(ProjectileActivationArgs<TStats> activationArgs)
-        {
-            // FELIX :D
-            throw new NotImplementedException();
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

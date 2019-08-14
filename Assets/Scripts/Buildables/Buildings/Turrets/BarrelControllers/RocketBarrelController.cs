@@ -10,6 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class RocketBarrelController : BarrelController
 	{
 		private ICircularList<RocketSpawner> _rocketSpawners;
+        // FELIX  Remove!
 		private Faction _faction;
         private ICruisingProjectileStats _rocketStats;
 

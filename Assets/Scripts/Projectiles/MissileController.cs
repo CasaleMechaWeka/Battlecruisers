@@ -1,12 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProviders;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
-using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
@@ -19,32 +17,26 @@ namespace BattleCruisers.Projectiles
 
         public  ITarget Target { get; private set; }
 
-		public void Initialise(
-            IProjectileStats missileStats, 
-            Vector2 initialVelocityInMPerS, 
-            ITargetFilter targetFilter, 
-            ITarget target,
-            IFactoryProvider factoryProvider,
-            ITarget parent)
-		{
-            base.Initialise(missileStats, initialVelocityInMPerS, targetFilter, factoryProvider, parent);
+        public void Activate(TargetProviderActivationArgs<IProjectileStats> activationArgs)
+        {
+            base.Activate(activationArgs);
 
-			Target = target;
-            _deferrer = factoryProvider.DeferrerProvider.Deferrer;
+			Target = activationArgs.Target;
+            _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
 
-            IVelocityProvider maxVelocityProvider = factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(missileStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
 			ITargetProvider targetProvider = this;
 
 			MovementController 
-                = factoryProvider.MovementControllerFactory.CreateMissileMovementController(
+                = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
                     _rigidBody, 
                     maxVelocityProvider, 
                     targetProvider, 
-                    factoryProvider.TargetPositionPredictorFactory);
+                    _factoryProvider.TargetPositionPredictorFactory);
 
-            _dummyMovementController = factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+            _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
 
-			target.Destroyed += Target_Destroyed;
+            activationArgs.Target.Destroyed += Target_Destroyed;
 		}
 
 		private void Target_Destroyed(object sender, DestroyedEventArgs e)

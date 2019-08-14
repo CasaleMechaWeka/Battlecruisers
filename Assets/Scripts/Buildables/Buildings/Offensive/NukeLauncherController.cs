@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
@@ -90,7 +91,14 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_launchedNuke.transform.position = transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT;
 
 			ITargetFilter targetFilter = _factoryProvider.TargetFactories.FilterFactory.CreateExactMatchTargetFilter(_enemyCruiser);
-            _launchedNuke.Initialise(_nukeStats, targetFilter, _enemyCruiser, _factoryProvider, this);
+            _launchedNuke.Initialise(_factoryProvider);
+            _launchedNuke.Activate(
+                new TargetProviderActivationArgs<INukeStats>(
+                    _nukeStats,
+                    Vector2.zero,
+                    targetFilter,
+                    this,
+                    _enemyCruiser));
 
             // Make nuke face upwards (rotation is set in Initialise() above)
             _launchedNuke.transform.eulerAngles = new Vector3(0, 0, 90);

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using UnityEngine;
@@ -30,7 +31,13 @@ namespace BattleCruisers.Projectiles.Spawners
             ProjectileController shell = Instantiate(shellPrefab, transform.position, new Quaternion());
 
 			Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
-            shell.Initialise(_projectileStats, shellVelocity, _targetFilter, _factoryProvider, _parent);
+            shell.Initialise(_factoryProvider);
+            shell.Activate(
+                new ProjectileActivationArgs<Stats.IProjectileStats>(
+                    _projectileStats,
+                    shellVelocity,
+                    _targetFilter,
+                    _parent));
             _soundPlayer.OnProjectileFired();
 
             base.ShowTrackerIfNeeded(shell);

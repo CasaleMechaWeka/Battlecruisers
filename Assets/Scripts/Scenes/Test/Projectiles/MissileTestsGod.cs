@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -27,8 +28,15 @@ namespace BattleCruisers.Scenes.Test
 
             foreach (MissileController missile in missiles)
 			{
-                missile.Initialise(missileStats, initialVelocity, targetFilter, target, args.FactoryProvider, parent);
-			}
+                missile.Initialise(args.FactoryProvider);
+                missile.Activate(
+                    new TargetProviderActivationArgs<IProjectileStats>(
+                        missileStats,
+                        initialVelocity,
+                        targetFilter,
+                        parent,
+                        target));
+            }
 		}
 	}
 }

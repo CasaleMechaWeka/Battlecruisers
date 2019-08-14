@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
@@ -13,7 +14,14 @@ namespace BattleCruisers.Projectiles.Spawners
 		{
             MissileController missile = Instantiate(missilePrefab, transform.position, new Quaternion());
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            missile.Initialise(_projectileStats, missileVelocity, targetFilter, target, _factoryProvider, _parent);
+            missile.Initialise(_factoryProvider);
+            missile.Activate(
+                new TargetProviderActivationArgs<Stats.IProjectileStats>(
+                    _projectileStats,
+                    missileVelocity,
+                    targetFilter,
+                    _parent,
+                    target));
 		}
 	}
 }
