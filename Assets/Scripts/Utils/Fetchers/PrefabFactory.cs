@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    // PERF  Cache prefabs, so only need to retrieve the first time :)
+    // PERF  Cache prefabs, so only need to retrieve the first time :)  Hm, maybe Unity already does this?
     public class PrefabFactory : IPrefabFactory
 	{
 		private readonly PrefabFetcher _prefabFetcher;
