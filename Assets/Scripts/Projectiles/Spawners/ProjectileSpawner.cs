@@ -12,7 +12,9 @@ namespace BattleCruisers.Projectiles.Spawners
         protected IProjectileStats _projectileStats;
 		protected IFactoryProvider _factoryProvider;
 
-        protected abstract ProjectileController ProjectilePrefab { get; }
+        // FELIX  Donn't like that this isn't strongly typed.  Should go away when I use
+        // inject IPool?  (Or ChoosePool?)
+        protected abstract MonoBehaviour ProjectilePrefab { get; }
 
         public void Initialise(IProjectileSpawnerArgs args)
         {

@@ -5,7 +5,7 @@ namespace BattleCruisers.Projectiles.Spawners
     public class BombSpawner : BaseShellSpawner
 	{
         public ProjectileController bombPrefab;
-        protected override ProjectileController ProjectilePrefab => bombPrefab;
+        protected override MonoBehaviour ProjectilePrefab => bombPrefab;
 
 		public void SpawnShell(float currentXVelocityInMPers)
 		{

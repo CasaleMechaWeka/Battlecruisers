@@ -9,7 +9,7 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Projectiles
 {
-    public class NukeController : ProjectileController, ITargetProvider
+    public class NukeController : ProjectileControllerBase<INukeStats>, ITargetProvider
 	{
 		private IMovementControllerFactory _movementControllerFactory;
 		private INukeStats _nukeStats;

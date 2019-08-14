@@ -3,7 +3,7 @@ using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
-    public class TargetProviderActivationArgs<TStats> : ProjectileActivationArgsBase<TStats> where TStats : IProjectileStats
+    public class TargetProviderActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : IProjectileStats
     {
         ITarget Target { get; }
     }

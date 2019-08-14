@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
-    public class ProjectileActivationArgsBase<TStats> where TStats : IProjectileStats
+    public class ProjectileActivationArgs<TStats> where TStats : IProjectileStats
     {
         TStats ProjectileStats { get; }
         Vector2 InitialVelocityInMPerS { get; }
