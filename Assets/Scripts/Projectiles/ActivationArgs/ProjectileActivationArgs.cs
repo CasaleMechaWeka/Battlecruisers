@@ -1,15 +1,30 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
     public class ProjectileActivationArgs<TStats> where TStats : IProjectileStats
     {
-        TStats ProjectileStats { get; }
-        Vector2 InitialVelocityInMPerS { get; }
+        public TStats ProjectileStats { get; }
+        public Vector2 InitialVelocityInMPerS { get; }
         public ITargetFilter TargetFilter { get; }
         public ITarget Parent { get; }
+
+        public ProjectileActivationArgs(
+            TStats projectileStats,
+            Vector2 initialVelocityInMPerS,
+            ITargetFilter targetFilter,
+            ITarget parent)
+        {
+            Helper.AssertIsNotNull(projectileStats, targetFilter, parent);
+
+            ProjectileStats = projectileStats;
+            InitialVelocityInMPerS = initialVelocityInMPerS;
+            TargetFilter = targetFilter;
+            Parent = parent;
+        }
     }
 }
