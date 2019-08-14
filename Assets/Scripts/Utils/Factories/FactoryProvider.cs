@@ -40,7 +40,6 @@ namespace BattleCruisers.Utils.Factories
         public ITrackerFactory TrackerFactory { get; }
         public IUpdaterProvider UpdaterProvider { get; }
 
-
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
             ICruiser friendlyCruiser, 
