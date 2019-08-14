@@ -9,11 +9,8 @@ namespace BattleCruisers.Effects.Explosions
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
         public IPool<Vector3> SmallExplosionsPool { get; }
-
         public IPool<Vector3> MediumExplosionsPool { get; }
-
         public IPool<Vector3> LargeExplosionsPool { get; }
-
         public IPool<Vector3> HugeExplosionsPool { get; }
 
         public ExplosionPoolProvider(IPrefabFactory prefabFactory)
