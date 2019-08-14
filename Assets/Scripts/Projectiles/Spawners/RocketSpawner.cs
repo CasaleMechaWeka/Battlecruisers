@@ -28,6 +28,7 @@ namespace BattleCruisers.Projectiles.Spawners
             rocket.Initialise(_factoryProvider);
             rocket.Activate(
                 new TargetProviderActivationArgs<ICruisingProjectileStats>(
+                    transform.position,
                     _rocketStats,
                     rocketVelocity,
                     targetFilter,

@@ -79,6 +79,7 @@ namespace BattleCruisers.Projectiles
         public virtual void Activate(ProjectileActivationArgs<TStats> activationArgs)
         {
             gameObject.SetActive(true);
+            transform.position = activationArgs.Position;
 
 			_projectileStats = activationArgs.ProjectileStats;
 			_targetFilter = activationArgs.TargetFilter;

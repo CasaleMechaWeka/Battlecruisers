@@ -37,6 +37,7 @@ namespace BattleCruisers.Scenes.Test
             nuke.Initialise(args.FactoryProvider);
             nuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
+                    nuke.Position,
                     nukeStats,
                     Vector2.zero,
                     targetFilter,

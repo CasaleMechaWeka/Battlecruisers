@@ -15,6 +15,7 @@ namespace BattleCruisers.Projectiles.Spawners
             shell.Initialise(_factoryProvider);
             shell.Activate(
                 new ProjectileActivationArgs<Stats.IProjectileStats>(
+                    transform.position,
                     _projectileStats,
                     shellVelocity,
                     _targetFilter,

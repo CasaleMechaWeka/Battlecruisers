@@ -17,6 +17,7 @@ namespace BattleCruisers.Projectiles.Spawners
             missile.Initialise(_factoryProvider);
             missile.Activate(
                 new TargetProviderActivationArgs<Stats.IProjectileStats>(
+                    transform.position,
                     _projectileStats,
                     missileVelocity,
                     targetFilter,

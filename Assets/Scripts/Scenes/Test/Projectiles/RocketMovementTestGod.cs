@@ -39,6 +39,7 @@ namespace BattleCruisers.Scenes.Test
             rocket.Initialise(args.FactoryProvider);
             rocket.Activate(
                 new TargetProviderActivationArgs<ICruisingProjectileStats>(
+                    rocket.Position,
                     rocketStats,
                     initialVelocity,
                     targetFilter,

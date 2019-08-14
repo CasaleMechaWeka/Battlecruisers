@@ -31,6 +31,7 @@ namespace BattleCruisers.Scenes.Test
                 missile.Initialise(args.FactoryProvider);
                 missile.Activate(
                     new TargetProviderActivationArgs<IProjectileStats>(
+                        missile.Position,
                         missileStats,
                         initialVelocity,
                         targetFilter,

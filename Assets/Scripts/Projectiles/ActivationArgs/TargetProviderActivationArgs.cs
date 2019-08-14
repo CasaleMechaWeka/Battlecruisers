@@ -11,12 +11,13 @@ namespace BattleCruisers.Projectiles.ActivationArgs
         public ITarget Target { get; }
 
         public TargetProviderActivationArgs(
+            Vector3 position,
             TStats projectileStats, 
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             ITarget parent,
             ITarget target) 
-            : base(projectileStats, initialVelocityInMPerS, targetFilter, parent)
+            : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent)
         {
             Assert.IsNotNull(target);
             Target = target;
