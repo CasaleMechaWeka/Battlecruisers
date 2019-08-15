@@ -8,7 +8,9 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Projectiles
 {
-    public class MissileController : ProjectileController, ITargetProvider
+    public class MissileController : 
+        ProjectileControllerBase<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>, 
+        ITargetProvider
 	{
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;
@@ -17,7 +19,7 @@ namespace BattleCruisers.Projectiles
 
         public  ITarget Target { get; private set; }
 
-        public void Activate(TargetProviderActivationArgs<IProjectileStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<IProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 
