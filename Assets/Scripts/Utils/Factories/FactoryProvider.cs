@@ -9,6 +9,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
@@ -39,6 +40,9 @@ namespace BattleCruisers.Utils.Factories
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public ITrackerFactory TrackerFactory { get; }
         public IUpdaterProvider UpdaterProvider { get; }
+
+        //FELIX  NEXT  Use Lazy :)
+        public IProjectilePoolProvider ProjectilePoolProvider => throw new System.NotImplementedException();
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 

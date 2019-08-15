@@ -8,6 +8,7 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -24,7 +25,11 @@ namespace BattleCruisers.Utils.Factories
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
+
+        // FELIX  Create Pools sub provider, once have UnitsPools too :)
         IExplosionPoolProvider ExplosionPoolProvider { get; }
+        IProjectilePoolProvider ProjectilePoolProvider { get; }
+
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }
         IMovementControllerFactory MovementControllerFactory { get; }
