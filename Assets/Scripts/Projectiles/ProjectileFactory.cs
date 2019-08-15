@@ -1,79 +1,63 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
     public class ProjectileFactory : IProjectileFactory
     {
-        private readonly PrefabFetcher _prefabFetcher;
+        private readonly IFactoryProvider _factoryProvider;
 
-        public ProjectileFactory(PrefabFetcher prefabFetcher)
-        {
-            Assert.IsNotNull(prefabFetcher);
-            _prefabFetcher = prefabFetcher;
-        }
-
-        public ProjectileController CreateBullet(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<ProjectileController, IProjectileStats>(StaticPrefabKeys.Projectiles.Bullet, factoryProvider);
-        }
-
-        public ProjectileController CreateShellSmall(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<ProjectileController, IProjectileStats>(StaticPrefabKeys.Projectiles.ShellSmall, factoryProvider);
-        }
-
-        public ProjectileController CreateShellLarge(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<ProjectileController, IProjectileStats>(StaticPrefabKeys.Projectiles.ShellLarge, factoryProvider);
-        }
-
-        public BombController CreateBomb(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<BombController, IProjectileStats>(StaticPrefabKeys.Projectiles.Bomb, factoryProvider);
-        }
-
-        public NukeController CreateNuke(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<NukeController, INukeStats>(StaticPrefabKeys.Projectiles.Nuke, factoryProvider);
-        }
-
-        public RocketController CreateRocket(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<RocketController, ICruisingProjectileStats>(StaticPrefabKeys.Projectiles.Rocket, factoryProvider);
-        }
-
-        public MissileController CreateMissileSmall(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<MissileController, IProjectileStats>(StaticPrefabKeys.Projectiles.MissileSmall, factoryProvider);
-        }
-
-        public MissileController CreateMissileMedium(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<MissileController, IProjectileStats>(StaticPrefabKeys.Projectiles.MissileMedium, factoryProvider);
-        }
-
-        public MissileController CreateMissileLarge(IFactoryProvider factoryProvider)
-        {
-            return CreateProjectile<MissileController, IProjectileStats>(StaticPrefabKeys.Projectiles.MissileLarge, factoryProvider);
-        }
-
-        // FELIX  Remove spawnPosition from everywhere :P
-        private TProjectile CreateProjectile<TProjectile, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
-            where TProjectile : ProjectileControllerBase<TStats>
-            where TStats : IProjectileStats
+        public ProjectileFactory(IFactoryProvider factoryProvider)
         {
             Assert.IsNotNull(factoryProvider);
+            _factoryProvider = factoryProvider;
+        }
 
-            TProjectile prefab = _prefabFetcher.GetPrefab<TProjectile>(prefabKey);
-            TProjectile projectile = Object.Instantiate(prefab);
-            projectile.Initialise(factoryProvider);
-            return projectile;
+        public ProjectileController CreateBullet()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<ProjectileController, IProjectileStats>(StaticPrefabKeys.Projectiles.Bullet, _factoryProvider);
+        }
+
+        public ProjectileController CreateShellSmall()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<ProjectileController, IProjectileStats>(StaticPrefabKeys.Projectiles.ShellSmall, _factoryProvider);
+        }
+
+        public ProjectileController CreateShellLarge()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<ProjectileController, IProjectileStats>(StaticPrefabKeys.Projectiles.ShellLarge, _factoryProvider);
+        }
+
+        public BombController CreateBomb()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<BombController, IProjectileStats>(StaticPrefabKeys.Projectiles.Bomb, _factoryProvider);
+        }
+
+        public NukeController CreateNuke()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<NukeController, INukeStats>(StaticPrefabKeys.Projectiles.Nuke, _factoryProvider);
+        }
+
+        public RocketController CreateRocket()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<RocketController, ICruisingProjectileStats>(StaticPrefabKeys.Projectiles.Rocket, _factoryProvider);
+        }
+
+        public MissileController CreateMissileSmall()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<MissileController, IProjectileStats>(StaticPrefabKeys.Projectiles.MissileSmall, _factoryProvider);
+        }
+
+        public MissileController CreateMissileMedium()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<MissileController, IProjectileStats>(StaticPrefabKeys.Projectiles.MissileMedium, _factoryProvider);
+        }
+
+        public MissileController CreateMissileLarge()
+        {
+            return _factoryProvider.PrefabFactory.CreateProjectile<MissileController, IProjectileStats>(StaticPrefabKeys.Projectiles.MissileLarge, _factoryProvider);
         }
     }
 }
