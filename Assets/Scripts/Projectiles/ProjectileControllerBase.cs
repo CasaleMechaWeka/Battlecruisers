@@ -17,10 +17,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public abstract class ProjectileControllerBase<TStats> : MonoBehaviour,
+    public abstract class ProjectileControllerBase<TActivationArgs, TStats> : MonoBehaviour,
         IRemovable,
         ITrackable,
-        IPoolable<ProjectileActivationArgs<TStats>> where TStats : IProjectileStats
+        IPoolable<TActivationArgs> 
+            where TActivationArgs : ProjectileActivationArgs<TStats>
+            where TStats : IProjectileStats
     {
         private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
@@ -76,7 +78,7 @@ namespace BattleCruisers.Projectiles
             _explosionPool = GetComponent<IExplosionPoolChooser>()?.ChoosePool(factoryProvider.ExplosionPoolProvider);
 		}
 
-        public virtual void Activate(ProjectileActivationArgs<TStats> activationArgs)
+        public virtual void Activate(TActivationArgs activationArgs)
         {
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;

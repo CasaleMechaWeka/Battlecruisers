@@ -7,14 +7,16 @@ using BattleCruisers.Targets.TargetProviders;
 
 namespace BattleCruisers.Projectiles
 {
-    public class NukeController : ProjectileControllerBase<INukeStats>, ITargetProvider
+    public class NukeController : 
+        ProjectileControllerBase<TargetProviderActivationArgs<INukeStats>, INukeStats>, 
+        ITargetProvider
 	{
 		private INukeStats _nukeStats;
 		private IFlightPointsProvider _flightPointsProvider;
 
 		public ITarget Target { get; private set; }
 
-        public void Activate(TargetProviderActivationArgs<INukeStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<INukeStats> activationArgs)
         {
             base.Activate(activationArgs);
 

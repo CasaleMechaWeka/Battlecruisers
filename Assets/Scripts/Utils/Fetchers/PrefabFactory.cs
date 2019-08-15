@@ -6,7 +6,9 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
@@ -94,8 +96,9 @@ namespace BattleCruisers.Utils.Fetchers
             return newExplosion;
         }
 
-        public TProjectile CreateProjectile<TProjectile, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
-            where TProjectile : ProjectileControllerBase<TStats>
+        public IPoolable<TActiavtionArgs> CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+            where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
+            where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
         {
             Assert.IsNotNull(factoryProvider);

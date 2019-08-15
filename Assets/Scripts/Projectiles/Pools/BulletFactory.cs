@@ -1,20 +1,19 @@
-﻿using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Utils.BattleScene.Pools;
+﻿//// FELIX  Remove :)
+//using BattleCruisers.Projectiles.ActivationArgs;
+//using BattleCruisers.Projectiles.Stats;
+//using BattleCruisers.Utils.BattleScene.Pools;
 
-namespace BattleCruisers.Projectiles.Pools
-{
-    public class BulletFactory : IPoolableFactory<ProjectileActivationArgs<ProjectileStats>>
-    {
-        private readonly IProjectileFactory _projectileFactory;
+//namespace BattleCruisers.Projectiles.Pools
+//{
+//    public class BulletFactory : IPoolableFactory<ProjectileActivationArgs<IProjectileStats>>
+//    {
+//        private readonly IProjectileFactory _projectileFactory;
 
-        // FELIX  Constructor :/
+//        // FELIX  Constructor :/
 
-        public IPoolable<ProjectileActivationArgs<ProjectileStats>> CreateItem()
-        {
-            // FELIX  Dang :/
-            //_projectileFactory.CreateBullet()
-                return null;
-        }
-    }
-}
+//        public IPoolable<ProjectileActivationArgs<IProjectileStats>> CreateItem()
+//        {
+//            return _projectileFactory.CreateBullet();
+//        }
+//    }
+//}

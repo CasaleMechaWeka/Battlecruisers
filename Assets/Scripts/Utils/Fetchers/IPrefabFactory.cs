@@ -5,7 +5,9 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
@@ -27,8 +29,9 @@ namespace BattleCruisers.Utils.Fetchers
 
         IExplosion CreateExplosion(ExplosionKey explosionKey);
 
-        TProjectile CreateProjectile<TProjectile, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
-            where TProjectile : ProjectileControllerBase<TStats>
+        IPoolable<TActiavtionArgs> CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+            where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
+            where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats;
     }
 }
