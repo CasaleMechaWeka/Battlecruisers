@@ -7,8 +7,7 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    // FELIX  Rename to ProjectileFactory :)
-    public class ProjectilePoolableFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TActivationArgs>
+    public class ProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TActivationArgs>
         where TActivationArgs : ProjectileActivationArgs<TStats>
         where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
         where TStats : IProjectileStats
@@ -16,7 +15,7 @@ namespace BattleCruisers.Projectiles.Pools
         private readonly IFactoryProvider _factoryProvider;
         private readonly ProjectileKey _projectileKey;
 
-        public ProjectilePoolableFactory(IFactoryProvider factoryProvider, ProjectileKey projectileKey)
+        public ProjectileFactory(IFactoryProvider factoryProvider, ProjectileKey projectileKey)
         {
             Helper.AssertIsNotNull(factoryProvider, projectileKey);
 
