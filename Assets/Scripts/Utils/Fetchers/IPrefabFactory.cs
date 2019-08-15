@@ -4,6 +4,9 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 
@@ -23,5 +26,9 @@ namespace BattleCruisers.Utils.Fetchers
         CountdownController CreateDeleteCountdown(Transform parent);
 
         IExplosion CreateExplosion(ExplosionKey explosionKey);
-	}
+
+        TProjectile CreateProjectile<TProjectile, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+            where TProjectile : ProjectileControllerBase<TStats>
+            where TStats : IProjectileStats;
+    }
 }

@@ -5,6 +5,9 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -89,6 +92,18 @@ namespace BattleCruisers.Utils.Fetchers
             AdvancedExplosion newExplosion = Object.Instantiate(explosionPrefab);
             newExplosion.Initialise(_randomGenerator);
             return newExplosion;
+        }
+
+        public TProjectile CreateProjectile<TProjectile, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+            where TProjectile : ProjectileControllerBase<TStats>
+            where TStats : IProjectileStats
+        {
+            Assert.IsNotNull(factoryProvider);
+
+            TProjectile prefab = _prefabFetcher.GetPrefab<TProjectile>(prefabKey);
+            TProjectile projectile = Object.Instantiate(prefab);
+            projectile.Initialise(factoryProvider);
+            return projectile;
         }
     }
 }
