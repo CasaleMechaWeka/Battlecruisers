@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class BoomPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class BombPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         public IPool<ProjectileActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
