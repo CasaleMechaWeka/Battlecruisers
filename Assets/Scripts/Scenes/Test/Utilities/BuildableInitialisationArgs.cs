@@ -13,11 +13,11 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -146,7 +146,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
-            factoryProvider.ExplosionPoolProvider.Returns(explosionPoolProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
@@ -174,6 +173,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             soundFactoryProvider.SoundPlayer.Returns(soundManager);
             soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.Sound.Returns(soundFactoryProvider);
+
+            // Pools
+            IPoolProviders poolProviders = Substitute.For<IPoolProviders>();
+            poolProviders.ExplosionPoolProvider.Returns(explosionPoolProvider);
+            IProjectilePoolProvider projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
+            poolProviders.ProjectilePoolProvider.Returns(projectilePoolProvider);
+            factoryProvider.PoolProviders.Returns(poolProviders);
 
             return factoryProvider;
         }

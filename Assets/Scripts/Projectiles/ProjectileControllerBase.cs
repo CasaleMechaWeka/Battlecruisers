@@ -75,7 +75,7 @@ namespace BattleCruisers.Projectiles
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
-            _explosionPool = GetComponent<IExplosionPoolChooser>()?.ChoosePool(factoryProvider.ExplosionPoolProvider);
+            _explosionPool = GetComponent<IExplosionPoolChooser>()?.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
 		}
 
         public virtual void Activate(TActivationArgs activationArgs)

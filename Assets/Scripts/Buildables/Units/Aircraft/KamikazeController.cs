@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     damageRadiusInM: parentAircraft.Size.x);
             _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
 
-            _explosionPoolProvider = factoryProvider.ExplosionPoolProvider;
+            _explosionPoolProvider = factoryProvider.PoolProviders.ExplosionPoolProvider;
         }
 
 		private void OnTriggerEnter2D(Collider2D collider)

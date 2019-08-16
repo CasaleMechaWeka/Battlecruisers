@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -28,10 +27,6 @@ namespace BattleCruisers.Utils.Factories
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
-
-        // FELIX  Remove, replaced by PoolsProvider :)
-        public IExplosionPoolProvider ExplosionPoolProvider { get; }
-
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IGlobalBoostProviders GlobalBoostProviders { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
@@ -80,7 +75,6 @@ namespace BattleCruisers.Utils.Factories
             BoostFactory = new BoostFactory();
             GlobalBoostProviders = new GlobalBoostProviders();
             DamageApplierFactory = new DamageApplierFactory(TargetFactories.FilterFactory);
-            ExplosionPoolProvider = new ExplosionPoolProvider(prefabFactory);
             SpriteChooserFactory
                 = new SpriteChooserFactory(
                     new AssignerFactory(),
