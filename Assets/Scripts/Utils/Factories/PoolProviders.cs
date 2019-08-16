@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
-    // FELIX  Interface :)
     public class PoolProviders : IPoolProviders
     {
         public IExplosionPoolProvider ExplosionPoolProvider { get; }

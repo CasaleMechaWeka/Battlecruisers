@@ -4,7 +4,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using UnityEngine;
 
-// FELIX  Move to Pools namespace?
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
     public class ProjectileActivationArgs<TStats> where TStats : IProjectileStats
