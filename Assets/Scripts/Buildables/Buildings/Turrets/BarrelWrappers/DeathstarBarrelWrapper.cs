@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
@@ -7,6 +8,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected override IAngleLimiter CreateAngleLimiter()
         {
             return _factoryProvider.Turrets.AngleLimiterFactory.CreateDummyLimiter();
+        }
+
+        protected override IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
+        {
+            return updaterProvider.PerFrameUpdater;
         }
     }
 }

@@ -8,18 +8,20 @@ using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
-    public class DeathstarTestGod : MonoBehaviour 
+    public class DeathstarTestGod : TestGodBase
 	{
 		private Helper _helper;
 
         public Building leftTarget, rightTarget;
 		public DeathstarController leftDeathstar, rightDeathstar;
 
-		void Start()
-		{
-			_helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
 
-			SetupPair(leftTarget, rightDeathstar, Faction.Blues);
+            _helper = new Helper(updaterProvider: _updaterProvider);
+
+            SetupPair(leftTarget, rightDeathstar, Faction.Blues);
 			SetupPair(rightTarget, leftDeathstar, Faction.Reds);
 		}
 
