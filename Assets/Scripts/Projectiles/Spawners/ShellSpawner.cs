@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
@@ -27,21 +28,20 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
 		{
-            // FELIX  Abstract to factory?  So can be called by IPool?
-            ProjectileController shell = Instantiate(shellPrefab, transform.position, new Quaternion());
-
 			Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
-            shell.Initialise(_factoryProvider);
-            shell.Activate(
-                new ProjectileActivationArgs<Stats.IProjectileStats>(
+            ProjectileActivationArgs<IProjectileStats> activationArgs
+                = new ProjectileActivationArgs<IProjectileStats>(
                     transform.position,
                     _projectileStats,
                     shellVelocity,
                     _targetFilter,
-                    _parent));
+                    _parent);
+            _projectilePool.GetItem(activationArgs);
+
             _soundPlayer.OnProjectileFired();
 
-            base.ShowTrackerIfNeeded(shell);
+            // FELIX  Don't make projectiles ITrackable?
+            //base.ShowTrackerIfNeeded(shell);
 		}
 	}
 }
