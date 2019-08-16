@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class MissileSpawner : ProjectileSpawner
+    public class MissileSpawner : ProjectileSpawner<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
 	{
         public MissileController missilePrefab;
         protected override MonoBehaviour ProjectilePrefab => missilePrefab;
@@ -16,7 +17,7 @@ namespace BattleCruisers.Projectiles.Spawners
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
             missile.Initialise(_factoryProvider);
             missile.Activate(
-                new TargetProviderActivationArgs<Stats.IProjectileStats>(
+                new TargetProviderActivationArgs<IProjectileStats>(
                     transform.position,
                     _projectileStats,
                     missileVelocity,

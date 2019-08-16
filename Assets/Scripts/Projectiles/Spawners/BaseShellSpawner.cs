@@ -1,10 +1,12 @@
-﻿using BattleCruisers.Projectiles.Trackers;
+﻿using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public abstract class BaseShellSpawner : ProjectileSpawner
+    public abstract class BaseShellSpawner : ProjectileSpawner<ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
 	{
 		protected ITargetFilter _targetFilter;
 
