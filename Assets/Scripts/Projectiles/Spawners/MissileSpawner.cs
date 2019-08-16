@@ -8,9 +8,6 @@ namespace BattleCruisers.Projectiles.Spawners
 {
     public class MissileSpawner : ProjectileSpawner<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
 	{
-        public MissileController missilePrefab;
-        protected override MonoBehaviour ProjectilePrefab => missilePrefab;
-
 		public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
 		{
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);

@@ -11,9 +11,6 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
         private ICruisingProjectileStats _rocketStats;
 
-        public RocketController rocketPrefab;
-        protected override MonoBehaviour ProjectilePrefab => rocketPrefab;
-
         public void Initialise(ITarget parent, ICruisingProjectileStats rocketStats, int burstSize, IFactoryProvider factoryProvider)
 		{
             base.Initialise(new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider));

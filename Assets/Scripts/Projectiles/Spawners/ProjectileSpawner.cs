@@ -19,13 +19,9 @@ namespace BattleCruisers.Projectiles.Spawners
 		protected IFactoryProvider _factoryProvider;
         protected IPool<TProjectileArgs> _projectilePool;
 
-        // FELIX  Donn't like that this isn't strongly typed.  Should go away when I use
-        // inject IPool?  (Or ChoosePool?)
-        protected abstract MonoBehaviour ProjectilePrefab { get; }
-
         public void Initialise(IProjectileSpawnerArgs args)
         {
-            Helper.AssertIsNotNull(ProjectilePrefab, args);
+            Helper.AssertIsNotNull(args);
 
             _parent = args.Parent;
             _projectileStats = args.ProjectileStats;
