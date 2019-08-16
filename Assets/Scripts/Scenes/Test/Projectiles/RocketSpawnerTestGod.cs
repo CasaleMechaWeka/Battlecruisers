@@ -36,6 +36,7 @@ namespace BattleCruisers.Scenes.Test
 			};
 
 			ITarget parent = Substitute.For<ITarget>();
+            parent.Faction.Returns(Faction.Reds);
             ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
             int burstSize = 1;
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
@@ -47,7 +48,7 @@ namespace BattleCruisers.Scenes.Test
 
 		private void FireRocket()
 		{
-			_rocketSpawner.SpawnRocket(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter, faction: Faction.Reds);
+			_rocketSpawner.SpawnRocket(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter);
 		}
 	}
 }

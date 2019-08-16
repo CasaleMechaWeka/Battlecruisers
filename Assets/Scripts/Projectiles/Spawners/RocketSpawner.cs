@@ -21,7 +21,7 @@ namespace BattleCruisers.Projectiles.Spawners
             _rocketStats = rocketStats;
 		}
 
-		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter, Faction faction)
+		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
 		{
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
             TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs

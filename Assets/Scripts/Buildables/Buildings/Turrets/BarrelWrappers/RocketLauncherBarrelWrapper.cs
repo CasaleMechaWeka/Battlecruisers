@@ -9,9 +9,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
         {
-            Faction ownFaction = Helper.GetOppositeFaction(_enemyFaction);
 			RocketBarrelController rocketBarrel = barrel.Parse<RocketBarrelController>();
-            rocketBarrel.Initialise(args, ownFaction);
+            rocketBarrel.Initialise(args);
         }
     }
 }

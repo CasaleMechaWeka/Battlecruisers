@@ -10,8 +10,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class RocketBarrelController : BarrelController
 	{
 		private ICircularList<RocketSpawner> _rocketSpawners;
-        // FELIX  Remove!
-		private Faction _faction;
         private ICruisingProjectileStats _rocketStats;
 
         public override Vector3 ProjectileSpawnerPosition => _rocketSpawners.Items.Middle().transform.position;
@@ -33,11 +31,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _rocketStats;
         }
 
-		public void Initialise(IBarrelControllerArgs args, Faction faction)
+		public override void Initialise(IBarrelControllerArgs args)
 		{
             base.Initialise(args);
-
-			_faction = faction;
 
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
@@ -53,8 +49,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 				    angleInDegrees,
 				    transform.IsMirrored(),
 				    Target,
-				    _targetFilter,
-				    _faction);
+				    _targetFilter);
 		}
 	}
 }
