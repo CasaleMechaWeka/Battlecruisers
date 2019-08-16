@@ -23,17 +23,16 @@ namespace BattleCruisers.Projectiles.Spawners
 
 		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter, Faction faction)
 		{
-            RocketController rocket = Instantiate(rocketPrefab, transform.position, new Quaternion());
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            rocket.Initialise(_factoryProvider);
-            rocket.Activate(
-                new TargetProviderActivationArgs<ICruisingProjectileStats>(
+            TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<ICruisingProjectileStats>(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,
                     targetFilter,
                     _parent,
-                    target));
+                    target);
+            _projectilePool.GetItem(activationArgs);
 		}
 	}
 }

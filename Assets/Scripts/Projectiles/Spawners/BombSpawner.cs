@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
@@ -10,18 +11,18 @@ namespace BattleCruisers.Projectiles.Spawners
 
 		public void SpawnShell(float currentXVelocityInMPers)
 		{
-            ProjectileController shell = Instantiate(bombPrefab, transform.position, new Quaternion());
 			Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
-            shell.Initialise(_factoryProvider);
-            shell.Activate(
-                new ProjectileActivationArgs<Stats.IProjectileStats>(
+            ProjectileActivationArgs<IProjectileStats> activationArgs
+                = new ProjectileActivationArgs<IProjectileStats>(
                     transform.position,
                     _projectileStats,
                     shellVelocity,
                     _targetFilter,
-                    _parent));
+                    _parent);
+            _projectilePool.GetItem(activationArgs);
 
-            base.ShowTrackerIfNeeded(shell);
+            // FELIX  Remove :P
+            //base.ShowTrackerIfNeeded(shell);
 		}
 	}
 }

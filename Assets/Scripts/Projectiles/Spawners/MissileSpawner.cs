@@ -13,17 +13,16 @@ namespace BattleCruisers.Projectiles.Spawners
 
 		public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
 		{
-            MissileController missile = Instantiate(missilePrefab, transform.position, new Quaternion());
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            missile.Initialise(_factoryProvider);
-            missile.Activate(
-                new TargetProviderActivationArgs<IProjectileStats>(
+            TargetProviderActivationArgs<IProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<IProjectileStats>(
                     transform.position,
                     _projectileStats,
                     missileVelocity,
                     targetFilter,
                     _parent,
-                    target));
+                    target);
+            _projectilePool.GetItem(activationArgs);
 		}
 	}
 }
