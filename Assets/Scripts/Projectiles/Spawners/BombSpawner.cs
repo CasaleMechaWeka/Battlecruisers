@@ -20,9 +20,6 @@ namespace BattleCruisers.Projectiles.Spawners
                     _targetFilter,
                     _parent);
             _projectilePool.GetItem(activationArgs);
-
-            // FELIX  Remove :P
-            //base.ShowTrackerIfNeeded(shell);
 		}
 	}
 }

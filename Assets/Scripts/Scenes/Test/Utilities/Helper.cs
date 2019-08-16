@@ -22,7 +22,6 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -90,8 +89,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
-            ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
-            ITrackerFactory trackerFactory = null)
+            ITargetPositionValidatorFactory targetPositionValidatorFactory = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -114,7 +112,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
                     deferrer: _deferrer,
-                    trackerFactory: trackerFactory,
                     updaterProvider: _updaterProvider);
 
             InitialiseBuilding(building, args, parentSlot);
@@ -153,8 +150,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
-            IUserChosenTargetManager userChosenTargetManager = null,
-            ITrackerFactory trackerFactory = null)
+            IUserChosenTargetManager userChosenTargetManager = null)
 		{
 			BuildableInitialisationArgs args
 				= new BuildableInitialisationArgs(
@@ -176,7 +172,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					parentCruiserDirection,
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
-                    trackerFactory: trackerFactory,
                     updaterProvider: _updaterProvider);
 
             InitialiseUnit(unit, args);

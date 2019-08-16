@@ -4,7 +4,6 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -19,7 +18,6 @@ namespace BattleCruisers.Projectiles
 {
     public abstract class ProjectileControllerBase<TActivationArgs, TStats> : MonoBehaviour,
         IRemovable,
-        ITrackable,
         IPoolable<TActivationArgs> 
             where TActivationArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats

@@ -18,7 +18,6 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Pools;
-using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -67,7 +66,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
-            ITrackerFactory trackerFactory = null,
             IUpdaterProvider updaterProvider = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
@@ -107,7 +105,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
                     new DeferrerProvider(deferrer),
-                    trackerFactory ?? Substitute.For<ITrackerFactory>(),
                     targetFactories,
                     new SpawnDeciderFactory(),
                     updaterProvider,
@@ -134,7 +131,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITurretStatsFactory turretStatsFactory,
             IAttackablePositionFinderFactory attackablePositionFinderFactory,
             IDeferrerProvider deferrerProvider,
-            ITrackerFactory trackerFactory,
             ITargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
             IUpdaterProvider updaterProvider,
@@ -154,7 +150,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.TargetFactories.Returns(targetFactories);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
-            factoryProvider.TrackerFactory.Returns(trackerFactory);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
 
             // Turrets

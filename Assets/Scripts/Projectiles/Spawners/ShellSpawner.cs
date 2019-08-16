@@ -39,9 +39,6 @@ namespace BattleCruisers.Projectiles.Spawners
             _projectilePool.GetItem(activationArgs);
 
             _soundPlayer.OnProjectileFired();
-
-            // FELIX  Don't make projectiles ITrackable?
-            //base.ShowTrackerIfNeeded(shell);
 		}
 	}
 }

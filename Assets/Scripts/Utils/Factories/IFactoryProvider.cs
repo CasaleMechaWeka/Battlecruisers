@@ -7,7 +7,6 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
@@ -32,7 +31,6 @@ namespace BattleCruisers.Utils.Factories
         ISpriteChooserFactory SpriteChooserFactory { get; }
         ITargetFactoriesProvider TargetFactories { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
-        ITrackerFactory TrackerFactory { get; }
         IUpdaterProvider UpdaterProvider { get; }
     }
 }

@@ -2,11 +2,9 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             Helper helper = new Helper();
 
             Artillery artillery = FindObjectOfType<Artillery>();
-            helper.InitialiseBuilding(artillery, Faction.Blues, trackerFactory: CreateTrackerFactory());
+            helper.InitialiseBuilding(artillery, Faction.Blues);
             artillery.StartConstruction();
 
             AirFactory airFactory = FindObjectOfType<AirFactory>();
@@ -37,17 +35,6 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             _skybox = FindObjectOfType<Skybox>();
             Assert.IsNotNull(_skybox);
             ChangeSky();
-        }
-
-        private ITrackerFactory CreateTrackerFactory()
-        {
-            MarkerFactory markerFactory = GetComponent<MarkerFactory>();
-            markerFactory.Intialise();
-
-            return
-                new TrackerFactory(
-                    markerFactory,
-                    new CameraBC(Camera.main));
         }
 
         private ICircularList<Material> FindSkyMaterials()

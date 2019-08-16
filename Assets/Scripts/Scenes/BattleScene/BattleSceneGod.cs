@@ -90,8 +90,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.Camera,
                     helper,
                     applicationModel,
-                    uiManager,
-                    components.MarkerFactory);
+                    uiManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();

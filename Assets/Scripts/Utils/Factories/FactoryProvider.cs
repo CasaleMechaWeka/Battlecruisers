@@ -8,7 +8,6 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -35,7 +34,6 @@ namespace BattleCruisers.Utils.Factories
         public ISpriteChooserFactory SpriteChooserFactory { get; }
         public ITargetFactoriesProvider TargetFactories { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
-        public ITrackerFactory TrackerFactory { get; }
         public IUpdaterProvider UpdaterProvider { get; }
 
         private IPoolProviders _poolProviders;
@@ -61,10 +59,9 @@ namespace BattleCruisers.Utils.Factories
             ICamera soleCamera,
             bool isPlayerCruiser,
             IAudioSource audioSource,
-            IMarkerFactory markerFactory,
             IUpdaterProvider updaterProvider)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, markerFactory, updaterProvider);
+            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, updaterProvider);
 
 			PrefabFactory = prefabFactory;
             TargetFactories = new TargetFactoriesProvider(friendlyCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
@@ -80,7 +77,6 @@ namespace BattleCruisers.Utils.Factories
                     new AssignerFactory(),
                     spriteProvider);
             DeferrerProvider = new DeferrerProvider(deferrer);
-            TrackerFactory = new TrackerFactory(markerFactory, soleCamera);
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = updaterProvider;
 

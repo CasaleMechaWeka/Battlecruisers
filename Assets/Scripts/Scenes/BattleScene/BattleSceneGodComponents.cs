@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Projectiles.Trackers;
-using BattleCruisers.UI.BattleScene.Clouds;
+﻿using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -18,7 +17,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public ICamera Camera { get; private set; }
-        public IMarkerFactory MarkerFactory { get; private set; }
 
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
@@ -43,9 +41,6 @@ namespace BattleCruisers.Scenes.BattleScene
             Camera platformCamera = FindObjectOfType<Camera>();
             Assert.IsNotNull(platformCamera);
             Camera = new CameraBC(platformCamera);
-
-            MarkerFactory = GetComponent<MarkerFactory>();
-            Assert.IsNotNull(MarkerFactory);
 
             _updaterProvider = GetComponentInChildren<UpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
