@@ -1,2 +1,21 @@
-﻿// FELIX  Implement :)
-//namespace BattleCruisers.
+﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles.Pools;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Utils.Factories
+{
+    // FELIX  Interface :)
+    public class PoolProviders : IPoolProviders
+    {
+        public IExplosionPoolProvider ExplosionPoolProvider { get; }
+        public IProjectilePoolProvider ProjectilePoolProvider { get; }
+
+        public PoolProviders(IFactoryProvider factoryProvider)
+        {
+            Assert.IsNotNull(factoryProvider);
+
+            ExplosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
+            ProjectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
+        }
+    }
+}

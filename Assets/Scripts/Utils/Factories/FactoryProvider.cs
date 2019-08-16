@@ -9,7 +9,6 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Trackers;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
@@ -23,13 +22,16 @@ namespace BattleCruisers.Utils.Factories
 {
     public class FactoryProvider : IFactoryProvider
     {
-        public ITurretFactoryProvider Turrets { get; }
         public ISoundFactoryProvider Sound { get; }
+        public ITurretFactoryProvider Turrets { get; }
         public IAircraftProvider AircraftProvider { get; }
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
+
+        // FELIX  Remove, replaced by PoolsProvider :)
         public IExplosionPoolProvider ExplosionPoolProvider { get; }
+
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IGlobalBoostProviders GlobalBoostProviders { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
@@ -41,8 +43,18 @@ namespace BattleCruisers.Utils.Factories
         public ITrackerFactory TrackerFactory { get; }
         public IUpdaterProvider UpdaterProvider { get; }
 
-        //FELIX  NEXT  Use Lazy :)
-        public IProjectilePoolProvider ProjectilePoolProvider => throw new System.NotImplementedException();
+        private IPoolProviders _poolProviders;
+        public IPoolProviders PoolProviders
+        {
+            get
+            {
+                if (_poolProviders == null)
+                {
+                    _poolProviders = new PoolProviders(this);
+                }
+                return _poolProviders;
+            }
+        }
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
@@ -73,13 +85,13 @@ namespace BattleCruisers.Utils.Factories
                 = new SpriteChooserFactory(
                     new AssignerFactory(),
                     spriteProvider);
-
-            Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
-            Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
             DeferrerProvider = new DeferrerProvider(deferrer);
             TrackerFactory = new TrackerFactory(markerFactory, soleCamera);
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = updaterProvider;
+
+            Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
+            Turrets = new TurretFactoryProvider(BoostFactory, GlobalBoostProviders);
         }
 	}
 }

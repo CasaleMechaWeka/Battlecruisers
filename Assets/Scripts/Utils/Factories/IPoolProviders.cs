@@ -1,0 +1,11 @@
+﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles.Pools;
+
+namespace BattleCruisers.Utils.Factories
+{
+    public interface IPoolProviders
+    {
+        IExplosionPoolProvider ExplosionPoolProvider { get; }
+        IProjectilePoolProvider ProjectilePoolProvider { get; }
+    }
+}
