@@ -2,27 +2,31 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using System;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class AntiShipTurretLotsOfShipsTestGod : MonoBehaviour 
+    public class AntiShipTurretLotsOfShipsTestGod : TestGodBase 
 	{
         public UnitWrapper unitPrefab;
 
-		void Start()
+		protected override void Start()
 		{
-			Helper helper = new Helper();
+            base.Start();
+
+			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             unitPrefab.Initialise();
 
             // Factory
             Factory factory = FindObjectOfType<Factory>();
-            helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right);
+            ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
+            helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right, parentCruiser: blueCruiser);
             factory.CompletedBuildable += Factory_CompletedBuildable;
             factory.StartConstruction();
+            Helper.SetupFactoryForUnitMonitor(factory, blueCruiser);
 
             // Turrets
             TurretController[] turrets = FindObjectsOfType<TurretController>();

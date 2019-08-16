@@ -6,13 +6,15 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public abstract class MortarTestGod : MonoBehaviour
+    public abstract class MortarTestGod : TestGodBase
     {
         protected abstract List<Vector2> TargetPatrolPoints { get; }
 
-        void Start()
+        protected override void Start()
         {
-            Helper helper = new Helper();
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
             // Setup target

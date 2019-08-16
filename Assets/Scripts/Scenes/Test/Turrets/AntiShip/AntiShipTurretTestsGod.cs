@@ -2,15 +2,16 @@
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class AntiShipTurretTestsGod : MonoBehaviour 
+    public class AntiShipTurretTestsGod : TestGodBase
 	{
-		void Start()
-		{
-			Helper helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             AttackBoatController boat = FindObjectOfType<AttackBoatController>();
             helper.InitialiseUnit(boat, Faction.Blues);
