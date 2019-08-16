@@ -12,17 +12,19 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-    public class AntiAirVsBomberTestGod : MonoBehaviour 
+    public class AntiAirVsBomberTestGod : TestGodBase 
 	{
 		private BomberController _bomber;
 		private TurretController _antiAirTurret;
 
 		public List<Vector2> bomberPatrolPoints;
 
-		void Start() 
+		protected override void Start() 
 		{
+            base.Start();
+
             IDeferrer deferrer = new Deferrer();
-			Helper helper = new Helper(deferrer: deferrer);
+            Helper helper = new Helper(deferrer: deferrer, updaterProvider: _updaterProvider);
 
 
 			// Set up turret
