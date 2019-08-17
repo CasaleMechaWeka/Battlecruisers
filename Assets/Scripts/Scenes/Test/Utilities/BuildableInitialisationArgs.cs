@@ -169,7 +169,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             turretFactoryProvider.AngleLimiterFactory.Returns(angleLimiterFactory);
             turretFactoryProvider.AttackablePositionFinderFactory.Returns(attackablePositionFinderFactory);
             turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
-            turretFactoryProvider.TurretStatsFactory.Returns(turretStatsFactory);
             factoryProvider.Turrets.Returns(turretFactoryProvider);
 
             // Sound

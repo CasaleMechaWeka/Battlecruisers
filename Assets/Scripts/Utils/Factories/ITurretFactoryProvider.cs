@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -14,6 +13,5 @@ namespace BattleCruisers.Utils.Factories
         IAngleLimiterFactory AngleLimiterFactory { get; }
         IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
-        ITurretStatsFactory TurretStatsFactory { get; }
     }
 }

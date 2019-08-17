@@ -98,7 +98,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             _targetFilter = args.TargetFilter;
             _turretStatsWrapper.TurretStats 
-                = args.FactoryProvider.Turrets.TurretStatsFactory.CreateBoostedTurretStats(
+                = args.CruiserSpecificFactories.TurretStatsFactory.CreateBoostedTurretStats(
                     _baseTurretStats, 
                     args.LocalBoostProviders,
                     args.GlobalFireRateBoostProviders);

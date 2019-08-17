@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -16,7 +15,6 @@ namespace BattleCruisers.Utils.Factories
         public IAngleLimiterFactory AngleLimiterFactory { get; }
         public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
-        public ITurretStatsFactory TurretStatsFactory { get; }
 
         public TurretFactoryProvider(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
         {
@@ -27,8 +25,6 @@ namespace BattleCruisers.Utils.Factories
             AngleLimiterFactory = new AngleLimiterFactory();
             AttackablePositionFinderFactory = new AttackablePositionFinderFactory();
             TargetPositionValidatorFactory = new TargetPositionValidatorFactory();
-            // FELIX  Cruiser specific
-            TurretStatsFactory = new TurretStatsFactory(boostFactory, globalBoostProviders);
         }
     }
 }
