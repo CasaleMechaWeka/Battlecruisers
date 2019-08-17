@@ -155,7 +155,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.SpawnDeciderFactory.Returns(spawnDeciderFactory);
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
-            factoryProvider.TargetFactories.Returns(targetFactories);
+            factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
 

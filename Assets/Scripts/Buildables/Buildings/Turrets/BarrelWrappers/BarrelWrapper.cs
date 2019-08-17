@@ -139,7 +139,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.TargetFactories,
+                    _factoryProvider.Targets,
                     _enemyFaction,
                     DamageCapability.AttackCapabilities,
                     RangeInM,
@@ -188,7 +188,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
+            return _factoryProvider.Targets.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()

@@ -24,7 +24,7 @@ namespace BattleCruisers.Targets.Factories
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, factoryProvider.UpdaterProvider);
-            ProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, factoryProvider.TargetFactories);
+            ProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, factoryProvider.Targets);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.TargetFactories,
+                    _factoryProvider.Targets,
                     enemyFaction,
                     AttackCapabilities,
                     enemyFollowRangeInM,
@@ -100,9 +100,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform, 
                     enemyHoverRangeInM,
-                    _factoryProvider.TargetFactories.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
+                    _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
+            ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
 

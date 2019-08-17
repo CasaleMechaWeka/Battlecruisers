@@ -133,7 +133,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.TargetFactories,
+                    _factoryProvider.Targets,
                     enemyFaction,
                     targetProcessorTargetTypes,
                     OptimalArmamentRangeInM,
@@ -144,7 +144,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
-            IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.SizeInclusiveCalculator;
+            IRangeCalculator rangeCalculator = _factoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,

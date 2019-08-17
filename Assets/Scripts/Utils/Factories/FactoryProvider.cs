@@ -15,19 +15,18 @@ namespace BattleCruisers.Utils.Factories
 {
     public class FactoryProvider : IFactoryProvider
     {
-        public ISoundFactoryProvider Sound { get; }
-        public ITurretFactoryProvider Turrets { get; }
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
         public IPrefabFactory PrefabFactory { get; }
+        public ISoundFactoryProvider Sound { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
-        // FELIX  Rename to Targets?
-        public ITargetFactoriesProvider TargetFactories { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        public ITargetFactoriesProvider Targets { get; }
+        public ITurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
 
         private IPoolProviders _poolProviders;
@@ -51,12 +50,12 @@ namespace BattleCruisers.Utils.Factories
             Helper.AssertIsNotNull(components, prefabFactory, spriteProvider);
 
 			PrefabFactory = prefabFactory;
-            TargetFactories = new TargetFactoriesProvider();
+            Targets = new TargetFactoriesProvider();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();
-            DamageApplierFactory = new DamageApplierFactory(TargetFactories.FilterFactory);
+            DamageApplierFactory = new DamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
                 = new SpriteChooserFactory(
                     new AssignerFactory(),

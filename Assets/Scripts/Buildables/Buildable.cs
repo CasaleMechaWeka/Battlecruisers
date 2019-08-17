@@ -256,7 +256,7 @@ namespace BattleCruisers.Buildables
 
             _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;
-            _targetFactories = _factoryProvider.TargetFactories;
+            _targetFactories = _factoryProvider.Targets;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
 
             Faction = ParentCruiser.Faction;

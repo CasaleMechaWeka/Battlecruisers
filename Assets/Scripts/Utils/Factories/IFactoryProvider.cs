@@ -27,8 +27,8 @@ namespace BattleCruisers.Utils.Factories
         ISoundFactoryProvider Sound { get; }
         ISpawnDeciderFactory SpawnDeciderFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
-        ITargetFactoriesProvider TargetFactories { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        ITargetFactoriesProvider Targets { get; }
         ITurretFactoryProvider Turrets { get; }
         IUpdaterProvider UpdaterProvider { get; }
     }
