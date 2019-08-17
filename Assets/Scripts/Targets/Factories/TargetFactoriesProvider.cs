@@ -26,7 +26,10 @@ namespace BattleCruisers.Targets.Factories
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             FilterFactory = new TargetFilterFactory();
             RankerFactory = new TargetRankerFactory();
+
+            // FELIX  Create new implementation that.  dang it
             ProviderFactory = new TargetProviderFactory(this);
+
             HelperFactory = new TargetHelperFactory();
             RangeCalculatorProvider = new RangeCalculatorProvider();
             TargetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);

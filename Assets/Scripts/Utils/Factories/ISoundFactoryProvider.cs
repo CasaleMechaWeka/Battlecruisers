@@ -10,6 +10,7 @@ namespace BattleCruisers.Utils.Factories
         ISoundPlayer SoundPlayer { get; }
         IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
+        IPrioritisedSoundPlayer DummySoundPlayer { get; }
         ISoundPlayerFactory SoundPlayerFactory { get; }
     }
 }
