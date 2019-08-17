@@ -10,7 +10,6 @@
         IRangeCalculatorProvider RangeCalculatorProvider { get; }
 
         // FELIX  Cruiser specific
-        ITargetProviderFactory ProviderFactory { get; }
         ITargetProcessorFactory ProcessorFactory { get; }
         ITargetDetectorFactory TargetDetectorFactory { get; }
     }

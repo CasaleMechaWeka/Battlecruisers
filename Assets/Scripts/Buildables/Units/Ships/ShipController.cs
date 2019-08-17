@@ -159,8 +159,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             return
                 _movementControllerFactory.CreateShipMovementDecider(
                     this,
-                    _targetFactories.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
-                    _targetFactories.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
+                    _cruiserSpecificFactories.TargetProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
+                    _cruiserSpecificFactories.TargetProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     _targetFactories.HelperFactory.CreateShipRangeHelper(this));
         }

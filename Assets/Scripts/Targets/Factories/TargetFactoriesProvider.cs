@@ -11,7 +11,6 @@ namespace BattleCruisers.Targets.Factories
         public ITargetFinderFactory FinderFactory { get; }
         public ITargetFilterFactory FilterFactory { get; }
         public ITargetRankerFactory RankerFactory { get; }
-        public ITargetProviderFactory ProviderFactory { get; }
         public ITargetHelperFactory HelperFactory { get; }
         public ITargetDetectorFactory TargetDetectorFactory { get; }
         public IRangeCalculatorProvider RangeCalculatorProvider { get; }
@@ -24,10 +23,6 @@ namespace BattleCruisers.Targets.Factories
             FinderFactory = new TargetFinderFactory();
             FilterFactory = new TargetFilterFactory();
             RankerFactory = new TargetRankerFactory();
-
-            // FELIX  Create new implementation that.  dang it
-            //ProviderFactory = new TargetProviderFactory(this);
-
             HelperFactory = new TargetHelperFactory();
             RangeCalculatorProvider = new RangeCalculatorProvider();
             TargetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
