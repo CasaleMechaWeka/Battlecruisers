@@ -78,7 +78,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
+
+            // FELIX  NEXT  Replace with new ITargetFactories :)
             ITargetFactoriesProvider targetFactories = null,
+            
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
@@ -232,7 +235,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			return enemyCruiser;
         }
 
-        public ITargetFactoriesProvider CreateTargetFactories(
+        public ITargetFactories CreateTargetFactories(
             GameObject globalTarget, 
             ITargetFilter targetFilter = null, 
             IExactMatchTargetFilter exactMatchTargetFilter = null)
@@ -246,7 +249,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             GlobalTargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
             IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
-            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
+            ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
+            ITargetFactoriesProvider targetFactoriesProvider = Substitute.For<ITargetFactoriesProvider>();
+            targetFactories.TargetFactoriesProvider.Returns(targetFactoriesProvider);
             targetFinder.EmitCruiserAsGlobalTarget();
 
             if (exactMatchTargetFilter == null)
@@ -254,22 +259,33 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 exactMatchTargetFilter = new ExactMatchTargetFilter();
             }
 
-            targetFactories.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
-            targetFactories.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-            targetFactories.FinderFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-            targetFactories.TrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
-            targetFactories.ProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
-            targetFactories.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            targetFactories.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
-            targetFactories.FilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
+            // Procressors
+            targetFactoriesProvider.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
+            targetFactoriesProvider.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
+            targetFactoriesProvider.ProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
+            targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
+            targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
+            targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
+
+            // Finders
+            targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
+
+            // Trackers
+            targetFactoriesProvider.TrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
+            targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
+
+            // Filters
+            targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            targetFactoriesProvider.FilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
 
             if (targetFilter != null)
             {
-                targetFactories.FilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
+                targetFactoriesProvider.FilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
             }
             else
             {
-                SetupCreateTargetFilter(targetFactories.FilterFactory);
+                SetupCreateTargetFilter(targetFactoriesProvider.FilterFactory);
             }
 
             return targetFactories;
