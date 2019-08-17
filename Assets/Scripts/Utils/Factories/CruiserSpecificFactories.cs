@@ -16,8 +16,6 @@ namespace BattleCruisers.Utils.Factories
         public ITurretStatsFactory TurretStatsFactory { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public ICruiserTargetFactoriesProvider Targets { get; }
-        // FELIX  Create targets sub provider? => Yes!  Then can pass subprovider instead of whole ICruiserSpecificFactories :)
-        public ITargetProviderFactory TargetProviderFactory { get; }  // FELIX  Remove Target prefix once part of sub provider :)
 
         public CruiserSpecificFactories(
             IFactoryProvider factoryProvider,
@@ -33,9 +31,6 @@ namespace BattleCruisers.Utils.Factories
             TurretStatsFactory = new TurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
             BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new CruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
-
-            // FELIX  Delete :)
-            TargetProviderFactory = new TargetProviderFactory(this, factoryProvider.TargetFactories);
         }
     }
 }

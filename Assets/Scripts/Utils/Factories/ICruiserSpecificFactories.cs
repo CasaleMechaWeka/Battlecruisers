@@ -16,8 +16,5 @@ namespace BattleCruisers.Utils.Factories
         IGlobalBoostProviders GlobalBoostProviders { get; }
         ITurretStatsFactory TurretStatsFactory { get; }
         ICruiserTargetFactoriesProvider Targets { get; }
-
-        // FELIX  Remove :)
-        ITargetProviderFactory TargetProviderFactory { get; }
     }
 }
