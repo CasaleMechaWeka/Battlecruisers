@@ -105,7 +105,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeTargetTracker = _factoryProvider.TargetFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
 
-            _barrelWrapper.Initialise(this, _factoryProvider, enemyFaction, SoundKeys.Firing.BigCannon);
+            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
 		}
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)

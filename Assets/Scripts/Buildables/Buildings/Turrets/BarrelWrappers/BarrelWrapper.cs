@@ -29,6 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected BarrelController[] _barrels;
         private ITargetProcessor _targetProcessor;
         protected IFactoryProvider _factoryProvider;
+        protected ICruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
 
@@ -102,15 +103,17 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void Initialise(
             ITarget parent, 
-            IFactoryProvider factoryProvider, 
+            IFactoryProvider factoryProvider,
+            ICruiserSpecificFactories cruiserSpecificFactories,
             Faction enemyFaction,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null)
         {
-            Helper.AssertIsNotNull(parent, factoryProvider);
+            Helper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
 
             _factoryProvider = factoryProvider;
+            _cruiserSpecificFactories = cruiserSpecificFactories;
             _enemyFaction = enemyFaction;
 
             // Shared by all barrels
@@ -128,8 +131,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         angleCalculator, 
                         attackablePositionFinder, 
                         firingSound, 
-                        localBoostProviders ?? factoryProvider.GlobalBoostProviders.DummyBoostProviders,
-                        globalFireRateBoostProviders ?? factoryProvider.GlobalBoostProviders.DummyBoostProviders);
+                        localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                        globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -170,6 +173,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreatePositionValidator(),
                 CreateAngleLimiter(),
                 _factoryProvider,
+                _cruiserSpecificFactories,
                 parent,
                 localBoostProviders,
                 globalFireRateBoostProvider,

@@ -104,6 +104,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.Turrets.TargetPositionValidatorFactory.CreateDummyValidator(),
                     _factoryProvider.Turrets.AngleLimiterFactory.CreateFighterLimiter(),
                     _factoryProvider,
+                    _cruiserSpecificFactories,
                     parent,
                     _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                     _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,

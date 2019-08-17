@@ -22,6 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         void Initialise(
             ITarget parent,
             IFactoryProvider factoryProvider,
+            ICruiserSpecificFactories cruiserSpecificFactories,
             Faction enemyFaction,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,

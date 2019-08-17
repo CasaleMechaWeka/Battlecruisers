@@ -499,11 +499,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidator targetPositionValidator = null,
             IAngleLimiter angleLimiter = null,
             IFactoryProvider factoryProvider = null,
+            ICruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             IAttackablePositionFinder attackablePositionFinder = null)
         {
+            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this);
+
             return
                 new BarrelControllerArgs(
                     updater,
@@ -515,7 +518,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     rotationMovementController ?? CreateRotationMovementController(barrel, updater),
                     targetPositionValidator ?? new DummyPositionValidator(),
                     angleLimiter ?? new DummyAngleLimiter(),
-                    factoryProvider ?? new BuildableInitialisationArgs(this).FactoryProvider,
+                    factoryProvider ?? initialisationArgs.FactoryProvider,
+                    cruiserSpecificFactories ?? initialisationArgs.CruiserSpecificFactories,
                     parent ?? Substitute.For<ITarget>(),
                     localBoostProviders ?? new ObservableCollection<IBoostProvider>(),
                     new ObservableCollection<IBoostProvider>(),

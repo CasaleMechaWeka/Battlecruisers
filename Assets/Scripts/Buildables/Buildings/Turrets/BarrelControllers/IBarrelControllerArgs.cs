@@ -26,6 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         ITargetPositionValidator TargetPositionValidator { get; }
         IAngleLimiter AngleLimiter { get; }
         IFactoryProvider FactoryProvider { get; }
+        ICruiserSpecificFactories CruiserSpecificFactories { get; }
         ITarget Parent { get; }
         ISoundKey SpawnerSoundKey { get; }
         ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
