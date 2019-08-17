@@ -142,7 +142,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			
 			ITargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker followableTargetTracker = _cruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
-			_followableTargetProcessor = _cruiserSpecificFactories.ProcessorFactory.CreateTargetProcessor(followableTargetTracker);
+			_followableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(followableTargetTracker);
 			_followableTargetProcessor.AddTargetConsumer(this);
 
 
@@ -159,7 +159,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			
 			ITargetRanker shootableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker shootableTargetTracker = _cruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
-			_shootableTargetProcessor = _cruiserSpecificFactories.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
+			_shootableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
 			_shootableTargetProcessor.AddTargetConsumer(_barrelController);
 		}
 

@@ -14,10 +14,12 @@ namespace BattleCruisers.Utils.Factories
         IAircraftProvider AircraftProvider { get; }
         IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }
-        ITargetProcessorFactory ProcessorFactory { get; }
+        ITurretStatsFactory TurretStatsFactory { get; }
+        ICruiserTargetFactoriesProvider Targets { get; }
+
+        // FELIX  Remove :)
         ITargetDetectorFactory TargetDetectorFactory { get; }
         ITargetTrackerFactory TrackerFactory { get; }
-        ITurretStatsFactory TurretStatsFactory { get; }
         ITargetProviderFactory TargetProviderFactory { get; }
     }
 }

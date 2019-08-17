@@ -198,7 +198,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
-            cruiserSpecificFactories.ProcessorFactory.Returns(targetProcessorFactory);
+            cruiserSpecificFactories.Targets.ProcessorFactory.Returns(targetProcessorFactory);
             cruiserSpecificFactories.TrackerFactory.Returns(targetTrackerFactory);
             cruiserSpecificFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
 

@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 
             ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             cruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
-            cruiserSpecificFactories.ProcessorFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
+            cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
 
             _targetProvider = new ShipBlockingEnemyProvider(cruiserSpecificFactories, targetFactories, enemyDetector, parentUnit);
             _asTargetConsumer = _targetProvider;

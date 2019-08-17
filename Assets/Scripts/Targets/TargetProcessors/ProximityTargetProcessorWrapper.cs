@@ -30,7 +30,7 @@ namespace BattleCruisers.Targets.TargetProcessors
                 _targetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
             }
 
-            return args.CruiserSpecificFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
+            return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);
         }
 
         protected ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
