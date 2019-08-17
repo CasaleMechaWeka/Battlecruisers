@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
             IList<TargetType> targetTypes = new List<TargetType>() { _antiAirTurret.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, targetTypes);
-            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(_antiAirTurret.GameObject, targetFilter);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_antiAirTurret.GameObject, targetFilter);
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
             helper.InitialiseUnit(_bomber, faction: Faction.Blues, targetFactories: targetFactories, aircraftProvider: aircraftProvider);
 			_bomber.StartConstruction();

@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test
 
 			// Setup railgun
             IBuilding railgun = FindObjectOfType<TurretController>();
-            ITargetFactoriesProvider targetFactories = helper.CreateTargetFactories(target.GameObject);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject);
 			helper.InitialiseBuilding(railgun, Faction.Blues, targetFactories: targetFactories);
 			railgun.StartConstruction();
 		}

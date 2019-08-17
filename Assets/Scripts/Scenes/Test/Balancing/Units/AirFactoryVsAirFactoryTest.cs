@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         protected override BuildableInitialisationArgs CreateFactoryArgs(Faction faction, Direction facingDirection)
         {
             IAircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
-            ITargetFactoriesProvider targetFactories = CreateTargetFactories(facingDirection);
+            ITargetFactories targetFactories = CreateTargetFactories(facingDirection);
 
             return 
                 new BuildableInitialisationArgs(
@@ -35,7 +35,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                 new AircraftProvider(parentCruiserPosition: _rightFactory.Position, enemyCruiserPosition: _leftFactory.Position, random: random);
         }
 
-        private ITargetFactoriesProvider CreateTargetFactories(Direction facingDirection)
+        private ITargetFactories CreateTargetFactories(Direction facingDirection)
         {
             ITarget bomberTarget = IsLeftHandFactory(facingDirection) ? _rightFactory : _leftFactory;
             return _helper.CreateTargetFactories(new List<ITarget> { bomberTarget });

@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
-            ITargetFactoriesProvider targetFactories = null,
+            ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
@@ -68,10 +68,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer deferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             IUpdaterProvider updaterProvider = null,
-            ITurretStatsFactory turretStatsFactory = null,
-            ITargetProcessorFactory targetProcessorFactory = null,
-            ITargetTrackerFactory targetTrackerFactory = null,
-            ITargetDetectorFactory targetDetectorFactory = null)
+            ITurretStatsFactory turretStatsFactory = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
@@ -79,7 +76,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
-            targetFactories = targetFactories ?? new TargetFactoriesProvider(ParentCruiser, EnemyCruiser, userChosenTargetManager, updaterProvider);
+            ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider(ParentCruiser, EnemyCruiser, userChosenTargetManager, updaterProvider);
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
@@ -96,7 +93,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
                     globalBoostProviders,
-                    damageApplierFactory ?? new DamageApplierFactory(targetFactories.FilterFactory),
+                    damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
@@ -110,7 +107,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
                     new DeferrerProvider(deferrer),
-                    targetFactories,
+                    targetFactoriesProvider,
                     new SpawnDeciderFactory(),
                     updaterProvider,
                     new ExplosionPoolProvider(prefabFactory));
@@ -120,9 +117,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     globalBoostProviders,
                     turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
-                    targetProcessorFactory ?? new TargetProcessorFactory(enemyCruiser, userChosenTargetManager),
-                    targetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
-                    targetDetectorFactory ?? new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider));
+                    targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(enemyCruiser, userChosenTargetManager),
+                    targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
+                    targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider));
         }
 
         private IFactoryProvider CreateFactoryProvider(

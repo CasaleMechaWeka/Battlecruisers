@@ -78,10 +78,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             IPrefabFactory prefabFactory = null,
-
-            // FELIX  NEXT  Replace with new ITargetFactories :)
-            ITargetFactoriesProvider targetFactories = null,
-            
+            ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
             ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
@@ -145,7 +142,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			ICruiser enemyCruiser = null,
 			IAircraftProvider aircraftProvider = null,
 			IPrefabFactory prefabFactory = null,
-            ITargetFactoriesProvider targetFactories = null,
+            ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
 			IAngleCalculatorFactory angleCalculatorFactory = null,
 			ITargetPositionPredictorFactory targetPositionPredictorFactory = null,
@@ -295,11 +292,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
         /// Target processors assign all the provided targets.  The targets are lost
         /// as they are destroyed.
         /// </summary>
-        public ITargetFactoriesProvider CreateTargetFactories(IList<ITarget> targets)
+        public ITargetFactories CreateTargetFactories(IList<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
 
-            ITargetFactoriesProvider targetFactories = CreateTargetFactories(targetFinder);
+            ITargetFactories targetFactories = CreateTargetFactories(targetFinder);
 
             // Emit target found events AFTER targets factory (target processor) is created
             foreach (ITarget target in targets)
@@ -313,14 +310,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         /// <summary>
         /// Use ObservableCollection so that targets do not need to be known right now.
-        /// Targets can be added later, once they are know, and the target finder
+        /// Targets can be added later, once they are known, and the target finder
         /// will emit appropriate target found events.
         /// </summary>
-        public ITargetFactoriesProvider CreateTargetFactories(ObservableCollection<ITarget> targets)
+        public ITargetFactories CreateTargetFactories(ObservableCollection<ITarget> targets)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
 
-            ITargetFactoriesProvider targetFactories = CreateTargetFactories(targetFinder);
+            ITargetFactories targetFactories = CreateTargetFactories(targetFinder);
 
             // Emit target found events AFTER targets factory (target processor) is created
             targets.CollectionChanged += (sender, e) =>
@@ -338,26 +335,34 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetFactories;
         }
 
-        private ITargetFactoriesProvider CreateTargetFactories(ITargetFinder targetFinder)
+        private ITargetFactories CreateTargetFactories(ITargetFinder targetFinder)
         {
+            ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
+
             ITargetRanker targetRanker = new EqualTargetRanker();
             IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, targetRanker);
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
 
-            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
+            // Processors
+            targetFactories.TargetFactoriesProvider.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
+            targetFactories.TargetFactoriesProvider.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
+            targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
+            targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 
-            targetFactories.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
-            targetFactories.FilterFactory.CreateDummyTargetFilter(default).ReturnsForAnyArgs(targetFilter);
-            targetFactories.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-            targetFactories.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            targetFactories.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            targetFactories.TargetFactoriesProvider.FilterFactory.CreateDummyTargetFilter(default).ReturnsForAnyArgs(targetFilter);
+            targetFactories.TargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
+            targetFactories.TargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
 
-            SetupCreateTargetFilter(targetFactories.FilterFactory);
-            SetupCreateRangedTargetFinder(targetFactories.FinderFactory);
-            SetupCreateRankedTargetTracker(targetFactories.TrackerFactory);
-            SetupCreateTargetProcessor(targetFactories.ProcessorFactory);
+            SetupCreateTargetFilter(targetFactories.TargetFactoriesProvider.FilterFactory);
+            SetupCreateRangedTargetFinder(targetFactories.TargetFactoriesProvider.FinderFactory);
+
+            SetupCreateRankedTargetTracker(targetFactories.TargetFactoriesProvider.TrackerFactory);
+            targetFactories.TargetTrackerFactory.Returns(targetFactories.TargetFactoriesProvider.TrackerFactory);
+
+            SetupCreateTargetProcessor(targetFactories.TargetFactoriesProvider.ProcessorFactory);
+            targetFactories.TargetProcessorFactory.Returns(targetFactories.TargetFactoriesProvider.ProcessorFactory);
 
             return targetFactories;
         }
