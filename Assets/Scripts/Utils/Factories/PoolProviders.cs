@@ -13,7 +13,10 @@ namespace BattleCruisers.Utils.Factories
         {
             Assert.IsNotNull(factoryProvider);
 
+            // FELIX  Prefab factory is all good :)
             ExplosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
+
+            // FELIX  IFactoryProvider not so much :P
             ProjectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
         }
     }

@@ -27,6 +27,7 @@ namespace BattleCruisers.Utils.Factories
             AngleLimiterFactory = new AngleLimiterFactory();
             AttackablePositionFinderFactory = new AttackablePositionFinderFactory();
             TargetPositionValidatorFactory = new TargetPositionValidatorFactory();
+            // FELIX  Cruiser specific
             TurretStatsFactory = new TurretStatsFactory(boostFactory, globalBoostProviders);
         }
     }

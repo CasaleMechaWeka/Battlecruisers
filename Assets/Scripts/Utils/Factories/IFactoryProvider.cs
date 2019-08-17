@@ -16,21 +16,28 @@ namespace BattleCruisers.Utils.Factories
 {
     public interface IFactoryProvider
     {
-        IPoolProviders PoolProviders { get; }
-        ISoundFactoryProvider Sound { get; }
-        ITurretFactoryProvider Turrets { get; }
-        IAircraftProvider AircraftProvider { get; }
+        // FELIX  
+        // Common
         IBoostFactory BoostFactory { get; }
-        IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        IGlobalBoostProviders GlobalBoostProviders { get; }
+        ISpriteChooserFactory SpriteChooserFactory { get; }
         IMovementControllerFactory MovementControllerFactory { get; }
         IPrefabFactory PrefabFactory { get; }
         ISpawnDeciderFactory SpawnDeciderFactory { get; }
-        ISpriteChooserFactory SpriteChooserFactory { get; }
-        ITargetFactoriesProvider TargetFactories { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IUpdaterProvider UpdaterProvider { get; }
+
+        // Common, but circular dependency :/
+        IPoolProviders PoolProviders { get; } // IFactoryProvider :/
+        IDamageApplierFactory DamageApplierFactory { get; } // FilterFactory => TargetsFactories => cruisers :/
+
+        // Cruiser specific
+        IAircraftProvider AircraftProvider { get; }
+        IGlobalBoostProviders GlobalBoostProviders { get; }
+
+        ISoundFactoryProvider Sound { get; }  // FELIX  1/5
+        ITurretFactoryProvider Turrets { get; }  // FELIX  1/6
+        ITargetFactoriesProvider TargetFactories { get; }  // FELIX  3/9
     }
 }

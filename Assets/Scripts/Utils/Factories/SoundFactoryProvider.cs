@@ -24,6 +24,8 @@ namespace BattleCruisers.Utils.Factories
             ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, audioSource);
             PrioritisedSoundPlayer = new PrioritisedSoundPlayer(singleSoundPlayer);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
+
+            // FELIX  Cruiser specific
             BuildableEffectsSoundPlayer = isPlayerCruiser ? PrioritisedSoundPlayer : new DummySoundPlayer();
         }
 	}
