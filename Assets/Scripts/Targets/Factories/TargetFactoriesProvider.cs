@@ -11,19 +11,15 @@ namespace BattleCruisers.Targets.Factories
         public ITargetFilterFactory FilterFactory { get; }
         public ITargetRankerFactory RankerFactory { get; }
         public ITargetHelperFactory HelperFactory { get; }
-        public ITargetDetectorFactory TargetDetectorFactory { get; }
         public IRangeCalculatorProvider RangeCalculatorProvider { get; }
 
-        public TargetFactoriesProvider(ICruiser parentCruiser, ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker, IUpdaterProvider updaterProvider)
+        public TargetFactoriesProvider()
         {
-            Helper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
-
             FinderFactory = new TargetFinderFactory();
             FilterFactory = new TargetFilterFactory();
             RankerFactory = new TargetRankerFactory();
             HelperFactory = new TargetHelperFactory();
             RangeCalculatorProvider = new RangeCalculatorProvider();
-            TargetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
         }
     }
 }

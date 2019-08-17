@@ -62,7 +62,7 @@ namespace BattleCruisers.Utils.Factories
             Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, updaterProvider);
 
 			PrefabFactory = prefabFactory;
-            TargetFactories = new TargetFactoriesProvider(friendlyCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
+            TargetFactories = new TargetFactoriesProvider();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();
             AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());

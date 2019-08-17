@@ -76,7 +76,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
-            ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider(ParentCruiser, EnemyCruiser, userChosenTargetManager, updaterProvider);
+            ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
             prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
