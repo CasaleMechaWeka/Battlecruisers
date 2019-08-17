@@ -23,7 +23,7 @@ namespace BattleCruisers.Targets.Factories
 
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             FinderFactory = new TargetFinderFactory();
-            TrackerFactory = new TargetTrackerFactory(enemyCruiser, userChosenTargetTracker);
+            TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             FilterFactory = new TargetFilterFactory();
             RankerFactory = new TargetRankerFactory();
             ProviderFactory = new TargetProviderFactory(this);

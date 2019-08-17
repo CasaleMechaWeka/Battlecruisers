@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Targets.TargetFinders;
+﻿using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -11,7 +10,7 @@ namespace BattleCruisers.Targets.Factories
     {
         public IRankedTargetTracker UserChosenTargetTracker { get; }
 
-        public TargetTrackerFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
+        public TargetTrackerFactory(IRankedTargetTracker userChosenTargetTracker)
         {
             Assert.IsNotNull(userChosenTargetTracker);
             UserChosenTargetTracker = userChosenTargetTracker;
