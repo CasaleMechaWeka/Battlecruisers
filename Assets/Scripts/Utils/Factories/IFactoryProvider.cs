@@ -27,13 +27,10 @@ namespace BattleCruisers.Utils.Factories
         IUpdaterProvider UpdaterProvider { get; }
         ISoundFactoryProvider Sound { get; }
         ITurretFactoryProvider Turrets { get; }
+        ITargetFactoriesProvider TargetFactories { get; }
 
         // Common, but circular dependency :/
         IPoolProviders PoolProviders { get; } // IFactoryProvider :/
         IDamageApplierFactory DamageApplierFactory { get; } // FilterFactory => TargetsFactories => cruisers :/
-
-        // Cruiser specific
-
-        ITargetFactoriesProvider TargetFactories { get; }  // FELIX  3/9
     }
 }
