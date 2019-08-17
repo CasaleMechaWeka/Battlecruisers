@@ -25,6 +25,7 @@ namespace BattleCruisers.Utils.Factories
         public IPrefabFactory PrefabFactory { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
+        // FELIX  Rename to Targets?
         public ITargetFactoriesProvider TargetFactories { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public IUpdaterProvider UpdaterProvider { get; }
