@@ -9,7 +9,6 @@ using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Utils.Factories
 {
-    // FELIX  Interface
     public class CruiserSpecificFactories : ICruiserSpecificFactories
     {
         public IAircraftProvider AircraftProvider { get; }

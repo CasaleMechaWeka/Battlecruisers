@@ -13,7 +13,6 @@ namespace BattleCruisers.Utils.Factories
         public ISoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
-        public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
 
         public SoundFactoryProvider(IDeferrer deferrer, ICamera soleCamera, bool isPlayerCruiser, IAudioSource audioSource)
@@ -26,9 +25,6 @@ namespace BattleCruisers.Utils.Factories
             PrioritisedSoundPlayer = new PrioritisedSoundPlayer(singleSoundPlayer);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
             DummySoundPlayer = new DummySoundPlayer();
-
-            // FELIX  Cruiser specific
-            BuildableEffectsSoundPlayer = isPlayerCruiser ? PrioritisedSoundPlayer : DummySoundPlayer;
         }
 	}
 }

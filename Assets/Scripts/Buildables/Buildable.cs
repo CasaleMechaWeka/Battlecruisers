@@ -409,7 +409,7 @@ namespace BattleCruisers.Buildables
 
             RepairCommand.EmitCanExecuteChanged();
 
-            _factoryProvider.Sound.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+            _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
         }
 
