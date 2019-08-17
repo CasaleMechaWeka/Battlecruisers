@@ -149,7 +149,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
-            factoryProvider.AircraftProvider.Returns(aircraftProvider);
             factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);

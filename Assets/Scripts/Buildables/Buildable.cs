@@ -252,7 +252,7 @@ namespace BattleCruisers.Buildables
             _droneManager = ParentCruiser.DroneManager;
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             _uiManager = uiManager;
-            _aircraftProvider = factoryProvider.AircraftProvider;
+            _aircraftProvider = cruiserSpecificFactories.AircraftProvider;
 
             _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;

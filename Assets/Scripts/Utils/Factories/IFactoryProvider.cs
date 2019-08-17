@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Factories
 {
     public interface IFactoryProvider
     {
-        // FELIX  
+        // FELIX  Sort alphabetically again :)
         // Common
         IBoostFactory BoostFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
@@ -27,16 +27,15 @@ namespace BattleCruisers.Utils.Factories
         ISpawnDeciderFactory SpawnDeciderFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IUpdaterProvider UpdaterProvider { get; }
+        ISoundFactoryProvider Sound { get; }  // FELIX  1/5
 
         // Common, but circular dependency :/
         IPoolProviders PoolProviders { get; } // IFactoryProvider :/
         IDamageApplierFactory DamageApplierFactory { get; } // FilterFactory => TargetsFactories => cruisers :/
 
         // Cruiser specific
-        IAircraftProvider AircraftProvider { get; }
         IGlobalBoostProviders GlobalBoostProviders { get; }
 
-        ISoundFactoryProvider Sound { get; }  // FELIX  1/5
         ITurretFactoryProvider Turrets { get; }  // FELIX  1/6
         ITargetFactoriesProvider TargetFactories { get; }  // FELIX  3/9
     }
