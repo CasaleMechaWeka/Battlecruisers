@@ -78,6 +78,7 @@ namespace BattleCruisers.Buildables
 
         public IRepairCommand RepairCommand { get; private set; }
 
+        // FELIX  Make set private?
         public float HealthGainPerDroneS { get; protected set; }
 
         // Lazily initialise so that the StaticInitialise() of all classes in

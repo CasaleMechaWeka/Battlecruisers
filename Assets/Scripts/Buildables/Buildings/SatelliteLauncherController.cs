@@ -25,8 +25,11 @@ namespace BattleCruisers.Buildables.Buildings
 
 			_satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab);
 			_satellite.Position = transform.position + SpawnPositionAdjustment;
+
+            // FELIX  Should happen in factory, so don't get double initialisation from pooling
 			_satellite.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider, _cruiserSpecificFactories);
-			_satellite.StartConstruction();
+
+            _satellite.StartConstruction();
 		}
 
 		protected override void OnDestroyed()

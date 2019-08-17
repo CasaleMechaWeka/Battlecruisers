@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.BuildProgress;
@@ -41,7 +42,6 @@ namespace BattleCruisers.Buildables
 
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
-        protected IDroneManager _droneManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected ITargetFactoriesProvider _targetFactories;
         protected IMovementControllerFactory _movementControllerFactory;
@@ -176,6 +176,8 @@ namespace BattleCruisers.Buildables
         public event EventHandler<BuildProgressEventArgs> BuildableProgress;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
         public event EventHandler Clicked;
+        // FELIX  Invoke!!!
+        public event EventHandler Deactivated;
 
         protected override void OnStaticInitialised()
         {
@@ -237,55 +239,58 @@ namespace BattleCruisers.Buildables
             return new List<SpriteRenderer>() { mainRenderer };
         }
 
-        protected void Initialise(
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IUIManager uiManager, 
-            IFactoryProvider factoryProvider, 
-            ICruiserSpecificFactories cruiserSpecificFactories)
+        // FELIX  Make sure this is only called once :)  By prefab factory!!!
+        protected void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
             Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
-            Helper.AssertIsNotNull(parentCruiser, enemyCruiser, uiManager, factoryProvider, cruiserSpecificFactories);
+            Helper.AssertIsNotNull(uiManager, factoryProvider);
 
-            ParentCruiser = parentCruiser;
-            _enemyCruiser = enemyCruiser;
-            _droneManager = ParentCruiser.DroneManager;
-            _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             _uiManager = uiManager;
-            _aircraftProvider = cruiserSpecificFactories.AircraftProvider;
-
             _factoryProvider = factoryProvider;
-            _cruiserSpecificFactories = cruiserSpecificFactories;
             _targetFactories = _factoryProvider.Targets;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
-
-            Faction = ParentCruiser.Faction;
-            BuildableState = BuildableState.NotStarted;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
-            _cumulativeBuildProgressInDroneS = 0;
-
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
-
-            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            SetupBuildRateBoost();
+            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
 
-        private void SetupBuildRateBoost()
+        public void Activate(BuildableActivationArgs activationArgs)
         {
-            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            _buildRateBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
-            _buildRateBoostableGroup.AddBoostable(BuildProgressBoostable);
+            Assert.IsNotNull(activationArgs);
+
+            ParentCruiser = activationArgs.ParentCruiser;
+            _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
+            Faction = ParentCruiser.Faction;
+
+            _enemyCruiser = activationArgs.EnemyCruiser;
+
+            _cruiserSpecificFactories = activationArgs.CruiserSpecificFactories;
+            _aircraftProvider = activationArgs.CruiserSpecificFactories.AircraftProvider;
+
+            BuildableState = BuildableState.NotStarted;
+            _cumulativeBuildProgressInDroneS = 0;
+
+            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+        }
+
+        private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        {
+            IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();
+            buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
-            AddBuildRateBoostProviders(_cruiserSpecificFactories.GlobalBoostProviders, buildRateBoostProvidersList);
-            
+            AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+
             foreach (ObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
             {
-                _buildRateBoostableGroup.AddBoostProvidersList(buildRateBoostProviders);
+                buildRateBoostableGroup.AddBoostProvidersList(buildRateBoostProviders);
             }
+
+            return buildRateBoostableGroup;
         }
 
         /// <summary>
@@ -440,6 +445,7 @@ namespace BattleCruisers.Buildables
             }
 
             _localBoosterBoostableGroup.CleanUp();
+            _buildRateBoostableGroup.CleanUp();
 
             _factoryProvider.Sound.SoundPlayer.PlaySound(DeathSoundKey, transform.position);
         }

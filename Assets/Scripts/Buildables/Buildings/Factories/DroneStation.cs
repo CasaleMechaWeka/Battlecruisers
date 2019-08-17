@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override void OnBuildableCompleted()
 		{
-			_droneManager.NumOfDrones += numOfDronesProvided;
+            ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;
             
             base.OnBuildableCompleted();
 		}
@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
             if (BuildableState == BuildableState.Completed)
             {
-    			_droneManager.NumOfDrones -= numOfDronesProvided;
+    			ParentCruiser.DroneManager.NumOfDrones -= numOfDronesProvided;
             }
             
             base.OnDestroyed();

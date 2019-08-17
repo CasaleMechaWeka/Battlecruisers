@@ -182,8 +182,11 @@ namespace BattleCruisers.Cruisers
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
 
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
+
+            // FELIX  Should happen in factory, so don't get double initialisation from pooling
             building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, CruiserSpecificFactories, slot, _buildingDoubleClickHandler);
-			slot.Building = building;
+
+            slot.Building = building;
 
 			building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
