@@ -2,15 +2,16 @@
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Scenes.Test.Utilities;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
 {
-    public class AntiAirTurretIgnoresSatellitesTestGod : MonoBehaviour
+    public class AntiAirTurretIgnoresSatellitesTestGod : TestGodBase
     {
-        void Start()
+        protected override void Start()
         {
-            Helper helper = new Helper();
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             // Aircraft
             AircraftController[] aircraftList = FindObjectsOfType<AircraftController>();
