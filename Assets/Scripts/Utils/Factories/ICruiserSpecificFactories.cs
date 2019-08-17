@@ -6,6 +6,9 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Utils.Factories
 {
+    /// <summary>
+    /// Factories that are cruiser specific.  Hence each cruiser will need their own instance of these.
+    /// </summary>
     public interface ICruiserSpecificFactories
     {
         IAircraftProvider AircraftProvider { get; }

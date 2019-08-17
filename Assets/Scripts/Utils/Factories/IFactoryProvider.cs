@@ -12,25 +12,24 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils.Factories
 {
+    /// <summary>
+    /// Factories that are singletons and can be shared between both cruisers.
+    /// </summary>
     public interface IFactoryProvider
     {
-        // FELIX  Sort alphabetically again :)
-        // Common
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        ISpriteChooserFactory SpriteChooserFactory { get; }
         IMovementControllerFactory MovementControllerFactory { get; }
+        IPoolProviders PoolProviders { get; }
         IPrefabFactory PrefabFactory { get; }
-        ISpawnDeciderFactory SpawnDeciderFactory { get; }
-        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
-        IUpdaterProvider UpdaterProvider { get; }
         ISoundFactoryProvider Sound { get; }
-        ITurretFactoryProvider Turrets { get; }
+        ISpawnDeciderFactory SpawnDeciderFactory { get; }
+        ISpriteChooserFactory SpriteChooserFactory { get; }
         ITargetFactoriesProvider TargetFactories { get; }
-
-        // Common, but circular dependency :/
-        IPoolProviders PoolProviders { get; } // IFactoryProvider :/
+        ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
+        ITurretFactoryProvider Turrets { get; }
+        IUpdaterProvider UpdaterProvider { get; }
     }
 }
