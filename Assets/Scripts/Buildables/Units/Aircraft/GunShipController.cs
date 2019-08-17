@@ -103,7 +103,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _factoryProvider.TargetFactories.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = _factoryProvider.TargetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.TargetFactories.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
-            _inRangeTargetTracker = _cruiserSpecificFactories.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
+            _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);

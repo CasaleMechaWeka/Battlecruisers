@@ -18,7 +18,6 @@ namespace BattleCruisers.Utils.Factories
         ICruiserTargetFactoriesProvider Targets { get; }
 
         // FELIX  Remove :)
-        ITargetTrackerFactory TrackerFactory { get; }
         ITargetProviderFactory TargetProviderFactory { get; }
     }
 }

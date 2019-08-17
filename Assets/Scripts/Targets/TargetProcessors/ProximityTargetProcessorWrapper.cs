@@ -20,14 +20,14 @@ namespace BattleCruisers.Targets.TargetProcessors
 		{
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
-            _targetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
+            _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
 
             if (considerUserChosenTarget)
             {
-                ITargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateTargetTracker(_targetFinder);
-                IRankedTargetTracker userChosenInRangeTargetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
+                ITargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_targetFinder);
+                IRankedTargetTracker userChosenInRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateUserChosenInRangeTargetTracker(inRangeTargetTracker);
                 IRankedTargetTracker inRangeSingleTargetTracker = _targetTracker;
-                _targetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
+                _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
             }
 
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);

@@ -19,20 +19,20 @@ namespace BattleCruisers.Targets.TargetProcessors
             // In range targets
             InRangeTargetFinder = CreateTargetFinder(args);
             ITargetRanker inRangeTargetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
-            IRankedTargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
+            IRankedTargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
             ITargetFilter attackingTargetFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = args.TargetFactories.FinderFactory.CreateAttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
             ITargetRanker baseRanker = args.TargetFactories.RankerFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = args.TargetFactories.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
-            IRankedTargetTracker attackingTargetTracker = args.CruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(attackingTargetFinder, attackingTargetRanker);
+            IRankedTargetTracker attackingTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(attackingTargetFinder, attackingTargetRanker);
 
             IRankedTargetTracker compositeTracker 
-                = args.CruiserSpecificFactories.TrackerFactory.CreateCompositeTracker(
+                = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateCompositeTracker(
                     inRangeTargetTracker, 
                     attackingTargetTracker, 
-                    args.CruiserSpecificFactories.TrackerFactory.UserChosenTargetTracker);
+                    args.CruiserSpecificFactories.Targets.TrackerFactory.UserChosenTargetTracker);
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(compositeTracker);
         }
     }
