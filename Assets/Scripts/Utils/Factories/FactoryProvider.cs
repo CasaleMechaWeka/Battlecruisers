@@ -1,14 +1,11 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
-using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -21,7 +18,6 @@ namespace BattleCruisers.Utils.Factories
     {
         public ISoundFactoryProvider Sound { get; }
         public ITurretFactoryProvider Turrets { get; }
-        public IAircraftProvider AircraftProvider { get; }
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
@@ -49,23 +45,18 @@ namespace BattleCruisers.Utils.Factories
 
         public FactoryProvider(
             IPrefabFactory prefabFactory, 
-            ICruiser friendlyCruiser, 
-            ICruiser enemyCruiser, 
             ISpriteProvider spriteProvider,
             IDeferrer deferrer,
-            IRankedTargetTracker userChosenTargetTracker,
             ICamera soleCamera,
-            bool isPlayerCruiser,
             IAudioSource audioSource,
             IUpdaterProvider updaterProvider)
 		{
-            Helper.AssertIsNotNull(prefabFactory, friendlyCruiser, enemyCruiser, spriteProvider, deferrer, userChosenTargetTracker, soleCamera, audioSource, updaterProvider);
+            Helper.AssertIsNotNull(prefabFactory, spriteProvider, deferrer, soleCamera, audioSource, updaterProvider);
 
 			PrefabFactory = prefabFactory;
             TargetFactories = new TargetFactoriesProvider();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();
-            AircraftProvider = new AircraftProvider(friendlyCruiser.Position, enemyCruiser.Position, new RandomGenerator());
 			FlightPointsProviderFactory = new FlightPointsProviderFactory();
             BoostFactory = new BoostFactory();
             DamageApplierFactory = new DamageApplierFactory(TargetFactories.FilterFactory);
@@ -77,7 +68,7 @@ namespace BattleCruisers.Utils.Factories
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = updaterProvider;
 
-            Sound = new SoundFactoryProvider(deferrer, soleCamera, isPlayerCruiser, audioSource);
+            Sound = new SoundFactoryProvider(deferrer, soleCamera, audioSource);
             Turrets = new TurretFactoryProvider();
         }
 	}

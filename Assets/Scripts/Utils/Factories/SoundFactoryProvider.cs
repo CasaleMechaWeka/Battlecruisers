@@ -15,7 +15,7 @@ namespace BattleCruisers.Utils.Factories
         public ISoundPlayerFactory SoundPlayerFactory { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
 
-        public SoundFactoryProvider(IDeferrer deferrer, ICamera soleCamera, bool isPlayerCruiser, IAudioSource audioSource)
+        public SoundFactoryProvider(IDeferrer deferrer, ICamera soleCamera, IAudioSource audioSource)
 		{
             Helper.AssertIsNotNull(deferrer, soleCamera, audioSource);
 

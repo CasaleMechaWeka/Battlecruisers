@@ -171,13 +171,9 @@ namespace BattleCruisers.Cruisers
             IFactoryProvider factoryProvider 
                 = new FactoryProvider(
                     _prefabFactory, 
-                    cruiser, 
-                    enemyCruiser, 
                     _spriteProvider, 
                     _components.Deferrer,
-                    userChosenTargetTracker, 
                     _soleCamera, 
-                    isPlayerCruiser, 
                     _components.AudioSource,
                     _components.UpdaterProvider);
             ICruiserSpecificFactories cruiserSpecificFactories
