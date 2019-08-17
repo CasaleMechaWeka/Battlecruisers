@@ -104,7 +104,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-			_targetProcessor = _targetFactories.ProcessorFactory.BomberTargetProcessor;
+			_targetProcessor = _cruiserSpecificFactories.ProcessorFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooser(this);

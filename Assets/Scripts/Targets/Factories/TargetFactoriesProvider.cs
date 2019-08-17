@@ -7,7 +7,6 @@ namespace BattleCruisers.Targets.Factories
 {
     public class TargetFactoriesProvider : ITargetFactoriesProvider
     {
-        public ITargetProcessorFactory ProcessorFactory { get; }
         public ITargetFinderFactory FinderFactory { get; }
         public ITargetFilterFactory FilterFactory { get; }
         public ITargetRankerFactory RankerFactory { get; }
@@ -19,7 +18,6 @@ namespace BattleCruisers.Targets.Factories
         {
             Helper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             FinderFactory = new TargetFinderFactory();
             FilterFactory = new TargetFilterFactory();
             RankerFactory = new TargetRankerFactory();

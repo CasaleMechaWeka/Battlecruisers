@@ -257,9 +257,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
 
             // Procressors
-            targetFactoriesProvider.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
-            targetFactoriesProvider.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-            targetFactoriesProvider.ProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
             targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
@@ -345,8 +342,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
 
             // Processors
-            targetFactories.TargetFactoriesProvider.ProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
-            targetFactories.TargetFactoriesProvider.ProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
 
@@ -359,8 +354,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             SetupCreateRankedTargetTracker(targetFactories.TargetTrackerFactory);
 
-            SetupCreateTargetProcessor(targetFactories.TargetFactoriesProvider.ProcessorFactory);
-            targetFactories.TargetProcessorFactory.Returns(targetFactories.TargetFactoriesProvider.ProcessorFactory);
+            SetupCreateTargetProcessor(targetFactories.TargetProcessorFactory);
 
             return targetFactories;
         }
