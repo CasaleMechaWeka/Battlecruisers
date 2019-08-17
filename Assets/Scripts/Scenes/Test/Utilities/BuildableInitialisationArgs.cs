@@ -117,9 +117,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     globalBoostProviders,
                     turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
-                    targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(enemyCruiser, userChosenTargetManager),
+                    targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
                     targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
-                    targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider));
+                    targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider));
         }
 
         private IFactoryProvider CreateFactoryProvider(
