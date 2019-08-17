@@ -15,5 +15,6 @@ namespace BattleCruisers.Utils.Factories
         ITargetDetectorFactory TargetDetectorFactory { get; }
         ITargetTrackerFactory TrackerFactory { get; }
         ITurretStatsFactory TurretStatsFactory { get; }
+        ITargetProviderFactory TargetProviderFactory { get; }
     }
 }
