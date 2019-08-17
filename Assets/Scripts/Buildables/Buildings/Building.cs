@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -12,7 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings
 {
-    public abstract class Building : Buildable, IBuilding
+    public abstract class Building : Buildable<BuildingActivationArgs>, IBuilding
 	{
         private BoxCollider2D _collider;
 

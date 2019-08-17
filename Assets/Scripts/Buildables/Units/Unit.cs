@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -15,7 +16,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-    public abstract class Unit : Buildable, IUnit
+    public abstract class Unit : Buildable<BuildableActivationArgs>, IUnit
     {
         private IAudioClipWrapper _engineAudioClip;
 

@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 
 
             // Setup targets
-            Buildable baseTarget = FindObjectOfType<AirFactory>();
+            IBuildable baseTarget = FindObjectOfType<AirFactory>();
 			
 			TestAircraftController aircraft = FindObjectOfType<TestAircraftController>();
 			aircraft.UseDummyMovementController = true;

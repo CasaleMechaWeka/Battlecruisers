@@ -8,14 +8,14 @@ namespace BattleCruisers.Buildables.BuildProgress
 {
     public class BuildableProgressController : MonoBehaviour
 	{
-		private Buildable _buildable;
+		private IBuildable _buildable;
 
 		public Image FillableImage { get; private set; }
         public Image OutlineImage { get; private set; }
 
 		public void Initialise() 
 		{
-			_buildable = gameObject.GetComponentInInactiveParent<Buildable>();
+			_buildable = gameObject.GetComponentInInactiveParent<IBuildable>();
 			Assert.IsNotNull(_buildable);
 
             FillableImage = transform.FindNamedComponent<Image>("Canvas/FillableImage");

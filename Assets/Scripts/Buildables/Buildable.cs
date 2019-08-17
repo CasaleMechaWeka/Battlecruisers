@@ -17,6 +17,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Timers;
@@ -28,7 +29,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Buildable : Target, IBuildable
+    public abstract class Buildable<TActivationArgs> : Target, IBuildable, IPoolable<TActivationArgs>
+        where TActivationArgs : BuildableActivationArgs
     {
         private float _cumulativeBuildProgressInDroneS;
         private float _buildTimeInDroneSeconds;
@@ -257,7 +259,7 @@ namespace BattleCruisers.Buildables
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
 
-        public void Activate(BuildableActivationArgs activationArgs)
+        public void Activate(TActivationArgs activationArgs)
         {
             Assert.IsNotNull(activationArgs);
 
