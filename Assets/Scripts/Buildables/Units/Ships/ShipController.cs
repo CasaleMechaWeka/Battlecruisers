@@ -146,12 +146,12 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
-                = _cruiserSpecificFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,
                     EnemyDetectionRangeInM,
                     rangeCalculator);
             _friendDetectorProvider
-                = _cruiserSpecificFactories.TargetDetectorFactory.CreateFriendlyShipTargetDetector(
+                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateFriendlyShipTargetDetector(
                     Transform,
                     FriendDetectionRangeInM,
                     rangeCalculator);

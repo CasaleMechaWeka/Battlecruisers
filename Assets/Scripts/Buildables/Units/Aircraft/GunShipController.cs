@@ -97,7 +97,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             // Create target tracker => For keeping track of in range targets
             _hoverTargetDetectorProvider 
-                = _cruiserSpecificFactories.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateEnemyShipTargetDetector(
                     Transform, 
                     enemyHoverRangeInM,
                     _factoryProvider.TargetFactories.RangeCalculatorProvider.BasicCalculator);

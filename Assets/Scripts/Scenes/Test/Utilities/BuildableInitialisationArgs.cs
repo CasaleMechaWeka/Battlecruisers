@@ -200,7 +200,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
             cruiserSpecificFactories.Targets.ProcessorFactory.Returns(targetProcessorFactory);
             cruiserSpecificFactories.TrackerFactory.Returns(targetTrackerFactory);
-            cruiserSpecificFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
+            cruiserSpecificFactories.Targets.TargetDetectorFactory.Returns(targetDetectorFactory);
 
             return cruiserSpecificFactories;
         }
