@@ -5,11 +5,10 @@ using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils.Factories
@@ -44,14 +43,11 @@ namespace BattleCruisers.Utils.Factories
         }
 
         public FactoryProvider(
+            IBattleSceneGodComponents components,
             IPrefabFactory prefabFactory, 
-            ISpriteProvider spriteProvider,
-            IDeferrer deferrer,
-            ICamera soleCamera,
-            IAudioSource audioSource,
-            IUpdaterProvider updaterProvider)
+            ISpriteProvider spriteProvider)
 		{
-            Helper.AssertIsNotNull(prefabFactory, spriteProvider, deferrer, soleCamera, audioSource, updaterProvider);
+            Helper.AssertIsNotNull(components, prefabFactory, spriteProvider);
 
 			PrefabFactory = prefabFactory;
             TargetFactories = new TargetFactoriesProvider();
@@ -64,11 +60,11 @@ namespace BattleCruisers.Utils.Factories
                 = new SpriteChooserFactory(
                     new AssignerFactory(),
                     spriteProvider);
-            DeferrerProvider = new DeferrerProvider(deferrer);
+            DeferrerProvider = new DeferrerProvider(components.Deferrer);
             SpawnDeciderFactory = new SpawnDeciderFactory();
-            UpdaterProvider = updaterProvider;
+            UpdaterProvider = components.UpdaterProvider;
 
-            Sound = new SoundFactoryProvider(deferrer, soleCamera, audioSource);
+            Sound = new SoundFactoryProvider(components.Deferrer, components.Camera, components.AudioSource);
             Turrets = new TurretFactoryProvider();
         }
 	}

@@ -83,22 +83,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
-            IFactoryProvider factoryProvider
-                = new FactoryProvider(
-                    prefabFactory,
-                    spriteProvider,
-                    // FELIX  Juse pass components :P
-                    components.Deferrer,
-                    components.Camera,
-                    components.AudioSource,
-                    components.UpdaterProvider);
-
-            ICruiserFactory cruiserFactory
-                = new CruiserFactory(
-                    factoryProvider,
-                    helper,
-                    applicationModel,
-                    uiManager);
+            IFactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider);
+            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
