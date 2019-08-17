@@ -18,18 +18,13 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Cruisers
 {
     public class CruiserFactory : ICruiserFactory
 	{
-        private readonly IPrefabFactory _prefabFactory;
-        private readonly IBattleSceneGodComponents _components;
-        private readonly ISpriteProvider _spriteProvider;
-        private readonly ICamera _soleCamera;
+        private readonly IFactoryProvider _factoryProvider;
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
         private readonly ISlotFilter _highlightableSlotFilter;
@@ -39,20 +34,14 @@ namespace BattleCruisers.Cruisers
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public CruiserFactory(
-            IPrefabFactory prefabFactory,
-            IBattleSceneGodComponents components,
-            ISpriteProvider spriteProvider,
-            ICamera soleCamera,
+            IFactoryProvider factoryProvider,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
             IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(prefabFactory, components, spriteProvider, soleCamera, helper, applicationModel, uiManager);
-            
-            _prefabFactory = prefabFactory;
-            _components = components;
-            _spriteProvider = spriteProvider;
-            _soleCamera = soleCamera;
+            Helper.AssertIsNotNull(factoryProvider, helper, applicationModel, uiManager);
+
+            _factoryProvider = factoryProvider;
             _helper = helper;
             _applicationModel = applicationModel;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
@@ -63,8 +52,8 @@ namespace BattleCruisers.Cruisers
         public Cruiser CreatePlayerCruiser()
         {
             ILoadout playerLoadout = _helper.GetPlayerLoadout();
-            Cruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(playerLoadout.Hull);
-            Cruiser playerCruiser = _prefabFactory.CreateCruiser(playerCruiserPrefab);
+            Cruiser playerCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(playerLoadout.Hull);
+            Cruiser playerCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerCruiserPrefab);
             playerCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);
 
             return playerCruiser;
@@ -73,8 +62,8 @@ namespace BattleCruisers.Cruisers
         public Cruiser CreateAICruiser()
         {
             ILevel currentLevel = _applicationModel.DataProvider.GetLevel(_applicationModel.SelectedLevel);
-            Cruiser aiCruiserPrefab = _prefabFactory.GetCruiserPrefab(currentLevel.Hull);
-            Cruiser aiCruiser = _prefabFactory.CreateCruiser(aiCruiserPrefab);
+            Cruiser aiCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(currentLevel.Hull);
+            Cruiser aiCruiser = _factoryProvider.PrefabFactory.CreateCruiser(aiCruiserPrefab);
 
             aiCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
             Quaternion rotation = aiCruiser.Rotation;
@@ -168,24 +157,16 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
             bool isPlayerCruiser)
         {
-            IFactoryProvider factoryProvider 
-                = new FactoryProvider(
-                    _prefabFactory, 
-                    _spriteProvider, 
-                    _components.Deferrer,
-                    _soleCamera, 
-                    _components.AudioSource,
-                    _components.UpdaterProvider);
             ICruiserSpecificFactories cruiserSpecificFactories
                 = new CruiserSpecificFactories(
-                    factoryProvider,
+                    _factoryProvider,
                     cruiser,
                     enemyCruiser,
                     userChosenTargetTracker,
-                    _components.UpdaterProvider);
+                    _factoryProvider.UpdaterProvider);
 
             IDroneManager droneManager = new DroneManager();
-            IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);
+            IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, _factoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             RepairManager repairManager = new RepairManager(feedbackFactory, droneConsumerProvider, cruiser);
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor);
@@ -198,7 +179,7 @@ namespace BattleCruisers.Cruisers
                     droneManager,
                     droneFocuser,
                     droneConsumerProvider,
-                    factoryProvider,
+                    _factoryProvider,
                     cruiserSpecificFactories,
                     facingDirection,
                     repairManager,

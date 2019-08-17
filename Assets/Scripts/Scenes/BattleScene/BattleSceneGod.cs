@@ -16,6 +16,7 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -82,12 +83,19 @@ namespace BattleCruisers.Scenes.BattleScene
             IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
+            IFactoryProvider factoryProvider
+                = new FactoryProvider(
+                    prefabFactory,
+                    spriteProvider,
+                    // FELIX  Juse pass components :P
+                    components.Deferrer,
+                    components.Camera,
+                    components.AudioSource,
+                    components.UpdaterProvider);
+
             ICruiserFactory cruiserFactory
                 = new CruiserFactory(
-                    prefabFactory,
-                    components,
-                    spriteProvider,
-                    components.Camera,
+                    factoryProvider,
                     helper,
                     applicationModel,
                     uiManager);
