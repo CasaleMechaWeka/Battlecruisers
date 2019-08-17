@@ -2,14 +2,16 @@
 {
     public interface ITargetFactoriesProvider
     {
-        ITargetProcessorFactory ProcessorFactory { get; }
+        // FELIX  Common
         ITargetFinderFactory FinderFactory { get; }
-        ITargetTrackerFactory TrackerFactory { get; }
         ITargetFilterFactory FilterFactory { get; }
         ITargetRankerFactory RankerFactory { get; }
-        ITargetProviderFactory ProviderFactory { get; }
         ITargetHelperFactory HelperFactory { get; }
-        ITargetDetectorFactory TargetDetectorFactory { get; }
         IRangeCalculatorProvider RangeCalculatorProvider { get; }
+
+        // FELIX  Cruiser specific
+        ITargetProviderFactory ProviderFactory { get; }
+        ITargetProcessorFactory ProcessorFactory { get; }
+        ITargetDetectorFactory TargetDetectorFactory { get; }
     }
 }

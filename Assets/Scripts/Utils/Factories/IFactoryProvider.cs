@@ -25,7 +25,8 @@ namespace BattleCruisers.Utils.Factories
         ISpawnDeciderFactory SpawnDeciderFactory { get; }
         ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         IUpdaterProvider UpdaterProvider { get; }
-        ISoundFactoryProvider Sound { get; }  // FELIX  1/5
+        ISoundFactoryProvider Sound { get; }
+        ITurretFactoryProvider Turrets { get; }
 
         // Common, but circular dependency :/
         IPoolProviders PoolProviders { get; } // IFactoryProvider :/
@@ -33,7 +34,6 @@ namespace BattleCruisers.Utils.Factories
 
         // Cruiser specific
 
-        ITurretFactoryProvider Turrets { get; }  // FELIX  1/6
         ITargetFactoriesProvider TargetFactories { get; }  // FELIX  3/9
     }
 }

@@ -132,6 +132,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             ITargetProcessorArgs args 
                 = new TargetProcessorArgs(
+                    _cruiserSpecificFactories,
                     _factoryProvider.TargetFactories,
                     enemyFaction,
                     targetProcessorTargetTypes,
@@ -160,7 +161,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     this,
                     _targetFactories.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
                     _targetFactories.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
-                    _targetFactories.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
+                    _cruiserSpecificFactories.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     _targetFactories.HelperFactory.CreateShipRangeHelper(this));
         }
 

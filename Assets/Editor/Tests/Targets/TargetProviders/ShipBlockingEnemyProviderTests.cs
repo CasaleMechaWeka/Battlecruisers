@@ -9,6 +9,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Utils.Factories;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -30,7 +31,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
             _isInFrontFilter = Substitute.For<ITargetFilter>();
             _target = Substitute.For<ITarget>();
 
-            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
             ITargetDetector enemyDetector = Substitute.For<ITargetDetector>();
             ITargetFilter enemyFilter = Substitute.For<ITargetFilter>();
             ITargetFinder enemyFinder = Substitute.For<ITargetFinder>();
@@ -39,14 +39,17 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 			ITargetProcessor targetProcessor = Substitute.For<ITargetProcessor>();
             IUnit parentUnit = Substitute.For<IUnit>();
 
+            ITargetFactoriesProvider targetFactories = Substitute.For<ITargetFactoriesProvider>();
             targetFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit).Returns(_isInFrontFilter);
             targetFactories.FilterFactory.CreateTargetFilter(default, targetTypes: null).ReturnsForAnyArgs(enemyFilter);
             targetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyFilter).Returns(enemyFinder);
             targetFactories.RankerFactory.EqualTargetRanker.Returns(enemyRanker);
-            targetFactories.TrackerFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
-            targetFactories.ProcessorFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
 
-            _targetProvider = new ShipBlockingEnemyProvider(targetFactories, enemyDetector, parentUnit);
+            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            cruiserSpecificFactories.TrackerFactory.CreateRankedTargetTracker(enemyFinder, enemyRanker).Returns(targetTracker);
+            cruiserSpecificFactories.ProcessorFactory.CreateTargetProcessor(targetTracker).Returns(targetProcessor);
+
+            _targetProvider = new ShipBlockingEnemyProvider(cruiserSpecificFactories, targetFactories, enemyDetector, parentUnit);
             _asTargetConsumer = _targetProvider;
 
             targetProcessor.Received().AddTargetConsumer(_targetProvider);

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -8,6 +9,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public class TargetProcessorArgs : ITargetProcessorArgs
     {
+        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
         public ITargetFactoriesProvider TargetFactories { get; }
         public Faction EnemyFaction { get; }
         public IList<TargetType> AttackCapabilities { get; }
@@ -16,6 +18,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         public ITarget ParentTarget { get; }
 
         public TargetProcessorArgs(
+            ICruiserSpecificFactories cruiserSpecificFactories,
             ITargetFactoriesProvider targetFactories,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
@@ -23,9 +26,10 @@ namespace BattleCruisers.Targets.TargetProcessors
             float minRangeInM = 0,
             ITarget parentTarget = null)
         {
-            Helper.AssertIsNotNull(targetFactories, attackCapabilities);
+            Helper.AssertIsNotNull(cruiserSpecificFactories, targetFactories, attackCapabilities);
             Assert.IsTrue(maxRangeInM > minRangeInM);
 
+            CruiserSpecificFactories = cruiserSpecificFactories;
             TargetFactories = targetFactories;
             EnemyFaction = enemyFaction;
             AttackCapabilities = attackCapabilities;

@@ -268,7 +268,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
 
             // Trackers
-            targetFactoriesProvider.TrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
             targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
 
             // Filters
@@ -358,8 +357,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             SetupCreateTargetFilter(targetFactories.TargetFactoriesProvider.FilterFactory);
             SetupCreateRangedTargetFinder(targetFactories.TargetFactoriesProvider.FinderFactory);
 
-            SetupCreateRankedTargetTracker(targetFactories.TargetFactoriesProvider.TrackerFactory);
-            targetFactories.TargetTrackerFactory.Returns(targetFactories.TargetFactoriesProvider.TrackerFactory);
+            SetupCreateRankedTargetTracker(targetFactories.TargetTrackerFactory);
 
             SetupCreateTargetProcessor(targetFactories.TargetFactoriesProvider.ProcessorFactory);
             targetFactories.TargetProcessorFactory.Returns(targetFactories.TargetFactoriesProvider.ProcessorFactory);

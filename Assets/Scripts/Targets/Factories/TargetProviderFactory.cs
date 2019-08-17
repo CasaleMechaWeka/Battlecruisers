@@ -2,17 +2,21 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetProviders;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Targets.Factories
 {
     public class TargetProviderFactory : ITargetProviderFactory
     {
         private readonly ITargetFactoriesProvider _targetFactoriesProvider;
+        private readonly ICruiserSpecificFactories _cruiserSpecificFactories;
 
-        public TargetProviderFactory(ITargetFactoriesProvider targetFactoriesProvider)
+        public TargetProviderFactory(ICruiserSpecificFactories cruiserSpecificFactories, ITargetFactoriesProvider targetFactoriesProvider)
         {
-            Assert.IsNotNull(targetFactoriesProvider);
+            Helper.AssertIsNotNull(cruiserSpecificFactories, targetFactoriesProvider);
+
+            _cruiserSpecificFactories = cruiserSpecificFactories;
             _targetFactoriesProvider = targetFactoriesProvider;
         }
 
@@ -23,7 +27,7 @@ namespace BattleCruisers.Targets.Factories
 
         public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {
-            return new ShipBlockingEnemyProvider(_targetFactoriesProvider, enemyDetector, parentUnit);
+            return new ShipBlockingEnemyProvider(_cruiserSpecificFactories, _targetFactoriesProvider, enemyDetector, parentUnit);
         }
 
         public IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
