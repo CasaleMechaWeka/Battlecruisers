@@ -16,10 +16,10 @@ namespace BattleCruisers.Utils.Factories
         public ITurretStatsFactory TurretStatsFactory { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         // FELIX  Create targets sub provider? => Yes!  Then can pass subprovider instead of whole ICruiserSpecificFactories :)
-        public ITargetProcessorFactory ProcessorFactory { get; }  // FELIX  Rename to TargetProcessorFactory
-        public ITargetTrackerFactory TrackerFactory { get; }  // FELIX  Rename to TargetTrackerFactory
-        public ITargetDetectorFactory TargetDetectorFactory { get; }
-        public ITargetProviderFactory TargetProviderFactory { get; }
+        public ITargetProcessorFactory ProcessorFactory { get; }
+        public ITargetTrackerFactory TrackerFactory { get; }
+        public ITargetDetectorFactory TargetDetectorFactory { get; }  // FELIX  Remove Target prefix once part of sub provider :)
+        public ITargetProviderFactory TargetProviderFactory { get; }  // FELIX  Remove Target prefix once part of sub provider :)
 
         public CruiserSpecificFactories(
             IFactoryProvider factoryProvider,
