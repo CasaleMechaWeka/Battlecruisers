@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders);
         }
 
         protected override void OnBuildableCompleted()

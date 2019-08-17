@@ -88,7 +88,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
-            _localBoosterBoostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.AircraftBoostProviders);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders);
             _localBoosterBoostableGroup.BoostChanged += _boostableGroup_BoostChanged;
             _fuzziedMaxVelocityInMPerS = new RandomGenerator().Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
 

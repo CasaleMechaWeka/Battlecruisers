@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders);
         }
     }
 }

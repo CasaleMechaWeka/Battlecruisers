@@ -146,7 +146,7 @@ namespace BattleCruisers.Buildables
         {
             get
             {
-                return _factoryProvider.GlobalBoostProviders.DummyBoostProviders;
+                return _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders;
             }
         }
 
@@ -280,7 +280,7 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup.AddBoostable(BuildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
-            AddBuildRateBoostProviders(_factoryProvider.GlobalBoostProviders, buildRateBoostProvidersList);
+            AddBuildRateBoostProviders(_cruiserSpecificFactories.GlobalBoostProviders, buildRateBoostProvidersList);
             
             foreach (ObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
             {

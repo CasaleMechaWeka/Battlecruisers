@@ -21,10 +21,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(offensivesBuildRateBoost > 0);
 
             IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(offensivesFireRateBoost);
-            FactoryProvider.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
 
             IBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(offensivesBuildRateBoost);
-            FactoryProvider.GlobalBoostProviders.BuildingBuildRate.OffensivesProviders.Add(buildRateBoostProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.OffensivesProviders.Add(buildRateBoostProvider);
         }
     }
 }

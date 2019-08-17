@@ -75,13 +75,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             {
                 new AddTurretAccuracyBoostStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _playerCruiser.FactoryProvider.GlobalBoostProviders,
+                    _playerCruiser.CruiserSpecificFactories.GlobalBoostProviders,
                     // 0.05 * 20 = 1 (100% accuracy)
                     new BoostProvider(20)),
 
                 new AddArtilleryFireRateBoostStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _playerCruiser.FactoryProvider.GlobalBoostProviders,
+                    _playerCruiser.CruiserSpecificFactories.GlobalBoostProviders,
                     new BoostProvider(3))
             };
         }

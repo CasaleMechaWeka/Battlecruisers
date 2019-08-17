@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
         protected override void OnStaticInitialised()

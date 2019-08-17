@@ -24,9 +24,9 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             Cruiser cruiser = FindObjectOfType<Cruiser>();
             Assert.IsNotNull(cruiser);
 
-            IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
+            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();
-            factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
+            cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -36,8 +36,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
                     droneManager: Substitute.For<IDroneManager>(),
                     droneFocuser: Substitute.For<IDroneFocuser>(),
                     droneConsumerProvider: Substitute.For<IDroneConsumerProvider>(),
-                    factoryProvider: factoryProvider,
-                    cruiserSpecificFactories: Substitute.For<ICruiserSpecificFactories>(),
+                    factoryProvider: Substitute.For<IFactoryProvider>(),
+                    cruiserSpecificFactories: cruiserSpecificFactories,
                     facingDirection: Direction.Right,
                     repairManager: Substitute.For<IRepairManager>(),
                     fogStrength: BattleCruisers.Cruisers.Fog.FogStrength.Weak,

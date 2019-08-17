@@ -21,10 +21,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(shieldBuildRateBoost > 0);
 
             IBoostProvider rechargeRateBoost = FactoryProvider.BoostFactory.CreateBoostProvider(shieldRechargeRateBoost);
-            FactoryProvider.GlobalBoostProviders.ShieldRechargeRateBoostProviders.Add(rechargeRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders.Add(rechargeRateBoost);
 
             IBoostProvider buildRateBoost = FactoryProvider.BoostFactory.CreateBoostProvider(shieldBuildRateBoost);
-            FactoryProvider.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders.Add(buildRateBoost);
+            CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders.Add(buildRateBoost);
         }
     }
 }

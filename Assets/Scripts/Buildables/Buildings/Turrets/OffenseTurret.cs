@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         {
             get
             {
-                return _factoryProvider.GlobalBoostProviders.OffenseFireRateBoostProviders;
+                return _cruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders;
             }
         }
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.OffensivesProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.OffensivesProviders);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_factoryProvider.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
+            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
         }
 
         protected override void OnStaticInitialised()
@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			_shieldController.gameObject.SetActive(false);
 
             _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
-            _localBoosterBoostableGroup.AddBoostProvidersList(_factoryProvider.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.ShieldRechargeRateBoostProviders);
 		}
 
 		protected override void OnBuildableCompleted()

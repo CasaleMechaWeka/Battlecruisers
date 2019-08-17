@@ -59,7 +59,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             {
                 new AddAircraftBoostStep(
                     _argsFactory.CreateTutorialStepArgs(unitUpcomingText),
-                    _aiCruiser.FactoryProvider.GlobalBoostProviders,
+                    _aiCruiser.CruiserSpecificFactories.GlobalBoostProviders,
                     boostProvider),
 
                 new DelayWaitStep(
@@ -69,7 +69,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
                 new RemoveAircraftBoostStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _aiCruiser.FactoryProvider.GlobalBoostProviders,
+                    _aiCruiser.CruiserSpecificFactories.GlobalBoostProviders,
                     boostProvider)
             };
         }
