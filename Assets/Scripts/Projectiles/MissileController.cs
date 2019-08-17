@@ -52,7 +52,7 @@ namespace BattleCruisers.Projectiles
 
         private void ConditionalDestroy()
         {
-            if (this != null)
+            if (gameObject.activeSelf)
             {
                 DestroyProjectile();
             }
