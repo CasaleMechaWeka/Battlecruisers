@@ -9,8 +9,8 @@ namespace BattleCruisers.Targets.Factories
     {
         public ITargetProcessorFactory ProcessorFactory { get; }
         public ITargetTrackerFactory TrackerFactory { get; }
-        public ITargetDetectorFactory TargetDetectorFactory { get; }  // FELIX  Remove Target prefix once part of sub provider :)
-        public ITargetProviderFactory TargetProviderFactory { get; }  // FELIX  Remove Target prefix once part of sub provider :)
+        public ITargetDetectorFactory DetectorFactory { get; }
+        public ITargetProviderFactory ProviderFactory { get; }
 
         public CruiserTargetFactoriesProvider(
             IFactoryProvider factoryProvider,
@@ -23,8 +23,8 @@ namespace BattleCruisers.Targets.Factories
 
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
-            TargetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, factoryProvider.UpdaterProvider);
-            TargetProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, factoryProvider.TargetFactories);
+            DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, factoryProvider.UpdaterProvider);
+            ProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, factoryProvider.TargetFactories);
         }
     }
 }

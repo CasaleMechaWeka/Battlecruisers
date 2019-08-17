@@ -131,7 +131,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
             // Detect followable enemies
             _followableEnemyDetectorProvider 
-                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateEnemyAircraftTargetDetector(
+                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
                     Transform, 
                     enemyFollowDetectionRangeInM, 
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);
@@ -151,7 +151,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 
             _shootableEnemeyDetectorProvider
-                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateEnemyAircraftTargetDetector(
+                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyAircraftTargetDetector(
                     Transform,
                     _barrelController.TurretStats.RangeInM,
                     _targetFactories.RangeCalculatorProvider.BasicCalculator);

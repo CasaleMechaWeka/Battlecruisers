@@ -15,7 +15,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             Assert.IsNull(_manualDetectorProvider, "Should only be called once.");
 
             _manualDetectorProvider 
-                = args.CruiserSpecificFactories.Targets.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                = args.CruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     args.ParentTarget.Transform,
                     args.MaxRangeInM,
                     args.TargetFactories.RangeCalculatorProvider.BasicCalculator);

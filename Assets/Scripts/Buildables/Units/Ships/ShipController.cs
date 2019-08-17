@@ -146,12 +146,12 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             IRangeCalculator rangeCalculator = _factoryProvider.TargetFactories.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
-                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateEnemyShipTargetDetector(
+                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,
                     EnemyDetectionRangeInM,
                     rangeCalculator);
             _friendDetectorProvider
-                = _cruiserSpecificFactories.Targets.TargetDetectorFactory.CreateFriendlyShipTargetDetector(
+                = _cruiserSpecificFactories.Targets.DetectorFactory.CreateFriendlyShipTargetDetector(
                     Transform,
                     FriendDetectionRangeInM,
                     rangeCalculator);
@@ -159,8 +159,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             return
                 _movementControllerFactory.CreateShipMovementDecider(
                     this,
-                    _cruiserSpecificFactories.Targets.TargetProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
-                    _cruiserSpecificFactories.Targets.TargetProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
+                    _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
+                    _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     _targetFactories.HelperFactory.CreateShipRangeHelper(this));
         }

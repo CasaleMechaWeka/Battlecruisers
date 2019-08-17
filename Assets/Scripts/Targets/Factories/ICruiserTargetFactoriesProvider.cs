@@ -3,8 +3,8 @@
     public interface ICruiserTargetFactoriesProvider
     {
         ITargetProcessorFactory ProcessorFactory { get; }
-        ITargetDetectorFactory TargetDetectorFactory { get; }
-        ITargetProviderFactory TargetProviderFactory { get; }
+        ITargetDetectorFactory DetectorFactory { get; }
+        ITargetProviderFactory ProviderFactory { get; }
         ITargetTrackerFactory TrackerFactory { get; }
     }
 }
