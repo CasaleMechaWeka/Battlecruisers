@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
@@ -34,7 +32,6 @@ namespace BattleCruisers.Utils.Factories
         IDamageApplierFactory DamageApplierFactory { get; } // FilterFactory => TargetsFactories => cruisers :/
 
         // Cruiser specific
-        IGlobalBoostProviders GlobalBoostProviders { get; }
 
         ITurretFactoryProvider Turrets { get; }  // FELIX  1/6
         ITargetFactoriesProvider TargetFactories { get; }  // FELIX  3/9

@@ -92,7 +92,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     boostFactory,
-                    globalBoostProviders,
                     damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
                     accuracyAdjusterFactory ?? helper.CreateDummyAccuracyAdjuster(),
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
@@ -130,7 +129,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
             IBoostFactory boostFactory,
-            IGlobalBoostProviders globalBoostProviders,
             IDamageApplierFactory damageApplierFactory,
             IAccuracyAdjusterFactory accuracyAdjusterFactory,
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
@@ -153,7 +151,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
-            factoryProvider.GlobalBoostProviders.Returns(globalBoostProviders);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.SpawnDeciderFactory.Returns(spawnDeciderFactory);

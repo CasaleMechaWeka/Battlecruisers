@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
@@ -16,10 +14,8 @@ namespace BattleCruisers.Utils.Factories
         public IAttackablePositionFinderFactory AttackablePositionFinderFactory { get; }
         public ITargetPositionValidatorFactory TargetPositionValidatorFactory { get; }
 
-        public TurretFactoryProvider(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
+        public TurretFactoryProvider()
         {
-            Helper.AssertIsNotNull(boostFactory, globalBoostProviders);
-
             AccuracyAdjusterFactory = new AccuracyAdjusterFactory();
             AngleCalculatorFactory = new AngleCalculatorFactory();
             AngleLimiterFactory = new AngleLimiterFactory();
