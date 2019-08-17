@@ -17,6 +17,7 @@ namespace BattleCruisers.Utils.Factories
         // FELIX  Sort alphabetically again :)
         // Common
         IBoostFactory BoostFactory { get; }
+        IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         ISpriteChooserFactory SpriteChooserFactory { get; }
@@ -31,6 +32,5 @@ namespace BattleCruisers.Utils.Factories
 
         // Common, but circular dependency :/
         IPoolProviders PoolProviders { get; } // IFactoryProvider :/
-        IDamageApplierFactory DamageApplierFactory { get; } // FilterFactory => TargetsFactories => cruisers :/
     }
 }
