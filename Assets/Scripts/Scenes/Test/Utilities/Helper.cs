@@ -120,6 +120,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InitialiseBuilding(
             IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
+
             ISlot parentSlot = null)
         {
             building.StaticInitialise();
@@ -128,6 +129,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.EnemyCruiser,
                 initialisationArgs.UiManager,
                 initialisationArgs.FactoryProvider,
+                initialisationArgs.CruiserSpecificFactories,
                 parentSlot ?? CreateParentSlot(),
                 Substitute.For<IDoubleClickHandler<IBuilding>>());
         }
@@ -186,7 +188,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 initialisationArgs.ParentCruiser,
                 initialisationArgs.EnemyCruiser,
                 initialisationArgs.UiManager,
-                initialisationArgs.FactoryProvider);
+                initialisationArgs.FactoryProvider,
+                initialisationArgs.CruiserSpecificFactories);
         }
 
 		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)

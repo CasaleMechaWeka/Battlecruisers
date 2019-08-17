@@ -39,6 +39,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
         public IFactoryProvider FactoryProvider { get; }
+        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction ParentCruiserFacingDirection { get; }
 
         public BuildableInitialisationArgs(
@@ -66,7 +67,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
-            IUpdaterProvider updaterProvider = null)
+            IUpdaterProvider updaterProvider = null,
+            ITurretStatsFactory turretStatsFactory = null,
+            ITargetProcessorFactory targetProcessorFactory = null,
+            ITargetTrackerFactory targetTrackerFactory = null,
+            ITargetDetectorFactory targetDetectorFactory = null)
         {
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
@@ -109,6 +114,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new SpawnDeciderFactory(),
                     updaterProvider,
                     new ExplosionPoolProvider(prefabFactory));
+
+            CruiserSpecificFactories
+                = CreateCruiserSpecificFactories(
+                    aircraftProvider ?? helper.CreateAircraftProvider(),
+                    globalBoostProviders,
+                    turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
+                    targetProcessorFactory ?? new TargetProcessorFactory(enemyCruiser, userChosenTargetManager),
+                    targetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
+                    targetDetectorFactory ?? new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -177,6 +191,26 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.PoolProviders.Returns(poolProviders);
 
             return factoryProvider;
+        }
+
+        private ICruiserSpecificFactories CreateCruiserSpecificFactories(
+            IAircraftProvider aircraftProvider,
+            IGlobalBoostProviders globalBoostProviders,
+            ITurretStatsFactory turretStatsFactory,
+            ITargetProcessorFactory targetProcessorFactory,
+            ITargetTrackerFactory targetTrackerFactory,
+            ITargetDetectorFactory targetDetectorFactory)
+        {
+            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+
+            cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);
+            cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
+            cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
+            cruiserSpecificFactories.ProcessorFactory.Returns(targetProcessorFactory);
+            cruiserSpecificFactories.TrackerFactory.Returns(targetTrackerFactory);
+            cruiserSpecificFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
+
+            return cruiserSpecificFactories;
         }
     }
 }

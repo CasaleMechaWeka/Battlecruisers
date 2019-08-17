@@ -180,6 +180,13 @@ namespace BattleCruisers.Cruisers
                     isPlayerCruiser, 
                     _components.AudioSource,
                     _components.UpdaterProvider);
+            ICruiserSpecificFactories cruiserSpecificFactories
+                = new CruiserSpecificFactories(
+                    factoryProvider,
+                    cruiser,
+                    enemyCruiser,
+                    userChosenTargetTracker,
+                    _components.UpdaterProvider);
 
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, factoryProvider.Sound.PrioritisedSoundPlayer);
@@ -196,6 +203,7 @@ namespace BattleCruisers.Cruisers
                     droneFocuser,
                     droneConsumerProvider,
                     factoryProvider,
+                    cruiserSpecificFactories,
                     facingDirection,
                     repairManager,
                     fogStrength,

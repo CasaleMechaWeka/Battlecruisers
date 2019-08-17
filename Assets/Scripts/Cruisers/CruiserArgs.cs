@@ -24,6 +24,7 @@ namespace BattleCruisers.Cruisers
         public IDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
         public IFactoryProvider FactoryProvider { get; }
+        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
         public FogStrength FogStrength { get; }
@@ -41,7 +42,8 @@ namespace BattleCruisers.Cruisers
             IDroneManager droneManager,
             IDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            IFactoryProvider factoryProvider, 
+            IFactoryProvider factoryProvider,
+            ICruiserSpecificFactories cruiserSpecificFactories,
             Direction facingDirection, 
             IRepairManager repairManager, 
             FogStrength fogStrength,
@@ -59,6 +61,7 @@ namespace BattleCruisers.Cruisers
                 droneFocuser,
                 droneConsumerProvider, 
                 factoryProvider, 
+                cruiserSpecificFactories,
                 repairManager, 
                 helper, 
                 highlightableFilter, 
@@ -74,6 +77,7 @@ namespace BattleCruisers.Cruisers
             DroneFocuser = droneFocuser;
             DroneConsumerProvider = droneConsumerProvider;
             FactoryProvider = factoryProvider;
+            CruiserSpecificFactories = cruiserSpecificFactories;
             FacingDirection = facingDirection;
             RepairManager = repairManager;
             FogStrength = fogStrength;

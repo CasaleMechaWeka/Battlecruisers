@@ -60,10 +60,11 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
             IFactoryProvider factoryProvider,
+            ICruiserSpecificFactories cruiserSpecificFactories,
             ISlot parentSlot,
             IDoubleClickHandler<IBuilding> doubleClickHandler)
         {
-            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
+            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider, cruiserSpecificFactories);
 
             Helper.AssertIsNotNull(parentCruiser, doubleClickHandler);
 

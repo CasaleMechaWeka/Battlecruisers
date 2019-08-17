@@ -58,9 +58,14 @@ namespace BattleCruisers.Buildables.Units
         protected virtual float OnDeathGravityScale => 1;
 		#endregion Properties
 
-		void IUnit.Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
+		void IUnit.Initialise(
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUIManager uiManager, 
+            IFactoryProvider factoryProvider, 
+            ICruiserSpecificFactories cruiserSpecificFactories)
 		{
-            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider);
+            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider, cruiserSpecificFactories);
 			
             Assert.IsTrue(maxVelocityInMPerS > 0);
 			FacingDirection = ParentCruiser.Direction;

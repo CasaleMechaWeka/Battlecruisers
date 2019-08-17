@@ -47,6 +47,7 @@ namespace BattleCruisers.Buildables
         protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
         protected IFactoryProvider _factoryProvider;
+        protected ICruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
         // Boost resulting from adjacent local boosters
@@ -236,9 +237,15 @@ namespace BattleCruisers.Buildables
             return new List<SpriteRenderer>() { mainRenderer };
         }
 
-        protected void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider)
+        protected void Initialise(
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUIManager uiManager, 
+            IFactoryProvider factoryProvider, 
+            ICruiserSpecificFactories cruiserSpecificFactories)
         {
             Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
+            Helper.AssertIsNotNull(parentCruiser, enemyCruiser, uiManager, factoryProvider, cruiserSpecificFactories);
 
             ParentCruiser = parentCruiser;
             _enemyCruiser = enemyCruiser;
@@ -248,6 +255,7 @@ namespace BattleCruisers.Buildables
             _aircraftProvider = factoryProvider.AircraftProvider;
 
             _factoryProvider = factoryProvider;
+            _cruiserSpecificFactories = cruiserSpecificFactories;
             _targetFactories = _factoryProvider.TargetFactories;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
 

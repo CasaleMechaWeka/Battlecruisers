@@ -34,7 +34,8 @@ namespace BattleCruisers.Buildables.Buildings
             ICruiser parentCruiser, 
             ICruiser enemyCruiser, 
             IUIManager uiManager, 
-            IFactoryProvider factoryProvider, 
+            IFactoryProvider factoryProvider,
+            ICruiserSpecificFactories cruiserSpecificFactories,
             ISlot parentSlot,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler);
 	}

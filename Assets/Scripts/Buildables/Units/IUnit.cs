@@ -26,7 +26,12 @@ namespace BattleCruisers.Buildables.Units
         float MaxVelocityInMPerS { get; }
         bool IsUltra { get; }
 
-		void Initialise(ICruiser parentCruiser, ICruiser enemyCruiser, IUIManager uiManager, IFactoryProvider factoryProvider);
+		void Initialise(
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUIManager uiManager, 
+            IFactoryProvider factoryProvider, 
+            ICruiserSpecificFactories cruiserSpecificFactories);
         void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
 	}
 }

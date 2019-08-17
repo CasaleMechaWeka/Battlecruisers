@@ -37,6 +37,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
                     droneFocuser: Substitute.For<IDroneFocuser>(),
                     droneConsumerProvider: Substitute.For<IDroneConsumerProvider>(),
                     factoryProvider: factoryProvider,
+                    cruiserSpecificFactories: Substitute.For<ICruiserSpecificFactories>(),
                     facingDirection: Direction.Right,
                     repairManager: Substitute.For<IRepairManager>(),
                     fogStrength: BattleCruisers.Cruisers.Fog.FogStrength.Weak,

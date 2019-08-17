@@ -34,6 +34,7 @@ namespace BattleCruisers.Cruisers
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
+        private ICruiserSpecificFactories _cruiserSpecificFactories;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager;
@@ -132,6 +133,7 @@ namespace BattleCruisers.Cruisers
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
             FactoryProvider = args.FactoryProvider;
+            _cruiserSpecificFactories = args.CruiserSpecificFactories;
             Direction = args.FacingDirection;
             _helper = args.Helper;
             BuildProgressCalculator = args.BuildProgressCalculator;
@@ -180,7 +182,7 @@ namespace BattleCruisers.Cruisers
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
 
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
-            building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, slot, _buildingDoubleClickHandler);
+            building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, _cruiserSpecificFactories, slot, _buildingDoubleClickHandler);
 			slot.Building = building;
 
 			building.CompletedBuildable += Building_CompletedBuildable;

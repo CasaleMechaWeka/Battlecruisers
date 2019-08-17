@@ -23,6 +23,7 @@ namespace BattleCruisers.Cruisers
         IDroneFocuser DroneFocuser { get; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
         IFactoryProvider FactoryProvider { get; }
+        ICruiserSpecificFactories CruiserSpecificFactories { get; }
         Direction FacingDirection { get; }
         IRepairManager RepairManager { get; }
         FogStrength FogStrength { get; }
