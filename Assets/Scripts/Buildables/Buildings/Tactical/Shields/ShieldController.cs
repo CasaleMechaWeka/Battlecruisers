@@ -27,9 +27,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             Helper.AssertIsNotNull(visuals, circleCollider, healthBar);
 

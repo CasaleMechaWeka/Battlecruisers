@@ -87,11 +87,11 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        protected override void OnStaticInitialised()
-		{
-            base.OnStaticInitialised();
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
 
-			_renderer = GetComponent<SpriteRenderer>();
+            _renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);

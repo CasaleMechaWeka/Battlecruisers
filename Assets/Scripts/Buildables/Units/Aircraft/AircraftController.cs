@@ -70,9 +70,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);

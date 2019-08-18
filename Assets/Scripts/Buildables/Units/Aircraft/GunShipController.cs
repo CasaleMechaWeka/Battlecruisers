@@ -49,9 +49,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Gunship;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Gunship;
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
 		{
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);

@@ -181,9 +181,9 @@ namespace BattleCruisers.Buildables
         // FELIX  Invoke!!!
         public event EventHandler Deactivated;
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);

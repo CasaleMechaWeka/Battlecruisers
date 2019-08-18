@@ -78,9 +78,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         }
         #endregion Properties
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
             _isUnitPaused = new ObservableValue<bool>(false);
         }
 

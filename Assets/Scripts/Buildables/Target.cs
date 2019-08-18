@@ -89,7 +89,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        public void StaticInitialise()
+        public virtual void StaticInitialise()
 		{
             _healthTracker = new HealthTracker(maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
@@ -105,11 +105,7 @@ namespace BattleCruisers.Buildables
             _audioSource = new AudioSourceBC(audioSource);
 
             Transform = new TransformBC(transform);
-
-            OnStaticInitialised();
         }
-
-        protected virtual void OnStaticInitialised() { }
 
         protected virtual ITextMesh GetRepairDroneNumText()
         {

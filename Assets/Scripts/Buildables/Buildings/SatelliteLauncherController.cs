@@ -13,10 +13,9 @@ namespace BattleCruisers.Buildables.Buildings
 
         protected abstract Vector3 SpawnPositionAdjustment { get; }
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
 		{
-            base.OnStaticInitialised();
-
+            base.StaticInitialise();
 			Assert.IsNotNull(satellitePrefab);
 		}
 

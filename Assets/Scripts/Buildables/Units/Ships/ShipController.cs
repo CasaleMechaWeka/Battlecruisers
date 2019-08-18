@@ -55,9 +55,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _turrets = GetTurrets();
 

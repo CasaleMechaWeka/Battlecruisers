@@ -42,9 +42,9 @@ namespace BattleCruisers.Buildables.Buildings
             }
         }
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _collider = GetComponent<BoxCollider2D>();
             Assert.IsNotNull(_collider);

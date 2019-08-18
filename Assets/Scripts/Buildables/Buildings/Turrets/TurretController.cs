@@ -18,9 +18,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound => null;
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
 		{
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);

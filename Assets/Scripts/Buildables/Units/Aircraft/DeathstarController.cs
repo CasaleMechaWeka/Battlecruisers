@@ -27,9 +27,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public override TargetType TargetType => TargetType.Satellite;
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
 		{
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             Helper.AssertIsNotNull(leftWing, rightWing);
 

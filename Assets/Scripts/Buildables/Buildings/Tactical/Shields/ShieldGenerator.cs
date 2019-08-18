@@ -24,9 +24,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
         }
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
         {
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);

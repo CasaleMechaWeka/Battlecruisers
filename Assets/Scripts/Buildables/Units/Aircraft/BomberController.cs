@@ -62,9 +62,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         #endregion Properties
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
 		{
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
 			_haveDroppedBombOnRun = false;
 			_isAtCruisingHeight = false;

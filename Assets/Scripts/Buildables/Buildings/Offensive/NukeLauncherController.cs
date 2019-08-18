@@ -40,9 +40,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        protected override void OnStaticInitialised()
+        public override void StaticInitialise()
 		{
-            base.OnStaticInitialised();
+            base.StaticInitialise();
 
             Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
