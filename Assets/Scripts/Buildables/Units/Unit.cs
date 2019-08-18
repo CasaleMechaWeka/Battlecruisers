@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.ActivationArgs;
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
