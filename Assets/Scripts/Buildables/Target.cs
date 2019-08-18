@@ -126,8 +126,10 @@ namespace BattleCruisers.Buildables
 
         public void Destroy()
         {
-            Assert.IsFalse(IsDestroyed, "Same target should not be destroyed more than once scrub :P");
-            _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
+            if (!IsDestroyed)
+            {
+                _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
+            }
 		}
 
 		protected virtual void InternalDestroy()
