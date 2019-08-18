@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Buildables.Buildings.Turrets;
@@ -9,17 +6,21 @@ using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
-    public class KamikazeTestGod : MonoBehaviour
+    public class KamikazeTestGod : TestGodBase
     {
         public int kamikaziDelayInS = 1;
 
-        async Task Start()
+        protected override async void Start()
         {
-            Helper helper = new Helper();
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             // Setup target
             IFactory _target = FindObjectOfType<Factory>();
