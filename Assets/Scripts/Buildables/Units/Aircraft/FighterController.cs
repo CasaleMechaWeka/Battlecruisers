@@ -70,7 +70,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(_barrelController.DamageCapability);
 		}
 
-		protected override void OnInitialised()
+        protected override void OnInitialised_FOR_REAL()
+        {
+            base.OnInitialised_FOR_REAL();
+            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
+        }
+
+        protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
@@ -80,8 +86,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     maxVelocityProvider: this,
                     targetProvider: this, 
                     safeZone: _aircraftProvider.FighterSafeZone);
-
-            _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
 		}
 
 		protected override void OnBuildableCompleted()

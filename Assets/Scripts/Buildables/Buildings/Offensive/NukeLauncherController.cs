@@ -59,9 +59,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
 		}
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
+        protected override void OnInitialised_FOR_REAL()
+        {
+            base.OnInitialised_FOR_REAL();
 
 			leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
 			rightSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);

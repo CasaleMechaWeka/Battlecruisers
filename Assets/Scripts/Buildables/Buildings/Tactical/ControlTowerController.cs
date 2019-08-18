@@ -12,9 +12,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
         public float boostMultiplier;
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
+        protected override void OnInitialised_FOR_REAL()
+        {
+            base.OnInitialised_FOR_REAL();
             _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
 		}
 

@@ -61,9 +61,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
 		}
 
-		protected override void OnInitialised()
-		{
-			base.OnInitialised();
+        protected override void OnInitialised_FOR_REAL()
+        {
+            base.OnInitialised_FOR_REAL();
 
             _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 

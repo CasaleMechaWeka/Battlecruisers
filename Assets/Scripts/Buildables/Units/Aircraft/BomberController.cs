@@ -84,7 +84,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
 		}
 
-		protected override void OnInitialised()
+        protected override void OnInitialised_FOR_REAL()
+        {
+            base.OnInitialised_FOR_REAL();
+            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
+        }
+
+        protected override void OnInitialised()
 		{
 			base.OnInitialised();
 
@@ -94,8 +100,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider);
 
             _bombSpawner.Initialise(spawnerArgs, targetFilter);
-
-            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
 		}
 		
 		protected override void OnBuildableCompleted()

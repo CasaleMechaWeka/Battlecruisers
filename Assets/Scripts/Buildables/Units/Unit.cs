@@ -65,6 +65,8 @@ namespace BattleCruisers.Buildables.Units
 			
             Assert.IsTrue(maxVelocityInMPerS > 0);
             _engineAudioClip = _factoryProvider.Sound.SoundFetcher.GetSound(EngineSoundKey);
+
+            OnInitialised_FOR_REAL();
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
