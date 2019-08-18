@@ -151,7 +151,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			if (_haveDroppedBombOnRun)
 			{
-				if (IsReadyToTurnAround(transform.position, Target.GameObject.transform.position, EffectiveMaxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
+				if (IsReadyToTurnAround(transform.position, Target.Position, EffectiveMaxVelocityInMPerS, _bomberMovementControler.TargetVelocity.x))
 				{
 					Logging.Log(Tags.AIRCRAFT, "About to turn around");
 
@@ -160,7 +160,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				}
 			}
 			else if (IsDirectionCorrect(rigidBody.velocity.x, _bomberMovementControler.TargetVelocity.x)
-				&& IsOnTarget(transform.position, Target.GameObject.transform.position, rigidBody.velocity.x))
+				&& IsOnTarget(transform.position, Target.Position, rigidBody.velocity.x))
 			{
 				Logging.Log(Tags.AIRCRAFT, "About to drop bomb");
 
