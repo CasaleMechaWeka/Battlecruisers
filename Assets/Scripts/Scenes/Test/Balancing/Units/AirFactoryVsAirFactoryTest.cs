@@ -30,7 +30,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                     faction, 
                     parentCruiserDirection: facingDirection, 
                     aircraftProvider: aircraftProvider,
-                    targetFactories: targetFactories);
+                    targetFactories: targetFactories,
+                    updaterProvider: updaterProvider);
         }
 
         private IAircraftProvider CreateAircraftProvider(Direction facingDirection)

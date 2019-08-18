@@ -137,7 +137,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             ICruiser enemyCruiser, 
             IUpdaterProvider updaterProvider)
         {
-            return new TestUtils.BuildableInitialisationArgs(_helper, faction, parentCruiserDirection: facingDirection);
+            return new TestUtils.BuildableInitialisationArgs(_helper, faction, parentCruiserDirection: facingDirection, updaterProvider: updaterProvider);
         }
 
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, float waitTimeInS, IKillCountController killCounter)

@@ -121,6 +121,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         private void _updater_Updated(object sender, EventArgs e)
         {
+            Debug.Log("FELIX temp =====================");
+
             _fireIntervalManager.ProcessTimeInterval(_updater.DeltaTime);
             BarrelAdjustmentResult adjustmentResult = _adjustmentHelper.AdjustTurretBarrel();
             bool wasFireSuccessful = _firingHelper.TryFire(adjustmentResult);
