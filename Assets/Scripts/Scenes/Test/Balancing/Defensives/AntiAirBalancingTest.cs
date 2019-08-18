@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Defensives
@@ -17,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
-            ITargetFactories targetFactories = _helper.CreateTargetFactories(defenceBuildings, _deferrer);
+            ITargetFactories targetFactories = _helper.CreateTargetFactories(new ObservableCollection<ITarget>(defenceBuildings));
 
             _helper
                 .InitialiseBuilding(

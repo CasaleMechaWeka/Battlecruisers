@@ -5,6 +5,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.Factories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
@@ -37,8 +38,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         private ITargetFactories CreateTargetFactories(Direction facingDirection)
         {
+            ObservableCollection<ITarget> targets = new ObservableCollection<ITarget>();
+
+            // Defer adding target, so target has a chance to be initialised
             ITarget bomberTarget = IsLeftHandFactory(facingDirection) ? _rightFactory : _leftFactory;
-            return _helper.CreateTargetFactories(new List<ITarget> { bomberTarget }, _deferrer);
+            _deferrer.Defer(() => targets.Add(bomberTarget), delayInS: 0.1f);
+
+            return _helper.CreateTargetFactories(targets);
         }
 
         private bool IsLeftHandFactory(Direction facingDirection)

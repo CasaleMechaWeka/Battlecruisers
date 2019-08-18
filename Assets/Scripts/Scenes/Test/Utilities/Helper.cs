@@ -299,30 +299,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         /// <summary>
-        /// Target processors assign all the provided targets.  The targets are lost
-        /// as they are destroyed.
-        /// </summary>
-        public ITargetFactories CreateTargetFactories(IList<ITarget> targets, IDeferrer deferrer)
-        {
-            ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-
-            ITargetFactories targetFactories = CreateTargetFactories(targetFinder);
-
-            // Emit target found events AFTER targets factory (target processor) is created
-            foreach (ITarget target in targets)
-            {
-                target.Destroyed += (sender, e) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(target));
-
-                // Defer giving targets a chance to be initialised :)
-                deferrer.Defer(
-                    () => targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target)),
-                    delayInS: 0.1f);
-            }
-
-            return targetFactories;
-        }
-
-        /// <summary>
         /// Use ObservableCollection so that targets do not need to be known right now.
         /// Targets can be added later, once they are known, and the target finder
         /// will emit appropriate target found events.
