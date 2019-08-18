@@ -1,8 +1,11 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.Factories;
+using BattleCruisers.Utils.BattleScene.Update;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,10 +15,15 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
     public class AirFactoryVsAirFactoryTest : FactoryVsFactoryTest
     {
-        protected override BuildableInitialisationArgs CreateFactoryArgs(Faction faction, Direction facingDirection)
+        protected override BuildableInitialisationArgs CreateFactoryArgs(
+            Faction faction, 
+            Direction facingDirection,
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUpdaterProvider updaterProvider)
         {
             IAircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
-            ITargetFactories targetFactories = CreateTargetFactories(facingDirection);
+            ITargetFactories targetFactories = CreateTargetFactories(facingDirection, parentCruiser, enemyCruiser, updaterProvider);
 
             return 
                 new BuildableInitialisationArgs(
@@ -36,7 +44,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                 new AircraftProvider(parentCruiserPosition: _rightFactory.Position, enemyCruiserPosition: _leftFactory.Position, random: random);
         }
 
-        private ITargetFactories CreateTargetFactories(Direction facingDirection)
+        private ITargetFactories CreateTargetFactories(Direction facingDirection, ICruiser parentCruiser, ICruiser enemyCruiser, IUpdaterProvider updaterProvider)
         {
             ObservableCollection<ITarget> targets = new ObservableCollection<ITarget>();
 
@@ -44,7 +52,12 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             ITarget bomberTarget = IsLeftHandFactory(facingDirection) ? _rightFactory : _leftFactory;
             _deferrer.Defer(() => targets.Add(bomberTarget), delayInS: 0.1f);
 
-            return _helper.CreateTargetFactories(targets);
+            ITargetFactories targetFactories = _helper.CreateTargetFactories(targets);
+
+            ITargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
+            targetFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
+
+            return targetFactories;
         }
 
         private bool IsLeftHandFactory(Direction facingDirection)

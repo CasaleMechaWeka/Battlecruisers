@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         protected override void InitialiseScenario(FactoryVsFactoryTest scenario)
         {
-            scenario.Initialise(_prefabFactory);
+            scenario.Initialise(_prefabFactory, _updaterProvider);
         }
     }
 }

@@ -5,11 +5,12 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Utils.BattleScene.Update;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
@@ -29,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory)
+        public void Initialise(IPrefabFactory prefabFactory, IUpdaterProvider updaterProvider)
         {
             Assert.IsNotNull(prefabFactory);
             Assert.IsTrue(numOfDrones > 0);
@@ -62,8 +63,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             float leftFactoryWaitTime = FindFactoryWaitTimeInS(leftUnit.Buildable, rightUnit.Buildable);
             float rightFactoryWaitTime = FindFactoryWaitTimeInS(rightUnit.Buildable, leftUnit.Buildable);
 
-            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime, _rightKillCount);
-            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime, _leftKillCount);
+            ICruiser blueCruiser = _helper.CreateCruiser(Direction.Left, Faction.Blues);
+            ICruiser redCruiser = _helper.CreateCruiser(Direction.Right, Faction.Reds);
+
+            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime, _rightKillCount, redCruiser, blueCruiser, updaterProvider);
+            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime, _leftKillCount, blueCruiser, redCruiser, updaterProvider);
 
 
             // Hide camera
@@ -111,20 +115,29 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Direction facingDirection,
             IBuildableWrapper<IUnit> unitWrapper,
             float waitTimeInS, 
-            IKillCountController killCounter)
+            IKillCountController killCounter,
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser,
+            IUpdaterProvider updaterProvider)
         {
-            BuildableInitialisationArgs args = CreateFactoryArgs(faction, facingDirection);
+            TestUtils.BuildableInitialisationArgs args = CreateFactoryArgs(faction, facingDirection, parentCruiser, enemyCruiser, updaterProvider);
             _helper.InitialiseBuilding(factory, args);
 
             factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS, killCounter);
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
             factory.StartConstruction();
+            TestUtils.Helper.SetupFactoryForUnitMonitor(factory, parentCruiser);
         }
 
-        protected virtual BuildableInitialisationArgs CreateFactoryArgs(Faction faction, Direction facingDirection)
+        protected virtual TestUtils.BuildableInitialisationArgs CreateFactoryArgs(
+            Faction faction, 
+            Direction facingDirection,
+            ICruiser parentCruiser, 
+            ICruiser enemyCruiser, 
+            IUpdaterProvider updaterProvider)
         {
-            return new BuildableInitialisationArgs(_helper, faction, parentCruiserDirection: facingDirection);
+            return new TestUtils.BuildableInitialisationArgs(_helper, faction, parentCruiserDirection: facingDirection);
         }
 
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, float waitTimeInS, IKillCountController killCounter)
