@@ -50,5 +50,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Assert.IsNotNull(turretBaseRenderer);
             return turretBaseRenderer;
         }
+
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+            _barrelWrapper.DisposeManagedState();
+        }
     }
 }
