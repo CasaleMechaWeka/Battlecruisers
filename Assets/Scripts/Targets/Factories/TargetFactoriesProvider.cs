@@ -1,9 +1,4 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Update;
-
-namespace BattleCruisers.Targets.Factories
+﻿namespace BattleCruisers.Targets.Factories
 {
     public class TargetFactoriesProvider : ITargetFactoriesProvider
     {
