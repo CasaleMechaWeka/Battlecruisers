@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.BattleScene.Update;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
@@ -122,7 +123,16 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             ICruiser enemyCruiser,
             IUpdaterProvider updaterProvider)
         {
-            TestUtils.BuildableInitialisationArgs args = CreateFactoryArgs(faction, facingDirection, parentCruiser, enemyCruiser, updaterProvider);
+            IAircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
+            TestUtils.BuildableInitialisationArgs args
+                = new TestUtils.BuildableInitialisationArgs(
+                    _helper,
+                    faction,
+                    parentCruiserDirection: facingDirection,
+                    updaterProvider: updaterProvider,
+                    parentCruiser: parentCruiser,
+                    enemyCruiser: enemyCruiser,
+                    aircraftProvider: aircraftProvider);
             _helper.InitialiseBuilding(factory, args);
 
             factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS, killCounter);
@@ -132,14 +142,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             TestUtils.Helper.SetupFactoryForUnitMonitor(factory, parentCruiser);
         }
 
-        protected virtual TestUtils.BuildableInitialisationArgs CreateFactoryArgs(
-            Faction faction, 
-            Direction facingDirection,
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IUpdaterProvider updaterProvider)
+        protected virtual IAircraftProvider CreateAircraftProvider(Direction facingDirection)
         {
-            return new TestUtils.BuildableInitialisationArgs(_helper, faction, parentCruiserDirection: facingDirection, updaterProvider: updaterProvider);
+            return null;
         }
 
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, float waitTimeInS, IKillCountController killCounter)
