@@ -335,6 +335,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
+            IExactMatchTargetFilter multipleExactMatchesTargetFilter = new MultipleExactMatchesTargetFilter();
 
             // Processors
             targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
@@ -343,6 +344,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactories.TargetFactoriesProvider.FilterFactory.CreateDummyTargetFilter(default).ReturnsForAnyArgs(targetFilter);
             targetFactories.TargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetFactories.TargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
+            targetFactories.TargetFactoriesProvider.FilterFactory.CreateMulitpleExactMatchTargetFilter().ReturnsForAnyArgs(multipleExactMatchesTargetFilter);
 
             SetupCreateTargetFilter(targetFactories.TargetFactoriesProvider.FilterFactory);
             SetupCreateRangedTargetFinder(targetFactories.TargetFactoriesProvider.FinderFactory);
