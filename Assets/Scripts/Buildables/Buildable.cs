@@ -242,7 +242,7 @@ namespace BattleCruisers.Buildables
         }
 
         // FELIX  Make sure this is only called once :)  By prefab factory!!!
-        protected void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public virtual void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
             Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
             Helper.AssertIsNotNull(uiManager, factoryProvider);
@@ -259,7 +259,7 @@ namespace BattleCruisers.Buildables
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
 
-        public void Activate(TActivationArgs activationArgs)
+        public virtual void Activate(TActivationArgs activationArgs)
         {
             Assert.IsNotNull(activationArgs);
 

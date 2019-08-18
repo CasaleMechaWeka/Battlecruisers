@@ -1,12 +1,12 @@
-﻿using BattleCruisers.Buildables.ActivationArgs;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.ObjectModel;
 
@@ -50,7 +50,8 @@ namespace BattleCruisers.Buildables
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         void StaticInitialise();
-		void StartConstruction();
+        void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider);
+        void StartConstruction();
         void InitiateDelete();
         void CancelDelete();
 	}

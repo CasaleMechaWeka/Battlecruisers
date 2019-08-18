@@ -1,8 +1,6 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.ActivationArgs;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Common.Click;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -24,19 +22,10 @@ namespace BattleCruisers.Buildables.Buildings
         Shield = 3
     }
 
-    public interface IBuilding : IBuildable
+    public interface IBuilding : IBuildable, IPoolable<BuildingActivationArgs>
     {
         BuildingCategory Category { get; }
         SlotSpecification SlotSpecification { get; }
         Vector3 PuzzleRootPoint { get; }
-
-        void Initialise(
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IUIManager uiManager, 
-            IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
-            ISlot parentSlot,
-            IDoubleClickHandler<IBuilding> buildingDoubleClickHandler);
 	}
 }

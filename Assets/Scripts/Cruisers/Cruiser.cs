@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.ActivationArgs;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
@@ -184,7 +185,14 @@ namespace BattleCruisers.Cruisers
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
 
             // FELIX  Should happen in factory, so don't get double initialisation from pooling
-            building.Initialise(this, _enemyCruiser, _uiManager, FactoryProvider, CruiserSpecificFactories, slot, _buildingDoubleClickHandler);
+            building.Initialise(_uiManager, FactoryProvider);
+            building.Activate(
+                new BuildingActivationArgs(
+                    this,
+                    _enemyCruiser,
+                    CruiserSpecificFactories,
+                    slot,
+                    _buildingDoubleClickHandler));
 
             slot.Building = building;
 

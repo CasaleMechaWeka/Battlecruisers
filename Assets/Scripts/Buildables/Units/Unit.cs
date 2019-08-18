@@ -59,20 +59,18 @@ namespace BattleCruisers.Buildables.Units
         protected virtual float OnDeathGravityScale => 1;
 		#endregion Properties
 
-		void IUnit.Initialise(
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IUIManager uiManager, 
-            IFactoryProvider factoryProvider, 
-            ICruiserSpecificFactories cruiserSpecificFactories)
+		public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
-            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider, cruiserSpecificFactories);
+            base.Initialise(uiManager, factoryProvider);
 			
             Assert.IsTrue(maxVelocityInMPerS > 0);
-			FacingDirection = ParentCruiser.Direction;
-
             _engineAudioClip = _factoryProvider.Sound.SoundFetcher.GetSound(EngineSoundKey);
+        }
 
+        public override void Activate(BuildableActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
+			FacingDirection = ParentCruiser.Direction;
             OnInitialised();
         }
 

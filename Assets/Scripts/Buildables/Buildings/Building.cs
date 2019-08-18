@@ -56,25 +56,17 @@ namespace BattleCruisers.Buildables.Buildings
             PuzzleRootPoint = puzzleRootPoint.position;
         }
 
-        public void Initialise(
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IUIManager uiManager, 
-            IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
-            ISlot parentSlot,
-            IDoubleClickHandler<IBuilding> doubleClickHandler)
+        public override void Activate(BuildingActivationArgs activationArgs)
         {
-            base.Initialise(parentCruiser, enemyCruiser, uiManager, factoryProvider, cruiserSpecificFactories);
+            base.Activate(activationArgs);
 
-            Helper.AssertIsNotNull(parentCruiser, doubleClickHandler);
-
-            _parentSlot = parentSlot;
-            _doubleClickHandler = doubleClickHandler;
+            _parentSlot = activationArgs.ParentSlot;
+            _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
+            // FELIX  Rename to OnAcivated() ?
             OnInitialised();
-		}
+        }
 
         protected override void OnSingleClick()
         {

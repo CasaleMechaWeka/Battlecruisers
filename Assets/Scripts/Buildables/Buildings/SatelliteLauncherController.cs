@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Units;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,7 +28,12 @@ namespace BattleCruisers.Buildables.Buildings
 			_satellite.Position = transform.position + SpawnPositionAdjustment;
 
             // FELIX  Should happen in factory, so don't get double initialisation from pooling
-			_satellite.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider, _cruiserSpecificFactories);
+			_satellite.Initialise(_uiManager, _factoryProvider);
+            _satellite.Activate(
+                new BuildableActivationArgs(
+                    ParentCruiser,
+                    _enemyCruiser,
+                    _cruiserSpecificFactories));
 
             _satellite.StartConstruction();
 		}

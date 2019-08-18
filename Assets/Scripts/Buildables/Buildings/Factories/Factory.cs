@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
@@ -137,7 +138,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper);
 
             // FELIX  Should happen in factory, so don't get double initialisation from pooling
-            UnitUnderConstruction.Initialise(ParentCruiser, _enemyCruiser, _uiManager, _factoryProvider, _cruiserSpecificFactories);
+            UnitUnderConstruction.Initialise(_uiManager, _factoryProvider);
+            UnitUnderConstruction.Activate(
+                new BuildableActivationArgs(
+                    ParentCruiser,
+                    _enemyCruiser,
+                    _cruiserSpecificFactories));
 
             UnitUnderConstruction.DroneConsumerProvider = this;
 

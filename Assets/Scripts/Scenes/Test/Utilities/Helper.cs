@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.ActivationArgs;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;
@@ -124,14 +125,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISlot parentSlot = null)
         {
             building.StaticInitialise();
-            building.Initialise(
-                initialisationArgs.ParentCruiser,
-                initialisationArgs.EnemyCruiser,
-                initialisationArgs.UiManager,
-                initialisationArgs.FactoryProvider,
-                initialisationArgs.CruiserSpecificFactories,
-                parentSlot ?? CreateParentSlot(),
-                Substitute.For<IDoubleClickHandler<IBuilding>>());
+            building.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
+            building.Activate(
+                new BuildingActivationArgs(
+                    initialisationArgs.ParentCruiser,
+                    initialisationArgs.EnemyCruiser,
+                    initialisationArgs.CruiserSpecificFactories,
+                    parentSlot ?? CreateParentSlot(),
+                    Substitute.For<IDoubleClickHandler<IBuilding>>()));
         }
 
         public void InitialiseUnit(
@@ -184,12 +185,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             BuildableInitialisationArgs initialisationArgs)
         {
             unit.StaticInitialise();
-            unit.Initialise(
-                initialisationArgs.ParentCruiser,
-                initialisationArgs.EnemyCruiser,
-                initialisationArgs.UiManager,
-                initialisationArgs.FactoryProvider,
-                initialisationArgs.CruiserSpecificFactories);
+            unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
+            unit.Activate(
+                new BuildableActivationArgs(
+                    initialisationArgs.ParentCruiser,
+                    initialisationArgs.EnemyCruiser,
+                    initialisationArgs.CruiserSpecificFactories));
         }
 
 		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)

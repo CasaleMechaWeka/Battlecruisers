@@ -1,9 +1,8 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Units
@@ -18,7 +17,7 @@ namespace BattleCruisers.Buildables.Units
 		Left, Right, Up, Down
 	}
 
-    public interface IUnit : IBuildable, IRemovable
+    public interface IUnit : IBuildable, IRemovable, IPoolable<BuildableActivationArgs>
     {
 		UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }
@@ -26,12 +25,6 @@ namespace BattleCruisers.Buildables.Units
         float MaxVelocityInMPerS { get; }
         bool IsUltra { get; }
 
-		void Initialise(
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IUIManager uiManager, 
-            IFactoryProvider factoryProvider, 
-            ICruiserSpecificFactories cruiserSpecificFactories);
         void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders);
 	}
 }
