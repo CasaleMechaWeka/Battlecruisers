@@ -18,6 +18,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
+            // FELIX  Try use natural target detection instead :)
             ITargetFactories targetFactories = _helper.CreateTargetFactories(new ObservableCollection<ITarget>(defenceBuildings));
 
             _helper
