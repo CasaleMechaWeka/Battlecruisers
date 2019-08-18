@@ -8,6 +8,7 @@ using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 		private IList<ITarget> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
 
+        protected IDeferrer _deferrer;
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
 
@@ -57,6 +59,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
             _numOfDefenceBuildngsDestroyed = 0;
+            _deferrer = new Deferrer();
 
 
             KillCountController killCount = transform.FindNamedComponent<KillCountController>("UnitKillCount");

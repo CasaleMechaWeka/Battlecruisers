@@ -302,7 +302,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         /// Target processors assign all the provided targets.  The targets are lost
         /// as they are destroyed.
         /// </summary>
-        public ITargetFactories CreateTargetFactories(IList<ITarget> targets)
+        public ITargetFactories CreateTargetFactories(IList<ITarget> targets, IDeferrer deferrer)
         {
             ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
 
@@ -312,7 +312,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
             foreach (ITarget target in targets)
             {
                 target.Destroyed += (sender, e) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(target));
-                targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target));
+
+                // Defer giving targets a chance to be initialised :)
+                deferrer.Defer(
+                    () => targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(target)),
+                    delayInS: 0.1f);
             }
 
             return targetFactories;

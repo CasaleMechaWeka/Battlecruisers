@@ -18,11 +18,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     {
         private IKillCountController _leftKillCount, _rightKillCount;
         private IList<ITarget> _completedUnits;
-        private IDeferrer _deferrer;
         private IPrefabFactory _prefabFactory;
 
 		protected IFactory _leftFactory, _rightFactory;
         protected TestUtils.Helper _helper;
+        protected IDeferrer _deferrer;
 
         public int numOfDrones;
         public PrefabKeyName leftUnitKeyName, rightUnitKeyName;

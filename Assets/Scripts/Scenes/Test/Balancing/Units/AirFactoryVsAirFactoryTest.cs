@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private ITargetFactories CreateTargetFactories(Direction facingDirection)
         {
             ITarget bomberTarget = IsLeftHandFactory(facingDirection) ? _rightFactory : _leftFactory;
-            return _helper.CreateTargetFactories(new List<ITarget> { bomberTarget });
+            return _helper.CreateTargetFactories(new List<ITarget> { bomberTarget }, _deferrer);
         }
 
         private bool IsLeftHandFactory(Direction facingDirection)
