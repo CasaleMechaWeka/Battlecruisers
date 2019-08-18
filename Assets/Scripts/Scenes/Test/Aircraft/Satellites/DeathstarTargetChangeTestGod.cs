@@ -5,20 +5,22 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
-using BcUtils = BattleCruisers.Utils;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
-    public class DeathstarTargetChangeTestGod : MonoBehaviour
+    public class DeathstarTargetChangeTestGod : TestGodBase
     {
         private Helper _helper;
         private IPrefabFactory _prefabFactory;
 
         public BuildingWrapper targetPrefab;
 
-        void Start()
+        protected override void Start()
         {
-            _helper = new Helper();
+            base.Start();
+
+            _helper = new Helper(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.DEFAULT, updaterProvider: _updaterProvider);
             _prefabFactory = new PrefabFactory(new PrefabFetcher());
 
             // Setup target 1
@@ -31,8 +33,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
             // Setup deathstar
             Vector2 parentCruiserPosition = new Vector2(-20, 0);
-            Vector2 enemyCruisrePosition = new Vector2(0, 0);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruisrePosition, new BcUtils.RandomGenerator());
+            Vector2 enemyCruiserPosition = new Vector2(0, 0);
+            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
 
             DeathstarController deathstar = FindObjectOfType<DeathstarController>();
             _helper.InitialiseUnit(deathstar, Faction.Blues, aircraftProvider: aircraftProvider);
@@ -42,8 +44,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         private void ConstructBuilding(Vector2 position)
         {
             IBuilding building = _prefabFactory.CreateBuilding(targetPrefab);
-            _helper.InitialiseBuilding(building, Faction.Reds);
             building.Position = position;
+            _helper.InitialiseBuilding(building, Faction.Reds);
+            building.StartConstruction();
 
             // Rebuild building instantly :D
             building.Destroyed += (sender, e) => ConstructBuilding(position);
