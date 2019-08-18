@@ -67,6 +67,8 @@ namespace BattleCruisers.Projectiles
 
         public void Initialise(IFactoryProvider factoryProvider)
 		{
+            Logging.LogMethod(Tags.SHELLS);
+
             Assert.IsNotNull(factoryProvider);
             _factoryProvider = factoryProvider;
 
@@ -78,6 +80,8 @@ namespace BattleCruisers.Projectiles
 
         public virtual void Activate(TActivationArgs activationArgs)
         {
+            Logging.LogMethod(Tags.SHELLS);
+
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
 
