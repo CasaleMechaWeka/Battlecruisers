@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
             IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
-            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter: targetFilter);
 
             IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
             helper.InitialiseUnit(bomberToLeft, Faction.Reds, aircraftProvider: leftAircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Right);

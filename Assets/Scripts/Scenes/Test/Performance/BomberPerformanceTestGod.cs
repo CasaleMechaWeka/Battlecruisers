@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
-            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter: targetFilter);
 
             // Setup bombers
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);

@@ -235,16 +235,22 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public ITargetFactories CreateTargetFactories(
             GameObject globalTarget, 
+
+            // FELIX  Make these non-optional :)
+            ICruiser parentCruiser = null,
+            ICruiser enemyCruiser = null,
+            IUpdaterProvider updaterProvider = null,
+
             ITargetFilter targetFilter = null, 
             IExactMatchTargetFilter exactMatchTargetFilter = null)
         {
             // The enemy cruiser is added as a target by the global target finder.
             // So pretend the cruiser game object is the specified target.
-            ICruiser enemyCruiser = Substitute.For<ICruiser>();
-            enemyCruiser.GameObject.Returns(globalTarget);
-            enemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
+            ICruiser dummyEnemyCruiser = Substitute.For<ICruiser>();
+            dummyEnemyCruiser.GameObject.Returns(globalTarget);
+            dummyEnemyCruiser.Position.Returns(x => (Vector2)globalTarget.transform.position);
 
-            GlobalTargetFinder targetFinder = new GlobalTargetFinder(enemyCruiser);
+            GlobalTargetFinder targetFinder = new GlobalTargetFinder(dummyEnemyCruiser);
             IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
@@ -257,7 +263,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 exactMatchTargetFilter = new ExactMatchTargetFilter();
             }
 
-            // Procressors
+            // Processors
             targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
@@ -268,6 +274,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             // Trackers
             targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
 
+            // Detector
+            // FELIX  Remove null checks once no longer optional :)
+            if (updaterProvider != null)
+            {
+                ITargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
+                targetFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
+            }
+            
             // Filters
             targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
             targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);

@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
 			{
 				Target = target
 			};
-            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject, targetFilter);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject, targetFilter: targetFilter);
             helper.InitialiseBuilding(turret, Faction.Reds, targetFactories: targetFactories);
 			turret.StartConstruction();
 		}
