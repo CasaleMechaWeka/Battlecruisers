@@ -22,6 +22,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             IUpdaterProvider updaterProvider)
         {
             IAircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
+            
+            // FELIX  Remove?  Or use :)
             ITargetFactories targetFactories = CreateTargetFactories(facingDirection, parentCruiser, enemyCruiser, updaterProvider);
 
             return 
@@ -30,8 +32,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                     faction, 
                     parentCruiserDirection: facingDirection, 
                     aircraftProvider: aircraftProvider,
-                    targetFactories: targetFactories,
-                    updaterProvider: updaterProvider);
+                    // FELIX Hmmm
+                    //targetFactories: targetFactories,
+                    updaterProvider: updaterProvider,
+                    parentCruiser: parentCruiser,
+                    enemyCruiser: enemyCruiser);
         }
 
         private IAircraftProvider CreateAircraftProvider(Direction facingDirection)
