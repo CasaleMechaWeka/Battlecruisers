@@ -35,7 +35,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Assert.IsNotNull(prefabFactory);
             Assert.IsTrue(numOfDrones > 0);
 
-            _deferrer = new Deferrer();
+            _deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(_deferrer);
+
             _prefabFactory = prefabFactory;
             _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
             _completedUnits = new List<ITarget>();
