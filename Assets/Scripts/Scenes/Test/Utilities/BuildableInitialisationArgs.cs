@@ -111,14 +111,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     updaterProvider,
                     new ExplosionPoolProvider(prefabFactory));
 
-            CruiserSpecificFactories
-                = CreateCruiserSpecificFactories(
-                    aircraftProvider ?? helper.CreateAircraftProvider(),
-                    globalBoostProviders,
-                    turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
-                    targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
-                    targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
-                    targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider));
+            CruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            SetupCruiserSpecificFactories(
+                CruiserSpecificFactories,
+                aircraftProvider ?? helper.CreateAircraftProvider(),
+                globalBoostProviders,
+                turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
+                targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
+                targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
+                targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider),
+                targetFactories?.TargetProviderFactory ?? new TargetProviderFactory(CruiserSpecificFactories, targetFactoriesProvider));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -185,24 +187,23 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return factoryProvider;
         }
 
-        private ICruiserSpecificFactories CreateCruiserSpecificFactories(
+        private void SetupCruiserSpecificFactories(
+            ICruiserSpecificFactories cruiserSpecificFactories,
             IAircraftProvider aircraftProvider,
             IGlobalBoostProviders globalBoostProviders,
             ITurretStatsFactory turretStatsFactory,
             ITargetProcessorFactory targetProcessorFactory,
             ITargetTrackerFactory targetTrackerFactory,
-            ITargetDetectorFactory targetDetectorFactory)
+            ITargetDetectorFactory targetDetectorFactory,
+            ITargetProviderFactory targetProviderFactory)
         {
-            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
-
             cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
             cruiserSpecificFactories.Targets.ProcessorFactory.Returns(targetProcessorFactory);
             cruiserSpecificFactories.Targets.TrackerFactory.Returns(targetTrackerFactory);
             cruiserSpecificFactories.Targets.DetectorFactory.Returns(targetDetectorFactory);
-
-            return cruiserSpecificFactories;
+            cruiserSpecificFactories.Targets.ProviderFactory.Returns(targetProviderFactory);
         }
     }
 }

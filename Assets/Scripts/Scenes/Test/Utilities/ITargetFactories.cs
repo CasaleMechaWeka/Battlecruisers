@@ -8,5 +8,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         ITargetProcessorFactory TargetProcessorFactory { get; }
         ITargetTrackerFactory TargetTrackerFactory { get; }
         ITargetDetectorFactory TargetDetectorFactory { get; }
+        ITargetProviderFactory TargetProviderFactory { get; }
     }
 }
