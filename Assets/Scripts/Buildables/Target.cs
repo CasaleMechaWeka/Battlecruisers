@@ -60,6 +60,9 @@ namespace BattleCruisers.Buildables
         private bool IsFullHealth => Health == maxHealth;
         public virtual Color Color { set { /* empty */ } }
         public bool IsInScene => gameObject.scene.IsValid();
+        public float Health => _healthTracker.Health;
+        public IRepairCommand RepairCommand { get; private set; }
+        public float HealthGainPerDroneS { get; protected set; }
 
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
@@ -70,16 +73,6 @@ namespace BattleCruisers.Buildables
                 _attackCapabilities.Add(attackCapability);
 			}
         }
-
-        public float Health
-        {
-            get { return _healthTracker.Health; }
-        }
-
-        public IRepairCommand RepairCommand { get; private set; }
-
-        // FELIX  Make set private?
-        public float HealthGainPerDroneS { get; protected set; }
 
         // Lazily initialise so that the StaticInitialise() of all classes in
         // inheritance tree have completed.
