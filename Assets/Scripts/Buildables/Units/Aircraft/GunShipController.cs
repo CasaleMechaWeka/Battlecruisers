@@ -157,6 +157,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override void CleanUp()
 		{
+            base.CleanUp();
+
             _followingTargetProcessorWrapper.DisposeManagedState();
             _followingTargetProcessorWrapper = null;
 

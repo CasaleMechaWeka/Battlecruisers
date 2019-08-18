@@ -265,6 +265,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void CleanUp()
         {
+            base.CleanUp();
+
 			_targetProcessor.RemoveTargetConsumer(this);
 			_targetProcessor = null;
         }

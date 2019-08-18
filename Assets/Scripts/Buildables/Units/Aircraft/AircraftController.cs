@@ -24,6 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
+        private TrailRenderer _aircraftTrail;
 
         protected ISpriteChooser _spriteChooser;
 
@@ -83,6 +84,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>(includeInactive: true);
             Assert.IsNotNull(_spriteRenderer);
+
+            _aircraftTrail = transform.FindNamedComponent<TrailRenderer>("AircraftTrail");
+            _aircraftTrail.enabled = false;
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -118,6 +122,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
+            _aircraftTrail.enabled = true;
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -236,6 +241,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             CleanUp();
         }
 
-        protected virtual void CleanUp() { }
+        protected virtual void CleanUp()
+        {
+            _aircraftTrail.enabled = false;
+        }
     }
 }

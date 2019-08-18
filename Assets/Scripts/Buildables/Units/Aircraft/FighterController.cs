@@ -194,6 +194,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void CleanUp()
         {
+            base.CleanUp();
+
             _followableEnemyDetectorProvider.DisposeManagedState();
             _followableEnemyDetectorProvider = null;
 
