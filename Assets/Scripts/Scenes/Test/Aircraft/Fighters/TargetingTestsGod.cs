@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
@@ -14,25 +16,30 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// 4. Target quickly moves out of range, fighter stops pursuing target and continues patrolling
     /// 5. Repeat
     /// </summary>
-    public class TargetingTestsGod : MonoBehaviour 
+    public class TargetingTestsGod : TestGodBase 
 	{
-		private Helper _helper;
+		private Helper helper;
 
 		public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
 
-		void Start() 
-		{
-			_helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
 
-			FighterController fighter = FindObjectOfType<FighterController>();
-			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
-            _helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
+
+            ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
+
+            FighterController fighter = FindObjectOfType<FighterController>();
+			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
+            helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider, enemyCruiser: blueCruiser);
 			fighter.StartConstruction();
 
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
-            _helper.InitialiseUnit(target, faction: Faction.Blues);
+            helper.InitialiseUnit(target, faction: Faction.Blues);
 			target.StartConstruction();
+            Helper.SetupUnitForUnitMonitor(target, blueCruiser);
 		}
 	}
 }
