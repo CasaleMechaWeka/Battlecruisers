@@ -241,6 +241,9 @@ namespace BattleCruisers.Buildables
             return new List<SpriteRenderer>() { mainRenderer };
         }
 
+        /// <summary>
+        /// Called only once, when an object is first instantiated.
+        /// </summary>
         // FELIX  Make sure this is only called once :)  By prefab factory!!!
         public virtual void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
@@ -259,6 +262,10 @@ namespace BattleCruisers.Buildables
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
         }
 
+        /// <summary>
+        /// Called every time an object is taken from an object pool and activated.  Can happen
+        /// multiple times for buildables as they are recycled.
+        /// </summary>
         public virtual void Activate(TActivationArgs activationArgs)
         {
             Assert.IsNotNull(activationArgs);
@@ -306,17 +313,6 @@ namespace BattleCruisers.Buildables
         {
             Logging.Log(Tags.BOOST, this.ToString());
         }
-
-        /// <summary>
-        /// Called only once, when an object is first instantiated.
-        /// </summary>
-        protected virtual void OnInitialised() { }
-
-        /// <summary>
-        /// Called every time an object is taken from an object pool and activated.  Can happen
-        /// multiple times for buildables as they are recycled.
-        /// </summary>
-        protected virtual void OnActivated() { }
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
         {

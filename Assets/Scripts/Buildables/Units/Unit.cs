@@ -64,15 +64,12 @@ namespace BattleCruisers.Buildables.Units
 			
             Assert.IsTrue(maxVelocityInMPerS > 0);
             _engineAudioClip = _factoryProvider.Sound.SoundFetcher.GetSound(EngineSoundKey);
-
-            OnInitialised();
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 			FacingDirection = ParentCruiser.Direction;
-            OnActivated();
         }
 
         protected override void OnBuildableCompleted()

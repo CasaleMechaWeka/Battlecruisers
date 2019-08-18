@@ -84,9 +84,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             _isUnitPaused = new ObservableValue<bool>(false);
         }
 
-        protected override void OnActivated()
+        public override void Activate(BuildingActivationArgs activationArgs)
         {
-            base.OnActivated();
+            base.Activate(activationArgs);
 
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
             _unitSpawnDecider = _factoryProvider.SpawnDeciderFactory.CreateSpawnDecider(this, _unitSpawnPositionFinder);

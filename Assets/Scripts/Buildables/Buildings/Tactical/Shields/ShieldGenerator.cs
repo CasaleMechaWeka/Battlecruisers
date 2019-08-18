@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
@@ -33,9 +34,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _shieldController.StaticInitialise();
         }
 
-		protected override void OnActivated()
+        public override void Activate(BuildingActivationArgs activationArgs)
 		{
-			base.OnActivated();
+            base.Activate(activationArgs);
 
 			_shieldController.Initialise(Faction, _cruiserSpecificFactories.BuildableEffectsSoundPlayer);
 			_shieldController.gameObject.SetActive(false);

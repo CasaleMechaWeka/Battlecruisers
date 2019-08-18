@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.Spawners;
@@ -6,8 +7,10 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -84,17 +87,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
 		}
 
-        protected override void OnInitialised()
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            base.OnInitialised();
+            base.Initialise(uiManager, factoryProvider);
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
-        protected override void OnActivated()
-		{
-			base.OnActivated();
+        public override void Activate(BuildableActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
 
-			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider);

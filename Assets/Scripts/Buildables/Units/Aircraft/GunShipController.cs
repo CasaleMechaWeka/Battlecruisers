@@ -8,8 +8,10 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,9 +63,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
 		}
 
-        protected override void OnInitialised()
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            base.OnInitialised();
+            base.Initialise(uiManager, factoryProvider);
 
             _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 

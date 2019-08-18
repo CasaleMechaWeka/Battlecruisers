@@ -6,8 +6,10 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -59,9 +61,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
 		}
 
-        protected override void OnInitialised()
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            base.OnInitialised();
+            base.Initialise(uiManager, factoryProvider);
 
 			leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
 			rightSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);

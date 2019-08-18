@@ -16,6 +16,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.Utils.Factories;
+using BattleCruisers.Buildables.ActivationArgs;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -70,17 +73,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(_barrelController.DamageCapability);
 		}
 
-        protected override void OnInitialised()
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            base.OnInitialised();
+            base.Initialise(uiManager, factoryProvider);
             _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
         }
 
-        protected override void OnActivated()
-		{
-			base.OnActivated();
+        public override void Activate(BuildableActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
 
-			_figherMovementController 
+            _figherMovementController
                 = _movementControllerFactory.CreateFighterMovementController(
                     rigidBody, 
                     maxVelocityProvider: this,

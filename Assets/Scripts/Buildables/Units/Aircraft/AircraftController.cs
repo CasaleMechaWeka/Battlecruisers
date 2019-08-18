@@ -1,12 +1,15 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -82,18 +85,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Assert.IsNotNull(_spriteRenderer);
         }
 
-        protected override void OnInitialised()
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            base.OnInitialised();
+            base.Initialise(uiManager, factoryProvider);
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _fuzziedMaxVelocityInMPerS = new RandomGenerator().Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 
-        protected override void OnActivated()
-		{
-			base.OnActivated();
+        public override void Activate(BuildableActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
 
             _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
             _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders);

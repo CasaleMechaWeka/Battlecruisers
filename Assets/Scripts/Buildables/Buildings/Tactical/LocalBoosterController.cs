@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
@@ -14,9 +16,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
         public float boostMultiplier;
 
-        protected override void OnInitialised()
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            base.OnInitialised();  
+            base.Initialise(uiManager, factoryProvider);
             _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
         }
 
