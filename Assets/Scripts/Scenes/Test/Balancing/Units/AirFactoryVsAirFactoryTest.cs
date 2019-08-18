@@ -7,7 +7,6 @@ using BattleCruisers.Targets.Factories;
 using BattleCruisers.Utils.BattleScene.Update;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BCUtils = BattleCruisers.Utils;
 
