@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             _deferrer = new Deferrer();
             _prefabFactory = prefabFactory;
-            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT);
+            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
             _completedUnits = new List<ITarget>();
 
             IPrefabKey leftUnitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(leftUnitKeyName);
