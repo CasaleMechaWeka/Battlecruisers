@@ -52,7 +52,7 @@ namespace BattleCruisers.Buildables.Buildings
             Transform puzzleRootPoint = transform.FindNamedComponent<Transform>("PuzzleRootPoint");
             PuzzleRootPoint = puzzleRootPoint.position;
 
-            OnInitialised_FOR_REAL();
+            OnInitialised();
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)
@@ -63,7 +63,7 @@ namespace BattleCruisers.Buildables.Buildings
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
 
-            OnInitialised();
+            OnActivated();
         }
 
         protected override void OnSingleClick()

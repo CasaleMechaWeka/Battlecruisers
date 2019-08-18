@@ -307,17 +307,16 @@ namespace BattleCruisers.Buildables
             Logging.Log(Tags.BOOST, this.ToString());
         }
 
-        // FELIX  Rename to OnInitialised()
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        protected virtual void OnInitialised_FOR_REAL() { }
+        protected virtual void OnInitialised() { }
+
         /// <summary>
         /// Called every time an object is taken from an object pool and activated.  Can happen
         /// multiple times for buildables as they are recycled.
         /// </summary>
-        // FELIX  Rename to OnActivated() :)
-        protected virtual void OnInitialised() { }
+        protected virtual void OnActivated() { }
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
         {

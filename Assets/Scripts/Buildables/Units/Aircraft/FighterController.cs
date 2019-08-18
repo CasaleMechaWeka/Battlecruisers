@@ -70,15 +70,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(_barrelController.DamageCapability);
 		}
 
-        protected override void OnInitialised_FOR_REAL()
+        protected override void OnInitialised()
         {
-            base.OnInitialised_FOR_REAL();
+            base.OnInitialised();
             _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
         }
 
-        protected override void OnInitialised()
+        protected override void OnActivated()
 		{
-			base.OnInitialised();
+			base.OnActivated();
 
 			_figherMovementController 
                 = _movementControllerFactory.CreateFighterMovementController(

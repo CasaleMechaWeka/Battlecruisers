@@ -84,15 +84,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
 		}
 
-        protected override void OnInitialised_FOR_REAL()
+        protected override void OnInitialised()
         {
-            base.OnInitialised_FOR_REAL();
+            base.OnInitialised();
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
-        protected override void OnInitialised()
+        protected override void OnActivated()
 		{
-			base.OnInitialised();
+			base.OnActivated();
 
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);

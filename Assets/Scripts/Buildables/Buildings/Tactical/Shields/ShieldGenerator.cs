@@ -33,9 +33,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _shieldController.StaticInitialise();
         }
 
-		protected override void OnInitialised()
+		protected override void OnActivated()
 		{
-			base.OnInitialised();
+			base.OnActivated();
 
 			_shieldController.Initialise(Faction, _cruiserSpecificFactories.BuildableEffectsSoundPlayer);
 			_shieldController.gameObject.SetActive(false);

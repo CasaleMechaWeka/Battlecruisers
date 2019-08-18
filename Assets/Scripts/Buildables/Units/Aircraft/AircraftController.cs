@@ -82,18 +82,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Assert.IsNotNull(_spriteRenderer);
         }
 
-        protected override void OnInitialised_FOR_REAL()
+        protected override void OnInitialised()
         {
-            base.OnInitialised_FOR_REAL();
+            base.OnInitialised();
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _fuzziedMaxVelocityInMPerS = new RandomGenerator().Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
 			DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 
-        protected override void OnInitialised()
+        protected override void OnActivated()
 		{
-			base.OnInitialised();
+			base.OnActivated();
 
             _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
             _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders);
