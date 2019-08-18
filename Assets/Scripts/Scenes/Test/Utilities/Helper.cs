@@ -121,7 +121,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InitialiseBuilding(
             IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
-
             ISlot parentSlot = null)
         {
             building.StaticInitialise();
