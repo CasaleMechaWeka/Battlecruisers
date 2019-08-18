@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
@@ -17,28 +19,33 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// 6. Fighter abandons chase
     /// 7. Repeat
     /// </summary>
-    public class SafeZoneTestsGod : MonoBehaviour 
+    public class SafeZoneTestsGod : TestGodBase
 	{
-		private Helper _helper;
+		private Helper helper;
 
 		public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
 		public float safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
 
-		void Start() 
-		{
-			_helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
 
-			FighterController fighter = FindObjectOfType<FighterController>();
+            helper = new Helper(updaterProvider: _updaterProvider);
+
+            ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
+
+            FighterController fighter = FindObjectOfType<FighterController>();
 			Rectangle safeZone = new Rectangle(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
-			IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
-            _helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider);
+			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
+            helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider, enemyCruiser: blueCruiser);
 			fighter.StartConstruction();
 
 			// Target aircraft
 			TestAircraftController target = FindObjectOfType<TestAircraftController>();
 			target.PatrolPoints = targetPatrolPoints;
-            _helper.InitialiseUnit(target, faction: Faction.Blues);
+            helper.InitialiseUnit(target, faction: Faction.Blues);
 			target.StartConstruction();
+            Helper.SetupUnitForUnitMonitor(target, blueCruiser);
 		}
 	}
 }
