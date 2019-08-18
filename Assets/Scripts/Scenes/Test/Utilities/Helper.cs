@@ -351,6 +351,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             SetupCreateTargetProcessor(targetFactories.TargetProcessorFactory);
 
+            IRangeCalculatorProvider rangeCalculatorProvider = new RangeCalculatorProvider();
+            targetFactories.TargetFactoriesProvider.RangeCalculatorProvider.Returns(rangeCalculatorProvider);
+
             return targetFactories;
         }
 
