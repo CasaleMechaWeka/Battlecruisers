@@ -376,6 +376,7 @@ namespace BattleCruisers.Buildables
             StartedConstruction?.Invoke(this, EventArgs.Empty);
         }
 
+        // PERF  Doesn't need to be every update :)
         void Update()
         {
             if (BuildableState == BuildableState.InProgress)
