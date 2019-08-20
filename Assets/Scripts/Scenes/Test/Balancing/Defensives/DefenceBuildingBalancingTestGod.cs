@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         protected override void InitialiseScenario(DefenceBuildingBalancingTest scenario)
         {
-            scenario.Initialise(_prefabFactory, UnitKey, BasicDefenceBuildingKey, AdvancedDefenceBuildingKey);
+            scenario.Initialise(_prefabFactory, UnitKey, BasicDefenceBuildingKey, AdvancedDefenceBuildingKey, _updaterProvider);
         }
     }
 }

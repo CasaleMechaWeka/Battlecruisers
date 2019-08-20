@@ -2,13 +2,16 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +31,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 		private IList<ITarget> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
 
+        protected IUpdaterProvider _updaterProvider;
         protected TestUtils.Helper _helper;
         protected IPrefabFactory _prefabFactory;
 
@@ -43,9 +47,14 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 		
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory, IPrefabKey unitKey, IPrefabKey basicDefenceBuildingKey, IPrefabKey advancedDefenceBuildingKey)
+        public void Initialise(
+            IPrefabFactory prefabFactory, 
+            IPrefabKey unitKey, 
+            IPrefabKey basicDefenceBuildingKey, 
+            IPrefabKey advancedDefenceBuildingKey,
+            IUpdaterProvider updaterProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, unitKey, basicDefenceBuildingKey, advancedDefenceBuildingKey);
+            Helper.AssertIsNotNull(prefabFactory, unitKey, basicDefenceBuildingKey, advancedDefenceBuildingKey, updaterProvider);
             Assert.IsTrue(numOfUnitDrones > 0);
             Assert.IsTrue(numOfBasicDefenceBuildings >= 0);
             Assert.IsTrue(numOfAdvancedDefenceBuildings >= 0);
@@ -53,11 +62,12 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
             _offensiveUnitKey = unitKey;
             _numOfDefenceBuildings = numOfBasicDefenceBuildings + numOfAdvancedDefenceBuildings;
-            _helper = new TestUtils.Helper(numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT);
+            _helper = new TestUtils.Helper(numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
             _prefabFactory = prefabFactory;
             _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
             _numOfDefenceBuildngsDestroyed = 0;
+            _updaterProvider = updaterProvider;
 
 
             KillCountController killCount = transform.FindNamedComponent<KillCountController>("UnitKillCount");
@@ -76,29 +86,38 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         private void CreateDefenceBuildings(IPrefabKey basicDefenceBuildingKey, IPrefabKey advancedDefenceBuildingKey)
         {
+            ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
+            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left , Faction.Reds);
+
             IBuildableSpawner buildingSpawner = new BuildingSpawner(_prefabFactory, _helper);
 
             int basicBuildingsXPos = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
             Vector2 basicBuildingsSpawnPos = new Vector2(basicBuildingsXPos, 0);
-            TestUtils.BuildableInitialisationArgs basicBuildingsArgs = new TestUtils.BuildableInitialisationArgs(_helper, Faction.Reds, parentCruiserDirection: Direction.Left);
+            TestUtils.BuildableInitialisationArgs defenceBuildingArgs 
+                = new TestUtils.BuildableInitialisationArgs(
+                    _helper, 
+                    Faction.Reds, 
+                    parentCruiserDirection: Direction.Left,
+                    updaterProvider: _updaterProvider,
+                    parentCruiser: redCruiser,
+                    enemyCruiser: blueCruiser);
 
             IList<IBuildable> basicDefenceBuildings
                 = buildingSpawner.SpawnBuildables(
                     basicDefenceBuildingKey,
                     numOfBasicDefenceBuildings,
-				    basicBuildingsArgs,
+				    defenceBuildingArgs,
                     basicBuildingsSpawnPos,
                     DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
             float advancedBuildingsXPos = basicDefenceBuildings.Count != 0 ? basicDefenceBuildings.Last().Position.x : basicBuildingsXPos;
             Vector2 advancedBuildingsSpawnPosition = new Vector2(advancedBuildingsXPos + DEFENCE_BUILDINGS_GROUP_GAP_IN_M, 0);
-            TestUtils.BuildableInitialisationArgs advancedBuildingsArgs = new TestUtils.BuildableInitialisationArgs(_helper, Faction.Reds, parentCruiserDirection: Direction.Left);
 
             IList<IBuildable> advancedDefenceBuildings =
                 buildingSpawner.SpawnBuildables(
                     advancedDefenceBuildingKey,
                     numOfAdvancedDefenceBuildings,
-					advancedBuildingsArgs,
+					defenceBuildingArgs,
                     advancedBuildingsSpawnPosition,
                     DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
@@ -107,6 +126,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             {
                 defenceBuilding.CompletedBuildable += Building_CompletedBuildable;
                 defenceBuilding.Destroyed += Building_Destroyed;
+                // For the GlobalTargetFinder
+                defenceBuilding.StartedConstruction += (sender, e) => redCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs((IBuilding)defenceBuilding));
             }            
         }
 

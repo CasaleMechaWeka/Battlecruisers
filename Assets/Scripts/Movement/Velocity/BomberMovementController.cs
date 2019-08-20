@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Movement.Velocity.Providers;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Velocity
@@ -13,6 +14,7 @@ namespace BattleCruisers.Movement.Velocity
 			get { return _targetVelocity; }
 			set
 			{
+                Logging.Log(Tags.MOVEMENT, $"{_targetVelocity} > {value}");
 				_targetVelocity = value;
 				float velocityChange = (_rigidBody.velocity - _targetVelocity).magnitude;
                 _velocitySmoothTime = velocityChange / _maxVelocityProvider.VelocityInMPerS;
