@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
     public class AntiSeaBalancingTest : DefenceBuildingBalancingTest
     {
-        protected override IFactory CreateFactory(IList<ITarget> defenceBuildings)
+        protected override IFactory CreateFactory(ICruiser enemyCruiser)
         {
             NavalFactory factory = GetComponentInChildren<NavalFactory>();
 

@@ -1,9 +1,14 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Construction;
+using NSubstitute;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
@@ -12,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private const int BOMBER_CRUISING_ALTITUDE_IN_M = 15;
 
         // FELIX  Still need separate implementation compared to AntiSeaBalancingTest?
-        protected override IFactory CreateFactory(IList<ITarget> defenceBuildings)
+        protected override IFactory CreateFactory(ICruiser enemyCruiser)
         {
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
@@ -25,9 +30,15 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     factory, 
                     Faction.Blues, 
                     parentCruiserDirection: Direction.Right, 
-                    aircraftProvider: aircraftProvider);
+                    aircraftProvider: aircraftProvider,
+                    enemyCruiser: enemyCruiser);
 
             return factory;
+        }
+
+        private void DefenceBuilding_BuildableProgress(object sender, BuildProgressEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         private IList<Vector2> GetBomberPatrolPoints(Vector2 factoryPosition, float bomberCruisingAltitudeInM)

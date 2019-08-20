@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private IFactory _offensiveFactory;
         private IList<ITarget> _completedOffensiveUnits;
         private IKillCountController _unitKillCount;
-		private IList<ITarget> _defenceBuildings;
+		private IList<IBuilding> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
 
         protected IUpdaterProvider _updaterProvider;
@@ -64,7 +64,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             _numOfDefenceBuildings = numOfBasicDefenceBuildings + numOfAdvancedDefenceBuildings;
             _helper = new TestUtils.Helper(numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
             _prefabFactory = prefabFactory;
-            _defenceBuildings = new List<ITarget>(_numOfDefenceBuildings);
+            _defenceBuildings = new List<IBuilding>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
             _numOfDefenceBuildngsDestroyed = 0;
             _updaterProvider = updaterProvider;
@@ -88,6 +88,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         {
             ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
             ICruiser redCruiser = _helper.CreateCruiser(Direction.Left , Faction.Reds);
+            
+            // Need to creat factory BEFORE defence buildings, so the defence buildings are captured
+            // by the factory's GlobalTargetFinder
+            _offensiveFactory = CreateFactory(redCruiser);
 
             IBuildableSpawner buildingSpawner = new BuildingSpawner(_prefabFactory, _helper);
 
@@ -126,8 +130,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             {
                 defenceBuilding.CompletedBuildable += Building_CompletedBuildable;
                 defenceBuilding.Destroyed += Building_Destroyed;
+
                 // For the GlobalTargetFinder
-                defenceBuilding.StartedConstruction += (sender, e) => redCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs((IBuilding)defenceBuilding));
+                redCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs((IBuilding)defenceBuilding));
             }            
         }
 
@@ -159,13 +164,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
-            ITarget completedBuilding = sender.Parse<ITarget>();
+            IBuilding completedBuilding = sender.Parse<IBuilding>();
             _defenceBuildings.Add(completedBuilding);
 
             if (_defenceBuildings.Count == _numOfDefenceBuildings)
             {
-                _offensiveFactory = CreateFactory(_defenceBuildings);
-
                 _offensiveFactory.CompletedBuildable += (factory, eventArgs) =>
                 {
                     _offensiveFactory.StartBuildingUnit(_prefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
@@ -176,7 +179,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             }
         }
 
-        protected abstract IFactory CreateFactory(IList<ITarget> defenceBuildings);
+        protected abstract IFactory CreateFactory(ICruiser enemyCruiser);
 
         private void Factory_CompletedUnit(object sender, UnitCompletedEventArgs e)
         {
