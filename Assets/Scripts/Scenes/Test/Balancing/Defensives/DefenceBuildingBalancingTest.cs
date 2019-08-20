@@ -10,7 +10,6 @@ using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
