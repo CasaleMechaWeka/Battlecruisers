@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
+    // PERF  Struct candidate :)
     public class BarrelAdjustmentResult
     {
         public bool IsOnTarget { get; }
