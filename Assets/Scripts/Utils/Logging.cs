@@ -92,8 +92,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -126,7 +126,9 @@ namespace BattleCruisers.Utils
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
-            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            // FELIX :P
+            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 
@@ -161,7 +163,9 @@ namespace BattleCruisers.Utils
             // Movement
             tagsToActiveness.Add(Tags.MOVEMENT, false);
             tagsToActiveness.Add(Tags.ROTATION_HELPER, false);
-            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
+            // FELIX :P
+            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
 
             // Camera

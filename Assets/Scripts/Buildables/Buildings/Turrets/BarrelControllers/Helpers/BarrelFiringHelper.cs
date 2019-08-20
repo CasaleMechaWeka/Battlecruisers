@@ -54,6 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         private void Fire(float fireAngleInDegrees)
         {
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"fireAngleInDegrees: {fireAngleInDegrees}");
             _barrelController.Fire(fireAngleInDegrees);
             _fireIntervalManager.OnFired();
         }

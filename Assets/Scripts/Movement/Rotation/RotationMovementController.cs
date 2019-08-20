@@ -52,8 +52,9 @@ namespace BattleCruisers.Movement.Rotation
 			}
 			Vector3 rotationIncrementVector = Vector3.forward * rotationIncrement * directionMultiplier;
 
+            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, $"Rotation pre rotate: {_transform.EulerAngles}");
 			_transform.Rotate(rotationIncrementVector);
-            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, "Rotated transform by: " + rotationIncrement);
+            Logging.Verbose(Tags.ROTATION_MOVEMENT_CONTROLLER, $"Rotated transform by: {rotationIncrement}  new rotation; {_transform.EulerAngles}");
 		}
 	}
 }
