@@ -126,9 +126,7 @@ namespace BattleCruisers.Utils
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
-            // FELIX :P
-            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
-            //tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 
@@ -163,9 +161,7 @@ namespace BattleCruisers.Utils
             // Movement
             tagsToActiveness.Add(Tags.MOVEMENT, false);
             tagsToActiveness.Add(Tags.ROTATION_HELPER, false);
-            // FELIX :P
-            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, true);
-            //tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
 
             // Camera

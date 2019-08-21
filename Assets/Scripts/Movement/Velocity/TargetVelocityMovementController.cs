@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Movement.Velocity.Providers;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -51,6 +52,8 @@ namespace BattleCruisers.Movement.Velocity
                         velocitySmoothTime, 
                         _maxVelocityProvider.VelocityInMPerS,
                         _time.DeltaTime);
+
+                Logging.Verbose(Tags.MOVEMENT, $"Velocity: {oldVelocity} > {Velocity}");
 
                 HandleDirectionChange(oldVelocity, Velocity);
             }
