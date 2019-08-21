@@ -34,6 +34,7 @@ namespace BattleCruisers.Movement.Deciders
         {
             set
             {
+                Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, $"_highestPriorityTarget: {_highestPriorityTarget}");
                 _highestPriorityTarget = value;
                 DecideMovement();
             }
