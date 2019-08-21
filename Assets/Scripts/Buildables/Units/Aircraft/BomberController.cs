@@ -62,7 +62,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         base.MaskHighlightableSize.y * 8);
             }
         }
-
         #endregion Properties
 
         public override void StaticInitialise()
