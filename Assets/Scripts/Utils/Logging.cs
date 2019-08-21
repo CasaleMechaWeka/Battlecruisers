@@ -28,6 +28,7 @@ namespace BattleCruisers.Utils
 		public const string ACCURACY_ADJUSTERS = "AccuraryAdjusters";
         public const string ANGLE_CALCULATORS = "AngleCalculators";
         public const string BARREL_CONTROLLER = "BarrelController";
+        public const string BARREL_WRAPPER = "BarrelWrapper";
         public const string SHELL_SPAWNER = "ShellSpawner";
         public const string SHELLS = "Shells";
 
@@ -127,6 +128,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
             tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.BARREL_WRAPPER, true);
+            //tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
             tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 
