@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
     {
         private const int BOMBER_CRUISING_ALTITUDE_IN_M = 15;
 
-        protected override IFactory CreateFactory(ICruiser enemyCruiser)
+        protected override IFactory CreateFactory(ICruiser parentCruiser, ICruiser enemyCruiser)
         {
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);

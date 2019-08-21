@@ -90,7 +90,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             
             // Need to creat factory BEFORE defence buildings, so the defence buildings are captured
             // by the factory's GlobalTargetFinder
-            _offensiveFactory = CreateFactory(redCruiser);
+            _offensiveFactory = CreateFactory(blueCruiser, redCruiser);
 
             IBuildableSpawner buildingSpawner = new BuildingSpawner(_prefabFactory, _helper);
 
@@ -178,7 +178,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             }
         }
 
-        protected abstract IFactory CreateFactory(ICruiser enemyCruiser);
+        protected abstract IFactory CreateFactory(ICruiser parentCruiser, ICruiser enemyCruiser);
 
         private void Factory_CompletedUnit(object sender, UnitCompletedEventArgs e)
         {
