@@ -22,7 +22,6 @@ namespace BattleCruisers.Buildables.Buildings
         public SlotType slotType;
 
         public override TargetType TargetType => TargetType.Buildings;
-        public override Vector2 Size => _collider.size;
         public SlotSpecification SlotSpecification { get; private set; }
         public Vector3 PuzzleRootPoint { get; private set; }
 
