@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
@@ -43,23 +44,24 @@ namespace BattleCruisers.Scenes.Test.Balancing
             }
         }
 
-        public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper)
+        public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper, IUpdaterProvider updaterProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, helper);
+            Helper.AssertIsNotNull(prefabFactory, helper, updaterProvider);
+
             _helper = helper;
             _isScenarioOver = false;
 
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition, updaterProvider);
             _leftGroup = leftGroupController.Initialise(prefabFactory, _helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition, updaterProvider);
             _rightGroup = rightGroupController.Initialise(prefabFactory, _helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
@@ -78,14 +80,20 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected virtual void OnInitialised() { }
 
-        protected virtual TestUtils.BuildableInitialisationArgs CreateLeftGroupArgs(TestUtils.Helper helper, Vector2 spawnPosition)
+        protected virtual TestUtils.BuildableInitialisationArgs CreateLeftGroupArgs(
+            TestUtils.Helper helper, 
+            Vector2 spawnPosition,
+            IUpdaterProvider updaterProvider)
         {
-            return new TestUtils.BuildableInitialisationArgs(helper, Faction.Blues, parentCruiserDirection: Direction.Right);
+            return new TestUtils.BuildableInitialisationArgs(helper, Faction.Blues, parentCruiserDirection: Direction.Right, updaterProvider: updaterProvider);
         }
 
-        protected virtual TestUtils.BuildableInitialisationArgs CreateRightGroupArgs(TestUtils.Helper helper, Vector2 spawnPosition)
+        protected virtual TestUtils.BuildableInitialisationArgs CreateRightGroupArgs(
+            TestUtils.Helper helper, 
+            Vector2 spawnPosition,
+            IUpdaterProvider updaterProvider)
         {
-            return new TestUtils.BuildableInitialisationArgs(helper, Faction.Reds, parentCruiserDirection: Direction.Left);
+            return new TestUtils.BuildableInitialisationArgs(helper, Faction.Reds, parentCruiserDirection: Direction.Left, updaterProvider: updaterProvider);
         }
 
         private void ShowScenarioDetails()

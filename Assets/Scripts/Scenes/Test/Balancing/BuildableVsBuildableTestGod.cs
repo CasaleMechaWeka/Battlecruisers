@@ -11,12 +11,12 @@ namespace BattleCruisers.Scenes.Test.Balancing
         protected override void Initialise()
         {
             _prefabFactory = new PrefabFactory(new PrefabFetcher());
-            _helper = new TestUtils.Helper();
+            _helper = new TestUtils.Helper(updaterProvider: _updaterProvider);
         }
 
         protected override void InitialiseScenario(BuildableVsBuildableTest scenario)
         {
-            scenario.Initialise(_prefabFactory, _helper);
+            scenario.Initialise(_prefabFactory, _helper, _updaterProvider);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.BattleScene.Update;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
     {
         private ObservableCollection<ITarget> _targetsOnLeft, _targetsOnRight;
 
-        protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition)
+        protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition, IUpdaterProvider updaterProvider)
         {
             _targetsOnRight = new ObservableCollection<ITarget>();
 
@@ -25,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     targetFactories: helper.CreateTargetFactories(_targetsOnRight));
         }
 
-        protected override BuildableInitialisationArgs CreateRightGroupArgs(Helper helper, Vector2 spawnPosition)
+        protected override BuildableInitialisationArgs CreateRightGroupArgs(Helper helper, Vector2 spawnPosition, IUpdaterProvider updaterProvider)
         {
             _targetsOnLeft = new ObservableCollection<ITarget>();
 

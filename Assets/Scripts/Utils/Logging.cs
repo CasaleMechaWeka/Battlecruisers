@@ -128,9 +128,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
             tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.BARREL_WRAPPER, true);
-            //tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
+            tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
             tagsToActiveness.Add(Tags.SHELL_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 

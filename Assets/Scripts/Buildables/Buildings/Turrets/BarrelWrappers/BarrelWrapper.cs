@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             get { return _target; }
             set
             {
-                Logging.Log(Tags.BARREL_WRAPPER, $"_target: {_target}");
+                Logging.Log(Tags.BARREL_WRAPPER, $"_target: {_target} > {value}");
                 _target = value;
 
                 foreach (IBarrelController barrel in _barrels)
