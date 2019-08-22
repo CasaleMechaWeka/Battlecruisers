@@ -168,6 +168,11 @@ namespace BattleCruisers.Projectiles
 
         public void RemoveFromScene()
         {
+            if (!gameObject.activeSelf)
+            {
+                return;
+            }
+
             gameObject.SetActive(false);
 
             Destroyed?.Invoke(this, EventArgs.Empty);
