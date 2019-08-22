@@ -13,10 +13,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
         private SatelliteLauncherController[] _launchers;
 
-        protected override void OnStart()
+		protected override void Start()
         {
+            base.Start();
+
             float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
-            Helper helper = new Helper(buildSpeedMultiplier: buildSpeedMultiplier);
+            Helper helper = new Helper(buildSpeedMultiplier: buildSpeedMultiplier, updaterProvider: _updaterProvider);
 
             _launchers = FindObjectsOfType<SatelliteLauncherController>();
 

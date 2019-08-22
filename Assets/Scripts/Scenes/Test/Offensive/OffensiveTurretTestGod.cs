@@ -2,16 +2,18 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class OffensiveTurretTestGod : CameraToggleTestGod
 	{
-		protected override void OnStart()
-		{
-			Helper helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
+
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
 			// Setup target

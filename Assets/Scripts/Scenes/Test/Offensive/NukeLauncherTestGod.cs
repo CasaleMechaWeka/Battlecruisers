@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 
@@ -10,9 +9,12 @@ namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class NukeLauncherTestGod : CameraToggleTestGod
 	{
-		protected override void OnStart()
-		{
-			Helper helper = new Helper();
+		protected override void Start()
+        {
+            base.Start();
+
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
 			// Setup targets

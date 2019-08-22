@@ -2,19 +2,17 @@
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
-	public class CameraToggleTestGod : MonoBehaviour 
+	public class CameraToggleTestGod : TestGodBase
 	{
 		public Camera overviewCamera, closeUpCamera;
 
-		void Start()
+		protected override void Start()
 		{
+            base.Start();
+
 			closeUpCamera.enabled = true;
 			overviewCamera.enabled = false;
-
-			OnStart();
 		}
-
-		protected virtual void OnStart() { }
 
 		public void ToggleCamera()
 		{
