@@ -40,7 +40,7 @@ namespace BattleCruisers.Projectiles
             RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(rocketTarget);
 
-            rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody);
+            rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
         }
     }
 }

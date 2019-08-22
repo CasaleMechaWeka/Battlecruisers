@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -7,6 +9,7 @@ namespace BattleCruisers.Projectiles
     public class RocketTarget : Target
 	{
 		private Rigidbody2D _rigidBody;
+        private IRemovable _parentProjectile;
 
 		public override TargetType TargetType => TargetType.Rocket;
 		public override Vector2 Velocity => _rigidBody.velocity;
@@ -14,12 +17,15 @@ namespace BattleCruisers.Projectiles
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        public void Initialise(Faction faction, Rigidbody2D rigidBody)
+        public void Initialise(Faction faction, Rigidbody2D rigidBody, IRemovable parentProjectile)
 		{
+            Helper.AssertIsNotNull(rigidBody, parentProjectile);
+
 			StaticInitialise();
 
 			Faction = faction;
 			_rigidBody = rigidBody;
+            _parentProjectile = parentProjectile;
 
             SpriteRenderer rocketRenderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(rocketRenderer);
@@ -27,12 +33,9 @@ namespace BattleCruisers.Projectiles
             _size = rocketRenderer.bounds.size;
 		}
 
-		// All RocketTarget gameObjects are wrapped by a RocketController gameObject.
-		// Hence, we need to destroy the parent gameObject.
 		protected override void InternalDestroy()
 		{
-			Assert.IsNotNull(transform.parent);
-			Destroy(transform.parent.gameObject);
+            _parentProjectile.RemoveFromScene();
 		}
 	}
 }
