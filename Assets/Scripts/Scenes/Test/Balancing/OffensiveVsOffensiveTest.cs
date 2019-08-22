@@ -14,42 +14,45 @@ namespace BattleCruisers.Scenes.Test.Balancing
     {
         private ObservableCollection<ITarget> _targetsOnLeft, _targetsOnRight;
 
-        protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition, IUpdaterProvider updaterProvider)
-        {
-            _targetsOnRight = new ObservableCollection<ITarget>();
+        // FELIX  Remove :)
+        //protected override BuildableInitialisationArgs CreateLeftGroupArgs(Helper helper, Vector2 spawnPosition, IUpdaterProvider updaterProvider)
+        //{
+        //    _targetsOnRight = new ObservableCollection<ITarget>();
 
-            return 
-                new BuildableInitialisationArgs(
-                    helper, 
-                    Faction.Blues, 
-                    parentCruiserDirection: Direction.Right,
-                    targetFactories: helper.CreateTargetFactories(_targetsOnRight));
-        }
+        //    return 
+        //        new BuildableInitialisationArgs(
+        //            helper, 
+        //            Faction.Blues, 
+        //            parentCruiserDirection: Direction.Right,
+        //            targetFactories: helper.CreateTargetFactories(_targetsOnRight));
+        //}
 
-        protected override BuildableInitialisationArgs CreateRightGroupArgs(Helper helper, Vector2 spawnPosition, IUpdaterProvider updaterProvider)
-        {
-            _targetsOnLeft = new ObservableCollection<ITarget>();
+        // FELIX  Remove :)
+        //protected override BuildableInitialisationArgs CreateRightGroupArgs(Helper helper, Vector2 spawnPosition, IUpdaterProvider updaterProvider)
+        //{
+        //    _targetsOnLeft = new ObservableCollection<ITarget>();
 
-            return
-                new BuildableInitialisationArgs(
-                    helper,
-                    Faction.Reds,
-                    parentCruiserDirection: Direction.Left,
-                    targetFactories: helper.CreateTargetFactories(_targetsOnLeft));
-        }
+        //    return
+        //        new BuildableInitialisationArgs(
+        //            helper,
+        //            Faction.Reds,
+        //            parentCruiserDirection: Direction.Left,
+        //            targetFactories: helper.CreateTargetFactories(_targetsOnLeft));
+        //}
 
-        protected override void OnInitialised()
-        {
-            // Add targets, which will reach the global target processor :)
-            foreach (IBuildable buildableOnLeft in _leftGroup.Buildables)
-            {
-                _targetsOnLeft.Add(buildableOnLeft);
-            }
+        // FELIX  Remove :)
+        //protected override void OnInitialised()
+        //{
+        //    // Add targets, which will reach the global target processor :)
+        //    foreach (IBuildable buildableOnLeft in _leftGroup.Buildables)
+        //    {
+        //        _targetsOnLeft.Add(buildableOnLeft);
+        //    }
 
-            foreach (IBuildable buildableOnRight in _rightGroup.Buildables)
-            {
-                _targetsOnRight.Add(buildableOnRight);
-            }
-        }
+        //    foreach (IBuildable buildableOnRight in _rightGroup.Buildables)
+        //    {
+        //        _targetsOnRight.Add(buildableOnRight);
+        //    }
+        //}
     }
 }

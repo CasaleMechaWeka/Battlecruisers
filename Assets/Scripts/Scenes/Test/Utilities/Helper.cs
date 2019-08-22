@@ -298,6 +298,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetFactories;
         }
 
+        // FELIX  Remove :)
         /// <summary>
         /// Use ObservableCollection so that targets do not need to be known right now.
         /// Targets can be added later, once they are known, and the target finder
@@ -325,6 +326,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetFactories;
         }
 
+        // FELIX  Remove :)
         private ITargetFactories CreateTargetFactories(ITargetFinder targetFinder)
         {
             ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
