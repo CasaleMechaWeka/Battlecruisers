@@ -1,14 +1,10 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Construction;
-using NSubstitute;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 {
@@ -31,11 +27,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     enemyCruiser: enemyCruiser);
 
             return factory;
-        }
-
-        private void DefenceBuilding_BuildableProgress(object sender, BuildProgressEventArgs e)
-        {
-            throw new System.NotImplementedException();
         }
 
         private IList<Vector2> GetBomberPatrolPoints(Vector2 factoryPosition, float bomberCruisingAltitudeInM)
