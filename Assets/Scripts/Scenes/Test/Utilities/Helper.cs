@@ -298,98 +298,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetFactories;
         }
 
-        // FELIX  Remove :)
-        /// <summary>
-        /// Use ObservableCollection so that targets do not need to be known right now.
-        /// Targets can be added later, once they are known, and the target finder
-        /// will emit appropriate target found events.
-        /// </summary>
-        public ITargetFactories CreateTargetFactories(ObservableCollection<ITarget> targets)
-        {
-            ITargetFinder targetFinder = Substitute.For<ITargetFinder>();
-
-            ITargetFactories targetFactories = CreateTargetFactories(targetFinder);
-
-            // Emit target found events AFTER targets factory (target processor) is created
-            targets.CollectionChanged += (sender, e) =>
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                {
-                    Assert.AreEqual(1, e.NewItems.Count);
-                    ITarget newTarget = e.NewItems[0] as ITarget;
-                    Assert.IsNotNull(newTarget);
-                    newTarget.Destroyed += (target, args) => targetFinder.TargetLost += Raise.EventWith(targetFinder, new TargetEventArgs(newTarget));
-                    targetFinder.TargetFound += Raise.EventWith(targetFinder, new TargetEventArgs(newTarget));
-                }                    
-            };
-
-            return targetFactories;
-        }
-
-        // FELIX  Remove :)
-        private ITargetFactories CreateTargetFactories(ITargetFinder targetFinder)
-        {
-            ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
-
-            ITargetRanker targetRanker = new EqualTargetRanker();
-            IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, targetRanker);
-            ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
-            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
-            IExactMatchTargetFilter exactMatchTargetFilter = new ExactMatchTargetFilter();
-            IExactMatchTargetFilter multipleExactMatchesTargetFilter = new MultipleExactMatchesTargetFilter();
-
-            // Processors
-            targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
-            targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-
-            targetFactories.TargetFactoriesProvider.FilterFactory.CreateDummyTargetFilter(default).ReturnsForAnyArgs(targetFilter);
-            targetFactories.TargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            targetFactories.TargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
-            targetFactories.TargetFactoriesProvider.FilterFactory.CreateMulitpleExactMatchTargetFilter().ReturnsForAnyArgs(multipleExactMatchesTargetFilter);
-
-            SetupCreateTargetFilter(targetFactories.TargetFactoriesProvider.FilterFactory);
-            SetupCreateRangedTargetFinder(targetFactories.TargetFactoriesProvider.FinderFactory);
-
-            SetupCreateRankedTargetTracker(targetFactories.TargetTrackerFactory);
-
-            SetupCreateTargetProcessor(targetFactories.TargetProcessorFactory);
-
-            IRangeCalculatorProvider rangeCalculatorProvider = new RangeCalculatorProvider();
-            targetFactories.TargetFactoriesProvider.RangeCalculatorProvider.Returns(rangeCalculatorProvider);
-
-            return targetFactories;
-        }
-
         // Copy real filter factory behaviour
         private void SetupCreateTargetFilter(ITargetFilterFactory filterFactory)
         {
             filterFactory
                 .CreateTargetFilter(default, null)
                 .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
-        }
-
-        // Copy real target finder behaviour
-        private void SetupCreateRangedTargetFinder(ITargetFinderFactory finderFactory)
-        {
-            finderFactory
-                .CreateRangedTargetFinder(null, null)
-                .ReturnsForAnyArgs(arg => new RangedTargetFinder((ITargetDetector)arg.Args()[0], (ITargetFilter)arg.Args()[1]));
-        }
-
-        // Copy real tracker factory behaviour
-        private void SetupCreateRankedTargetTracker(ITargetTrackerFactory trackerFactory)
-        {
-            trackerFactory
-                .CreateRankedTargetTracker(null, null)
-                .ReturnsForAnyArgs(arg => new RankedTargetTracker((ITargetFinder)arg.Args()[0], (ITargetRanker)arg.Args()[1]));
-        }
-
-        // Copy real processor factory behaviour
-        private void SetupCreateTargetProcessor(ITargetProcessorFactory processorFactory)
-        {
-            processorFactory
-                .CreateTargetProcessor(null)
-                .ReturnsForAnyArgs(arg => new TargetProcessor((IRankedTargetTracker)arg.Args()[0]));
         }
 
         public IAircraftProvider CreateAircraftProvider(
