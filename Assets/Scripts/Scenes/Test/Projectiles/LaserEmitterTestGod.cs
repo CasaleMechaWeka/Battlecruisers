@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test
 		}
 	}
 
-	public class LaserEmitterTestGod : MonoBehaviour 
+	public class LaserEmitterTestGod : TestGodBase
 	{
 		private Helper _helper;
 		private Faction _enemyFaction;
@@ -49,9 +49,11 @@ namespace BattleCruisers.Scenes.Test
 		public TestAircraftController targetRightMoving, targetMovingLeft;
 		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving, laserEmitterRightMoving;
 
-		void Start () 
+		protected override void Start () 
 		{
-			_helper = new Helper();
+            base.Start();
+
+			_helper = new Helper(updaterProvider: _updaterProvider);
 			_enemyFaction = Faction.Blues;
 			Faction friendlyFaction = Faction.Reds;
             _soundFetcher = new SoundFetcher();
@@ -117,7 +119,13 @@ namespace BattleCruisers.Scenes.Test
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
             ITarget parent = Substitute.For<ITarget>();
-            laserEmitter.Initialise(targetFilter, damagePerS: 100, parent: parent, soundFetcher: _soundFetcher);
+            laserEmitter
+                .Initialise(
+                    targetFilter, 
+                    damagePerS: 100, 
+                    parent: parent, 
+                    soundFetcher: _soundFetcher, 
+                    deltaTimeProvider: _updaterProvider.BarrelControllerUpdater);
         }
 
         private void SetupMovingTarget(TestAircraftController movingTarget, bool isSourceMirrored)

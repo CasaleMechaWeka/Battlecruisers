@@ -19,7 +19,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 		private float _damagePerS;
         private ITarget _parent;
         private LaserImpact _laserImpact;
-        private ITime _time;
+        private IDeltaTimeProvider _deltaTimeProvider;
 
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
@@ -35,17 +35,21 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
             _laserImpact.Initialise();
-
-            _time = TimeBC.Instance;
         }
 
-        public void Initialise(ITargetFilter targetFilter, float damagePerS, ITarget parent, ISoundFetcher soundFetcher)
+        public void Initialise(
+            ITargetFilter targetFilter, 
+            float damagePerS, 
+            ITarget parent, 
+            ISoundFetcher soundFetcher, 
+            IDeltaTimeProvider deltaTimeProvider)
         {
-            Helper.AssertIsNotNull(targetFilter, parent, soundFetcher);
+            Helper.AssertIsNotNull(targetFilter, parent, soundFetcher, deltaTimeProvider);
             Assert.IsTrue(damagePerS > 0);
 
             _damagePerS = damagePerS;
             _parent = parent;
+            _deltaTimeProvider = deltaTimeProvider;
 
             ContactFilter2D contactFilter = new ContactFilter2D()
             {
@@ -67,7 +71,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
                 _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
                 _laserImpact.Show(collision.CollisionPoint);
 
-				float damage = _time.DeltaTime * _damagePerS;
+				float damage = _deltaTimeProvider.DeltaTime * _damagePerS;
                 collision.Target.TakeDamage(damage, _parent);
 			}
 		}
