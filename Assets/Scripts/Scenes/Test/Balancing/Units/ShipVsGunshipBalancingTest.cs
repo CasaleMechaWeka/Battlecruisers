@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Fetchers;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -31,14 +32,14 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory)
+        public void Initialise(IPrefabFactory prefabFactory, IUpdaterProvider updaterProvider)
         {
-            Assert.IsNotNull(prefabFactory);
+            Helper.AssertIsNotNull(prefabFactory, updaterProvider);
             Assert.IsTrue(numOfDrones > 0);
 
 
             _prefabFactory = prefabFactory;
-            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT);
+            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
             _completedUnits = new List<ITarget>();
 
             IPrefabKey gunshipKey = StaticPrefabKeys.Units.Gunship;
@@ -57,8 +58,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             _navalFactory = GetComponentInChildren<NavalFactory>();
             _airFactory = GetComponentInChildren<AirFactory>();
 
-            InitialiseFactory(_navalFactory, Faction.Reds, Direction.Right, ship, _shipsKillCount);
-            InitialiseFactory(_airFactory, Faction.Blues, Direction.Left, gunship, _aircraftKillCount);
+            ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
+            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
+
+            InitialiseFactory(_navalFactory, Faction.Blues, Direction.Right, ship, _shipsKillCount, blueCruiser, redCruiser);
+            InitialiseFactory(_airFactory, Faction.Reds, Direction.Left, gunship, _aircraftKillCount, redCruiser, blueCruiser);
 
 
             // Hide camera
@@ -84,7 +88,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Faction faction,
             Direction facingDirection,
             IBuildableWrapper<IUnit> unitWrapper,
-            IKillCountController killCounter)
+            IKillCountController killCounter,
+            ICruiser parentCruiser,
+            ICruiser enemyCruiser)
         {
             IList<Vector2> gunshipPatrolPoints = GetGunshipPatrolPoints(factory.Position, GUNSHIP_CRUISING_ALTITUDE_IN_M);
             IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
@@ -94,12 +100,16 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                     factory,
                     faction,
                     parentCruiserDirection: facingDirection,
-                    aircraftProvider: aircraftProvider);
+                    aircraftProvider: aircraftProvider,
+                    parentCruiser: parentCruiser,
+                    enemyCruiser: enemyCruiser);
 
             factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, killCounter);
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
             factory.StartConstruction();
+
+            TestUtils.Helper.SetupFactoryForUnitMonitor(factory, parentCruiser);
         }
 
         private IList<Vector2> GetGunshipPatrolPoints(Vector2 factoryPosition, float cruisingAltitudeInM)
