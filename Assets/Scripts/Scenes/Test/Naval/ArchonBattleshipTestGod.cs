@@ -8,19 +8,21 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
-    public class ArchonBattleshipTestGod : MonoBehaviour
+    public class ArchonBattleshipTestGod : TestGodBase
     {
         private Faction _leftBattleshipFaction;
         private Faction _rightBattleshipFaction;
 
         public List<Vector2> leftSidePatrolPoints, rightSidePatrolPoints;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+
             _leftBattleshipFaction = Faction.Reds;
             _rightBattleshipFaction = Faction.Blues;
 
-            Helper helper = new Helper();
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             SetupBattleships(helper);
             SetupPlanes(helper);
