@@ -86,7 +86,7 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
 
             public static ProjectileKey MissileSmall { get; } = new ProjectileKey("MissileSmall");
-            public static ProjectileKey MissileMedium { get; } = new ProjectileKey("MissilMediuml");
+            public static ProjectileKey MissileMedium { get; } = new ProjectileKey("MissileMedium");
             public static ProjectileKey MissileLarge { get; } = new ProjectileKey("MissileLarge");
 
             public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
