@@ -1,16 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class CloudGenerator : ICloudGenerator
     {
         private readonly ICloudFactory _cloudFactory;
+        private readonly IRandomGenerator _random;
 
-        public CloudGenerator(ICloudFactory cloudFactory)
+        public CloudGenerator(ICloudFactory cloudFactory, IRandomGenerator random)
         {
-            Assert.IsNotNull(cloudFactory);
+            Helper.AssertIsNotNull(cloudFactory, random);
+
             _cloudFactory = cloudFactory;
+            _random = random;
         }
 
         public void GenerateClouds(ICloudGenerationStats generationStats)
@@ -23,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             while (areaUsed < targetArea)
             {
-                Vector2 spawnPosition = FindSpawnPosition(generationStats.CloudSpawnArea);
+                Vector3 spawnPosition = FindSpawnPosition(generationStats.CloudSpawnArea, generationStats.ZPositionRange);
                 ICloud newCloud = _cloudFactory.CreateCloud(spawnPosition);
                 newCloud.Initialise(cloudStats);
 
@@ -32,12 +36,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             }
         }
 
-        private Vector2 FindSpawnPosition(Rect spawnArea)
+        private Vector3 FindSpawnPosition(Rect spawnArea, IRange<float> zPositionRange)
         {
-            float xPos = Random.Range(spawnArea.xMin, spawnArea.xMax);
-            float yPos = Random.Range(spawnArea.yMin, spawnArea.yMax);
+            float xPos = _random.Range(spawnArea.xMin, spawnArea.xMax);
+            float yPos = _random.Range(spawnArea.yMin, spawnArea.yMax);
+            float zPos = _random.Range(zPositionRange.Min, zPositionRange.Max);
 
-            return new Vector2(xPos, yPos);
+            return new Vector3(xPos, yPos, zPos);
         }
     }
 }

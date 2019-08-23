@@ -15,6 +15,7 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
@@ -178,7 +179,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Other
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
-            components.CloudInitialiser.Initialise(currentLevel);
+            components.CloudInitialiser.Initialise(currentLevel, new RandomGenerator());
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _gameEndMonitor 
                 = new GameEndMonitor(

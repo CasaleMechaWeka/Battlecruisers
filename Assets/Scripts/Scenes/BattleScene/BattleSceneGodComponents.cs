@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Assert.IsNotNull(platformAudioSource);
             AudioSource = new AudioSourceBC(platformAudioSource);
 
-            CloudInitialiser = GetComponent<CloudInitialiser>();
+            CloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(CloudInitialiser);
 
             SkyboxInitialiser = GetComponent<SkyboxInitialiser>();

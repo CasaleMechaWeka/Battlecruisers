@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public enum CloudDensity
     {
-        Low, Medium, High
+        Low, Medium, High, VeryHigh
     }
 
     public enum CloudMovementSpeed
@@ -17,5 +18,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         Rect CloudSpawnArea { get; }
 		float CloudDensityAsFraction { get; }
         float CloudHorizontalMovementSpeedInS { get; }
+        IRange<float> ZPositionRange { get; }
     }
 }

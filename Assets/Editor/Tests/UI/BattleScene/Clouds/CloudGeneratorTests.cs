@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Clouds;
+using BattleCruisers.Utils;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
             _factory.CreateCloudStats(_generationStats).Returns(_cloudStats);
             _factory.CreateCloud(default).ReturnsForAnyArgs(_cloud);
 			
-			_generator = new CloudGenerator(_factory);
+			_generator = new CloudGenerator(_factory, new RandomGenerator());
         }
 
         [Test]

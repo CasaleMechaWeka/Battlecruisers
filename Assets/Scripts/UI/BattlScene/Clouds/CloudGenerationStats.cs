@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
@@ -18,13 +20,18 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
         public float CloudDensityAsFraction { get; }
         public float CloudHorizontalMovementSpeedInS { get; }
+        public IRange<float> ZPositionRange { get; }
 
         public CloudGenerationStats(
             Rect cloudSpawnArea,
+            IRange<float> zPositionRange,
             CloudDensity density = CloudDensity.Medium,
             CloudMovementSpeed movementSpeed = CloudMovementSpeed.Slow)
         {
+            Assert.IsNotNull(zPositionRange);
+
             CloudSpawnArea = cloudSpawnArea;
+            ZPositionRange = zPositionRange;
             CloudDensityAsFraction = ConvertCloudDensity(density);
             CloudHorizontalMovementSpeedInS = ConvertMovementSpeed(movementSpeed);
         }
@@ -33,6 +40,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         {
             switch (density)
             {
+                case CloudDensity.VeryHigh:
+                    return 4;
                 case CloudDensity.High:
                     return 2;
                 case CloudDensity.Medium:

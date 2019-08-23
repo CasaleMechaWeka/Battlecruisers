@@ -1,5 +1,6 @@
 ﻿namespace BattleCruisers.Utils.DataStrctures
 {
+    // PERF  Struct candidate :)
     public class Range<T> : IRange<T>
     {
         public T Min { get; }

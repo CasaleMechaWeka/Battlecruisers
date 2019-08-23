@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             Assert.IsTrue(cloudPrefabs.Count != 0);
         }
 
-        public ICloud CreateCloud(Vector2 spawnPosition)
+        public ICloud CreateCloud(Vector3 spawnPosition)
         {
             CloudController cloudToCreate = cloudPrefabs.Shuffle().First();
             return Instantiate(cloudToCreate, spawnPosition, new Quaternion());
