@@ -10,6 +10,7 @@ using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private IKillCountController _unitKillCount;
 		private IList<IBuilding> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
+        private IDeferrer _deferrer;
 
         protected IUpdaterProvider _updaterProvider;
         protected TestUtils.Helper _helper;
@@ -58,7 +60,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             Assert.IsTrue(numOfBasicDefenceBuildings >= 0);
             Assert.IsTrue(numOfAdvancedDefenceBuildings >= 0);
 
-
             _offensiveUnitKey = unitKey;
             _numOfDefenceBuildings = numOfBasicDefenceBuildings + numOfAdvancedDefenceBuildings;
             _helper = new TestUtils.Helper(numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
@@ -68,16 +69,16 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             _numOfDefenceBuildngsDestroyed = 0;
             _updaterProvider = updaterProvider;
 
+            _deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(_deferrer);
 
             KillCountController killCount = transform.FindNamedComponent<KillCountController>("UnitKillCount");
             killCount.Initialise((int)FindUnitCost(unitKey));
             _unitKillCount = killCount;
 
-
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
             Camera.enabled = false;
-
 
 			SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
             CreateDefenceBuildings(basicDefenceBuildingKey, advancedDefenceBuildingKey);
@@ -103,7 +104,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     parentCruiserDirection: Direction.Left,
                     updaterProvider: _updaterProvider,
                     parentCruiser: redCruiser,
-                    enemyCruiser: blueCruiser);
+                    enemyCruiser: blueCruiser,
+                    deferrer: _deferrer);
 
             IList<IBuildable> basicDefenceBuildings
                 = buildingSpawner.SpawnBuildables(
