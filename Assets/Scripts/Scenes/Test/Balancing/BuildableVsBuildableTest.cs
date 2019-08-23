@@ -55,19 +55,28 @@ namespace BattleCruisers.Scenes.Test.Balancing
             _helper = helper;
             _isScenarioOver = false;
 
+            ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
             ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
 
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition, updaterProvider, redCruiser);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition, updaterProvider, blueCruiser, redCruiser);
             _leftGroup = leftGroupController.Initialise(prefabFactory, _helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
+
+            foreach (IBuildable buildable in _leftGroup.Buildables)
+            {
+                if (buildable is IUnit unit)
+                {
+                    TestUtils.Helper.SetupUnitForUnitMonitor(unit, unit.ParentCruiser);
+                }
+            }
 
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition, updaterProvider, redCruiser);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition, updaterProvider, redCruiser, blueCruiser);
             _rightGroup = rightGroupController.Initialise(prefabFactory, _helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
@@ -96,6 +105,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             TestUtils.Helper helper, 
             Vector2 spawnPosition,
             IUpdaterProvider updaterProvider,
+            ICruiser parentCruiser,
             ICruiser enemyCruiser)
         {
             return 
@@ -104,6 +114,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     Faction.Blues, 
                     parentCruiserDirection: Direction.Right, 
                     updaterProvider: updaterProvider,
+                    parentCruiser: parentCruiser,
                     enemyCruiser: enemyCruiser);
         }
 
@@ -111,15 +122,17 @@ namespace BattleCruisers.Scenes.Test.Balancing
             TestUtils.Helper helper, 
             Vector2 spawnPosition,
             IUpdaterProvider updaterProvider,
-            ICruiser parentCruiser)
+            ICruiser parentCruiser,
+            ICruiser enemyCruiser)
         {
-            return 
+            return
                 new TestUtils.BuildableInitialisationArgs(
-                    helper, 
-                    Faction.Reds, 
-                    parentCruiserDirection: Direction.Left, 
+                    helper,
+                    Faction.Reds,
+                    parentCruiserDirection: Direction.Left,
                     updaterProvider: updaterProvider,
-                    parentCruiser: parentCruiser);
+                    parentCruiser: parentCruiser,
+                    enemyCruiser: enemyCruiser);
         }
 
         private void ShowScenarioDetails()
