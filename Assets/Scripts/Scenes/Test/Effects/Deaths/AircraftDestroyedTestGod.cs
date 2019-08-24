@@ -6,14 +6,16 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
-    public class AircraftDestroyedTestGod : MonoBehaviour 
+    public class AircraftDestroyedTestGod : TestGodBase 
 	{
         public TestAircraftController aircraftToDestroy, blockingAircraft;
 		public List<Vector2> patrolPoints;
 
-		void Start() 
+		protected override void Start() 
 		{
-			Helper helper = new Helper();
+            base.Start();
+
+			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             Faction aircraftFaction = Faction.Blues;
             Faction turretFaction = Faction.Reds;
