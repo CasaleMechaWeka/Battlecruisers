@@ -3,19 +3,20 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
-    public class HotSpawningTestGod : MonoBehaviour
+    public class HotSpawningTestGod : TestGodBase
     {
         public UnitWrapper unitPrefab;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+
             unitPrefab.Initialise();
 
-            Helper helper = new Helper(buildSpeedMultiplier: 5);
+            Helper helper = new Helper(buildSpeedMultiplier: 5, updaterProvider: _updaterProvider);
 
             // Factory
             Factory factory = FindObjectOfType<Factory>();

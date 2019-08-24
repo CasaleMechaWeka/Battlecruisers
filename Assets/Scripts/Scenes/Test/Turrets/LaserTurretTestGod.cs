@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
         {
             base.Start();
 
-            Helper helper = new Helper();
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
             // Setup laser barrel

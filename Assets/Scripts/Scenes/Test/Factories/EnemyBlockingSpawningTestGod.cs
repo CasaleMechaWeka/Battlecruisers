@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 			archonPrefab.Initialise();
             attackBoatPrefab.Initialise();
 
-			Helper helper = new Helper();
+			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             // Factory building archon
             helper.InitialiseBuilding(leftFactory, Faction.Reds, parentCruiserDirection: Direction.Right);
