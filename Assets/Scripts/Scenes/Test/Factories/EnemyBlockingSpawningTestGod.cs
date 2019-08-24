@@ -1,19 +1,20 @@
-﻿using System;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
-using UnityEngine;
+using System;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
-    public class EnemyBlockingSpawningTestGod : MonoBehaviour 
+    public class EnemyBlockingSpawningTestGod : TestGodBase 
 	{
 		public Factory leftFactory, rightFactory;
 		public UnitWrapper archonPrefab, attackBoatPrefab;
 
-		void Start()
+		protected override void Start()
 		{
+            base.Start();
+
 			archonPrefab.Initialise();
             attackBoatPrefab.Initialise();
 
