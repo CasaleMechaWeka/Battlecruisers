@@ -7,9 +7,11 @@ using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using UnityEngine;
+using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Balancing
@@ -20,6 +22,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         protected IBuildableGroup _leftGroup, _rightGroup;
         protected TestUtils.Helper _helper;
+        protected IDeferrer _deferrer;
 
         protected const int DEFAULT_OFFSET_FROM_CENTRE_IN_M = 15;
 
@@ -54,6 +57,9 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
             _helper = helper;
             _isScenarioOver = false;
+
+            _deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(_deferrer);
 
             ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
             ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
@@ -115,7 +121,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     parentCruiserDirection: Direction.Right, 
                     updaterProvider: updaterProvider,
                     parentCruiser: parentCruiser,
-                    enemyCruiser: enemyCruiser);
+                    enemyCruiser: enemyCruiser,
+                    deferrer: _deferrer);
         }
 
         protected virtual TestUtils.BuildableInitialisationArgs CreateRightGroupArgs(
@@ -132,7 +139,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
                     parentCruiserDirection: Direction.Left,
                     updaterProvider: updaterProvider,
                     parentCruiser: parentCruiser,
-                    enemyCruiser: enemyCruiser);
+                    enemyCruiser: enemyCruiser,
+                    deferrer: _deferrer);
         }
 
         private void ShowScenarioDetails()
