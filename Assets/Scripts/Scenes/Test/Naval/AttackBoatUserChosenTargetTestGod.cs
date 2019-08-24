@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using System.Collections.Generic;
@@ -7,15 +9,25 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
-    public class AttackBoatUserChosenTargetTestGod : MonoBehaviour 
+    public class AttackBoatUserChosenTargetTestGod : TestGodBase 
 	{
         private IUserChosenTargetManager _userChosenTargetManager;
 
         public TestAircraftController inRangeLowPriorityTarget, inRangeHighPriorityTarget, outOfRangeLowPriorityTarget;
 
-		void Start()
-		{
-			Helper helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
+
+            ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
+
+            // Ship
+            ShipController boat = FindObjectOfType<ShipController>();
+            _userChosenTargetManager = new UserChosenTargetManager();
+            helper.InitialiseUnit(boat, Faction.Blues, userChosenTargetManager: _userChosenTargetManager, enemyCruiser: redCruiser);
+            boat.StartConstruction();
 
             // Targets
             IList<TestAircraftController> targets = new List<TestAircraftController>()
@@ -27,16 +39,11 @@ namespace BattleCruisers.Scenes.Test.Naval
             foreach (TestAircraftController target in targets)
             {
                 target.UseDummyMovementController = true;
-                target.SetTargetType(TargetType.Buildings);
+                target.SetTargetType(TargetType.Ships);
                 helper.InitialiseUnit(target, Faction.Reds);
                 target.StartConstruction();
+                Helper.SetupUnitForUnitMonitor(target, redCruiser);
             }
-
-            // Ship
-            ShipController boat = FindObjectOfType<ShipController>();
-            _userChosenTargetManager = new UserChosenTargetManager();
-            helper.InitialiseUnit(boat, Faction.Blues, userChosenTargetManager: _userChosenTargetManager);
-            boat.StartConstruction();
 
             // Imitate user choosing targets
             Invoke("ChooseInRangeLowPriorityTarget", 2);
