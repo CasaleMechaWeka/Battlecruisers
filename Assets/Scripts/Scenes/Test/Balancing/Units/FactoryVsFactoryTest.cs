@@ -132,7 +132,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                     updaterProvider: updaterProvider,
                     parentCruiser: parentCruiser,
                     enemyCruiser: enemyCruiser,
-                    aircraftProvider: aircraftProvider);
+                    aircraftProvider: aircraftProvider,
+                    deferrer: _deferrer);
             _helper.InitialiseBuilding(factory, args);
 
             factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS, killCounter);
