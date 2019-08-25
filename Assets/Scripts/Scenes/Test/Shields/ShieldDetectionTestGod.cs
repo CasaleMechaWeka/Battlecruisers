@@ -3,16 +3,17 @@ using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
-    public class ShieldDetectionTestGod : MonoBehaviour 
+    public class ShieldDetectionTestGod : TestGodBase
 	{
-		void Start () 
+		protected override void Start () 
 		{
-			Helper helper = new Helper();
+            base.Start();
+
+			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
 			// Setup shields
