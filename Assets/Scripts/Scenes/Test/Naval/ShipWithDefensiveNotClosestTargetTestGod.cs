@@ -4,15 +4,16 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
-    public class ShipWithDefensiveNotClosestTargetTestGod : MonoBehaviour 
+    public class ShipWithDefensiveNotClosestTargetTestGod : TestGodBase
 	{
-		void Start()
+		protected override void Start()
 		{
-			Helper helper = new Helper();
+            base.Start();
+
+			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             // Turrets
             TurretController[] turrets = FindObjectsOfType<TurretController>();

@@ -46,9 +46,9 @@ namespace BattleCruisers.Scenes.Test.Naval
             }
 
             // Imitate user choosing targets
-            Invoke("ChooseInRangeLowPriorityTarget", 2);
-            Invoke("ChooseOutOfRangeLowPriorityTarget", 4);
-            Invoke("ClearChosenTarget", 6);
+            Invoke("ChooseInRangeLowPriorityTarget", 3);
+            Invoke("ChooseOutOfRangeLowPriorityTarget", 6);
+            Invoke("ClearChosenTarget", 9);
         }
 
         private void ChooseInRangeLowPriorityTarget()
