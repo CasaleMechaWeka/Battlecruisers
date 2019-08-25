@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Block;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
@@ -11,6 +12,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Smoke;
+using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -81,6 +83,7 @@ namespace BattleCruisers.Cruisers
         public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
         public ICruiserUnitMonitor UnitMonitor { get; private set; }
         public IUnitTargets UnitTargets { get; private set; }
+        public ITargetTracker BlockedShipsTracker { get; private set; }
 
         public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
@@ -149,6 +152,14 @@ namespace BattleCruisers.Cruisers
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
 
             _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
+
+            EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponent<EnemyShipBlockerInitialiser>();
+            Assert.IsNotNull(enemyShipBlockerInitialiser);
+            BlockedShipsTracker
+                = enemyShipBlockerInitialiser.Initialise(
+                    args.FactoryProvider.Targets,
+                    args.CruiserSpecificFactories.Targets.TrackerFactory,
+                    args.EnemyCruiser.Faction);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;

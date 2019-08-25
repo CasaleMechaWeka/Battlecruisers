@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Targets.TargetTrackers;
 using System;
 
 namespace BattleCruisers.Cruisers
@@ -18,6 +19,7 @@ namespace BattleCruisers.Cruisers
         ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
         IUnitTargets UnitTargets { get; }
+        ITargetTracker BlockedShipsTracker { get; }
 
         event EventHandler<BuildingStartedEventArgs> BuildingStarted;
 
