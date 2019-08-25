@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class NavigationTestGod : MonoBehaviour
+    public class NavigationTestGod : TestGodBase
     {
         private ICameraAdjuster _cameraAdjuster;
         private ICamera _camera;
@@ -21,8 +21,10 @@ namespace BattleCruisers.Scenes.Test
         public float smoothTime;
         public bool useCorners;
 
-        protected virtual void Start()
+        protected override void Start()
         {
+            base.Start();
+
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             IBroadcastingFilter navigationWheelEnabledFilter = new StaticBroadcastingFilter(isMatch: true);
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);

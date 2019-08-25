@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
         {
             base.Start();
 
-            Helper helper = new Helper();
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             Artillery artillery = FindObjectOfType<Artillery>();
             helper.InitialiseBuilding(artillery, Faction.Blues);
