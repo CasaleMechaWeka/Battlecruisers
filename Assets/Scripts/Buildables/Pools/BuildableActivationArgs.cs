@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 
-namespace BattleCruisers.Buildables.ActivationArgs
+namespace BattleCruisers.Buildables.Pools
 {
     public class BuildableActivationArgs
     {
