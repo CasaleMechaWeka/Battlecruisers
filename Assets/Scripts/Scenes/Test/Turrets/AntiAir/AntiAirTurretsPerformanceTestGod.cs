@@ -3,7 +3,9 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Threading;
 using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
@@ -15,7 +17,10 @@ namespace BattleCruisers.Scenes.Test.Performance
         {
             base.Initialise();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(timeScaleDeferrer);
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
    
             // Initialise prefab
 			unitPrefab.Initialise();
