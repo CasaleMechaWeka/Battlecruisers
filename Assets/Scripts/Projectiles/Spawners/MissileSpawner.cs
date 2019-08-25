@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class MissileSpawner : ProjectileSpawner<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
+    public class MissileSpawner : ProjectileSpawner<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
 	{
 		public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
 		{

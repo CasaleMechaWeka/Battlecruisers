@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class RocketSpawner : ProjectileSpawner<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
+    public class RocketSpawner : ProjectileSpawner<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
 	{
         private ICruisingProjectileStats _rocketStats;
 

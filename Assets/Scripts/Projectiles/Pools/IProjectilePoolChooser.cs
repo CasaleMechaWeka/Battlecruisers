@@ -4,10 +4,11 @@ using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public interface IProjectilePoolChooser<TActivationArgs, TStats>
+    public interface IProjectilePoolChooser<TProjectile, TActivationArgs, TStats>
+        where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
         where TActivationArgs : ProjectileActivationArgs<TStats>
         where TStats : IProjectileStats
     {
-        IPool<ProjectileControllerBase<TActivationArgs, TStats>, TActivationArgs> ChoosePool(IProjectilePoolProvider projectilePoolProvider);
+        IPool<TProjectile, TActivationArgs> ChoosePool(IProjectilePoolProvider projectilePoolProvider);
     }
 }

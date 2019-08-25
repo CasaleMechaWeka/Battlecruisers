@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class ShellSpawner : BaseShellSpawner
+    public class ShellSpawner : BaseShellSpawner<ProjectileController>
 	{
         private IProjectileSpawnerSoundPlayer _soundPlayer;
 

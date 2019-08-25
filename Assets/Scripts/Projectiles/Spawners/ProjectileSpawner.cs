@@ -10,14 +10,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public abstract class ProjectileSpawner<TProjectileArgs, TStats> : MonoBehaviour
+    public abstract class ProjectileSpawner<TProjectile, TProjectileArgs, TStats> : MonoBehaviour
+        where TProjectile : ProjectileControllerBase<TProjectileArgs, TStats>
         where TProjectileArgs : ProjectileActivationArgs<TStats>
         where TStats : IProjectileStats
 	{
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
 		protected IFactoryProvider _factoryProvider;
-        protected IPool<ProjectileControllerBase<TProjectileArgs, TStats>, TProjectileArgs> _projectilePool;
+        protected IPool<TProjectile, TProjectileArgs> _projectilePool;
 
         public void Initialise(IProjectileSpawnerArgs args)
         {
@@ -27,7 +28,7 @@ namespace BattleCruisers.Projectiles.Spawners
             _projectileStats = args.ProjectileStats;
             _factoryProvider = args.FactoryProvider;
 
-            IProjectilePoolChooser<TProjectileArgs, TStats> poolChooser = GetComponent<IProjectilePoolChooser<TProjectileArgs, TStats>>();
+            IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats>>();
             Assert.IsNotNull(poolChooser);
             _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
         }
