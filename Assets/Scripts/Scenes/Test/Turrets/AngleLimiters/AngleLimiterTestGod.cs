@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class AngleLimiterTestGod : MonoBehaviour
+    public class AngleLimiterTestGod : TestGodBase
     {
         public List<Vector2> targetPatrolPoints;
         public TargetType targetType;
 
-        void Start()
+        protected override void Start()
         {
-            Helper helper = new Helper();
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
             // Setup target
