@@ -94,8 +94,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             base.Initialise(uiManager, factoryProvider);
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
-            // FELIX  Inject :)
-            _fuzziedMaxVelocityInMPerS = new RandomGenerator().Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
+            _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 

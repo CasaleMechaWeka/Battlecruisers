@@ -179,7 +179,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Other
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
-            components.CloudInitialiser.Initialise(currentLevel.CloudStats, new RandomGenerator());
+            components.CloudInitialiser.Initialise(currentLevel.CloudStats, RandomGenerator.Instance);
             components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
             _gameEndMonitor 
                 = new GameEndMonitor(

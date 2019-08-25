@@ -42,7 +42,7 @@ namespace BattleCruisers.AI
             ISlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
 
-            _factoryMonitorFactory = new FactoryMonitorFactory(new RandomGenerator());
+            _factoryMonitorFactory = new FactoryMonitorFactory(RandomGenerator.Instance);
         }
 
         public IArtificialIntelligence CreateAI(ILevelInfo levelInfo)

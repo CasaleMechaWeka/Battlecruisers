@@ -48,9 +48,8 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
-            IRandomGenerator random = new RandomGenerator();
-            HintProviders hintProviders = new HintProviders(random);
-            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, _gameModel, random);
+            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, _gameModel, RandomGenerator.Instance);
 
             // TEMP  For showing PostBattleScreen :)
             //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);

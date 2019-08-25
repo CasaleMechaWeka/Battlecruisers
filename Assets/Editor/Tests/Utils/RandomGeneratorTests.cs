@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Utils
         [SetUp]
         public void TestSetup()
         {
-            _randomGenerator = new RandomGenerator();
+            _randomGenerator = RandomGenerator.Instance;
         }
 
         [Test]

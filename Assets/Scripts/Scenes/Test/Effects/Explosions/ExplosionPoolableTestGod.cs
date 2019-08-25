@@ -9,11 +9,10 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
         void Start()
         {
             AdvancedExplosion[] explosions = FindObjectsOfType<AdvancedExplosion>();
-            IRandomGenerator random = new RandomGenerator();
 
             foreach (AdvancedExplosion explosion in explosions)
             {
-                explosion.Initialise(random);
+                explosion.Initialise(RandomGenerator.Instance);
                 explosion.Activate(explosion.transform.position);
                 explosion.Deactivated += (sender, e) => explosion.Activate(explosion.transform.position);
             }

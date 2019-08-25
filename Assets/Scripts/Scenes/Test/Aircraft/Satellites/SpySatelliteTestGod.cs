@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
             Vector2 parentCruiserPosition = new Vector2(-35, 0);
             Vector2 enemyCruiserPosition = new Vector2(35, 0);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
+            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, BCUtils.RandomGenerator.Instance);
 
             SpySatelliteController satellite = FindObjectOfType<SpySatelliteController>();
             helper.InitialiseUnit(satellite, aircraftProvider: aircraftProvider);

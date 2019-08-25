@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
             _factory.CreateCloudStats(_generationStats).Returns(_cloudStats);
             _factory.CreateCloud(default).ReturnsForAnyArgs(_cloud);
 			
-			_generator = new CloudGenerator(_factory, new RandomGenerator());
+			_generator = new CloudGenerator(_factory, RandomGenerator.Instance);
         }
 
         [Test]

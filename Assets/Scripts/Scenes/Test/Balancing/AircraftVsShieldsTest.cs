@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
                 = new AircraftProvider(
                     parentCruiserPosition: spawnPosition,
                     enemyCruiserPosition: shieldSpawnPosition,
-                    random: new BCUtils.RandomGenerator());
+                    random: BCUtils.RandomGenerator.Instance);
 
             return
                 new BuildableInitialisationArgs(

@@ -8,12 +8,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     {
         protected override IAircraftProvider CreateAircraftProvider(Direction facingDirection)
         {
-            BCUtils.IRandomGenerator random = new BCUtils.RandomGenerator();
-
             return
                 facingDirection == Direction.Right ?
-                new AircraftProvider(parentCruiserPosition: _leftFactory.Position, enemyCruiserPosition: _rightFactory.Position, random: random) :
-                new AircraftProvider(parentCruiserPosition: _rightFactory.Position, enemyCruiserPosition: _leftFactory.Position, random: random);
+                new AircraftProvider(parentCruiserPosition: _leftFactory.Position, enemyCruiserPosition: _rightFactory.Position, random: BCUtils.RandomGenerator.Instance) :
+                new AircraftProvider(parentCruiserPosition: _rightFactory.Position, enemyCruiserPosition: _leftFactory.Position, random: BCUtils.RandomGenerator.Instance);
         }
     }
 }

@@ -5,6 +5,21 @@ namespace BattleCruisers.Utils
 {
     public class RandomGenerator : IRandomGenerator
     {
+        private static RandomGenerator _instance;
+        public static RandomGenerator Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new RandomGenerator();
+                }
+                return _instance;
+            }
+        }
+
+        private RandomGenerator() { }
+
         public float RangeFromCenter(float center, float radius)
         {
             Assert.IsTrue(radius > 0);

@@ -28,8 +28,8 @@ namespace BattleCruisers.Utils.Fetchers
             Assert.IsNotNull(prefabFetcher);
 
 			_prefabFetcher = prefabFetcher;
-            _randomGenerator = new RandomGenerator();
-		}
+            _randomGenerator = RandomGenerator.Instance;
+        }
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
 		{

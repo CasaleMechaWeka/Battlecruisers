@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            cloudInitialiser.Initialise(cloudStats, new BCUtils.RandomGenerator());
+            cloudInitialiser.Initialise(cloudStats, BCUtils.RandomGenerator.Instance);
         }
 
         private ICircularList<Material> FindSkyMaterials()

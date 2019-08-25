@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             // Setup deathstar
             Vector2 parentCruiserPosition = new Vector2(-20, 0);
             Vector2 enemyCruiserPosition = new Vector2(0, 0);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, new BCUtils.RandomGenerator());
+            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, BCUtils.RandomGenerator.Instance);
 
             DeathstarController deathstar = FindObjectOfType<DeathstarController>();
             _helper.InitialiseUnit(deathstar, Faction.Blues, aircraftProvider: aircraftProvider);

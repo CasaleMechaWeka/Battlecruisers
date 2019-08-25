@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
                     targetBoundsFinder,
                     angleCalculator,
                     new LinearRangeFinder(),
-                    new RandomGenerator(),
+                    RandomGenerator.Instance,
                     turretStats);
         }
     }
