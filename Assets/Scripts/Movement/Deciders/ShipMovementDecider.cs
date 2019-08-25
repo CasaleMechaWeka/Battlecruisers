@@ -18,7 +18,6 @@ namespace BattleCruisers.Movement.Deciders
     /// 
     /// Otherwise ship starts moving.
     /// </summary>
-    /// FELIX  Update tests :)
     public class ShipMovementDecider : IMovementDecider
     {
         private readonly IShip _ship;
@@ -117,6 +116,9 @@ namespace BattleCruisers.Movement.Deciders
 
             _inRangeTargetTracker.TargetsChanged -= TriggerDecideMovement;
             _inRangeTargetTracker.DisposeManagedState();
+
+            // Do not dispose, because owned by enemy cruiser.  Shared by all friendly ships.
+            _shipBlockerTargetTracker.TargetsChanged -= TriggerDecideMovement;
         }
     }
 }

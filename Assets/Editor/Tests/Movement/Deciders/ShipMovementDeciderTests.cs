@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.Movement.Deciders
 
         private IShip _ship;
         private IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
-        private ITargetTracker _inRangeTargetTracker;
+        private ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
         private ITargetRangeHelper _rangeHelper;
         private ITarget _target, _nullTarget;
 
@@ -39,13 +39,15 @@ namespace BattleCruisers.Tests.Movement.Deciders
             _blockingEnemyProvider = Substitute.For<IBroadcastingTargetProvider>();
             _blockingFriendlyProvider = Substitute.For<IBroadcastingTargetProvider>();
             _inRangeTargetTracker = Substitute.For<ITargetTracker>();
+            _shipBlockerTargetTracker = Substitute.For<ITargetTracker>();
             _rangeHelper = Substitute.For<ITargetRangeHelper>();
+
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(false);
 
             _target = Substitute.For<ITarget>();
 			_nullTarget = null;
 
-            // FELIX  Fix :)
-            _shipMovementDecider = new ShipMovementDecider(_ship, _blockingEnemyProvider, _blockingFriendlyProvider, _inRangeTargetTracker, null, _rangeHelper);
+            _shipMovementDecider = new ShipMovementDecider(_ship, _blockingEnemyProvider, _blockingFriendlyProvider, _inRangeTargetTracker, _shipBlockerTargetTracker, _rangeHelper);
             _ship.ClearReceivedCalls();
         }
 
@@ -72,6 +74,13 @@ namespace BattleCruisers.Tests.Movement.Deciders
         }
 
         [Test]
+        public void ShipBlockerTargetTracker_TargetsChanged_TriggersDecision()
+        {
+            _shipBlockerTargetTracker.TargetsChanged += Raise.Event();
+            AssertDecideMovementWasCalled();
+        }
+
+        [Test]
         public void HighestPriorityTargetChanged_TriggersDecision()
         {
             _shipMovementDecider.Target = _target;
@@ -94,6 +103,7 @@ namespace BattleCruisers.Tests.Movement.Deciders
             _ship.IsMoving.Returns(false);
             _blockingEnemyProvider.Target.Returns(_nullTarget);
             _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(false);
             _shipMovementDecider.Target = null;
 
             TriggerDecision();
@@ -107,6 +117,7 @@ namespace BattleCruisers.Tests.Movement.Deciders
             _ship.IsMoving.Returns(false);
             _blockingEnemyProvider.Target.Returns(_nullTarget);
             _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(false);
             _shipMovementDecider.Target = _target;
             _rangeHelper.IsTargetInRange(_target).Returns(false);
 
@@ -139,11 +150,25 @@ namespace BattleCruisers.Tests.Movement.Deciders
         }
 
         [Test]
-        public void Stationary_NoBlockingTargets_HighPriorityTargetInRange_DoesNothing()
+        public void Stationary_ReachedEnemyCruiser_DoesNothing()
         {
             _ship.IsMoving.Returns(false);
             _blockingEnemyProvider.Target.Returns(_nullTarget);
             _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(true);
+
+            TriggerDecision();
+
+            _ship.DidNotReceive().StartMoving();
+        }
+
+        [Test]
+        public void Stationary_NoBlockingTargets_HaveNotReachedEnemyCruiser_HighPriorityTargetInRange_DoesNothing()
+        {
+            _ship.IsMoving.Returns(false);
+            _blockingEnemyProvider.Target.Returns(_nullTarget);
+            _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(false);
             _rangeHelper.IsTargetInRange(_target).Returns(true);
             _shipMovementDecider.Target = _target;
 
@@ -178,11 +203,25 @@ namespace BattleCruisers.Tests.Movement.Deciders
         }
 
         [Test]
-        public void Moving_NoBlockingTargets_HighPriorityTargetInRange_StopsMoving()
+        public void Moving_NoBlockingTargets_ReachedEnemyCruiser_StopsMoving()
         {
             _ship.IsMoving.Returns(true);
             _blockingEnemyProvider.Target.Returns(_nullTarget);
             _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(true);
+
+            TriggerDecision();
+
+            _ship.Received().StopMoving();
+        }
+
+        [Test]
+        public void Moving_NoBlockingTargets_HaveNotReachedEnemyCruiser_HighPriorityTargetInRange_StopsMoving()
+        {
+            _ship.IsMoving.Returns(true);
+            _blockingEnemyProvider.Target.Returns(_nullTarget);
+            _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(false);
             _rangeHelper.IsTargetInRange(_target).Returns(true);
             _shipMovementDecider.Target = _target;
 
@@ -192,11 +231,12 @@ namespace BattleCruisers.Tests.Movement.Deciders
         }
 
         [Test]
-        public void Moving_NoBlockingTargets_HighPriorityTargetOutOfRange_DoesNothing()
+        public void Moving_NoBlockingTargets_HaveNotReachedEnemyCruiser_HighPriorityTargetOutOfRange_DoesNothing()
         {
             _ship.IsMoving.Returns(true);
             _blockingEnemyProvider.Target.Returns(_nullTarget);
             _blockingFriendlyProvider.Target.Returns(_nullTarget);
+            _shipBlockerTargetTracker.ContainsTarget(_ship).Returns(false);
             _rangeHelper.IsTargetInRange(_target).Returns(false);
             _shipMovementDecider.Target = _target;
 
