@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -6,8 +7,10 @@ using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -53,7 +56,10 @@ namespace BattleCruisers.Scenes.Test
 		{
             base.Start();
 
-			_helper = new Helper(updaterProvider: _updaterProvider);
+            TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(timeScaleDeferrer);
+
+			_helper = new Helper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
 			_enemyFaction = Faction.Blues;
 			Faction friendlyFaction = Faction.Reds;
             _soundFetcher = new SoundFetcher();
@@ -68,7 +74,6 @@ namespace BattleCruisers.Scenes.Test
                 SetupLaser(test.LaserStats.Laser);
             }
 
-
             // Moving targets
             _movingTargets = CreateMovingTargetTests();
 
@@ -80,13 +85,15 @@ namespace BattleCruisers.Scenes.Test
                 SetupLaser(test.LaserStats.Laser);
 			}
 
-
 			// Blocking targets
 			_helper.InitialiseBuilding(targetRightLevelBlockingEnemy, _enemyFaction);
 			targetRightLevelBlockingEnemy.StartConstruction();
 
 			_helper.InitialiseBuilding(targetRightLevelBlockingFriendly, friendlyFaction);
 			targetRightLevelBlockingFriendly.StartConstruction();
+
+
+            _updaterProvider.BarrelControllerUpdater.Updated += BarrelControllerUpdater_Updated;
 		}
 
         private IList<LaserTest<IBuilding>> CreateStationaryTargetTests()
@@ -139,8 +146,9 @@ namespace BattleCruisers.Scenes.Test
 			};
 		}
 
-		void Update()
-		{
+
+        private void BarrelControllerUpdater_Updated(object sender, EventArgs e)
+        {
             foreach (LaserTest<IBuilding> test in _stationaryTargets)
             {
                 FireOrCease(test.LaserStats, test.Target);
