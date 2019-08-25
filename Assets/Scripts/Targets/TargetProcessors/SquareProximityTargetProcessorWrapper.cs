@@ -11,6 +11,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             TargetDetectorController enemyDetector = GetComponentInChildren<TargetDetectorController>();
             Assert.IsNotNull(enemyDetector);
+            enemyDetector.Initialise();
 
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
