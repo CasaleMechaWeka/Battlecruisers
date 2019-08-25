@@ -52,9 +52,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Gunship;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Gunship;
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);

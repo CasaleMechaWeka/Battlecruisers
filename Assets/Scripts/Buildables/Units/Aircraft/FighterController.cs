@@ -64,9 +64,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override float PositionEqualityMarginInM => 2;
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Fighter;
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);

@@ -124,10 +124,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             BuildableInitialisationArgs initialisationArgs,
             ISlot parentSlot = null)
         {
-            // FELIX  Check test scene still works :/
-            BuildingWrapper buildableWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
-            HealthBarController healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            building.StaticInitialise(healthBar);
+            BuildingWrapper buildingWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
+            HealthBarController healthBar = buildingWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            building.StaticInitialise(buildingWrapper.gameObject, healthBar);
             building.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             building.Activate(
                 new BuildingActivationArgs(
@@ -187,9 +186,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUnit unit,
             BuildableInitialisationArgs initialisationArgs)
         {
-            UnitWrapper buildableWrapper = unit.GameObject.GetComponentInInactiveParent<UnitWrapper>();
-            HealthBarController healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            unit.StaticInitialise(healthBar);
+            UnitWrapper unitWrapper = unit.GameObject.GetComponentInInactiveParent<UnitWrapper>();
+            HealthBarController healthBar = unitWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            unit.StaticInitialise(unitWrapper.gameObject, healthBar);
             unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             unit.Activate(
                 new BuildableActivationArgs(

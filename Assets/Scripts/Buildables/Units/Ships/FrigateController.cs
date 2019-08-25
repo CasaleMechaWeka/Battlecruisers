@@ -18,9 +18,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Frigate;
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Frigate;
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 		

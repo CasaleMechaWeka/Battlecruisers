@@ -79,9 +79,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         }
         #endregion Properties
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
             _isUnitPaused = new ObservableValue<bool>(false);
         }
 

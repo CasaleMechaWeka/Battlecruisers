@@ -43,9 +43,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 

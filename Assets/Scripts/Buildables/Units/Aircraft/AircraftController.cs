@@ -75,9 +75,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);

@@ -55,9 +55,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             _turrets = GetTurrets();
 

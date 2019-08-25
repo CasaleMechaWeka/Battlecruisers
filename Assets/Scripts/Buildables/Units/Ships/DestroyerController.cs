@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -17,9 +18,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Destroyer;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Destroyer;
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 

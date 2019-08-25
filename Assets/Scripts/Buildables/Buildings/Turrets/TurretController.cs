@@ -19,9 +19,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound => null;
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);

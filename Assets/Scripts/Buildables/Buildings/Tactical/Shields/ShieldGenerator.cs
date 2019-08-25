@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
@@ -26,9 +27,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
         }
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
             _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);

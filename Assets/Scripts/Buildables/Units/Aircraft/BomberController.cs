@@ -65,9 +65,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
         #endregion Properties
 
-        public override void StaticInitialise(HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
-            base.StaticInitialise(healthBar);
+            base.StaticInitialise(parent, healthBar);
 
 			_haveDroppedBombOnRun = false;
 			_isAtCruisingHeight = false;

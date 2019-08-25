@@ -40,6 +40,9 @@ namespace BattleCruisers.Buildables
 #pragma warning disable CS0414  // Variable is assigned but never used
         private SmokeInitialiser _smokeInitialiser;
 #pragma warning restore CS0414  // Variable is assigned but never used
+        // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
+        // both the target and the health bar.
+        private GameObject _parent;
 
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
@@ -177,14 +180,16 @@ namespace BattleCruisers.Buildables
         public event EventHandler<BuildProgressEventArgs> BuildableProgress;
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
         public event EventHandler Clicked;
-        // FELIX  Invoke!!!
         public event EventHandler Deactivated;
 
-        public virtual void StaticInitialise(HealthBarController healthBar)
+        public virtual void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise();
 
-            Assert.IsNotNull(healthBar);
+            Helper.AssertIsNotNull(parent, healthBar);
+
+            _parent = parent;
+
             _healthBar = healthBar;
             _healthBar.Initialise(this, followDamagable: true);
 
@@ -267,6 +272,8 @@ namespace BattleCruisers.Buildables
         public virtual void Activate(TActivationArgs activationArgs)
         {
             Assert.IsNotNull(activationArgs);
+
+            _parent.SetActive(true);
 
             ParentCruiser = activationArgs.ParentCruiser;
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
@@ -432,13 +439,10 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
-        // both the target and the health bar.  Hence destroy wrapper, so health bar
-        // gets destroyed at the same time as the target.
         protected override void InternalDestroy()
         {
-            Assert.IsNotNull(transform.parent);
-            Destroy(transform.parent.gameObject);
+            _parent.SetActive(false);
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void OnDestroyed()

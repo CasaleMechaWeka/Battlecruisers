@@ -60,7 +60,14 @@ namespace BattleCruisers.Buildables.Units
         public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
+
 			FacingDirection = ParentCruiser.Direction;
+
+            _healthBar.gameObject.SetActive(false);
+
+            // Disable gravity
+            rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            rigidBody.gravityScale = 0;
         }
 
         protected override void OnBuildableCompleted()
@@ -139,8 +146,7 @@ namespace BattleCruisers.Buildables.Units
 
         protected virtual void OnDeathWhileCompleted()
         {
-            // FELIX  Deactivate instead (need to activate in Activate() )
-            Destroy(_healthBar.gameObject);
+            _healthBar.gameObject.SetActive(false);
 
             // Make gravity take effect
             rigidBody.bodyType = RigidbodyType2D.Dynamic;
