@@ -44,7 +44,8 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
 			CircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetectorController>();
 			Assert.IsNotNull(enemyDetector);
-			
+            enemyDetector.Initialise();
+
 			// Create target finder
 			enemyDetector.Initialise(args.MaxRangeInM);
 			ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
