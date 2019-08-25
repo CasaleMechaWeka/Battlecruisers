@@ -153,7 +153,7 @@ namespace BattleCruisers.Cruisers
 
             _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
 
-            EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponent<EnemyShipBlockerInitialiser>();
+            EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponentInChildren<EnemyShipBlockerInitialiser>();
             Assert.IsNotNull(enemyShipBlockerInitialiser);
             BlockedShipsTracker
                 = enemyShipBlockerInitialiser.Initialise(
