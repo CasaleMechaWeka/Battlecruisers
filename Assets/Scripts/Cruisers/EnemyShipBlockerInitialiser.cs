@@ -8,8 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  Remove namespace if only for one class?
-namespace BattleCruisers.Cruisers.Block
+namespace BattleCruisers.Cruisers
 {
     public class EnemyShipBlockerInitialiser : MonoBehaviour
     {

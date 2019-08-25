@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Block;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetTrackers;
 using NSubstitute;
