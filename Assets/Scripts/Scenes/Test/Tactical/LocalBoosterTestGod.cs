@@ -8,21 +8,20 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Tactical
 {
-    public class LocalBoosterTestGod : MonoBehaviour
+    public class LocalBoosterTestGod : TestGodBase
     {
-        void Start()
+        protected override void Start()
         {
-            Helper helper = new Helper();
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
 
             // Setup target

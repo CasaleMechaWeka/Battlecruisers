@@ -6,11 +6,10 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
-using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class RocketSpawnerTestGod : MonoBehaviour 
+    public class RocketSpawnerTestGod : TestGodBase
 	{
 		private RocketSpawner _rocketSpawner;
 		private IBuilding _target;
@@ -18,10 +17,14 @@ namespace BattleCruisers.Scenes.Test
 
 		public RocketController rocketPrefab;
 
-		void Start()
-		{
-			// Setup target
-			Helper helper = new Helper();
+        protected override void Start()
+        {
+            base.Start();
+
+            Helper helper = new Helper(updaterProvider: _updaterProvider);
+
+            
+            // Setup target
 			_target = FindObjectOfType<Building>();
             helper.InitialiseBuilding(_target, Faction.Blues);
 			_target.StartConstruction();
