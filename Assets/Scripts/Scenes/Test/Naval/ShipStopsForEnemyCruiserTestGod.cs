@@ -12,13 +12,15 @@ namespace BattleCruisers.Scenes.Test.Naval
 {
     public class ShipStopsForEnemyCruiserTestGod : TestGodBase
     {
+        protected Helper _helper;
+
         protected override void Start()
         {
             base.Start();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            _helper = new Helper(updaterProvider: _updaterProvider);
 
-            BuildableInitialisationArgs redArgs = new BuildableInitialisationArgs(helper, faction: Faction.Reds);
+            BuildableInitialisationArgs redArgs = new BuildableInitialisationArgs(_helper, faction: Faction.Reds);
 
             EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = FindObjectOfType<EnemyShipBlockerInitialiser>();
             Assert.IsNotNull(enemyShipBlockerInitialiser);
@@ -28,12 +30,12 @@ namespace BattleCruisers.Scenes.Test.Naval
                     redArgs.CruiserSpecificFactories.Targets.TrackerFactory,
                     Faction.Blues);
 
-            ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
+            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
             redCruiser.BlockedShipsTracker.Returns(enemyShipBlockerTargetTracker);
 
             ShipController ship = FindObjectOfType<ShipController>();
             Assert.IsNotNull(ship);
-            helper.InitialiseUnit(ship, enemyCruiser: redCruiser);
+            _helper.InitialiseUnit(ship, enemyCruiser: redCruiser);
             ship.StartConstruction();
         }
     }
