@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Frigate;
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Frigate;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
         {
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 		

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -78,9 +79,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         }
         #endregion Properties
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
         {
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
             _isUnitPaused = new ObservableValue<bool>(false);
         }
 

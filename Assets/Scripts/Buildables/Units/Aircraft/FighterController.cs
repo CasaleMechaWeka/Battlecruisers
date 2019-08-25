@@ -19,6 +19,7 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.ActivationArgs;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -63,9 +64,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected override float PositionEqualityMarginInM => 2;
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Fighter;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
 		{
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
 
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);

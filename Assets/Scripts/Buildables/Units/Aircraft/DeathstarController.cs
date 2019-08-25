@@ -3,6 +3,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -29,9 +30,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public override TargetType TargetType => TargetType.Satellite;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
 		{
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
 
             Helper.AssertIsNotNull(leftWing, rightWing);
 

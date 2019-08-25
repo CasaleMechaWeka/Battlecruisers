@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.BattleScene.ProgressBars;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
@@ -11,9 +12,13 @@ namespace BattleCruisers.Buildables
 
         public void Initialise()
 		{
-            Buildable = gameObject.GetComponentInChildren<TBuildable>();
+            Buildable = GetComponentInChildren<TBuildable>();
 			Assert.IsNotNull(Buildable);
-            Buildable.StaticInitialise();
+
+            HealthBarController healthBar = GetComponentInChildren<HealthBarController>();
+            Assert.IsNotNull(healthBar);
+
+            Buildable.StaticInitialise(healthBar);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound => null;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
 		{
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);

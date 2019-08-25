@@ -35,7 +35,6 @@ namespace BattleCruisers.Buildables
         private float _cumulativeBuildProgressInDroneS;
         private float _buildTimeInDroneSeconds;
         private NumOfDronesTextController _numOfDronesText;
-        private HealthBarController _healthBar;
         private IClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -55,6 +54,7 @@ namespace BattleCruisers.Buildables
         // Boost resulting from adjacent local boosters
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected BuildableProgressController _buildableProgress;
+        protected HealthBarController _healthBar;
 
         public string buildableName;
         public string description;
@@ -68,7 +68,6 @@ namespace BattleCruisers.Buildables
         public float BuildProgress { get; private set; }
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
-        protected abstract HealthBarController HealthBarController { get; }
         public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
@@ -181,17 +180,17 @@ namespace BattleCruisers.Buildables
         // FELIX  Invoke!!!
         public event EventHandler Deactivated;
 
-        public override void StaticInitialise()
+        public virtual void StaticInitialise(HealthBarController healthBar)
         {
             base.StaticInitialise();
+
+            Assert.IsNotNull(healthBar);
+            _healthBar = healthBar;
+            _healthBar.Initialise(this, followDamagable: true);
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
-
-            _healthBar = HealthBarController;
-            Assert.IsNotNull(_healthBar);
-            _healthBar.Initialise(this, followDamagable: true);
 
             ToggleDroneConsumerFocusCommand = new Command(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
 

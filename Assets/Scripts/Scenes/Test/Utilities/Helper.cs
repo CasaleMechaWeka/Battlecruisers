@@ -32,6 +32,7 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -123,7 +124,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             BuildableInitialisationArgs initialisationArgs,
             ISlot parentSlot = null)
         {
-            building.StaticInitialise();
+            // FELIX  Check test scene still works :/
+            BuildingWrapper buildableWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
+            HealthBarController healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            building.StaticInitialise(healthBar);
             building.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             building.Activate(
                 new BuildingActivationArgs(
@@ -183,7 +187,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUnit unit,
             BuildableInitialisationArgs initialisationArgs)
         {
-            unit.StaticInitialise();
+            UnitWrapper buildableWrapper = unit.GameObject.GetComponentInInactiveParent<UnitWrapper>();
+            HealthBarController healthBar = buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
+            unit.StaticInitialise(healthBar);
             unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             unit.Activate(
                 new BuildableActivationArgs(

@@ -43,15 +43,6 @@ namespace BattleCruisers.Buildables.Units
 			}
 		}
 
-        protected override HealthBarController HealthBarController
-        {
-            get
-            {
-                UnitWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<UnitWrapper>();
-				return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            }
-        }
-
         protected override bool IsDroneConsumerFocusable => false;
 
         protected abstract ISoundKey EngineSoundKey { get; }
@@ -148,7 +139,8 @@ namespace BattleCruisers.Buildables.Units
 
         protected virtual void OnDeathWhileCompleted()
         {
-            Destroy(HealthBarController.gameObject);
+            // FELIX  Deactivate instead (need to activate in Activate() )
+            Destroy(_healthBar.gameObject);
 
             // Make gravity take effect
             rigidBody.bodyType = RigidbodyType2D.Dynamic;

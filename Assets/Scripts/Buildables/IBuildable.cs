@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
@@ -49,7 +50,7 @@ namespace BattleCruisers.Buildables
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-        void StaticInitialise();
+        void StaticInitialise(HealthBarController healthBar);
         void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider);
         void StartConstruction();
         void InitiateDelete();

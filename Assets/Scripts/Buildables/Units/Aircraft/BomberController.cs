@@ -8,6 +8,7 @@ using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -64,9 +65,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
         #endregion Properties
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
 		{
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
 
 			_haveDroppedBombOnRun = false;
 			_isAtCruisingHeight = false;

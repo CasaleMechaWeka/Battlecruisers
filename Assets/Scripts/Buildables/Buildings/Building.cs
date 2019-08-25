@@ -30,18 +30,9 @@ namespace BattleCruisers.Buildables.Buildings
 
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building1;
 
-        protected override HealthBarController HealthBarController
+        public override void StaticInitialise(HealthBarController healthBar)
         {
-            get
-            {
-                BuildingWrapper buildableWrapper = gameObject.GetComponentInInactiveParent<BuildingWrapper>();
-                return buildableWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            }
-        }
-
-        public override void StaticInitialise()
-        {
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
 
             _collider = GetComponent<BoxCollider2D>();
             Assert.IsNotNull(_collider);

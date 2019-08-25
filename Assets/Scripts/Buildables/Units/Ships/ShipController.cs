@@ -8,6 +8,7 @@ using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -54,9 +55,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(HealthBarController healthBar)
         {
-            base.StaticInitialise();
+            base.StaticInitialise(healthBar);
 
             _turrets = GetTurrets();
 
