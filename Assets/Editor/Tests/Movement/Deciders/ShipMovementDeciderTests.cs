@@ -44,7 +44,8 @@ namespace BattleCruisers.Tests.Movement.Deciders
             _target = Substitute.For<ITarget>();
 			_nullTarget = null;
 
-            _shipMovementDecider = new ShipMovementDecider(_ship, _blockingEnemyProvider, _blockingFriendlyProvider, _inRangeTargetTracker, _rangeHelper);
+            // FELIX  Fix :)
+            _shipMovementDecider = new ShipMovementDecider(_ship, _blockingEnemyProvider, _blockingFriendlyProvider, _inRangeTargetTracker, null, _rangeHelper);
             _ship.ClearReceivedCalls();
         }
 

@@ -50,6 +50,7 @@ namespace BattleCruisers.Movement
             IBroadcastingTargetProvider blockingEnemyTargetProvider, 
             IBroadcastingTargetProvider blockingFriendTargetProvider,
             ITargetTracker inRangeTargetTracker,
+            ITargetTracker shipBlockerTargetTracker,
             ITargetRangeHelper rangeHelper);
     }
 }

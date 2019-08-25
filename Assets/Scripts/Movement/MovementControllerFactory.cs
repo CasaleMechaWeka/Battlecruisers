@@ -123,9 +123,10 @@ namespace BattleCruisers.Movement
             IBroadcastingTargetProvider blockingEnemyTargetProvider, 
             IBroadcastingTargetProvider blockingFriendTargetProvider,
             ITargetTracker inRangeTargetTracker,
+            ITargetTracker shipBlockerTargetTracker,
             ITargetRangeHelper rangeHelper)
         {
-            return new ShipMovementDecider(ship, blockingEnemyTargetProvider, blockingFriendTargetProvider, inRangeTargetTracker, rangeHelper);
+            return new ShipMovementDecider(ship, blockingEnemyTargetProvider, blockingFriendTargetProvider, inRangeTargetTracker, shipBlockerTargetTracker, rangeHelper);
         }
     }
 }
