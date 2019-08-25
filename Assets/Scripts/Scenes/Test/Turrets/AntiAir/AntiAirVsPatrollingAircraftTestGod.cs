@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Threading;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -19,8 +19,10 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 		{
             base.Start();
 
-            IDeferrer deferrer = new Deferrer();
-            Helper helper = new Helper(deferrer: deferrer, updaterProvider: _updaterProvider);
+            TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(timeScaleDeferrer);
+
+            Helper helper = new Helper(deferrer: timeScaleDeferrer, updaterProvider: _updaterProvider);
 
             // Setup turret
             _turret = FindObjectOfType<TurretController>();
