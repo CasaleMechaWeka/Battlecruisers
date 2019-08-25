@@ -193,10 +193,8 @@ namespace BattleCruisers.Cruisers
 			Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
 
-            IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
+            IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
 
-            // FELIX  Should happen in factory, so don't get double initialisation from pooling
-            building.Initialise(_uiManager, FactoryProvider);
             building.Activate(
                 new BuildingActivationArgs(
                     this,

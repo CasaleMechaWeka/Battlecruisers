@@ -8,6 +8,7 @@ using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Timers;
@@ -35,9 +36,12 @@ namespace BattleCruisers.Utils.Fetchers
             return GetBuildableWrapperPrefab<IBuilding>(buildingKey);
 		}
 
-		public IBuilding CreateBuilding(IBuildableWrapper<IBuilding> buildingWrapperPrefab)
+		public IBuilding CreateBuilding(
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab,
+            IUIManager uiManager,
+            IFactoryProvider factoryProvider)
 		{
-            return CreateBuildable(buildingWrapperPrefab.UnityObject);
+            return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager, factoryProvider);
 		}
 
         public IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
@@ -45,9 +49,12 @@ namespace BattleCruisers.Utils.Fetchers
             return GetBuildableWrapperPrefab<IUnit>(unitKey);
 		}
 
-        public IUnit CreateUnit(IBuildableWrapper<IUnit> unitWrapperPrefab)
+        public IUnit CreateUnit(
+            IBuildableWrapper<IUnit> unitWrapperPrefab,
+            IUIManager uiManager,
+            IFactoryProvider factoryProvider)
 		{
-            return CreateBuildable(unitWrapperPrefab.UnityObject);
+            return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
 		}
 
 		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : class, IBuildable
@@ -57,11 +64,17 @@ namespace BattleCruisers.Utils.Fetchers
 			return buildableWrapperPrefab;
 		}
 
-		private TBuildable CreateBuildable<TBuildable>(BuildableWrapper<TBuildable> buildableWrapperPrefab) where TBuildable : class, IBuildable
+		private TBuildable CreateBuildable<TBuildable>(
+            BuildableWrapper<TBuildable> buildableWrapperPrefab,
+            IUIManager uiManager,
+            IFactoryProvider factoryProvider) where TBuildable : class, IBuildable
 		{
+            Helper.AssertIsNotNull(buildableWrapperPrefab, uiManager, factoryProvider);
+
 			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
 			buildableWrapper.gameObject.SetActive(true);
 			buildableWrapper.Initialise();
+            buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
 			return buildableWrapper.Buildable;
 		}
 

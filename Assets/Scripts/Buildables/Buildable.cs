@@ -244,7 +244,6 @@ namespace BattleCruisers.Buildables
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        // FELIX  Make sure this is only called once :)  By prefab factory!!!
         public virtual void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
             Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");

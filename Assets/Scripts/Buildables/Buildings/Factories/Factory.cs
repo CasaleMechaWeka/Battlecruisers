@@ -135,10 +135,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
             Logging.LogMethod(Tags.FACTORY);
 
-			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper);
+			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper, _uiManager, _factoryProvider);
 
-            // FELIX  Should happen in factory, so don't get double initialisation from pooling
-            UnitUnderConstruction.Initialise(_uiManager, _factoryProvider);
             UnitUnderConstruction.Activate(
                 new BuildableActivationArgs(
                     ParentCruiser,

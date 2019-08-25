@@ -23,11 +23,9 @@ namespace BattleCruisers.Buildables.Buildings
 		{
 			base.OnBuildableCompleted();
 
-			_satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab);
+			_satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, _uiManager, _factoryProvider);
 			_satellite.Position = transform.position + SpawnPositionAdjustment;
 
-            // FELIX  Should happen in factory, so don't get double initialisation from pooling
-			_satellite.Initialise(_uiManager, _factoryProvider);
             _satellite.Activate(
                 new BuildableActivationArgs(
                     ParentCruiser,

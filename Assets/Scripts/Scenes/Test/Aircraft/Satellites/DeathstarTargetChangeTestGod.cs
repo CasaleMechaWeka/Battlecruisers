@@ -43,7 +43,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
         private void ConstructBuilding(Vector2 position)
         {
-            IBuilding building = _prefabFactory.CreateBuilding(targetPrefab);
+            BuildableWrapper<IBuilding> buildingWrapper = Instantiate(targetPrefab);
+            buildingWrapper.gameObject.SetActive(true);
+            buildingWrapper.Initialise();
+
+            IBuilding building = buildingWrapper.Buildable;
             building.Position = position;
             _helper.InitialiseBuilding(building, Faction.Reds);
             building.StartConstruction();
