@@ -7,7 +7,7 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class ProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TActivationArgs>
+    public class ProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TProjectile, TActivationArgs>
         where TActivationArgs : ProjectileActivationArgs<TStats>
         where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
         where TStats : IProjectileStats
@@ -23,7 +23,7 @@ namespace BattleCruisers.Projectiles.Pools
             _projectileKey = projectileKey;
         }
 
-        public IPoolable<TActivationArgs> CreateItem()
+        public TProjectile CreateItem()
         {
             return _factoryProvider.PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
         }

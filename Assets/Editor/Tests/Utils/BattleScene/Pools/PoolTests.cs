@@ -6,16 +6,16 @@ namespace BattleCruisers.Tests.Utils.BattleScene.Pools
 {
     public class PoolTests
     {
-        private IPool<int> _pool;
-        private IPoolableFactory<int> _itemFactory;
+        private IPool<IPoolable<int>, int> _pool;
+        private IPoolableFactory<IPoolable<int>, int> _itemFactory;
         private IPoolable<int> _item;
 
         [SetUp]
         public void TestSetup()
         {
-            _itemFactory = Substitute.For<IPoolableFactory<int>>();
+            _itemFactory = Substitute.For<IPoolableFactory<IPoolable<int>, int>>();
 
-            _pool = new Pool<int>(_itemFactory);
+            _pool = new Pool<IPoolable<int>, int>(_itemFactory);
 
             _item = Substitute.For<IPoolable<int>>();
             _itemFactory.CreateItem().Returns(_item);

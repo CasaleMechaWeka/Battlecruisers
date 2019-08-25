@@ -7,7 +7,8 @@ namespace BattleCruisers.Projectiles.Pools
 {
     public class MissilesLargePoolChooser : MonoBehaviour, IProjectilePoolChooser<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
     {
-        public IPool<TargetProviderActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public IPool<ProjectileControllerBase<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>, TargetProviderActivationArgs<IProjectileStats>> 
+            ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             return projectilePoolProvider.MissilesLargePool;
         }

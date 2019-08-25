@@ -5,6 +5,6 @@ namespace BattleCruisers.Effects.Explosions
 {
     public interface IExplosionPoolChooser
     {
-        IPool<Vector3> ChoosePool(IExplosionPoolProvider explosionPoolProvider);
+        IPool<IExplosion, Vector3> ChoosePool(IExplosionPoolProvider explosionPoolProvider);
     }
 }

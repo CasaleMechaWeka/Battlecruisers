@@ -26,7 +26,7 @@ namespace BattleCruisers.Projectiles
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private ITarget _parent;
-        private IPool<Vector3> _explosionPool;
+        private IPool<IExplosion, Vector3> _explosionPool;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because

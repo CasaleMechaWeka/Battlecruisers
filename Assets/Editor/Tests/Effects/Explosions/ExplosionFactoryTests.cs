@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Effects.Explosions
 {
     public class ExplosionFactoryTests
     {
-        private IPoolableFactory<Vector3> _factory;
+        private IPoolableFactory<IExplosion, Vector3> _factory;
         private IPrefabFactory _prefabFactory;
         private ExplosionKey _explosionKey;
         private IExplosion _explosion;

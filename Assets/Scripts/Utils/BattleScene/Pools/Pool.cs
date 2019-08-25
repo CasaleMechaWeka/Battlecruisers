@@ -4,33 +4,33 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene.Pools
 {
-    public class Pool<TArgs> : IPool<TArgs>
+    public class Pool<TPoolable, TArgs> : IPool<TPoolable, TArgs> where TPoolable : class, IPoolable<TArgs>
     {
-        private readonly Stack<IPoolable<TArgs>> _items;
-        private readonly IPoolableFactory<TArgs> _itemFactory;
+        private readonly Stack<TPoolable> _items;
+        private readonly IPoolableFactory<TPoolable, TArgs> _itemFactory;
 
-        public Pool(IPoolableFactory<TArgs> itemFactory)
+        public Pool(IPoolableFactory<TPoolable, TArgs> itemFactory)
         {
             Assert.IsNotNull(itemFactory);
 
             _itemFactory = itemFactory;
-            _items = new Stack<IPoolable<TArgs>>();
+            _items = new Stack<TPoolable>();
         }
 
-        public IPoolable<TArgs> GetItem(TArgs activationArgs)
+        public TPoolable GetItem(TArgs activationArgs)
         {
             Logging.LogMethod(Tags.POOLS);
 
-            IPoolable<TArgs> item = _items.Count != 0 ? _items.Pop() : CreateItem();
+            TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
             item.Activate(activationArgs);
             return item;
         }
 
-        private IPoolable<TArgs> CreateItem()
+        private TPoolable CreateItem()
         {
             Logging.LogMethod(Tags.POOLS);
 
-            IPoolable<TArgs> item = _itemFactory.CreateItem();
+            TPoolable item = _itemFactory.CreateItem();
             item.Deactivated += Item_Deactivated;
             return item;
         }
@@ -39,7 +39,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         {
             Logging.LogMethod(Tags.POOLS);
 
-            _items.Push(sender.Parse<IPoolable<TArgs>>());
+            _items.Push(sender.Parse<TPoolable>());
         }
     }
 }

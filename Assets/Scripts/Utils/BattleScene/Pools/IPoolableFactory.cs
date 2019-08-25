@@ -1,7 +1,7 @@
 ﻿namespace BattleCruisers.Utils.BattleScene.Pools
 {
-    public interface IPoolableFactory<TArgs>
+    public interface IPoolableFactory<TPoolable, TArgs> where TPoolable : IPoolable<TArgs>
     {
-        IPoolable<TArgs> CreateItem();
+        TPoolable CreateItem();
     }
 }

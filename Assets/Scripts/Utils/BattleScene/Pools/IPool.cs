@@ -1,9 +1,7 @@
 ﻿namespace BattleCruisers.Utils.BattleScene.Pools
 {
-    // FELIX  Don't return IPoolable, return generic that extends IPoolable :)
-    // That way will get IUnit instead of IPoolable :)
-    public interface IPool<TArgs>
+    public interface IPool<TPoolable, TArgs> where TPoolable : IPoolable<TArgs>
     {
-        IPoolable<TArgs> GetItem(TArgs activationArgs);
+        TPoolable GetItem(TArgs activationArgs);
     }
 }

@@ -8,6 +8,6 @@ namespace BattleCruisers.Projectiles.Pools
         where TActivationArgs : ProjectileActivationArgs<TStats>
         where TStats : IProjectileStats
     {
-        IPool<TActivationArgs> ChoosePool(IProjectilePoolProvider projectilePoolProvider);
+        IPool<ProjectileControllerBase<TActivationArgs, TStats>, TActivationArgs> ChoosePool(IProjectilePoolProvider projectilePoolProvider);
     }
 }
