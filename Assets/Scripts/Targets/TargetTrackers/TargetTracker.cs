@@ -60,6 +60,7 @@ namespace BattleCruisers.Targets.TargetTrackers
             TargetsChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        // PERF  Hashset instead of list?
         public bool ContainsTarget(ITarget target)
         {
             return _targets.Contains(target);
