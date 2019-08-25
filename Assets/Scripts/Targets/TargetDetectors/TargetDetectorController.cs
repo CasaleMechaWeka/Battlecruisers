@@ -15,6 +15,7 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         public void Initialise()
         {
+            Logging.Log(Tags.TARGET_DETECTOR, $"id: {gameObject.GetInstanceID()}");
             _targetColliderHandler = new TargetColliderHandler(this);
         }
 
@@ -28,7 +29,7 @@ namespace BattleCruisers.Targets.TargetDetectors
 
 		void OnTriggerEnter2D(Collider2D collider)
 		{
-			Logging.Log(Tags.TARGET_DETECTOR, "collider id: " + collider.GetInstanceID());
+			Logging.Log(Tags.TARGET_DETECTOR, $"id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             ITarget target = GetTarget(collider);
             _targetColliderHandler.OnTargetColliderEntered(target);
@@ -36,9 +37,9 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         void OnTriggerExit2D(Collider2D collider)
 		{
-            Logging.Log(Tags.TARGET_DETECTOR, "collider id: " + collider.GetInstanceID());
+			Logging.Log(Tags.TARGET_DETECTOR, $"id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
-			ITarget target = GetTarget(collider);
+            ITarget target = GetTarget(collider);
             _targetColliderHandler.OnTargetColliderExited(target);
 		}
 
