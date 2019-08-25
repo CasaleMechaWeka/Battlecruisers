@@ -216,6 +216,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _shootableTargetFinder.DisposeManagedState();
             _shootableTargetFinder = null;
+
+            // Do not set to null, only created once in StaticInitialise(), so reused by unit pools.
+            _barrelController.CleanUp();
         }
     }
 }
