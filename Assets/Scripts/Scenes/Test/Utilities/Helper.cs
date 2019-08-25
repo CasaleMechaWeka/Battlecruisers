@@ -239,12 +239,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public ITargetFactories CreateTargetFactories(
             GameObject globalTarget, 
-
-            // FELIX  Make these non-optional :)
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             IUpdaterProvider updaterProvider = null,
-
             ITargetFilter targetFilter = null, 
             IExactMatchTargetFilter exactMatchTargetFilter = null)
         {
@@ -279,7 +276,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
 
             // Detector
-            // FELIX  Remove null checks once no longer optional :)
             if (updaterProvider != null)
             {
                 ITargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
