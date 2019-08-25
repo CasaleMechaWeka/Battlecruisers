@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override int NumOfBarrels => _shellSpawners.Length;
 
+        // PERF  Cache middle spawner, so don't need to run method each time
         public override Vector3 ProjectileSpawnerPosition => _shellSpawners.Middle().transform.position;
         public override bool CanFireWithoutTarget => true;
 
