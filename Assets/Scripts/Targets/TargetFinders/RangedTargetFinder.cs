@@ -6,7 +6,7 @@ using System;
 namespace BattleCruisers.Targets.TargetFinders
 {
     /// <summary>
-    /// Target zone is a circle.  Targets are found as they enter this circle
+    /// Target zone is a circle/rectangle.  Targets are found as they enter this circle/rectangle
     /// and lost as they exit.
     /// </summary>
     public class RangedTargetFinder : ITargetFinder
