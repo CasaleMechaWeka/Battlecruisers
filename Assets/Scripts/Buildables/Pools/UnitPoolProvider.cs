@@ -11,7 +11,6 @@ namespace BattleCruisers.Buildables.Pools
 {
     public class UnitPoolProvider : IUnitPoolProvider
     {
-        private readonly IPrefabFactory _prefabFactory;
         private readonly IUIManager _uiManager;
         private readonly IFactoryProvider _factoryProvider;
 
@@ -26,11 +25,10 @@ namespace BattleCruisers.Buildables.Pools
         public IPool<Unit, BuildableActivationArgs> DestroyerPool { get; }
         public IPool<Unit, BuildableActivationArgs> ArchonPool { get; }
 
-        public UnitPoolProvider(IPrefabFactory prefabFactory, IUIManager uiManager, IFactoryProvider factoryProvider)
+        public UnitPoolProvider(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, uiManager, factoryProvider);
+            Helper.AssertIsNotNull(uiManager, factoryProvider);
 
-            _prefabFactory = prefabFactory;
             _uiManager = uiManager;
             _factoryProvider = factoryProvider;
 
@@ -51,7 +49,7 @@ namespace BattleCruisers.Buildables.Pools
             return
                 new Pool<Unit, BuildableActivationArgs>(
                     new UnitFactory(
-                        _prefabFactory,
+                        _factoryProvider.PrefabFactory,
                         unitKey,
                         _uiManager,
                         _factoryProvider));

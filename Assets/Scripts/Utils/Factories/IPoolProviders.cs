@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects.Explosions;
+﻿using BattleCruisers.Buildables.Pools;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles.Pools;
 
 namespace BattleCruisers.Utils.Factories
@@ -7,5 +8,6 @@ namespace BattleCruisers.Utils.Factories
     {
         IExplosionPoolProvider ExplosionPoolProvider { get; }
         IProjectilePoolProvider ProjectilePoolProvider { get; }
+        IUnitPoolProvider UnitPoolProvider { get; }
     }
 }
