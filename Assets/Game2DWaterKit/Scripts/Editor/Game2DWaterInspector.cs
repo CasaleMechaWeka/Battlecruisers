@@ -8,191 +8,367 @@ using UnityEngine.Events;
 namespace Game2DWaterKit
 {
     [CanEditMultipleObjects, CustomEditor(typeof(Game2DWater))]
-    class Game2DWaterInspector : Editor
+    internal class Game2DWaterInspector : Editor
     {
         #region variables
 
+        #region Serialized Properties
+
+        #region Water Properties
+        //Mesh Properties
         private SerializedProperty subdivisionsCountPerUnit;
         private SerializedProperty waterSize;
-
+        //Wave Properties
         private SerializedProperty damping;
         private SerializedProperty stiffness;
         private SerializedProperty spread;
         private SerializedProperty useCustomBoundaries;
         private SerializedProperty firstCustomBoundary;
         private SerializedProperty secondCustomBoundary;
+        //Misc Properties
         private SerializedProperty buoyancyEffectorSurfaceLevel;
+        #endregion
 
-        private SerializedProperty collisionMask;
-        private SerializedProperty collisionMinimumDepth;
-        private SerializedProperty collisionMaximumDepth;
-        private SerializedProperty collisionRaycastMaxDistance;
-        private SerializedProperty minimumDisturbance;
-        private SerializedProperty maximumDisturbance;
-        private SerializedProperty velocityMultiplier;
+        #region On-Collision Ripples Properties
+        private SerializedProperty activateOnCollisionOnWaterEnterRipples;
+        private SerializedProperty activateOnCollisionOnWaterExitRipples;
+        //Disturbance Properties
+        private SerializedProperty onCollisionRipplesMinimumDisturbance;
+        private SerializedProperty onCollisionRipplesMaximumDisturbance;
+        private SerializedProperty onCollisionRipplesVelocityMultiplier;
+        //Collision Properties
+        private SerializedProperty onCollisionRipplesCollisionMask;
+        private SerializedProperty onCollisionRipplesCollisionMinimumDepth;
+        private SerializedProperty onCollisionRipplesCollisionMaximumDepth;
+        private SerializedProperty onCollisionRipplesCollisionRaycastMaxDistance;
+        //Events
+        private SerializedProperty onWaterEnter;
+        private SerializedProperty onWaterExit;
+        //Sound Effect Properties (On Water Enter)
+        private SerializedProperty onCollisionRipplesActivateOnWaterEnterSoundEffect;
+        private SerializedProperty onCollisionRipplesOnWaterEnterAudioClip;
+        private SerializedProperty onCollisionRipplesOnWaterEnterMinimumAudioPitch;
+        private SerializedProperty onCollisionRipplesOnWaterEnterMaximumAudioPitch;
+        private SerializedProperty onCollisionRipplesUseConstantOnWaterEnterAudioPitch;
+        private SerializedProperty onCollisionRipplesOnWaterEnterAudioPitch;
+        private SerializedProperty onCollisionRipplesOnWaterEnterAudioVolume;
+        private SerializedProperty onCollisionRipplesOnWaterEnterSoundEffectPoolSize;
+        private SerializedProperty onCollisionRipplesOnWaterEnterSoundEffectPoolExpandIfNecessary;
+        //Sound Effect Properties (On Water Exit)
+        private SerializedProperty onCollisionRipplesActivateOnWaterExitSoundEffect;
+        private SerializedProperty onCollisionRipplesOnWaterExitAudioClip;
+        private SerializedProperty onCollisionRipplesOnWaterExitMinimumAudioPitch;
+        private SerializedProperty onCollisionRipplesOnWaterExitMaximumAudioPitch;
+        private SerializedProperty onCollisionRipplesUseConstantOnWaterExitAudioPitch;
+        private SerializedProperty onCollisionRipplesOnWaterExitAudioPitch;
+        private SerializedProperty onCollisionRipplesOnWaterExitAudioVolume;
+        private SerializedProperty onCollisionRipplesOnWaterExitSoundEffectPoolSize;
+        private SerializedProperty onCollisionRipplesOnWaterExitSoundEffectPoolExpandIfNecessary;
+        //Particle Effect Properties (On Water Enter)
+        private SerializedProperty onCollisionRipplesActivateOnWaterEnterParticleEffect;
+        private SerializedProperty onCollisionRipplesOnWaterEnterParticleEffect;
+        private SerializedProperty onCollisionRipplesOnWaterEnterParticleEffectPoolSize;
+        private SerializedProperty onCollisionRipplesOnWaterEnterParticleEffectSpawnOffset;
+        private SerializedProperty onCollisionRipplesOnWaterEnterParticleEffectStopAction;
+        private SerializedProperty onCollisionRipplesOnWaterEnterParticleEffectPoolExpandIfNecessary;
+        //Particle Effect Properties (On Water Exit)
+        private SerializedProperty onCollisionRipplesActivateOnWaterExitParticleEffect;
+        private SerializedProperty onCollisionRipplesOnWaterExitParticleEffect;
+        private SerializedProperty onCollisionRipplesOnWaterExitParticleEffectPoolSize;
+        private SerializedProperty onCollisionRipplesOnWaterExitParticleEffectSpawnOffset;
+        private SerializedProperty onCollisionRipplesOnWaterExitParticleEffectStopAction;
+        private SerializedProperty onCollisionRipplesOnWaterExitParticleEffectPoolExpandIfNecessary;
+        #endregion
 
+        #region Constant Ripples Properties
         private SerializedProperty activateConstantRipples;
         private SerializedProperty constantRipplesUpdateWhenOffscreen;
+        //Disturbance Properties
         private SerializedProperty constantRipplesDisturbance;
         private SerializedProperty constantRipplesRandomizeDisturbance;
         private SerializedProperty constantRipplesMinimumDisturbance;
         private SerializedProperty constantRipplesMaximumDisturbance;
+        private SerializedProperty constantRipplesSmoothDisturbance;
+        private SerializedProperty constantRipplesSmoothFactor;
+        //Interval Properties
         private SerializedProperty constantRipplesRandomizeInterval;
         private SerializedProperty constantRipplesInterval;
         private SerializedProperty constantRipplesMinimumInterval;
         private SerializedProperty constantRipplesMaximumInterval;
-        private SerializedProperty constantRipplesSmoothDisturbance;
-        private SerializedProperty constantRipplesSmoothFactor;
+        //Ripple Source Positions Properties
         private SerializedProperty constantRipplesRandomizeRipplesSourcesPositions;
         private SerializedProperty constantRipplesRandomizeRipplesSourcesCount;
         private SerializedProperty constantRipplesAllowDuplicateRipplesSourcesPositions;
         private SerializedProperty constantRipplesSourcePositions;
+        //Sound Effect Properties
+        private SerializedProperty constantRipplesActivateSoundEffect;
+        private SerializedProperty constantRipplesAudioClip;
+        private SerializedProperty constantRipplesUseConstantAudioPitch;
+        private SerializedProperty constantRipplesAudioPitch;
+        private SerializedProperty constantRipplesMinimumAudioPitch;
+        private SerializedProperty constantRipplesMaximumAudioPitch;
+        private SerializedProperty constantRipplesAudioVolume;
+        private SerializedProperty constantRipplesSoundEffectPoolSize;
+        private SerializedProperty constantRipplesSoundEffectPoolExpandIfNecessary;
+        //Particle Effect Properties
+        private SerializedProperty constantRipplesActivateParticleEffect;
+        private SerializedProperty constantRipplesParticleEffect;
+        private SerializedProperty constantRipplesParticleEffectPoolSize;
+        private SerializedProperty constantRipplesParticleEffectSpawnOffset;
+        private SerializedProperty constantRipplesParticleEffectStopAction;
+        private SerializedProperty constantRipplesParticleEffectPoolExpandIfNecessary;
+        #endregion
 
-        private SerializedProperty refractionRenderTextureResizeFactor;
+        #region Script-Generated Ripples
+        //Disturbance Properties
+        private SerializedProperty scriptGeneratedRipplesMinimumDisturbance;
+        private SerializedProperty scriptGeneratedRipplesMaximumDisturbance;
+        //Sound Effect Properties
+        private SerializedProperty scriptGeneratedRipplesActivateSoundEffect;
+        private SerializedProperty scriptGeneratedRipplesAudioClip;
+        private SerializedProperty scriptGeneratedRipplesUseConstantAudioPitch;
+        private SerializedProperty scriptGeneratedRipplesAudioPitch;
+        private SerializedProperty scriptGeneratedRipplesMinimumAudioPitch;
+        private SerializedProperty scriptGeneratedRipplesAudioVolume;
+        private SerializedProperty scriptGeneratedRipplesMaximumAudioPitch;
+        private SerializedProperty scriptGeneratedRipplesSoundEffectPoolSize;
+        private SerializedProperty scriptGeneratedRipplesSoundEffectPoolExpandIfNecessary;
+        //Particle Effect Properties
+        private SerializedProperty scriptGeneratedRipplesActivateParticleEffect;
+        private SerializedProperty scriptGeneratedRipplesParticleEffect;
+        private SerializedProperty scriptGeneratedRipplesParticleEffectPoolSize;
+        private SerializedProperty scriptGeneratedRipplesParticleEffectSpawnOffset;
+        private SerializedProperty scriptGeneratedRipplesParticleEffectStopAction;
+        private SerializedProperty scriptGeneratedRipplesParticleEffectPoolExpandIfNecessary;
+        #endregion
+
+        #region Refraction & Reflection Rendering Properties
+        //Refraction Properties
+        private SerializedProperty refractionRenderTextureResizingFactor;
         private SerializedProperty refractionCullingMask;
-        private SerializedProperty reflectionRenderTextureResizeFactor;
+        private SerializedProperty refractionPartiallySubmergedObjectsCullingMask;
+        private SerializedProperty refractionRenderTextureFilterMode;
+        //Reflection Properties
+        private SerializedProperty reflectionRenderTextureResizingFactor;
+        private SerializedProperty reflectionViewingFrustumHeightScalingFactor;
+        private SerializedProperty reflectionPartiallySubmergedObjectsViewingFrustumHeightScalingFactor;
         private SerializedProperty reflectionCullingMask;
+        private SerializedProperty reflectionPartiallySubmergedObjectsCullingMask;
         private SerializedProperty reflectionZOffset;
-
+        private SerializedProperty reflectionRenderTextureFilterMode;
+        //Other Properties
         private SerializedProperty renderPixelLights;
         private SerializedProperty sortingLayerID;
         private SerializedProperty sortingOrder;
         private SerializedProperty allowMSAA;
         private SerializedProperty allowHDR;
         private SerializedProperty farClipPlane;
+        #endregion
 
-        private SerializedProperty splashAudioClip;
-        private SerializedProperty minimumAudioPitch;
-        private SerializedProperty maximumAudioPitch;
-        private SerializedProperty useConstanAudioPitch;
-        private SerializedProperty audioPitch;
+        #endregion
 
-        private SerializedProperty activateOnCollisionSplashParticleEffect;
-        private SerializedProperty activateConstantSplashParticleEffect;
-        private SerializedProperty onCollisionSplashParticleEffect;
-        private SerializedProperty constantSplashParticleEffect;
-        private SerializedProperty onCollisionSplashParticleEffectPoolSize;
-        private SerializedProperty constantSplashParticleEffectPoolSize;
-        private SerializedProperty onCollisionSplashParticleEffectSpawnOffset;
-        private SerializedProperty constantSplashParticleEffectSpawnOffset;
+        #region Serialized Properties Labels
 
-        private SerializedProperty onWaterEnter;
-        
-        private static readonly GUIContent fixScalingButtonLabel = new GUIContent("Fix Scaling");
-        private static readonly GUIContent waterPropertiesFoldoutLabel = new GUIContent("Water Properties");
-        private static readonly GUIContent onCollisionRipplesPropertiesFoldoutLabel = new GUIContent("On Collision Ripples Properties");
-        private static readonly GUIContent constantRipplesPropertiesFoldoutLabel = new GUIContent("Constant Ripples Properties");
-        private static readonly GUIContent refractionPropertiesFoldoutLabel = new GUIContent("Refraction Properties");
-        private static readonly GUIContent reflectionPropertiesFoldoutLabel = new GUIContent("Reflection Properties");
-        private static readonly GUIContent renderingSettingsFoldoutLabel = new GUIContent("Rendering Settings");
-        private static readonly GUIContent audioSettingsFoldoutLabel = new GUIContent("Splash Sound Effect Properties");
-        private static readonly GUIContent spalshParticleSystemSettingsFoldoutLabel = new GUIContent("Spalsh Particle Effect Properties");
-        private static readonly GUIContent prefabUtilityFoldoutLabel = new GUIContent("Prefab Utility");
+        #region WaterProperties
 
-        private static readonly GUIContent waterSizeLabel = new GUIContent("Water Size", "Sets the water size. X represents the width and Y represents the height.");
+        //Mesh Properties
+        private static readonly string meshPropertiesLabel = "Mesh Properties";
+        private static readonly GUIContent waterSizeLabel = new GUIContent("Water Size", "Sets the water size, the width and the height respectively.");
         private static readonly GUIContent subdivisionsCountPerUnitLabel = new GUIContent("Subdivisions Per Unit", "Sets the number of water’s surface vertices within one unit.");
-        private static readonly GUIContent useCustomBoundariesLabel = new GUIContent("Use Custom Boundaries", "Enable/Disable using custom wave boundaries. When waves reach a boundary, they bounce back.");
-        private static readonly GUIContent firstCustomBoundaryLabel = new GUIContent("First Boundary", "The location of the first boundary.");
-        private static readonly GUIContent secondCustomBoundaryLabel = new GUIContent("Second Boundary", "The location of the second boundary.");
-
+        private static readonly GUIContent waterPropertiesFoldoutLabel = new GUIContent("Water Properties");
+        //Wave Properties
+        private static readonly string wavePropertiesLabel = "Wave Properties";
         private static readonly GUIContent dampingLabel = new GUIContent("Damping", "Controls how fast the waves decay. A low value will make waves oscillate for a long time, while a high value will make waves oscillate for a short time.");
         private static readonly GUIContent spreadLabel = new GUIContent("Spread", "Controls how fast the waves spread.");
         private static readonly GUIContent stiffnessLabel = new GUIContent("Stiffness", "Controls the frequency of wave vibration. A low value will make waves oscillate slowly, while a high value will make waves oscillate quickly.");
+        private static readonly GUIContent useCustomBoundariesLabel = new GUIContent("Use Custom Boundaries", "Enable/Disable using custom wave boundaries. When waves reach a boundary, they bounce back.");
+        private static readonly GUIContent firstCustomBoundaryLabel = new GUIContent("First Boundary", "The location of the first boundary.");
+        private static readonly GUIContent secondCustomBoundaryLabel = new GUIContent("Second Boundary", "The location of the second boundary.");
+        //Misc Properties
+        private static readonly string miscLabel = "Misc";
+        private static readonly GUIContent buoyancyEffectorSurfaceLevelLabel = new GUIContent("Surface Level", "Sets the surface location of the buoyancy fluid. When an object is above this line, no buoyancy forces are applied. When an object is intersecting or completely below this line, buoyancy forces are applied.");
+        private static readonly GUIContent useEdgeCollider2DLabel = new GUIContent("Use Edge Collider 2D", "Adds/Removes an EdgeCollider2D component. The water script takes care of updating the edge collider points.");
+        private static readonly GUIContent fixScalingButtonLabel = new GUIContent("Fix Scaling");
+        private static readonly string nonUniformScaleWarning = "Please use uniform scaling.";
 
-        private static readonly GUIContent minimumDisturbanceLabel = new GUIContent("Minimum", "The minimum displacement of water’s surface when a GameObject falls into water.");
-        private static readonly GUIContent maximumDisturbanceLabel = new GUIContent("Maximum", "The maximum displacement of water’s surface when a GameObject falls into water.");
-        private static readonly GUIContent velocityMultiplierLabel = new GUIContent("Velocity Multiplier", "When a rigidbody falls into water, the amount of water’s surface displacement is determined by multiplying the rigidbody velocity by this factor.");
-        private static readonly GUIContent buoyancyEffectorSurfaceLevelLabel = new GUIContent("Surface Level", "Sets the surface location of the buoyancy fluid. When a GameObject is above this line, no buoyancy forces are applied. When a GameObject is intersecting or completely below this line, buoyancy forces are applied.");
-        private static readonly GUIContent collisionMinimumDepthLabel = new GUIContent("Minimum Depth", "Only GameObjects with Z coordinate (depth) greater than or equal to this value will disturb the water’s surface when they fall into water.");
-        private static readonly GUIContent collisionMaximumDepthLabel = new GUIContent("Maximum Depth", "Only GameObjects with Z coordinate (depth) less than or equal to this value will disturb the water’s surface when they fall into water.");
-        private static readonly GUIContent collisionRaycastMaxDistanceLabel = new GUIContent("Maximum Distance", "The maximum distance from the water's surface over which to check for collisions (Default: 0.5)");
-        private static readonly GUIContent collisionMaskLabel = new GUIContent("Collision Mask", "Only GameObjects on these layers will disturb the water’s surface (produce waves) when they fall into water.");
+        #endregion
 
-        private static readonly GUIContent activateConstantRipplesLabel = new GUIContent("Activate", "Activate constant ripples.");
-        private static readonly GUIContent constantRipplesUpdateWhenOffscreenLabel = new GUIContent("Update When Off-screen", "Apply constant ripples even when the water is invisible to the camera.");
-        private static readonly GUIContent constantRipplesDisturbanceLabel = new GUIContent("Disturbance", "Sets the displacement of water’s surface.");
-        private static readonly GUIContent constantRipplesRandomizeDisturbanceLabel = new GUIContent("Randomize", "Randomize the disturbance (displacement) of the water's surface.");
-        private static readonly GUIContent constantRipplesMinimumDisturbanceLabel = new GUIContent("Minimum", "Sets the minimum displacement of water’s surface.");
-        private static readonly GUIContent constantRipplesMaximumDisturbanceLabel = new GUIContent("Maximum", "Sets the maximum displacement of water’s surface.");
-        private static readonly GUIContent randomizePersistnetWaveIntervalLabel = new GUIContent("Randomize", "Randomize the interval.");
-        private static readonly GUIContent constantRipplesIntervalLabel = new GUIContent("Interval", "Apply constant ripples at regular intervals (second).");
-        private static readonly GUIContent constantRipplesMinimumIntervalLabel = new GUIContent("Minimum", "Minimum Interval.");
-        private static readonly GUIContent constantRipplesMaximumIntervalLabel = new GUIContent("Maximum", "Maximum Interval.");
-        private static readonly GUIContent constantRipplesRandomizeRipplesSourcesCountLabel = new GUIContent("Sources Count", "Sets the number of constant ripples sources.");
-        private static readonly GUIContent constantRipplesSmoothDisturbanceLabel = new GUIContent("Smooth Ripples", "Disturb neighbor vertices to create a smoother ripple (wave).");
-        private static readonly GUIContent constantRipplesSmoothFactorLabel = new GUIContent("Smoothing Factor", "The amount of disturbance to apply to neighbor vertices.");
-        private static readonly GUIContent constantRipplesRandomizeRipplesSourcesPositionsLabel = new GUIContent("Randomize", "Randomize constant ripples sources positions.");
-        private static readonly GUIContent constantRipplesSourcePositionsLabel = new GUIContent("Ripples Sources Positions (X-axis)", "Sets the constant ripples sources positions.");
-        private static readonly GUIContent constantRipplesAllowDuplicateRipplesSourcesPositionsLabel = new GUIContent("Allow Duplicate Positions","Allow applying constant ripple at the same position more than once.");
+        #region On-Collision Ripples Properties
+        //Disturbance Properties
+        private static readonly GUIContent onCollisionRipplesMinimumDisturbanceLabel = new GUIContent("Minimum Disturbance", "Sets the minimum displacement of the water’s surface.");
+        private static readonly GUIContent onCollisionRipplesMaximumDisturbanceLabel = new GUIContent("Maximum Disturbance", "Sets the maximum displacement of the water’s surface.");
+        private static readonly GUIContent onCollisionRipplesVelocityMultiplierLabel = new GUIContent("Velocity Multiplier", "When an object falls into water or leaves the water, the amount of water’s surface displacement is determined by multiplying the object’s rigidbody velocity by this factor and clamping the result between the minimum and the maximum disturbance values.");
+        //Collision Properties
+        private static readonly GUIContent onCollisionRipplesCollisionMinimumDepthLabel = new GUIContent("Minimum Depth", "Only objects with Z coordinate (depth) greater than or equal to this value will disturb the water’s surface.");
+        private static readonly GUIContent onCollisionRipplesCollisionMaximumDepthLabel = new GUIContent("Maximum Depth", "Only objects with Z coordinate (depth) less than or equal to this value will disturb the water’s surface.");
+        private static readonly GUIContent onCollisionRipplesCollisionRaycastMaxDistanceLabel = new GUIContent("Maximum Distance", "The maximum distance from the water's surface over which to check for collisions (Default: 0.5)");
+        private static readonly GUIContent onCollisionRipplesCollisionMaskLabel = new GUIContent("Collision Mask", "Only objects on these layers will disturb the water’s surface and will  trigger the OnWaterEnter and the OnWaterExit events when they get into or out of the water.");
+        private static readonly string collisionPropertiesLabel = "Collision Properties";
+        //Water Events Properties
+        private static readonly string eventsLabel = "Events";
+        private static readonly GUIContent onWaterEnterLabel = new GUIContent("OnWaterEnter", "This Unity Event is triggered when an object falls into water.");
+        private static readonly GUIContent onWaterExitLabel = new GUIContent("OnWaterExit", "This Unity Event is triggered when an object gets out of the water.");
+        //Sound Effect Properties (On Water Enter)
+        private static readonly string onCollisionRipplesOnWaterEnterAudioPitchMessage = "The AudioSource pitch (playback speed) is linearly interpolated between the minimum pitch and the maximum pitch. When a rigidbody falls into water, the higher its velocity, the lower the pitch value is.";
+        //Sound Effect Properties (On Water Exit)
+        private static readonly string onCollisionRipplesOnWaterExitAudioPitchMessage = "The AudioSource pitch (playback speed) is linearly interpolated between the minimum pitch and the maximum pitch. When a rigidbody leaves the water, the higher its velocity, the lower the pitch value is.";
+        //Misc
+        private static readonly GUIContent onCollisionRipplesPropertiesFoldoutLabel = new GUIContent("On Collision Ripples Properties");
+        private static readonly string onWaterEnterRipplesPropertiesLabel = "On Water Enter Ripples Properties";
+        private static readonly string onWaterExitRipplesPropertiesLabel = "On Water Exit Ripples Properties";
+        #endregion
+
+        #region Constant Ripples Properties
+        private static readonly GUIContent constantRipplesPropertiesFoldoutLabel = new GUIContent("Constant Ripples Properties");
+        private static readonly GUIContent activateConstantRipplesLabel = new GUIContent("Activate Constant Ripples", "Activates/Deactivates generating ripples at regular time intervals.");
+        private static readonly GUIContent constantRipplesUpdateWhenOffscreenLabel = new GUIContent("Simulate ripples when off-screen", "Generate constant ripples even when the water is not visible to any camera in the scene.");
+        //Disturbance Properties
+        private static readonly GUIContent constantRipplesDisturbanceLabel = new GUIContent("Disturbance", "Sets the displacement of the water’s surface when generating constant ripples.");
+        private static readonly GUIContent constantRipplesRandomizeDisturbanceLabel = new GUIContent("Randomize Disturbance", "Randomize the disturbance (displacement) of the water's surface.");
+        private static readonly GUIContent constantRipplesMinimumDisturbanceLabel = new GUIContent("Minimum Disturbance", "Sets the minimum displacement of the water’s surface.");
+        private static readonly GUIContent constantRipplesMaximumDisturbanceLabel = new GUIContent("Maximum Disturbance", "Sets the maximum displacement of the water’s surface.");
+        private static readonly GUIContent constantRipplesSmoothDisturbanceLabel = new GUIContent("Smooth Ripples", "Disturb neighbor surface vertices to create a smoother ripple.");
+        private static readonly GUIContent constantRipplesSmoothFactorLabel = new GUIContent("Smoothing Factor", "The amount of disturbance to apply to neighbor surface vertices.");
+        //Interval Properties
+        private static readonly string intervalPropertiesLabel = "Time Interval Properties";
+        private static readonly GUIContent randomizePersistnetWaveIntervalLabel = new GUIContent("Randomize Time Interval", "Randomize the time interval.");
+        private static readonly GUIContent constantRipplesIntervalLabel = new GUIContent("Time Interval", "Generate constant ripples at regular time interval (expressed in seconds).");
+        private static readonly GUIContent constantRipplesMinimumIntervalLabel = new GUIContent("Minimum Time Interval", "Sets the minimum time interval.");
+        private static readonly GUIContent constantRipplesMaximumIntervalLabel = new GUIContent("Maximum Time Interval", "Sets the maximum time interval.");
+        //Ripple Source Positions Properties
+        private static readonly string constantRipplesSourcesPropertiesLabel = "Ripple Source Positions Properties";
+        private static readonly GUIContent constantRipplesRandomizeRipplesSourcesCountLabel = new GUIContent("Ripples Source Count", "When Randomize Positions is checked, this sets the number of random surface vertices to disturb when generating constant ripples.");
+        private static readonly GUIContent constantRipplesRandomizeRipplesSourcesPositionsLabel = new GUIContent("Randomize Positions", "Randomize constant ripples sources positions. When checked, random surface vertices are disturbed each time the constant ripples are generated.");
+        private static readonly GUIContent constantRipplesSourcePositionsLabel = new GUIContent("Ripples Source Positions (X-axis)", "Sets the constant ripples source positions.");
+        private static readonly GUIContent constantRipplesAllowDuplicateRipplesSourcesPositionsLabel = new GUIContent("Allow Duplicate Positions", "Allow generating multiple ripples in the same position and at the same time.");
         private static readonly GUIContent constantRipplesEditSourcesPositionsLabel = new GUIContent("Edit Positions", "Edit constant ripples sources positions.");
+        //Sound Effect Properties
+        private static readonly string constantRipplesAudioPitchMessage = "The AudioSource pitch (playback speed) is linearly interpolated between the minimum pitch and the maximum pitch. When a ripple is generated, the higher its disturbance, the lower the pitch value is.";
+        #endregion
 
-        private static readonly GUIContent cameraCullingMaskLabel = new GUIContent("Culling Mask", "Only GameObjects on these layers will be rendered.");
-        private static readonly GUIContent refractionRenderTextureResizeFactorLabel = new GUIContent("Resize Factor", "Specifies how much the RenderTexture used to render refraction is resized. Decreasing this value lowers the RenderTexture resolution and thus improves performance at the expense of visual quality.");
-        private static readonly GUIContent reflectionRenderTextureResizeFactorLabel = new GUIContent("Resize Factor", "Specifies how much the RenderTexture used to render reflection is resized. Decreasing this value lowers the RenderTexture resolution and thus improves performance at the expense of visual quality.");
-        private static readonly GUIContent reflectionZOffsetLabel = new GUIContent("Z Offset", "Controls where to start rendering reflection relative to the water GameObject position.");
+        #region Script-Generated Ripples Properties
+        private static readonly string scriptGeneratedRipplesMessage = "You can generate ripples in script with the .ScriptGeneratedRipplesModule.GenerateRipple() method";
+        //Disturbance Properties
+        private static readonly GUIContent scriptGeneratedRipplesPropertiesFoldoutLabel = new GUIContent("Script-Generated Ripples Properties");
+        private static readonly GUIContent scriptGeneratedRipplesMaximumDisturbanceLabel = new GUIContent("Maximum Disturbance", "Sets the maximum displacement of the water’s surface.");
+        private static readonly GUIContent scriptGeneratedRipplesMinimumDisturbanceLabel = new GUIContent("Minimum Disturbance", "Sets the minimum displacement of the water’s surface.");
+        //Sound Effect Properties
+        private static readonly string scriptGeneratedRipplesAudioPitchMessage = "The AudioSource pitch (playback speed) is linearly interpolated between the minimum pitch and the maximum pitch. When a ripple is generated, the higher its disturbance, the lower the pitch value is.";
+        #endregion
 
-        private static readonly GUIContent farClipPlaneLabel = new GUIContent("Far Clip Plane", "Sets the furthest point relative to the water that will be drawn when rendering refraction and/or reflection.");
-        private static readonly GUIContent renderPixelLightsLabel = new GUIContent("Render Pixel Lights", "Controls whether the rendered objects will be affected by pixel lights. Disabling this could increase performance at the expense of visual fidelity.");
+        #region Refraction & Reflection Rendering Properties
+        //Refraction Properties
+        private static readonly GUIContent refractionPropertiesFoldoutLabel = new GUIContent("Refraction Properties");
+        private static readonly GUIContent refractionRenderTextureResizingFactorLabel = new GUIContent("Resizing Factor", "Specifies how much the refraction RenderTexture is resized.");
+        private static readonly GUIContent refractionRenderTextureFilterModeLabel = new GUIContent("Filter Mode", "Sets the refraction RenderTexture filter mode.");
+        private static readonly string refractionMessage = "Refraction properties are disabled. \"Refraction\" can be activated in the material editor.";
+        //Reflection Properties
+        private static readonly GUIContent reflectionPropertiesFoldoutLabel = new GUIContent("Reflection Properties");
+        private static readonly GUIContent reflectionPartiallySubmergedObjectsViewingFrustumHeightScalingFactorLabel = new GUIContent("Partially Submerged Objects", "Sets how much to scale the partially submerged objects reflection camera viewing frustum height. The default viewing frustum height is equal to the distance between the surface level and the submerge level.");
+        private static readonly GUIContent reflectionViewingFrustumHeightScalingFactorLabel = new GUIContent("Other objects", "Sets how much to scale the reflection camera viewing frustum height when rendering other objects (all objects specified in ‘Objects to render’ layers except those specified in ‘Partially Submerged Objects’ layers). The default viewing frustum height for the reflection camera is equal to the surface thickness.");
+        private static readonly GUIContent reflectionRenderTextureResizingFactorLabel = new GUIContent("Resizing Factor", "Specifies how much the reflection RenderTexture is resized.");
+        private static readonly GUIContent reflectionZOffsetLabel = new GUIContent("Z Offset", "Controls where to start rendering the reflection relative to the water object position.");
+        private static readonly GUIContent reflectionRenderTextureFilterModeLabel = new GUIContent("Filter Mode", "Sets the reflection RenderTexture filter mode.");
+        private static readonly string viewingFrustumHeightScalingFactorLabel = "Viewing Frustum Height Scaling Factors";
+        private static readonly string reflectionMessage = "Reflection properties are disabled. \"Reflection\" can be activated in the material editor.";
+        //Other Properties
+        private static readonly GUIContent refractionReflectionCullingMaskLabel = new GUIContent("Objects to render", "Only objects on these layers will be rendered by the water refraction camera.");
+        private static readonly GUIContent refractionReflectionPartiallySubmergedObjectsCullingMaskLabel = new GUIContent("Partially Submerged Objects", "Objects on these layers will be rendered as partially submerged into water when they intersect the submerge level.");
+        private static readonly GUIContent renderingSettingsFoldoutLabel = new GUIContent("Rendering Settings");
+        private static readonly GUIContent farClipPlaneLabel = new GUIContent("Far Clip Plane", "Sets the furthest point relative to the water that will be rendered by the refraction and/or the reflection cameras.");
+        private static readonly GUIContent renderPixelLightsLabel = new GUIContent("Render Pixel Lights", "Controls whether the rendered objects will be affected by pixel lights. Disabling this parameter could increase performance at the expense of visual fidelity.");
         private static readonly GUIContent sortingLayerLabel = new GUIContent("Sorting Layer", "The name of the water mesh renderer sorting layer.");
         private static readonly GUIContent orderInLayerLabel = new GUIContent("Order In Layer", "The water mesh renderer order within a sorting layer.");
-        private static readonly GUIContent allowMSAALabel = new GUIContent("Allow MSAA", "Allow multisample antialiasing rendering.");
+        private static readonly GUIContent allowMSAALabel = new GUIContent("Allow MSAA", "Allow multi-sample anti-aliasing rendering.");
         private static readonly GUIContent allowHDRLabel = new GUIContent("Allow HDR", "Allow high dynamic range rendering.");
-        private static readonly GUIContent useEdgeCollider2DLabel = new GUIContent("Use Edge Collider 2D", "Adds/Removes an EdgeCollider2D component. The points of the edge collider are automatically updated whenever the water size changes.");
+        #endregion
 
-        private static readonly GUIContent activateSplashSoundLabel = new GUIContent("Activate Splash Sound", "Activate/Deactivate playing splash sound effect when a GameObject falls into water. ");
-        private static readonly GUIContent splashAudioClipLabel = new GUIContent("Splash Clip", "The AudioClip asset to play when a GameObject falls into water.");
-        private static readonly GUIContent minimumAudioPitchLabel = new GUIContent("Minimum Pitch", "Sets the splash audio clip’s minimum playback speed.");
-        private static readonly GUIContent maximumAudioPicthLabel = new GUIContent("Maximum Pitch", "Sets the splash audio clip’s maximum playback speed.");
-        private static readonly GUIContent useConstanAudioPitchLabel = new GUIContent("Constant Pitch", "Apply constant splash audio clip playback speed.");
-        private static readonly GUIContent audioPitchLabel = new GUIContent("Pitch", "Sets the splash audio clip’s playback speed.");
-        
-        private static readonly GUIContent activateOnCollisionSplashParticleEffectLabel = new GUIContent("Activate On Collision Ripples Splash","Apply splash particle effect when a GameObject falls into water.");
-        private static readonly GUIContent activateConstantSplashParticleEffectLabel = new GUIContent("Activate Constant Ripples Splash", "Apply splash particle effect when generating constant ripples.");
-        private static readonly GUIContent onCollisionSplashParticleEffectLabel = new GUIContent("Splash Prefab", "Sets the splash particle effect prefab");
-        private static readonly GUIContent constantSplashParticleEffectLabel = new GUIContent("Splash Prefab", "Sets the splash particle effect prefab");
-        private static readonly GUIContent onCollisionSplashParticleEffectPoolSizeLabel = new GUIContent("Pool Size", "Sets the number of splash particle effect objects that will be created and pooled when the game starts");
-        private static readonly GUIContent constantSplashParticleEffectPoolSizeLabel = new GUIContent("Pool Size", "Sets the number of splash particle effect objects that will be created and pooled when the game starts");
-        private static readonly GUIContent onCollisionSplashParticleEffectSpawnOffsetLabel = new GUIContent("Spawn Offset", "Shift the splash particle effect spawn position.");
-        private static readonly GUIContent constantSplashParticleEffectSpawnOffsetLabel = new GUIContent("Spawn Offset", "Shift the splash particle effect spawn position.");
-        
-        private static readonly GUIContent onWaterEnterLabel = new GUIContent("OnWaterEnter", "UnityEvent that is triggered when a GameObject falls into water.");
+        #region Sound Effect Properties
+        private static readonly GUIContent soundEffectAudioClipLabel = new GUIContent("Audio Clip", "The AudioClip asset to play.");
+        private static readonly GUIContent soundEffectMinimumAudioPitchLabel = new GUIContent("Minimum Pitch", "Sets the audio clip’s minimum playback speed. (when ‘Constant Pitch’ is toggled off)");
+        private static readonly GUIContent soundEffectMaximumAudioPitchLabel = new GUIContent("Maximum Pitch", "Sets the audio clip’s maximum playback speed. (when constant pitch is toggled off)");
+        private static readonly GUIContent soundEffectConstantAudioPitchLabel = new GUIContent("Constant Pitch", "Apply constant audio clip playback speed.");
+        private static readonly GUIContent soundEffectAudioPitchLabel = new GUIContent("Pitch", "Sets the audio clip’s playback speed. (when ‘Constant Pitch’ is toggled on)");
+        private static readonly GUIContent soundEffectAudioVolumeLabel = new GUIContent("Volume", "Sets the audio clip’s volume.");
+        private static readonly GUIContent soundEffectPoolSizeLabel = new GUIContent("Pool Size", "Sets the number of audio source objects that will be created and pooled when the game starts.");
+        private static readonly GUIContent soundEffectPoolExpandIfNecessaryLabel = new GUIContent("Can Expand", "Enables/Disables increasing the number of pooled audio source objects at runtime if needed.");
+        private static readonly string soundEffectLabel = "Sound Effect";
+        #endregion
 
-        private static readonly string meshPropertiesLabel = "Mesh Properties";
-        private static readonly string wavePropertiesLabel = "Wave Properties";
+        #region Particle Effect Properties
+        private static readonly GUIContent particleEffectParticleSystemLabel = new GUIContent("Particle System", "Sets the particle effect system to play.");
+        private static readonly GUIContent particleEffectPoolSizeLabel = new GUIContent("Pool Size", "Sets the number of particle system objects that will be created and pooled when the game starts.");
+        private static readonly GUIContent particleEffectSpawnOffsetLabel = new GUIContent("Spawn Offset", "Shifts the particle system spawn position.");
+        private static readonly GUIContent particleEffectStopActionLabel = new GUIContent("Stop Action", "This UnityEvent is triggered when the particle system finishes playing.");
+        private static readonly GUIContent particleEffectPoolExpandIfNecessaryLabel = new GUIContent("Can Expand", "Enables/Disables increasing the number of pooled particle system objects at runtime if needed.");
+        private static readonly string particleEffectLabel = "Particle Effect";
+        #endregion
+
+        #region Misc
+        private static readonly GUIContent prefabUtilityFoldoutLabel = new GUIContent("Prefab Utility");
+        private static readonly string particleSystemLoopMessage = "Please make sure the particle system is non-looping!";
         private static readonly string disturbancePropertiesLabel = "Disturbance Properties";
-        private static readonly string intervalPropertiesLabel = "Interval Properties";
-        private static readonly string constantRipplesSourcesPropertiesLabel = "Ripple Source Positions Properties";
-        private static readonly string collisionPropertiesLabel = "Collision Properties";
-        private static readonly string miscLabel = "Misc";
-
-        private static readonly string audioPitchMessage = "The AudioSource pitch (playback speed) is linearly interpolated between the minimum pitch and the maximum pitch. When a GameObject falls into water, the higher its velocity, the lower the pitch value is.";
-        private static readonly string nonUniformScaleWarning = "Unexpected water simulation results may occur when using non-uniform scaling.";
-        private static readonly string refractionMessage = "Refraction properties are disabled. \"Refraction\" can be activated in the material editor.";
-        private static readonly string reflectionMessage = "Reflection properties are disabled. \"Reflection\" can be activated in the material editor.";
-
         private static readonly string noiseTextureShaderPropertyName = "_NoiseTexture";
+#if UNITY_2018_3_OR_NEWER
+        private static readonly string newPrefabWorkflowMessage = "As of Unity 2018.3, disconnecting (unlinking) and relinking a Prefab instance are no longer supported. Alternatively, you can now unpack a Prefab instance if you want to entirely remove its link to its Prefab asset and thus be able to restructure the resulting plain GameObject as you please.";
+#endif
+
+        #endregion
+
+        #endregion
+
+        #region Misc
+        private static AnimBool waterPropertiesExpanded = new AnimBool();
+        private static AnimBool onCollisionRipplesPropertiesExpanded = new AnimBool();
+        private static AnimBool constantRipplesPropertiesExpanded = new AnimBool();
+        private static AnimBool scriptGeneratedRipplesPropertiesExpanded = new AnimBool();
+        private static AnimBool refractionPropertiesExpanded = new AnimBool();
+        private static AnimBool reflectionPropertiesExpanded = new AnimBool();
+        private static AnimBool renderingSettingsExpanded = new AnimBool();
+        private static AnimBool prefabUtilityExpanded = new AnimBool();
+
+        private static AnimBool meshPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool wavePropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool miscPropertiesBoxGroupExpanded = new AnimBool();
+
+        private static AnimBool collisionRipplesDisturbancePropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesCollisionPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterEnterRipplesPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterEnterRipplesEventsPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterEnterRipplesSoundEffectPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterEnterRipplesParticleffectPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterExitRipplesPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterExitRipplesEventsPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterExitRipplesSoundEffectPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool collisionRipplesOnWaterExitRipplesParticleffectPropertiesBoxGroupExpanded = new AnimBool();
+
+        private static AnimBool constantRipplesDisturbancePropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool constantRipplesTimeIntervalPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool constantRipplesSourcePositionsPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool constantRipplesSoundEffectPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool constantRipplesParticleEffectPropertiesBoxGroupExpanded = new AnimBool();
+
+        private static AnimBool scriptGeneratedRipplesDisturbancePropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool scriptGeneratedRipplesSoundEffectPropertiesBoxGroupExpanded = new AnimBool();
+        private static AnimBool scriptGeneratedRipplesParticleffectPropertiesBoxGroupExpanded = new AnimBool();
+
+        private static AnimBool reflectionCameraViewingFrustumHeightPropertiesBoxGroupExpanded = new AnimBool();
 
         private static readonly Color wireframeColor = new Color(0.89f, 0.259f, 0.204f, 0.375f);
         private static readonly Color constantRipplesSourcesColorAdd = Color.green;
         private static readonly Color constantRipplesSourcesColorRemove = Color.red;
         private static readonly Color buoyancyEffectorSurfaceLevelGuidelineColor = Color.cyan;
 
-        private AnimBool waterPropertiesExpanded = new AnimBool();
-        private AnimBool onCollisionRipplesPropertiesExpanded = new AnimBool();
-        private AnimBool constantRipplesPropertiesExpanded = new AnimBool();
-        private AnimBool refractionPropertiesExpanded = new AnimBool();
-        private AnimBool reflectionPropertiesExpanded = new AnimBool();
-        private AnimBool renderingSettingsExpanded = new AnimBool();
-        private AnimBool audioSettingsExpanded = new AnimBool();
-        private AnimBool spalshParticleEffectSettingsExpanded = new AnimBool();
-        private AnimBool prefabUtilityExpanded = new AnimBool();
-        private AnimBool activateOnCollisionSplashParticleEffectExpanded = new AnimBool();
-        private AnimBool activateConstantSplashParticleEffectExpanded = new AnimBool();
+        private static GUIStyle helpBoxStyle;
+        private static GUIStyle groupBoxStyle;
 
         private bool isMultiEditing = false;
         private bool constantRipplesEditSourcesPositions = false;
         private string prefabsPath;
-        private bool updateSplashParticleEffectPool = false;
+        private UnityAction repaint;
+
+        private WaterResizerUtility waterResizerUtility;
+        #endregion
 
         #endregion
 
@@ -200,698 +376,377 @@ namespace Game2DWaterKit
 
         private void OnEnable()
         {
+            foreach (Game2DWater water2D in targets)
+            {
+                if (!water2D.enabled && !water2D.IsInitialized)
+                {
+                    water2D.InitializeModules();
+                }
+            }
+
+            repaint = new UnityAction(Repaint);
+            isMultiEditing = targets.Length > 1;
+
+            //Water Properties
+            //Mesh Properties
             waterSize = serializedObject.FindProperty("waterSize");
             subdivisionsCountPerUnit = serializedObject.FindProperty("subdivisionsCountPerUnit");
-
+            waterPropertiesExpanded.valueChanged.AddListener(repaint);
+            //Water Wave Properties
             damping = serializedObject.FindProperty("damping");
             stiffness = serializedObject.FindProperty("stiffness");
             spread = serializedObject.FindProperty("spread");
             useCustomBoundaries = serializedObject.FindProperty("useCustomBoundaries");
             firstCustomBoundary = serializedObject.FindProperty("firstCustomBoundary");
             secondCustomBoundary = serializedObject.FindProperty("secondCustomBoundary");
+            //Misc Properties
             buoyancyEffectorSurfaceLevel = serializedObject.FindProperty("buoyancyEffectorSurfaceLevel");
+
+            //On-Collision Ripples Properties
+            onCollisionRipplesPropertiesExpanded.valueChanged.AddListener(repaint);
+            //Disturbance Properties
+            onCollisionRipplesMinimumDisturbance = serializedObject.FindProperty("onCollisionRipplesMinimumDisturbance");
+            onCollisionRipplesMaximumDisturbance = serializedObject.FindProperty("onCollisionRipplesMaximumDisturbance");
+            onCollisionRipplesVelocityMultiplier = serializedObject.FindProperty("onCollisionRipplesVelocityMultiplier");
+            //Collision Properties
+            onCollisionRipplesCollisionMask = serializedObject.FindProperty("onCollisionRipplesCollisionMask");
+            onCollisionRipplesCollisionMinimumDepth = serializedObject.FindProperty("onCollisionRipplesCollisionMinimumDepth");
+            onCollisionRipplesCollisionMaximumDepth = serializedObject.FindProperty("onCollisionRipplesCollisionMaximumDepth");
+            onCollisionRipplesCollisionRaycastMaxDistance = serializedObject.FindProperty("onCollisionRipplesCollisionRaycastMaxDistance");
+            //On Water Enter Ripples Properties
+            activateOnCollisionOnWaterEnterRipples = serializedObject.FindProperty("activateOnCollisionOnWaterEnterRipples");
             onWaterEnter = serializedObject.FindProperty("onWaterEnter");
+            //Sound Effect Properies (On Water Enter)
+            onCollisionRipplesActivateOnWaterEnterSoundEffect = serializedObject.FindProperty("onCollisionRipplesActivateOnWaterEnterSoundEffect");
+            onCollisionRipplesOnWaterEnterAudioClip = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterAudioClip");
+            onCollisionRipplesOnWaterEnterMinimumAudioPitch = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterMinimumAudioPitch");
+            onCollisionRipplesOnWaterEnterMaximumAudioPitch = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterMaximumAudioPitch");
+            onCollisionRipplesUseConstantOnWaterEnterAudioPitch = serializedObject.FindProperty("onCollisionRipplesUseConstantOnWaterEnterAudioPitch");
+            onCollisionRipplesOnWaterEnterAudioPitch = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterAudioPitch");
+            onCollisionRipplesOnWaterEnterAudioVolume = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterAudioVolume");
+            onCollisionRipplesOnWaterEnterSoundEffectPoolSize = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterSoundEffectPoolSize");
+            onCollisionRipplesOnWaterEnterSoundEffectPoolExpandIfNecessary = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterSoundEffectPoolExpandIfNecessary");
+            //Particle Effect Properties (OnWaterEnter)
+            onCollisionRipplesActivateOnWaterEnterParticleEffect = serializedObject.FindProperty("onCollisionRipplesActivateOnWaterEnterParticleEffect");
+            onCollisionRipplesOnWaterEnterParticleEffect = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterParticleEffect");
+            onCollisionRipplesOnWaterEnterParticleEffectPoolSize = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterParticleEffectPoolSize");
+            onCollisionRipplesOnWaterEnterParticleEffectSpawnOffset = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterParticleEffectSpawnOffset");
+            onCollisionRipplesOnWaterEnterParticleEffectStopAction = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterParticleEffectStopAction");
+            onCollisionRipplesOnWaterEnterParticleEffectPoolExpandIfNecessary = serializedObject.FindProperty("onCollisionRipplesOnWaterEnterParticleEffectPoolExpandIfNecessary");
+            //On Water Exit Ripples Properties
+            activateOnCollisionOnWaterExitRipples = serializedObject.FindProperty("activateOnCollisionOnWaterExitRipples");
+            onWaterExit = serializedObject.FindProperty("onWaterExit");
+            //Sound Effect Properies (On Water Exit)
+            onCollisionRipplesActivateOnWaterExitSoundEffect = serializedObject.FindProperty("onCollisionRipplesActivateOnWaterExitSoundEffect");
+            onCollisionRipplesOnWaterExitAudioClip = serializedObject.FindProperty("onCollisionRipplesOnWaterExitAudioClip");
+            onCollisionRipplesOnWaterExitMinimumAudioPitch = serializedObject.FindProperty("onCollisionRipplesOnWaterExitMinimumAudioPitch");
+            onCollisionRipplesOnWaterExitMaximumAudioPitch = serializedObject.FindProperty("onCollisionRipplesOnWaterExitMaximumAudioPitch");
+            onCollisionRipplesUseConstantOnWaterExitAudioPitch = serializedObject.FindProperty("onCollisionRipplesUseConstantOnWaterExitAudioPitch");
+            onCollisionRipplesOnWaterExitAudioPitch = serializedObject.FindProperty("onCollisionRipplesOnWaterExitAudioPitch");
+            onCollisionRipplesOnWaterExitAudioVolume = serializedObject.FindProperty("onCollisionRipplesOnWaterExitAudioVolume");
+            onCollisionRipplesOnWaterExitSoundEffectPoolSize = serializedObject.FindProperty("onCollisionRipplesOnWaterExitSoundEffectPoolSize");
+            onCollisionRipplesOnWaterExitSoundEffectPoolExpandIfNecessary = serializedObject.FindProperty("onCollisionRipplesOnWaterExitSoundEffectPoolExpandIfNecessary");
+            //Particle Effect Properties (On Water Exit)
+            onCollisionRipplesActivateOnWaterExitParticleEffect = serializedObject.FindProperty("onCollisionRipplesActivateOnWaterExitParticleEffect");
+            onCollisionRipplesOnWaterExitParticleEffect = serializedObject.FindProperty("onCollisionRipplesOnWaterExitParticleEffect");
+            onCollisionRipplesOnWaterExitParticleEffectPoolSize = serializedObject.FindProperty("onCollisionRipplesOnWaterExitParticleEffectPoolSize");
+            onCollisionRipplesOnWaterExitParticleEffectSpawnOffset = serializedObject.FindProperty("onCollisionRipplesOnWaterExitParticleEffectSpawnOffset");
+            onCollisionRipplesOnWaterExitParticleEffectStopAction = serializedObject.FindProperty("onCollisionRipplesOnWaterExitParticleEffectStopAction");
+            onCollisionRipplesOnWaterExitParticleEffectPoolExpandIfNecessary = serializedObject.FindProperty("onCollisionRipplesOnWaterExitParticleEffectPoolExpandIfNecessary");
 
-            collisionMask = serializedObject.FindProperty("collisionMask");
-            collisionMinimumDepth = serializedObject.FindProperty("collisionMinimumDepth");
-            collisionMaximumDepth = serializedObject.FindProperty("collisionMaximumDepth");
-            collisionRaycastMaxDistance = serializedObject.FindProperty("collisionRaycastMaxDistance");
-            minimumDisturbance = serializedObject.FindProperty("minimumDisturbance");
-            maximumDisturbance = serializedObject.FindProperty("maximumDisturbance");
-            velocityMultiplier = serializedObject.FindProperty("velocityMultiplier");
-
+            //Constant Ripples Properties
+            activateConstantRipples = serializedObject.FindProperty("activateConstantRipples");
+            constantRipplesPropertiesExpanded.valueChanged.AddListener(repaint);
+            //Disturbance Properties
             constantRipplesDisturbance = serializedObject.FindProperty("constantRipplesDisturbance");
             constantRipplesUpdateWhenOffscreen = serializedObject.FindProperty("constantRipplesUpdateWhenOffscreen");
             constantRipplesRandomizeDisturbance = serializedObject.FindProperty("constantRipplesRandomizeDisturbance");
             constantRipplesMinimumDisturbance = serializedObject.FindProperty("constantRipplesMinimumDisturbance");
             constantRipplesMaximumDisturbance = serializedObject.FindProperty("constantRipplesMaximumDisturbance");
+            constantRipplesSmoothDisturbance = serializedObject.FindProperty("constantRipplesSmoothDisturbance");
+            constantRipplesSmoothFactor = serializedObject.FindProperty("constantRipplesSmoothFactor");
+            //Time Interval Proeprties
             constantRipplesRandomizeInterval = serializedObject.FindProperty("constantRipplesRandomizeInterval");
             constantRipplesInterval = serializedObject.FindProperty("constantRipplesInterval");
             constantRipplesMinimumInterval = serializedObject.FindProperty("constantRipplesMinimumInterval");
             constantRipplesMaximumInterval = serializedObject.FindProperty("constantRipplesMaximumInterval");
-            constantRipplesSmoothDisturbance = serializedObject.FindProperty("constantRipplesSmoothDisturbance");
-            constantRipplesSmoothFactor = serializedObject.FindProperty("constantRipplesSmoothFactor");
-            activateConstantRipples = serializedObject.FindProperty("activateConstantRipples");
+            //Ripple Source Position
             constantRipplesRandomizeRipplesSourcesPositions = serializedObject.FindProperty("constantRipplesRandomizeRipplesSourcesPositions");
             constantRipplesRandomizeRipplesSourcesCount = serializedObject.FindProperty("constantRipplesRandomizeRipplesSourcesCount");
             constantRipplesSourcePositions = serializedObject.FindProperty("constantRipplesSourcePositions");
             constantRipplesAllowDuplicateRipplesSourcesPositions = serializedObject.FindProperty("constantRipplesAllowDuplicateRipplesSourcesPositions");
+            //Sound Effect Properties
+            constantRipplesActivateSoundEffect = serializedObject.FindProperty("constantRipplesActivateSoundEffect");
+            constantRipplesUseConstantAudioPitch = serializedObject.FindProperty("constantRipplesUseConstantAudioPitch");
+            constantRipplesAudioPitch = serializedObject.FindProperty("constantRipplesAudioPitch");
+            constantRipplesAudioVolume = serializedObject.FindProperty("constantRipplesAudioVolume");
+            constantRipplesMinimumAudioPitch = serializedObject.FindProperty("constantRipplesMinimumAudioPitch");
+            constantRipplesMaximumAudioPitch = serializedObject.FindProperty("constantRipplesMaximumAudioPitch");
+            constantRipplesAudioClip = serializedObject.FindProperty("constantRipplesAudioClip");
+            constantRipplesSoundEffectPoolSize = serializedObject.FindProperty("constantRipplesSoundEffectPoolSize");
+            constantRipplesSoundEffectPoolExpandIfNecessary = serializedObject.FindProperty("constantRipplesSoundEffectPoolExpandIfNecessary");
+            //Particle Effect Proeprties
+            constantRipplesActivateParticleEffect = serializedObject.FindProperty("constantRipplesActivateParticleEffect");
+            constantRipplesParticleEffect = serializedObject.FindProperty("constantRipplesParticleEffect");
+            constantRipplesParticleEffectPoolSize = serializedObject.FindProperty("constantRipplesParticleEffectPoolSize");
+            constantRipplesParticleEffectSpawnOffset = serializedObject.FindProperty("constantRipplesParticleEffectSpawnOffset");
+            constantRipplesParticleEffectStopAction = serializedObject.FindProperty("constantRipplesParticleEffectStopAction");
+            constantRipplesParticleEffectPoolExpandIfNecessary = serializedObject.FindProperty("constantRipplesParticleEffectPoolExpandIfNecessary");
 
-            refractionRenderTextureResizeFactor = serializedObject.FindProperty("refractionRenderTextureResizeFactor");
+            //Script-Generated Ripples Properties
+            scriptGeneratedRipplesPropertiesExpanded.valueChanged.AddListener(repaint);
+            //Disturbance Properties
+            scriptGeneratedRipplesMinimumDisturbance = serializedObject.FindProperty("scriptGeneratedRipplesMinimumDisturbance");
+            scriptGeneratedRipplesMaximumDisturbance = serializedObject.FindProperty("scriptGeneratedRipplesMaximumDisturbance");
+            //Sound Effect Properties
+            scriptGeneratedRipplesActivateSoundEffect = serializedObject.FindProperty("scriptGeneratedRipplesActivateSoundEffect");
+            scriptGeneratedRipplesUseConstantAudioPitch = serializedObject.FindProperty("scriptGeneratedRipplesUseConstantAudioPitch");
+            scriptGeneratedRipplesAudioPitch = serializedObject.FindProperty("scriptGeneratedRipplesAudioPitch");
+            scriptGeneratedRipplesAudioVolume = serializedObject.FindProperty("scriptGeneratedRipplesAudioVolume");
+            scriptGeneratedRipplesMinimumAudioPitch = serializedObject.FindProperty("scriptGeneratedRipplesMinimumAudioPitch");
+            scriptGeneratedRipplesMaximumAudioPitch = serializedObject.FindProperty("scriptGeneratedRipplesMaximumAudioPitch");
+            scriptGeneratedRipplesAudioClip = serializedObject.FindProperty("scriptGeneratedRipplesAudioClip");
+            scriptGeneratedRipplesSoundEffectPoolSize = serializedObject.FindProperty("scriptGeneratedRipplesSoundEffectPoolSize");
+            scriptGeneratedRipplesSoundEffectPoolExpandIfNecessary = serializedObject.FindProperty("scriptGeneratedRipplesSoundEffectPoolExpandIfNecessary");
+            //Particle Effect Properties
+            scriptGeneratedRipplesActivateParticleEffect = serializedObject.FindProperty("scriptGeneratedRipplesActivateParticleEffect");
+            scriptGeneratedRipplesParticleEffect = serializedObject.FindProperty("scriptGeneratedRipplesParticleEffect");
+            scriptGeneratedRipplesParticleEffectPoolSize = serializedObject.FindProperty("scriptGeneratedRipplesParticleEffectPoolSize");
+            scriptGeneratedRipplesParticleEffectSpawnOffset = serializedObject.FindProperty("scriptGeneratedRipplesParticleEffectSpawnOffset");
+            scriptGeneratedRipplesParticleEffectStopAction = serializedObject.FindProperty("scriptGeneratedRipplesParticleEffectStopAction");
+            scriptGeneratedRipplesParticleEffectPoolExpandIfNecessary = serializedObject.FindProperty("scriptGeneratedRipplesParticleEffectPoolExpandIfNecessary");
+
+            //Reflection & Refraction Rendering Proeprties
+            //Refraction Properties
+            refractionRenderTextureResizingFactor = serializedObject.FindProperty("refractionRenderTextureResizeFactor");
             refractionCullingMask = serializedObject.FindProperty("refractionCullingMask");
-            reflectionRenderTextureResizeFactor = serializedObject.FindProperty("reflectionRenderTextureResizeFactor");
+            refractionPartiallySubmergedObjectsCullingMask = serializedObject.FindProperty("refractionPartiallySubmergedObjectsCullingMask");
+            refractionRenderTextureFilterMode = serializedObject.FindProperty("refractionRenderTextureFilterMode");
+            refractionPropertiesExpanded.valueChanged.AddListener(repaint);
+            //Reflection Properties
+            reflectionRenderTextureResizingFactor = serializedObject.FindProperty("reflectionRenderTextureResizeFactor");
+            reflectionViewingFrustumHeightScalingFactor = serializedObject.FindProperty("reflectionViewingFrustumHeightScalingFactor");
+            reflectionPartiallySubmergedObjectsViewingFrustumHeightScalingFactor = serializedObject.FindProperty("reflectionPartiallySubmergedObjectsViewingFrustumHeightScalingFactor");
             reflectionCullingMask = serializedObject.FindProperty("reflectionCullingMask");
+            reflectionPartiallySubmergedObjectsCullingMask = serializedObject.FindProperty("reflectionPartiallySubmergedObjectsCullingMask");
             reflectionZOffset = serializedObject.FindProperty("reflectionZOffset");
-
+            reflectionRenderTextureFilterMode = serializedObject.FindProperty("reflectionRenderTextureFilterMode");
+            reflectionPropertiesExpanded.valueChanged.AddListener(repaint);
+            //Rendering Properties
             renderPixelLights = serializedObject.FindProperty("renderPixelLights");
             sortingLayerID = serializedObject.FindProperty("sortingLayerID");
             sortingOrder = serializedObject.FindProperty("sortingOrder");
             allowMSAA = serializedObject.FindProperty("allowMSAA");
             allowHDR = serializedObject.FindProperty("allowHDR");
             farClipPlane = serializedObject.FindProperty("farClipPlane");
+            renderingSettingsExpanded.valueChanged.AddListener(repaint);
 
-            splashAudioClip = serializedObject.FindProperty("splashAudioClip");
-            minimumAudioPitch = serializedObject.FindProperty("minimumAudioPitch");
-            maximumAudioPitch = serializedObject.FindProperty("maximumAudioPitch");
-            useConstanAudioPitch = serializedObject.FindProperty("useConstantAudioPitch");
-            audioPitch = serializedObject.FindProperty("audioPitch");
-
-            activateOnCollisionSplashParticleEffect = serializedObject.FindProperty("activateOnCollisionSplashParticleEffect");
-            activateConstantSplashParticleEffect = serializedObject.FindProperty("activateConstantSplashParticleEffect");
-            onCollisionSplashParticleEffect = serializedObject.FindProperty("onCollisionSplashParticleEffect");
-            constantSplashParticleEffect = serializedObject.FindProperty("constantSplashParticleEffect");
-            onCollisionSplashParticleEffectPoolSize = serializedObject.FindProperty("onCollisionSplashParticleEffectPoolSize");
-            constantSplashParticleEffectPoolSize = serializedObject.FindProperty("constantSplashParticleEffectPoolSize");
-            onCollisionSplashParticleEffectSpawnOffset = serializedObject.FindProperty("onCollisionSplashParticleEffectSpawnOffset");
-            constantSplashParticleEffectSpawnOffset = serializedObject.FindProperty("constantSplashParticleEffectSpawnOffset");
-            
-            waterPropertiesExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            onCollisionRipplesPropertiesExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            constantRipplesPropertiesExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            refractionPropertiesExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            reflectionPropertiesExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            renderingSettingsExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            audioSettingsExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            spalshParticleEffectSettingsExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            prefabUtilityExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            activateOnCollisionSplashParticleEffectExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-            activateConstantSplashParticleEffectExpanded.valueChanged.AddListener(new UnityAction(Repaint));
-
-            waterPropertiesExpanded.target = EditorPrefs.GetBool("Water2D_WaterPropertiesExpanded", false);
-            onCollisionRipplesPropertiesExpanded.target = EditorPrefs.GetBool("Water2D_OnCollisionRipplesPropertiesExpanded", false);
-            constantRipplesPropertiesExpanded.target = EditorPrefs.GetBool("Water2D_ConstantRipplesPropertiesExpanded", false);
-            refractionPropertiesExpanded.target = EditorPrefs.GetBool("Water2D_RefractionPropertiesExpanded", false);
-            reflectionPropertiesExpanded.target = EditorPrefs.GetBool("Water2D_ReflectionPropertiesExpanded", false);
-            renderingSettingsExpanded.target = EditorPrefs.GetBool("Water2D_RenderingSettingsExpanded", false);
-            audioSettingsExpanded.target = EditorPrefs.GetBool("Water2D_AudioSettingsExpanded", false);
-            spalshParticleEffectSettingsExpanded.target = EditorPrefs.GetBool("Water2D_SpashParticleEffectSettingsExpanded", false);
-            prefabUtilityExpanded.target = EditorPrefs.GetBool("Water2D_PrefabUtilityExpanded", false);
-            activateOnCollisionSplashParticleEffectExpanded.target = EditorPrefs.GetBool("Water2D_ActivateOnCollisionSplashParticleEffectExpanded", false);
-            activateConstantSplashParticleEffectExpanded.target = EditorPrefs.GetBool("Water2D_ActivateConstantSplashParticleEffectExpanded", false);
-
+            //Prefabs Utility
+            prefabUtilityExpanded.valueChanged.AddListener(repaint);
             prefabsPath = EditorPrefs.GetString("Water2D_Paths_PrefabUtility_Path", "Assets/");
 
-            isMultiEditing = targets.Length > 1;
+            //Utilities
+            waterResizerUtility = new WaterResizerUtility(repaint)
+            {
+                IsActive = !isMultiEditing
+            };
+
+            //box groups animBools
+            meshPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            wavePropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            miscPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+
+            collisionRipplesDisturbancePropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesCollisionPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterEnterRipplesPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterEnterRipplesEventsPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterEnterRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterEnterRipplesParticleffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterExitRipplesPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterExitRipplesEventsPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterExitRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            collisionRipplesOnWaterExitRipplesParticleffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+
+            constantRipplesDisturbancePropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            constantRipplesTimeIntervalPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            constantRipplesSourcePositionsPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            constantRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            constantRipplesParticleEffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+
+            scriptGeneratedRipplesDisturbancePropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            scriptGeneratedRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+            scriptGeneratedRipplesParticleffectPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
+
+            reflectionCameraViewingFrustumHeightPropertiesBoxGroupExpanded.valueChanged.AddListener(repaint);
         }
 
         private void OnDisable()
         {
-            waterPropertiesExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            onCollisionRipplesPropertiesExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            constantRipplesPropertiesExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            refractionPropertiesExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            reflectionPropertiesExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            renderingSettingsExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            audioSettingsExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            spalshParticleEffectSettingsExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-            prefabUtilityExpanded.valueChanged.RemoveListener(new UnityAction(Repaint));
-
-            EditorPrefs.SetBool("Water2D_WaterPropertiesExpanded", waterPropertiesExpanded.target);
-            EditorPrefs.SetBool("Water2D_OnCollisionRipplesPropertiesExpanded", onCollisionRipplesPropertiesExpanded.target);
-            EditorPrefs.SetBool("Water2D_ConstantRipplesPropertiesExpanded", constantRipplesPropertiesExpanded.target);
-            EditorPrefs.SetBool("Water2D_RefractionPropertiesExpanded", refractionPropertiesExpanded.target);
-            EditorPrefs.SetBool("Water2D_ReflectionPropertiesExpanded", reflectionPropertiesExpanded.target);
-            EditorPrefs.SetBool("Water2D_RenderingSettingsExpanded", renderingSettingsExpanded.target);
-            EditorPrefs.SetBool("Water2D_AudioSettingsExpanded", audioSettingsExpanded.target);
-            EditorPrefs.SetBool("Water2D_SpashParticleEffectSettingsExpanded", spalshParticleEffectSettingsExpanded.target);
-            EditorPrefs.SetBool("Water2D_PrefabUtilityExpanded", prefabUtilityExpanded.target);
-            EditorPrefs.SetBool("Water2D_ActivateOnCollisionSplashParticleEffectExpanded", activateOnCollisionSplashParticleEffectExpanded.target);
-            EditorPrefs.SetBool("Water2D_ActivateConstantSplashParticleEffectExpanded", activateConstantSplashParticleEffectExpanded.target);
+            //Water Proeperties
+            waterPropertiesExpanded.valueChanged.RemoveListener(repaint);
+            //On-Collision Ripples Properties
+            onCollisionRipplesPropertiesExpanded.valueChanged.RemoveListener(repaint);
+            //Constant Ripples Properties
+            constantRipplesPropertiesExpanded.valueChanged.RemoveListener(repaint);
+            //Script-Generated Ripples Properties
+            scriptGeneratedRipplesPropertiesExpanded.valueChanged.RemoveListener(repaint);
+            //Refraction & Reflection Rendering Properties
+            refractionPropertiesExpanded.valueChanged.RemoveListener(repaint);
+            reflectionPropertiesExpanded.valueChanged.RemoveListener(repaint);
+            renderingSettingsExpanded.valueChanged.RemoveListener(repaint);
+            //Prefabs Utility
+            prefabUtilityExpanded.valueChanged.RemoveListener(repaint);
             EditorPrefs.SetString("Water2D_Paths_PrefabUtility_Path", prefabsPath);
+
+            //box groups animBools
+            meshPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            wavePropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            miscPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+
+            collisionRipplesDisturbancePropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesCollisionPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterEnterRipplesPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterEnterRipplesEventsPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterEnterRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterEnterRipplesParticleffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterExitRipplesPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterExitRipplesEventsPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterExitRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            collisionRipplesOnWaterExitRipplesParticleffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+
+            constantRipplesDisturbancePropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            constantRipplesTimeIntervalPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            constantRipplesSourcePositionsPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            constantRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            constantRipplesParticleEffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+
+            scriptGeneratedRipplesDisturbancePropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            scriptGeneratedRipplesSoundEffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+            scriptGeneratedRipplesParticleffectPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
+
+            reflectionCameraViewingFrustumHeightPropertiesBoxGroupExpanded.valueChanged.RemoveListener(repaint);
         }
+
+        #region Inspector
 
         public override void OnInspectorGUI()
         {
             Game2DWater water2D = target as Game2DWater;
-            Material water2DMaterial = water2D.GetComponent<MeshRenderer>().sharedMaterial;
+            UnityEngine.Material water2DMaterial = water2D.GetComponent<MeshRenderer>().sharedMaterial;
             bool hasRefraction = false;
             bool hasReflection = false;
+            bool hasFakePerspectve = false;
             if (water2DMaterial)
             {
                 hasRefraction = water2DMaterial.IsKeywordEnabled("Water2D_Refraction");
                 hasReflection = water2DMaterial.IsKeywordEnabled("Water2D_Reflection");
+                hasFakePerspectve = water2DMaterial.IsKeywordEnabled("Water2D_FakePerspective");
             }
+
+            if(helpBoxStyle == null)
+                helpBoxStyle = new GUIStyle("HelpBox");
+            if(groupBoxStyle == null)
+                groupBoxStyle = new GUIStyle("GroupBox");
 
             serializedObject.Update();
 
+            if (waterResizerUtility.IsActive && waterResizerUtility.HasChanged)
+            {
+                waterResizerUtility.HasChanged = false;
+                waterSize.vector2Value = waterResizerUtility.WaterSize;
+                Undo.RecordObject(water2D.transform, "changing water size/position");
+                water2D.transform.position = waterResizerUtility.WaterPosition;
+            }
+
             if (!isMultiEditing)
+            {
                 DrawFixScalingField(water2D);
+            }
 
             DrawWaterProperties(water2D);
-            DrawOnCollisionRipplesProperties();
-            DrawConstantRipplesProperties();
-            DrawRefractionProperties(hasRefraction);
-            DrawReflectionProperties(hasReflection);
+            DrawOnCollisionRipplesProperties(water2D);
+            DrawConstantRipplesProperties(water2D);
+            DrawScriptGeneratedRipplesProperties(water2D);
+            DrawRefractionProperties(hasRefraction, hasFakePerspectve);
+            DrawReflectionProperties(hasReflection, hasFakePerspectve);
             DrawRenderingSettingsProperties(hasRefraction, hasReflection);
-            DrawSplashParticleEffectProperties();
-            DrawSplashSoundProperties(water2D);
 
-            if (!isMultiEditing && PrefabUtility.GetPrefabType(water2D) != PrefabType.Prefab)
+#if UNITY_2018_3_OR_NEWER
+            //Editing the Prefab GameObjects in the Project Browser is no longer supported as of Unity 2018.3 due to the technical changes in the Prefabs back-end.
+            bool isPrefabSelectedInProjectBrowser = Application.isPlaying || UnityEditor.SceneManagement.EditorSceneManager.IsPreviewSceneObject(water2D.gameObject);
+#else
+            bool isPrefabSelectedInProjectBrowser = PrefabUtility.GetPrefabType(water2D) == PrefabType.Prefab;
+#endif
+
+            if (!isMultiEditing && !isPrefabSelectedInProjectBrowser)
                 DrawPrefabUtility(water2D, water2DMaterial);
 
-            EditorGUILayout.Space();
-
-            //Draw OnWaterEnter event property field
-            EditorGUILayout.PropertyField(onWaterEnter, onWaterEnterLabel);
-
             serializedObject.ApplyModifiedProperties();
-
-            if (updateSplashParticleEffectPool && Application.isPlaying)
-            {
-                updateSplashParticleEffectPool = false;
-                foreach (Game2DWater item in targets)
-                {
-                    item.ActivateSplashParticleEffect(activateOnCollisionSplashParticleEffect.boolValue, activateConstantSplashParticleEffect.boolValue);
-                }
-            }
-        }
-
-        private void OnSceneGUI()
-        {
-            Game2DWater game2DWater = target as Game2DWater;
-
-            if (!isMultiEditing)
-            {
-                DrawWaterResizer(game2DWater);
-                if (constantRipplesEditSourcesPositions)
-                    DrawConstantRipplesSourcesPositions(game2DWater);
-            }
-            DrawWaterWireframe(game2DWater);
-            DrawBuoyancyEffectorSurfaceLevelGuideline(game2DWater);
-
-            if (GUI.changed)
-                SceneView.RepaintAll();
-        }
-
-        private void DrawWaterWireframe(Game2DWater water2D)
-        {
-            List<Vector3> vertices = new List<Vector3>();
-            water2D.GetComponent<MeshFilter>().sharedMesh.GetVertices(vertices);
-            int start, end;
-            if (water2D.UseCustomBoundaries)
-            {
-                start = 2;
-                end = vertices.Count - 4;
-            }
-            else
-            {
-                start = 0;
-                end = vertices.Count - 2;
-            }
-            Matrix4x4 localToWorldMatrix = water2D.transform.localToWorldMatrix;
-            using (new Handles.DrawingScope(wireframeColor, localToWorldMatrix))
-            {
-                for (int i = start; i <= end; i += 2)
-                {
-                    Handles.DrawLine(vertices[i], vertices[i + 1]);
-                }
-            }
-        }
-
-        private void DrawBuoyancyEffectorSurfaceLevelGuideline(Game2DWater water2D)
-        {
-            Vector2 size = water2D.WaterSize / 2f;
-            float y = size.y * (1f - 2f * water2D.BuoyancyEffectorSurfaceLevel);
-            Vector3 lineStart = water2D.transform.TransformPoint(-size.x, y, 0f);
-            Vector3 lineEnd = water2D.transform.TransformPoint(size.x, y, 0f);
-            Handles.color = buoyancyEffectorSurfaceLevelGuidelineColor;
-            Handles.DrawLine(lineStart, lineEnd);
-            Handles.color = Color.white;
-        }
-
-        private void DrawWaterResizer(Game2DWater water2D)
-        {
-            Bounds bounds = water2D.GetComponent<MeshRenderer>().bounds;
-            Vector3 min = bounds.min;
-            Vector3 max = bounds.max;
-            Vector3 center = bounds.center;
-
-            Vector3 upHandle = new Vector3(center.x, max.y, center.z);
-            Vector3 downHandle = new Vector3(center.x, min.y, center.z);
-            Vector3 rightHandle = new Vector3(max.x, center.y, center.z);
-            Vector3 leftHandle = new Vector3(min.x, center.y, center.z);
-
-            float handlesSize = HandleUtility.GetHandleSize(center) * 0.5f;
-            EditorGUI.BeginChangeCheck();
-            Vector3 upPos = Handles.Slider(upHandle, Vector3.up, handlesSize, Handles.ArrowHandleCap, 1f);
-            Vector3 downPos = Handles.Slider(downHandle, Vector3.down, handlesSize, Handles.ArrowHandleCap, 1f);
-            Vector3 rightPos = Handles.Slider(rightHandle, Vector3.right, handlesSize, Handles.ArrowHandleCap, 1f);
-            Vector3 leftPos = Handles.Slider(leftHandle, Vector3.left, handlesSize, Handles.ArrowHandleCap, 1f);
-            if (EditorGUI.EndChangeCheck())
-            {
-                Undo.RecordObject(water2D, "changing water size");
-                Vector3 newCenter = new Vector3((rightPos.x + leftPos.x) / 2f, (upPos.y + downPos.y) / 2f, center.z);
-                upPos = water2D.transform.worldToLocalMatrix.MultiplyPoint(upPos);
-                downPos = water2D.transform.worldToLocalMatrix.MultiplyPoint(downPos);
-                rightPos = water2D.transform.worldToLocalMatrix.MultiplyPoint(rightPos);
-                leftPos = water2D.transform.worldToLocalMatrix.MultiplyPoint(leftPos);
-                Vector2 newSize = new Vector2(Mathf.Clamp(rightPos.x - leftPos.x, 0f, float.MaxValue), Mathf.Clamp(upPos.y - downPos.y, 0f, float.MaxValue));
-                if (newSize.x > 0f && newSize.y > 0f)
-                {
-                    if (water2D.UseCustomBoundaries)
-                    {
-                        float halfWidth = newSize.x / 2f;
-                        water2D.FirstCustomBoundary = Mathf.Clamp(water2D.FirstCustomBoundary, -halfWidth, halfWidth);
-                        water2D.SecondCustomBoundary = Mathf.Clamp(water2D.SecondCustomBoundary, -halfWidth, halfWidth);
-                    }
-                    water2D.WaterSize = newSize;
-                    water2D.transform.position = newCenter;
-                    EditorUtility.SetDirty(water2D);
-                }
-            }
-        }
-
-        private void DrawConstantRipplesSourcesPositions(Game2DWater water2D)
-        {
-            var ripplesSources = water2D.ConstantRipplesSourcePositions;
-            List<Vector3> vertices = new List<Vector3>();
-            water2D.GetComponent<MeshFilter>().sharedMesh.GetVertices(vertices);
-            int surfaceVerticesCount = vertices.Count / 2;
-
-            Vector2 halfWaterSize = water2D.WaterSize / 2f;
-
-            float xStep, leftmostBoundary, rightmostBoundary;
-            int indexOffset;
-            int start, end;
-
-            bool changeMade = false;
-            bool addNewSource = false;
-            int index = -1;
-            
-            Quaternion handlesRotation = Quaternion.identity;
-            float handlesSize = HandleUtility.GetHandleSize(water2D.transform.position) * 0.05f;
-            Color handlesColor = Handles.color;
-
-            if (water2D.UseCustomBoundaries)
-            {
-                float firstCustomBoundary = water2D.FirstCustomBoundary;
-                float secondCustomBoundary = water2D.SecondCustomBoundary;
-                if (firstCustomBoundary < secondCustomBoundary)
-                {
-                    leftmostBoundary = firstCustomBoundary;
-                    rightmostBoundary = secondCustomBoundary;
-                }
-                else
-                {
-                    leftmostBoundary = secondCustomBoundary;
-                    rightmostBoundary = firstCustomBoundary;
-                }
-                xStep = (rightmostBoundary - leftmostBoundary) / (surfaceVerticesCount - 3);
-                indexOffset = 1;
-                start = 2;
-                end = vertices.Count - 4;
-            }
-            else
-            {
-                xStep = halfWaterSize.x * 2f / (surfaceVerticesCount - 1);
-                leftmostBoundary = -halfWaterSize.x;
-                rightmostBoundary = halfWaterSize.x;
-                indexOffset = 0;
-                start = 0;
-                end = vertices.Count - 2;
-            }
-
-            List<int> indices = new List<int>(ripplesSources.Count);
-            Matrix4x4 worldToLocalMatrix = water2D.transform.worldToLocalMatrix;
-            Matrix4x4 localToWorldMatrix = water2D.transform.localToWorldMatrix;
-            float surfaceYPosition = localToWorldMatrix.m11 * halfWaterSize.y + localToWorldMatrix.m13;
-
-            for (int i = 0, maxi = ripplesSources.Count; i < maxi; i++)
-            {
-                float xPosition = worldToLocalMatrix.m00 * ripplesSources[i] + worldToLocalMatrix.m03;
-                if (xPosition < leftmostBoundary || xPosition > rightmostBoundary)
-                {
-                        Handles.color = constantRipplesSourcesColorRemove;
-                        if (Handles.Button(new Vector3(ripplesSources[i], surfaceYPosition), handlesRotation, handlesSize, handlesSize, Handles.DotHandleCap))
-                        {
-                            changeMade = true;
-                            index = i;
-                            addNewSource = false;
-                        }
-                        indices.Add(-1);
-                }
-                else
-                {
-                    int nearestIndex = Mathf.RoundToInt((xPosition - leftmostBoundary) / xStep) + indexOffset;
-                    indices.Add(nearestIndex * 2);
-                }
-            }
-
-            for (int i = start; i <= end; i += 2)
-            {
-                Vector3 pos = localToWorldMatrix.MultiplyPoint3x4(vertices[i]);
-
-                bool foundMatch = false;
-                int foundMatchIndex = -1;
-                for (int j = 0,maxj = indices.Count; j < maxj; j++)
-                {
-                    if (indices[j] == i)
-                    {
-                        foundMatch = true;
-                        foundMatchIndex = j;
-                        break;
-                    }
-                }
-
-                if (foundMatch)
-                {
-                    Handles.color = constantRipplesSourcesColorRemove;
-                    if (Handles.Button(pos, handlesRotation, handlesSize, handlesSize, Handles.DotHandleCap))
-                    {
-                        changeMade = true;
-                        index = foundMatchIndex;
-                        addNewSource = false;
-                    }
-                }
-                else
-                {
-                    Handles.color = constantRipplesSourcesColorAdd;
-                    if (Handles.Button(pos, handlesRotation, handlesSize, handlesSize, Handles.DotHandleCap))
-                    {
-                        changeMade = true;
-                        index = i;
-                        addNewSource = true;
-                    }
-                }
-            }
-
-            Handles.color = handlesColor;
-
-            if (changeMade)
-            {
-                Undo.RecordObject(water2D, "editing water ripple source position");
-                if (addNewSource)
-                    ripplesSources.Add(water2D.transform.localToWorldMatrix.MultiplyPoint3x4(vertices[index]).x);
-                else
-                    ripplesSources.RemoveAt(index);
-                EditorUtility.SetDirty(water2D);
-
-                if (Application.isPlaying)
-                    water2D.UpdateConstantRipplesSourceIndices();
-            }
         }
 
         private void DrawWaterProperties(Game2DWater water2D)
         {
             waterPropertiesExpanded.target = EditorGUILayout.Foldout(waterPropertiesExpanded.target, waterPropertiesFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(waterPropertiesExpanded.faded))
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(waterPropertiesExpanded.faded))
             {
                 if (group.visible)
                 {
-                    EditorGUI.indentLevel++;
-                    EditorGUI.BeginChangeCheck();
-                    EditorGUILayout.LabelField(meshPropertiesLabel, EditorStyles.boldLabel);
-                    EditorGUI.BeginChangeCheck();
-                    EditorGUILayout.PropertyField(waterSize, waterSizeLabel);
-                    EditorGUILayout.PropertyField(subdivisionsCountPerUnit, subdivisionsCountPerUnitLabel);
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.LabelField(wavePropertiesLabel, EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(stiffness, stiffnessLabel);
-                    EditorGUILayout.PropertyField(spread, spreadLabel);
-                    EditorGUILayout.Slider(damping, 0f, 1f, dampingLabel);
-                    EditorGUILayout.PropertyField(useCustomBoundaries, useCustomBoundariesLabel);
-                    if (useCustomBoundaries.boolValue)
+                    //Mesh Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(meshPropertiesLabel, meshPropertiesBoxGroupExpanded, 155f, 0f, true))
                     {
-                        EditorGUILayout.PropertyField(firstCustomBoundary, firstCustomBoundaryLabel);
-                        EditorGUILayout.PropertyField(secondCustomBoundary, secondCustomBoundaryLabel);
-                    }
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.LabelField(miscLabel, EditorStyles.boldLabel);
-                    EditorGUILayout.Slider(buoyancyEffectorSurfaceLevel, 0f, 1f, buoyancyEffectorSurfaceLevelLabel);
-                    if (!isMultiEditing)
-                        DrawEdgeColliderPropertyField(water2D);
-
-                    EditorGUI.indentLevel--;
-                }
-            }
-        }
-
-        private void DrawOnCollisionRipplesProperties()
-        {
-            onCollisionRipplesPropertiesExpanded.target = EditorGUILayout.Foldout(onCollisionRipplesPropertiesExpanded.target, onCollisionRipplesPropertiesFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(onCollisionRipplesPropertiesExpanded.faded))
-            {
-                if (group.visible)
-                {
-                    EditorGUI.indentLevel++;
-
-                    EditorGUILayout.LabelField(disturbancePropertiesLabel, EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(minimumDisturbance, minimumDisturbanceLabel);
-                    EditorGUILayout.PropertyField(maximumDisturbance, maximumDisturbanceLabel);
-                    EditorGUILayout.PropertyField(velocityMultiplier, velocityMultiplierLabel);
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.LabelField(collisionPropertiesLabel, EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(collisionMask, collisionMaskLabel);
-                    EditorGUILayout.PropertyField(collisionMinimumDepth, collisionMinimumDepthLabel);
-                    EditorGUILayout.PropertyField(collisionMaximumDepth, collisionMaximumDepthLabel);
-                    EditorGUILayout.PropertyField(collisionRaycastMaxDistance, collisionRaycastMaxDistanceLabel);
-
-                    EditorGUI.indentLevel--;
-                }
-            }
-        }
-
-        private void DrawConstantRipplesProperties()
-        {
-            constantRipplesPropertiesExpanded.target = EditorGUILayout.Foldout(constantRipplesPropertiesExpanded.target, constantRipplesPropertiesFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(constantRipplesPropertiesExpanded.faded))
-            {
-                if (group.visible)
-                {
-                    EditorGUI.indentLevel++;
-
-                    EditorGUILayout.PropertyField(activateConstantRipples, activateConstantRipplesLabel);
-
-                    EditorGUI.BeginDisabledGroup(!activateConstantRipples.boolValue);
-                    EditorGUILayout.PropertyField(constantRipplesUpdateWhenOffscreen, constantRipplesUpdateWhenOffscreenLabel);
-                    EditorGUILayout.Space();
-
-                    EditorGUILayout.LabelField(disturbancePropertiesLabel, EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(constantRipplesRandomizeDisturbance, constantRipplesRandomizeDisturbanceLabel);
-                    bool randomizeDisturbance = constantRipplesRandomizeDisturbance.boolValue;
-                    if (randomizeDisturbance)
-                    {
-                        EditorGUILayout.PropertyField(constantRipplesMinimumDisturbance, constantRipplesMinimumDisturbanceLabel);
-                        EditorGUILayout.PropertyField(constantRipplesMaximumDisturbance, constantRipplesMaximumDisturbanceLabel);
-                    }
-                    else
-                    {
-                        EditorGUILayout.PropertyField(constantRipplesDisturbance, constantRipplesDisturbanceLabel);
-                    }
-                    EditorGUILayout.PropertyField(constantRipplesSmoothDisturbance, constantRipplesSmoothDisturbanceLabel);
-                    bool smoothWave = constantRipplesSmoothDisturbance.boolValue;
-                    if (smoothWave)
-                        EditorGUILayout.Slider(constantRipplesSmoothFactor, 0f, 1f, constantRipplesSmoothFactorLabel);
-
-                    EditorGUILayout.Space();
-                    EditorGUILayout.LabelField(intervalPropertiesLabel, EditorStyles.boldLabel);
-
-                    EditorGUILayout.PropertyField(constantRipplesRandomizeInterval, randomizePersistnetWaveIntervalLabel);
-                    bool randomizeInterval = constantRipplesRandomizeInterval.boolValue;
-                    if (randomizeInterval)
-                    {
-                        EditorGUILayout.PropertyField(constantRipplesMinimumInterval, constantRipplesMinimumIntervalLabel);
-                        EditorGUILayout.PropertyField(constantRipplesMaximumInterval, constantRipplesMaximumIntervalLabel);
-                    }
-                    else
-                    {
-                        EditorGUILayout.PropertyField(constantRipplesInterval, constantRipplesIntervalLabel);
-                    }
-                    EditorGUILayout.Space();
-                    EditorGUILayout.LabelField(constantRipplesSourcesPropertiesLabel, EditorStyles.boldLabel);
-                    EditorGUILayout.PropertyField(constantRipplesRandomizeRipplesSourcesPositions, constantRipplesRandomizeRipplesSourcesPositionsLabel);
-                    bool randomizeRipplesSources = constantRipplesRandomizeRipplesSourcesPositions.boolValue;
-                    if (!randomizeRipplesSources)
-                    {
-                        EditorGUILayout.PropertyField(constantRipplesAllowDuplicateRipplesSourcesPositions, constantRipplesAllowDuplicateRipplesSourcesPositionsLabel);
-                        EditorGUI.BeginDisabledGroup(isMultiEditing);
-                        constantRipplesEditSourcesPositions = GUILayout.Toggle(constantRipplesEditSourcesPositions, constantRipplesEditSourcesPositionsLabel, "Button");
-                        constantRipplesSourcePositions.isExpanded |= constantRipplesEditSourcesPositions;
-                        EditorGUILayout.PropertyField(constantRipplesSourcePositions, constantRipplesSourcePositionsLabel, true);
-                        EditorGUI.EndDisabledGroup();
-                    }
-                    else
-                    {
-                        EditorGUILayout.PropertyField(constantRipplesRandomizeRipplesSourcesCount, constantRipplesRandomizeRipplesSourcesCountLabel);
-                        constantRipplesEditSourcesPositions = false;
-                    }
-
-                    EditorGUI.indentLevel--;
-
-                    EditorGUI.EndDisabledGroup();
-                }
-            }
-        }
-
-        private void DrawRefractionProperties(bool hasRefraction)
-        {
-            refractionPropertiesExpanded.target = EditorGUILayout.Foldout(refractionPropertiesExpanded.target, refractionPropertiesFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(refractionPropertiesExpanded.faded))
-            {
-                if (group.visible)
-                {
-                    EditorGUI.indentLevel++;
-
-                    if (!hasRefraction)
-                        EditorGUILayout.HelpBox(refractionMessage, MessageType.None, true);
-                    EditorGUI.BeginDisabledGroup(!hasRefraction);
-                    EditorGUILayout.PropertyField(refractionCullingMask, cameraCullingMaskLabel);
-                    EditorGUILayout.Slider(refractionRenderTextureResizeFactor, 0f, 1f, refractionRenderTextureResizeFactorLabel);
-                    EditorGUI.EndDisabledGroup();
-
-                    EditorGUI.indentLevel--;
-                }
-            }
-        }
-
-        private void DrawReflectionProperties(bool hasReflection)
-        {
-            reflectionPropertiesExpanded.target = EditorGUILayout.Foldout(reflectionPropertiesExpanded.target, reflectionPropertiesFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(reflectionPropertiesExpanded.faded))
-            {
-                if (group.visible)
-                {
-                    EditorGUI.indentLevel++;
-
-                    if (!hasReflection)
-                        EditorGUILayout.HelpBox(reflectionMessage, MessageType.None, true);
-                    EditorGUI.BeginDisabledGroup(!hasReflection);
-                    EditorGUILayout.PropertyField(reflectionCullingMask, cameraCullingMaskLabel);
-                    EditorGUILayout.Slider(reflectionRenderTextureResizeFactor, 0f, 1f, reflectionRenderTextureResizeFactorLabel);
-                    EditorGUILayout.PropertyField(reflectionZOffset, reflectionZOffsetLabel);
-                    EditorGUI.EndDisabledGroup();
-
-                    EditorGUI.indentLevel--;
-                }
-            }
-        }
-
-        private void DrawRenderingSettingsProperties(bool hasRefraction, bool hasReflection)
-        {
-            renderingSettingsExpanded.target = EditorGUILayout.Foldout(renderingSettingsExpanded.target, renderingSettingsFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(renderingSettingsExpanded.faded))
-            {
-                if (group.visible)
-                {
-                    EditorGUI.indentLevel++;
-
-                    EditorGUI.BeginDisabledGroup(!(hasReflection || hasRefraction));
-                    EditorGUILayout.PropertyField(farClipPlane, farClipPlaneLabel);
-                    EditorGUILayout.PropertyField(renderPixelLights, renderPixelLightsLabel);
-                    EditorGUILayout.PropertyField(allowMSAA, allowMSAALabel);
-                    EditorGUILayout.PropertyField(allowHDR, allowHDRLabel);
-                    EditorGUI.EndDisabledGroup();
-                    DrawSortingLayerField(sortingLayerID, sortingOrder);
-
-                    EditorGUI.indentLevel--;
-                }
-            }
-        }
-
-        private void DrawSplashParticleEffectProperties()
-        {
-            spalshParticleEffectSettingsExpanded.target = EditorGUILayout.Foldout(spalshParticleEffectSettingsExpanded.target, spalshParticleSystemSettingsFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(spalshParticleEffectSettingsExpanded.faded))
-            {
-                if (group.visible)
-                {
-                    EditorGUI.indentLevel++;
-                    
-                    EditorGUI.BeginChangeCheck();
-                    EditorGUI.showMixedValue = activateOnCollisionSplashParticleEffect.hasMultipleDifferentValues;
-                    activateOnCollisionSplashParticleEffectExpanded.target = EditorGUILayout.ToggleLeft(activateOnCollisionSplashParticleEffectLabel, activateOnCollisionSplashParticleEffect.boolValue);
-                    EditorGUI.showMixedValue = false;
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        activateOnCollisionSplashParticleEffect.boolValue = activateOnCollisionSplashParticleEffectExpanded.target;
-                        updateSplashParticleEffectPool = true;
-                    }
-                    using (var subGroup = new EditorGUILayout.FadeGroupScope(activateOnCollisionSplashParticleEffectExpanded.faded))
-                    {
-                        if (subGroup.visible)
+                        if (boxGroup.IsFaded)
                         {
-                            EditorGUI.indentLevel++;
                             EditorGUI.BeginChangeCheck();
-                            EditorGUILayout.PropertyField(onCollisionSplashParticleEffect, onCollisionSplashParticleEffectLabel);
-                            EditorGUILayout.DelayedIntField(onCollisionSplashParticleEffectPoolSize, onCollisionSplashParticleEffectPoolSizeLabel);
-                            if (EditorGUI.EndChangeCheck())
-                                updateSplashParticleEffectPool = true;
-                            EditorGUILayout.PropertyField(onCollisionSplashParticleEffectSpawnOffset, onCollisionSplashParticleEffectSpawnOffsetLabel);
-                            EditorGUI.indentLevel--;
+                            waterResizerUtility.IsActive = !isMultiEditing && GUILayout.Toggle(waterResizerUtility.IsActive, "Edit Water Size", "Button");
+                            EditorGUILayout.PropertyField(waterSize, waterSizeLabel);
+                            EditorGUILayout.PropertyField(subdivisionsCountPerUnit, subdivisionsCountPerUnitLabel);
                         }
                     }
 
-                    EditorGUI.BeginChangeCheck();
-                    EditorGUI.showMixedValue = activateConstantSplashParticleEffect.hasMultipleDifferentValues;
-                    activateConstantSplashParticleEffectExpanded.target = EditorGUILayout.ToggleLeft(activateConstantSplashParticleEffectLabel, activateConstantSplashParticleEffect.boolValue);
-                    EditorGUI.showMixedValue = false;
-                    if (EditorGUI.EndChangeCheck())
+                    //Wave Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(wavePropertiesLabel, wavePropertiesBoxGroupExpanded, 155f, 0f, true))
                     {
-                        activateConstantSplashParticleEffect.boolValue = activateConstantSplashParticleEffectExpanded.target;
-                        updateSplashParticleEffectPool = true;
-                    }
-                    using (var subGroup = new EditorGUILayout.FadeGroupScope(activateConstantSplashParticleEffectExpanded.faded))
-                    {
-                        if (subGroup.visible)
+                        if (boxGroup.IsFaded)
                         {
-                            EditorGUI.indentLevel++;
-                            EditorGUI.BeginChangeCheck();
-                            EditorGUILayout.PropertyField(constantSplashParticleEffect, constantSplashParticleEffectLabel);
-                            EditorGUILayout.DelayedIntField(constantSplashParticleEffectPoolSize, constantSplashParticleEffectPoolSizeLabel);
-                            if (EditorGUI.EndChangeCheck())
-                                updateSplashParticleEffectPool = true;
-                            EditorGUILayout.PropertyField(constantSplashParticleEffectSpawnOffset, constantSplashParticleEffectSpawnOffsetLabel);
-                            EditorGUI.indentLevel--;
+                            EditorGUILayout.PropertyField(stiffness, stiffnessLabel);
+                            EditorGUILayout.PropertyField(spread, spreadLabel);
+                            EditorGUILayout.Slider(damping, 0f, 1f, dampingLabel);
+                            EditorGUILayout.PropertyField(useCustomBoundaries, useCustomBoundariesLabel);
+                            if (useCustomBoundaries.boolValue)
+                            {
+                                EditorGUILayout.PropertyField(firstCustomBoundary, firstCustomBoundaryLabel);
+                                EditorGUILayout.PropertyField(secondCustomBoundary, secondCustomBoundaryLabel);
+                            }
                         }
                     }
-                    
-                    EditorGUI.indentLevel--;
+
+                    //Misc
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(miscLabel, miscPropertiesBoxGroupExpanded, 155f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.Slider(buoyancyEffectorSurfaceLevel, 0f, 1f, buoyancyEffectorSurfaceLevelLabel);
+                            if (!isMultiEditing)
+                            {
+                                DrawEdgeColliderPropertyField(water2D);
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        private void DrawSplashSoundProperties(Game2DWater water2D)
+        private void DrawFixScalingField(Game2DWater water2D)
         {
-            audioSettingsExpanded.target = EditorGUILayout.Foldout(audioSettingsExpanded.target, audioSettingsFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(audioSettingsExpanded.faded))
+            Vector2 scale = water2D.transform.localScale;
+            if (!Mathf.Approximately(scale.x, 1f) || !Mathf.Approximately(scale.y, 1f))
             {
-                if (group.visible)
+                EditorGUILayout.HelpBox(nonUniformScaleWarning, MessageType.Warning, true);
+                if (GUILayout.Button(fixScalingButtonLabel))
                 {
-                    EditorGUI.indentLevel++;
-
-                    EditorGUI.BeginChangeCheck();
-                    bool hasAudioSource = EditorGUILayout.Toggle(activateSplashSoundLabel, water2D.GetComponent<AudioSource>() != null);
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        if (hasAudioSource)
-                        {
-                            water2D.gameObject.AddComponent<AudioSource>();
-                        }
-                        else
-                        {
-                            DestroyImmediate(water2D.GetComponent<AudioSource>());
-                        }
-                    }
-
-                    EditorGUI.BeginDisabledGroup(!hasAudioSource);
-                    EditorGUILayout.PropertyField(splashAudioClip, splashAudioClipLabel);
-                    EditorGUILayout.PropertyField(useConstanAudioPitch, useConstanAudioPitchLabel);
-                    if (useConstanAudioPitch.boolValue)
-                    {
-                        EditorGUILayout.Slider(audioPitch, -3f, 3f, audioPitchLabel);
-                    }
-                    else
-                    {
-                        EditorGUILayout.Slider(minimumAudioPitch, -3f, 3f, minimumAudioPitchLabel);
-                        EditorGUILayout.Slider(maximumAudioPitch, -3f, 3f, maximumAudioPicthLabel);
-                        EditorGUILayout.HelpBox(audioPitchMessage, MessageType.None, true);
-                    }
-                    EditorGUI.EndDisabledGroup();
-
-                    EditorGUI.indentLevel--;
+                    waterSize.vector2Value = Vector2.Scale(waterSize.vector2Value, scale);
+                    Undo.RecordObject(water2D.transform, "changing water size/position");
+                    water2D.transform.localScale = Vector3.one;
                 }
             }
         }
@@ -899,21 +754,12 @@ namespace Game2DWaterKit
         private void DrawEdgeColliderPropertyField(Game2DWater water2D)
         {
             EditorGUI.BeginChangeCheck();
-            bool hasEdgeCollider = EditorGUILayout.Toggle(useEdgeCollider2DLabel, water2D.GetComponent<EdgeCollider2D>() != null);
+            bool useEdgeCollider = EditorGUILayout.Toggle(useEdgeCollider2DLabel, water2D.GetComponent<EdgeCollider2D>() != null);
             if (EditorGUI.EndChangeCheck())
             {
-                if (hasEdgeCollider)
+                if (useEdgeCollider)
                 {
-                    EdgeCollider2D edgeCollider = water2D.gameObject.AddComponent<EdgeCollider2D>();
-                    float xOffset, yOffset;
-                    xOffset = -water2D.WaterSize.x / 2f;
-                    yOffset = water2D.WaterSize.y / 2f;
-                    edgeCollider.points = new[] {
-                        new Vector2 ( xOffset, yOffset ),
-                        new Vector2 ( xOffset, -yOffset ),
-                        new Vector2 ( -xOffset, -yOffset ),
-                        new Vector2 ( -xOffset, yOffset )
-                    };
+                    water2D.gameObject.AddComponent<EdgeCollider2D>();
                     water2D.OnValidate();
                 }
                 else
@@ -923,27 +769,515 @@ namespace Game2DWaterKit
             }
         }
 
-        private void DrawPrefabUtility(Game2DWater water2D, Material water2DMaterial)
+        private void DrawOnCollisionRipplesProperties(Game2DWater water2D)
         {
-            prefabUtilityExpanded.target = EditorGUILayout.Foldout(prefabUtilityExpanded.target, prefabUtilityFoldoutLabel, true);
-            using (var group = new EditorGUILayout.FadeGroupScope(prefabUtilityExpanded.faded))
+            onCollisionRipplesPropertiesExpanded.target = EditorGUILayout.Foldout(onCollisionRipplesPropertiesExpanded.target, onCollisionRipplesPropertiesFoldoutLabel, true);
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(onCollisionRipplesPropertiesExpanded.faded))
             {
                 if (group.visible)
                 {
-                    EditorGUI.indentLevel++;
+                    //Disturbance Proeprties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(disturbancePropertiesLabel, collisionRipplesDisturbancePropertiesBoxGroupExpanded, 155f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.PropertyField(onCollisionRipplesMinimumDisturbance, onCollisionRipplesMinimumDisturbanceLabel);
+                            EditorGUILayout.PropertyField(onCollisionRipplesMaximumDisturbance, onCollisionRipplesMaximumDisturbanceLabel);
+                            EditorGUILayout.PropertyField(onCollisionRipplesVelocityMultiplier, onCollisionRipplesVelocityMultiplierLabel);
+                        }
+                    }
 
+                    //Collision Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(collisionPropertiesLabel, collisionRipplesCollisionPropertiesBoxGroupExpanded, 155f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.PropertyField(onCollisionRipplesCollisionMask, onCollisionRipplesCollisionMaskLabel);
+                            EditorGUILayout.PropertyField(onCollisionRipplesCollisionMinimumDepth, onCollisionRipplesCollisionMinimumDepthLabel);
+                            EditorGUILayout.PropertyField(onCollisionRipplesCollisionMaximumDepth, onCollisionRipplesCollisionMaximumDepthLabel);
+                            EditorGUILayout.PropertyField(onCollisionRipplesCollisionRaycastMaxDistance, onCollisionRipplesCollisionRaycastMaxDistanceLabel);
+                        }
+                    }
+
+                    //On Water Enter Ripples Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(onWaterEnterRipplesPropertiesLabel, activateOnCollisionOnWaterEnterRipples, collisionRipplesOnWaterEnterRipplesPropertiesBoxGroupExpanded, 0f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            //OnWaterEnterEvent
+                            using (BoxGroupScope subBoxGroup = new BoxGroupScope(eventsLabel, collisionRipplesOnWaterEnterRipplesEventsPropertiesBoxGroupExpanded, 0f, 0f, false))
+                            {
+                                if (subBoxGroup.IsFaded)
+                                {
+                                    EditorGUILayout.PropertyField(onWaterEnter, onWaterEnterLabel);
+                                }
+                            }
+
+                            //Sound Effect
+                            using (BoxGroupScope subBoxGroup = new BoxGroupScope(soundEffectLabel, onCollisionRipplesActivateOnWaterEnterSoundEffect, collisionRipplesOnWaterEnterRipplesSoundEffectPropertiesBoxGroupExpanded, 135f, 0f, false))
+                            {
+                                if (subBoxGroup.IsFaded)
+                                {
+                                    EditorGUI.BeginChangeCheck();
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterAudioClip, soundEffectAudioClipLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterSoundEffectPoolSize, soundEffectPoolSizeLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterSoundEffectPoolExpandIfNecessary, soundEffectPoolExpandIfNecessaryLabel);
+
+                                    EditorGUILayout.Slider(onCollisionRipplesOnWaterEnterAudioVolume, 0f, 1f, soundEffectAudioVolumeLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesUseConstantOnWaterEnterAudioPitch, soundEffectConstantAudioPitchLabel);
+                                    if (onCollisionRipplesUseConstantOnWaterEnterAudioPitch.boolValue)
+                                    {
+                                        EditorGUILayout.Slider(onCollisionRipplesOnWaterEnterAudioPitch, -3f, 3f, soundEffectAudioPitchLabel);
+                                    }
+                                    else
+                                    {
+                                        EditorGUILayout.Slider(onCollisionRipplesOnWaterEnterMinimumAudioPitch, -3f, 3f, soundEffectMinimumAudioPitchLabel);
+                                        EditorGUILayout.Slider(onCollisionRipplesOnWaterEnterMaximumAudioPitch, -3f, 3f, soundEffectMaximumAudioPitchLabel);
+                                        EditorGUILayout.HelpBox(onCollisionRipplesOnWaterEnterAudioPitchMessage, MessageType.None, true);
+                                    }
+                                }
+                            }
+
+                            //Particle Effect
+                            using (BoxGroupScope subBoxGroup = new BoxGroupScope(particleEffectLabel, onCollisionRipplesActivateOnWaterEnterParticleEffect, collisionRipplesOnWaterEnterRipplesParticleffectPropertiesBoxGroupExpanded, 135f, 0f, false))
+                            {
+                                if (subBoxGroup.IsFaded)
+                                {
+                                    ParticleSystem particleSystem = onCollisionRipplesOnWaterEnterParticleEffect.objectReferenceValue as ParticleSystem;
+                                    if (particleSystem != null && particleSystem.main.loop)
+                                    {
+                                        EditorGUILayout.HelpBox(particleSystemLoopMessage, MessageType.Warning);
+                                    }
+
+                                    EditorGUI.BeginChangeCheck();
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterParticleEffect, particleEffectParticleSystemLabel);
+                                    EditorGUILayout.DelayedIntField(onCollisionRipplesOnWaterEnterParticleEffectPoolSize, particleEffectPoolSizeLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterParticleEffectPoolExpandIfNecessary, particleEffectPoolExpandIfNecessaryLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterParticleEffectSpawnOffset, particleEffectSpawnOffsetLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterEnterParticleEffectStopAction, particleEffectStopActionLabel);
+                                }
+                            }
+                        }
+                    }
+
+                    //On Water Exit Ripples Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(onWaterExitRipplesPropertiesLabel, activateOnCollisionOnWaterExitRipples, collisionRipplesOnWaterExitRipplesPropertiesBoxGroupExpanded, 0f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            //OnWaterExitEvent
+                            using (BoxGroupScope subBoxGroup = new BoxGroupScope(eventsLabel, collisionRipplesOnWaterExitRipplesEventsPropertiesBoxGroupExpanded, 0f, 0f, false))
+                            {
+                                if (subBoxGroup.IsFaded)
+                                {
+                                    EditorGUILayout.PropertyField(onWaterExit, onWaterExitLabel);
+                                }
+                            }
+
+                            //Sound Effect
+                            using (BoxGroupScope subBoxGroup = new BoxGroupScope(soundEffectLabel, onCollisionRipplesActivateOnWaterExitSoundEffect, collisionRipplesOnWaterExitRipplesSoundEffectPropertiesBoxGroupExpanded, 135f, 0f, false))
+                            {
+                                if (subBoxGroup.IsFaded)
+                                {
+                                    EditorGUI.BeginChangeCheck();
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitAudioClip, soundEffectAudioClipLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitSoundEffectPoolSize, soundEffectPoolSizeLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitSoundEffectPoolExpandIfNecessary, soundEffectPoolExpandIfNecessaryLabel);
+
+                                    EditorGUILayout.Slider(onCollisionRipplesOnWaterExitAudioVolume, 0f, 1f, soundEffectAudioVolumeLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesUseConstantOnWaterExitAudioPitch, soundEffectConstantAudioPitchLabel);
+                                    if (onCollisionRipplesUseConstantOnWaterExitAudioPitch.boolValue)
+                                    {
+                                        EditorGUILayout.Slider(onCollisionRipplesOnWaterExitAudioPitch, -3f, 3f, soundEffectAudioPitchLabel);
+                                    }
+                                    else
+                                    {
+                                        EditorGUILayout.Slider(onCollisionRipplesOnWaterExitMinimumAudioPitch, -3f, 3f, soundEffectMinimumAudioPitchLabel);
+                                        EditorGUILayout.Slider(onCollisionRipplesOnWaterExitMaximumAudioPitch, -3f, 3f, soundEffectMaximumAudioPitchLabel);
+                                        EditorGUILayout.HelpBox(onCollisionRipplesOnWaterExitAudioPitchMessage, MessageType.None, true);
+                                    }
+                                }
+                            }
+
+                            //Particle Effect
+                            using (BoxGroupScope subBoxGroup = new BoxGroupScope(particleEffectLabel, onCollisionRipplesActivateOnWaterExitParticleEffect, collisionRipplesOnWaterExitRipplesParticleffectPropertiesBoxGroupExpanded, 135f, 0f, false))
+                            {
+                                if (subBoxGroup.IsFaded)
+                                {
+                                    ParticleSystem particleSystem = onCollisionRipplesOnWaterExitParticleEffect.objectReferenceValue as ParticleSystem;
+                                    if (particleSystem != null && particleSystem.main.loop)
+                                    {
+                                        EditorGUILayout.HelpBox(particleSystemLoopMessage, MessageType.Warning);
+                                    }
+
+                                    EditorGUI.BeginChangeCheck();
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitParticleEffect, particleEffectParticleSystemLabel);
+                                    EditorGUILayout.DelayedIntField(onCollisionRipplesOnWaterExitParticleEffectPoolSize, particleEffectPoolSizeLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitParticleEffectPoolExpandIfNecessary, particleEffectPoolExpandIfNecessaryLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitParticleEffectSpawnOffset, particleEffectSpawnOffsetLabel);
+                                    EditorGUILayout.PropertyField(onCollisionRipplesOnWaterExitParticleEffectStopAction, particleEffectStopActionLabel);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DrawConstantRipplesProperties(Game2DWater water2D)
+        {
+            constantRipplesPropertiesExpanded.target = EditorGUILayout.Foldout(constantRipplesPropertiesExpanded.target, constantRipplesPropertiesFoldoutLabel, true);
+
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(constantRipplesPropertiesExpanded.faded))
+            {
+                if (group.visible)
+                {
+                    EditorGUIUtility.labelWidth = 195f;
+                    EditorGUILayout.PropertyField(activateConstantRipples, activateConstantRipplesLabel);
+                    EditorGUILayout.PropertyField(constantRipplesUpdateWhenOffscreen, constantRipplesUpdateWhenOffscreenLabel);
+                    EditorGUIUtility.labelWidth = 0f;
+
+                    //Disturbance Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(disturbancePropertiesLabel, constantRipplesDisturbancePropertiesBoxGroupExpanded, 155f, 130f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.PropertyField(constantRipplesRandomizeDisturbance, constantRipplesRandomizeDisturbanceLabel);
+                            bool randomizeDisturbance = constantRipplesRandomizeDisturbance.boolValue;
+                            if (randomizeDisturbance)
+                            {
+                                EditorGUILayout.PropertyField(constantRipplesMinimumDisturbance, constantRipplesMinimumDisturbanceLabel);
+                                EditorGUILayout.PropertyField(constantRipplesMaximumDisturbance, constantRipplesMaximumDisturbanceLabel);
+                            }
+                            else
+                            {
+                                EditorGUILayout.PropertyField(constantRipplesDisturbance, constantRipplesDisturbanceLabel);
+                            }
+                            EditorGUILayout.PropertyField(constantRipplesSmoothDisturbance, constantRipplesSmoothDisturbanceLabel);
+                            bool smoothWave = constantRipplesSmoothDisturbance.boolValue;
+                            if (smoothWave)
+                            {
+                                EditorGUILayout.Slider(constantRipplesSmoothFactor, 0f, 1f, constantRipplesSmoothFactorLabel);
+                            }
+                        }
+                    }
+
+                    //Time Interval Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(intervalPropertiesLabel, constantRipplesTimeIntervalPropertiesBoxGroupExpanded, 175f, 130f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.PropertyField(constantRipplesRandomizeInterval, randomizePersistnetWaveIntervalLabel);
+                            bool randomizeInterval = constantRipplesRandomizeInterval.boolValue;
+                            if (randomizeInterval)
+                            {
+                                EditorGUILayout.PropertyField(constantRipplesMinimumInterval, constantRipplesMinimumIntervalLabel);
+                                EditorGUILayout.PropertyField(constantRipplesMaximumInterval, constantRipplesMaximumIntervalLabel);
+                            }
+                            else
+                            {
+                                EditorGUILayout.PropertyField(constantRipplesInterval, constantRipplesIntervalLabel);
+                            }
+                        }
+                    }
+
+                    //Ripples Source Properties
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(constantRipplesSourcesPropertiesLabel, constantRipplesSourcePositionsPropertiesBoxGroupExpanded, 155f, 130f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.PropertyField(constantRipplesRandomizeRipplesSourcesPositions, constantRipplesRandomizeRipplesSourcesPositionsLabel);
+                            bool randomizeRipplesSources = constantRipplesRandomizeRipplesSourcesPositions.boolValue;
+                            if (!randomizeRipplesSources)
+                            {
+                                EditorGUILayout.PropertyField(constantRipplesAllowDuplicateRipplesSourcesPositions, constantRipplesAllowDuplicateRipplesSourcesPositionsLabel);
+                                EditorGUI.BeginDisabledGroup(isMultiEditing);
+                                constantRipplesEditSourcesPositions = GUILayout.Toggle(constantRipplesEditSourcesPositions, constantRipplesEditSourcesPositionsLabel, "Button");
+                                constantRipplesSourcePositions.isExpanded |= constantRipplesEditSourcesPositions;
+                                EditorGUI.indentLevel++;
+                                EditorGUILayout.PropertyField(constantRipplesSourcePositions, constantRipplesSourcePositionsLabel, true);
+                                EditorGUI.indentLevel--;
+                                EditorGUI.EndDisabledGroup();
+                            }
+                            else
+                            {
+                                EditorGUILayout.PropertyField(constantRipplesRandomizeRipplesSourcesCount, constantRipplesRandomizeRipplesSourcesCountLabel);
+                                constantRipplesEditSourcesPositions = false;
+                            }
+                        }
+                    }
+
+                    //Sound Effect
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(soundEffectLabel, constantRipplesActivateSoundEffect, constantRipplesSoundEffectPropertiesBoxGroupExpanded, 135f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUI.BeginChangeCheck();
+                            EditorGUILayout.PropertyField(constantRipplesAudioClip, soundEffectAudioClipLabel);
+                            EditorGUILayout.PropertyField(constantRipplesSoundEffectPoolSize, soundEffectPoolSizeLabel);
+                            EditorGUILayout.PropertyField(constantRipplesSoundEffectPoolExpandIfNecessary, soundEffectPoolExpandIfNecessaryLabel);
+                            EditorGUILayout.Slider(constantRipplesAudioVolume, 0f, 1f, soundEffectAudioVolumeLabel);
+                            EditorGUILayout.PropertyField(constantRipplesUseConstantAudioPitch, soundEffectConstantAudioPitchLabel);
+                            if (constantRipplesUseConstantAudioPitch.boolValue)
+                            {
+                                EditorGUILayout.Slider(constantRipplesAudioPitch, -3f, 3f, soundEffectAudioPitchLabel);
+                            }
+                            else
+                            {
+                                EditorGUILayout.Slider(constantRipplesMinimumAudioPitch, -3f, 3f, soundEffectMinimumAudioPitchLabel);
+                                EditorGUILayout.Slider(constantRipplesMaximumAudioPitch, -3f, 3f, soundEffectMaximumAudioPitchLabel);
+                                EditorGUILayout.HelpBox(constantRipplesAudioPitchMessage, MessageType.None, true);
+                            }
+                        }
+                    }
+
+                    //Particle Effect
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(particleEffectLabel, constantRipplesActivateParticleEffect, constantRipplesParticleEffectPropertiesBoxGroupExpanded, 135f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            ParticleSystem particleSystem = constantRipplesParticleEffect.objectReferenceValue as ParticleSystem;
+                            if (particleSystem != null && particleSystem.main.loop)
+                            {
+                                EditorGUILayout.HelpBox(particleSystemLoopMessage, MessageType.Warning);
+                            }
+
+                            EditorGUI.BeginChangeCheck();
+                            EditorGUILayout.PropertyField(constantRipplesParticleEffect, particleEffectParticleSystemLabel);
+                            EditorGUILayout.DelayedIntField(constantRipplesParticleEffectPoolSize, particleEffectPoolSizeLabel);
+                            EditorGUILayout.PropertyField(constantRipplesParticleEffectPoolExpandIfNecessary, particleEffectPoolExpandIfNecessaryLabel);
+                            EditorGUILayout.PropertyField(constantRipplesParticleEffectSpawnOffset, particleEffectSpawnOffsetLabel);
+                            EditorGUILayout.PropertyField(constantRipplesParticleEffectStopAction, particleEffectStopActionLabel);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DrawScriptGeneratedRipplesProperties(Game2DWater water2D)
+        {
+            scriptGeneratedRipplesPropertiesExpanded.target = EditorGUILayout.Foldout(scriptGeneratedRipplesPropertiesExpanded.target, scriptGeneratedRipplesPropertiesFoldoutLabel, true);
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(scriptGeneratedRipplesPropertiesExpanded.faded))
+            {
+                if (group.visible)
+                {
+                    EditorGUILayout.HelpBox(scriptGeneratedRipplesMessage, MessageType.None);
+
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(disturbancePropertiesLabel, scriptGeneratedRipplesDisturbancePropertiesBoxGroupExpanded, 0f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesMinimumDisturbance, scriptGeneratedRipplesMinimumDisturbanceLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesMaximumDisturbance, scriptGeneratedRipplesMaximumDisturbanceLabel);
+                        }
+                    }
+
+                    //Sound Effect
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(soundEffectLabel, scriptGeneratedRipplesActivateSoundEffect, scriptGeneratedRipplesSoundEffectPropertiesBoxGroupExpanded, 135f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUI.indentLevel++;
+                            EditorGUI.BeginChangeCheck();
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesAudioClip, soundEffectAudioClipLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesSoundEffectPoolSize, soundEffectPoolSizeLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesSoundEffectPoolExpandIfNecessary, soundEffectPoolExpandIfNecessaryLabel);
+                            EditorGUILayout.Slider(scriptGeneratedRipplesAudioVolume, 0f, 1f, soundEffectAudioVolumeLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesUseConstantAudioPitch, soundEffectConstantAudioPitchLabel);
+                            if (scriptGeneratedRipplesUseConstantAudioPitch.boolValue)
+                            {
+                                EditorGUILayout.Slider(scriptGeneratedRipplesAudioPitch, -3f, 3f, soundEffectAudioPitchLabel);
+                            }
+                            else
+                            {
+                                EditorGUILayout.Slider(scriptGeneratedRipplesMinimumAudioPitch, -3f, 3f, soundEffectMinimumAudioPitchLabel);
+                                EditorGUILayout.Slider(scriptGeneratedRipplesMaximumAudioPitch, -3f, 3f, soundEffectMaximumAudioPitchLabel);
+                                EditorGUILayout.HelpBox(scriptGeneratedRipplesAudioPitchMessage, MessageType.None, true);
+                            }
+                            EditorGUI.indentLevel--;
+                        }
+                    }
+
+                    //Particle Effect
+                    using (BoxGroupScope boxGroup = new BoxGroupScope(particleEffectLabel, scriptGeneratedRipplesActivateParticleEffect, scriptGeneratedRipplesParticleffectPropertiesBoxGroupExpanded, 135f, 0f, true))
+                    {
+                        if (boxGroup.IsFaded)
+                        {
+                            EditorGUI.indentLevel++;
+                            ParticleSystem particleSystem = scriptGeneratedRipplesParticleEffect.objectReferenceValue as ParticleSystem;
+                            if (particleSystem != null && particleSystem.main.loop)
+                            {
+                                EditorGUILayout.HelpBox(particleSystemLoopMessage, MessageType.Warning);
+                            }
+
+                            EditorGUI.BeginChangeCheck();
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesParticleEffect, particleEffectParticleSystemLabel);
+                            EditorGUILayout.DelayedIntField(scriptGeneratedRipplesParticleEffectPoolSize, particleEffectPoolSizeLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesParticleEffectPoolExpandIfNecessary, particleEffectPoolExpandIfNecessaryLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesParticleEffectSpawnOffset, particleEffectSpawnOffsetLabel);
+                            EditorGUILayout.PropertyField(scriptGeneratedRipplesParticleEffectStopAction, particleEffectStopActionLabel);
+                            EditorGUI.indentLevel--;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DrawRefractionProperties(bool hasRefraction, bool hasFakePerspective)
+        {
+            refractionPropertiesExpanded.target = EditorGUILayout.Foldout(refractionPropertiesExpanded.target, refractionPropertiesFoldoutLabel, true);
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(refractionPropertiesExpanded.faded))
+            {
+                if (group.visible)
+                {
+                    BeginBoxGroup(helpBoxStyle,170f,0f);
+                    if (!hasRefraction)
+                        EditorGUILayout.HelpBox(refractionMessage, MessageType.None, true);
+
+                    EditorGUI.BeginDisabledGroup(!hasRefraction);
+                    DrawRefractionReflectionRenderingCullingMaskFields(true, hasFakePerspective);
+                    EditorGUILayout.Slider(refractionRenderTextureResizingFactor, 0f, 1f, refractionRenderTextureResizingFactorLabel);
+                    EditorGUILayout.PropertyField(refractionRenderTextureFilterMode, refractionRenderTextureFilterModeLabel);
+                    EditorGUI.EndDisabledGroup();
+                    EndBoxGroup();
+                }
+            }
+        }
+
+        private void DrawReflectionProperties(bool hasReflection, bool hasFakePerspective)
+        {
+            reflectionPropertiesExpanded.target = EditorGUILayout.Foldout(reflectionPropertiesExpanded.target, reflectionPropertiesFoldoutLabel, true);
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(reflectionPropertiesExpanded.faded))
+            {
+                if (group.visible)
+                {
+                    BeginBoxGroup(helpBoxStyle,170f,0f);
+                    if (!hasReflection)
+                    {
+                        EditorGUILayout.HelpBox(reflectionMessage, MessageType.None, true);
+                    }
+
+                    EditorGUI.BeginDisabledGroup(!hasReflection);
+                    DrawRefractionReflectionRenderingCullingMaskFields(false, hasFakePerspective);
+                    if (hasFakePerspective)
+                    {
+                        using (BoxGroupScope boxGroup = new BoxGroupScope(viewingFrustumHeightScalingFactorLabel, reflectionCameraViewingFrustumHeightPropertiesBoxGroupExpanded, 200f, 0f, false))
+                        {
+                            if (boxGroup.IsFaded)
+                            {
+                                EditorGUILayout.PropertyField(reflectionPartiallySubmergedObjectsViewingFrustumHeightScalingFactor, reflectionPartiallySubmergedObjectsViewingFrustumHeightScalingFactorLabel);
+                                EditorGUILayout.PropertyField(reflectionViewingFrustumHeightScalingFactor, reflectionViewingFrustumHeightScalingFactorLabel);
+                            }
+                        }
+                    }
+                    EditorGUILayout.Slider(reflectionRenderTextureResizingFactor, 0f, 1f, reflectionRenderTextureResizingFactorLabel);
+                    EditorGUILayout.PropertyField(reflectionRenderTextureFilterMode, reflectionRenderTextureFilterModeLabel);
+                    EditorGUILayout.PropertyField(reflectionZOffset, reflectionZOffsetLabel);
+                    EditorGUI.EndDisabledGroup();
+                    EndBoxGroup();
+                }
+            }
+        }
+
+        private void DrawRefractionReflectionRenderingCullingMaskFields(bool refraction, bool hasFakePerspective)
+        {
+            if (hasFakePerspective)
+            {
+                SerializedProperty allObjects;
+                SerializedProperty partiallySubmergedObjects;
+                if (refraction)
+                {
+                    allObjects = refractionCullingMask;
+                    partiallySubmergedObjects = refractionPartiallySubmergedObjectsCullingMask;
+                }
+                else
+                {
+                    allObjects = reflectionCullingMask;
+                    partiallySubmergedObjects = reflectionPartiallySubmergedObjectsCullingMask;
+                }
+
+                //All objects field
+                EditorGUILayout.PropertyField(allObjects, refractionReflectionCullingMaskLabel);
+
+                //Partially submerged objects
+                string[] displayedOptions = GetAllLayersNamesInMask(allObjects.intValue);
+                int mask = LayerMaskToConcatenatedLayersMask(partiallySubmergedObjects.intValue, displayedOptions);
+                mask = EditorGUILayout.MaskField(refractionReflectionPartiallySubmergedObjectsCullingMaskLabel, mask, displayedOptions);
+                partiallySubmergedObjects.intValue = ConcatenatedLayersMaskToLayerMask(mask, displayedOptions);
+            }
+            else
+            {
+                EditorGUILayout.PropertyField(refraction ? refractionCullingMask : reflectionCullingMask, refractionReflectionCullingMaskLabel);
+            }
+        }
+
+        private void DrawRenderingSettingsProperties(bool hasRefraction, bool hasReflection)
+        {
+            renderingSettingsExpanded.target = EditorGUILayout.Foldout(renderingSettingsExpanded.target, renderingSettingsFoldoutLabel, true);
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(renderingSettingsExpanded.faded))
+            {
+                if (group.visible)
+                {
+                    BeginBoxGroup(helpBoxStyle,155f,130f);
+                    EditorGUI.BeginDisabledGroup(!(hasReflection || hasRefraction));
+                    EditorGUILayout.PropertyField(farClipPlane, farClipPlaneLabel);
+                    EditorGUILayout.PropertyField(allowMSAA, allowMSAALabel);
+                    EditorGUILayout.PropertyField(allowHDR, allowHDRLabel);
+                    EditorGUILayout.PropertyField(renderPixelLights, renderPixelLightsLabel);
+                    EditorGUI.EndDisabledGroup();
+                    EndBoxGroup();
+
+                    BeginBoxGroup(helpBoxStyle,155f,130f);
+                    DrawSortingLayerField(sortingLayerID, sortingOrder);
+                    EndBoxGroup();
+                }
+            }
+        }
+
+        private static void DrawSortingLayerField(SerializedProperty layerID, SerializedProperty orderInLayer)
+        {
+            MethodInfo methodInfo = typeof(EditorGUILayout).GetMethod("SortingLayerField", BindingFlags.Static | BindingFlags.NonPublic, null, new[] {
+                typeof( GUIContent ),
+                typeof( SerializedProperty ),
+                typeof( GUIStyle ),
+                typeof( GUIStyle )
+            }, null);
+
+            if (methodInfo != null)
+            {
+                object[] parameters = { sortingLayerLabel, layerID, EditorStyles.popup, EditorStyles.label };
+                methodInfo.Invoke(null, parameters);
+                EditorGUILayout.PropertyField(orderInLayer, orderInLayerLabel);
+            }
+        }
+
+        private void DrawPrefabUtility(Game2DWater water2D, UnityEngine.Material water2DMaterial)
+        {
+            prefabUtilityExpanded.target = EditorGUILayout.Foldout(prefabUtilityExpanded.target, prefabUtilityFoldoutLabel, true);
+            using (EditorGUILayout.FadeGroupScope group = new EditorGUILayout.FadeGroupScope(prefabUtilityExpanded.faded))
+            {
+                if (group.visible)
+                {
+                    BeginBoxGroup(helpBoxStyle,155f,130f);
                     GameObject water2DGameObject = water2D.gameObject;
                     Texture waterNoiseTexture = water2DMaterial != null && water2DMaterial.HasProperty(noiseTextureShaderPropertyName) ? water2DMaterial.GetTexture(noiseTextureShaderPropertyName) : null;
 
+#if UNITY_2018_3_OR_NEWER
+                    bool isPrefabInstance = PrefabUtility.GetPrefabInstanceStatus(water2DGameObject) == PrefabInstanceStatus.Connected;
+#else
                     PrefabType prefabType = PrefabUtility.GetPrefabType(water2DGameObject);
+                    bool isPrefabInstance = prefabType == PrefabType.PrefabInstance;
+                    bool isPrefabInstanceDisconnected = prefabType == PrefabType.DisconnectedPrefabInstance;
+#endif
+
                     bool materialAssetAlreadyExist = water2DMaterial != null && AssetDatabase.Contains(water2DMaterial);
                     bool textureAssetAlreadyExist = waterNoiseTexture != null && AssetDatabase.Contains(waterNoiseTexture);
 
                     EditorGUI.BeginDisabledGroup(true);
 #if UNITY_2018_2_OR_NEWER
-                    Object prefabObjct = prefabType == PrefabType.PrefabInstance ? PrefabUtility.GetCorrespondingObjectFromSource(water2DGameObject) : null;
+                    Object prefabObjct = isPrefabInstance ? PrefabUtility.GetCorrespondingObjectFromSource(water2DGameObject) : null;
 #else
-                    Object prefabObjct = prefabType == PrefabType.PrefabInstance ? PrefabUtility.GetPrefabParent(water2DGameObject) : null;
+                    Object prefabObjct = isPrefabInstance ? PrefabUtility.GetPrefabParent(water2DGameObject) : null;
 #endif
                     EditorGUILayout.ObjectField(prefabObjct, typeof(Object), false);
                     EditorGUI.EndDisabledGroup();
@@ -961,7 +1295,7 @@ namespace Game2DWaterKit
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    if (prefabType != PrefabType.PrefabInstance)
+                    if (!isPrefabInstance)
                     {
                         if (GUILayout.Button("Create Prefab"))
                         {
@@ -980,21 +1314,35 @@ namespace Game2DWaterKit
                             }
 
                             string prefabPath = prefabsPath + fileName + ".prefab";
+#if UNITY_2018_3_OR_NEWER
+                            PrefabUtility.SaveAsPrefabAssetAndConnect(water2DGameObject, prefabPath, InteractionMode.AutomatedAction);
+#else
                             PrefabUtility.CreatePrefab(prefabPath, water2DGameObject, ReplacePrefabOptions.ConnectToPrefab);
+#endif
                         }
                     }
-
-                    if (prefabType == PrefabType.PrefabInstance)
+#if UNITY_2018_3_OR_NEWER
+                    /*
+                    As of Unity 2018.3, disconnecting (unlinking) and relinking a Prefab instance are no longer supported.
+                    Alternatively, we can now unpack a Prefab instance if we want to entirely remove its link to its Prefab asset 
+                    and thus be able to restructure the resulting plain GameObject as we please.
+                    */
+                    if (isPrefabInstance)
+                    {
+                        EditorGUILayout.HelpBox(newPrefabWorkflowMessage, MessageType.Info);
+                    }
+#else
+                    if (isPrefabInstance)
                     {
                         if (GUILayout.Button("Unlink Prefab"))
                         {
-                            PrefabUtility.DisconnectPrefabInstance(water2DGameObject);
 #if UNITY_2018_2_OR_NEWER
                             GameObject prefab = PrefabUtility.GetCorrespondingObjectFromSource(water2DGameObject) as GameObject;
 #else
                             GameObject prefab = PrefabUtility.GetPrefabParent(water2DGameObject) as GameObject;
 #endif
-                            Material prefabMaterial = prefab.GetComponent<MeshRenderer>().sharedMaterial;
+                            PrefabUtility.DisconnectPrefabInstance(water2DGameObject);
+                            UnityEngine.Material prefabMaterial = prefab.GetComponent<MeshRenderer>().sharedMaterial;
                             if (water2DMaterial != null && water2DMaterial == prefabMaterial)
                             {
                                 bool usePrefabMaterial = EditorUtility.DisplayDialog("Use same prefab's material?",
@@ -1004,7 +1352,7 @@ namespace Game2DWaterKit
 
                                 if (!usePrefabMaterial)
                                 {
-                                    Material duplicateMaterial = new Material(water2DMaterial);
+                                    UnityEngine.Material duplicateMaterial = new UnityEngine.Material(water2DMaterial);
                                     if (waterNoiseTexture != null)
                                     {
                                         Texture duplicateWaterNoiseTexture = Instantiate<Texture>(waterNoiseTexture);
@@ -1016,18 +1364,17 @@ namespace Game2DWaterKit
                         }
                     }
 
-                    if (prefabType == PrefabType.DisconnectedPrefabInstance)
+                    if (isPrefabInstanceDisconnected)
                     {
                         if (GUILayout.Button("Relink Prefab"))
                         {
                             PrefabUtility.ReconnectToLastPrefab(water2DGameObject);
-
 #if UNITY_2018_2_OR_NEWER
                             GameObject prefab = PrefabUtility.GetCorrespondingObjectFromSource(water2DGameObject) as GameObject;
 #else
                             GameObject prefab = PrefabUtility.GetPrefabParent(water2DGameObject) as GameObject;
 #endif
-                            Material prefabMaterial = prefab.GetComponent<MeshRenderer>().sharedMaterial;
+                            UnityEngine.Material prefabMaterial = prefab.GetComponent<MeshRenderer>().sharedMaterial;
 
                             if (prefabMaterial != null && water2DMaterial != prefabMaterial)
                             {
@@ -1044,7 +1391,7 @@ namespace Game2DWaterKit
                                 {
                                     if (!materialAssetAlreadyExist)
                                     {
-                                        string fileName = GetValidAssetFileName(water2DGameObject.name, ".mat", typeof(Material));
+                                        string fileName = GetValidAssetFileName(water2DGameObject.name, ".mat", typeof(UnityEngine.Material));
 
                                         if (!textureAssetAlreadyExist)
                                         {
@@ -1059,44 +1406,10 @@ namespace Game2DWaterKit
                             }
                         }
                     }
-
-                    EditorGUI.indentLevel--;
+#endif
+                    EndBoxGroup();
                 }
             }
-        }
-
-        static void DrawSortingLayerField(SerializedProperty layerID, SerializedProperty orderInLayer)
-        {
-            MethodInfo methodInfo = typeof(EditorGUILayout).GetMethod("SortingLayerField", BindingFlags.Static | BindingFlags.NonPublic, null, new[] {
-                typeof( GUIContent ),
-                typeof( SerializedProperty ),
-                typeof( GUIStyle ),
-                typeof( GUIStyle )
-            }, null);
-
-            if (methodInfo != null)
-            {
-                object[] parameters = { sortingLayerLabel, layerID, EditorStyles.popup, EditorStyles.label };
-                methodInfo.Invoke(null, parameters);
-                EditorGUILayout.PropertyField(orderInLayer, orderInLayerLabel);
-            }
-
-        }
-
-        private bool DrawFixScalingField(Game2DWater water2D)
-        {
-            Vector2 scale = water2D.transform.localScale;
-            if (!Mathf.Approximately(scale.x, 1f) || !Mathf.Approximately(scale.y, 1f))
-            {
-                EditorGUILayout.HelpBox(nonUniformScaleWarning, MessageType.Warning, true);
-                if (GUILayout.Button(fixScalingButtonLabel))
-                {
-                    waterSize.vector2Value = Vector2.Scale(waterSize.vector2Value, scale);
-                    water2D.transform.localScale = Vector3.one;
-                    return true;
-                }
-            }
-            return false;
         }
 
         private string GetValidAssetFileName(string assetName, string assetExtension, System.Type assetType)
@@ -1120,6 +1433,401 @@ namespace Game2DWaterKit
             return fileName;
         }
 
-#endregion
+        private void SetEditorGUISettings(float labelWidth, float fieldWidth)
+        {
+            EditorGUIUtility.labelWidth = labelWidth;
+            EditorGUIUtility.fieldWidth = fieldWidth;
+        }
+
+        private static void BeginBoxGroup(GUIStyle boxStyle,float labelWidth,float fieldWidth)
+        {
+            EditorGUIUtility.labelWidth = labelWidth;
+            EditorGUIUtility.fieldWidth = fieldWidth;
+            EditorGUILayout.BeginVertical(boxStyle);
+        }
+
+        private static void EndBoxGroup()
+        {
+            EditorGUIUtility.labelWidth = 0f;
+            EditorGUIUtility.fieldWidth = 0f;
+            EditorGUILayout.EndVertical();
+        }
+
+        private string[] GetAllLayersNamesInMask(int mask)
+        {
+            List<string> layers = new List<string>();
+            for (int i = 0; i < 32; i++)
+            {
+                if (mask == (mask | (1 << i)) && !string.IsNullOrEmpty(LayerMask.LayerToName(i)))
+                {
+                    layers.Add(LayerMask.LayerToName(i));
+                }
+            }
+            return layers.ToArray();
+        }
+
+        private bool MaskContainsLayer(int mask, int layerIndex)
+        {
+            return mask == (mask | (1 << layerIndex));
+        }
+
+        private int LayerMaskToConcatenatedLayersMask(int mask, string[] displayedOptions)
+        {
+            int concatenatedMask = 0;
+            for (int i = 0; i < displayedOptions.Length; i++)
+            {
+                int layer = LayerMask.NameToLayer(displayedOptions[i]);
+                if (MaskContainsLayer(mask, layer))
+                {
+                    concatenatedMask |= (1 << i);
+                }
+            }
+            return concatenatedMask;
+        }
+
+        private int ConcatenatedLayersMaskToLayerMask(int concatMask, string[] displayedOptions)
+        {
+            int mask = 0;
+            for (int i = 0; i < displayedOptions.Length; i++)
+            {
+                if (MaskContainsLayer(concatMask, i))
+                {
+                    mask |= (1 << LayerMask.NameToLayer(displayedOptions[i]));
+                }
+            }
+            return mask;
+        }
+
+        #endregion
+
+        #region SceneView
+
+        private void OnSceneGUI()
+        {
+            Game2DWater water2D = target as Game2DWater;
+
+            if (!isMultiEditing)
+            {
+                if (waterResizerUtility.IsActive)
+                {
+                    waterResizerUtility.DrawWaterResizer(water2D);
+                }
+                if (constantRipplesEditSourcesPositions)
+                {
+                    DrawConstantRipplesSourcesPositions(water2D);
+                }
+            }
+            DrawWaterWireframe(water2D);
+            DrawBuoyancyEffectorSurfaceLevelGuideline(water2D);
+
+            if (reflectionPropertiesExpanded.value && reflectionCameraViewingFrustumHeightPropertiesBoxGroupExpanded.value)
+            {
+                UnityEngine.Material waterMaterial = water2D.GetComponent<MeshRenderer>().sharedMaterial;
+                if (waterMaterial.IsKeywordEnabled("Water2D_Reflection") && waterMaterial.IsKeywordEnabled("Water2D_FakePerspective"))
+                {
+                    DrawPartiallySubmergedObjectsReflectionFrustumBox(water2D, waterMaterial);
+                }
+            }
+
+            if (GUI.changed)
+            {
+                SceneView.RepaintAll();
+            }
+        }
+
+        private void DrawWaterWireframe(Game2DWater water2D)
+        {
+            Vector3[] vertices = water2D.MeshModule.Vertices;
+            int surfaceVerticesCount = water2D.MeshModule.SurfaceVerticesCount;
+
+            int start, end;
+            if (water2D.SimulationModule.IsUsingCustomBoundaries)
+            {
+                start = 1;
+                end = surfaceVerticesCount - 2;
+            }
+            else
+            {
+                start = 0;
+                end = surfaceVerticesCount - 1;
+            }
+
+            using (new Handles.DrawingScope(wireframeColor, water2D.MainModule.LocalToWorldMatrix))
+            {
+                for (int i = start; i <= end; i++)
+                {
+                    Handles.DrawLine(vertices[i], vertices[i + surfaceVerticesCount]);
+                }
+            }
+        }
+
+        private void DrawBuoyancyEffectorSurfaceLevelGuideline(Game2DWater water2D)
+        {
+            Vector2 halfWaterSize = water2D.MainModule.WaterSize * 0.5f;
+            float y = halfWaterSize.y * (1f - 2f * water2D.AttachedComponentsModule.BuoyancyEffectorSurfaceLevel);
+            Vector3 lineStart = water2D.MainModule.TransformLocalToWorld(new Vector2(-halfWaterSize.x, y));
+            Vector3 lineEnd = water2D.MainModule.TransformLocalToWorld(new Vector2(halfWaterSize.x, y));
+            Handles.color = buoyancyEffectorSurfaceLevelGuidelineColor;
+            Handles.DrawLine(lineStart, lineEnd);
+            Handles.color = Color.white;
+        }
+
+        private void DrawConstantRipplesSourcesPositions(Game2DWater water2D)
+        {
+            List<float> ripplesSourcesPositions = water2D.ConstantRipplesModule.SourcePositions;
+            List<int> ripplesSourcesIndices = new List<int>(ripplesSourcesPositions.Count);
+            Vector3[] meshVerticesPositions = water2D.MeshModule.Vertices;
+            int surfaceVerticesCount = water2D.MeshModule.SurfaceVerticesCount;
+
+            Vector2 halfWaterSize = water2D.MainModule.WaterSize * 0.5f;
+
+            float leftmostBoundary = water2D.SimulationModule.LeftBoundary;
+            float rightmostBoundary = water2D.SimulationModule.RightBoundary;
+            float activeSurfaceArea = rightmostBoundary - leftmostBoundary;
+            int activeSurfaceAreaVerticesCount = water2D.SimulationModule.IsUsingCustomBoundaries ? surfaceVerticesCount - 3 : surfaceVerticesCount - 1;
+            float columnWdth = activeSurfaceArea / activeSurfaceAreaVerticesCount;
+
+            int indexOffset, start, end;
+
+            if (water2D.SimulationModule.IsUsingCustomBoundaries)
+            {
+                indexOffset = 1;
+                start = 1;
+                end = surfaceVerticesCount - 2;
+            }
+            else
+            {
+                indexOffset = 0;
+                start = 0;
+                end = surfaceVerticesCount - 1;
+            }
+
+            bool changeMade = false;
+            bool addNewSource = false;
+            int index = -1;
+
+            Quaternion handlesRotation = Quaternion.identity;
+            float handlesSize = HandleUtility.GetHandleSize(water2D.MainModule.Position) * 0.05f;
+            Handles.CapFunction handlesCap = Handles.DotHandleCap;
+            Color handlesColor = Handles.color;
+
+            using (new Handles.DrawingScope(water2D.MainModule.LocalToWorldMatrix))
+            {
+                for (int i = 0, maxi = ripplesSourcesPositions.Count; i < maxi; i++)
+                {
+                    float xPosition = ripplesSourcesPositions[i];
+                    if (xPosition < leftmostBoundary || xPosition > rightmostBoundary)
+                    {
+                        Handles.color = constantRipplesSourcesColorRemove;
+                        if (Handles.Button(new Vector3(xPosition, halfWaterSize.y), handlesRotation, handlesSize, handlesSize, handlesCap))
+                        {
+                            changeMade = true;
+                            index = i;
+                            addNewSource = false;
+                        }
+                        ripplesSourcesIndices.Add(-1);
+                    }
+                    else
+                    {
+                        int nearestIndex = Mathf.RoundToInt((xPosition - leftmostBoundary) / columnWdth) + indexOffset;
+                        ripplesSourcesIndices.Add(nearestIndex);
+                    }
+                }
+
+                for (int i = start; i <= end; i++)
+                {
+                    Vector3 pos = meshVerticesPositions[i];
+
+                    bool foundMatch = false;
+                    int foundMatchIndex = -1;
+                    for (int j = 0, maxj = ripplesSourcesIndices.Count; j < maxj; j++)
+                    {
+                        if (ripplesSourcesIndices[j] == i)
+                        {
+                            foundMatch = true;
+                            foundMatchIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (foundMatch)
+                    {
+                        Handles.color = constantRipplesSourcesColorRemove;
+                        if (Handles.Button(pos, handlesRotation, handlesSize, handlesSize, handlesCap))
+                        {
+                            changeMade = true;
+                            index = foundMatchIndex;
+                            addNewSource = false;
+                        }
+                    }
+                    else
+                    {
+                        Handles.color = constantRipplesSourcesColorAdd;
+                        if (Handles.Button(pos, handlesRotation, handlesSize, handlesSize, handlesCap))
+                        {
+                            changeMade = true;
+                            index = i;
+                            addNewSource = true;
+                        }
+                    }
+                }
+            }
+
+            Handles.color = handlesColor;
+
+            if (changeMade)
+            {
+                Undo.RecordObject(water2D, "editing water ripple source position");
+                if (addNewSource)
+                {
+                    ripplesSourcesPositions.Add(meshVerticesPositions[index].x);
+                }
+                else
+                {
+                    ripplesSourcesPositions.RemoveAt(index);
+                }
+
+                EditorUtility.SetDirty(water2D);
+
+                if (Application.isPlaying)
+                {
+                    water2D.ConstantRipplesModule.SourcePositions = ripplesSourcesPositions;
+                }
+            }
+        }
+
+        private void DrawPartiallySubmergedObjectsReflectionFrustumBox(Game2DWater water2D, UnityEngine.Material waterMaterial)
+        {
+            Vector2 waterSize = water2D.MainModule.WaterSize;
+            float surfaceLevel = waterSize.y * (waterMaterial.GetFloat("_SurfaceLevel") - 0.5f);
+            float surfaceSubmergeLevel = waterSize.y * (waterMaterial.GetFloat("_SubmergeLevel") - 0.5f);
+
+            Color defaultHandlesColor = Handles.color;
+            using (new Handles.DrawingScope(water2D.transform.localToWorldMatrix))
+            {
+                //partially submerged objects reflection camera viewing frustum
+                Vector2 bottomLeft = new Vector2(-waterSize.x * 0.5f, surfaceSubmergeLevel);
+                float scalingFactor = water2D.RenderingModule.ReflectionPartiallySubmergedObjects.ViewingFrustumHeightScalingFactor;
+                Vector2 size = new Vector2(waterSize.x, (surfaceSubmergeLevel - surfaceLevel) * scalingFactor);
+                DrawBox(bottomLeft, size, Color.red);
+
+                //other objects reflection camera viewing frustum
+                bottomLeft.y = waterSize.y * 0.5f;
+                scalingFactor = water2D.RenderingModule.Reflection.ViewingFrustumHeightScalingFactor;
+                size.y = (waterSize.y * 0.5f - surfaceLevel) * scalingFactor;
+                DrawBox(bottomLeft, size, Color.green);
+            }
+            Handles.color = defaultHandlesColor;
+        }
+
+        private void DrawBox(Vector2 bottomLeft, Vector2 size, Color color)
+        {
+            Vector2 topLeft = bottomLeft + new Vector2(0f, size.y);
+            Vector2 topRight = bottomLeft + size;
+            Vector3 bottomRight = bottomLeft + new Vector2(size.x, 0f);
+
+            Handles.color = color;
+            Handles.DrawPolyLine(bottomLeft, topLeft, topRight, bottomRight, bottomLeft);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Custom Classes
+
+        private class BoxGroupScope : GUI.Scope
+        {
+            private static readonly string clickToExpandTooltip = "Click to expand";
+            private static readonly string clickToCollapseTooltip = "Click to collapse";
+            
+            public bool IsFaded { get; private set; }
+            
+            public BoxGroupScope(string name, AnimBool state, float labelWidth, float fieldWidth, bool useHelpBoxStyle = true)
+            {
+                BeginBoxGroup(useHelpBoxStyle ? helpBoxStyle : groupBoxStyle,labelWidth, fieldWidth);
+
+                if (GUILayout.Button(new GUIContent(name, state.target ? clickToCollapseTooltip : clickToExpandTooltip), EditorStyles.boldLabel))
+                    state.target = !state.target;
+
+                IsFaded = EditorGUILayout.BeginFadeGroup(state.faded);
+            }
+
+            public BoxGroupScope(string name, SerializedProperty toggle, AnimBool state, float labelWidth, float fieldWidth, bool useHelpBoxStyle = true)
+            {
+                BeginBoxGroup(useHelpBoxStyle ? helpBoxStyle : groupBoxStyle, labelWidth, fieldWidth);
+
+                Rect rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+                EditorGUI.showMixedValue = toggle.hasMultipleDifferentValues;
+                EditorGUI.BeginChangeCheck();
+                bool toggleState = EditorGUI.Toggle(new Rect(rect.x, rect.y, 14f, rect.height), toggle.boolValue);
+                if (EditorGUI.EndChangeCheck())
+                    toggle.boolValue = toggleState;
+
+                EditorGUI.showMixedValue = false;
+                rect.x += 16f;
+                if (GUI.Button(rect, new GUIContent(name, state.target ? clickToCollapseTooltip : clickToExpandTooltip), EditorStyles.boldLabel))
+                    state.target = !state.target;
+
+                IsFaded = EditorGUILayout.BeginFadeGroup(state.faded);
+            }
+
+            protected override void CloseScope()
+            {
+                EditorGUILayout.EndFadeGroup();
+                EndBoxGroup();
+            }
+        }
+
+        private class WaterResizerUtility
+        {
+            private readonly UnityAction _repaint;
+
+            public bool IsActive { get; set; }
+            public bool HasChanged { get; set; }
+
+            public Vector2 WaterSize { get; private set; }
+            public Vector3 WaterPosition { get; private set; }
+
+            public WaterResizerUtility(UnityAction repaint)
+            {
+                _repaint = repaint;
+            }
+
+            public void DrawWaterResizer(Game2DWater water2D)
+            {
+                using (new Handles.DrawingScope(water2D.MainModule.LocalToWorldMatrix))
+                {
+                    Vector2 halfWaterSize = water2D.MainModule.WaterSize * 0.5f;
+                    float handlesSize = HandleUtility.GetHandleSize(Vector3.zero) * 0.5f;
+                    Handles.CapFunction handlesCap = Handles.ArrowHandleCap;
+                    const float handlesSnap = 1f;
+
+                    EditorGUI.BeginChangeCheck();
+                    Vector3 upPos = Handles.Slider(new Vector3(0f, halfWaterSize.y, 0f), Vector3.up, handlesSize, handlesCap, handlesSnap);
+                    Vector3 downPos = Handles.Slider(new Vector3(0f, -halfWaterSize.y, 0f), Vector3.down, handlesSize, handlesCap, handlesSnap);
+                    Vector3 rightPos = Handles.Slider(new Vector3(halfWaterSize.x, 0f, 0f), Vector3.right, handlesSize, handlesCap, handlesSnap);
+                    Vector3 leftPos = Handles.Slider(new Vector3(-halfWaterSize.x, 0f, 0f), Vector3.left, handlesSize, handlesCap, handlesSnap);
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Vector2 newWaterSize;
+                        newWaterSize.x = Mathf.Clamp(rightPos.x - leftPos.x, 0f, float.MaxValue);
+                        newWaterSize.y = Mathf.Clamp(upPos.y - downPos.y, 0f, float.MaxValue);
+
+                        if (newWaterSize.x > 0f && newWaterSize.y > 0f)
+                        {
+                            HasChanged = true;
+                            WaterSize = newWaterSize;
+                            WaterPosition = water2D.MainModule.TransformLocalToWorld(new Vector2((rightPos.x + leftPos.x) / 2f, (upPos.y + downPos.y) / 2f));
+                            
+                            if(_repaint != null)
+                                _repaint.Invoke();
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }
