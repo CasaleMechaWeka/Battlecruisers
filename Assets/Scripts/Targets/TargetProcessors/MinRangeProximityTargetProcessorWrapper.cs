@@ -11,11 +11,9 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
 			CircleTargetDetectorController maxRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MaxRangeDetector");
             maxRangeDetector.Initialise(args.MaxRangeInM);
-            maxRangeDetector.Initialise();
 
             CircleTargetDetectorController minRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MinRangeDetector");
             minRangeDetector.Initialise(args.MinRangeInM);
-            minRangeDetector.Initialise();
 
             // Create target finder
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);

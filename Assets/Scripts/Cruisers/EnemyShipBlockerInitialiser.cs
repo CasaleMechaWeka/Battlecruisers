@@ -21,7 +21,6 @@ namespace BattleCruisers.Cruisers
 
             TargetDetectorController targetDetectorController = GetComponent<TargetDetectorController>();
             Assert.IsNotNull(targetDetectorController);
-            targetDetectorController.Initialise();
 
             IList<TargetType> targetTypesToFind = new List<TargetType>()
             {
