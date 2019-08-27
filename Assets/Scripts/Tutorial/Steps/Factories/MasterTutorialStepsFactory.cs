@@ -13,14 +13,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly TutorialStepsFactoriesProvider _factoriesProvider;
         private readonly ISystemInfo _systemInfo;
 
-        public MasterTutorialStepsFactory(IHighlighter highlighter, IExplanationPanel explanationPanel, ITutorialArgs tutorialArgs)
+        public MasterTutorialStepsFactory(
+            IHighlighter highlighter,
+            IExplanationPanel explanationPanel,
+            IDeferrer deferrer,
+            ITutorialArgs tutorialArgs)
         {
-            Helper.AssertIsNotNull(highlighter, explanationPanel, tutorialArgs);
+            Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
 
             _factoriesProvider
                 = new TutorialStepsFactoriesProvider(
                     highlighter,
                     explanationPanel,
+                    deferrer,
                     tutorialArgs);
             _systemInfo = new SystemInfoBC();
         }

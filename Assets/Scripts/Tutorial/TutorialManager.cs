@@ -39,6 +39,7 @@ namespace BattleCruisers.Tutorial
                 = new MasterTutorialStepsFactory(
                     highlighter, 
                     explanationPanel, 
+                    tutorialArgs.Components.Deferrer, 
                     tutorialArgs);
 
             Queue<ITutorialStep> steps = new Queue<ITutorialStep>(stepsFactory.CreateSteps());
