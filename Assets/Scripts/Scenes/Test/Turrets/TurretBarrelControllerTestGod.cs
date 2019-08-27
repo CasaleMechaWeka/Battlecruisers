@@ -3,7 +3,7 @@ using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class TurretBarrelControllerTests : BarrelControllerTestGod 
+    public class TurretBarrelControllerTestGod : BarrelControllerTestGod 
 	{
         protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
         {
