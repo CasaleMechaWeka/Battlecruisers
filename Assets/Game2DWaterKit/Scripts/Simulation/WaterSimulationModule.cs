@@ -25,6 +25,8 @@
         private float[] _velocities;
         private bool _updateSimulation;
 
+        private const float DEFAULT_FIXED_DELTA_TIME = 0.02f;
+
         public WaterSimulationModule(float damping, float stiffness, float spread, float firstCustomBoundary, float secondCustomBoundary, bool useCustomBoundaries)
         {
             _damping = damping;
@@ -206,7 +208,7 @@
         {
             var vertices = _meshModule.Vertices;
 
-            float deltaTime = Time.fixedDeltaTime;
+            float deltaTime = DEFAULT_FIXED_DELTA_TIME;
             float dampingFactor = _damping * 2f * _stiffnessSquareRoot;
             float spreadFactor = _spread * _meshModule.SubdivisionsPerUnit;
             float waterPositionOfRest = _mainModule.Height * 0.5f;
