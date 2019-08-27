@@ -10,6 +10,7 @@ namespace BattleCruisers.Utils.Factories
         public IExplosionPoolProvider ExplosionPoolProvider { get; }
         public IProjectilePoolProvider ProjectilePoolProvider { get; }
         public IUnitPoolProvider UnitPoolProvider { get; }
+        public IUnitToPoolMap UnitToPoolMap { get; }
 
         public PoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager)
         {
@@ -18,6 +19,7 @@ namespace BattleCruisers.Utils.Factories
             ExplosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
             ProjectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
             UnitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
+            UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }
     }
 }

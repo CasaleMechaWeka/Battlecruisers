@@ -9,5 +9,6 @@ namespace BattleCruisers.Utils.Factories
         IExplosionPoolProvider ExplosionPoolProvider { get; }
         IProjectilePoolProvider ProjectilePoolProvider { get; }
         IUnitPoolProvider UnitPoolProvider { get; }
+        IUnitToPoolMap UnitToPoolMap { get; }
     }
 }
