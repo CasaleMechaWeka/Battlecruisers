@@ -15,7 +15,9 @@ namespace BattleCruisers.Scenes.Test.Balancing
             base.Initialise();
 
             Assert.IsTrue(scenarioDelayInS >= 0);
-            _deferrer = new Deferrer();
+
+            _deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(_deferrer);
         }
 
         protected override void InitialiseScenario(BuildableVsBuildableTest scenario)

@@ -23,7 +23,9 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 		{
             base.Start();
 
-            IDeferrer deferrer = new Deferrer();
+            IDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(deferrer);
+
             Helper helper = new Helper(deferrer: deferrer, updaterProvider: _updaterProvider);
 
 
