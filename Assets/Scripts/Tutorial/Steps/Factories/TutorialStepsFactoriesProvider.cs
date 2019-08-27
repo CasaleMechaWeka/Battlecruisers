@@ -22,13 +22,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public ITutorialStepsFactory GameSpeedStepsFactory { get; }
         public ITutorialStepsFactory EndgameStepsFactory { get; }
 
-        public TutorialStepsFactoriesProvider(
-            IHighlighter highlighter,
-            IExplanationPanel explanationPanel,
-            IDeferrer deferrer,
-            ITutorialArgs tutorialArgs)
+        public TutorialStepsFactoriesProvider(IHighlighter highlighter, IExplanationPanel explanationPanel, ITutorialArgs tutorialArgs)
         {
-            Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
+            Helper.AssertIsNotNull(highlighter, explanationPanel, tutorialArgs);
 
             ITutorialStepArgsFactory argsFactory = new TutorialStepArgsFactory(highlighter, explanationPanel.TextDisplayer);
             ITutorialStepFactory cameraAdjustmentWaitStepFactory = new CameraAdjustmentWaitStepFactory(argsFactory, tutorialArgs.CameraComponents);
@@ -124,7 +120,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     enemyUnitArgs,
                     tutorialArgs.AICruiser,
-                    deferrer,
+                    tutorialArgs.AICruiser.FactoryProvider.DeferrerProvider.Deferrer,
                     tutorialArgs.TutorialProvider.SingleAircraftProvider);
 
             EnemyShipStepsFactory
