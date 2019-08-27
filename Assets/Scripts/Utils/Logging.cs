@@ -199,7 +199,7 @@ namespace BattleCruisers.Utils
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            Log(LoggingLevel.Normal, tag, CreateMessage(string.Empty, memberName, sourceFilePath, sourceLineNumber));
+            Log(LoggingLevel.Normal, tag, string.Empty, memberName, sourceFilePath, sourceLineNumber);
         }
 
         public static void Log(
@@ -209,7 +209,7 @@ namespace BattleCruisers.Utils
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
 		{
-			Log(LoggingLevel.Normal, tag, CreateMessage(message, memberName, sourceFilePath, sourceLineNumber));
+			Log(LoggingLevel.Normal, tag, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
 		public static void Verbose(
@@ -219,7 +219,7 @@ namespace BattleCruisers.Utils
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-            Log(LoggingLevel.Verbose, tag, CreateMessage(message, memberName, sourceFilePath, sourceLineNumber));
+            Log(LoggingLevel.Verbose, tag, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
         public static void Warn(
@@ -229,32 +229,34 @@ namespace BattleCruisers.Utils
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
 		{
-			Log(LoggingLevel.Warning, tag, CreateMessage(message, memberName, sourceFilePath, sourceLineNumber));
+			Log(LoggingLevel.Warning, tag, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
-        private static string CreateMessage(string message, string memberName, string sourceFilePath, int sourceLineNumber)
-        {
-            string fileName = sourceFilePath.Split('\\').Last();
-            return $"{fileName}:{memberName}[{sourceLineNumber}]: {message}";
-        }
-
-		private static void Log(LoggingLevel logLevel, string tag, string message)
+		private static void Log(LoggingLevel logLevel, string tag, string message, string memberName, string sourceFilePath, int sourceLineNumber)
 		{
 			if (LOG_LEVEL >= logLevel
 				&& (LOG_ALL || TagsToActiveness[tag]))
 			{
-				string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
-				string fullMsg = $"{timestamp} - {tag}:  {message}";
+                string fullMessage = CreateMessage(tag, message, memberName, sourceFilePath, sourceLineNumber);
 
 				if (logLevel == LoggingLevel.Warning)
 				{
-					Debug.LogWarning(fullMsg);
+					Debug.LogWarning(fullMessage);
 				}
 				else
 				{
-					Debug.Log(fullMsg);
+					Debug.Log(fullMessage);
 				}
 			}
 		}
+
+        // This method is extremely expensive in terms of memory.  Hence only call when logging
+        // is enabled (in debug builds).
+        private static string CreateMessage(string tag, string baseMessage, string memberName, string sourceFilePath, int sourceLineNumber)
+        {
+			string timestamp = DateTime.Now.ToString("hh:mm:ss.fff");
+            string fileName = sourceFilePath.Split('\\').Last();
+            return $"{timestamp} - {tag}:  {fileName}:{memberName}[{sourceLineNumber}]: {baseMessage}";
+        }
 	}
 }
