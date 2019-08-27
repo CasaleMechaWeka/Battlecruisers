@@ -46,6 +46,9 @@ namespace BattleCruisers.Buildables.Pools
                 case "Turtle Gunship":
                     return _unitPoolProvider.GunshipPool;
 
+                case "Test Aircraft":
+                    return _unitPoolProvider.TestAircraftPool;
+
                 default:
                     throw new ArgumentException($"Unsupported aircraft: {aircraft.Name}");
             }

@@ -46,6 +46,7 @@ namespace BattleCruisers.Data.Static
             public static UnitKey Bomber { get; } = new UnitKey(UnitCategory.Aircraft, "Bomber");
             public static UnitKey Fighter { get; } = new UnitKey(UnitCategory.Aircraft, "Fighter");
             public static UnitKey Gunship { get; } = new UnitKey(UnitCategory.Aircraft, "Gunship");
+            public static UnitKey TestAircraft { get; } = new UnitKey(UnitCategory.Aircraft, "TestAircraft");
 
             // Ships
             public static UnitKey AttackBoat { get; } = new UnitKey(UnitCategory.Naval, "AttackBoat");

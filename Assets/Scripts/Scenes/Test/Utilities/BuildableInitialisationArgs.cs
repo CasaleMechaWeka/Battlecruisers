@@ -12,12 +12,10 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -109,7 +107,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetFactoriesProvider,
                     new SpawnDeciderFactory(),
                     updaterProvider,
-                    new ExplosionPoolProvider(prefabFactory));
+                    UiManager);
 
             CruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             SetupCruiserSpecificFactories(
@@ -145,7 +143,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
             IUpdaterProvider updaterProvider,
-            IExplosionPoolProvider explosionPoolProvider)
+            IUIManager uiManager)
         {
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
 
@@ -178,10 +176,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.Sound.Returns(soundFactoryProvider);
 
             // Pools
-            IPoolProviders poolProviders = Substitute.For<IPoolProviders>();
-            poolProviders.ExplosionPoolProvider.Returns(explosionPoolProvider);
-            IProjectilePoolProvider projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
-            poolProviders.ProjectilePoolProvider.Returns(projectilePoolProvider);
+            IPoolProviders poolProviders = new PoolProviders(factoryProvider, uiManager);
             factoryProvider.PoolProviders.Returns(poolProviders);
 
             return factoryProvider;
