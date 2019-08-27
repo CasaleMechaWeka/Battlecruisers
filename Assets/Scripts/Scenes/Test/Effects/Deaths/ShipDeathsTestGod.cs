@@ -3,6 +3,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Threading;
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
@@ -12,7 +13,9 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         void Start()
         {
-            _deferrer = new Deferrer();
+            _deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(_deferrer);
+
             Helper helper = new Helper();
             ShipController[] ships = FindObjectsOfType<ShipController>();
 
