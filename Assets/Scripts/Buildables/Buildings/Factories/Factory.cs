@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
@@ -7,6 +7,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
@@ -19,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
         private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IUnitSpawnDecider _unitSpawnDecider;
+        private IPool<Unit, BuildableActivationArgs> _unitPool;
 
         public abstract UnitCategory UnitCategory { get; }
 
@@ -54,6 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                         CleanUpDroneConsumer();
 	                    DestroyUnitUnderConstruction();
                         _isUnitPaused.Value = false;
+                        _unitPool = null;
 	                }
 
 	                _unitWrapper = value;
@@ -62,6 +65,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                     {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
                         EnsureDroneConsumerHasHighestPriority();
+                        _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
 
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
                     }
@@ -124,9 +128,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         // PERF  Don't need to do this every update :)
 		protected override void OnUpdate()
 		{
-			if (_unitWrapper != null 
+			if (UnitWrapper != null 
 				&& (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
-				&& _unitSpawnDecider.CanSpawnUnit(_unitWrapper.Buildable))
+				&& _unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable))
 			{
 				StartBuildingUnit();
 			}
@@ -136,13 +140,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
             Logging.LogMethod(Tags.FACTORY);
 
-			UnitUnderConstruction = _factoryProvider.PrefabFactory.CreateUnit(_unitWrapper, _uiManager, _factoryProvider);
-
-            UnitUnderConstruction.Activate(
-                new BuildableActivationArgs(
-                    ParentCruiser,
-                    _enemyCruiser,
-                    _cruiserSpecificFactories));
+            BuildableActivationArgs activationArgs = new BuildableActivationArgs(ParentCruiser, _enemyCruiser, _cruiserSpecificFactories);
+            UnitUnderConstruction = _unitPool.GetItem(activationArgs);
 
             UnitUnderConstruction.DroneConsumerProvider = this;
 
@@ -233,7 +232,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public void PauseBuildingUnit()
         {
-            if (_unitWrapper != null
+            if (UnitWrapper != null
                 && !_isUnitPaused.Value)
             {
                 _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
@@ -245,7 +244,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         {
             if (_isUnitPaused.Value)
             {
-                Assert.IsNotNull(_unitWrapper);
+                Assert.IsNotNull(UnitWrapper);
 
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
                 EnsureDroneConsumerHasHighestPriority();
