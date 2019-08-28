@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using UnityEngine;
+using UnityDebug = UnityEngine.Debug;
 
 namespace BattleCruisers.Utils
 {
@@ -193,6 +194,7 @@ namespace BattleCruisers.Utils
             return tagsToActiveness;
 		}
 
+        [Conditional("ENABLE_LOGS")]
         public static void LogMethod(
             string tag,
             [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
@@ -202,6 +204,7 @@ namespace BattleCruisers.Utils
             Log(LoggingLevel.Normal, tag, string.Empty, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [Conditional("ENABLE_LOGS")]
         public static void Log(
             string tag, 
             string message,
@@ -212,6 +215,7 @@ namespace BattleCruisers.Utils
 			Log(LoggingLevel.Normal, tag, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [Conditional("ENABLE_LOGS")]
 		public static void Verbose(
             string tag, 
             string message,
@@ -222,6 +226,7 @@ namespace BattleCruisers.Utils
             Log(LoggingLevel.Verbose, tag, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [Conditional("ENABLE_LOGS")]
         public static void Warn(
             string tag, 
             string message,
@@ -241,11 +246,11 @@ namespace BattleCruisers.Utils
 
 				if (logLevel == LoggingLevel.Warning)
 				{
-					Debug.LogWarning(fullMessage);
+					UnityDebug.LogWarning(fullMessage);
 				}
 				else
 				{
-					Debug.Log(fullMessage);
+					UnityDebug.Log(fullMessage);
 				}
 			}
 		}
