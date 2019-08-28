@@ -18,9 +18,7 @@ namespace BattleCruisers.Scenes.Test
 
             Helper helper = new Helper();
 
-			ITarget target = Substitute.For<ITarget>();
-			Vector2 targetPosition = targetGameObject.transform.position;
-			target.Position.Returns(targetPosition);
+            ITarget target = CreateTarget(targetGameObject.transform.position);
 
             BarrelController[] turretBarrels = FindObjectsOfType<BarrelController>();
 
@@ -40,5 +38,12 @@ namespace BattleCruisers.Scenes.Test
 		}
 
         protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
+
+        protected virtual ITarget CreateTarget(Vector2 targetPosition)
+        {
+            ITarget target = Substitute.For<ITarget>();
+            target.Position.Returns(targetPosition);
+            return target;
+        }
 	}
 }
