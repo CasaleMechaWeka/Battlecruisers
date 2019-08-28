@@ -67,12 +67,13 @@ namespace BattleCruisers.Movement.Velocity
                 // excplicitly set (to get the fighter pointing the direction it's travelling).
                 _rigidBody.transform.position = moveToPosition;
 
-                string logMessage
-                    = $"currentPosition:D {_rigidBody.transform.position}  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint.Position}  " +
-                        $"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
-                        $"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +
-                        $"_time.DeltaTime: {_time.DeltaTime}  _rigidBody.transform.rotation.eulerAngles: {_rigidBody.transform.rotation.eulerAngles}";
-                Logging.Verbose(Tags.MOVEMENT, logMessage);
+                // Have this inline so it will be stripped out when logs are excluded.
+                Logging.Verbose(
+                    Tags.MOVEMENT,
+                    $"currentPosition:D {_rigidBody.transform.position}  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint.Position}  " +
+                    $"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
+                    $"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +
+                    $"_time.DeltaTime: {_time.DeltaTime}  _rigidBody.transform.rotation.eulerAngles: {_rigidBody.transform.rotation.eulerAngles}");
 
 				HandleDirectionChange(oldPatrollingVelocity, _patrollingVelocity);
 			}
