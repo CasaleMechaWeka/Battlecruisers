@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.Utils.DataStrctures
 {
+    // PERF  Struct candidate :)
     public class Rectangle
     {
         public float MinX { get; }

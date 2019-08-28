@@ -2,16 +2,22 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Threading;
+using NSubstitute;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
+using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
     public class AntiAirTurretsPerformanceTestGod : MultiCameraTestGod<CameraScenario>
 	{
 		public UnitWrapper unitPrefab;
+        public List<Vector2> patrolPoints;
 
         protected override void Initialise()
         {
@@ -20,14 +26,18 @@ namespace BattleCruisers.Scenes.Test.Performance
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(timeScaleDeferrer);
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
+            TestUtils.Helper helper = new TestUtils.Helper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
    
             // Initialise prefab
 			unitPrefab.Initialise();
 
             // Initialise air factory
+            IAircraftProvider aircraftProvider = Substitute.For<IAircraftProvider>();
+            aircraftProvider.FighterSafeZone.Returns(new Rectangle(-50, 50, -50, 50));
+            aircraftProvider.FindFighterPatrolPoints(default).ReturnsForAnyArgs(patrolPoints);
+
             AirFactory factory = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right);
+            helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right, aircraftProvider: aircraftProvider);
             factory.CompletedBuildable += Factory_CompletedBuildable;
             factory.StartConstruction();
 
@@ -40,7 +50,7 @@ namespace BattleCruisers.Scenes.Test.Performance
             }
 		}
 
-		private void Factory_CompletedBuildable(object sender, EventArgs e)
+        private void Factory_CompletedBuildable(object sender, EventArgs e)
 		{
             ((Factory)sender).StartBuildingUnit(unitPrefab);
 		}
