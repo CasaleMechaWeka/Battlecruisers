@@ -81,6 +81,7 @@ namespace BattleCruisers.Cruisers
         public IDroneFocuser DroneFocuser { get; private set; }
         public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
         public ICruiserUnitMonitor UnitMonitor { get; private set; }
+        public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IUnitTargets UnitTargets { get; private set; }
         public ITargetTracker BlockedShipsTracker { get; private set; }
 
@@ -116,6 +117,7 @@ namespace BattleCruisers.Cruisers
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
+            PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
             UnitTargets = new UnitTargets(UnitMonitor);
         }
 

@@ -24,7 +24,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         {
             _uiManager = Substitute.For<IUIManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer);
+            // FELIX  fIX :P
+            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, null);
 
             _unit = Substitute.For<IUnit>();
             _unitWrapper = Substitute.For<IBuildableWrapper<IUnit>>();

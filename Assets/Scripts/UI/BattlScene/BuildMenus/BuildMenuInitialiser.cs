@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -25,7 +26,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             ISpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            IPopulationLimitMonitor populationLimitMonitor)
 		{
             Helper.AssertIsNotNull(
                 uiManager,
@@ -35,7 +37,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 buttonVisibilityFilters,
                 spriteProvider,
                 playerCruiserFocusHelper,
-                soundPlayer);
+                soundPlayer,
+                populationLimitMonitor);
 
             // Selector panel
             SelectorPanelController selectorPanel = GetComponentInChildren<SelectorPanelController>();
@@ -57,7 +60,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
 
             // Unit menus
-            IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager, soundPlayer);
+            IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager, soundPlayer, populationLimitMonitor);
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();

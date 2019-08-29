@@ -18,6 +18,7 @@ namespace BattleCruisers.Cruisers
         IDroneFocuser DroneFocuser { get; }
         ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
+        IPopulationLimitMonitor PopulationLimitMonitor { get; }
         IUnitTargets UnitTargets { get; }
         ITargetTracker BlockedShipsTracker { get; }
 

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Tutorial.Highlighting.Masked;
@@ -43,7 +44,8 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            IPopulationLimitMonitor populationLimitMonitor)
         {
             Helper.AssertIsNotNull(
                 droneManager, 
@@ -54,10 +56,11 @@ namespace BattleCruisers.UI.BattleScene
                 spriteProvider,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
-                soundPlayer);
+                soundPlayer,
+                populationLimitMonitor);
 
             IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
-            IBuildMenu buildMenu = SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer);
+            IBuildMenu buildMenu = SetupBuildMenuController(uiManager, playerLoadout, prefabFactory, spriteProvider, buttonVisibilityFilters, playerCruiserFocusHelper, soundPlayer, populationLimitMonitor);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu);
@@ -77,7 +80,8 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            IPopulationLimitMonitor populationLimitMonitor)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
@@ -97,7 +101,8 @@ namespace BattleCruisers.UI.BattleScene
                     buttonVisibilityFilters,
                     spriteProvider,
                     playerCruiserFocusHelper,
-                    soundPlayer);
+                    soundPlayer,
+                    populationLimitMonitor);
         }
 
         private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
