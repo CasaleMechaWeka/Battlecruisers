@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -10,6 +12,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     // FELIX  Update tests :)
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
+        private readonly IPopulationLimitMonitor _populationLimitMonitor;
+
         public UnitClickHandler(IUIManager uiManager, IPrioritisedSoundPlayer soundPlayer)
             : base(uiManager, soundPlayer)
         {
@@ -24,15 +28,18 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 bool tryingToBuildUnit = HandleFactory(unitClicked, unitFactory);
 			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
 
-                if (tryingToBuildUnit)
+                if (tryingToBuildUnit
+                    && _populationLimitMonitor.IsPopulationLimitReached)
                 {
-                    // FELIX  Check for population limit, play sound
+                    // FELIX  NEXT
+                    //_soundPlayer.PlaySound(PrioritisedSoundKeys.Events.)
                 }
             }
             else if (unitFactory.BuildableState == BuildableState.Completed)
             {
                 PlayUnaffordableSound();
             }
+            // FELIX  Play wait for factory to complete sound :D
         }
 
         /// <returns>
