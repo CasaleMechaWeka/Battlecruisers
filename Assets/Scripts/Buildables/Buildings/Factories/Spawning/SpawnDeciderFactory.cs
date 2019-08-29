@@ -1,12 +1,11 @@
-﻿using UnityCommon.PlatformAbstractions;
+﻿using BattleCruisers.Utils;
+using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {
     public class SpawnDeciderFactory : ISpawnDeciderFactory
     {
         private readonly ITime _time;
-
-        private const int POPULATION_LIMIT = 30;
 
         public SpawnDeciderFactory()
         {
@@ -36,7 +35,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
                         spawnPositionFinder),
                     new PopulationLimitSpawnDecider(
                         factory.ParentCruiser.UnitMonitor,
-                        POPULATION_LIMIT));
+                        Constants.POPULATION_LIMIT));
         }
     }
 }

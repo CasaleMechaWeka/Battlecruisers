@@ -9,6 +9,8 @@
         public const float MAX_ACCURACY = 1;
 
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
+
+        public const int POPULATION_LIMIT = 30;
     }
 
     public static class ZoomScale
