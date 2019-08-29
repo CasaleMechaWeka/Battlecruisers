@@ -94,6 +94,8 @@ namespace BattleCruisers.Data.Static
 
             // Other
             public static ISoundKey EnemyStartedUltra => new SoundKey(SoundType.Events, "enemy-started-ultra");
+            public static ISoundKey FactoryIncomplete => new SoundKey(SoundType.Events, "wait-for-factory-to-complete");
+            public static ISoundKey PopulationLimitReached => new SoundKey(SoundType.Events, "population-limit-reached");
             public static ISoundKey ShieldsDown => new SoundKey(SoundType.Events, "shields-down");
             public static ISoundKey TargettingNewTarget => new SoundKey(SoundType.Events, "targeting-new-target");
             public static ISoundKey TargettingDeselected => new SoundKey(SoundType.Events, "targeting-untargeted");

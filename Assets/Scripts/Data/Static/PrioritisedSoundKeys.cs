@@ -126,11 +126,15 @@ namespace BattleCruisers.Data.Static
             }
 
             public static PrioritisedSoundKey EnemyStartedUltra { get; }
+            public static PrioritisedSoundKey IncompleteFactory { get; }
+            public static PrioritisedSoundKey PopulationLimitReached { get; }
             public static PrioritisedSoundKey ShieldsDown { get; }
 
             static Events()
             {
                 EnemyStartedUltra = new PrioritisedSoundKey(SoundKeys.Events.EnemyStartedUltra, SoundPriority.VeryHigh);
+                IncompleteFactory = new PrioritisedSoundKey(SoundKeys.Events.FactoryIncomplete, SoundPriority.VeryHigh);
+                PopulationLimitReached = new PrioritisedSoundKey(SoundKeys.Events.PopulationLimitReached, SoundPriority.VeryHigh);
                 ShieldsDown = new PrioritisedSoundKey(SoundKeys.Events.ShieldsDown, SoundPriority.Normal);
             }
         }
