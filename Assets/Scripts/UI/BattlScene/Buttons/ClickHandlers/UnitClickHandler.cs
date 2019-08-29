@@ -7,6 +7,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
+    // FELIX  Update tests :)
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
         public UnitClickHandler(IUIManager uiManager, IPrioritisedSoundPlayer soundPlayer)
@@ -20,8 +21,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
-                HandleFactory(unitClicked, unitFactory);
+                bool tryingToBuildUnit = HandleFactory(unitClicked, unitFactory);
 			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
+
+                if (tryingToBuildUnit)
+                {
+                    // FELIX  Check for population limit, play sound
+                }
             }
             else if (unitFactory.BuildableState == BuildableState.Completed)
             {
@@ -29,7 +35,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
         }
 
-        private void HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
+        /// <returns>
+        /// True if trying to build a unit, false otherwise.
+        /// </returns>
+        private bool HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))
             {
@@ -37,16 +46,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 if (unitFactory.IsUnitPaused.Value)
                 {
                     unitFactory.ResumeBuildingUnit();
+                    return true;
                 }
                 else
                 {
                     unitFactory.PauseBuildingUnit();
+                    return false;
                 }
             }
             else
             {
                 // Different unit
                 unitFactory.StartBuildingUnit(unitClicked);
+                return true;
             }
         }
     }
