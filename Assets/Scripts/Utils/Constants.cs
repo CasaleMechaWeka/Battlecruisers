@@ -10,9 +10,7 @@
 
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
 
-        // FELIX  TEMP :P
-        public const int POPULATION_LIMIT = 1;
-        //public const int POPULATION_LIMIT = 30;
+        public const int POPULATION_LIMIT = 30;
     }
 
     public static class ZoomScale
