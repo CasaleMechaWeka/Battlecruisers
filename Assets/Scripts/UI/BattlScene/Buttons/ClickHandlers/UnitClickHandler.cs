@@ -28,8 +28,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
-                bool tryingToBuildUnit = HandleFactory(unitClicked, unitFactory);
+                HandleFactory(unitClicked, unitFactory);
 			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
+
+                bool tryingToBuildUnit
+                    = unitFactory.UnitUnderConstruction == null
+                        && !unitFactory.IsUnitPaused.Value;
 
                 if (tryingToBuildUnit
                     && _populationLimitMonitor.IsPopulationLimitReached)
@@ -47,10 +51,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
         }
 
-        /// <returns>
-        /// True if trying to build a unit, false otherwise.
-        /// </returns>
-        private bool HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
+        private void HandleFactory(IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             if (ReferenceEquals(unitFactory.UnitWrapper, unitClicked))
             {
@@ -58,19 +59,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 if (unitFactory.IsUnitPaused.Value)
                 {
                     unitFactory.ResumeBuildingUnit();
-                    return true;
                 }
                 else
                 {
                     unitFactory.PauseBuildingUnit();
-                    return false;
                 }
             }
             else
             {
                 // Different unit
                 unitFactory.StartBuildingUnit(unitClicked);
-                return true;
             }
         }
     }
