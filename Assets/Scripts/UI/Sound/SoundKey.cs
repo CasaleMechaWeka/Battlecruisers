@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.UI.Sound
 {
+    // PERF  Struct candidate?
     public class SoundKey : ISoundKey
     {
         public SoundType Type { get; }
