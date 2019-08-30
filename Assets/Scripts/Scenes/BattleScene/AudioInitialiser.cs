@@ -19,6 +19,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IManagedDisposable _droneEventSoundPlayer;
         private readonly CruiserEventMonitor _cruiserEventMonitor;
         private readonly UltrasConstructionMonitor _ultrasConstructionMonitor;
+        private readonly PopulationLimitAnnouncer _populationLimitAnnouncer;
 
         public AudioInitialiser(
             IBattleSceneHelper helper,
@@ -34,6 +35,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
+            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time);
         }
 
         private DangerMusicPlayer CreateDangerMusicPlayer(
@@ -69,6 +71,15 @@ namespace BattleCruisers.Scenes.BattleScene
                 new UltrasConstructionMonitor(
                     aiCruiser,
                     aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+        }
+
+        private PopulationLimitAnnouncer CreatePopulationLimitAnnouncer(ICruiser playerCruiser, ITime time)
+        {
+            return
+                new PopulationLimitAnnouncer(
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    new Debouncer(time, debounceTimeInS: 30),
+                    playerCruiser.PopulationLimitMonitor);
         }
     }
 }
