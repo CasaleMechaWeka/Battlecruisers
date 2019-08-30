@@ -1,30 +1,26 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     // FELIX  Update tests :)
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
-        private readonly IPopulationLimitMonitor _populationLimitMonitor;
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
 
         public UnitClickHandler(
             IUIManager uiManager, 
             IPrioritisedSoundPlayer soundPlayer, 
-            IPopulationLimitMonitor populationLimitMonitor,
             IPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, soundPlayer)
         {
-            Helper.AssertIsNotNull(populationLimitMonitor, populationLimitReachedDecider);
-
-            _populationLimitMonitor = populationLimitMonitor;
+            Assert.IsNotNull(populationLimitReachedDecider);
             _populationLimitReachedDecider = populationLimitReachedDecider;
         }
 
@@ -37,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 HandleFactory(unitClicked, unitFactory);
 			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
 
-                if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory, _populationLimitMonitor.IsPopulationLimitReached))
+                if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
                 {
                     _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
                 }

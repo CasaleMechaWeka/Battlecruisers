@@ -4,6 +4,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     public interface IPopulationLimitReachedDecider
     {
-        bool ShouldPlayPopulationLimitReachedWarning(IFactory factory, bool isPopulationLimitReached);
+        bool ShouldPlayPopulationLimitReachedWarning(IFactory factory);
     }
 }

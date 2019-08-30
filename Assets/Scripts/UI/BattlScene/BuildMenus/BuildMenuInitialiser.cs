@@ -64,8 +64,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 = new UnitClickHandler(
                     uiManager, 
                     soundPlayer, 
-                    populationLimitMonitor,
-                    new PopulationLimitReachedDecider());
+                    new PopulationLimitReachedDecider(populationLimitMonitor));
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();

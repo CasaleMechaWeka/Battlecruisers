@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -16,7 +15,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         private IUnitClickHandler _clickHandler;
         private IUIManager _uiManager;
         private IPrioritisedSoundPlayer _soundPlayer;
-        private IPopulationLimitMonitor _populationLimitMonitor;
         private IBuildableWrapper<IUnit> _unitWrapper;
         private IUnit _unit;
         private IFactory _factory;
@@ -26,9 +24,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         {
             _uiManager = Substitute.For<IUIManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            _populationLimitMonitor = Substitute.For<IPopulationLimitMonitor>();
             // FELIX  Fix :P
-            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, _populationLimitMonitor, null);
+            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, null);
 
             _unit = Substitute.For<IUnit>();
             _unitWrapper = Substitute.For<IBuildableWrapper<IUnit>>();
