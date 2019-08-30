@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX Test
     public class PopulationLimitMonitor : IPopulationLimitMonitor
     {
         private readonly ICruiserUnitMonitor _unitMonitor;
