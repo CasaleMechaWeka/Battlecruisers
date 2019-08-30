@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -15,6 +16,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         private IUnitClickHandler _clickHandler;
         private IUIManager _uiManager;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private IPopulationLimitMonitor _populationLimitMonitor;
         private IBuildableWrapper<IUnit> _unitWrapper;
         private IUnit _unit;
         private IFactory _factory;
@@ -24,8 +26,9 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         {
             _uiManager = Substitute.For<IUIManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            // FELIX  fIX :P
-            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, null);
+            _populationLimitMonitor = Substitute.For<IPopulationLimitMonitor>();
+            // FELIX  Fix :P
+            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, _populationLimitMonitor, null);
 
             _unit = Substitute.For<IUnit>();
             _unitWrapper = Substitute.For<IBuildableWrapper<IUnit>>();
@@ -92,14 +95,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         }
 
         [Test]
-        public void HandleUnitClick_CannotAffordUnit_FactoryNotCompleted_DoesNothing()
+        public void HandleUnitClick_CannotAffordUnit_FactoryNotCompleted_PlaysFactoryIncompleteSound()
         {
             bool canAffordUnit = false;
             _factory.BuildableState.Returns(BuildableState.InProgress);
 
             _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
 
-            _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.IncompleteFactory);
             _uiManager.DidNotReceiveWithAnyArgs().ShowUnitDetails(null);
             _factory.DidNotReceive().StartBuildingUnit(null);
             _factory.DidNotReceive().PauseBuildingUnit();

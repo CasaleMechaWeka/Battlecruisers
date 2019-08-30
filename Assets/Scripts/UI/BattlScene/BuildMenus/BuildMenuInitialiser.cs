@@ -60,7 +60,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
 
             // Unit menus
-            IUnitClickHandler unitClickHandler = new UnitClickHandler(uiManager, soundPlayer, populationLimitMonitor);
+            IUnitClickHandler unitClickHandler 
+                = new UnitClickHandler(
+                    uiManager, 
+                    soundPlayer, 
+                    populationLimitMonitor,
+                    new PopulationLimitReachedDecider());
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();

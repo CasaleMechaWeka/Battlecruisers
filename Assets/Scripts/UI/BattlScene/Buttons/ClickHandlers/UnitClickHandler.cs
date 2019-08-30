@@ -6,7 +6,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
@@ -14,12 +13,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
         private readonly IPopulationLimitMonitor _populationLimitMonitor;
+        private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
 
-        public UnitClickHandler(IUIManager uiManager, IPrioritisedSoundPlayer soundPlayer, IPopulationLimitMonitor populationLimitMonitor)
+        public UnitClickHandler(
+            IUIManager uiManager, 
+            IPrioritisedSoundPlayer soundPlayer, 
+            IPopulationLimitMonitor populationLimitMonitor,
+            IPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, soundPlayer)
         {
-            Assert.IsNotNull(populationLimitMonitor);
+            Helper.AssertIsNotNull(populationLimitMonitor, populationLimitReachedDecider);
+
             _populationLimitMonitor = populationLimitMonitor;
+            _populationLimitReachedDecider = populationLimitReachedDecider;
         }
 
         public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
@@ -31,12 +37,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 HandleFactory(unitClicked, unitFactory);
 			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
 
-                bool tryingToBuildUnit
-                    = unitFactory.UnitUnderConstruction == null
-                        && !unitFactory.IsUnitPaused.Value;
-
-                if (tryingToBuildUnit
-                    && _populationLimitMonitor.IsPopulationLimitReached)
+                if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory, _populationLimitMonitor.IsPopulationLimitReached))
                 {
                     _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
                 }
