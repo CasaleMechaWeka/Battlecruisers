@@ -6,11 +6,10 @@ using System;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Test :)
     public class PopulationLimitAnnouncer
     {
-        private readonly IDebouncer _debouncer;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
+        private readonly IDebouncer _debouncer;
 
         public PopulationLimitAnnouncer(IPrioritisedSoundPlayer soundPlayer, IDebouncer debouncer, IPopulationLimitMonitor populationLimitMonitor)
         {
