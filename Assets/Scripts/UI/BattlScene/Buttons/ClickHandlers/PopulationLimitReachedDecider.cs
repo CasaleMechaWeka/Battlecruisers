@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
-    // FELIX  Test :)
     public class PopulationLimitReachedDecider : IPopulationLimitReachedDecider
     {
         private readonly IPopulationLimitMonitor _populationLimitMonitor;
@@ -17,6 +16,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
         public bool ShouldPlayPopulationLimitReachedWarning(IFactory factory)
         {
+            Assert.IsNotNull(factory);
+
             return
                 _populationLimitMonitor.IsPopulationLimitReached
                 && factory.UnitUnderConstruction == null
