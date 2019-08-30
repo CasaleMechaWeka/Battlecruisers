@@ -15,6 +15,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         private IUnitClickHandler _clickHandler;
         private IUIManager _uiManager;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private IPopulationLimitReachedDecider _populationLimitReachedDecider;
         private IBuildableWrapper<IUnit> _unitWrapper;
         private IUnit _unit;
         private IFactory _factory;
@@ -24,8 +25,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         {
             _uiManager = Substitute.For<IUIManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            // FELIX  Fix :P
-            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, null);
+            _populationLimitReachedDecider = Substitute.For<IPopulationLimitReachedDecider>();
+            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, _populationLimitReachedDecider);
 
             _unit = Substitute.For<IUnit>();
             _unitWrapper = Substitute.For<IBuildableWrapper<IUnit>>();
@@ -74,6 +75,39 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
             bool canAffordUnit = true;
             _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
             _uiManager.Received().ShowUnitDetails(_unit);
+        }
+
+        [Test]
+        public void HandleUnitClick_CanAffordUnit_ShouldPlaySound_PlaysSound()
+        {
+            bool canAffordUnit = true;
+            _populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_factory).Returns(true);
+
+            _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
+
+            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+        }
+
+        [Test]
+        public void HandleUnitClick_CanAffordUnit_ShouldNotPlaySound_DoesNotPlaysSound()
+        {
+            bool canAffordUnit = true;
+            _populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_factory).Returns(false);
+
+            _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
+
+            _soundPlayer.DidNotReceive().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+        }
+
+        [Test]
+        public void HandleUnitClick_CannotAffordUnit_ShouldPlaySound_DoesNotPlaysSound()
+        {
+            bool canAffordUnit = false;
+            _populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_factory).Returns(false);
+
+            _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
+
+            _soundPlayer.DidNotReceive().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
         }
 
         [Test]

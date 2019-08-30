@@ -9,7 +9,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
-    // FELIX  Update tests :)
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
