@@ -54,6 +54,7 @@ namespace BattleCruisers.Projectiles
 
                 if (_movementController != null)
                 {
+                    Logging.Log(Tags.SHELLS, $"Passing along current velocity to movement controller: {_movementController.Velocity}");
                     value.Velocity = _movementController.Velocity;
                 }
 
@@ -84,7 +85,7 @@ namespace BattleCruisers.Projectiles
 
         public virtual void Activate(TActivationArgs activationArgs)
         {
-            Logging.LogMethod(Tags.SHELLS);
+            Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
@@ -178,6 +179,7 @@ namespace BattleCruisers.Projectiles
                 return;
             }
 
+            MovementController.Velocity = Vector2.zero;
             gameObject.SetActive(false);
 
             Destroyed?.Invoke(this, EventArgs.Empty);

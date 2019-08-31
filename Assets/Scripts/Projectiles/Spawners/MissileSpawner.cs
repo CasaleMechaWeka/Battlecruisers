@@ -2,6 +2,7 @@
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
@@ -19,6 +20,9 @@ namespace BattleCruisers.Projectiles.Spawners
                     targetFilter,
                     _parent,
                     target);
+
+            Logging.Log(Tags.PROJECTILE_SPAWNER, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}");
+
             _projectilePool.GetItem(activationArgs);
 		}
 	}
