@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
@@ -6,7 +7,7 @@ namespace BattleCruisers.UI
     public class ButtonWithClickSound : ClickableTogglable
     {
         private ISoundPlayer _soundPlayer;
-        protected virtual ISoundKey ClickSound => null;
+        protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual void Initialise(ISoundPlayer soundPlayer)
         {

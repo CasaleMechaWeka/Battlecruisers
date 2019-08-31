@@ -1,21 +1,25 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene.Presentables;
-using UnityEngine.Assertions;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene
 {
     public abstract class ScreenController : PresentableController
 	{ 
 		protected IScreensSceneGod _screensSceneGod;
+        protected ISoundPlayer _soundPlayer;
 
         public bool IsInitialised => _screensSceneGod != null;
 
-        protected void Initialise(IScreensSceneGod screensSceneGod)
+        protected void Initialise(IScreensSceneGod screensSceneGod, ISoundPlayer soundPlayer)
 		{
             base.Initialise();
 
-			Assert.IsNotNull(screensSceneGod);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer);
+
 			_screensSceneGod = screensSceneGod;
+            _soundPlayer = soundPlayer;
 		}
 	}
 }

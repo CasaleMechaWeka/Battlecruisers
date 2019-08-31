@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -15,9 +16,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         private Button _firstTimePlayButton, _continueButton, _selectLevelButton, _loadoutButton, _settingsButton, _tutorialButton, _quitButton;
 
-        public void Initialise(IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
+        public void Initialise(IScreensSceneGod screensSceneGod, ISoundPlayer soundPlayer, IGameModel gameModel, int totalNumOfLevels)
 		{
-			base.Initialise(screensSceneGod);
+			base.Initialise(screensSceneGod, soundPlayer);
 
             Assert.IsNotNull(gameModel);
 

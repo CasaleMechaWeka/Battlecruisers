@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
@@ -37,18 +38,23 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, int lastPlayedLevelNum)
+		public void Initialise(
+            IScreensSceneGod screensSceneGod,
+            ISoundPlayer soundPlayer,
+            IList<LevelInfo> levels, 
+            int numOfLevelsUnlocked, 
+            int lastPlayedLevelNum)
         {
-            base.Initialise(screensSceneGod);
+            base.Initialise(screensSceneGod, soundPlayer);
 
             int numOfSets = levels.Count / SET_SIZE;
             InitialiseLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets);
 			
 			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
-            nextSetButton.Initialise(_nextSetCommand);
+            nextSetButton.Initialise(_soundPlayer, _nextSetCommand);
 
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
-            previousSetButton.Initialise(_previousSetCommand);
+            previousSetButton.Initialise(_soundPlayer, _previousSetCommand);
 
             NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
             Assert.IsNotNull(navigationFeedbackButtonsPanel);

@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.UI.Commands;
+using BattleCruisers.UI.Sound;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common
 {
-    public class ButtonController : ClickableTogglable
+    public class ButtonController : ButtonWithClickSound
     {
         private ICommand _command;
 
@@ -17,9 +18,9 @@ namespace BattleCruisers.UI.Common
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(ICommand command)
+        public void Initialise(ISoundPlayer soundPlayer, ICommand command)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Assert.IsNotNull(command);
 			
@@ -49,6 +50,7 @@ namespace BattleCruisers.UI.Common
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _command.Execute();
         }
     }

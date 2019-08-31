@@ -7,6 +7,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections;
@@ -24,13 +25,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private LoadoutItemColourController _loadoutItemColourController;
 
         public IEnumerator Initialise(
-            IScreensSceneGod screensSceneGod, 
+            IScreensSceneGod screensSceneGod,
+            ISoundPlayer soundPlayer,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
         {
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            base.Initialise(screensSceneGod);
+            base.Initialise(screensSceneGod, soundPlayer);
 
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 

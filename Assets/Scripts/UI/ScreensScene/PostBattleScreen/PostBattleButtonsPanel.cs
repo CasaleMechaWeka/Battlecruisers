@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -7,9 +8,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleButtonsPanel : ButtonsPanel
     {
-        public void Initialise(IPostBattleScreen postBattleScreen, ICommand nextCommand)
+        public void Initialise(IPostBattleScreen postBattleScreen, ICommand nextCommand, ISoundPlayer soundPlayer)
         {
-            base.Initialise(postBattleScreen);
+            base.Initialise(postBattleScreen, soundPlayer);
 
             Assert.IsNotNull(nextCommand);
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             ButtonController nextButton = GetComponentInChildren<ButtonController>();
             Assert.IsNotNull(nextButton);
-            nextButton.Initialise(nextCommand);
+            nextButton.Initialise(soundPlayer, nextCommand);
         }
     }
 }

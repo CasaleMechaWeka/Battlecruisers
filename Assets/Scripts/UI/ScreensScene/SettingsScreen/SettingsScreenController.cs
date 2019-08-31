@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
@@ -8,9 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
-        public void Initialise(IScreensSceneGod screensSceneGod, ISettingsManager settingsManager)
+        public void Initialise(IScreensSceneGod screensSceneGod, ISoundPlayer soundPlayer, ISettingsManager settingsManager)
 		{
-			base.Initialise(screensSceneGod);
+			base.Initialise(screensSceneGod, soundPlayer);
 
             Assert.IsNotNull(settingsManager);
 

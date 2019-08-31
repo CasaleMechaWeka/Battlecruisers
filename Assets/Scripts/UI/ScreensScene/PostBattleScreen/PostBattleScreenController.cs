@@ -4,6 +4,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -31,9 +32,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
-            IMusicPlayer musicPlayer)
+            IMusicPlayer musicPlayer,
+            ISoundPlayer soundPlayer)
 		{
-			base.Initialise(screensSceneGod);
+			base.Initialise(screensSceneGod, soundPlayer);
 
             Helper.AssertIsNotNull(
                 title, 
@@ -59,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 PostTutorialButtonsPanel postTutorialButtonsPanel = GetComponentInChildren<PostTutorialButtonsPanel>(includeInactive: true);
                 Assert.IsNotNull(postTutorialButtonsPanel);
-                postTutorialButtonsPanel.Initialise(this);
+                postTutorialButtonsPanel.Initialise(this, _soundPlayer);
                 postTutorialButtonsPanel.gameObject.SetActive(true);
             }
             else
@@ -104,7 +106,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 PostBattleButtonsPanel postBattleButtonsPanel = GetComponentInChildren<PostBattleButtonsPanel>(includeInactive: true);
                 Assert.IsNotNull(postBattleButtonsPanel);
-                postBattleButtonsPanel.Initialise(this, nextCommand);
+                postBattleButtonsPanel.Initialise(this, nextCommand, _soundPlayer);
                 postBattleButtonsPanel.gameObject.SetActive(true);
             }
 		}

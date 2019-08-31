@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using NSubstitute;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,6 +10,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
+    /// <summary>
+    /// This class is only used in tests scenes :)
+    /// </summary>
     public class GameSpeedController : MonoBehaviour
     {
         private ITime _time;
@@ -43,13 +48,15 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             _gameSpeedText = GetComponent<Text>();
             Assert.IsNotNull(_gameSpeedText);
 
+            ISoundPlayer soundPlayer = Substitute.For<ISoundPlayer>();
+
             _increaseSpeedCommand = new Command(IncreaseSpeedCommandExecute, CanIncreaseSpeedCommandExecute);
             _increaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("IncreaseSpeedButton");
-            _increaseSpeedButton.Initialise(_increaseSpeedCommand);
+            _increaseSpeedButton.Initialise(soundPlayer, _increaseSpeedCommand);
 
             _decreaseSpeedCommand = new Command(DecreaseSpeedCommandExecute, CanDecreaseSpeedCommandExecute);
             _decreaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("DecreaseSpeedButton");
-            _decreaseSpeedButton.Initialise(_decreaseSpeedCommand);
+            _decreaseSpeedButton.Initialise(soundPlayer, _decreaseSpeedCommand);
         }
 
         void Update()
