@@ -116,5 +116,11 @@ namespace BattleCruisers.Data.Static
                 public static ISoundKey Bobby { get; } = new SoundKey(SoundType.Music, "bobby");
             }
         }
+
+        public static class UI
+        {
+            public static ISoundKey Click { get; } = new SoundKey(SoundType.UI, "default-click");
+            public static ISoundKey ScreenChange { get; } = new SoundKey(SoundType.UI, "screen-change");
+        }
     }
 }
