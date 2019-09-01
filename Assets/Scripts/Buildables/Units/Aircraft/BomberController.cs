@@ -24,8 +24,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IProjectileStats _bombStats;
         private ITargetProcessor _targetProcessor;
         private IBomberMovementController _bomberMovementControler;
-		private bool _haveDroppedBombOnRun;
-        private bool _isAtCruisingHeight;
+		private bool _haveDroppedBombOnRun = false;
+        private bool _isAtCruisingHeight = false;
 
 		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
 		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
@@ -69,9 +69,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
             base.StaticInitialise(parent, healthBar);
 
-			_haveDroppedBombOnRun = false;
-			_isAtCruisingHeight = false;
-			
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);
 
@@ -96,6 +93,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
+
+            _haveDroppedBombOnRun = false;
+            _isAtCruisingHeight = false;
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
