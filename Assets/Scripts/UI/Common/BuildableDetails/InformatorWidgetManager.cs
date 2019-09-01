@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
             Assert.IsNotNull(_toggleDronesButton);
-            _toggleDronesButton.Initialise();
+            _toggleDronesButton.Initialise(soundPlayer);
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);

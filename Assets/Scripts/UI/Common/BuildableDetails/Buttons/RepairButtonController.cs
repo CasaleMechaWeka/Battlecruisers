@@ -12,8 +12,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private IDroneFocuser _droneFocuser;
         private IRepairManager _repairManager;
 
-        protected override ISoundKey ClickSound => null;
-
         private ITarget _repairable;
 		public ITarget Repairable
         {

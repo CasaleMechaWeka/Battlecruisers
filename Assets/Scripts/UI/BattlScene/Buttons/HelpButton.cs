@@ -11,8 +11,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private BroadcastingFilter _helpLabelsVisibilityFilter;
         private Image _leverOff, _leverOn;
 
-        protected override ISoundKey ClickSound => null;
-
         public void Initialise(ISoundPlayer soundPlayer, BroadcastingFilter helpLabelsVisibilityFilter)
         {
             base.Initialise(soundPlayer);

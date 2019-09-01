@@ -17,8 +17,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private const string TARGET = "Target";
         private const string UNTARGET = "Untarget";
 
-        protected override ISoundKey ClickSound => null;
-
         private ITarget _target;
         public ITarget Target
         {

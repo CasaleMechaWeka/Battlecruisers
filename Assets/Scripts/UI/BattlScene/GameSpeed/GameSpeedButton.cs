@@ -21,8 +21,6 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public Image selectedFeedback;
         protected override MaskableGraphic Graphic => selectedFeedback;
 
-        protected override ISoundKey ClickSound => null;
-
         public event EventHandler Clicked;
 
         public bool IsSelected
@@ -37,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         public void Initialise(ISoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Assert.IsTrue(timeScale >= 0);
             Helper.AssertIsNotNull(selectedFeedback, shouldBeEnabledFilter, time);
