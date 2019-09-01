@@ -2,13 +2,14 @@
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class DeleteButtonController : ClickableTogglable
+    public class DeleteButtonController : ButtonWithClickSound
     {
         private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
@@ -32,11 +33,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         }
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IUIManager uiManager, 
             IFilter<ITarget> buttonVisibilityFilter,
             IBroadcastingFilter helpLabelVisibilityFilter)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilter);
 
@@ -54,6 +56,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             Buildable.InitiateDelete();
             _uiManager.HideItemDetails();
         }
