@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             CompareButton compareButton = GetComponentInChildren<CompareButton>();
             Assert.IsNotNull(compareButton);
-            compareButton.Initialise(_itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
+            compareButton.Initialise(_soundPlayer, _itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
 
             yield return null;
 
@@ -75,6 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(selectCruiserButton);
             selectCruiserButton
                 .Initialise(
+                    _soundPlayer,
                     cruiserDetails,
                     comparisonStateTracker,
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
@@ -94,7 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             CancelButtonController homeButton = GetComponentInChildren<CancelButtonController>();
             Assert.IsNotNull(homeButton);
-            homeButton.Initialise(this);
+            homeButton.Initialise(_soundPlayer, this);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }

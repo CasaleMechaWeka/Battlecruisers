@@ -139,6 +139,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(components.Camera, cameraComponents.CameraFocuser, playerCruiser),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
+                    factoryProvider.Sound.SoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
 
             RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
@@ -151,7 +152,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
                     pauseGameManager,
-                    battleCompletionHandler);
+                    battleCompletionHandler,
+                    factoryProvider.Sound.SoundPlayer);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargetsColourChanger());

@@ -5,6 +5,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -24,7 +25,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneFocuser droneFocuser,
             IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            ISoundPlayer soundPlayer)
         {
             base.Initialise();
 
@@ -38,7 +40,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
             Assert.IsNotNull(_buttonManager);
-            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
+            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable)

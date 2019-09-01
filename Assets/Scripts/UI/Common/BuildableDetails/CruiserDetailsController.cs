@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -21,19 +22,20 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            ISoundPlayer soundPlayer)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
-            _repairButton.Initialise(droneFocuser, repairManager);
+            _repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
 
             CruiserHealthDialInitialiser healthDialInitialiser = GetComponentInChildren<CruiserHealthDialInitialiser>(includeInactive: true);
             Assert.IsNotNull(healthDialInitialiser);

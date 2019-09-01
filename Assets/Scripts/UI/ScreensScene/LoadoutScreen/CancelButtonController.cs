@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.UI.Sound;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -6,9 +7,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private ICancellable _cancellable;
 
-        public void Initialise(ICancellable cancellable)
+        public void Initialise(ISoundPlayer soundPlayer, ICancellable cancellable)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Assert.IsNotNull(cancellable);
             _cancellable = cancellable;
@@ -16,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _cancellable.Cancel();
         }
     }

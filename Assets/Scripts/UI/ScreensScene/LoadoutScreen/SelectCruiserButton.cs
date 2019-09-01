@@ -4,6 +4,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityCommon.Properties;
@@ -24,12 +25,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public IBroadcastingProperty<HullKey> SelectedHull { get; private set; }
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IItemDetailsDisplayer<ICruiser> cruiserDetails, 
             IComparisonStateTracker comparisonStateTracker,
             IHullNameToKey hullNameToKey,
             IDataProvider dataProvider)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, dataProvider);
 
@@ -60,6 +62,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
             Assert.IsNotNull(displayedCruiser);
             _selectedHull.Value = _hullNameToKey.GetKey(displayedCruiser.Name);

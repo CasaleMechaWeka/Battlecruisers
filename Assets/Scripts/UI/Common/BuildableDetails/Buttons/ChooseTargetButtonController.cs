@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
@@ -15,6 +16,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         private const string TARGET = "Target";
         private const string UNTARGET = "Untarget";
+
+        protected override ISoundKey ClickSound => null;
 
         private ITarget _target;
         public ITarget Target
@@ -33,9 +36,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         public event EventHandler Clicked;
 
-        public void Initialise(IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
+        public void Initialise(ISoundPlayer soundPlayer, IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter);
 
@@ -50,6 +53,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             _userChosenTargetHelper.ToggleChosenTarget(_target);
 
             Clicked?.Invoke(this, EventArgs.Empty);

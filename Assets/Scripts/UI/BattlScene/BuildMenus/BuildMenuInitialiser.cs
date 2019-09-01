@@ -26,7 +26,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             ISpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer prioritisedSoundPlayer,
+            ISoundPlayer soundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
 		{
             Helper.AssertIsNotNull(
@@ -37,6 +38,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 buttonVisibilityFilters,
                 spriteProvider,
                 playerCruiserFocusHelper,
+                prioritisedSoundPlayer,
                 soundPlayer,
                 populationLimitMonitor);
 
@@ -49,21 +51,21 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             // Building categories menu
             BuildingCategoriesMenu buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
             Assert.IsNotNull(buildingCategoriesMenu);
-            buildingCategoriesMenu.Initialise(uiManager, buttonVisibilityFilters, buildingGroups);
+            buildingCategoriesMenu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
 
             // Building menus
             BuildingMenus buildingMenus = GetComponentInChildren<BuildingMenus>();
             Assert.IsNotNull(buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, soundPlayer);
+            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, prioritisedSoundPlayer);
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
 
             // Unit menus
             IUnitClickHandler unitClickHandler 
                 = new UnitClickHandler(
                     uiManager, 
-                    soundPlayer, 
+                    prioritisedSoundPlayer, 
                     new PopulationLimitReachedDecider(populationLimitMonitor));
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);

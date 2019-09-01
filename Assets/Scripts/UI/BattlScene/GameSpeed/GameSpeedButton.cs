@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityCommon.PlatformAbstractions;
@@ -20,6 +21,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public Image selectedFeedback;
         protected override MaskableGraphic Graphic => selectedFeedback;
 
+        protected override ISoundKey ClickSound => null;
+
         public event EventHandler Clicked;
 
         public bool IsSelected
@@ -32,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             }
         }
 
-        public void Initialise(IBroadcastingFilter shouldBeEnabledFilter, ITime time)
+        public void Initialise(ISoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)
         {
             base.Initialise();
 
@@ -46,6 +49,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             Clicked?.Invoke(this, EventArgs.Empty);
         }
     }

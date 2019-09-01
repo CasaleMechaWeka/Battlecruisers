@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Presentables;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildingGroup> buildingGroups)
@@ -38,6 +40,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     // Have category for button
                     button
                         .Initialise(
+                            soundPlayer,
                             group.BuildingCategory, 
                             uiManager, 
                             buttonVisibilityFilters.CategoryButtonVisibilityFilter,

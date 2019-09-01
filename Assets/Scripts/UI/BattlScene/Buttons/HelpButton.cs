@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,9 +11,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private BroadcastingFilter _helpLabelsVisibilityFilter;
         private Image _leverOff, _leverOn;
 
-        public void Initialise(BroadcastingFilter helpLabelsVisibilityFilter)
+        protected override ISoundKey ClickSound => null;
+
+        public void Initialise(ISoundPlayer soundPlayer, BroadcastingFilter helpLabelsVisibilityFilter)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Assert.IsNotNull(helpLabelsVisibilityFilter);
             _helpLabelsVisibilityFilter = helpLabelsVisibilityFilter;
@@ -25,6 +28,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             _helpLabelsVisibilityFilter.IsMatch = !_helpLabelsVisibilityFilter.IsMatch;
             UpdateLeverVisibility(_helpLabelsVisibilityFilter.IsMatch);
         }

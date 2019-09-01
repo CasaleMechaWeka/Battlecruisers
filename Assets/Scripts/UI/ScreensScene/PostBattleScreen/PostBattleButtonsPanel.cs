@@ -15,10 +15,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Assert.IsNotNull(nextCommand);
 
             ActionButton retryButton = transform.FindNamedComponent<ActionButton>("SmallButtons/RetryButton");
-            retryButton.Initialise(postBattleScreen.Retry);
+            retryButton.Initialise(soundPlayer, postBattleScreen.Retry);
 
             ActionButton loadoutButton = transform.FindNamedComponent<ActionButton>("SmallButtons/LoadoutButton");
-            loadoutButton.Initialise(postBattleScreen.GoToLoadoutScreen);
+            loadoutButton.Initialise(soundPlayer, postBattleScreen.GoToLoadoutScreen);
 
             ButtonController nextButton = GetComponentInChildren<ButtonController>();
             Assert.IsNotNull(nextButton);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.UI.Sound;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
@@ -7,9 +8,9 @@ namespace BattleCruisers.UI
     {
         private Action _onClick;
 
-        public void Initialise(Action onClick)
+        public void Initialise(ISoundPlayer soundPlayer, Action onClick)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Assert.IsNotNull(onClick);
             _onClick = onClick;
@@ -17,6 +18,7 @@ namespace BattleCruisers.UI
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _onClick.Invoke();
         }
     }

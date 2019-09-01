@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 
@@ -10,6 +11,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         private IDroneFocuser _droneFocuser;
         private IRepairManager _repairManager;
+
+        protected override ISoundKey ClickSound => null;
 
         private ITarget _repairable;
 		public ITarget Repairable
@@ -43,9 +46,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             } 
         }
 
-        public void Initialise(IDroneFocuser droneFocuser, IRepairManager repairManager)
+        public void Initialise(ISoundPlayer soundPlayer, IDroneFocuser droneFocuser, IRepairManager repairManager)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(droneFocuser, repairManager);
 
@@ -55,6 +58,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             IDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
             _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }

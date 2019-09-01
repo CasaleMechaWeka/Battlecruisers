@@ -1,10 +1,13 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.UI.Sound;
 using System;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
     public class ToggleDroneButtonController : CanvasGroupButton, IButton
     {
+        protected override ISoundKey ClickSound => null;
+
         private IBuildable _buildable;
         public IBuildable Buildable
         {
@@ -41,6 +44,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
 			_buildable.ToggleDroneConsumerFocusCommand.Execute();
    
             Clicked?.Invoke(this, EventArgs.Empty);

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 
@@ -13,11 +14,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
         protected override bool ToggleVisibility => true;
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
             IComparisonStateTracker comparisonStateTracker)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, comparisonStateTracker);
 
@@ -35,6 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _comparingFamilyTracker.SetComparingFamily(_itemDetailsManager.SelectedItemFamily);
         }
     }

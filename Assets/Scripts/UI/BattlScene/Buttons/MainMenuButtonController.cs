@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.UI.Sound;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
@@ -6,9 +7,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     {
         private IMainMenuManager _mainMenuManager;
 
-        public void Initialise(IMainMenuManager mainMenuManager)
+        public void Initialise(ISoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Assert.IsNotNull(mainMenuManager);
             _mainMenuManager = mainMenuManager;
@@ -16,6 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _mainMenuManager.ShowMenu();
         }
     }

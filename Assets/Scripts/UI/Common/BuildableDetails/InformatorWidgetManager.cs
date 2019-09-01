@@ -5,6 +5,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -36,13 +37,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            ISoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
-            _repairButton.Initialise(droneFocuser, repairManager);
+            _repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
 
             _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
             Assert.IsNotNull(_toggleDronesButton);
@@ -50,7 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
 
             BuildableHealthDialInitialiser healthDialInitialiser = GetComponentInChildren<BuildableHealthDialInitialiser>(includeInactive: true);
             Assert.IsNotNull(healthDialInitialiser);

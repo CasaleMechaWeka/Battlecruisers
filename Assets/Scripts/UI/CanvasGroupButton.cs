@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.UI.Sound;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
 {
-    public abstract class CanvasGroupButton : ClickableTogglable
+    public abstract class CanvasGroupButton : ButtonWithClickSound
     {
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public override void Initialise()
+        public override void Initialise(ISoundPlayer soundPlayer)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);

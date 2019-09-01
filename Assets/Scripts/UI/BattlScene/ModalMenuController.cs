@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,19 +11,19 @@ namespace BattleCruisers.UI.BattleScene
 		private Canvas _canvas;
 		private MenuDismissed _onMenuDismissed;
 
-		public void Initialise(bool isTutorial)
+		public void Initialise(ISoundPlayer soundPlayer, bool isTutorial)
 		{
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
             ActionButton endGameButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/EndGameButton");
-            endGameButton.Initialise(Quit);
+            endGameButton.Initialise(soundPlayer, Quit);
 
             ActionButton skipTutorialButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/SkipTutorialButton");
-            skipTutorialButton.Initialise(Quit);
+            skipTutorialButton.Initialise(soundPlayer, Quit);
 
             ActionButton cancelButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/CancelButton");
-            cancelButton.Initialise(Cancel);
+            cancelButton.Initialise(soundPlayer, Cancel);
 
             if (isTutorial)
             {

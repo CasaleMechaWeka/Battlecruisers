@@ -8,6 +8,7 @@ using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using UnityEngine;
@@ -39,7 +40,8 @@ namespace BattleCruisers.UI.BattleScene
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPauseGameManager pauseGameManager,
-            IBattleCompletionHandler battleCompletionHandler)
+            IBattleCompletionHandler battleCompletionHandler,
+            ISoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(
                 modalMenu, 
@@ -50,14 +52,15 @@ namespace BattleCruisers.UI.BattleScene
                 userChosenTargetHelper, 
                 buttonVisibilityFilters, 
                 pauseGameManager,
-                battleCompletionHandler);
+                battleCompletionHandler,
+                soundPlayer);
 
-            modalMenu.Initialise(applicationModel.IsTutorial);
+            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial);
 
-            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters);
-            IMaskHighlightable speedButtonPanel = SetupSpeedPanel(buttonVisibilityFilters);
-            SetupMainMenuButtons(pauseGameManager, battleCompletionHandler);
-            SetupHelpButton(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
+            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            IMaskHighlightable speedButtonPanel = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
+            SetupMainMenuButtons(soundPlayer, pauseGameManager, battleCompletionHandler);
+            SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return new RightPanelComponents(informator, speedButtonPanel);
@@ -67,7 +70,8 @@ namespace BattleCruisers.UI.BattleScene
             IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters)
+            IButtonVisibilityFilters buttonVisibilityFilters,
+            ISoundPlayer soundPlayer)
         {
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -77,34 +81,35 @@ namespace BattleCruisers.UI.BattleScene
                     uiManager,
                     playerCruiser,
                     userChosenTargetHelper,
-                    buttonVisibilityFilters);
+                    buttonVisibilityFilters,
+                    soundPlayer);
 
             return informator;
         }
 
-        private IMaskHighlightable SetupSpeedPanel(IButtonVisibilityFilters buttonVisibilityFilters)
+        private IMaskHighlightable SetupSpeedPanel(ISoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
-            return speedPanelInitialiser.Initialise(buttonVisibilityFilters.SpeedButtonsEnabledFilter);
+            return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButtons(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
+        private void SetupMainMenuButtons(ISoundPlayer soundPlayer, IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
         {
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
 
             MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);
-            mainMenuButton.Initialise(mainMenuManager);
+            mainMenuButton.Initialise(soundPlayer, mainMenuManager);
 
-            modalMainMenuButton.Initialise(mainMenuManager);
+            modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
         }
 
-        private void SetupHelpButton(BroadcastingFilter helpLabelsVisibilityFilter)
+        private void SetupHelpButton(ISoundPlayer soundPlayer, BroadcastingFilter helpLabelsVisibilityFilter)
         {
             HelpButton helpButton = GetComponentInChildren<HelpButton>();
             Assert.IsNotNull(helpButton);
-            helpButton.Initialise(helpLabelsVisibilityFilter);
+            helpButton.Initialise(soundPlayer, helpLabelsVisibilityFilter);
         }
 
         private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
