@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityCommon.Properties;
@@ -19,12 +20,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public override IComparableItem Item => cruiser;
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             IBroadcastingProperty<HullKey> selectedHull)
         {
-            base.Initialise(itemDetailsManager, comparingFamiltyTracker);
+            base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
 
             Helper.AssertIsNotNull(cruiser, selectedHull, hullKey);
 
@@ -50,6 +52,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {
                 _itemDetailsManager.ShowDetails(cruiser);

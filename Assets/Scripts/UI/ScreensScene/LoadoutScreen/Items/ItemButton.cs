@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public abstract class ItemButton : ClickableTogglable, IItemButton
+    public abstract class ItemButton : ButtonWithClickSound, IItemButton
     {
         private Image _itemImage;
         private Text _itemName;
@@ -33,9 +34,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public ItemFamily itemFamily;
 
-        public virtual void Initialise(IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
+        public virtual void Initialise(ISoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
 

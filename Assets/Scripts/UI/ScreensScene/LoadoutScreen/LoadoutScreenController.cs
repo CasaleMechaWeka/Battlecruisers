@@ -83,7 +83,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            IList<IItemButton> itemButtons = itemPanels.Initialise(_itemDetailsManager, ItemType.Hull, _comparingFamilyTracker, dataProvider.GameModel, selectCruiserButton.SelectedHull);
+            IList<IItemButton> itemButtons 
+                = itemPanels.Initialise(
+                    _itemDetailsManager, 
+                    ItemType.Hull, 
+                    _comparingFamilyTracker, 
+                    dataProvider.GameModel, 
+                    selectCruiserButton.SelectedHull, 
+                    soundPlayer);
 
             _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
 

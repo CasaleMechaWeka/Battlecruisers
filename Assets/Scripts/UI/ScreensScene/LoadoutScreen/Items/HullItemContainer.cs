@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityCommon.Properties;
 using UnityEngine.Assertions;
@@ -28,11 +29,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override ItemButton InitialiseItemButton(
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamilyTracker, 
-            IBroadcastingProperty<HullKey> selectedHull)
+            IBroadcastingProperty<HullKey> selectedHull,
+            ISoundPlayer soundPlayer)
         {
             HullButton hullButton = GetComponentInChildren<HullButton>(includeInactive: true);
             Assert.IsNotNull(hullButton);
-            hullButton.Initialise(itemDetailsManager, comparingFamilyTracker, HullKey, selectedHull);
+            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, selectedHull);
             return hullButton;
         }
 
