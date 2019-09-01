@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
 {
-    public abstract class CanvasGroupButton : ButtonWithClickSound
+    public abstract class CanvasGroupButton : ElementWithClickSound
     {
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;

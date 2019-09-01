@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class SaveButton : ButtonWithClickSound
+    public class SaveButton : ElementWithClickSound
     {
         private IScreensSceneGod _screensSceneGod;
         private ISettingsManager _settingsManager;

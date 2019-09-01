@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common
 {
-    public class ButtonController : ButtonWithClickSound
+    public class ButtonController : ElementWithClickSound
     {
         private ICommand _command;
 

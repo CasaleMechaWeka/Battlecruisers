@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
-    public class DeleteButtonController : ButtonWithClickSound
+    public class DeleteButtonController : ElementWithClickSound
     {
         private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;

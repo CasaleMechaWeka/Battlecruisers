@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class DismissPanelButtonController : ButtonWithClickSound
+    public abstract class DismissPanelButtonController : ElementWithClickSound
     {
         private FilterToggler _isEnabledToggler;
         protected IUIManager _uiManager;

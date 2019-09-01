@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    public class LevelButtonController : ButtonWithClickSound
+    public class LevelButtonController : ElementWithClickSound
     {
         private LevelInfo _level;
         private IScreensSceneGod _screensSceneGod;

@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    public abstract class PresentableController : ButtonWithClickSound, IPresentable
+    public abstract class PresentableController : ElementWithClickSound, IPresentable
 	{
         private IPresentableComponent _presentableComponent;
 

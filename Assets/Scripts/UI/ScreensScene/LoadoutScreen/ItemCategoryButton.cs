@@ -10,7 +10,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class ItemCategoryButton : ButtonWithClickSound, IPointerClickHandler
+    public class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler
     {
         private IItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;

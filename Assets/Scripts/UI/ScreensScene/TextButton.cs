@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-    public abstract class TextButton : ButtonWithClickSound
+    public abstract class TextButton : ElementWithClickSound
     {
         private MaskableGraphic _text;
         protected override MaskableGraphic Graphic => _text;

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public abstract class ItemButton : ButtonWithClickSound, IItemButton
+    public abstract class ItemButton : ElementWithClickSound, IItemButton
     {
         private Image _itemImage;
         private Text _itemName;
