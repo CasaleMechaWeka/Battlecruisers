@@ -179,7 +179,11 @@ namespace BattleCruisers.Projectiles
                 return;
             }
 
-            MovementController.Velocity = Vector2.zero;
+            if (MovementController != null)
+            {
+                MovementController.Velocity = Vector2.zero;
+            }
+
             gameObject.SetActive(false);
 
             Destroyed?.Invoke(this, EventArgs.Empty);
