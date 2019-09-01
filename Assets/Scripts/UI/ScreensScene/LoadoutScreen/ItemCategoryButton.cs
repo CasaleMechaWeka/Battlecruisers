@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class ItemCategoryButton : ClickableTogglable, IPointerClickHandler
+    public class ItemCategoryButton : ButtonWithClickSound, IPointerClickHandler
     {
         private IItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
@@ -30,9 +31,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
+        public void Initialise(ISoundPlayer soundPlayer, IItemPanelsController itemPanels, IBroadcastingProperty<ItemFamily?> itemFamilyToCompare)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare);
 
@@ -77,6 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _itemPanels.ShowItemsPanel(itemType);
         }
     }
