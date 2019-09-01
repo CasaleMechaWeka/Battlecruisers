@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
-using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
@@ -17,21 +14,13 @@ namespace BattleCruisers.Scenes.Test.Shields
         {
             base.Start();
 
+            Helper helper = new Helper();
+
             // Setup shield
-            AudioSource platformAudioSource = GetComponent<AudioSource>();
-            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
-            IPrioritisedSoundPlayer soundPlayer
-                = new PrioritisedSoundPlayer(
-                    new SingleSoundPlayer(
-                        new SoundFetcher(),
-                        audioSource));
-
-            ShieldStats shieldStats = FindObjectOfType<ShieldStats>();
-            shieldStats.BoostMultiplier = 1;
-            ShieldController shield = FindObjectOfType<ShieldController>();
-            shield.StaticInitialise();
-			shield.Initialise(Faction.Reds, soundPlayer);
-
+            ShieldGenerator shield = FindObjectOfType<ShieldGenerator>();
+            Assert.IsNotNull(shield);
+            helper.InitialiseBuilding(shield, Faction.Reds);
+            shield.StartConstruction();
 
             // Setup turret
             BarrelController turret = FindObjectOfType<BarrelController>();
@@ -41,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Shields
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes);
 
             IBarrelControllerArgs barrelControllerArgs
-                = new Helper()
+                = helper
                     .CreateBarrelControllerArgs(
                     turret,
                     _updaterProvider.PerFrameUpdater,

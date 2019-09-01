@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldController : Target
 	{
-        private IPrioritisedSoundPlayer _soundPlayer;
+        private ISoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
 
         public GameObject visuals;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _size = new Vector2(diameter, diameter); 
         }
 
-		public void Initialise(Faction faction, IPrioritisedSoundPlayer soundPlayer)
+		public void Initialise(Faction faction, ISoundPlayer soundPlayer)
 		{
 			Faction = faction;
 
@@ -63,6 +63,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			healthBar.UpdateSize(width, height);
 		}
 
+        // PERF:  Don't need to do this every frame
 		void Update()
 		{
 			// Eat into recharge delay
@@ -79,7 +80,12 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 					}
 
 					RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
-				}
+
+                    if (Health == maxHealth)
+                    {
+                        _soundPlayer.PlaySound(SoundKeys.Shields.FullyCharged, Position);
+                    }
+                }
 			}
 		}
 
@@ -92,19 +98,20 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		protected override void OnTakeDamage()
 		{
 			_timeSinceDamageInS = 0;
-		}
+            _soundPlayer.PlaySound(SoundKeys.Shields.HitWhileActive, Position);
+        }
 
-		private void EnableShield()
+        private void EnableShield()
 		{
             visuals.SetActive(true);
 			circleCollider.enabled = true;
-		}
+        }
 
-		private void DisableShield()
+        private void DisableShield()
 		{
             visuals.SetActive(false);
             circleCollider.enabled = false;
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.ShieldsDown);
+            _soundPlayer.PlaySound(SoundKeys.Shields.FullyDepleted, Position);
 		}
 	}
 }

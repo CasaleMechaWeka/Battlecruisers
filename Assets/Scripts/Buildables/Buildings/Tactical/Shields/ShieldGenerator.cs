@@ -40,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		{
             base.Activate(activationArgs);
 
-			_shieldController.Initialise(Faction, _cruiserSpecificFactories.BuildableEffectsSoundPlayer);
+			_shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer);
 			_shieldController.gameObject.SetActive(false);
 
             _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);
