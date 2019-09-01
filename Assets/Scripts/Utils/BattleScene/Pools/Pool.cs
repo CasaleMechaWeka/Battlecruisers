@@ -20,7 +20,8 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         public TPoolable GetItem(TArgs activationArgs)
         {
-            Logging.LogMethod(Tags.POOLS);
+            // FELIX  TEMP
+            //Logging.LogMethod(Tags.POOLS);
 
             TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
             item.Activate(activationArgs);
@@ -38,7 +39,8 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         private void Item_Deactivated(object sender, EventArgs e)
         {
-            Logging.LogMethod(Tags.POOLS);
+            // FELIX  TEMP
+            //Logging.LogMethod(Tags.POOLS);
 
             _items.Push(sender.Parse<TPoolable>());
         }
