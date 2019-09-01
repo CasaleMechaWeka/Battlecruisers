@@ -136,7 +136,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public void CleanUp()
         {
-            _updater.Updated -= _updater_Updated;
+            if (_updater != null)
+            {
+                _updater.Updated -= _updater_Updated;
+            }
         }
     }
 }

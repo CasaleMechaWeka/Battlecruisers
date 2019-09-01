@@ -246,7 +246,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void DisposeManagedState()
         {
-            _targetProcessor.DisposeManagedState();
+            _targetProcessor?.DisposeManagedState();
 
             foreach (BarrelController barrel in _barrels)
             {
