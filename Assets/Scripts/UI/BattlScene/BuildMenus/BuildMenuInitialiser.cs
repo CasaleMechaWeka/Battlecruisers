@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             // Selector panel
             SelectorPanelController selectorPanel = GetComponentInChildren<SelectorPanelController>();
             Assert.IsNotNull(selectorPanel);
-            selectorPanel.Initialise(uiManager, buttonVisibilityFilters);
+            selectorPanel.Initialise(uiManager, buttonVisibilityFilters, soundPlayer);
             selectorPanel.Hide();
 
             // Building categories menu

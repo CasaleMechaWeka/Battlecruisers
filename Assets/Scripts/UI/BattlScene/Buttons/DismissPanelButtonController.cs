@@ -1,11 +1,12 @@
 ﻿using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class DismissPanelButtonController : ClickableTogglable
+    public abstract class DismissPanelButtonController : ButtonWithClickSound
     {
         private FilterToggler _isEnabledToggler;
         protected IUIManager _uiManager;
@@ -13,9 +14,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private Image _closeImage;
         protected override MaskableGraphic Graphic => _closeImage;
 
-        public void Initialise(IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(ISoundPlayer soundPlayer, IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
 
