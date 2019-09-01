@@ -27,7 +27,8 @@ namespace BattleCruisers.Utils.Fetchers
 
         CountdownController CreateDeleteCountdown(Transform parent);
 
-        IExplosion CreateExplosion(ExplosionKey explosionKey);
+        IExplosion CreateBulletImpactExplosion();
+        IExplosion CreateAdvancedExplosion(ExplosionKey explosionKey);
 
         TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>

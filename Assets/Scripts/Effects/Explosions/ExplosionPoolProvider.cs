@@ -19,18 +19,22 @@ namespace BattleCruisers.Effects.Explosions
         {
             Assert.IsNotNull(prefabFactory);
 
-            BulletImpactPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
-            SmallExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75);
-            MediumExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100);
-            LargeExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150);
-            HugeExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500);
+            BulletImpactPool
+                = new Pool<IExplosion, Vector3>(
+                    new BulletImpactExplosionFactory(
+                        prefabFactory));
+
+            SmallExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75);
+            MediumExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100);
+            LargeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150);
+            HugeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500);
         }
 
-        private IPool<IExplosion, Vector3> CreatePool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        private IPool<IExplosion, Vector3> CreateAdvancedExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             return
                 new Pool<IExplosion, Vector3>(
-                    new ExplosionFactory(
+                    new AdvancedExplosionFactory(
                         prefabFactory,
                         explosionKey));
         }

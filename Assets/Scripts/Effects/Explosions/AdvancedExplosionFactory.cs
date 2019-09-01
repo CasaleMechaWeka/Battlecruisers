@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    public class ExplosionFactory : IPoolableFactory<IExplosion, Vector3>
+    public class AdvancedExplosionFactory : IPoolableFactory<IExplosion, Vector3>
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly ExplosionKey _explosionKey;
 
-        public ExplosionFactory(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        public AdvancedExplosionFactory(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             Helper.AssertIsNotNull(prefabFactory, explosionKey);
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Effects.Explosions
 
         public IExplosion CreateItem()
         {
-            return _prefabFactory.CreateExplosion(_explosionKey);
+            return _prefabFactory.CreateAdvancedExplosion(_explosionKey);
         }
     }
 }

@@ -100,7 +100,15 @@ namespace BattleCruisers.Utils.Fetchers
             return newCountdown;
         }
 
-        public IExplosion CreateExplosion(ExplosionKey explosionKey)
+        public IExplosion CreateBulletImpactExplosion()
+        {
+            BulletImpactExplosion explosionPrefab = _prefabFetcher.GetPrefab<BulletImpactExplosion>(StaticPrefabKeys.Explosions.BulletImpact);
+            BulletImpactExplosion newExplosion = Object.Instantiate(explosionPrefab);
+            newExplosion.Initialise();
+            return newExplosion;
+        }
+
+        public IExplosion CreateAdvancedExplosion(ExplosionKey explosionKey)
         {
             AdvancedExplosion explosionPrefab = _prefabFetcher.GetPrefab<AdvancedExplosion>(explosionKey);
             AdvancedExplosion newExplosion = Object.Instantiate(explosionPrefab);
