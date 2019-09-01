@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
@@ -213,6 +214,7 @@ namespace BattleCruisers.Scenes
 			{
                 _currentScreen.OnDismissing();
 				_currentScreen.gameObject.SetActive(false);
+                _soundPlayer.PlaySound(SoundKeys.UI.ScreenChange);
 			}
 
 			_currentScreen = destinationScreen;
