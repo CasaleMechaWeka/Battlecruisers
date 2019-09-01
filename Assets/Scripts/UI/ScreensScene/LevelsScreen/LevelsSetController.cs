@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -7,9 +8,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsSetController : MonoBehaviourWrapper
     {
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked)
+		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, ISoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(screensSceneGod, levels);
+            Helper.AssertIsNotNull(screensSceneGod, levels, soundPlayer);
 
             LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
             Assert.AreEqual(levels.Count, levelButtons.Length);
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelButtonController button = levelButtons[i];
                 LevelInfo level = levels[i];
 
-                button.Initialise(level, screensSceneGod, numOfLevelsUnlocked);
+                button.Initialise(soundPlayer, level, screensSceneGod, numOfLevelsUnlocked);
             }
 		}
 	}

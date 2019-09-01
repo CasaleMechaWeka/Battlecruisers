@@ -87,7 +87,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                         .ToList();
 
                 LevelsSetController levelsSet = levelSets[j];
-                levelsSet.Initialise(screensSceneGod, setLevels, numOfLevelsUnlocked);
+                levelsSet.Initialise(screensSceneGod, setLevels, numOfLevelsUnlocked, _soundPlayer);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }

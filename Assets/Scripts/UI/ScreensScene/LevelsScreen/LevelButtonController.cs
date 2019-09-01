@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    public class LevelButtonController : ClickableTogglable
+    public class LevelButtonController : ButtonWithClickSound
     {
         private LevelInfo _level;
         private IScreensSceneGod _screensSceneGod;
@@ -18,8 +19,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 		private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(LevelInfo level, IScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
+        public void Initialise(ISoundPlayer soundPlayer, LevelInfo level, IScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
 		{
+            base.Initialise(soundPlayer);
+
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, level, screensSceneGod);
 
             _level = level;
@@ -37,6 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             _screensSceneGod.LoadLevel(_level.Num);
         }
     }
