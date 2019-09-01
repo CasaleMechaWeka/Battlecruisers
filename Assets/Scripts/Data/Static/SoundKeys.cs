@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Sound;
+﻿ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Data.Static
 {
@@ -121,6 +121,13 @@ namespace BattleCruisers.Data.Static
         {
             public static ISoundKey Click { get; } = new SoundKey(SoundType.UI, "default-click");
             public static ISoundKey ScreenChange { get; } = new SoundKey(SoundType.UI, "screen-change");
+        }
+
+        public static class Shields
+        {
+            public static ISoundKey FullyCharged { get; } = new SoundKey(SoundType.Shields, "shields-blinking-on");
+            public static ISoundKey HitWhileActive { get; } = new SoundKey(SoundType.Shields, "shield-bracing");
+            public static ISoundKey FullyDepleted { get; } = new SoundKey(SoundType.Shields, "shields-broken");
         }
     }
 }
