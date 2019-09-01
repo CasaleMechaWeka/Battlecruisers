@@ -23,6 +23,7 @@ namespace BattleCruisers.Effects.Explosions
             SmallExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75);
             MediumExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100);
             LargeExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150);
+            HugeExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500);
         }
 
         private IPool<IExplosion, Vector3> CreatePool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)

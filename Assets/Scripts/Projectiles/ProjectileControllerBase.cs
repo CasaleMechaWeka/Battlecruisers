@@ -80,7 +80,9 @@ namespace BattleCruisers.Projectiles
             _trailRenderer = GetComponentInChildren<TrailRenderer>();
             Assert.IsNotNull(_trailRenderer);
 
-            _explosionPool = GetComponent<IExplosionPoolChooser>()?.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
+            IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
+            Assert.IsNotNull(explosionPoolChooser);
+            _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
 		}
 
         public virtual void Activate(TActivationArgs activationArgs)
@@ -146,7 +148,7 @@ namespace BattleCruisers.Projectiles
 
         protected virtual void DestroyProjectile()
         {
-            ShowExplosionIfNecessary();
+            ShowExplosion();
 
             if (ImpactSoundKey != null)
             {
@@ -157,9 +159,9 @@ namespace BattleCruisers.Projectiles
 		}
 
 
-        private void ShowExplosionIfNecessary()
+        private void ShowExplosion()
         {
-            _explosionPool?.GetItem(transform.position);
+            _explosionPool.GetItem(transform.position);
         }
 
         private void AdjustGameObjectDirection()
