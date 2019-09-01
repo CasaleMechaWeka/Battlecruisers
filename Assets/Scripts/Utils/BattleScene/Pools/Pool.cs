@@ -8,6 +8,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
     {
         private readonly Stack<TPoolable> _items;
         private readonly IPoolableFactory<TPoolable, TArgs> _itemFactory;
+        private int _createCount = 0;
 
         public Pool(IPoolableFactory<TPoolable, TArgs> itemFactory)
         {
@@ -28,8 +29,9 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         private TPoolable CreateItem()
         {
-            Logging.LogMethod(Tags.POOLS);
+            Logging.Log(Tags.POOLS, $"{_itemFactory} {_createCount}");
 
+            _createCount++;
             TPoolable item = _itemFactory.CreateItem();
             item.Deactivated += Item_Deactivated;
             return item;

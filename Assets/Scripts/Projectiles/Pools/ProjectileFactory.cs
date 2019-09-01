@@ -27,5 +27,10 @@ namespace BattleCruisers.Projectiles.Pools
         {
             return _factoryProvider.PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(ProjectileFactory<TProjectile, TActivationArgs, TStats>)} {_projectileKey}";
+        }
     }
 }

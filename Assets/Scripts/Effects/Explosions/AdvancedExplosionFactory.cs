@@ -23,5 +23,10 @@ namespace BattleCruisers.Effects.Explosions
         {
             return _prefabFactory.CreateAdvancedExplosion(_explosionKey);
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(AdvancedExplosion)} {_explosionKey}";
+        }
     }
 }

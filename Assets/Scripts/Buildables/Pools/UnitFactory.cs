@@ -35,5 +35,10 @@ namespace BattleCruisers.Buildables.Pools
                     .CreateUnit(_unitPrefab, _uiManager, _factoryProvider)
                     .Parse<Unit>();
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(UnitFactory)} {_unitPrefab.Buildable}";
+        }
     }
 }
