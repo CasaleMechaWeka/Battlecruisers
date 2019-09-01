@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
@@ -8,9 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
         protected IHomeScreen _homeScreen;
         protected IGameModel _gameModel;
 
-        public void Initialise(IHomeScreen homeScreen, IGameModel gameModel)
+        public void Initialise(ISoundPlayer soundPlayer, IHomeScreen homeScreen, IGameModel gameModel)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(homeScreen, gameModel);
 

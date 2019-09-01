@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             HomeButtonController homeButton = GetComponentInChildren<HomeButtonController>();
             Assert.IsNotNull(homeButton);
-            homeButton.Initialise(screensSceneGod);
+            homeButton.Initialise(_soundPlayer, screensSceneGod);
         }
 
         private void InitialiseLevelSets(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, int numOfSets)

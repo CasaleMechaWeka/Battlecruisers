@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             CancelButton cancelButton = GetComponentInChildren<CancelButton>();
             Assert.IsNotNull(cancelButton);
-            cancelButton.Initialise(screensSceneGod);
+            cancelButton.Initialise(_soundPlayer, screensSceneGod);
 		}
 	}
 }

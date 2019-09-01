@@ -4,6 +4,8 @@
     {
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             if (_gameModel.HasAttemptedTutorial)
             {
                 _homeScreen.StartLevel1();

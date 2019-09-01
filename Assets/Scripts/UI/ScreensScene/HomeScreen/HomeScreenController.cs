@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
             _totalNumOfLevels = totalNumOfLevels;
 
             HomeScreenLayout layout = GetLayout(gameModel);
-            layout.Initialise(this, gameModel);
+            layout.Initialise(this, gameModel, soundPlayer);
             layout.IsVisible = true;
 		}
 
