@@ -29,9 +29,8 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         private TPoolable CreateItem()
         {
-            Logging.Log(Tags.POOLS, $"{_itemFactory} {_createCount}");
+            Logging.Log(Tags.POOLS, $"{_itemFactory} {++_createCount}");
 
-            _createCount++;
             TPoolable item = _itemFactory.CreateItem();
             item.Deactivated += Item_Deactivated;
             return item;
