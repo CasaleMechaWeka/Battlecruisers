@@ -7,8 +7,10 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using NSubstitute;
 using UnityEngine;
@@ -20,6 +22,23 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
     public class CruiserDeathTestGod : MonoBehaviour
     {
         void Start()
+        {
+            SetupExplosions();
+            CreateAndDestroyCruiser();
+        }
+
+        private static void SetupExplosions()
+        {
+            AdvancedExplosion[] explosions = FindObjectsOfType<AdvancedExplosion>();
+            
+            foreach (AdvancedExplosion explosion in explosions)
+            {
+                explosion.Initialise(RandomGenerator.Instance);
+                explosion.Activate(explosion.gameObject.transform.position);
+            }
+        }
+
+        private static void CreateAndDestroyCruiser()
         {
             Cruiser cruiser = FindObjectOfType<Cruiser>();
             Assert.IsNotNull(cruiser);
