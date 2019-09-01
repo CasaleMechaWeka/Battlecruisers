@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
             IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, prioritisedSoundPlayer);
-            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, buildingClickHandler);
+            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, soundPlayer, buildingClickHandler);
 
             // Unit menus
             IUnitClickHandler unitClickHandler 
@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-            unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, unitClickHandler);
+            unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, soundPlayer, unitClickHandler);
 
             return
                 new BuildMenu(

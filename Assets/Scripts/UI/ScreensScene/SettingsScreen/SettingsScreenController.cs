@@ -9,9 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
-        public void Initialise(IScreensSceneGod screensSceneGod, ISoundPlayer soundPlayer, ISettingsManager settingsManager)
+        public void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, ISettingsManager settingsManager)
 		{
-			base.Initialise(screensSceneGod, soundPlayer);
+			base.Initialise(soundPlayer, screensSceneGod);
 
             Assert.IsNotNull(settingsManager);
 

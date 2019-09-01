@@ -5,6 +5,7 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IFactory _factory;
 
 		public void Initialise(
+            ISoundPlayer soundPlayer,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IUnit>> units,
@@ -27,12 +29,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(clickHandler);
             _unitClickHandler = clickHandler;
 
-            base.Initialise(uiManager, buttonVisibilityFilters, units);
+            base.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, units);
 		}
 
         protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildableWrapper)
         {
-            button.Initialise(buildableWrapper, _shouldBeEnabledFilter, _unitClickHandler);
+            button.Initialise(_soundPlayer, buildableWrapper, _shouldBeEnabledFilter, _unitClickHandler);
         }
 
 		public override void OnPresenting(object activationParameter)

@@ -4,9 +4,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
 {
+    // FELIX  Rename.  Not only buttons :/
     public class ButtonWithClickSound : ClickableTogglable
     {
-        private ISoundPlayer _soundPlayer;
+        protected ISoundPlayer _soundPlayer;
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual void Initialise(ISoundPlayer soundPlayer)

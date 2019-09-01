@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -27,6 +29,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         protected override bool Disable => false;
+        protected override ISoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual bool IsMatch => _shouldBeEnabledFilter.IsMatch(Buildable);
         public Color Color
@@ -39,9 +42,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise(IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+        public void Initialise(ISoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
-			base.Initialise();
+			base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(buildable, shouldBeEnabledFilter);
 
@@ -72,8 +75,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         protected override void OnClicked()
         {
-            HandleClick(IsMatch);
+            base.OnClicked();
 
+            HandleClick(IsMatch);
             Clicked?.Invoke(this, EventArgs.Empty);
         }
 

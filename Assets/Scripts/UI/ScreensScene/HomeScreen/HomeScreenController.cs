@@ -16,9 +16,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         private Button _firstTimePlayButton, _continueButton, _selectLevelButton, _loadoutButton, _settingsButton, _tutorialButton, _quitButton;
 
-        public void Initialise(IScreensSceneGod screensSceneGod, ISoundPlayer soundPlayer, IGameModel gameModel, int totalNumOfLevels)
+        public void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
 		{
-			base.Initialise(screensSceneGod, soundPlayer);
+			base.Initialise(soundPlayer, screensSceneGod);
 
             Assert.IsNotNull(gameModel);
 

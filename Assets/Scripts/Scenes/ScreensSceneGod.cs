@@ -75,8 +75,8 @@ namespace BattleCruisers.Scenes
 
 
             _musicPlayer.PlayScreensSceneMusic();
-            homeScreen.Initialise(this, _soundPlayer, _gameModel, _dataProvider.Levels.Count);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+            homeScreen.Initialise(_soundPlayer, this, _gameModel, _dataProvider.Levels.Count);
+            settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager);
 
 
             if (_applicationModel.ShowPostBattleScreen)
@@ -100,7 +100,7 @@ namespace BattleCruisers.Scenes
         private void GoToPostBattleScreen()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            postBattleScreen.Initialise(this, _applicationModel, _prefabFactory, _musicPlayer, _soundPlayer);
+            postBattleScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, _musicPlayer);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
@@ -115,7 +115,7 @@ namespace BattleCruisers.Scenes
 
                 IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
-                levelsScreen.Initialise(this, _soundPlayer, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
+                levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
             }
 
 			GoToScreen(levelsScreen);
@@ -175,7 +175,7 @@ namespace BattleCruisers.Scenes
         {
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            yield return loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
+            yield return loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
             yield return GoToScreenAsync(loadoutScreen);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");

@@ -39,13 +39,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public event EventHandler VisibleSetChanged;
 
 		public void Initialise(
-            IScreensSceneGod screensSceneGod,
             ISoundPlayer soundPlayer,
+            IScreensSceneGod screensSceneGod,
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
             int lastPlayedLevelNum)
         {
-            base.Initialise(screensSceneGod, soundPlayer);
+            base.Initialise(soundPlayer, screensSceneGod);
 
             int numOfSets = levels.Count / SET_SIZE;
             InitialiseLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets);

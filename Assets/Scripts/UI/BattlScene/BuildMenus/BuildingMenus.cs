@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Sorting;
@@ -21,6 +22,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
             ISpriteProvider spriteProvider,
+            ISoundPlayer soundPlayer,
             IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
@@ -29,16 +31,17 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
 
-            base.Initialise(buildings, uiManager, buttonVisibilityFilters, buildingSorter);
+            base.Initialise(buildings, uiManager, buttonVisibilityFilters, buildingSorter, soundPlayer);
         }
 
         protected override void InitialiseMenu(
+            ISoundPlayer soundPlayer,
             BuildingsMenuController menu, 
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)
         {
-            menu.Initialise(uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _clickHandler);
+            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _spriteProvider, _clickHandler);
         }
     }
 }

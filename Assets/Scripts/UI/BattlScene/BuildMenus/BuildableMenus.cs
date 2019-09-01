@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
@@ -23,9 +24,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            IBuildableSorter<TBuildable> buildableSorter)
+            IBuildableSorter<TBuildable> buildableSorter,
+            ISoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(buildables, uiManager, buttonVisibilityFilters, buildableSorter);
+            Helper.AssertIsNotNull(buildables, uiManager, buttonVisibilityFilters, buildableSorter, soundPlayer);
 
             IList<TMenu> buildableMenus = GetComponentsInChildren<TMenu>().ToList();
             Assert.AreEqual(buildables.Count, buildableMenus.Count);
@@ -41,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 if (pair.Value.Count != 0)
                 {
                     IList<IBuildableWrapper<TBuildable>> sortedBuildables = buildableSorter.Sort(pair.Value);
-                    InitialiseMenu(buildableMenu, uiManager, buttonVisibilityFilters, sortedBuildables);
+                    InitialiseMenu(soundPlayer, buildableMenu, uiManager, buttonVisibilityFilters, sortedBuildables);
                     _buildableCategoryToMenus.Add(pair.Key, buildableMenu);
                     buildableMenu.IsVisible = false;
                 }
@@ -57,6 +59,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         protected abstract void InitialiseMenu(
+            ISoundPlayer soundPlayer,
             TMenu menu,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,

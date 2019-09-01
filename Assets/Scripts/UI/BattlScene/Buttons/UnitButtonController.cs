@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
@@ -32,13 +33,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		}
 
 		public void Initialise(
+            ISoundPlayer soundPlayer,
             IBuildableWrapper<IUnit> unitWrapper, 
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
             IUnitClickHandler unitClickHandler)
 		{
             Helper.AssertIsNotNull(unitWrapper, unitClickHandler);
 
-            base.Initialise(unitWrapper.Buildable, shouldBeEnabledFilter);
+            base.Initialise(soundPlayer, unitWrapper.Buildable, shouldBeEnabledFilter);
 
 			_unitWrapper = unitWrapper;
             _unitClickHandler = unitClickHandler;

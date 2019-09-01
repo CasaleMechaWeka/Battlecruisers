@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildingGroup> buildingGroups)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilters, buildingGroups);
 

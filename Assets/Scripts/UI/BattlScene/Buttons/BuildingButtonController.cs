@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
@@ -11,11 +12,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private IBuildingClickHandler _clickHandler;
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IBuildableWrapper<IBuilding> buildingWrapper, 
             IBuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
-            base.Initialise(buildingWrapper.Buildable, shouldBeEnabledFilter);
+            base.Initialise(soundPlayer, buildingWrapper.Buildable, shouldBeEnabledFilter);
 			
 			_buildingWrapper = buildingWrapper;
             _clickHandler = clickHandler;

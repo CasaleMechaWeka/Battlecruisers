@@ -29,13 +29,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
 		public void Initialise(
+            ISoundPlayer soundPlayer,
             ScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
-            IMusicPlayer musicPlayer,
-            ISoundPlayer soundPlayer)
+            IMusicPlayer musicPlayer)
 		{
-			base.Initialise(screensSceneGod, soundPlayer);
+			base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(
                 title, 

@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public BuildingCategoryButton buildingCategoryButton;
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildings,
@@ -30,13 +32,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
 
-            base.Initialise(uiManager, buttonVisibilityFilters, buildings);
+            base.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildings);
             buildingCategoryButton.IsActiveFeedbackVisible = false;
         }
 
         protected override void InitialiseBuildableButton(BuildingButtonController button, IBuildableWrapper<IBuilding> buildableWrapper)
         {
-            button.Initialise(buildableWrapper, _clickHandler, _shouldBeEnabledFilter);
+            button.Initialise(_soundPlayer, buildableWrapper, _clickHandler, _shouldBeEnabledFilter);
         }
 
         public override void OnPresenting(object activationParameter)

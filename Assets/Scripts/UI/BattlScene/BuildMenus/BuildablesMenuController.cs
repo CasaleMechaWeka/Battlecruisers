@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,11 +23,12 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
 
 		public virtual void Initialise(
+            ISoundPlayer soundPlayer,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<TBuildable>> buildables)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilters, buildables);
 

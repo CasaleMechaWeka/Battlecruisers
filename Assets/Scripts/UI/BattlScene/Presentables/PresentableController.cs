@@ -1,14 +1,17 @@
-﻿namespace BattleCruisers.UI.BattleScene.Presentables
+﻿using BattleCruisers.UI.Sound;
+
+namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    public abstract class PresentableController : ClickableTogglable, IPresentable
+    public abstract class PresentableController : ButtonWithClickSound, IPresentable
 	{
         private IPresentableComponent _presentableComponent;
 
 		protected bool IsPresented => _presentableComponent.IsPresented;
+        protected override ISoundKey ClickSound => null;
 
-		public override void Initialise()
+        public override void Initialise(ISoundPlayer soundPlayer)
 		{
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             _presentableComponent = new PresentableComponent();
 		}
@@ -26,11 +29,6 @@
         protected void AddChildPresentable(IPresentable presentableToAdd)
         {
             _presentableComponent.AddChildPresentable(presentableToAdd);
-        }
-
-        protected override void OnClicked()
-        {
-            // Empty, do not force child classes to implement
         }
     }
 }

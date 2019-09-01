@@ -25,14 +25,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private LoadoutItemColourController _loadoutItemColourController;
 
         public IEnumerator Initialise(
-            IScreensSceneGod screensSceneGod,
             ISoundPlayer soundPlayer,
+            IScreensSceneGod screensSceneGod,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
         {
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            base.Initialise(screensSceneGod, soundPlayer);
+            base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
