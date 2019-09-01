@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using UnityCommon.Properties;
@@ -8,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class SaveButton : ClickableTogglable
+    public class SaveButton : ButtonWithClickSound
     {
         private IScreensSceneGod _screensSceneGod;
         private ISettingsManager _settingsManager;
@@ -19,13 +20,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
+            ISoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             ISettingsManager settingsManager, 
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel)
         {
-            base.Initialise();
+            base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel);
 
@@ -62,6 +64,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         protected override void OnClicked()
         {
+            base.OnClicked();
+
             Assert.IsTrue(ShouldBeEnabled());
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
