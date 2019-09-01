@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace BattleCruisers.Effects.Explosions
 {
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
+        public IPool<IExplosion, Vector3> BulletImpactPool { get; }
         public IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
         public IPool<IExplosion, Vector3> MediumExplosionsPool { get; }
         public IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
@@ -17,29 +19,19 @@ namespace BattleCruisers.Effects.Explosions
         {
             Assert.IsNotNull(prefabFactory);
 
-            SmallExplosionsPool
-                = new Pool<IExplosion, Vector3>(
-                    new ExplosionFactory(
-                        prefabFactory,
-                        StaticPrefabKeys.Explosions.HDExplosion75));
+            BulletImpactPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
+            SmallExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75);
+            MediumExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100);
+            LargeExplosionsPool = CreatePool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150);
+        }
 
-            MediumExplosionsPool
-                = new Pool<IExplosion, Vector3>(
+        private IPool<IExplosion, Vector3> CreatePool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        {
+            return
+                new Pool<IExplosion, Vector3>(
                     new ExplosionFactory(
                         prefabFactory,
-                        StaticPrefabKeys.Explosions.HDExplosion100));
-
-            LargeExplosionsPool
-                = new Pool<IExplosion, Vector3>(
-                    new ExplosionFactory(
-                        prefabFactory,
-                        StaticPrefabKeys.Explosions.HDExplosion150));
-
-            HugeExplosionsPool
-                = new Pool<IExplosion, Vector3>(
-                    new ExplosionFactory(
-                        prefabFactory,
-                        StaticPrefabKeys.Explosions.HDExplosion500));
+                        explosionKey));
         }
     }
 }

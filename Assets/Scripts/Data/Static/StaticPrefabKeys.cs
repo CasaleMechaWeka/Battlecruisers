@@ -74,6 +74,7 @@ namespace BattleCruisers.Data.Static
 
         public static class Explosions
         {
+            public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
             public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75");
             public static ExplosionKey HDExplosion100 { get; } = new ExplosionKey("HDExplosion1.0");
             public static ExplosionKey HDExplosion150 { get; } = new ExplosionKey("HDExplosion1.5");

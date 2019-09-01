@@ -5,6 +5,8 @@ namespace BattleCruisers.Effects.Explosions
 {
     public interface IExplosionPoolProvider
     {
+        IPool<IExplosion, Vector3> BulletImpactPool { get; }
+
         // Radius 0.75m => Bomber, mortar, SAM site
         IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
         
