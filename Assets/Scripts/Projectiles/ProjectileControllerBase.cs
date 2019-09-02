@@ -50,7 +50,11 @@ namespace BattleCruisers.Projectiles
             set
             {
                 Assert.IsNotNull(value);
-                Assert.AreNotEqual(value, _movementController);
+
+                if (ReferenceEquals(value, _movementController))
+                {
+                    return;
+                }
 
                 if (_movementController != null)
                 {
