@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Units
 		public override Vector2 Velocity => rigidBody.velocity;
         public virtual bool IsUltra => false;
 
-		private Direction _facingDirection;
+        private Direction _facingDirection;
 		public Direction FacingDirection
 		{
 			get { return _facingDirection; }
@@ -42,6 +42,7 @@ namespace BattleCruisers.Buildables.Units
 		}
 
         protected override bool IsDroneConsumerFocusable => false;
+        protected override bool HealthbarShouldFollow => true;
 
         protected abstract ISoundKey EngineSoundKey { get; }
         protected virtual float OnDeathGravityScale => 1;
