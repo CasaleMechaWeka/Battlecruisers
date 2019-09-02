@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -71,11 +72,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 		private void ShowProgressBar()
 		{
+            Logging.VerboseMethod(Tags.PROGRESS_BARS);
 			EnableImages(true);
 		}
 
 		private void HideProgressBar()
 		{
+            Logging.VerboseMethod(Tags.PROGRESS_BARS);
 			EnableImages(false);
 		}
 

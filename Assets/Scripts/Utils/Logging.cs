@@ -218,6 +218,16 @@ namespace BattleCruisers.Utils
         }
 
         [Conditional("ENABLE_LOGS")]
+        public static void VerboseMethod(
+            string tag,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Log(LoggingLevel.Verbose, tag, string.Empty, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [Conditional("ENABLE_LOGS")]
 		public static void Verbose(
             string tag, 
             string message,

@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         void Start()
         {
-            Helper helper = new Helper(buildSpeedMultiplier: 5);
+            Helper helper = new Helper(buildSpeedMultiplier: 10);
 
             Factory factory = FindObjectOfType<Factory>();
             Assert.IsNotNull(factory);
