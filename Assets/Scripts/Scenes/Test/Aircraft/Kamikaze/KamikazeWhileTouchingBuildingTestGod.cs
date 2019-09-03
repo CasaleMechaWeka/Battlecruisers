@@ -8,7 +8,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 {
     public class KamikazeWhileTouchingBuildingTestGod : MonoBehaviour
     {

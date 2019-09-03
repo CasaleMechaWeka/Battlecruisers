@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace BattleCruisers.Scenes.Test.Aircraft
+namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 {
     public class KamikazeTestGod : TestGodBase
     {
