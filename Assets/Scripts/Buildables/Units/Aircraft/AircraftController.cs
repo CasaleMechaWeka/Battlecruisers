@@ -236,6 +236,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             // Make aircraft spin a bit for coolness
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+
+            _kamikazeController.gameObject.SetActive(false);
         }
 
         private void OnKamikaze()
@@ -246,7 +248,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected virtual void CleanUp()
         {
             _aircraftTrail.enabled = false;
-            _kamikazeController.gameObject.SetActive(false);
         }
     }
 }
