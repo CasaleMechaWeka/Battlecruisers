@@ -73,6 +73,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public void RemoveFromScene()
         {
+            _targetToDamage = null;
             _parentAircraft.Destroy();
             _parentAsRemovable.RemoveFromScene();
         }
