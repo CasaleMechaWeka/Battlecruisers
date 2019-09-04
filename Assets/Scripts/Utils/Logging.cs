@@ -77,9 +77,12 @@ namespace BattleCruisers.Utils
         public const string SCROLL_WHEEL_NAVIGATION = "ScrollWheelNavigation";
         public const string SWIPE_NAVIGATION = "SwipeNavigation";
 
+        // Cruiser
+        public const string CRUISER = "Cruiser";
+        public const string UNIT_TARGETS = "UnitTargets";
+
         // Other
         public const string BOOST = "Boost";
-        public const string CRUISER = "Cruiser";
         public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
         public const string POOLS = "Pools";
@@ -178,9 +181,12 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SWIPE_NAVIGATION, false);
 
+            // Cruiser
+            tagsToActiveness.Add(Tags.CRUISER, false);
+            tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
+
             // Other
             tagsToActiveness.Add(Tags.BOOST, false);
-            tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             // FELIX

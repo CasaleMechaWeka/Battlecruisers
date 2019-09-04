@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
@@ -25,6 +26,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void CruiserUnitMonitor_UnitCompleted(object sender, UnitCompletedEventArgs e)
         {
+            Logging.Log(Tags.UNIT_TARGETS, $"{e.CompletedUnit}  id: {e.CompletedUnit.GameObject.GetInstanceID()}");
+
             switch (e.CompletedUnit.TargetType)
             {
                 case TargetType.Ships:
@@ -42,6 +45,8 @@ namespace BattleCruisers.Cruisers.Construction
         // May occur for uncompleted unit.
         private void CruiserUnitMonitor_UnitDestroyed(object sender, UnitDestroyedEventArgs e)
         {
+            Logging.Log(Tags.UNIT_TARGETS, $"{e.DestroyedUnit}  id: {e.DestroyedUnit.GameObject.GetInstanceID()}");
+
             switch (e.DestroyedUnit.TargetType)
             {
                 case TargetType.Ships:
