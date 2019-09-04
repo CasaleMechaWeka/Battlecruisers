@@ -186,7 +186,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             // object to inactive.
             PlayEngineSound();
 
-            // FELIX  Need to reset kamikazi controller :/  For recycling!
             _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
 			_kamikazeController.gameObject.SetActive(true);
         }
