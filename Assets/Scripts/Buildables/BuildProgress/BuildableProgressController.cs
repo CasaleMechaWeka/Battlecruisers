@@ -1,5 +1,5 @@
-﻿using System;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -45,13 +45,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 		
 		private void Buildable_CompletedOrDestroyedBuilding(object sender, EventArgs e)
 		{
-			_buildable.StartedConstruction -= Buildable_StartedBuilding;
-			_buildable.BuildableProgress -= Buildable_BuildableProgress;
-			_buildable.CompletedBuildable -= Buildable_CompletedOrDestroyedBuilding;
-			_buildable.Destroyed -= Buildable_CompletedOrDestroyedBuilding;
-
-			FillableImage.enabled = false;
-			OutlineImage.enabled = false;
+			gameObject.SetActive(false);
 		}
 	}
 }
