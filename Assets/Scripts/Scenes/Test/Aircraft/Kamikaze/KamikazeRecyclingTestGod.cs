@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
+namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
 {
     public class KamikazeRecyclingTestGod : TestGodBase
     {
