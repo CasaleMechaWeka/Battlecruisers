@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using System;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
@@ -11,8 +12,9 @@ namespace BattleCruisers.Scenes.Test.Factories
 	{
 		public Factory factoryFacingRight, factoryFacingLeft;
 		public UnitWrapper unitPrefab;
+        public float buildSpeedMultiplier = BCUtils.BuildSpeedMultipliers.VERY_FAST;
 
-		protected virtual Faction FactoryFacingLeftFaction => Faction.Blues;
+        protected virtual Faction FactoryFacingLeftFaction => Faction.Blues;
 		protected virtual Faction FactoryFacingRightFaction => Faction.Blues;
 
 		protected override void Start()
@@ -21,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 			unitPrefab.Initialise();
 
-			Helper helper = new Helper(updaterProvider: _updaterProvider);
+			Helper helper = new Helper(buildSpeedMultiplier: buildSpeedMultiplier, updaterProvider: _updaterProvider);
 
             ICruiser leftCruiser = helper.CreateCruiser(Direction.Right, FactoryFacingRightFaction);
             ICruiser rightCruiser = helper.CreateCruiser(Direction.Left, FactoryFacingLeftFaction);
