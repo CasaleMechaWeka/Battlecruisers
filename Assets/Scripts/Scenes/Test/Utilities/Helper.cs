@@ -41,6 +41,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
@@ -482,8 +483,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
         // So UnitTargets knows about ships, and ManualProximityTargetProcessor works.
         public static void SetupUnitForUnitMonitor(IUnit unit, ICruiser parentCruiser)
         {
-            unit.CompletedBuildable += (sender, e) => parentCruiser.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unit));
-            unit.Destroyed += (sender, e) => parentCruiser.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(unit));
+            EventHandler completedHandler = (sender, e) => parentCruiser.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unit));
+            void destroyedHandler(object sender, DestroyedEventArgs e)
+            {
+                unit.CompletedBuildable -= completedHandler;
+                unit.Destroyed -= destroyedHandler;
+
+                parentCruiser.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(unit));
+            }
+
+            unit.CompletedBuildable += completedHandler;
+            unit.Destroyed += destroyedHandler;
         }
 	}
 }
