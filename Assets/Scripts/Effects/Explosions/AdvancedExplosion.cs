@@ -24,6 +24,8 @@ namespace BattleCruisers.Effects.Explosions
             }
 
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
+
+            gameObject.SetActive(false);
         }
 
         // All fire and smoke pairs should complete at the same time, so deactivate

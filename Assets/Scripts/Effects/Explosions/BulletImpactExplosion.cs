@@ -20,6 +20,8 @@ namespace BattleCruisers.Effects.Explosions
 
             // Sparks is longer particle system, so wait for it to complete
             _sparks.Stopped += _sparks_Stopped;
+
+            gameObject.SetActive(false);
         }
 
         private void _sparks_Stopped(object sender, EventArgs e)

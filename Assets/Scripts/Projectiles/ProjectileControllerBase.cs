@@ -87,7 +87,9 @@ namespace BattleCruisers.Projectiles
             IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
             _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
-		}
+
+            gameObject.SetActive(false);
+        }
 
         public virtual void Activate(TActivationArgs activationArgs)
         {

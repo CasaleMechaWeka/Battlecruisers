@@ -263,6 +263,8 @@ namespace BattleCruisers.Buildables
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
+
+            _parent.SetActive(false);
         }
 
         /// <summary>
