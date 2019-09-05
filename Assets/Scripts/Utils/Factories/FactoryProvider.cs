@@ -7,7 +7,6 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -29,15 +28,16 @@ namespace BattleCruisers.Utils.Factories
         public ITargetFactoriesProvider Targets { get; }
         public ITurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
-        public IPoolProviders PoolProviders { get; }
+
+        // Have setter because of circular dependency with FactoryProvider :/
+        public IPoolProviders PoolProviders { get; set; }
 
         public FactoryProvider(
             IBattleSceneGodComponents components,
             IPrefabFactory prefabFactory, 
-            ISpriteProvider spriteProvider,
-            IUIManager uiManager)
+            ISpriteProvider spriteProvider)
 		{
-            Helper.AssertIsNotNull(components, prefabFactory, spriteProvider, uiManager);
+            Helper.AssertIsNotNull(components, prefabFactory, spriteProvider);
 
 			PrefabFactory = prefabFactory;
             Targets = new TargetFactoriesProvider();
@@ -56,7 +56,6 @@ namespace BattleCruisers.Utils.Factories
 
             Sound = new SoundFactoryProvider(components.Deferrer, components.Camera, components.AudioSource);
             Turrets = new TurretFactoryProvider();
-            PoolProviders = new PoolProviders(this, uiManager);
         }
 	}
 }
