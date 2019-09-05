@@ -85,7 +85,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             FactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider);
-            factoryProvider.PoolProviders = new PoolProviders(factoryProvider, uiManager);
+            factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
