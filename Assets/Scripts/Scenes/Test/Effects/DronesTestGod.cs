@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Effects;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects
@@ -6,7 +7,7 @@ namespace BattleCruisers.Scenes.Test.Effects
     public class DronesTestGod : MonoBehaviour
     {
         public GameObject parentObject;
-        public GameObject dronePrefab;
+        public DroneController dronePrefab;
         public int numOfDrones = 10;
         public float spawnRadiusInM = 0.5f;
 
@@ -14,8 +15,12 @@ namespace BattleCruisers.Scenes.Test.Effects
         {
             for (int i = 0; i < numOfDrones; ++i)
             {
-                GameObject newDrone = Instantiate(dronePrefab, parentObject.transform);
-                newDrone.transform.position = RandomisePosition(parentObject.transform.position);
+                DroneController newDrone = Instantiate(dronePrefab);
+                //DroneController newDrone = Instantiate(dronePrefab, parentObject.transform);
+
+                newDrone.Initialise(RandomGenerator.Instance);
+                newDrone.Activate(RandomisePosition(parentObject.transform.position));
+                //newDrone.transform.position = RandomisePosition(parentObject.transform.position);
 
                 Debug.Log($"Created rone #{i} at position: {newDrone.transform.position}");
             }
