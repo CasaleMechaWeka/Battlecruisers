@@ -53,7 +53,8 @@ namespace BattleCruisers.Buildables.Pools
                         _factoryProvider.PrefabFactory,
                         unitKey,
                         _uiManager,
-                        _factoryProvider));
+                        _factoryProvider),
+                    initialCapacity: 1);
         }
     }
 }

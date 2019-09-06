@@ -7,6 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
+    // FELIX  Create Pools namespace :)
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
         public IPool<IExplosion, Vector3> BulletImpactPool { get; }
@@ -22,21 +23,26 @@ namespace BattleCruisers.Effects.Explosions
             BulletImpactPool
                 = new Pool<IExplosion, Vector3>(
                     new BulletImpactExplosionFactory(
-                        prefabFactory));
+                        prefabFactory),
+                    InitialCapacity.BULLET_IMPACT);
 
-            SmallExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75);
-            MediumExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100);
-            LargeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150);
-            HugeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500);
+            SmallExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75, InitialCapacity.SMALL);
+            MediumExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100, InitialCapacity.MEDIUM);
+            LargeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150, InitialCapacity.LARGE);
+            HugeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500, InitialCapacity.HUGE);
         }
 
-        private IPool<IExplosion, Vector3> CreateAdvancedExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        private IPool<IExplosion, Vector3> CreateAdvancedExplosionPool(
+            IPrefabFactory prefabFactory, 
+            ExplosionKey explosionKey, 
+            int initialCapacity)
         {
             return
                 new Pool<IExplosion, Vector3>(
                     new AdvancedExplosionFactory(
                         prefabFactory,
-                        explosionKey));
+                        explosionKey),
+                    initialCapacity);
         }
     }
 }
