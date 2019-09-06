@@ -81,8 +81,19 @@ namespace BattleCruisers.Projectiles.Pools
                 new Pool<TProjectile, TArgs>(
                     new ProjectileFactory<TProjectile, TArgs, TStats>(
                         factoryProvider,
-                        projectileKey),
-                    initialCapacity);
+                        projectileKey));
+        }
+
+        public void SetInitialCapacity()
+        {
+            BulletsPool.AddCapacity(InitialCapacity.BULLET);
+            ShellsSmallPool.AddCapacity(InitialCapacity.SHELL_SMALL);
+            ShellsLargePool.AddCapacity(InitialCapacity.SHELL_LARGE);
+            BombsPool.AddCapacity(InitialCapacity.BOMB);
+            RocketsPool.AddCapacity(InitialCapacity.ROCKET);
+            MissilesSmallPool.AddCapacity(InitialCapacity.MISSILE_SMALL);
+            MissilesMediumPool.AddCapacity(InitialCapacity.MISSILE_MEDIUM);
+            MissilesLargePool.AddCapacity(InitialCapacity.MISSILE_LARGE);
         }
     }
 }

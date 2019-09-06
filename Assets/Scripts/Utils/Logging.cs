@@ -189,7 +189,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.BOOST, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
-            tagsToActiveness.Add(Tags.POOLS, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.POOLS, true);
+            //tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);

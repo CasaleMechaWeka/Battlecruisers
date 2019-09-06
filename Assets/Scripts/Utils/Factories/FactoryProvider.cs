@@ -62,7 +62,10 @@ namespace BattleCruisers.Utils.Factories
         public void Initialise(IUIManager uiManager)
         {
             Assert.IsNotNull(uiManager);
-            PoolProviders = new PoolProviders(this, uiManager);
+
+            PoolProviders poolProviders = new PoolProviders(this, uiManager);
+            PoolProviders = poolProviders;
+            poolProviders.SetInitialCapacities();
         }
 	}
 }

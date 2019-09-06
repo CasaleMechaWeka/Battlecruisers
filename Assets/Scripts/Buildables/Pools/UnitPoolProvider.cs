@@ -5,6 +5,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Pools
 {
@@ -12,6 +13,12 @@ namespace BattleCruisers.Buildables.Pools
     {
         private readonly IUIManager _uiManager;
         private readonly IFactoryProvider _factoryProvider;
+        private readonly IList<IPool<Unit, BuildableActivationArgs>> _pools;
+
+        // Don't want more than 1 because unit may never be built.  Want at least 1
+        // to force prefab to be loaded.  First time load is the slowest, because
+        // it fetches everything the prefab needs (materials, sprites???).
+        private const int INITIAL_UNIT_CAPACITY = 1;
 
         // Aircraft
         public IPool<Unit, BuildableActivationArgs> BomberPool { get; }
@@ -31,6 +38,7 @@ namespace BattleCruisers.Buildables.Pools
 
             _uiManager = uiManager;
             _factoryProvider = factoryProvider;
+            _pools = new List<IPool<Unit, BuildableActivationArgs>>();
 
             // Aircraft
             BomberPool = CreatePool(StaticPrefabKeys.Units.Bomber);
@@ -47,14 +55,23 @@ namespace BattleCruisers.Buildables.Pools
 
         private IPool<Unit, BuildableActivationArgs> CreatePool(IPrefabKey unitKey)
         {
-            return
-                new Pool<Unit, BuildableActivationArgs>(
+            IPool<Unit, BuildableActivationArgs> pool
+                = new Pool<Unit, BuildableActivationArgs>(
                     new UnitFactory(
                         _factoryProvider.PrefabFactory,
                         unitKey,
                         _uiManager,
-                        _factoryProvider),
-                    initialCapacity: 1);
+                        _factoryProvider));
+            _pools.Add(pool);
+            return pool;
+        }
+
+        public void SetInitialCapacity()
+        {
+            foreach (IPool<Unit, BuildableActivationArgs> pool in _pools)
+            {
+                pool.AddCapacity(INITIAL_UNIT_CAPACITY);
+            }
         }
     }
 }

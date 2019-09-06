@@ -23,8 +23,7 @@ namespace BattleCruisers.Effects.Explosions
             BulletImpactPool
                 = new Pool<IExplosion, Vector3>(
                     new BulletImpactExplosionFactory(
-                        prefabFactory),
-                    InitialCapacity.BULLET_IMPACT);
+                        prefabFactory));
 
             SmallExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75, InitialCapacity.SMALL);
             MediumExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100, InitialCapacity.MEDIUM);
@@ -41,8 +40,16 @@ namespace BattleCruisers.Effects.Explosions
                 new Pool<IExplosion, Vector3>(
                     new AdvancedExplosionFactory(
                         prefabFactory,
-                        explosionKey),
-                    initialCapacity);
+                        explosionKey));
+        }
+
+        public void SetInitialCapacity()
+        {
+            BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
+            SmallExplosionsPool.AddCapacity(InitialCapacity.SMALL);
+            MediumExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
+            LargeExplosionsPool.AddCapacity(InitialCapacity.LARGE);
+            HugeExplosionsPool.AddCapacity(InitialCapacity.HUGE);
         }
     }
 }

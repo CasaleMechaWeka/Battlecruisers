@@ -7,19 +7,33 @@ namespace BattleCruisers.Utils.Factories
 {
     public class PoolProviders : IPoolProviders
     {
-        public IExplosionPoolProvider ExplosionPoolProvider { get; }
-        public IProjectilePoolProvider ProjectilePoolProvider { get; }
-        public IUnitPoolProvider UnitPoolProvider { get; }
+        private ExplosionPoolProvider _explosionPoolProvider;
+        public IExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;
+
+        private ProjectilePoolProvider _projectilePoolProvider;
+        public IProjectilePoolProvider ProjectilePoolProvider => _projectilePoolProvider;
+
+        private UnitPoolProvider _unitPoolProvider;
+        public IUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
+
         public IUnitToPoolMap UnitToPoolMap { get; }
 
         public PoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager)
         {
             Helper.AssertIsNotNull(factoryProvider, uiManager);
 
-            ExplosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
-            ProjectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
-            UnitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
+            _explosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
+            _projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
+            _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
+        }
+
+        // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
+        public void SetInitialCapacities()
+        {
+            _explosionPoolProvider.SetInitialCapacity();
+            _projectilePoolProvider.SetInitialCapacity();
+            _unitPoolProvider.SetInitialCapacity();
         }
     }
 }

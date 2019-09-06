@@ -10,16 +10,21 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         private readonly IPoolableFactory<TPoolable, TArgs> _itemFactory;
         private int _createCount = 0;
 
-        public Pool(IPoolableFactory<TPoolable, TArgs> itemFactory, int initialCapacity)
+        public Pool(IPoolableFactory<TPoolable, TArgs> itemFactory)
         {
             Assert.IsNotNull(itemFactory);
 
             _itemFactory = itemFactory;
             _items = new Stack<TPoolable>();
+        }
 
-            for (int i = 0; i < initialCapacity; ++i)
+        public void AddCapacity(int capacityToAdd)
+        {
+            Logging.Log(Tags.POOLS, $"{typeof(TPoolable)}:  {capacityToAdd} items");
+
+            for (int i = 0; i < capacityToAdd; ++i)
             {
-                _items.Push(itemFactory.CreateItem());
+                _items.Push(_itemFactory.CreateItem());
             }
         }
 
