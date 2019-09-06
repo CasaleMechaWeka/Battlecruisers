@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
-namespace BattleCruisers.Effects.Explosions
+namespace BattleCruisers.Effects.Explosions.Pools
 {
     public interface IExplosionPoolChooser
     {

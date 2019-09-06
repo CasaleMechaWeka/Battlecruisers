@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Effects.Explosions;
+﻿using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;

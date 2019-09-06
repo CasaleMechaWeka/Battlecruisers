@@ -5,9 +5,8 @@ using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects.Explosions
+namespace BattleCruisers.Effects.Explosions.Pools
 {
-    // FELIX  Create Pools namespace :)
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
         public IPool<IExplosion, Vector3> BulletImpactPool { get; }

@@ -4,7 +4,7 @@ using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 
-namespace BattleCruisers.Effects.Explosions
+namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class AdvancedExplosionFactory : IPoolableFactory<IExplosion, Vector3>
     {

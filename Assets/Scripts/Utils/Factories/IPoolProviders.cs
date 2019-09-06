@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
 
 namespace BattleCruisers.Utils.Factories

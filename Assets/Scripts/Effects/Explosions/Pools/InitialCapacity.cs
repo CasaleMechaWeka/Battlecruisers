@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Effects.Explosions
+﻿namespace BattleCruisers.Effects.Explosions.Pools
 {
     public static class InitialCapacity
     {

@@ -1,13 +1,13 @@
 ﻿using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
-namespace BattleCruisers.Effects.Explosions
+namespace BattleCruisers.Effects.Explosions.Pools
 {
-    public class HugeSmallExplosionPoolChooser : MonoBehaviour, IExplosionPoolChooser
+    public class SmallExplosionPoolChooser : MonoBehaviour, IExplosionPoolChooser
     {
         public IPool<IExplosion, Vector3> ChoosePool(IExplosionPoolProvider explosionPoolProvider)
         {
-            return explosionPoolProvider.HugeExplosionsPool;
+            return explosionPoolProvider.SmallExplosionsPool;
         }
     }
 }

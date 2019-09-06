@@ -3,7 +3,7 @@ using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects.Explosions
+namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class BulletImpactExplosionFactory : IPoolableFactory<IExplosion, Vector3>
     {
