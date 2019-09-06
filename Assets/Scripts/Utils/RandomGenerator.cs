@@ -18,6 +18,8 @@ namespace BattleCruisers.Utils
             }
         }
 
+        public float Value => Random.value;
+
         private RandomGenerator() { }
 
         public float RangeFromCenter(float center, float radius)

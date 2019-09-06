@@ -7,6 +7,9 @@
 
     public interface IRandomGenerator
     {
+        // Random value between 0 and 1 inclusive.
+        float Value { get; }
+
         bool NextBool();
 		float RangeFromCenter(float center, float radius);
         float Range(float minInclusive, float maxInclusive);
