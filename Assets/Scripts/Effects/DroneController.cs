@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects
 {
-    // FELIX  Create and use pool :)
     public class DroneController : MonoBehaviour, IDroneController
     {
         private IRandomGenerator _random;
