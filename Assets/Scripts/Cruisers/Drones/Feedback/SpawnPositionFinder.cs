@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    // FELIX  test
     public class SpawnPositionFinder : ISpawnPositionFinder
     {
         private readonly IRandomGenerator _random;
@@ -17,6 +16,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         public Vector2 FindSpawnPosition(IDroneConsumerInfo droneConsumerInfo)
         {
+            Assert.IsNotNull(droneConsumerInfo);
+
             float x = _random.Range(-droneConsumerInfo.Size.x / 2, droneConsumerInfo.Size.x / 2);
             float y = _random.Range(-droneConsumerInfo.Size.y / 2, droneConsumerInfo.Size.y / 2);
             return new Vector2(droneConsumerInfo.Position.x + x, droneConsumerInfo.Position.y + y);
