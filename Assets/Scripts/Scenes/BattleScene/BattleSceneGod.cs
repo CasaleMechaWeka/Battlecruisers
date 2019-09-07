@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (applicationModel.SelectedLevel == -1)
             {
                 // TEMP  Force level I'm currently testing :)
-                applicationModel.SelectedLevel = 1;
+                applicationModel.SelectedLevel = 3;
 
                 sceneNavigator = Substitute.For<ISceneNavigator>();
                 musicPlayer = Substitute.For<IMusicPlayer>();
