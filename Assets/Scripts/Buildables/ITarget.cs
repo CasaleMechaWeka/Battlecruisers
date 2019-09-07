@@ -33,10 +33,8 @@ namespace BattleCruisers.Buildables
 		TargetValue TargetValue { get; }
         Color Color { set; }
         bool IsInScene { get; }
-        Vector2 Size { get; }
         ITransform Transform { get; }
 
-        Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }
 	}
 }
