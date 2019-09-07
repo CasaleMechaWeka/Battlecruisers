@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
+    // FELIX  Reuse this for drone animations?
     public class NumOfDronesTextController : MonoBehaviour, IManagedDisposable
     {
         private IBuildable _buildable;

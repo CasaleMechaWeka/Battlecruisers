@@ -6,6 +6,7 @@ namespace BattleCruisers.Buildables.Repairables
     /// <summary>
     /// Shows the number of repair drones via the text mesh.
     /// </summary>
+    /// FELIX  Can reuse this for showing drone animations?
     public class DroneNumFeedback : DroneNumFeedbackBase
     {
         private const string FEEDBACK_PREFIX = "R";  // R for "Repair"

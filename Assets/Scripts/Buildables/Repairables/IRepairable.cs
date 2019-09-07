@@ -6,6 +6,8 @@ namespace BattleCruisers.Buildables.Repairables
     {
         float HealthGainPerDroneS { get; }
         IRepairCommand RepairCommand { get; }
+
+        // FELIX  Remove once have drone aniamtions :)
         ITextMesh NumOfRepairDronesText { get; }
     }
 }
