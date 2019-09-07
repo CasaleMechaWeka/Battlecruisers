@@ -1,6 +1,9 @@
 ﻿using BattleCruisers.Buildables.Pools;
+using BattleCruisers.Effects;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -9,6 +12,7 @@ namespace BattleCruisers.Utils.Factories
         IExplosionPoolProvider ExplosionPoolProvider { get; }
         IProjectilePoolProvider ProjectilePoolProvider { get; }
         IUnitPoolProvider UnitPoolProvider { get; }
+        IPool<IDroneController, Vector2> DronePool { get; }
         IUnitToPoolMap UnitToPoolMap { get; }
     }
 }
