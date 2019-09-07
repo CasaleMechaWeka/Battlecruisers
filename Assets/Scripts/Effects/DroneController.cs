@@ -1,14 +1,17 @@
-﻿using BattleCruisers.Utils;
+﻿using System;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects
 {
-    // FELIX  Make poolable :)
-    public class DroneController : MonoBehaviour
+    // FELIX  Create and use pool :)
+    public class DroneController : MonoBehaviour, IDroneController
     {
         private IRandomGenerator _random;
         private Animation _animation;
+
+        public event EventHandler Deactivated;
 
         public void Initialise(IRandomGenerator random)
         {
@@ -33,6 +36,7 @@ namespace BattleCruisers.Effects
         public void Deactivate()
         {
             gameObject.SetActive(false);
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
     }
 }
