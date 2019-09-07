@@ -85,7 +85,6 @@ namespace BattleCruisers.Cruisers
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
             FogStrength fogStrength = FogStrength.Weak;
-            IDroneNumFeedbackFactory feedbackFactory = new DroneNumFeedbackFactory();
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new PlayerBuildingDoubleClickHandler();
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new PlayerCruiserDoubleClickHandler();
 
@@ -100,7 +99,6 @@ namespace BattleCruisers.Cruisers
                 _highlightableSlotFilter,
                 _helper.PlayerCruiserBuildProgressCalculator,
                 userChosenTargetTracker,
-                feedbackFactory,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
                 isPlayerCruiser: true);
@@ -120,7 +118,6 @@ namespace BattleCruisers.Cruisers
             Direction facingDirection = Direction.Left;
             FogStrength fogStrength = FogStrength.Strong;
 
-            IDroneNumFeedbackFactory feedbackFactory = new DummyDroneNumFeedbackFactory();
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler = new AIBuildingDoubleClickHandler(userChosenTargetHelper);
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler = new AICruiserDoubleClickHandler(userChosenTargetHelper);
 
@@ -135,7 +132,6 @@ namespace BattleCruisers.Cruisers
                 _highlightableSlotFilter,
                 _helper.AICruiserBuildProgressCalculator,
                 userChosenTargetTracker,
-                feedbackFactory,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
                 isPlayerCruiser: false);
@@ -152,7 +148,6 @@ namespace BattleCruisers.Cruisers
             ISlotFilter highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
-            IDroneNumFeedbackFactory feedbackFactory,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
             bool isPlayerCruiser)
@@ -168,7 +163,7 @@ namespace BattleCruisers.Cruisers
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, _factoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            RepairManager repairManager = new RepairManager(feedbackFactory, droneConsumerProvider, cruiser);
+            RepairManager repairManager = new RepairManager(_factoryProvider.DroneFeedbackFactory, droneConsumerProvider, cruiser);
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor);
 
             ICruiserArgs cruiserArgs
