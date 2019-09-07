@@ -53,5 +53,16 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 _drones.Add(droneToAdd);
             }
         }
+
+        public void DisposeManagedState()
+        {
+            foreach (IDroneController drone in _drones)
+            {
+                drone.Deactivate();
+            }
+            _drones.Clear();
+
+            _droneConsumerInfo.DroneConsumer.DroneNumChanged -= DroneConsumer_DroneNumChanged;
+        }
     }
 }

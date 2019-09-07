@@ -28,11 +28,5 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     _dronePool,
                     _spawnPositionFinder);
         }
-
-        public IDroneFeedback CreateFeedback(IDroneConsumerInfo droneConsumerInfo)
-        {
-            Assert.IsNotNull(droneConsumerInfo);
-            return new DroneFeedback(droneConsumerInfo, _dronePool, _spawnPositionFinder);
-        }
     }
 }

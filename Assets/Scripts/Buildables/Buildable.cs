@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Cruisers.Drones.Feedback;
 
 namespace BattleCruisers.Buildables
 {
@@ -34,7 +35,10 @@ namespace BattleCruisers.Buildables
     {
         private float _cumulativeBuildProgressInDroneS;
         private float _buildTimeInDroneSeconds;
+
+        // FELIX  Remove from all prefabs :)
         private NumOfDronesTextController _numOfDronesText;
+
         private IClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -43,6 +47,7 @@ namespace BattleCruisers.Buildables
         // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
         // both the target and the health bar.
         private GameObject _parent;
+        private IDroneFeedback _droneFeedback;
 
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
@@ -250,7 +255,7 @@ namespace BattleCruisers.Buildables
         /// </summary>
         public virtual void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
-            Assert.IsNotNull(_numOfDronesText, "Must call StaticInitialise() before Initialise(...)");
+            Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
             Helper.AssertIsNotNull(uiManager, factoryProvider);
 
             _uiManager = uiManager;
@@ -466,6 +471,7 @@ namespace BattleCruisers.Buildables
         {
             Assert.IsNull(DroneConsumer);
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
+            _droneFeedback = _factoryProvider.DroneFeedbackFactory.CreateFeedback(DroneConsumer, Position, Size);
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 
             Logging.Log(Tags.BUILDABLE, $"{buildableName}  numOfDrones: {numOfDrones}  DroneConsumer.NumOfDrones: {DroneConsumer.NumOfDrones}");
@@ -473,6 +479,10 @@ namespace BattleCruisers.Buildables
 
         protected void CleanUpDroneConsumer()
         {
+            Assert.IsNotNull(_droneFeedback);
+            _droneFeedback.DisposeManagedState();
+            _droneFeedback = null;
+
             Assert.IsNotNull(DroneConsumer);
             _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
             DroneConsumer = null;

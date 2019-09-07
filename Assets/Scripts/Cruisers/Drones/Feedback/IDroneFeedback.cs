@@ -1,6 +1,8 @@
-﻿namespace BattleCruisers.Cruisers.Drones.Feedback
+﻿using BattleCruisers.Utils;
+
+namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    public interface IDroneFeedback
+    public interface IDroneFeedback : IManagedDisposable
     {
         IDroneConsumer DroneConsumer { get; }
     }
