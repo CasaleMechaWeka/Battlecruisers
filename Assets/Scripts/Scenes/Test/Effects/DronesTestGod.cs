@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Effects
                 newDrone.Activate(RandomisePosition(parentObject.transform.position));
                 //newDrone.transform.position = RandomisePosition(parentObject.transform.position);
 
-                Debug.Log($"Created rone #{i} at position: {newDrone.transform.position}");
+                Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
             }
         }
 
