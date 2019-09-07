@@ -9,12 +9,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     // FELIX   Test, use
-    public class DroneFeedback
+    public class DroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
         private readonly IPool<IDroneController, Vector2> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly IList<IDroneController> _drones;
+
+        public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
         public DroneFeedback(IDroneConsumerInfo droneConsumerInfo, IPool<IDroneController, Vector2> dronePool, ISpawnPositionFinder spawnPositionFinder)
         {
