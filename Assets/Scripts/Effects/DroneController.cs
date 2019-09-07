@@ -23,9 +23,10 @@ namespace BattleCruisers.Effects
         {
             gameObject.transform.position = position;
             gameObject.SetActive(true);
-            // FELIX  Magic strings :/
-            // FELIX  null, "MainState" wrong?
-            _animation["MainState"].normalizedTime = _random.Value;
+
+            AnimationState state = _animation["BuilderDrone"];
+            Assert.IsNotNull(state);
+            state.normalizedTime = _random.Value;
             _animation.Play();
         }
 
