@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -20,6 +21,7 @@ namespace BattleCruisers.Utils.Factories
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
+        public IDroneFeedbackFactory DroneFeedbackFactory { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
         public IPrefabFactory PrefabFactory { get; }
@@ -66,6 +68,11 @@ namespace BattleCruisers.Utils.Factories
             PoolProviders poolProviders = new PoolProviders(this, uiManager);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
+
+            DroneFeedbackFactory
+                = new DroneFeedbackFactory(
+                    poolProviders.DronePool,
+                    new SpawnPositionFinder(RandomGenerator.Instance));
         }
 	}
 }
