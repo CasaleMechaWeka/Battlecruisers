@@ -25,24 +25,16 @@ namespace BattleCruisers.Buildables.Repairables
     public class RepairManager : IRepairManager
     {
         private readonly IDroneFeedbackFactory _feedbackFactory;
-        private readonly IDroneConsumerProvider _droneConsumerProvider;
         private readonly ICruiser _cruiser;
         private readonly IDictionary<IRepairable, IDroneFeedback> _repairableToFeedback;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
-        // FELIX  Check this is still accurate?  May have fixed it?
-        // Code smell :D  ICruiser contains DroneConsumerProvider property, but this is not set
-        // unit cruiser has been initialised.  Hence directly pass drone consumer provider.
-        public RepairManager(
-            IDroneFeedbackFactory feedbackFactory,
-            IDroneConsumerProvider droneConsumerProvider,
-            ICruiser cruiser)
+        public RepairManager(IDroneFeedbackFactory feedbackFactory, ICruiser cruiser)
         {
-            Helper.AssertIsNotNull(feedbackFactory, droneConsumerProvider, cruiser);
+            Helper.AssertIsNotNull(feedbackFactory, cruiser);
 
             _feedbackFactory = feedbackFactory;
-            _droneConsumerProvider = droneConsumerProvider;
             _cruiser = cruiser;
 
             _repairableToFeedback = new Dictionary<IRepairable, IDroneFeedback>();
@@ -64,11 +56,11 @@ namespace BattleCruisers.Buildables.Repairables
 
             if (repairable.RepairCommand.CanExecute)
             {
-                _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
+                _cruiser.DroneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
             else
             {
-                _droneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
+                _cruiser.DroneConsumerProvider.ReleaseDroneConsumer(droneConsumer);
             }
         }
 
@@ -109,14 +101,14 @@ namespace BattleCruisers.Buildables.Repairables
 
             Assert.IsFalse(_repairableToFeedback.ContainsKey(repairable));
 
-            IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            IDroneConsumer droneConsumer = _cruiser.DroneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
 
             IDroneFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.Position, repairable.Size);
             _repairableToFeedback.Add(repairable, droneNumFeedback);
 			
             if (repairable.RepairCommand.CanExecute)
             {
-                _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
+                _cruiser.DroneConsumerProvider.ActivateDroneConsumer(droneConsumer);
             }
 
             repairable.Destroyed += Repairable_Destroyed;
@@ -131,7 +123,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             IDroneFeedback droneNumFeedback = _repairableToFeedback[repairable];
             droneNumFeedback.DisposeManagedState();
-            _droneConsumerProvider.ReleaseDroneConsumer(droneNumFeedback.DroneConsumer);
+            _cruiser.DroneConsumerProvider.ReleaseDroneConsumer(droneNumFeedback.DroneConsumer);
 
             _repairableToFeedback.Remove(repairable);
 
