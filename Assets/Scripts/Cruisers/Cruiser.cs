@@ -18,7 +18,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -119,13 +118,6 @@ namespace BattleCruisers.Cruisers
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
             PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
             UnitTargets = new UnitTargets(UnitMonitor);
-        }
-
-        protected override ITextMesh GetRepairDroneNumText()
-        {
-            TextMesh numOfRepairDronesText = transform.FindNamedComponent<TextMesh>("NumOfDrones");
-            Assert.IsNotNull(numOfRepairDronesText);
-            return new TextMeshWrapper(numOfRepairDronesText);
         }
 
         public virtual void Initialise(ICruiserArgs args)

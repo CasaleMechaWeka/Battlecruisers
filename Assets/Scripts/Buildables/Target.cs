@@ -74,21 +74,6 @@ namespace BattleCruisers.Buildables
 			}
         }
 
-        // Lazily initialise so that the StaticInitialise() of all classes in
-        // inheritance tree have completed.
-        private ITextMesh _numOfRepairDronesText;
-        public ITextMesh NumOfRepairDronesText
-        { 
-            get
-            {
-                if (_numOfRepairDronesText == null)
-                {
-                    _numOfRepairDronesText = GetRepairDroneNumText();
-                }
-                return _numOfRepairDronesText;
-            }
-        }
-
         public virtual void StaticInitialise()
 		{
             _healthTracker = new HealthTracker(maxHealth);
@@ -105,11 +90,6 @@ namespace BattleCruisers.Buildables
             _audioSource = new AudioSourceBC(audioSource);
 
             Transform = new TransformBC(transform);
-        }
-
-        protected virtual ITextMesh GetRepairDroneNumText()
-        {
-            return new DummyTextMesh();
         }
 
         private void _health_HealthGone(object sender, EventArgs e)

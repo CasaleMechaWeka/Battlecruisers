@@ -1,11 +1,12 @@
-﻿using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Movement;
@@ -19,14 +20,12 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Timers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Cruisers.Drones.Feedback;
 
 namespace BattleCruisers.Buildables
 {
@@ -35,10 +34,6 @@ namespace BattleCruisers.Buildables
     {
         private float _cumulativeBuildProgressInDroneS;
         private float _buildTimeInDroneSeconds;
-
-        // FELIX  Remove from all prefabs :)
-        private NumOfDronesTextController _numOfDronesText;
-
         private IClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -204,10 +199,6 @@ namespace BattleCruisers.Buildables
 
             ToggleDroneConsumerFocusCommand = new Command(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
 
-            _numOfDronesText = gameObject.GetComponentInChildren<NumOfDronesTextController>(includeInactive: true);
-            Assert.IsNotNull(_numOfDronesText);
-            _numOfDronesText.Initialise(this);
-
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
@@ -235,12 +226,6 @@ namespace BattleCruisers.Buildables
                     AddAttackCapability(attackCapability);
                 }
             }
-        }
-
-        // Reuse text mesh for showing num of drones while building is being built.
-        protected override ITextMesh GetRepairDroneNumText()
-        {
-            return _numOfDronesText.NumOfDronesText;
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()

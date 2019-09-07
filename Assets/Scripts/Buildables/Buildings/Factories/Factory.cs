@@ -99,22 +99,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected abstract IUnitSpawnPositionFinder CreateSpawnPositionFinder();
 
-        /// <summary>
-        /// Buildings only become repairable after they are completed.  So buildings
-        /// reuse the text mesh for the number of building drones for the number
-        /// of repairing drones.  
-        /// 
-        /// However, factories use the text mesh even AFTER they finish building,
-        /// to show the number of drones used in constructing units.  Hence, we
-        /// need a different text mesh to show the number of repair drones
-        /// (ie, both text meshes can be visible at the same time).
-        /// </summary>
-        protected override ITextMesh GetRepairDroneNumText()
-        {
-            TextMesh repairDroneNumText = transform.FindNamedComponent<TextMesh>("RepairDroneNumText");
-            return new TextMeshWrapper(repairDroneNumText);
-        }
-
         protected override void OnSingleClick()
 		{
 			base.OnSingleClick();

@@ -24,8 +24,6 @@ namespace BattleCruisers.Tests.Buildables
         private IRepairCommand _cruiserRepairCommand, _buildingRepairCommand;
 		private IDroneFeedbackFactory _feedbackFactory;
         private IDroneFeedback _cruiserFeedback, _buildingFeedback;
-        // FELIX  Remove :)
-        private ITextMesh _numOfRepairDronesText;
         private float _repairAmount;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
@@ -48,13 +46,11 @@ namespace BattleCruisers.Tests.Buildables
             _buildingFeedback = Substitute.For<IDroneFeedback>();
             _buildingFeedback.DroneConsumer.Returns(_buildingDroneConsumer);
             _feedbackFactory = Substitute.For<IDroneFeedbackFactory>();
-			_numOfRepairDronesText = Substitute.For<ITextMesh>();
 
             // Cruiser repairable
             _cruiserRepairCommand = Substitute.For<IRepairCommand>();
             _cruiser = Substitute.For<ICruiser>();
             _cruiser.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
-			_cruiser.NumOfRepairDronesText.Returns(_numOfRepairDronesText);
             _cruiser.RepairCommand.Returns(_cruiserRepairCommand);
             _cruiserRepairCommand.Repairable.Returns(_cruiser);
             _cruiser.Position.Returns(new Vector2(17, 93));
@@ -64,7 +60,6 @@ namespace BattleCruisers.Tests.Buildables
             _buildingRepairCommand = Substitute.For<IRepairCommand>();
             _building = Substitute.For<IBuilding>();
             _building.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
-            _building.NumOfRepairDronesText.Returns(_numOfRepairDronesText);
             _building.RepairCommand.Returns(_buildingRepairCommand);
             _buildingRepairCommand.Repairable.Returns(_building);
             _building.Position.Returns(new Vector2(7, 3));
