@@ -20,6 +20,8 @@ namespace BattleCruisers.Effects
 
             _animation = GetComponentInChildren<Animation>();
             Assert.IsNotNull(_animation);
+
+            gameObject.SetActive(false);
         }
 
         public void Activate(Vector2 position)

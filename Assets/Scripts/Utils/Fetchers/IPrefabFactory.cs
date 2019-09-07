@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Effects;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -34,5 +35,7 @@ namespace BattleCruisers.Utils.Fetchers
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats;
+
+        IDroneController CreateDrone();
     }
 }

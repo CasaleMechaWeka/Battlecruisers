@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -127,6 +128,14 @@ namespace BattleCruisers.Utils.Fetchers
             TProjectile projectile = Object.Instantiate(prefab);
             projectile.Initialise(factoryProvider);
             return projectile;
+        }
+
+        public IDroneController CreateDrone()
+        {
+            DroneController prefab = _prefabFetcher.GetPrefab<DroneController>(StaticPrefabKeys.Effects.BuilderDrone);
+            DroneController newDrone = Object.Instantiate(prefab);
+            newDrone.Initialise(_randomGenerator);
+            return newDrone;
         }
     }
 }

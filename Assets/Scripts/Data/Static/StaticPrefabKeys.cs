@@ -72,6 +72,11 @@ namespace BattleCruisers.Data.Static
             public static UIKey DeleteCountdown { get; } = new UIKey("DeleteCountdown");
         }
 
+        public static class Effects
+        {
+            public static EffectKey BuilderDrone { get; } = new EffectKey("BuilderDrone");
+        }
+
         public static class Explosions
         {
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
