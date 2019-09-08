@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		private float _maxHealth;
 		private bool _followDamagable;
 
-        private Vector2 _offset;
+        private Vector3 _offset;
 		public Vector3 Offset
         {
             get => _offset;

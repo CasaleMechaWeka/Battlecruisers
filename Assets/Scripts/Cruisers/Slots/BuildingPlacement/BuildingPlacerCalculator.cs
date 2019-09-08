@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
 {
-    // FELIX  Interface, use, test
     public class BuildingPlacerCalculator : IBuildingPlacerCalculator
     {
         public Quaternion FindBuildingRotation(ISlot parentSlot)
@@ -21,18 +20,19 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
                 + (parentSlot.Transform.Right * horizontalChange);
         }
 
-        public Vector2 FindHealthBarOffset(IBuilding building, ISlot parentSlot)
+        public Vector3 FindHealthBarOffset(IBuilding building, ISlot parentSlot)
         {
             if (building.HealthBar.Offset.x == 0
                 || !parentSlot.Transform.IsMirroredAcrossYAxis)
             {
-                return building.HealthBar.Position;
+                return building.HealthBar.Offset;
             }
 
             return
-                new Vector2(
+                new Vector3(
                     -building.HealthBar.Offset.x,
-                    building.HealthBar.Offset.y);
+                    building.HealthBar.Offset.y,
+                    building.HealthBar.Offset.z);
         }
     }
 }
