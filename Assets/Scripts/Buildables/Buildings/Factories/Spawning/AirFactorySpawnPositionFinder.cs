@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
         public Vector3 FindSpawnPosition(IUnit unitToSpawn)
         {
-            float verticalChange = (_factory.Size.y * 0.6f) + (unitToSpawn.Size.y * 0.5f);
+            float verticalChange = (_factory.Size.y * 0.7f) + (unitToSpawn.Size.y * 0.5f);
             return _factory.Transform.Position + (_factory.Transform.Up * verticalChange);
         }
     }
