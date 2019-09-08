@@ -27,6 +27,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             _drones = new List<IDroneController>();
 
             _droneConsumerInfo.DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
+
+            // FELIX  UPdate tests for initial state :)
+            AddDronesIfNeeded(_droneConsumerInfo.DroneConsumer.NumOfDrones);
         }
 
         private void DroneConsumer_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
@@ -38,16 +41,23 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 return;
             }
 
-            // Add drones if necessary
-            while (e.NewNumOfDrones > _drones.Count)
+            AddDronesIfNeeded(e.NewNumOfDrones);
+            RemoveDronesIfNeeded(e.NewNumOfDrones);
+        }
+
+        private void AddDronesIfNeeded(int numOfDrones)
+        {
+            while (numOfDrones> _drones.Count)
             {
                 Vector2 spawnPosition = _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo);
                 IDroneController droneToAdd = _dronePool.GetItem(spawnPosition);
                 _drones.Add(droneToAdd);
             }
+        }
 
-            // Remove drones if necessary
-            while (e.NewNumOfDrones < _drones.Count)
+        private void RemoveDronesIfNeeded(int numOfDrones)
+        {
+            while (numOfDrones < _drones.Count)
             {
                 IDroneController droneToRemove = _drones.Last();
                 _drones.RemoveAt(_drones.Count - 1);
