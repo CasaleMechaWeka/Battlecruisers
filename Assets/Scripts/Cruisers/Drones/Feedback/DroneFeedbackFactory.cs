@@ -28,5 +28,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     _dronePool,
                     _spawnPositionFinder);
         }
+
+        public IDroneFeedback CreateDummyFeedback()
+        {
+            return new DummyDroneFeedback();
+        }
     }
 }

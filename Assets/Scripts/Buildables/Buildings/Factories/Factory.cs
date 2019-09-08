@@ -62,7 +62,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 	                if (_unitWrapper != null)
                     {
-                        SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired);
+                        SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         EnsureDroneConsumerHasHighestPriority();
                         _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
 

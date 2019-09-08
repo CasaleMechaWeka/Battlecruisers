@@ -363,7 +363,7 @@ namespace BattleCruisers.Buildables
 
             _healthTracker.SetMinHealth();
 
-            SetupDroneConsumer(numOfDronesRequired);
+            SetupDroneConsumer(numOfDronesRequired, showDroneFeedback: true);
 
             EnableRenderers(false);
 
@@ -456,13 +456,16 @@ namespace BattleCruisers.Buildables
             _factoryProvider.Sound.SoundPlayer.PlaySound(DeathSoundKey, transform.position);
         }
 
-        protected void SetupDroneConsumer(int numOfDrones)
+        protected void SetupDroneConsumer(int numOfDrones, bool showDroneFeedback)
         {
             Logging.Log(Tags.BUILDABLE, $"{this.ToString()}  numOfDrones: {numOfDrones}");
 
             Assert.IsNull(DroneConsumer);
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
-            _droneFeedback = _factoryProvider.DroneFeedbackFactory.CreateFeedback(DroneConsumer, Position, Size);
+            _droneFeedback
+                = showDroneFeedback ?
+                    _factoryProvider.DroneFeedbackFactory.CreateFeedback(DroneConsumer, Position, Size) :
+                    _factoryProvider.DroneFeedbackFactory.CreateDummyFeedback();
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 
             Logging.Log(Tags.BUILDABLE, $"{buildableName}   Want: {numOfDrones}  Got: {DroneConsumer.NumOfDrones}");
