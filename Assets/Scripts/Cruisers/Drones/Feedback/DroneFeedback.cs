@@ -28,7 +28,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
             _droneConsumerInfo.DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
 
-            // FELIX  UPdate tests for initial state :)
             AddDronesIfNeeded(_droneConsumerInfo.DroneConsumer.NumOfDrones);
         }
 

@@ -44,8 +44,17 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         }
 
         [Test]
-        public void DroneConsumer()
+        public void InitialState()
         {
+            _droneConsumer.NumOfDrones.Returns(2);
+
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder);
+
+            // Create feedback for initial number of drones
+            _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
+            _dronePool.Received().GetItem(_spawnPosition1);
+            _dronePool.Received().GetItem(_spawnPosition2);
+
             Assert.AreSame(_droneConsumer, _feedback.DroneConsumer);
         }
 
