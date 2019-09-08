@@ -18,8 +18,8 @@ namespace BattleCruisers.Scenes.Test
         private ICameraAdjuster _cameraAdjuster;
         private ICamera _camera;
 
-        public float smoothTime;
-        public bool useCorners;
+        public float smoothTime = 0.15f;
+        public bool useCorners = true;
 
         protected override void Start()
         {

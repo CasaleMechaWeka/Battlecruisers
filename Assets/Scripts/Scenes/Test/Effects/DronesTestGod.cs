@@ -4,21 +4,23 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects
 {
-    public class DronesTestGod : MonoBehaviour
+    public class DronesTestGod : NavigationTestGod
     {
         public GameObject parentObject;
         public DroneController dronePrefab;
         public int numOfDrones = 10;
         public float spawnRadiusInM = 0.5f;
 
-        void Start()
+        protected override void Start()
         {
+            base.Start();
+
             for (int i = 0; i < numOfDrones; ++i)
             {
                 DroneController newDrone = Instantiate(dronePrefab);
                 newDrone.Initialise(RandomGenerator.Instance);
                 newDrone.Activate(RandomisePosition(parentObject.transform.position));
-                Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
+                //Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
             }
         }
 
