@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -22,9 +23,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
             //  5 <= y <= 10
             // Area = 100
             Rect cloudSpawnArea = new Rect(x: -10, y: 5, width: 20, height: 5);
-   
+            IRange<float> zPositionRange = new Range<float>(-5, 5);
+
             _generationStats = Substitute.For<ICloudGenerationStats>();
             _generationStats.CloudSpawnArea.Returns(cloudSpawnArea);
+            _generationStats.ZPositionRange.Returns(zPositionRange);
             _generationStats.CloudDensityAsFraction.Returns(0.5f);
 
             _cloud = Substitute.For<ICloud>();
@@ -52,12 +55,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
 			// => Should generate 50 clouds :)
             int expectedNumOfClouds = 50;
 			
-            _factory.Received(expectedNumOfClouds).CreateCloud(Arg.Is<Vector2>(
+            _factory.Received(expectedNumOfClouds).CreateCloud(Arg.Is<Vector3>(
                 spawnPosition =>
                     spawnPosition.x >= _generationStats.CloudSpawnArea.xMin
                     && spawnPosition.x <= _generationStats.CloudSpawnArea.xMax
                     && spawnPosition.y >= _generationStats.CloudSpawnArea.yMin
                     && spawnPosition.y <= _generationStats.CloudSpawnArea.yMax
+                    && spawnPosition.z >= _generationStats.ZPositionRange.Min
+                    && spawnPosition.z <= _generationStats.ZPositionRange.Max
             ));
 
             _cloud.Received(expectedNumOfClouds).Initialise(_cloudStats);
