@@ -34,7 +34,9 @@ namespace BattleCruisers.Scenes.Test.Tactical
 			Slot slotToBoost = FindObjectOfType<Slot>();
             ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
             ReadOnlyCollection<ISlot> emptyNeighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
-            IBuildingPlacer buildingPlacer = new BuildingPlacer();
+            IBuildingPlacer buildingPlacer 
+                = new BuildingPlacer(
+                    new BuildingPlacerCalculator());
             slotToBoost.Initialise(parentCruiser, emptyNeighbouringSlots, buildingPlacer);
 
 

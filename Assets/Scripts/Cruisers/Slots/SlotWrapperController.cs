@@ -22,7 +22,9 @@ namespace BattleCruisers.Cruisers.Slots
         {
             Assert.IsNotNull(parentCruiser);
 
-            IBuildingPlacer buildingPlacer = new BuildingPlacer();
+            IBuildingPlacer buildingPlacer 
+                = new BuildingPlacer(
+                    new BuildingPlacerCalculator());
             ISlotInitialiser slotInitialiser = new SlotInitialiser();
             IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
