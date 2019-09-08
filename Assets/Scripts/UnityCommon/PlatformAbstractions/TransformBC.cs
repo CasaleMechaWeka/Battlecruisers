@@ -13,10 +13,11 @@ namespace UnityCommon.PlatformAbstractions
             set { PlatformObject.position = value; }
         }
 
-        public Vector3 EulerAngles => PlatformObject.rotation.eulerAngles;
+        public Vector3 EulerAngles => PlatformObject.eulerAngles;
         public Vector3 Right => PlatformObject.right;
         public Vector3 Up => PlatformObject.up;
         public Quaternion Rotation => PlatformObject.rotation;
+        public bool IsMirroredAcrossYAxis => PlatformObject.eulerAngles.y == 180;
 
         public TransformBC(Transform platformTransform)
         {

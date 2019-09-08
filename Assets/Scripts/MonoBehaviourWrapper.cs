@@ -5,7 +5,11 @@ namespace BattleCruisers
 {
     public class MonoBehaviourWrapper : MonoBehaviour, IGameObject
     {
-        public Vector2 Position => gameObject.transform.position;
+        public Vector3 Position
+        {
+            get { return gameObject.transform.position; }
+            set { gameObject.transform.position = value; }
+        }
 
         public bool IsVisible
         {

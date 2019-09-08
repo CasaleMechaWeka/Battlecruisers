@@ -5,6 +5,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
     public interface IGameObject
     {
         bool IsVisible { get; set; }
-        Vector2 Position { get; }
+        Vector3 Position { get; set; }
     }
 }

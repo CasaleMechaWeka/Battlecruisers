@@ -9,6 +9,7 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
         {
             buildingToPlace.Rotation = FindBuildingRotation(parentSlot);
             buildingToPlace.Position = FindSpawnPosition(buildingToPlace, parentSlot);
+            buildingToPlace.HealthBar.UpdateOffset(FindHealthBarOffset(buildingToPlace, parentSlot));
         }
 
         private Quaternion FindBuildingRotation(ISlot parentSlot)
@@ -24,6 +25,21 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
             return parentSlot.BuildingPlacementPoint
                 + (parentSlot.Transform.Up * verticalChange)
                 + (parentSlot.Transform.Right * horizontalChange);
+        }
+
+        // FELIX  Update tests :)
+        private Vector2 FindHealthBarOffset(IBuilding building, ISlot parentSlot)
+        {
+            if (building.HealthBar.Offset.x == 0
+                || !parentSlot.Transform.IsMirroredAcrossYAxis)
+            {
+                return building.HealthBar.Position;
+            }
+
+            return
+                new Vector2(
+                    -building.HealthBar.Offset.x,
+                    building.HealthBar.Offset.y);
         }
     }
 }

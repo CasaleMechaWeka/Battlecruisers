@@ -11,6 +11,7 @@ namespace UnityCommon.PlatformAbstractions
         Vector3 Right { get; }
         Vector3 Up { get; }
         Quaternion Rotation { get; }
+        bool IsMirroredAcrossYAxis { get; }
 
         void Rotate(Vector3 rotationChangeVector);
         void SetParent(Transform parent, bool worldPositionStays);

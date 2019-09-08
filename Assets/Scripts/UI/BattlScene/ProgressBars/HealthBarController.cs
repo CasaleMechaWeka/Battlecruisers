@@ -10,8 +10,10 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 	{
 		private IDamagable _damagable;
 		private float _maxHealth;
-		private Vector3 _offset;
 		private bool _followDamagable;
+
+        // FELIX  Create interface :)
+		public Vector3 Offset { get; private set; }
 
 		public void Initialise(IDamagable damagable, bool followDamagable = false)
 		{
@@ -22,7 +24,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 			_damagable = damagable;
 			_maxHealth = _damagable.Health;
-			_offset = transform.position;
+			Offset = transform.position;
 			_followDamagable = followDamagable;
 
 			damagable.HealthChanged += Damagable_HealthChanged;
@@ -43,13 +45,13 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 		public void UpdateOffset(Vector2 offset)
 		{
-			_offset = offset;
+			Offset = offset;
             UpdatePosition();
 		}
 
         private void UpdatePosition()
         {
-			transform.position = _damagable.GameObject.transform.position + _offset;
+			transform.position = _damagable.GameObject.transform.position + Offset;
 		}
 	}
 }
