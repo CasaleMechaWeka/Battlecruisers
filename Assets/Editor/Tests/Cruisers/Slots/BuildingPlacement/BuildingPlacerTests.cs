@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -10,41 +11,40 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
     public class BuildingPlacerTests
     {
         private IBuildingPlacer _placer;
+        private IBuildingPlacerCalculator _calculator;
         private IBuilding _building;
         private ISlot _slot;
+        private IHealthBar _healthBar;
 
         [SetUp]
         public void TestSetup()
         {
-            // FELIX  Fix :)
-            //_placer = new BuildingPlacer();
+            _calculator = Substitute.For<IBuildingPlacerCalculator>();
+            _placer = new BuildingPlacer(_calculator);
 
+            _healthBar = Substitute.For<IHealthBar>();
             _building = Substitute.For<IBuilding>();
-            _building.PuzzleRootPoint.Returns(new Vector3(-0.45f, 3.2f, 0));
-            _building.Position.Returns(new Vector2(0, 0));
-
+            _building.HealthBar.Returns(_healthBar);
             _slot = Substitute.For<ISlot>();
-            _slot.Transform.Rotation.Returns(new Quaternion(1, 2, 3, 4));
-            _slot.Transform.Right.Returns(new Vector3(1, 0, 0));
-            _slot.Transform.Up.Returns(new Vector3(0, 1, 0));
-            _slot.BuildingPlacementPoint.Returns(new Vector3(0.02f, -0.5f, 0));
         }
 
         [Test]
-        public void PlaceBuilding_SlotFacingRight()
+        public void PlaceBuilding()
         {
-            float verticalChange = _building.Position.y - _building.PuzzleRootPoint.y;
-            float horizontalChange = _building.Position.x - _building.PuzzleRootPoint.x;
+            Quaternion expectedRotation = new Quaternion(4, 3, 2, 1);
+            _calculator.FindBuildingRotation(_slot).Returns(expectedRotation);
 
-            Vector3 expectedPosition = _slot.BuildingPlacementPoint
-                + (_slot.Transform.Up * verticalChange)
-                + (_slot.Transform.Right * horizontalChange);
+            Vector3 expectedSpawnPosition = new Vector3(1, 2, 3);
+            _calculator.FindSpawnPosition(_building, _slot).Returns(expectedSpawnPosition);
+
+            Vector3 expectedHealthBarOffset = new Vector3(4, 5, 6);
+            _calculator.FindHealthBarOffset(_building, _slot).Returns(expectedHealthBarOffset);
 
             _placer.PlaceBuilding(_building, _slot);
 
-            _building.Received().Rotation = _slot.Transform.Rotation;
-
-            _building.Received().Position = expectedPosition;
+            _building.Received().Rotation = expectedRotation;
+            _building.Received().Position = expectedSpawnPosition;
+            _healthBar.Received().Offset = expectedHealthBarOffset;
         }
     }
 }
