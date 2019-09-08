@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			healthBar.Initialise(this);
 			
 			float yPos = HEALTH_BAR_Y_POSITION_MULTIPLIER * Stats.ShieldRadiusInM;
-            healthBar.UpdateOffset(new Vector2(0, yPos));
+            healthBar.Offset = new Vector2(0, yPos);
 			
 			float width = SHIELD_RADIUS_TO_HEALTH_BAR_WIDTH_MULTIPLIER * Stats.ShieldRadiusInM;
 			float height = HEALTH_BAR_WIDTH_TO_HEIGHT_MULTIPLIER * width;

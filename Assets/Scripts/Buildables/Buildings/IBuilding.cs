@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings
@@ -29,9 +27,5 @@ namespace BattleCruisers.Buildables.Buildings
         BuildingCategory Category { get; }
         SlotSpecification SlotSpecification { get; }
         Vector3 PuzzleRootPoint { get; }
-
-        // FELIX  Use interface
-        HealthBarController HealthBar { get; }
-        //IGameObject HealthBar { get; }
 	}
 }

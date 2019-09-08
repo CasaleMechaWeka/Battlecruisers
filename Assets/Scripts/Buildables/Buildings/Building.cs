@@ -29,7 +29,6 @@ namespace BattleCruisers.Buildables.Buildings
         public BuildingCategory Category => category;
 
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building1;
-        public HealthBarController HealthBar => _healthBar;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {

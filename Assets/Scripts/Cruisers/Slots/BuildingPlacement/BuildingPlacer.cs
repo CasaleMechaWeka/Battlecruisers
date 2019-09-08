@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
         {
             buildingToPlace.Rotation = FindBuildingRotation(parentSlot);
             buildingToPlace.Position = FindSpawnPosition(buildingToPlace, parentSlot);
-            buildingToPlace.HealthBar.UpdateOffset(FindHealthBarOffset(buildingToPlace, parentSlot));
+            buildingToPlace.HealthBar.Offset = FindHealthBarOffset(buildingToPlace, parentSlot);
         }
 
         private Quaternion FindBuildingRotation(ISlot parentSlot)

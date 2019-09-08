@@ -6,14 +6,22 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-    public class HealthBarController : BaseProgressBarController
+    public class HealthBarController : BaseProgressBarController, IHealthBar
 	{
 		private IDamagable _damagable;
 		private float _maxHealth;
 		private bool _followDamagable;
 
-        // FELIX  Create interface :)
-		public Vector3 Offset { get; private set; }
+        private Vector2 _offset;
+		public Vector3 Offset
+        {
+            get => _offset;
+            set
+            {
+                _offset = value;
+                UpdatePosition();
+            }
+        }
 
 		public void Initialise(IDamagable damagable, bool followDamagable = false)
 		{
@@ -41,12 +49,6 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			{
                 UpdatePosition();
 			}
-		}
-
-		public void UpdateOffset(Vector2 offset)
-		{
-			Offset = offset;
-            UpdatePosition();
 		}
 
         private void UpdatePosition()

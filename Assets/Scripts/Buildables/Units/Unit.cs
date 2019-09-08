@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables.Units
 
 			FacingDirection = ParentCruiser.Direction;
 
-            _healthBar.gameObject.SetActive(true);
+            HealthBar.IsVisible = true;
 
             // Disable gravity
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
@@ -144,7 +144,7 @@ namespace BattleCruisers.Buildables.Units
 
         protected virtual void OnDeathWhileCompleted()
         {
-            _healthBar.gameObject.SetActive(false);
+            HealthBar.IsVisible = false;
 
             // Make gravity take effect
             rigidBody.bodyType = RigidbodyType2D.Dynamic;

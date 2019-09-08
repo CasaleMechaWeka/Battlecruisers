@@ -45,8 +45,9 @@ namespace BattleCruisers.Buildables
 		IBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
         ICruiser ParentCruiser { get; }
-  
-		event EventHandler StartedConstruction;
+        IHealthBar HealthBar { get; }
+
+        event EventHandler StartedConstruction;
 		event EventHandler CompletedBuildable;
 		event EventHandler<BuildProgressEventArgs> BuildableProgress;
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;

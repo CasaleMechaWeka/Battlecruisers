@@ -57,7 +57,6 @@ namespace BattleCruisers.Buildables
         // Boost resulting from adjacent local boosters
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected BuildableProgressController _buildableProgress;
-        protected HealthBarController _healthBar;
 
         public string buildableName;
         public string description;
@@ -78,6 +77,7 @@ namespace BattleCruisers.Buildables
         protected abstract PrioritisedSoundKey ConstructionCompletedSoundKey { get; }
         public ICruiser ParentCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
+        public IHealthBar HealthBar { get; private set; }
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
@@ -190,8 +190,8 @@ namespace BattleCruisers.Buildables
 
             _parent = parent;
 
-            _healthBar = healthBar;
-            _healthBar.Initialise(this, followDamagable: true);
+            healthBar.Initialise(this, followDamagable: true);
+            HealthBar = healthBar;
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
