@@ -359,6 +359,8 @@ namespace BattleCruisers.Buildables
 
         public void StartConstruction()
         {
+            Logging.Log(Tags.BUILDABLE, this.ToString());
+
             _healthTracker.SetMinHealth();
 
             SetupDroneConsumer(numOfDronesRequired);
@@ -410,6 +412,8 @@ namespace BattleCruisers.Buildables
 
         protected virtual void OnBuildableCompleted()
         {
+            Logging.Log(Tags.BUILDABLE, this.ToString());
+
             CleanUpDroneConsumer();
 
             EnableRenderers(true);
@@ -454,16 +458,20 @@ namespace BattleCruisers.Buildables
 
         protected void SetupDroneConsumer(int numOfDrones)
         {
+            Logging.Log(Tags.BUILDABLE, $"{this.ToString()}  numOfDrones: {numOfDrones}");
+
             Assert.IsNull(DroneConsumer);
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
             _droneFeedback = _factoryProvider.DroneFeedbackFactory.CreateFeedback(DroneConsumer, Position, Size);
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 
-            Logging.Log(Tags.BUILDABLE, $"{buildableName}  numOfDrones: {numOfDrones}  DroneConsumer.NumOfDrones: {DroneConsumer.NumOfDrones}");
+            Logging.Log(Tags.BUILDABLE, $"{buildableName}   Want: {numOfDrones}  Got: {DroneConsumer.NumOfDrones}");
         }
 
         protected void CleanUpDroneConsumer()
         {
+            Logging.Log(Tags.BUILDABLE, this.ToString());
+
             Assert.IsNotNull(_droneFeedback);
             _droneFeedback.DisposeManagedState();
             _droneFeedback = null;

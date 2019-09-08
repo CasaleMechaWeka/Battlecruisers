@@ -98,8 +98,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -124,10 +124,14 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
-            tagsToActiveness.Add(Tags.BUILDABLE, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.BUILDABLE, true);
+            //tagsToActiveness.Add(Tags.BUILDABLE, false);
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-            tagsToActiveness.Add(Tags.FACTORY, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.FACTORY, true);
+            //tagsToActiveness.Add(Tags.FACTORY, false);
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);

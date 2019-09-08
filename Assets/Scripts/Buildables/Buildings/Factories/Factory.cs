@@ -169,6 +169,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         /// </summary>
         public IDroneConsumer RequestDroneConsumer(int numOfDronesRequired)
 		{
+            Logging.LogMethod(Tags.FACTORY);
+
 			Assert.IsNotNull(DroneConsumer);
             Assert.AreEqual(DroneConsumer.NumOfDronesRequired, numOfDronesRequired, "DroneConsumer.NumOfDronesRequired: " + DroneConsumer.NumOfDronesRequired + " != " + numOfDronesRequired);
 			return DroneConsumer;
