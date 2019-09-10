@@ -10,16 +10,16 @@ namespace BattleCruisers.Scenes.Test
     {
         void Start()
         {
-            Artillery artillery = FindObjectOfType<Artillery>();
-            Assert.IsNotNull(artillery);
+            //Artillery artillery = FindObjectOfType<Artillery>();
+            //Assert.IsNotNull(artillery);
 
             //BuildingWrapper wrapper = artillery.GetComponentInParent<BuildingWrapper>();
             //Assert.IsNotNull(wrapper);
             //wrapper.Initialise();
 
-            Helper helper = new Helper(buildSpeedMultiplier: 5);
-            helper.InitialiseBuilding(artillery);
-            artillery.StartConstruction();
+            //Helper helper = new Helper(buildSpeedMultiplier: 5);
+            //helper.InitialiseBuilding(artillery);
+            //artillery.StartConstruction();
         }
     }
 }
