@@ -20,6 +20,12 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
 
         public bool IsPlaying => _audioSource.isPlaying;
 
+        public float Volume
+        {
+            get => _audioSource.volume;
+            set => _audioSource.volume = value;
+        }
+
         public AudioSourceBC(AudioSource audioSource)
         {
             Assert.IsNotNull(audioSource);

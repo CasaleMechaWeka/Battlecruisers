@@ -4,6 +4,7 @@
     {
         bool IsPlaying { get; }
         IAudioClipWrapper AudioClip { set; }
+        float Volume { get; set; }
 
         /// <param name="isSpatial">
         /// True if the sound should get quieter the further away from the camera it is.
