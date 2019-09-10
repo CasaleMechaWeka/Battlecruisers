@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine.Assertions;
 
@@ -9,22 +8,13 @@ namespace BattleCruisers.UI.Sound
     public class LayeredMusicPlayer : ILayeredMusicPlayer
     {
         private readonly IAudioSource _primarySource, _secondarySource;
-        private readonly IAudioClipWrapper _primarySound, _secondarySound;
 
-        public LayeredMusicPlayer(
-            IAudioSource primarySource, 
-            IAudioSource secondarySource, 
-            ISoundFetcher soundFetcher,
-            ISoundKey primarySoundKey, 
-            ISoundKey secondarySoundKey)
+        public LayeredMusicPlayer(IAudioSource primarySource, IAudioSource secondarySource)
         {
-            Helper.AssertIsNotNull(primarySource, secondarySource, soundFetcher, primarySoundKey, secondarySoundKey);
+            Helper.AssertIsNotNull(primarySource, secondarySource);
 
             _primarySource = primarySource;
-            _primarySource.AudioClip = soundFetcher.GetSound(primarySoundKey);
-
             _secondarySource = secondarySource;
-            _secondarySource.AudioClip = soundFetcher.GetSound(secondarySoundKey);
         }
 
         public void Play()
