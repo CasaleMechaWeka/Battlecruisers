@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -14,7 +13,6 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables
 {
-    // FELIX  Fix tests :)
     public class RepairManagerTests
 	{
         private ICruiser _cruiser;
