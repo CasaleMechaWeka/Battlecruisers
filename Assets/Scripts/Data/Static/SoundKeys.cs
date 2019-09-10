@@ -110,9 +110,13 @@ namespace BattleCruisers.Data.Static
             
             public static class Background
             {
+                // FELIX  Remove?
                 public static ISoundKey Kentient { get; } = new SoundKey(SoundType.Music, "kentient");
                 public static ISoundKey Experimental { get; } = new SoundKey(SoundType.Music, "experimental");
                 public static ISoundKey Bobby { get; } = new SoundKey(SoundType.Music, "bobby");
+
+                public static ISoundKey KentientBase { get; } = new SoundKey(SoundType.Music, "kentient-base");
+                public static ISoundKey KentientDanger { get; } = new SoundKey(SoundType.Music, "kentient-danger");
             }
         }
 
