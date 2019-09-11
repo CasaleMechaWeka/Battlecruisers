@@ -1,11 +1,11 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Music
 {
-    // FELIX  Move to Music namespace
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
         public ILayeredMusicPlayer CreatePlayer(

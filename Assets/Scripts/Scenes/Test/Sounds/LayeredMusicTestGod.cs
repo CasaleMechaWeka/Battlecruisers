@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 

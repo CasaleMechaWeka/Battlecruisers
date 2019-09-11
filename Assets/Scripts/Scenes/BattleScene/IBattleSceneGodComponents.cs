@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
