@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using UnityCommon.PlatformAbstractions;
@@ -28,11 +29,12 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IDeferrer deferrer,
-            ITime time)
+            ITime time,
+            IBattleCompletionHandler battleCompletionHandler)
         {
-            Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time);
+            Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler);
 
-            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer);
+            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer, battleCompletionHandler);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
@@ -43,7 +45,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ILayeredMusicPlayer musicPlayer,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IDeferrer deferrer)
+            IDeferrer deferrer,
+            IBattleCompletionHandler battleCompletionHandler)
         {
             return
                 new DangerMusicPlayer(
@@ -53,7 +56,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         aiCruiser,
                         new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                         new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f)),
-                    deferrer);
+                    deferrer,
+                    battleCompletionHandler);
         }
 
         private CruiserEventMonitor CreateCruiserEventMonitor(ICruiser playerCruiser, ITime time)

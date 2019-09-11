@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using System;
 
@@ -10,6 +11,7 @@ namespace BattleCruisers.UI.Music
     /// return to the standard music.
     /// </summary>
     /// FELIX  Update tests
+    /// FELIX  Rename to LevelMusicPlayer?
     public class DangerMusicPlayer
     {
         private readonly ILayeredMusicPlayer _musicPlayer;
@@ -22,9 +24,10 @@ namespace BattleCruisers.UI.Music
         public DangerMusicPlayer(
             ILayeredMusicPlayer musicPlayer,
             IDangerMonitor dangerMonitor,
-            IDeferrer deferrer)
+            IDeferrer deferrer,
+            IBattleCompletionHandler battleCompletionHandler)
         {
-            Helper.AssertIsNotNull(musicPlayer, dangerMonitor, deferrer);
+            Helper.AssertIsNotNull(musicPlayer, dangerMonitor, deferrer, battleCompletionHandler);
 
             _musicPlayer = musicPlayer;
             _dangerMonitor = dangerMonitor;
@@ -32,6 +35,9 @@ namespace BattleCruisers.UI.Music
             _currentDangerCount = 0;
 
             _dangerMonitor.Danger += _dangerMonitor_Danger;
+            battleCompletionHandler.BattleCompleted += (sender, e) => _musicPlayer.Stop();
+
+            _musicPlayer.Play();
         }
 
         private void _dangerMonitor_Danger(object sender, EventArgs e)

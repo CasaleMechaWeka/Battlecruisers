@@ -177,7 +177,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.SoundFetcher, 
                     SoundKeys.Music.Background.KentientBase,
                     SoundKeys.Music.Background.KentientDanger);
-            layeredMusicPlayer.Play();
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
@@ -185,7 +184,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser,
                     aiCruiser,
                     components.Deferrer,
-                    time);
+                    time,
+                    battleCompletionHandler);
 
             // Other
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
