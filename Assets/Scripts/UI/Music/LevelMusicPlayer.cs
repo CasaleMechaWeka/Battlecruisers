@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -10,8 +9,6 @@ namespace BattleCruisers.UI.Music
     /// Play danger music for 15 seconds after a danger event.  After this time
     /// return to the standard music.
     /// </summary>
-    /// FELIX  Update tests
-    /// FELIX  Rename to LevelMusicPlayer?
     public class LevelMusicPlayer
     {
         private readonly ILayeredMusicPlayer _musicPlayer;

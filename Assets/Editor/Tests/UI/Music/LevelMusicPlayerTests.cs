@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
@@ -15,6 +16,7 @@ namespace BattleCruisers.Tests.UI.Music
         private ILayeredMusicPlayer _musicPlayer;
         private IDangerMonitor _dangerMonitor;
         private IDeferrer _deferrer;
+        private IBattleCompletionHandler _battleCompletionHandler;
         private IList<Action> _deferredActions;
         private const float EXPECTED_DEFER_TIME_IN_S = 15;
 
@@ -24,12 +26,18 @@ namespace BattleCruisers.Tests.UI.Music
             _musicPlayer = Substitute.For<ILayeredMusicPlayer>();
             _dangerMonitor = Substitute.For<IDangerMonitor>();
             _deferrer = Substitute.For<IDeferrer>();
+            _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
 
-            // FELIX  Fix :)
-            //_dangerMusicPlayer = new DangerMusicPlayer(_musicPlayer, _dangerMonitor, _deferrer);
+            _levelMusicPlayer = new LevelMusicPlayer(_musicPlayer, _dangerMonitor, _deferrer, _battleCompletionHandler);
 
             _deferredActions = new List<Action>();
             _deferrer.Defer(Arg.Do<Action>(action => _deferredActions.Add(action)), EXPECTED_DEFER_TIME_IN_S);
+        }
+
+        [Test]
+        public void Constructor()
+        {
+            _musicPlayer.Received().Play();
         }
 
         [Test]
@@ -62,6 +70,13 @@ namespace BattleCruisers.Tests.UI.Music
             // Run second deferral => Stops danger music
             _deferredActions[1].Invoke();
             _musicPlayer.Received().StopSecondary();
+        }
+
+        [Test]
+        public void BattleCompleted_StopsMusic()
+        {
+            _battleCompletionHandler.BattleCompleted += Raise.Event();
+            _musicPlayer.Received().Stop();
         }
     }
 }
