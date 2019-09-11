@@ -171,11 +171,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Audio
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
-            // FELIX  Use music keys provided by level instead of hardcoding :)
             ILayeredMusicPlayer layeredMusicPlayer
                 = components.MusicPlayerInitialiser.CreatePlayer(
                     factoryProvider.Sound.SoundFetcher,
-                    SoundKeys.Music.Background.Kentient);
+                    currentLevel.MusicKeys);
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
