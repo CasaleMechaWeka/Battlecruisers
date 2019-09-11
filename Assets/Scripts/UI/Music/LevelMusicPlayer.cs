@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Music
     /// </summary>
     /// FELIX  Update tests
     /// FELIX  Rename to LevelMusicPlayer?
-    public class DangerMusicPlayer
+    public class LevelMusicPlayer
     {
         private readonly ILayeredMusicPlayer _musicPlayer;
         private readonly IDangerMonitor _dangerMonitor;
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Music
 
         private const float DANGER_MUSIC_PLAY_TIME_IN_S = 15;
 
-        public DangerMusicPlayer(
+        public LevelMusicPlayer(
             ILayeredMusicPlayer musicPlayer,
             IDangerMonitor dangerMonitor,
             IDeferrer deferrer,

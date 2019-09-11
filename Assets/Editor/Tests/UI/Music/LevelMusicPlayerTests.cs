@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.UI.Music
 {
-    public class DangerMusicPlayerTests
+    public class LevelMusicPlayerTests
     {
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private DangerMusicPlayer _dangerMusicPlayer;
+        private LevelMusicPlayer _levelMusicPlayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private ILayeredMusicPlayer _musicPlayer;
         private IDangerMonitor _dangerMonitor;

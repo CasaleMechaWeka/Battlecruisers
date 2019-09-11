@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.BattleScene
     /// </summary>
     public class AudioInitialiser
     {
-        private readonly DangerMusicPlayer _dangerMusicPlayer;
+        private readonly LevelMusicPlayer _levelMusicPlayer;
         private readonly IManagedDisposable _droneEventSoundPlayer;
         private readonly CruiserEventMonitor _cruiserEventMonitor;
         private readonly UltrasConstructionMonitor _ultrasConstructionMonitor;
@@ -34,14 +34,14 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler);
 
-            _dangerMusicPlayer = CreateDangerMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer, battleCompletionHandler);
+            _levelMusicPlayer = CreateLevelMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer, battleCompletionHandler);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
             _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time);
         }
 
-        private DangerMusicPlayer CreateDangerMusicPlayer(
+        private LevelMusicPlayer CreateLevelMusicPlayer(
             ILayeredMusicPlayer musicPlayer,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler)
         {
             return
-                new DangerMusicPlayer(
+                new LevelMusicPlayer(
                     musicPlayer,
                     new DangerMonitor(
                         playerCruiser,
