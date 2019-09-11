@@ -12,15 +12,20 @@ namespace BattleCruisers.Scenes.Test.Sounds
 {
     public class SoundBalancingTestGod : NavigationTestGod
     {
-        private IMusicPlayer _musicPlayer;
+        private ILayeredMusicPlayer _musicPlayer;
         private AudioListener _audioListener;
 
         protected override void Start()
         {
             base.Start();
 
-            _musicPlayer = CreateMusicPlayer();
-            _musicPlayer.LevelMusicKey = SoundKeys.Music.Background.Kentient;
+            LayeredMusicPlayerInitialiser musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
+            Assert.IsNotNull(musicInitialiser);
+            _musicPlayer 
+                = musicInitialiser.CreatePlayer(
+                    new SoundFetcher(),
+                    SoundKeys.Music.Background.KentientBase,
+                    SoundKeys.Music.Background.KentientDanger);
 
             SetupSoundPlayerObjects();
 
@@ -59,12 +64,12 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
         public void PlayBackgroundMusic()
         {
-            _musicPlayer.PlayBattleSceneMusic();
+            _musicPlayer.Play();
         }
 
         public void PlayDangerMusic()
         {
-            _musicPlayer.PlayDangerMusic();
+            _musicPlayer.PlaySecondary();
         }
 
         public void StopMusic()
