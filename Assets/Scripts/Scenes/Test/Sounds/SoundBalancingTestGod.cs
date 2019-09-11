@@ -21,11 +21,10 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             LayeredMusicPlayerInitialiser musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(musicInitialiser);
-            _musicPlayer 
+            _musicPlayer
                 = musicInitialiser.CreatePlayer(
                     new SoundFetcher(),
-                    SoundKeys.Music.Background.KentientBase,
-                    SoundKeys.Music.Background.KentientDanger);
+                    SoundKeys.Music.Background.Kentient);
 
             SetupSoundPlayerObjects();
 

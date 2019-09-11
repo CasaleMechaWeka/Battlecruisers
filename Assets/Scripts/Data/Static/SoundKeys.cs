@@ -112,9 +112,24 @@ namespace BattleCruisers.Data.Static
             public static class Background
             {
                 // FELIX  Remove? & sound files
-                public static ISoundKey Kentient { get; } = new SoundKey(SoundType.Music, "kentient");
-                public static ISoundKey Experimental { get; } = new SoundKey(SoundType.Music, "experimental");
-                public static ISoundKey Bobby { get; } = new SoundKey(SoundType.Music, "bobby");
+                //public static ISoundKey Kentient { get; } = new SoundKey(SoundType.Music, "kentient");
+                //public static ISoundKey Experimental { get; } = new SoundKey(SoundType.Music, "experimental");
+                //public static ISoundKey Bobby { get; } = new SoundKey(SoundType.Music, "bobby");
+
+                public static SoundKeyPair Bobby { get; }
+                    = new SoundKeyPair(
+                        // TEMP  Use bobby music when we have it
+                        new SoundKey(SoundType.Music, "kentient-base"),
+                        new SoundKey(SoundType.Music, "kentient-danger"));
+                public static SoundKeyPair Experimental { get; }
+                        // TEMP  Use experimental music when we have it
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "kentient-base"),
+                        new SoundKey(SoundType.Music, "kentient-danger"));
+                public static SoundKeyPair Kentient { get; }
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "kentient-base"),
+                        new SoundKey(SoundType.Music, "kentient-danger"));
 
                 public static ISoundKey KentientBase { get; } = new SoundKey(SoundType.Music, "kentient-base");
                 public static ISoundKey KentientDanger { get; } = new SoundKey(SoundType.Music, "kentient-danger");

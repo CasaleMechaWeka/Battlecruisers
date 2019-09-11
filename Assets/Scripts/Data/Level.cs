@@ -10,7 +10,7 @@ namespace BattleCruisers.Data
 		public int Num { get; }
         public string Name { get; }
         public IPrefabKey Hull { get; }
-        public ISoundKey MusicKey { get; }
+        public SoundKeyPair MusicKeys { get; }
         public string SkyMaterialName { get; }
         public ICloudGenerationStats CloudStats { get; }
 
@@ -18,16 +18,16 @@ namespace BattleCruisers.Data
             int num, 
             string name, 
             IPrefabKey hull, 
-            ISoundKey musicKey,
+            SoundKeyPair musicKeys,
             string skyMaterialName, 
             ICloudGenerationStats cloudStats)
 		{
-            Helper.AssertIsNotNull(hull, musicKey, cloudStats);
+            Helper.AssertIsNotNull(hull, musicKeys, cloudStats);
 
 			Num = num;
             Name = name;
             Hull = hull;
-            MusicKey = musicKey;
+            MusicKeys = musicKeys;
             SkyMaterialName = skyMaterialName;
             CloudStats = cloudStats;
 		}

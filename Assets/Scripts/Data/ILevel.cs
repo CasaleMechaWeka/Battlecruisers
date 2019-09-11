@@ -9,7 +9,7 @@ namespace BattleCruisers.Data
         int Num { get; }
         string Name { get; }
         IPrefabKey Hull { get; }
-        ISoundKey MusicKey { get; }
+        SoundKeyPair MusicKeys { get; }
         string SkyMaterialName { get; }
         ICloudGenerationStats CloudStats { get; }
     }

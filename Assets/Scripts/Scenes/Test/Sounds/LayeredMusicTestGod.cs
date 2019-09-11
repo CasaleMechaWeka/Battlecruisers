@@ -15,8 +15,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
             _musicPlayer
                 = initialiser.CreatePlayer(
                     new SoundFetcher(),
-                    SoundKeys.Music.Background.KentientBase,
-                    SoundKeys.Music.Background.KentientDanger);
+                    SoundKeys.Music.Background.Kentient);
             _musicPlayer.Play();
         }
 

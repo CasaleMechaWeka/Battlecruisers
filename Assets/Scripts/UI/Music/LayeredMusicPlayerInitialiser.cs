@@ -9,19 +9,17 @@ namespace BattleCruisers.UI.Music
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
         public ILayeredMusicPlayer CreatePlayer(
-            // FELIX  Use SoundKeyPair instead :)
             ISoundFetcher soundFetcher,
-            ISoundKey primarySoundKey,
-            ISoundKey secondarySoundKey)
+            SoundKeyPair soundKeys)
         {
-            Helper.AssertIsNotNull(soundFetcher, primarySoundKey, secondarySoundKey);
+            Helper.AssertIsNotNull(soundFetcher, soundKeys);
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
-            IAudioClipWrapper primaryClip = soundFetcher.GetSound(primarySoundKey);
+            IAudioClipWrapper primaryClip = soundFetcher.GetSound(soundKeys.PrimaryKey);
             primarySource.clip = primaryClip.AudioClip;
 
             AudioSource secondarySource = transform.FindNamedComponent<AudioSource>("SecondaryAudioSource");
-            IAudioClipWrapper secondaryClip = soundFetcher.GetSound(secondarySoundKey);
+            IAudioClipWrapper secondaryClip = soundFetcher.GetSound(soundKeys.SecondaryKey);
             secondarySource.clip = secondaryClip.AudioClip;
 
             return 
