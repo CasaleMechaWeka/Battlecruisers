@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System;
 
@@ -8,9 +9,10 @@ namespace BattleCruisers.UI.Music
     /// Play danger music for 15 seconds after a danger event.  After this time
     /// return to the standard music.
     /// </summary>
+    /// FELIX  Update tests
     public class DangerMusicPlayer
     {
-        private readonly IMusicPlayer _musicPlayer;
+        private readonly ILayeredMusicPlayer _musicPlayer;
         private readonly IDangerMonitor _dangerMonitor;
         private readonly IDeferrer _deferrer;
         private int _currentDangerCount;
@@ -18,7 +20,7 @@ namespace BattleCruisers.UI.Music
         private const float DANGER_MUSIC_PLAY_TIME_IN_S = 15;
 
         public DangerMusicPlayer(
-            IMusicPlayer musicPlayer,
+            ILayeredMusicPlayer musicPlayer,
             IDangerMonitor dangerMonitor,
             IDeferrer deferrer)
         {
@@ -36,7 +38,12 @@ namespace BattleCruisers.UI.Music
         {
             _currentDangerCount++;
             int cachedDangerCount = _currentDangerCount;
-            _musicPlayer.PlayDangerMusic();
+
+            if (_currentDangerCount == 1)
+            {
+                _musicPlayer.PlaySecondary();
+            }
+
             _deferrer.Defer(() => OnDangerComplete(cachedDangerCount), DANGER_MUSIC_PLAY_TIME_IN_S);
         }
 
@@ -44,7 +51,7 @@ namespace BattleCruisers.UI.Music
         {
             if (dangerCount == _currentDangerCount)
             {
-                _musicPlayer.PlayBattleSceneMusic();
+                _musicPlayer.StopSecondary();
             }
         }
     }

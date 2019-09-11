@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
@@ -15,6 +16,7 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
@@ -52,7 +54,7 @@ namespace BattleCruisers.Scenes.BattleScene
             components.Initialise();
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-            IMusicPlayer musicPlayer = LandingSceneGod.MusicPlayer;
+            LandingSceneGod.MusicPlayer?.Stop();
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
@@ -62,7 +64,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 applicationModel.SelectedLevel = 3;
 
                 sceneNavigator = Substitute.For<ISceneNavigator>();
-                musicPlayer = Substitute.For<IMusicPlayer>();
             }
 
             // TEMP  Force  tutorial
@@ -170,12 +171,17 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Audio
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
-            musicPlayer.LevelMusicKey = currentLevel.MusicKey;
-            musicPlayer.PlayBattleSceneMusic();
+            // FELIX  Use music keys provided by level instead of hardcoding :)
+            ILayeredMusicPlayer layeredMusicPlayer 
+                = components.MusicPlayerInitialiser.CreatePlayer(
+                    factoryProvider.Sound.SoundFetcher, 
+                    SoundKeys.Music.Background.KentientBase,
+                    SoundKeys.Music.Background.KentientDanger);
+            layeredMusicPlayer.Play();
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
-                    musicPlayer,
+                    layeredMusicPlayer,
                     playerCruiser,
                     aiCruiser,
                     components.Deferrer,

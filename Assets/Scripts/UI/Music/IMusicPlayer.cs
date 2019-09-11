@@ -4,11 +4,14 @@ namespace BattleCruisers.UI.Music
 {
     public interface IMusicPlayer
     {
+        // FELIX  Remove :)
         ISoundKey LevelMusicKey { set; }
-
-        void PlayScreensSceneMusic();
+        
+        // FELIX  Remove :)
         void PlayBattleSceneMusic();
         void PlayDangerMusic();
+
+        void PlayScreensSceneMusic();
         void PlayVictoryMusic();
         void PlayDefeatMusic();
         void PlayLoadingMusic();

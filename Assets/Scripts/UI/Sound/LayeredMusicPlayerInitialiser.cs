@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
+    // FELIX  Move to Music namespace
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
         public ILayeredMusicPlayer CreatePlayer(
