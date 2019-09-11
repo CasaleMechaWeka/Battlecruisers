@@ -29,30 +29,6 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
-        public void PlayBattleSceneMusic_NoLevelMusicSet_Throws()
-        {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.PlayBattleSceneMusic());
-        }
-
-        [Test]
-        public void PlayBattleSceneMusic_LevelMusicSet_PlaysMusic()
-        {
-            ISoundKey soundToPlay = Substitute.For<ISoundKey>();
-            _musicPlayer.LevelMusicKey = soundToPlay;
-
-            _musicPlayer.PlayBattleSceneMusic();
-
-            _soundPlayer.Received().PlaySound(soundToPlay, loop: true);
-        }
-
-        [Test]
-        public void PlayDangerMusic()
-        {
-            _musicPlayer.PlayDangerMusic();
-            _soundPlayer.Received().PlaySound(SoundKeys.Music.Danger, loop: true);
-        }
-
-        [Test]
         public void PlayVictoryMusic()
         {
             _musicPlayer.PlayVictoryMusic();

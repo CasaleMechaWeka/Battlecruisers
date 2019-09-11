@@ -103,6 +103,7 @@ namespace BattleCruisers.Data.Static
         public static class Music
         {
             public static ISoundKey MainTheme { get; } = new SoundKey(SoundType.Music, "main-theme");
+            // FELIX  Remove sound file
             public static ISoundKey Danger { get; } = new SoundKey(SoundType.Music, "danger");
             public static ISoundKey Victory { get; } = new SoundKey(SoundType.Music, "victory");
             public static ISoundKey Defeat { get; } = new SoundKey(SoundType.Music, "defeat");

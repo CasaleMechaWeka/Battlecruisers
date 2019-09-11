@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.Music
 #pragma warning disable CS0414  // Variable is assigned but never used
         private DangerMusicPlayer _dangerMusicPlayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private IMusicPlayer _musicPlayer;
+        private ILayeredMusicPlayer _musicPlayer;
         private IDangerMonitor _dangerMonitor;
         private IDeferrer _deferrer;
         private IList<Action> _deferredActions;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Music
         [SetUp]
         public void TestSetup()
         {
-            _musicPlayer = Substitute.For<IMusicPlayer>();
+            _musicPlayer = Substitute.For<ILayeredMusicPlayer>();
             _dangerMonitor = Substitute.For<IDangerMonitor>();
             _deferrer = Substitute.For<IDeferrer>();
 
@@ -37,11 +37,11 @@ namespace BattleCruisers.Tests.UI.Music
         {
             _dangerMonitor.Danger += Raise.Event();
 
-            _musicPlayer.Received().PlayDangerMusic();
+            _musicPlayer.Received().PlaySecondary();
             Assert.AreEqual(1, _deferredActions.Count);
 
             _deferredActions[0].Invoke();
-            _musicPlayer.Received().PlayBattleSceneMusic();
+            _musicPlayer.Received().StopSecondary();
         }
 
         [Test]
@@ -57,11 +57,11 @@ namespace BattleCruisers.Tests.UI.Music
 
             // Run first deferral => Does nothing
             _deferredActions[0].Invoke();
-            _musicPlayer.DidNotReceive().PlayBattleSceneMusic();
+            _musicPlayer.DidNotReceive().StopSecondary();
 
             // Run second deferral => Stops danger music
             _deferredActions[1].Invoke();
-            _musicPlayer.Received().PlayBattleSceneMusic();
+            _musicPlayer.Received().StopSecondary();
         }
     }
 }

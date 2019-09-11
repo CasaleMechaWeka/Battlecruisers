@@ -9,31 +9,17 @@ namespace BattleCruisers.UI.Music
         private readonly ISingleSoundPlayer _soundPlayer;
         private ISoundKey _currentlyPlaying;
 
-        public ISoundKey LevelMusicKey { private get; set; }
-
         public MusicPlayer(ISingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(soundPlayer);
 
             _soundPlayer = soundPlayer;
             _currentlyPlaying = null;
-            LevelMusicKey = null;
         }
 
         public void PlayScreensSceneMusic()
         {
             PlayMusic(SoundKeys.Music.MainTheme);
-        }
-
-        public void PlayBattleSceneMusic()
-        {
-            Assert.IsNotNull(LevelMusicKey);
-            PlayMusic(LevelMusicKey);
-        }
-
-        public void PlayDangerMusic()
-        {
-            PlayMusic(SoundKeys.Music.Danger);
         }
 
         public void PlayVictoryMusic()
