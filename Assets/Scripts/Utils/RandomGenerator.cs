@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
@@ -27,7 +28,12 @@ namespace BattleCruisers.Utils
             Assert.IsTrue(radius > 0);
             return Range(center - radius, center + radius);
         }
-		
+
+        public float Range(IRange<float> range)
+        {
+            return Range(range.Min, range.Max);
+        }
+
         public float Range(float minInclusive, float maxInclusive)
         {
             Assert.IsTrue(minInclusive < maxInclusive);

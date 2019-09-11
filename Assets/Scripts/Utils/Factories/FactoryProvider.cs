@@ -72,7 +72,7 @@ namespace BattleCruisers.Utils.Factories
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     poolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance));
+                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE));
         }
 	}
 }

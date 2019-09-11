@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -19,20 +20,60 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             UnityAsserts.Assert.raiseExceptions = true;
 
             _random = Substitute.For<IRandomGenerator>();
-            _positionFinder = new SpawnPositionFinder(_random);
+            _positionFinder = new SpawnPositionFinder(_random, Constants.WATER_LINE);
 
             _droneConsumerInfo = Substitute.For<IDroneConsumerInfo>();
-            _droneConsumerInfo.Position.Returns(new Vector2(33, 22));
-            _droneConsumerInfo.Size.Returns(new Vector2(17, -17));
         }
 
         [Test]
-        public void FindSpawnPosition()
+        public void FindSpawnPosition_NotCapped()
         {
-            Vector2 randomElement = new Vector2(2, 4);
-            _random.Range(-_droneConsumerInfo.Size.x / 2, _droneConsumerInfo.Size.x / 2).Returns(randomElement.x);
-            _random.Range(-_droneConsumerInfo.Size.y / 2, _droneConsumerInfo.Size.y / 2).Returns(randomElement.y);
-            Vector2 expectedPosition = _droneConsumerInfo.Position + randomElement;
+            _droneConsumerInfo.Position.Returns(new Vector2(12, 0));
+            _droneConsumerInfo.Size.Returns(new Vector2(2, 1));
+
+            float xDeltaInM = _droneConsumerInfo.Size.x / 2;
+            IRange<float> xPositionRange
+                = new Range<float>(
+                    _droneConsumerInfo.Position.x - xDeltaInM,
+                    _droneConsumerInfo.Position.x + xDeltaInM);
+
+            float yDeltaInM = _droneConsumerInfo.Size.y / 2;
+            IRange<float> yPositionRange
+                = new Range<float>(
+                    _droneConsumerInfo.Position.y - yDeltaInM,
+                    _droneConsumerInfo.Position.y + yDeltaInM);
+
+            Vector2 expectedPosition = new Vector2(17, 71);
+            _random.Range(xPositionRange).Returns(expectedPosition.x);
+            _random.Range(yPositionRange).Returns(expectedPosition.y);
+
+            Assert.AreEqual(expectedPosition, _positionFinder.FindSpawnPosition(_droneConsumerInfo));
+        }
+
+
+        [Test]
+        public void FindSpawnPosition_Capped()
+        {
+            _droneConsumerInfo.Position.Returns(new Vector2(12, -4));
+            _droneConsumerInfo.Size.Returns(new Vector2(2, 1));
+            // -4 - 1 < WATER_LINE (-1.4)!
+            // -4 + 1 < WATER_LINE (-1.4)!
+
+            float xDeltaInM = _droneConsumerInfo.Size.x / 2;
+            IRange<float> xPositionRange
+                = new Range<float>(
+                    _droneConsumerInfo.Position.x - xDeltaInM,
+                    _droneConsumerInfo.Position.x + xDeltaInM);
+
+            float yDeltaInM = _droneConsumerInfo.Size.y / 2;
+            IRange<float> yPositionRange
+                = new Range<float>(
+                    Constants.WATER_LINE,
+                    Constants.WATER_LINE);
+
+            Vector2 expectedPosition = new Vector2(17, 71);
+            _random.Range(xPositionRange).Returns(expectedPosition.x);
+            _random.Range(yPositionRange).Returns(expectedPosition.y);
 
             Assert.AreEqual(expectedPosition, _positionFinder.FindSpawnPosition(_droneConsumerInfo));
         }
