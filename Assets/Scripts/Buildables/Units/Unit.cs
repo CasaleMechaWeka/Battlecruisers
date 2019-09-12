@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
@@ -16,8 +17,9 @@ namespace BattleCruisers.Buildables.Units
     public abstract class Unit : Buildable<BuildableActivationArgs>, IUnit
     {
         private IAudioClipWrapper _engineAudioClip;
+        private IAudioSource _audioSource;
 
-		public UnitCategory category;
+        public UnitCategory category;
 
 		public float maxVelocityInMPerS;
         public float MaxVelocityInMPerS => maxVelocityInMPerS;
@@ -45,9 +47,18 @@ namespace BattleCruisers.Buildables.Units
 
         protected abstract ISoundKey EngineSoundKey { get; }
         protected virtual float OnDeathGravityScale => 1;
-		#endregion Properties
+        #endregion Properties
 
-		public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(audioSource);
+            _audioSource = new AudioSourceBC(audioSource);
+        }
+
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
             base.Initialise(uiManager, factoryProvider);
 			

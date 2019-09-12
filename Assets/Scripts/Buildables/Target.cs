@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +13,6 @@ namespace BattleCruisers.Buildables
     public abstract class Target : MonoBehaviour, ITarget
     {
         protected IHealthTracker _healthTracker;
-        protected IAudioSource _audioSource;
         protected ITime _time;
 
         public float maxHealth;
@@ -84,10 +82,6 @@ namespace BattleCruisers.Buildables
             AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
             RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
-
-            AudioSource audioSource = GetComponent<AudioSource>();
-            Assert.IsNotNull(audioSource);
-            _audioSource = new AudioSourceBC(audioSource);
 
             Transform = new TransformBC(transform);
         }
