@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -53,7 +54,7 @@ namespace BattleCruisers.Buildables.Units
         {
             base.StaticInitialise(parent, healthBar);
 
-            AudioSource audioSource = GetComponent<AudioSource>();
+            AudioSource audioSource = transform.FindNamedComponent<AudioSource>("AudioSource");
             Assert.IsNotNull(audioSource);
             _audioSource = new AudioSourceBC(audioSource);
         }
