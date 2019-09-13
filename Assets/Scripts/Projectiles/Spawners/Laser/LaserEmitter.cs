@@ -28,7 +28,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
 
-            AudioSource audioSource = GetComponent<AudioSource>();
+            AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
 			_audioSource = new AudioSourceBC(audioSource);
 
