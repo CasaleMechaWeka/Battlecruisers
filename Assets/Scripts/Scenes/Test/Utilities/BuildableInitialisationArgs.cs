@@ -210,6 +210,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             if (_poolProviders == null)
             {
                 PoolProviders poolProviders = new PoolProviders(factoryProvider, uiManager);
+                factoryProvider.PoolProviders.Returns(poolProviders);
                 poolProviders.SetInitialCapacities();
                 _poolProviders = poolProviders;
             }
