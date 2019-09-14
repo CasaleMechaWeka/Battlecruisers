@@ -33,8 +33,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         }
 
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Archon;
-        // FELIX  Still want "Ultra ready" when archon is built :/  Use a monitor?  Modify UltrasConstructionMonitor?
-        //protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {

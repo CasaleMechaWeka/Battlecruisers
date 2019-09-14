@@ -74,6 +74,7 @@ namespace BattleCruisers.Buildables
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
         protected virtual ISoundKey DeathSoundKey => SoundKeys.Explosions.Default;
+        protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
         public ICruiser ParentCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
         public IHealthBar HealthBar { get; private set; }
@@ -423,6 +424,11 @@ namespace BattleCruisers.Buildables
             RepairCommand.EmitCanExecuteChanged();
 
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
+
+            if (ConstructionCompletedSoundKey != null)
+            {
+                _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+            }
         }
 
         private void EnableRenderers(bool enabled)

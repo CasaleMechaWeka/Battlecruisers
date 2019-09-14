@@ -28,7 +28,6 @@ namespace BattleCruisers.Buildables.Buildings
         public BuildingCategory category;
         public BuildingCategory Category => category;
 
-        protected abstract PrioritisedSoundKey ConstructionCompletedSoundKey { get; }
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building1;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
@@ -51,12 +50,6 @@ namespace BattleCruisers.Buildables.Buildings
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
-        }
-
-        protected override void OnBuildableCompleted()
-        {
-            base.OnBuildableCompleted();
-            _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
         }
 
         protected override void OnSingleClick()
