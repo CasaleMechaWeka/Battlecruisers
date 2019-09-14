@@ -107,23 +107,33 @@ namespace BattleCruisers.Data.Static
             {
                 public static SoundKeyPair Bobby { get; }
                     = new SoundKeyPair(
-                        // TEMP  Use bobby music when we have it
-                        new SoundKey(SoundType.Music, "nothing-base"),
-                        new SoundKey(SoundType.Music, "nothing-danger"));
-                public static SoundKeyPair Experimental { get; }
-                    // TEMP  Use experimental music when we have it
+                        new SoundKey(SoundType.Music, "bobby-base"),
+                        new SoundKey(SoundType.Music, "bobby-danger"));
+
+                public static SoundKeyPair Confusion { get; }
                     = new SoundKeyPair(
-                        new SoundKey(SoundType.Music, "nothing-base"),
-                        new SoundKey(SoundType.Music, "nothing-danger"));
-                    // TEMP  Use kentient music when we have it
+                        new SoundKey(SoundType.Music, "confusion-base"),
+                        new SoundKey(SoundType.Music, "confusion-danger"));
+
+                public static SoundKeyPair Experimental { get; }
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "experimental-base"),
+                        new SoundKey(SoundType.Music, "experimental-danger"));
+
                 public static SoundKeyPair Kentient { get; }
                     = new SoundKeyPair(
-                        new SoundKey(SoundType.Music, "nothing-base"),
-                        new SoundKey(SoundType.Music, "nothing-danger"));
+                        new SoundKey(SoundType.Music, "kentient-base"),
+                        new SoundKey(SoundType.Music, "kentient-danger"));
+                
                 public static SoundKeyPair Nothing { get; }
                     = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "nothing-base"),
                         new SoundKey(SoundType.Music, "nothing-danger"));
+                
+                public static SoundKeyPair Sleeper { get; }
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "sleeper-base"),
+                        new SoundKey(SoundType.Music, "sleeper-danger"));
             }
         }
 

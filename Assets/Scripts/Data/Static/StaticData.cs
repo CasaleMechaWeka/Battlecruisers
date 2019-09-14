@@ -198,11 +198,11 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Blue", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(2, "Deep Blue", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Kentient, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(1, "Blue", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Kentient, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(2, "Deep Blue", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Sleeper, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(3, "Twilight", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(4, "White", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(5, "Sunset", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Kentient, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(5, "Sunset", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(6, "Speckled Blue", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(7, "Dark Sunset", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
 
@@ -211,27 +211,27 @@ namespace BattleCruisers.Data.Static
                 new Level(9, "White", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
                 new Level(10, "Deep Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(11, "Dark Sunset", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Kentient, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(12, "Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(13, "Speckled Blue", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(12, "Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(13, "Speckled Blue", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(14, "Sunset", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Kentient, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
 
                 // Set 3
                 new Level(15, "Speckled Blue", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(16, "Dark Sunset", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
                 new Level(17, "White", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Kentient, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(18, "Sunset", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(18, "Sunset", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(19, "Blue", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
                 new Level(20, "Twilight", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(21, "Deep Blue", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Bobby, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(21, "Deep Blue", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
 
                 // Set 4
                 new Level(22, "Sunset", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(23, "Blue", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Kentient, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
                 new Level(24, "Dark Sunset", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.SunsetWeirdClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(25, "Speckled Blue", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(26, "Deep Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Kentient, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(25, "Speckled Blue", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.BlueCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(26, "Deep Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(27, "White", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(28, "Twilight", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow))
+                new Level(28, "Twilight", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow))
             };
 		}
 
