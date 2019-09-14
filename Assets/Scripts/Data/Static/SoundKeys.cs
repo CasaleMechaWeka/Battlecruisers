@@ -112,20 +112,22 @@ namespace BattleCruisers.Data.Static
                 public static SoundKeyPair Bobby { get; }
                     = new SoundKeyPair(
                         // TEMP  Use bobby music when we have it
-                        new SoundKey(SoundType.Music, "kentient-base"),
-                        new SoundKey(SoundType.Music, "kentient-danger"));
+                        new SoundKey(SoundType.Music, "nothing-base"),
+                        new SoundKey(SoundType.Music, "nothing-danger"));
                 public static SoundKeyPair Experimental { get; }
-                        // TEMP  Use experimental music when we have it
+                    // TEMP  Use experimental music when we have it
                     = new SoundKeyPair(
-                        new SoundKey(SoundType.Music, "kentient-base"),
-                        new SoundKey(SoundType.Music, "kentient-danger"));
+                        new SoundKey(SoundType.Music, "nothing-base"),
+                        new SoundKey(SoundType.Music, "nothing-danger"));
+                    // TEMP  Use kentient music when we have it
                 public static SoundKeyPair Kentient { get; }
                     = new SoundKeyPair(
-                        new SoundKey(SoundType.Music, "kentient-base"),
-                        new SoundKey(SoundType.Music, "kentient-danger"));
-
-                public static ISoundKey KentientBase { get; } = new SoundKey(SoundType.Music, "kentient-base");
-                public static ISoundKey KentientDanger { get; } = new SoundKey(SoundType.Music, "kentient-danger");
+                        new SoundKey(SoundType.Music, "nothing-base"),
+                        new SoundKey(SoundType.Music, "nothing-danger"));
+                public static SoundKeyPair Nothing { get; }
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "nothing-base"),
+                        new SoundKey(SoundType.Music, "nothing-danger"));
             }
         }
 
