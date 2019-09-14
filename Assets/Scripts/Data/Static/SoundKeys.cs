@@ -65,6 +65,9 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey TeslaCoil { get; } = new SoundKey(SoundType.Completed, "tesla-coil");
 
             // Units
+            public static ISoundKey AircraftReady { get; } = new SoundKey(SoundType.Completed, "AircraftReadyWhoosh");
+            public static ISoundKey ShipReady { get; } = new SoundKey(SoundType.Completed, "ShipReadyWhoosh");
+            // FELIX  Remove??
             public static ISoundKey AttackBoat { get; } = new SoundKey(SoundType.Completed, "attack-boat");
             public static ISoundKey Frigate { get; } = new SoundKey(SoundType.Completed, "frigate");
             public static ISoundKey Destroyer { get; } = new SoundKey(SoundType.Completed, "destroyer");

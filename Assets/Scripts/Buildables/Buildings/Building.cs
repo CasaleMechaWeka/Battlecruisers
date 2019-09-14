@@ -52,6 +52,12 @@ namespace BattleCruisers.Buildables.Buildings
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
         }
 
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+        }
+
         protected override void OnSingleClick()
         {
             Logging.LogMethod(Tags.BUILDING);

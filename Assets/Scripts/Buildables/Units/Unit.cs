@@ -22,9 +22,6 @@ namespace BattleCruisers.Buildables.Units
 
         public UnitCategory category;
 
-		public float maxVelocityInMPerS;
-        public float MaxVelocityInMPerS => maxVelocityInMPerS;
-
 		public Rigidbody2D rigidBody;
 
 		#region Properties
@@ -32,6 +29,9 @@ namespace BattleCruisers.Buildables.Units
 		public UnitCategory Category => category;
 		public override Vector2 Velocity => rigidBody.velocity;
         public virtual bool IsUltra => false;
+
+		public float maxVelocityInMPerS;
+        public float MaxVelocityInMPerS => maxVelocityInMPerS;
 
 		private Direction _facingDirection;
 		public Direction FacingDirection
@@ -47,6 +47,7 @@ namespace BattleCruisers.Buildables.Units
         protected override bool IsDroneConsumerFocusable => false;
 
         protected abstract ISoundKey EngineSoundKey { get; }
+        protected abstract ISoundKey UnitReadySoundKey { get; }
         protected virtual float OnDeathGravityScale => 1;
         #endregion Properties
 
@@ -83,6 +84,7 @@ namespace BattleCruisers.Buildables.Units
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
+            _factoryProvider.Sound.SoundPlayer.PlaySound(UnitReadySoundKey, Position);
             PlayEngineSound();
         }
 
