@@ -13,7 +13,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 		private IBarrelWrapper _antiSeaTurret;
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.AttackBoat;
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.AtatckBoat;
 
         protected override Vector2 MaskHighlightableSize

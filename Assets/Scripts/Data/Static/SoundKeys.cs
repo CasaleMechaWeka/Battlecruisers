@@ -1,4 +1,4 @@
-﻿ using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Data.Static
 {
@@ -67,13 +67,6 @@ namespace BattleCruisers.Data.Static
             // Units
             public static ISoundKey AircraftReady { get; } = new SoundKey(SoundType.Completed, "AircraftReadyWhoosh");
             public static ISoundKey ShipReady { get; } = new SoundKey(SoundType.Completed, "ShipReadyWhoosh");
-            // FELIX  Remove??
-            public static ISoundKey AttackBoat { get; } = new SoundKey(SoundType.Completed, "attack-boat");
-            public static ISoundKey Frigate { get; } = new SoundKey(SoundType.Completed, "frigate");
-            public static ISoundKey Destroyer { get; } = new SoundKey(SoundType.Completed, "destroyer");
-            public static ISoundKey Bomber { get; } = new SoundKey(SoundType.Completed, "bomber");
-            public static ISoundKey Gunship { get; } = new SoundKey(SoundType.Completed, "gunship");
-            public static ISoundKey Fighter { get; } = new SoundKey(SoundType.Completed, "fighter");
 
             // Other
             public static ISoundKey SpySatellite { get; } = new SoundKey(SoundType.Completed, "satellite");

@@ -50,7 +50,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Gunship;
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Gunship;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{

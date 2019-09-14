@@ -33,8 +33,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IAngleHelper _angleHelper;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Units.Fighter;
-
 		public float enemyFollowDetectionRangeInM;
 
 		private const float PATROLLING_VELOCITY_DIVISOR = 2;

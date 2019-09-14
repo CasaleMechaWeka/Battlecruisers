@@ -26,18 +26,6 @@ namespace BattleCruisers.Data.Static
                 public static PrioritisedSoundKey TeslaCoil { get; } = new PrioritisedSoundKey(SoundKeys.Completed.TeslaCoil, SoundPriority.VeryLow);
             }
 
-            // FELIX  Remove :)
-            public static class Units
-            {
-                public static PrioritisedSoundKey AttackBoat { get; } = new PrioritisedSoundKey(SoundKeys.Completed.AttackBoat, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey Frigate { get; } = new PrioritisedSoundKey(SoundKeys.Completed.Frigate, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey Destroyer { get; } = new PrioritisedSoundKey(SoundKeys.Completed.Destroyer, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey Bomber { get; } = new PrioritisedSoundKey(SoundKeys.Completed.Bomber, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey Gunship { get; } = new PrioritisedSoundKey(SoundKeys.Completed.Gunship, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey Fighter { get; } = new PrioritisedSoundKey(SoundKeys.Completed.Fighter, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey Satellite { get; } = new PrioritisedSoundKey(SoundKeys.Completed.SpySatellite, SoundPriority.VeryLow);
-            }
-
             public static PrioritisedSoundKey Ultra { get; } = new PrioritisedSoundKey(SoundKeys.Completed.Ultra, SoundPriority.VeryHigh);
         }
 
