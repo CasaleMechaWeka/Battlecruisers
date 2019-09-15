@@ -6,6 +6,7 @@ namespace BattleCruisers.Effects
 {
     public class BroadcastingParticleSystem : MonoBehaviour, IBroadcastingParticleSystem
     {
+        // FELIX  Remove?
         public ParticleSystem ParticleSystem { get; private set; }
 
         public event EventHandler Stopped;
@@ -16,6 +17,11 @@ namespace BattleCruisers.Effects
             Assert.IsNotNull(ParticleSystem);
             ParticleSystem.MainModule mainModule = ParticleSystem.main;
             mainModule.stopAction = ParticleSystemStopAction.Callback;
+        }
+
+        public void Play()
+        {
+            ParticleSystem.Play();
         }
 
         private void OnParticleSystemStopped()

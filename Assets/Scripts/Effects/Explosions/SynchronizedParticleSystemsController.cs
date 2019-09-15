@@ -5,7 +5,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    public class SynchronizedParticleSystemsController : MonoBehaviour, IBroadcastingParticleSystem
+    // FELIX  Initialisation should happen in Initialiser class.  This class should not be need then?
+    public class SynchronizedParticleSystemsController : MonoBehaviour
+    //public class SynchronizedParticleSystemsController : MonoBehaviour, IBroadcastingParticleSystem
     {
         private int _numOfParticleSystems;
         private int _numOfStoppedSystems = 0;
