@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    // FELIX  Use, test :)
     public class Explosion : IExplosion
     {
         private readonly IGameObject _explosionController;
