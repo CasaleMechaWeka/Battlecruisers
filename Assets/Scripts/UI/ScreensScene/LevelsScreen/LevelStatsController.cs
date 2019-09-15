@@ -8,8 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelStatsController : MonoBehaviour
     {
-        // FELIX  4 :)
-        private const int EXPECTED_NUM_OF_STAR = 5;
+        private const int EXPECTED_NUM_OF_STAR = 4;
 
         public void Initialise(Difficulty? levelCompletedDifficulty)
         {
