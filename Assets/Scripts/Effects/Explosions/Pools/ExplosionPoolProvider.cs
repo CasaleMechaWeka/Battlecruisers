@@ -19,25 +19,18 @@ namespace BattleCruisers.Effects.Explosions.Pools
         {
             Assert.IsNotNull(prefabFactory);
 
-            BulletImpactPool
-                = new Pool<IExplosion, Vector3>(
-                    new BulletImpactExplosionFactory(
-                        prefabFactory));
-
-            SmallExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75, InitialCapacity.SMALL);
-            MediumExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100, InitialCapacity.MEDIUM);
-            LargeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150, InitialCapacity.LARGE);
-            HugeExplosionsPool = CreateAdvancedExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500, InitialCapacity.HUGE);
+            BulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
+            SmallExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion75);
+            MediumExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion100);
+            LargeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion150);
+            HugeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HDExplosion500);
         }
 
-        private IPool<IExplosion, Vector3> CreateAdvancedExplosionPool(
-            IPrefabFactory prefabFactory, 
-            ExplosionKey explosionKey, 
-            int initialCapacity)
+        private IPool<IExplosion, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             return
                 new Pool<IExplosion, Vector3>(
-                    new AdvancedExplosionFactory(
+                    new ExplosionFactory(
                         prefabFactory,
                         explosionKey));
         }

@@ -82,12 +82,13 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
             // FELIX  Remove HD part from name :)
             // TEMP  Revert once explosions are stable :)
-            //public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75");
-            public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75Legacy");
-            //public static ExplosionKey HDExplosion100 { get; } = new ExplosionKey("HDExplosion1.0");
-            public static ExplosionKey HDExplosion100 { get; } = new ExplosionKey("HDExplosion1.0Legacy");
-            //public static ExplosionKey HDExplosion150 { get; } = new ExplosionKey("HDExplosion1.5");
-            public static ExplosionKey HDExplosion150 { get; } = new ExplosionKey("HDExplosion1.5Legacy");
+            // FELIX  Remove legacy prefabs :)
+            public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75");
+            //public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75Legacy");
+            public static ExplosionKey HDExplosion100 { get; } = new ExplosionKey("HDExplosion1.0");
+            //public static ExplosionKey HDExplosion100 { get; } = new ExplosionKey("HDExplosion1.0Legacy");
+            public static ExplosionKey HDExplosion150 { get; } = new ExplosionKey("HDExplosion1.5");
+            //public static ExplosionKey HDExplosion150 { get; } = new ExplosionKey("HDExplosion1.5Legacy");
             public static ExplosionKey HDExplosion500 { get; } = new ExplosionKey("HDExplosion5.0");
         }
 

@@ -39,7 +39,7 @@ namespace BattleCruisers.Effects.Explosions
             {
                 _systemsCompletedCount = 0;
                 _explosionController.IsVisible = false;
-                Deactivated.Invoke(this, EventArgs.Empty);
+                Deactivated?.Invoke(this, EventArgs.Empty);
             }
         }
 
