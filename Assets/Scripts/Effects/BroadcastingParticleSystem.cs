@@ -7,27 +7,26 @@ namespace BattleCruisers.Effects
 {
     public class BroadcastingParticleSystem : MonoBehaviour, IBroadcastingParticleSystem
     {
-        // FELIX  Make private :)
-        public ParticleSystem ParticleSystem { get; private set; }
+        private ParticleSystem _particleSystem;
 
         public event EventHandler Stopped;
 
         public void Initialise()
         {
-            ParticleSystem = GetComponent<ParticleSystem>();
-            Assert.IsNotNull(ParticleSystem);
-            ParticleSystem.MainModule mainModule = ParticleSystem.main;
+            _particleSystem = GetComponent<ParticleSystem>();
+            Assert.IsNotNull(_particleSystem);
+            ParticleSystem.MainModule mainModule = _particleSystem.main;
             mainModule.stopAction = ParticleSystemStopAction.Callback;
         }
 
         public void Play()
         {
-            ParticleSystem.Play();
+            _particleSystem.Play();
         }
 
         private void OnParticleSystemStopped()
         {
-            Logging.Log(Tags.EXPLOSIONS, $"{ParticleSystem}");
+            Logging.Log(Tags.EXPLOSIONS, $"{_particleSystem}");
 
             Stopped?.Invoke(this, EventArgs.Empty);
         }
