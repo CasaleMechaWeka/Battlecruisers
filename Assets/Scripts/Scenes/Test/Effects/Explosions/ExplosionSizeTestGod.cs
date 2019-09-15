@@ -1,20 +1,34 @@
 ﻿using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects.Explosions
 {
     public class ExplosionSizeTestGod : MonoBehaviour
     {
+        // FELIX
         void Start()
         {
-            AdvancedExplosion[] explosions = GetComponentsInChildren<AdvancedExplosion>();
+            TimeScaleDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(deferrer);
 
-            foreach (AdvancedExplosion explosion in explosions)
+            ExplosionController[] explosionControllers = GetComponentsInChildren<ExplosionController>();
+
+            foreach (ExplosionController explosionController in explosionControllers)
             {
-                explosion.Initialise(RandomGenerator.Instance);
-                explosion.Activate(explosion.transform.position);
+                IExplosion explosion = explosionController.Initialise();
+                explosion.Deactivated += (sender, e) => deferrer.Defer(() => explosion.Activate(explosionController.Position), delayInS: 0.25f);
+                explosion.Activate(explosionController.Position);
             }
+
+            //AdvancedExplosion[] explosions = GetComponentsInChildren<AdvancedExplosion>();
+
+            //foreach (AdvancedExplosion explosion in explosions)
+            //{
+            //    explosion.Initialise(RandomGenerator.Instance);
+            //    explosion.Activate(explosion.transform.position);
+            //}
         }
     }
 }
