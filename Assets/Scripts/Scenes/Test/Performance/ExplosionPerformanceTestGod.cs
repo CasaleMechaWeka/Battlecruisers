@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         private void Update()
         {
-            IExplosion explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.HDExplosion75);
+            IExplosion explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.Explosion75);
             explosion.Activate(FindRandomSpawnPosition());
         }
 

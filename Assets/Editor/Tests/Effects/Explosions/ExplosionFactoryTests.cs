@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Effects.Explosions
         public void TestSetup()
         {
             _prefabFactory = Substitute.For<IPrefabFactory>();
-            _explosionKey = StaticPrefabKeys.Explosions.HDExplosion150;
+            _explosionKey = StaticPrefabKeys.Explosions.Explosion150;
 
             _factory = new ExplosionFactory(_prefabFactory, _explosionKey);
 
