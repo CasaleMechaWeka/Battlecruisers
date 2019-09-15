@@ -15,7 +15,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -108,7 +107,12 @@ namespace BattleCruisers.Scenes
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
 
-		public void GoToLevelsScreen()
+        public void GoToHomeScreen()
+        {
+            GoToScreen(homeScreen);
+        }
+
+        public void GoToLevelsScreen()
         {
             GoToScreen(levelsScreen);
         }
@@ -144,71 +148,14 @@ namespace BattleCruisers.Scenes
             return levels;
         }
 
-        public void GoToHomeScreen()
-		{
-			GoToScreen(homeScreen);
-		}
-
 		public void GoToLoadoutScreen()
 		{
             GoToScreen(loadoutScreen);
-
-            // FELIX  Remove?
-            //if (loadoutScreen.IsInitialised)
-            //{
-            //    GoToScreen(loadoutScreen);
-            //}
-            //else
-            //{
-            //    // Laziliy initalise, because post battle screen can change the loadout
-            //    if (LandingSceneGod.LoadingScreen != null)
-            //    {
-            //        StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(GoToLoadoutScreenAsync()));
-            //    }
-            //    else
-            //    {
-            //        // TEMP  For starting ScreensScene without previous LandingScene.
-            //        // So I can test the ScreensScene without having to go through
-            //        // the LandingScene each time :P
-            //        // => Should be able to remove if else, and just keep if content
-            //        StartCoroutine(GoToLoadoutScreenAsync());
-            //    }
-            //}
         }
-
-        // FELIX  Remove
-        //private IEnumerator GoToLoadoutScreenAsync()
-        //{
-        //    Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
-
-        //    //yield return loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
-        //    //yield return GoToScreenAsync(loadoutScreen);
-
-        //    Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
-        //}
 
         public void GoToSettingsScreen()
         {
             GoToScreen(settingsScreen);
-        }
-
-		public void LoadLevel(int levelNum)
-		{
-            Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
-                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
-
-			_applicationModel.SelectedLevel = levelNum;
-
-            string hint = !_applicationModel.IsTutorial ? _hintProvider.GetHint() : null;
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, hint);
-		}
-
-        // FLEIX  Remove?
-        private IEnumerator GoToScreenAsync(ScreenController destinationScreen)
-        {
-            yield return null;
-            GoToScreen(destinationScreen);
         }
 
 		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
@@ -233,5 +180,17 @@ namespace BattleCruisers.Scenes
                 _musicPlayer.PlayScreensSceneMusic();
             }
         }
+
+		public void LoadLevel(int levelNum)
+		{
+            Assert.IsTrue(
+                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+
+			_applicationModel.SelectedLevel = levelNum;
+
+            string hint = !_applicationModel.IsTutorial ? _hintProvider.GetHint() : null;
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, hint);
+		}
 	}
 }
