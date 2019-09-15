@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -12,15 +12,16 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public void Initialise(Difficulty? levelCompletedDifficulty)
         {
-            Image[] stars = GetComponentsInChildren<Image>();
+            StarController[] stars = GetComponentsInChildren<StarController>();
             Assert.AreEqual(EXPECTED_NUM_OF_STAR, stars.Length);
 
             int numOfStarsToShow = FindNumOfStarsToShow(levelCompletedDifficulty);
 
             for (int i = 0; i < stars.Length; ++i)
             {
-                Image star = stars[i];
-                star.gameObject.SetActive(numOfStarsToShow > i);
+                StarController star = stars[i];
+                star.Initialise();
+                star.Enabled = numOfStarsToShow > i;
             }
         }
 
