@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Effects.Explosions
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _explosionKey = StaticPrefabKeys.Explosions.HDExplosion150;
 
-            _factory = new AdvancedExplosionFactory(_prefabFactory, _explosionKey);
+            _factory = new ExplosionFactory(_prefabFactory, _explosionKey);
 
             _explosion = Substitute.For<IExplosion>();
             _prefabFactory.CreateAdvancedExplosion(_explosionKey).Returns(_explosion);
