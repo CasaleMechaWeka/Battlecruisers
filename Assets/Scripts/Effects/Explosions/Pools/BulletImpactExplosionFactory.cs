@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions.Pools
 {
+    // FELIX  Remove :)
     public class BulletImpactExplosionFactory : IPoolableFactory<IExplosion, Vector3>
     {
         private readonly IPrefabFactory _prefabFactory;

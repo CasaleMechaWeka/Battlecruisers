@@ -80,6 +80,7 @@ namespace BattleCruisers.Data.Static
         public static class Explosions
         {
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
+            // FELIX  Remove HD part from name :)
             // TEMP  Revert once explosions are stable :)
             //public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75");
             public static ExplosionKey HDExplosion75 { get; } = new ExplosionKey("HDExplosion0.75Legacy");
