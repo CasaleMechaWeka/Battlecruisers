@@ -90,6 +90,9 @@ namespace BattleCruisers.Scenes
                 GoToHomeScreen();
             }
 
+            // After potentially initialising post battle screen, because that can modify the data model.
+            InitialiseLevelsScreen();
+            loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
             //GoToSettingsScreen();
@@ -106,20 +109,19 @@ namespace BattleCruisers.Scenes
         }
 
 		public void GoToLevelsScreen()
-		{
-            // Laziliy initalise, because post battle screen can change the number of levels unlocked
-            if (!levelsScreen.IsInitialised)
-            {
-                BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
-                int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
+        {
+            GoToScreen(levelsScreen);
+        }
 
-                IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
+        private void InitialiseLevelsScreen()
+        {
+            BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
+            int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
 
-                levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
-            }
+            IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
-			GoToScreen(levelsScreen);
-		}
+            levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
+        }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
         {
@@ -149,37 +151,41 @@ namespace BattleCruisers.Scenes
 
 		public void GoToLoadoutScreen()
 		{
-            if (loadoutScreen.IsInitialised)
-            {
-                GoToScreen(loadoutScreen);
-            }
-            else
-            {
-                // Laziliy initalise, because post battle screen can change the loadout
-                if (LandingSceneGod.LoadingScreen != null)
-                {
-                    StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(GoToLoadoutScreenAsync()));
-                }
-                else
-                {
-                    // TEMP  For starting ScreensScene without previous LandingScene.
-                    // So I can test the ScreensScene without having to go through
-                    // the LandingScene each time :P
-                    // => Should be able to remove if else, and just keep if content
-                    StartCoroutine(GoToLoadoutScreenAsync());
-                }
-            }
+            GoToScreen(loadoutScreen);
+
+            // FELIX  Remove?
+            //if (loadoutScreen.IsInitialised)
+            //{
+            //    GoToScreen(loadoutScreen);
+            //}
+            //else
+            //{
+            //    // Laziliy initalise, because post battle screen can change the loadout
+            //    if (LandingSceneGod.LoadingScreen != null)
+            //    {
+            //        StartCoroutine(LandingSceneGod.LoadingScreen.PerformLongOperation(GoToLoadoutScreenAsync()));
+            //    }
+            //    else
+            //    {
+            //        // TEMP  For starting ScreensScene without previous LandingScene.
+            //        // So I can test the ScreensScene without having to go through
+            //        // the LandingScene each time :P
+            //        // => Should be able to remove if else, and just keep if content
+            //        StartCoroutine(GoToLoadoutScreenAsync());
+            //    }
+            //}
         }
 
-        private IEnumerator GoToLoadoutScreenAsync()
-        {
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
+        // FELIX  Remove
+        //private IEnumerator GoToLoadoutScreenAsync()
+        //{
+        //    Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            yield return loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
-            yield return GoToScreenAsync(loadoutScreen);
+        //    //yield return loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
+        //    //yield return GoToScreenAsync(loadoutScreen);
 
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
-        }
+        //    Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
+        //}
 
         public void GoToSettingsScreen()
         {
@@ -198,6 +204,7 @@ namespace BattleCruisers.Scenes
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, hint);
 		}
 
+        // FLEIX  Remove?
         private IEnumerator GoToScreenAsync(ScreenController destinationScreen)
         {
             yield return null;

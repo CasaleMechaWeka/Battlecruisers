@@ -10,7 +10,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -24,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourController _loadoutItemColourController;
 
-        public IEnumerator Initialise(
+        public void Initialise(
             ISoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             IDataProvider dataProvider,
@@ -38,8 +37,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
-
-            yield return null;
 
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
@@ -68,8 +65,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             CompareButton compareButton = GetComponentInChildren<CompareButton>();
             Assert.IsNotNull(compareButton);
             compareButton.Initialise(soundPlayer, _itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
-
-            yield return null;
 
             SelectCruiserButton selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
             Assert.IsNotNull(selectCruiserButton);

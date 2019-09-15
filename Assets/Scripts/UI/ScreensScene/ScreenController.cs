@@ -9,6 +9,7 @@ namespace BattleCruisers.UI.ScreensScene
 	{ 
 		protected IScreensSceneGod _screensSceneGod;
 
+        // FELIX  Remove?
         public bool IsInitialised => _screensSceneGod != null;
 
         protected void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
