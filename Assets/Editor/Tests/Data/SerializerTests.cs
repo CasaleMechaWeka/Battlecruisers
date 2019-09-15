@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.Data
 				unlockedUnits: CreateUnlockedUnits());
 
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy));
-            _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Insane));
+            _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Harder));
         }
 
 		private Loadout CreateLoadout()

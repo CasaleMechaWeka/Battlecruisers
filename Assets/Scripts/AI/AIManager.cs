@@ -71,7 +71,6 @@ namespace BattleCruisers.AI
                     return aiFactory.CreateBasicAI(levelInfo);
 
                 case Difficulty.Harder:
-                case Difficulty.Insane:
                     return aiFactory.CreateAdaptiveAI(levelInfo);
 
                 default:

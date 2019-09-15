@@ -55,9 +55,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 case Difficulty.Normal:
                     return BuildSpeedMultipliers.POINT_7_DEFAULT;
 
-                case Difficulty.Insane:
-                    return BuildSpeedMultipliers.ONE_AND_A_HALF_DEFAULT;
-
                 default:
                     return BuildSpeedMultipliers.DEFAULT;
             }
