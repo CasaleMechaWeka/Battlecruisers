@@ -83,6 +83,7 @@ namespace BattleCruisers.Utils
 
         // Other
         public const string BOOST = "Boost";
+        public const string EXPLOSIONS = "Explosions";
         public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
         public const string POOLS = "Pools";
@@ -187,6 +188,7 @@ namespace BattleCruisers.Utils
 
             // Other
             tagsToActiveness.Add(Tags.BOOST, false);
+            tagsToActiveness.Add(Tags.EXPLOSIONS, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.POOLS, false);

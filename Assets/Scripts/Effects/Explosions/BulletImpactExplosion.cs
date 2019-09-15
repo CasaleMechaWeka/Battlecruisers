@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions
 {
+    // FELIX  Remove :)
     public class BulletImpactExplosion : MonoBehaviour, IExplosion
     {
         private BroadcastingParticleSystem _sparks;
