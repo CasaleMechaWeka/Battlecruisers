@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
+    // FELIX  Remove?
     public class AdvancedExplosion : MonoBehaviour, IExplosion
     {
         private ParticleSystem[] _particleSystems;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Effects.Explosions
             foreach (SynchronizedParticleSystemsController fireSmokePair in fireSmokePairs)
             {
                 fireSmokePair.Initialise(randomGenerator);
-                fireSmokePair.Stopped += FireSmokePair_Stopped;
+                //fireSmokePair.Stopped += FireSmokePair_Stopped;
             }
 
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
