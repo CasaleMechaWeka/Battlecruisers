@@ -101,6 +101,14 @@ namespace BattleCruisers.Utils.Fetchers
             return newCountdown;
         }
 
+        public IExplosion CreateExplosion(ExplosionKey explosionKey)
+        {
+            ExplosionController explosionPrefab = _prefabFetcher.GetPrefab<ExplosionController>(explosionKey);
+            ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
+            return newExplosion.Initialise();
+        }
+
+        // FELIX  Remove
         public IExplosion CreateBulletImpactExplosion()
         {
             BulletImpactExplosion explosionPrefab = _prefabFetcher.GetPrefab<BulletImpactExplosion>(StaticPrefabKeys.Explosions.BulletImpact);
@@ -109,6 +117,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newExplosion;
         }
 
+        // FELIX  Remove
         public IExplosion CreateAdvancedExplosion(ExplosionKey explosionKey)
         {
             AdvancedExplosion explosionPrefab = _prefabFetcher.GetPrefab<AdvancedExplosion>(explosionKey);

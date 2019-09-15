@@ -28,6 +28,8 @@ namespace BattleCruisers.Utils.Fetchers
 
         CountdownController CreateDeleteCountdown(Transform parent);
 
+        IExplosion CreateExplosion(ExplosionKey explosionKey);
+        // FELIX  Remove :)
         IExplosion CreateBulletImpactExplosion();
         IExplosion CreateAdvancedExplosion(ExplosionKey explosionKey);
 
