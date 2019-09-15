@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.Effects.Explosions
             _factory = new ExplosionFactory(_prefabFactory, _explosionKey);
 
             _explosion = Substitute.For<IExplosion>();
-            _prefabFactory.CreateAdvancedExplosion(_explosionKey).Returns(_explosion);
+            _prefabFactory.CreateExplosion(_explosionKey).Returns(_explosion);
         }
 
         [Test]

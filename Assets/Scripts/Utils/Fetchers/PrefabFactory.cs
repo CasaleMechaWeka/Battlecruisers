@@ -108,24 +108,6 @@ namespace BattleCruisers.Utils.Fetchers
             return newExplosion.Initialise();
         }
 
-        // FELIX  Remove
-        public IExplosion CreateBulletImpactExplosion()
-        {
-            BulletImpactExplosion explosionPrefab = _prefabFetcher.GetPrefab<BulletImpactExplosion>(StaticPrefabKeys.Explosions.BulletImpact);
-            BulletImpactExplosion newExplosion = Object.Instantiate(explosionPrefab);
-            newExplosion.Initialise();
-            return newExplosion;
-        }
-
-        // FELIX  Remove
-        public IExplosion CreateAdvancedExplosion(ExplosionKey explosionKey)
-        {
-            AdvancedExplosion explosionPrefab = _prefabFetcher.GetPrefab<AdvancedExplosion>(explosionKey);
-            AdvancedExplosion newExplosion = Object.Instantiate(explosionPrefab);
-            newExplosion.Initialise(_randomGenerator);
-            return newExplosion;
-        }
-
         public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
