@@ -7,6 +7,7 @@ using BattleCruisers.UI;
 using System;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
+using UnityCommon.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
@@ -45,7 +46,7 @@ namespace BattleCruisers.Cruisers.Slots
         /// </summary>
         BuildingFunction BuildingFunctionAffinity { get; }
         Direction Direction { get; }
-        IBuilding Building { get; }
+        IBroadcastingProperty<IBuilding> Building { get; }
         ObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
         Vector2 Position { get; }

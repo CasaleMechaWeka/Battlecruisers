@@ -197,7 +197,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         {
             SlotSpecification slotSpecification = new SlotSpecification(SlotType.Deck, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
-            _deckSlot2.Building.Returns(_building);
+            _deckSlot2.Building.Value.Returns(_building);
 
             Assert.AreSame(_deckSlot2, _slotAccessor.GetSlot(_building));
         }

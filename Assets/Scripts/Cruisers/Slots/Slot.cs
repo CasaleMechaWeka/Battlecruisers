@@ -8,6 +8,7 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -37,12 +38,16 @@ namespace BattleCruisers.Cruisers.Slots
         public float index;
         public float Index => index;
 
-        public bool IsFree => Building == null;
+        public bool IsFree => _baseBuildingProperty.Value == null;
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         public Vector3 BuildingPlacementPoint { get; private set; }
         public Vector2 Position => transform.position;
+        
+        // FELIX  Rename to Building
+        private ISettableBroadcastingProperty<IBuilding> _baseBuildingProperty;
+        public IBroadcastingProperty<IBuilding> Building { get; private set; }
 
         /// <summary>
         /// Only show/hide slot sprite renderer.  Always show boost feedback.
@@ -53,24 +58,22 @@ namespace BattleCruisers.Cruisers.Slots
             set { _renderer.gameObject.SetActive(value); }
         }
 
-        private IBuilding _building;
-        public IBuilding Building
+        private IBuilding SlotBuilding
         {
-            get { return _building; }
             set
             {
-                if (_building != null)
+                if (_baseBuildingProperty.Value != null)
                 {
                     Assert.IsNull(value);
-                    _building.Destroyed -= OnBuildingDestroyed;
+                    _baseBuildingProperty.Value.Destroyed -= OnBuildingDestroyed;
                 }
 
-                _building = value;
+                _baseBuildingProperty.Value = value;
 
-                if (_building != null)
+                if (_baseBuildingProperty.Value != null)
                 {
-                    _buildingPlacer.PlaceBuilding(_building, this);
-                    _building.Destroyed += OnBuildingDestroyed;
+                    _buildingPlacer.PlaceBuilding(_baseBuildingProperty.Value, this);
+                    _baseBuildingProperty.Value.Destroyed += OnBuildingDestroyed;
 				}
             }
         }
@@ -101,6 +104,9 @@ namespace BattleCruisers.Cruisers.Slots
             _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
 
             Transform = new TransformBC(transform);
+
+            _baseBuildingProperty = new SettableBroadcastingProperty<IBuilding>(initialValue: null);
+            Building = new BroadcastingProperty<IBuilding>(_baseBuildingProperty);
         }
 
 		public void OnPointerClick(PointerEventData eventData)
@@ -117,7 +123,7 @@ namespace BattleCruisers.Cruisers.Slots
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
-			Building = null;
+			SlotBuilding = null;
 
             BuildingDestroyed?.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
 		}
@@ -130,7 +136,7 @@ namespace BattleCruisers.Cruisers.Slots
         public void SetBuilding(IBuilding building)
         {
             Assert.IsNotNull(building);
-            Building = building;
+            SlotBuilding = building;
         }
     }
 }

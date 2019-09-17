@@ -63,7 +63,7 @@ namespace BattleCruisers.Cruisers.Slots
 
             return
                 _slots[building.SlotSpecification.SlotType]
-                    .FirstOrDefault(slot => ReferenceEquals(slot.Building, building));
+                    .FirstOrDefault(slot => ReferenceEquals(slot.Building.Value, building));
         }
 
 		public int GetSlotCount(SlotType slotType)
