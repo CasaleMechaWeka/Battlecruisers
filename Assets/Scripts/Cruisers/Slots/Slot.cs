@@ -22,7 +22,7 @@ namespace BattleCruisers.Cruisers.Slots
         private Vector2 _size;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private SlotBoostFeedback _boostFeedback;
+        private SlotBoostTextFeedback _boostFeedback;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public SlotType type;

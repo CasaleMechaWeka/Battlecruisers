@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
-    public class SlotBoostFeedback
+    public class SlotBoostTextFeedback
     {
         private readonly ITextMesh _textMesh;
         private readonly ObservableCollection<IBoostProvider> _boostProviders;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
             }
         }
 
-        public SlotBoostFeedback(ITextMesh textMesh, ObservableCollection<IBoostProvider> boostProviders)
+        public SlotBoostTextFeedback(ITextMesh textMesh, ObservableCollection<IBoostProvider> boostProviders)
         {
             Helper.AssertIsNotNull(textMesh, boostProviders);
 

@@ -6,7 +6,7 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
 {
     public class SlotBoostFeedbackInitialiser : MonoBehaviour
     {
-        public SlotBoostFeedback CreateSlotBoostFeedback(ISlot parentSlot)
+        public SlotBoostTextFeedback CreateSlotBoostFeedback(ISlot parentSlot)
         {
             Assert.IsNotNull(parentSlot);
 
@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
             Assert.IsNotNull(textMesh);
             ITextMesh textMeshWrapper = new TextMeshWrapper(textMesh);
 
-            return new SlotBoostFeedback(textMeshWrapper, parentSlot.BoostProviders);
+            return new SlotBoostTextFeedback(textMeshWrapper, parentSlot.BoostProviders);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots.Feedback
     public class SlotBoostFeedbackTests
     {
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private SlotBoostFeedback _slotBoostFeedback;
+        private SlotBoostTextFeedback _slotBoostFeedback;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private ITextMesh _textMesh;
         private ObservableCollection<IBoostProvider> _boostProviders;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots.Feedback
             _textMesh = Substitute.For<ITextMesh>();
             _boostProviders = new ObservableCollection<IBoostProvider>();
 
-            _slotBoostFeedback = new SlotBoostFeedback(_textMesh, _boostProviders);
+            _slotBoostFeedback = new SlotBoostTextFeedback(_textMesh, _boostProviders);
 
             _boostProvider = Substitute.For<IBoostProvider>();
         }
