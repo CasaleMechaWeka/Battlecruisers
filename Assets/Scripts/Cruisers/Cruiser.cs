@@ -196,7 +196,7 @@ namespace BattleCruisers.Cruisers
                     slot,
                     _buildingDoubleClickHandler));
 
-            slot.Building = building;
+            slot.SetBuilding(building);
 
 			building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;

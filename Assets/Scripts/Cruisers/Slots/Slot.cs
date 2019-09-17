@@ -126,5 +126,11 @@ namespace BattleCruisers.Cruisers.Slots
         {
             return highlightArgsFactory.CreateForInGameObject(Transform.Position, _size);
         }
+
+        public void SetBuilding(IBuilding building)
+        {
+            Assert.IsNotNull(building);
+            Building = building;
+        }
     }
 }

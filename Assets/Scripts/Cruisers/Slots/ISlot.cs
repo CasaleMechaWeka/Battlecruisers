@@ -45,7 +45,7 @@ namespace BattleCruisers.Cruisers.Slots
         /// </summary>
         BuildingFunction BuildingFunctionAffinity { get; }
         Direction Direction { get; }
-        IBuilding Building { get; set; }
+        IBuilding Building { get; }
         ObservableCollection<IBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
         Vector2 Position { get; }
@@ -74,5 +74,6 @@ namespace BattleCruisers.Cruisers.Slots
         event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
 
         void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer);
+        void SetBuilding(IBuilding building);
 	}
 }
