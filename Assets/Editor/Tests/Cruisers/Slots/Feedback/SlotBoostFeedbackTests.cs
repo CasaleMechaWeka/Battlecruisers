@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Cruisers.Slots.Feedback;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.ObjectModel;
 
-namespace BattleCruisers.Tests.Cruisers.Slots
+namespace BattleCruisers.Tests.Cruisers.Slots.Feedback
 {
     public class SlotBoostFeedbackTests
     {

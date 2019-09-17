@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Cruisers.Slots
+namespace BattleCruisers.Cruisers.Slots.Feedback
 {
     public class SlotBoostFeedbackInitialiser : MonoBehaviour
     {

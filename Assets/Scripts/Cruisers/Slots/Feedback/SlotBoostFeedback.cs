@@ -5,7 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
-namespace BattleCruisers.Cruisers.Slots
+namespace BattleCruisers.Cruisers.Slots.Feedback
 {
     public class SlotBoostFeedback
     {

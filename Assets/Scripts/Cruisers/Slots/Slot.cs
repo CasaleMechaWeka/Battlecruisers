@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
+using BattleCruisers.Cruisers.Slots.Feedback;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using System;
