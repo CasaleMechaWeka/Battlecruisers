@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
-using System;
+﻿using System;
 
 namespace BattleCruisers.Effects
 {
