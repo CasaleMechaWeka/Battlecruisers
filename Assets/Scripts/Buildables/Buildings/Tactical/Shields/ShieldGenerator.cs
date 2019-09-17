@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building5;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
         public override TargetValue TargetValue => TargetValue.Medium;
+        public override bool IsBoostable => true;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,

@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         private IBoostProvider _boostProvider;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Booster;
+        public override bool IsBoostable => true;
 
         public float boostMultiplier;
 

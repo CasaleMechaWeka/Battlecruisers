@@ -27,5 +27,19 @@ namespace BattleCruisers.Buildables.Buildings
         BuildingCategory Category { get; }
         SlotSpecification SlotSpecification { get; }
         Vector3 PuzzleRootPoint { get; }
+
+        /// <summary>
+        /// True if the buliding is boostable, false otherwise.  For example, these buildings are boostable:
+        /// + Air/Naval factory => Build speed
+        /// + Turrets           => Fire rate
+        /// + Shield            => Recharge rate
+        /// + LocalBooster      => Boost multiplier
+        /// 
+        /// Everything else is not, such as:
+        /// + Kamikaze signal
+        /// + Stealth generator
+        /// + Nuke launcher
+        /// </summary>
+        bool IsBoostable { get; }
 	}
 }

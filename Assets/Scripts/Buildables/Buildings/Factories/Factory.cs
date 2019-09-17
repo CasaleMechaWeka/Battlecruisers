@@ -33,6 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building3;
         public abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
+        public override bool IsBoostable => true;
 
         private ObservableValue<bool> _isUnitPaused;
         public IObservableValue<bool> IsUnitPaused
