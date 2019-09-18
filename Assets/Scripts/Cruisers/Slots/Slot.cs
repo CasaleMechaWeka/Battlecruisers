@@ -38,15 +38,14 @@ namespace BattleCruisers.Cruisers.Slots
         public float index;
         public float Index => index;
 
-        public bool IsFree => _baseBuildingProperty.Value == null;
+        public bool IsFree => _baseBuilding.Value == null;
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         public Vector3 BuildingPlacementPoint { get; private set; }
         public Vector2 Position => transform.position;
         
-        // FELIX  Rename to Building
-        private ISettableBroadcastingProperty<IBuilding> _baseBuildingProperty;
+        private ISettableBroadcastingProperty<IBuilding> _baseBuilding;
         public IBroadcastingProperty<IBuilding> Building { get; private set; }
 
         /// <summary>
@@ -62,18 +61,18 @@ namespace BattleCruisers.Cruisers.Slots
         {
             set
             {
-                if (_baseBuildingProperty.Value != null)
+                if (_baseBuilding.Value != null)
                 {
                     Assert.IsNull(value);
-                    _baseBuildingProperty.Value.Destroyed -= OnBuildingDestroyed;
+                    _baseBuilding.Value.Destroyed -= OnBuildingDestroyed;
                 }
 
-                _baseBuildingProperty.Value = value;
+                _baseBuilding.Value = value;
 
-                if (_baseBuildingProperty.Value != null)
+                if (_baseBuilding.Value != null)
                 {
-                    _buildingPlacer.PlaceBuilding(_baseBuildingProperty.Value, this);
-                    _baseBuildingProperty.Value.Destroyed += OnBuildingDestroyed;
+                    _buildingPlacer.PlaceBuilding(_baseBuilding.Value, this);
+                    _baseBuilding.Value.Destroyed += OnBuildingDestroyed;
 				}
             }
         }
@@ -101,8 +100,8 @@ namespace BattleCruisers.Cruisers.Slots
 
             Transform = new TransformBC(transform);
 
-            _baseBuildingProperty = new SettableBroadcastingProperty<IBuilding>(initialValue: null);
-            Building = new BroadcastingProperty<IBuilding>(_baseBuildingProperty);
+            _baseBuilding = new SettableBroadcastingProperty<IBuilding>(initialValue: null);
+            Building = new BroadcastingProperty<IBuilding>(_baseBuilding);
 
             SlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);
