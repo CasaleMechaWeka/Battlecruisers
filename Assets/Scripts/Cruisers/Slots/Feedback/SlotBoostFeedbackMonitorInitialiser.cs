@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
@@ -8,6 +9,8 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
     {
         public SlotBoostFeedbackMonitor CreateFeedbackMonitor(ISlot slot)
         {
+            Assert.IsNotNull(slot);
+
             ParticleSystem singleBoostEffect = transform.FindNamedComponent<ParticleSystem>("SingleBoostEffect");
             ParticleSystem doubleBoostEffect = transform.FindNamedComponent<ParticleSystem>("DoubleBoostEffect");
 

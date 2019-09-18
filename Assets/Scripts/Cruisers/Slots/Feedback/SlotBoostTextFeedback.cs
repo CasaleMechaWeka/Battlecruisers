@@ -7,6 +7,8 @@ using System.Collections.Specialized;
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
+    // FELIX  Remove
+    // FELIX  Remove component from slot prefabs
     public class SlotBoostTextFeedback
     {
         private readonly ITextMesh _textMesh;

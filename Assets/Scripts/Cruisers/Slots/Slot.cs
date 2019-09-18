@@ -23,6 +23,8 @@ namespace BattleCruisers.Cruisers.Slots
         private Vector2 _size;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
+        private SlotBoostFeedbackMonitor _boostFeedbackMonitor;
+        // FELIX  Remove :)
         private SlotBoostTextFeedback _boostFeedback;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
@@ -99,14 +101,19 @@ namespace BattleCruisers.Cruisers.Slots
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
 
-            SlotBoostFeedbackInitialiser feedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackInitialiser>();
-            Assert.IsNotNull(feedbackInitialiser);
-            _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
-
             Transform = new TransformBC(transform);
 
             _baseBuildingProperty = new SettableBroadcastingProperty<IBuilding>(initialValue: null);
             Building = new BroadcastingProperty<IBuilding>(_baseBuildingProperty);
+
+            SlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackMonitorInitialiser>();
+            Assert.IsNotNull(boostFeedbackInitialiser);
+            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this);
+
+            // FELIX  Remove
+            SlotBoostFeedbackInitialiser feedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackInitialiser>();
+            Assert.IsNotNull(feedbackInitialiser);
+            _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
         }
 
 		public void OnPointerClick(PointerEventData eventData)
