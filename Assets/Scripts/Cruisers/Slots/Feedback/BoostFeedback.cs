@@ -9,6 +9,17 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
         private readonly IGameObject _singleBoostEffect, _doubleBoostEffect;
 
         private BoostState _state;
+        public BoostState State
+        {
+            get => _state;
+            set
+            {
+                _state = value;
+
+                _singleBoostEffect.IsVisible = _state == BoostState.Single;
+                _doubleBoostEffect.IsVisible = _state == BoostState.Double;
+            }
+        }
 
         public BoostFeedback(IGameObject singleBoostEffect, IGameObject doubleBoostEffect)
         {
@@ -16,21 +27,8 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
 
             _singleBoostEffect = singleBoostEffect;
             _doubleBoostEffect = doubleBoostEffect;
-        }
 
-        public BoostState State
-        {
-            get => _state;
-            set
-            {
-                if (_state != value)
-                {
-                    _state = value;
-
-                    _singleBoostEffect.IsVisible = _state == BoostState.Single;
-                    _doubleBoostEffect.IsVisible = _state == BoostState.Double;
-                }
-            }
+            State = BoostState.Off;
         }
     }
 }
