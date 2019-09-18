@@ -24,8 +24,6 @@ namespace BattleCruisers.Cruisers.Slots
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private SlotBoostFeedbackMonitor _boostFeedbackMonitor;
-        // FELIX  Remove :)
-        private SlotBoostTextFeedback _boostFeedback;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public SlotType type;
@@ -109,11 +107,6 @@ namespace BattleCruisers.Cruisers.Slots
             SlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);
             _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this);
-
-            // FELIX  Remove
-            SlotBoostFeedbackInitialiser feedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackInitialiser>();
-            Assert.IsNotNull(feedbackInitialiser);
-            _boostFeedback = feedbackInitialiser.CreateSlotBoostFeedback(this);
         }
 
 		public void OnPointerClick(PointerEventData eventData)
