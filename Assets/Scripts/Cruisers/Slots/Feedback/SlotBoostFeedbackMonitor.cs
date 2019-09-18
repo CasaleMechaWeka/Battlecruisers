@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
-    // FELIX  Use, test
     public class SlotBoostFeedbackMonitor
     {
         private readonly ISlot _parentSlot;
