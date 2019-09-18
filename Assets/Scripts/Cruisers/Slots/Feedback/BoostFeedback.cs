@@ -3,7 +3,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
-    // FELIX  Use, test
     public class BoostFeedback : IBoostFeedback
     {
         private readonly IGameObject _singleBoostEffect, _doubleBoostEffect;
