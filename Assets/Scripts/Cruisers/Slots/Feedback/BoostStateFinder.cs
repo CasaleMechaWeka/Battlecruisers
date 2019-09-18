@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
-    // FELIX  Use, test
     public class BoostStateFinder : IBoostStateFinder
     {
         public BoostState FindState(int numOfLocalBoosters, IBuilding building)
