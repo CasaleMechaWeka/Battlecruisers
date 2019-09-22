@@ -10,6 +10,7 @@ namespace BattleCruisers.Effects
         private IRandomGenerator _random;
         private Animation _animation;
 
+        public event EventHandler Activated;
         public event EventHandler Deactivated;
 
         public void Initialise(IRandomGenerator random)
@@ -32,6 +33,8 @@ namespace BattleCruisers.Effects
             Assert.IsNotNull(state);
             state.normalizedTime = _random.Value;
             _animation.Play();
+
+            Activated?.Invoke(this, EventArgs.Empty);
         }
 
         public void Deactivate()
