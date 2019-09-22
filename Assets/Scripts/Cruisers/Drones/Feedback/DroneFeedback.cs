@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly IDroneConsumerInfo _droneConsumerInfo;
         private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
-        private readonly IDroneMonitor _droneMonitor;
+        private readonly IDroneAudioActivenessDecider _droneAudioActivenessDecider;
         private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
 
@@ -23,15 +23,15 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             IDroneConsumerInfo droneConsumerInfo, 
             IPool<IDroneController, DroneActivationArgs> dronePool, 
             ISpawnPositionFinder spawnPositionFinder,
-            IDroneMonitor droneMonitor,
+            IDroneAudioActivenessDecider droneAudioActivenessDecider,
             Faction faction)
         {
-            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder, droneMonitor);
+            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder, droneAudioActivenessDecider);
 
             _droneConsumerInfo = droneConsumerInfo;
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
-            _droneMonitor = droneMonitor;
+            _droneAudioActivenessDecider = droneAudioActivenessDecider;
             _faction = faction;
             _drones = new List<IDroneController>();
 
@@ -60,7 +60,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 DroneActivationArgs activationArgs
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
-                        playAudio: _droneMonitor.ShouldPlaySound(_faction),
+                        playAudio: _droneAudioActivenessDecider.ShouldDroneAudioBeActive(_faction),
                         _faction);
                 IDroneController droneToAdd = _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);

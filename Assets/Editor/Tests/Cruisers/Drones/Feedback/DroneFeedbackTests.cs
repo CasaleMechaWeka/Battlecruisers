@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         private IDroneConsumerInfo _droneConsumerInfo;
         private IPool<IDroneController, DroneActivationArgs> _dronePool;
         private ISpawnPositionFinder _spawnPositionFinder;
-        private IDroneMonitor _droneMonitor;
+        private IDroneAudioActivenessDecider _droneAudioActivenessDecider;
         private IDroneController _drone1, _drone2;
         private IDroneConsumer _droneConsumer;
         private DroneActivationArgs _activationArgs1, _activationArgs2;
@@ -33,10 +33,10 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _dronePool = Substitute.For<IPool<IDroneController, DroneActivationArgs>>();
             _spawnPositionFinder = Substitute.For<ISpawnPositionFinder>();
 
-            _droneMonitor = Substitute.For<IDroneMonitor>();
-            _droneMonitor.ShouldPlaySound(Faction.Reds).Returns(true, false);
+            _droneAudioActivenessDecider = Substitute.For<IDroneAudioActivenessDecider>();
+            _droneAudioActivenessDecider.ShouldDroneAudioBeActive(Faction.Reds).Returns(true, false);
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor, Faction.Reds);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneAudioActivenessDecider, Faction.Reds);
 
             _spawnPosition1 = new Vector2(4, 3);
             _spawnPosition2 = new Vector2(6, 7);
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _droneConsumer.NumOfDrones.Returns(2);
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor, Faction.Reds);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneAudioActivenessDecider, Faction.Reds);
 
             // Create feedback for initial number of drones
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(0));
 
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
-            _droneMonitor.DidNotReceiveWithAnyArgs().ShouldPlaySound(default);
+            _droneAudioActivenessDecider.DidNotReceiveWithAnyArgs().ShouldDroneAudioBeActive(default);
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
 
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
 
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
-            _droneMonitor.Received(2).ShouldPlaySound(Faction.Reds);
+            _droneAudioActivenessDecider.Received(2).ShouldDroneAudioBeActive(Faction.Reds);
             _dronePool.Received().GetItem(_activationArgs1);
             _dronePool.Received().GetItem(_activationArgs2);
         }
@@ -112,7 +112,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Add 2 drones
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
             _spawnPositionFinder.ClearReceivedCalls();
-            _droneMonitor.ClearReceivedCalls();
+            _droneAudioActivenessDecider.ClearReceivedCalls();
             _dronePool.ClearReceivedCalls();
 
             // Disose
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Check unsubscribed
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
-            _droneMonitor.DidNotReceiveWithAnyArgs().ShouldPlaySound(default);
+            _droneAudioActivenessDecider.DidNotReceiveWithAnyArgs().ShouldDroneAudioBeActive(default);
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
     }
