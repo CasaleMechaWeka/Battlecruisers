@@ -15,15 +15,18 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneMonitor : IDroneMonitor
     {
         private readonly IDroneFactory _droneFactory;
+        private readonly int _maxActiveDroneAudioSources;
         private readonly IDictionary<Faction, int> _factionToActiveDronesCount;
 
-        private const int MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
+        private const int DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
 
-        public DroneMonitor(IDroneFactory droneFactory)
+        public DroneMonitor(IDroneFactory droneFactory, int maxActiveDroneAudioSources = DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES)
         {
             Assert.IsNotNull(droneFactory);
 
             _droneFactory = droneFactory;
+            _maxActiveDroneAudioSources = maxActiveDroneAudioSources;
+
             _droneFactory.DroneCreated += _droneFactory_DroneCreated;
 
             _factionToActiveDronesCount = new Dictionary<Faction, int>()
@@ -56,7 +59,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             Assert.IsTrue(_factionToActiveDronesCount.ContainsKey(faction));
 
             int numOfActiveDrones = _factionToActiveDronesCount[faction];
-            bool shouldPlaySound = numOfActiveDrones < MAX_ACTIVE_DRONE_AUDIO_SOURCES;
+            bool shouldPlaySound = numOfActiveDrones < _maxActiveDroneAudioSources;
             Logging.Log(Tags.DRONE_FEEDBACK, $"Faction: {faction}  Active drone #: {numOfActiveDrones}  shouldMakeSound: {shouldPlaySound}");
             return shouldPlaySound;
         }
