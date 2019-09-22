@@ -19,7 +19,10 @@ namespace BattleCruisers.Scenes.Test.Effects
             {
                 DroneController newDrone = Instantiate(dronePrefab);
                 newDrone.Initialise(RandomGenerator.Instance);
-                newDrone.Activate(RandomisePosition(parentObject.transform.position));
+                newDrone.Activate(
+                    new DroneActivationArgs(
+                        position: RandomisePosition(parentObject.transform.position),
+                        playAudio: true));
                 //Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
             }
         }

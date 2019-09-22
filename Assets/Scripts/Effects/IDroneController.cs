@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects
 {
-    public interface IDroneController : IPoolable<Vector2>
+    public interface IDroneController : IPoolable<DroneActivationArgs>
     {
         event EventHandler Activated;
 

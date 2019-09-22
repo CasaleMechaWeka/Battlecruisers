@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
@@ -11,19 +10,25 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
-        private readonly IPool<IDroneController, Vector2> _dronePool;
+        private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
+        private readonly IDroneMonitor _droneMonitor;
         private readonly IList<IDroneController> _drones;
 
         public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
-        public DroneFeedback(IDroneConsumerInfo droneConsumerInfo, IPool<IDroneController, Vector2> dronePool, ISpawnPositionFinder spawnPositionFinder)
+        public DroneFeedback(
+            IDroneConsumerInfo droneConsumerInfo, 
+            IPool<IDroneController, DroneActivationArgs> dronePool, 
+            ISpawnPositionFinder spawnPositionFinder,
+            IDroneMonitor droneMonitor)
         {
-            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder);
+            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder, droneMonitor);
 
             _droneConsumerInfo = droneConsumerInfo;
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
+            _droneMonitor = droneMonitor;
             _drones = new List<IDroneController>();
 
             _droneConsumerInfo.DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
@@ -48,8 +53,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         {
             while (numOfDrones> _drones.Count)
             {
-                Vector2 spawnPosition = _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo);
-                IDroneController droneToAdd = _dronePool.GetItem(spawnPosition);
+                DroneActivationArgs activationArgs
+                    = new DroneActivationArgs(
+                        position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
+                        playAudio: _droneMonitor.ShouldDroneMakeSound);
+                IDroneController droneToAdd = _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);
             }
         }

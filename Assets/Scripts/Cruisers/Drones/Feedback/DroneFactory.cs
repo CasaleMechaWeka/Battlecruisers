@@ -1,6 +1,6 @@
-﻿using System;
-using BattleCruisers.Effects;
+﻿using BattleCruisers.Effects;
 using BattleCruisers.Utils.Fetchers;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback

@@ -13,10 +13,12 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
     {
         private IDroneFeedback _feedback;
         private IDroneConsumerInfo _droneConsumerInfo;
-        private IPool<IDroneController, Vector2> _dronePool;
+        private IPool<IDroneController, DroneActivationArgs> _dronePool;
         private ISpawnPositionFinder _spawnPositionFinder;
+        private IDroneMonitor _droneMonitor;
         private IDroneController _drone1, _drone2;
         private IDroneConsumer _droneConsumer;
+        private DroneActivationArgs _activationArgs1, _activationArgs2;
         private Vector2 _spawnPosition1, _spawnPosition2;
 
         [SetUp]
@@ -27,20 +29,26 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumerInfo = Substitute.For<IDroneConsumerInfo>();
             _droneConsumer = Substitute.For<IDroneConsumer>();
             _droneConsumerInfo.DroneConsumer.Returns(_droneConsumer);
-            _dronePool = Substitute.For<IPool<IDroneController, Vector2>>();
+            _dronePool = Substitute.For<IPool<IDroneController, DroneActivationArgs>>();
             _spawnPositionFinder = Substitute.For<ISpawnPositionFinder>();
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder);
+            _droneMonitor = Substitute.For<IDroneMonitor>();
+            _droneMonitor.ShouldDroneMakeSound.Returns(true, false);
+
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor);
 
             _spawnPosition1 = new Vector2(4, 3);
             _spawnPosition2 = new Vector2(6, 7);
             _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo).Returns(_spawnPosition1, _spawnPosition2);
 
+            _activationArgs1 = new DroneActivationArgs(_spawnPosition1, true);
+            _activationArgs2 = new DroneActivationArgs(_spawnPosition2, false);
+
             _drone1 = Substitute.For<IDroneController>();
             _drone2 = Substitute.For<IDroneController>();
 
-            _dronePool.GetItem(_spawnPosition1).Returns(_drone1);
-            _dronePool.GetItem(_spawnPosition2).Returns(_drone2);
+            _dronePool.GetItem(_activationArgs1).Returns(_drone1);
+            _dronePool.GetItem(_activationArgs2).Returns(_drone2);
         }
 
         [Test]
@@ -48,12 +56,12 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _droneConsumer.NumOfDrones.Returns(2);
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor);
 
             // Create feedback for initial number of drones
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
-            _dronePool.Received().GetItem(_spawnPosition1);
-            _dronePool.Received().GetItem(_spawnPosition2);
+            _dronePool.Received().GetItem(_activationArgs1);
+            _dronePool.Received().GetItem(_activationArgs2);
 
             Assert.AreSame(_droneConsumer, _feedback.DroneConsumer);
         }
@@ -70,6 +78,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(0));
 
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
+            bool compilerBribe = _droneMonitor.DidNotReceive().ShouldDroneMakeSound;
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
 
@@ -79,8 +88,9 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
 
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
-            _dronePool.Received().GetItem(_spawnPosition1);
-            _dronePool.Received().GetItem(_spawnPosition2);
+            bool compilerBribe = _droneMonitor.Received(2).ShouldDroneMakeSound;
+            _dronePool.Received().GetItem(_activationArgs1);
+            _dronePool.Received().GetItem(_activationArgs2);
         }
 
         [Test]
@@ -101,6 +111,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Add 2 drones
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
             _spawnPositionFinder.ClearReceivedCalls();
+            _droneMonitor.ClearReceivedCalls();
             _dronePool.ClearReceivedCalls();
 
             // Disose
@@ -112,6 +123,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Check unsubscribed
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
+            bool compilerBribe = _droneMonitor.DidNotReceive().ShouldDroneMakeSound;
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
     }

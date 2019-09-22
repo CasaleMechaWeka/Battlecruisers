@@ -12,7 +12,7 @@ namespace BattleCruisers.Utils.Factories
         IExplosionPoolProvider ExplosionPoolProvider { get; }
         IProjectilePoolProvider ProjectilePoolProvider { get; }
         IUnitPoolProvider UnitPoolProvider { get; }
-        IPool<IDroneController, Vector2> DronePool { get; }
+        IPool<IDroneController, DroneActivationArgs> DronePool { get; }
         IUnitToPoolMap UnitToPoolMap { get; }
     }
 }

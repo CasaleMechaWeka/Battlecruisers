@@ -9,6 +9,7 @@ namespace BattleCruisers.Effects
     {
         private IRandomGenerator _random;
         private Animation _animation;
+        private AudioSource _audioSource;
 
         public event EventHandler Activated;
         public event EventHandler Deactivated;
@@ -21,13 +22,18 @@ namespace BattleCruisers.Effects
             _animation = GetComponentInChildren<Animation>();
             Assert.IsNotNull(_animation);
 
+            _audioSource = GetComponentInChildren<AudioSource>();
+            Assert.IsNotNull(_audioSource);
+
             gameObject.SetActive(false);
         }
 
-        public void Activate(Vector2 position)
+        public void Activate(DroneActivationArgs activationArgs)
         {
-            gameObject.transform.position = position;
+            gameObject.transform.position = activationArgs.Position;
             gameObject.SetActive(true);
+
+            _audioSource.gameObject.SetActive(activationArgs.PlayAudio);
 
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);

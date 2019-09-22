@@ -12,6 +12,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -209,7 +210,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             if (_poolProviders == null)
             {
-                PoolProviders poolProviders = new PoolProviders(factoryProvider, uiManager);
+                IDroneFactory droneFactory = new DroneFactory(factoryProvider.PrefabFactory);
+                PoolProviders poolProviders = new PoolProviders(factoryProvider, uiManager, droneFactory);
                 factoryProvider.PoolProviders.Returns(poolProviders);
                 poolProviders.SetInitialCapacities();
                 _poolProviders = poolProviders;

@@ -65,14 +65,17 @@ namespace BattleCruisers.Utils.Factories
         {
             Assert.IsNotNull(uiManager);
 
-            PoolProviders poolProviders = new PoolProviders(this, uiManager);
+            IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
+
+            PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
 
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     poolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE));
+                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                    new DroneMonitor(droneFactory));
         }
 	}
 }

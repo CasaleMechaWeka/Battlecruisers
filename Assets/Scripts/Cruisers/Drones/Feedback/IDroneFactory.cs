@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Effects;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
@@ -17,7 +16,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         }
     }
 
-    public interface IDroneFactory : IPoolableFactory<IDroneController, Vector2>
+    public interface IDroneFactory : IPoolableFactory<IDroneController, DroneActivationArgs>
     {
         event EventHandler<DroneCreatedEventArgs> DroneCreated;
     }

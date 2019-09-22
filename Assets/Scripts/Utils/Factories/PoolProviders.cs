@@ -5,7 +5,6 @@ using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Pools;
-using UnityEngine;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -20,24 +19,22 @@ namespace BattleCruisers.Utils.Factories
         private UnitPoolProvider _unitPoolProvider;
         public IUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
-        private Pool<IDroneController, Vector2> _dronePool;
-        public IPool<IDroneController, Vector2> DronePool => _dronePool;
+        private Pool<IDroneController, DroneActivationArgs> _dronePool;
+        public IPool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
 
         public IUnitToPoolMap UnitToPoolMap { get; }
 
         // 16 per cruiser
         private const int DRONES_INITIAL_CAPACITY = 32;
 
-        public PoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager)
+        public PoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager, IDroneFactory droneFactory)
         {
-            Helper.AssertIsNotNull(factoryProvider, uiManager);
+            Helper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 
             _explosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
             _projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
-            _dronePool
-                = new Pool<IDroneController, Vector2>(
-                    new DroneFactory(factoryProvider.PrefabFactory));
+            _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }
 

@@ -8,15 +8,20 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class DroneFeedbackFactory : IDroneFeedbackFactory
     {
-        private readonly IPool<IDroneController, Vector2> _dronePool;
+        private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
+        private readonly IDroneMonitor _droneMonitor;
 
-        public DroneFeedbackFactory(IPool<IDroneController, Vector2> dronePool, ISpawnPositionFinder spawnPositionFinder)
+        public DroneFeedbackFactory(
+            IPool<IDroneController, DroneActivationArgs> dronePool, 
+            ISpawnPositionFinder spawnPositionFinder,
+            IDroneMonitor droneMonitor)
         {
-            Helper.AssertIsNotNull(dronePool, spawnPositionFinder);
+            Helper.AssertIsNotNull(dronePool, spawnPositionFinder, droneMonitor);
 
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
+            _droneMonitor = droneMonitor;
         }
 
         public IDroneFeedback CreateFeedback(IDroneConsumer droneConsumer, Vector2 position, Vector2 size)
@@ -26,7 +31,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 new DroneFeedback(
                     new DroneConsumerInfo(droneConsumer, position, size),
                     _dronePool,
-                    _spawnPositionFinder);
+                    _spawnPositionFinder,
+                    _droneMonitor);
         }
 
         public IDroneFeedback CreateDummyFeedback()

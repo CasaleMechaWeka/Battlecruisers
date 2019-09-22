@@ -3,7 +3,7 @@
 namespace BattleCruisers.Effects
 {
     // FELIX  Create Drones namespace?
-    public class DroneActivationArgs
+    public struct DroneActivationArgs
     {
         public Vector2 Position { get; }
         public bool PlayAudio { get; }
