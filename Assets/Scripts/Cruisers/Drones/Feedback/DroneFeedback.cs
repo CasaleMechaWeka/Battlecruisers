@@ -60,7 +60,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 DroneActivationArgs activationArgs
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
-                        playAudio: _droneMonitor.ShouldDroneMakeSound,
+                        playAudio: _droneMonitor.ShouldPlaySound(_faction),
                         _faction);
                 IDroneController droneToAdd = _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);

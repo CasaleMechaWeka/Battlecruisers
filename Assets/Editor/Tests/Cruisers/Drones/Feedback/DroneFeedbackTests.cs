@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _spawnPositionFinder = Substitute.For<ISpawnPositionFinder>();
 
             _droneMonitor = Substitute.For<IDroneMonitor>();
-            _droneMonitor.ShouldDroneMakeSound.Returns(true, false);
+            _droneMonitor.ShouldPlaySound(Faction.Reds).Returns(true, false);
 
             _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor, Faction.Reds);
 
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(0));
 
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
-            bool compilerBribe = _droneMonitor.DidNotReceive().ShouldDroneMakeSound;
+            _droneMonitor.DidNotReceiveWithAnyArgs().ShouldPlaySound(default);
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
 
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
 
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
-            bool compilerBribe = _droneMonitor.Received(2).ShouldDroneMakeSound;
+            _droneMonitor.Received(2).ShouldPlaySound(Faction.Reds);
             _dronePool.Received().GetItem(_activationArgs1);
             _dronePool.Received().GetItem(_activationArgs2);
         }
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Check unsubscribed
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
-            bool compilerBribe = _droneMonitor.DidNotReceive().ShouldDroneMakeSound;
+            _droneMonitor.DidNotReceiveWithAnyArgs().ShouldPlaySound(default);
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
     }

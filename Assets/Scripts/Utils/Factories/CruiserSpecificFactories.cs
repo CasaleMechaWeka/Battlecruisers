@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost.GlobalProviders;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
@@ -24,7 +25,8 @@ namespace BattleCruisers.Utils.Factories
             ICruiser parentCruiser, 
             ICruiser enemyCruiser, 
             IRankedTargetTracker userChosenTargetTracker, 
-            IUpdaterProvider updaterProvider)
+            IUpdaterProvider updaterProvider, 
+            Faction faction)
         {
             Helper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
@@ -39,7 +41,7 @@ namespace BattleCruisers.Utils.Factories
                     factoryProvider.PoolProviders.DronePool,
                     new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
                     factoryProvider.DroneMonitor,
-                    parentCruiser.Faction);
+                    faction);
         }
     }
 }

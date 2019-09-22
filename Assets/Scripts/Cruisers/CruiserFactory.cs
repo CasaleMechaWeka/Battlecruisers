@@ -158,7 +158,8 @@ namespace BattleCruisers.Cruisers
                     cruiser,
                     enemyCruiser,
                     userChosenTargetTracker,
-                    _factoryProvider.UpdaterProvider);
+                    _factoryProvider.UpdaterProvider,
+                    faction);
 
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, _factoryProvider.Sound.PrioritisedSoundPlayer);

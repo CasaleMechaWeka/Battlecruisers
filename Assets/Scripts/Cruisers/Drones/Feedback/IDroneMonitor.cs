@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.Cruisers.Drones.Feedback
+﻿using BattleCruisers.Buildables;
+
+namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public interface IDroneMonitor
     {
-        bool ShouldDroneMakeSound { get; }
+        bool ShouldPlaySound(Faction faction);
     }
 }

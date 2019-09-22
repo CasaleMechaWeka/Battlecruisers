@@ -1,5 +1,8 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects;
+using BattleCruisers.Utils;
 using System;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
@@ -12,19 +15,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneMonitor : IDroneMonitor
     {
         private readonly IDroneFactory _droneFactory;
+        private readonly IDictionary<Faction, int> _factionToActiveDronesCount;
 
-        private int _numOfActiveDrones = 0;
         private const int MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
-
-        public bool ShouldDroneMakeSound
-        {
-            get
-            {
-                bool shouldMakeSound = _numOfActiveDrones < MAX_ACTIVE_DRONE_AUDIO_SOURCES;
-                Logging.Log(Tags.DRONE_FEEDBACK, $"Active drone #: {_numOfActiveDrones}  shouldMakeSound: {shouldMakeSound}");
-                return shouldMakeSound;
-            }
-        }
 
         public DroneMonitor(IDroneFactory droneFactory)
         {
@@ -32,6 +25,12 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
             _droneFactory = droneFactory;
             _droneFactory.DroneCreated += _droneFactory_DroneCreated;
+
+            _factionToActiveDronesCount = new Dictionary<Faction, int>()
+            {
+                {  Faction.Blues, 0 },
+                { Faction.Reds, 0 }
+            };
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
@@ -42,12 +41,24 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         private void Drone_Activated(object sender, EventArgs e)
         {
-            ++_numOfActiveDrones;
+            IDroneController drone = sender.Parse<IDroneController>();
+            _factionToActiveDronesCount[drone.Faction]++;
         }
 
         private void Drone_Deactivated(object sender, EventArgs e)
         {
-            --_numOfActiveDrones;
+            IDroneController drone = sender.Parse<IDroneController>();
+            _factionToActiveDronesCount[drone.Faction]--;
+        }
+
+        public bool ShouldPlaySound(Faction faction)
+        {
+            Assert.IsTrue(_factionToActiveDronesCount.ContainsKey(faction));
+
+            int numOfActiveDrones = _factionToActiveDronesCount[faction];
+            bool shouldPlaySound = numOfActiveDrones < MAX_ACTIVE_DRONE_AUDIO_SOURCES;
+            Logging.Log(Tags.DRONE_FEEDBACK, $"Faction: {faction}  Active drone #: {numOfActiveDrones}  shouldMakeSound: {shouldPlaySound}");
+            return shouldPlaySound;
         }
     }
 }
