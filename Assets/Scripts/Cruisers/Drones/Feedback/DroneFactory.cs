@@ -1,14 +1,15 @@
-﻿using BattleCruisers.Effects;
-using BattleCruisers.Utils.BattleScene.Pools;
+﻿using System;
+using BattleCruisers.Effects;
 using BattleCruisers.Utils.Fetchers;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    public class DroneFactory : IPoolableFactory<IDroneController, Vector2>
+    public class DroneFactory : IDroneFactory
     {
         private readonly IPrefabFactory _prefabFactory;
+
+        public event EventHandler<DroneCreatedEventArgs> DroneCreated;
 
         public DroneFactory(IPrefabFactory prefabFactory)
         {
@@ -18,7 +19,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         public IDroneController CreateItem()
         {
-            return _prefabFactory.CreateDrone();
+            IDroneController newDrone = _prefabFactory.CreateDrone();
+            DroneCreated?.Invoke(this, new DroneCreatedEventArgs(newDrone));
+            return newDrone;
         }
     }
 }
