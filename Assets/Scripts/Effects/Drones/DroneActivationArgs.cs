@@ -1,9 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using UnityEngine;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.Drones
 {
-    // FELIX  Create Drones namespace?
     public struct DroneActivationArgs
     {
         public Vector2 Position { get; }

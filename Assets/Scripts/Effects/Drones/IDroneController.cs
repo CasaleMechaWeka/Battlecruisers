@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.BattleScene.Pools;
 using System;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.Drones
 {
     public interface IDroneController : IPoolable<DroneActivationArgs>
     {

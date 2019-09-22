@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.Drones
 {
     public class DroneController : MonoBehaviour, IDroneController
     {

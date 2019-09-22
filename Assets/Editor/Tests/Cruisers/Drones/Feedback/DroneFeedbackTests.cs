@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Effects;
+using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils.BattleScene.Pools;
 using NSubstitute;
 using NUnit.Framework;
