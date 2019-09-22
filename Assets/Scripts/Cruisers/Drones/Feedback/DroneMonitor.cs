@@ -3,6 +3,7 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
@@ -15,28 +16,23 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneMonitor : IDroneMonitor
     {
         private readonly IDroneFactory _droneFactory;
-        private readonly int _maxActiveDroneAudioSources;
-        private readonly IDictionary<Faction, int> _factionToActiveDronesCount;
 
-        private const int DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
+        private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
+        public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
-        // FELIX
-        public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum => throw new NotImplementedException();
-
-        public DroneMonitor(IDroneFactory droneFactory, int maxActiveDroneAudioSources = DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES)
+        public DroneMonitor(IDroneFactory droneFactory)
         {
             Assert.IsNotNull(droneFactory);
 
             _droneFactory = droneFactory;
-            _maxActiveDroneAudioSources = maxActiveDroneAudioSources;
-
             _droneFactory.DroneCreated += _droneFactory_DroneCreated;
 
-            _factionToActiveDronesCount = new Dictionary<Faction, int>()
+            _factionToActiveDroneNum = new Dictionary<Faction, int>()
             {
                 {  Faction.Blues, 0 },
                 { Faction.Reds, 0 }
             };
+            FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
@@ -48,23 +44,13 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private void Drone_Activated(object sender, EventArgs e)
         {
             IDroneController drone = sender.Parse<IDroneController>();
-            _factionToActiveDronesCount[drone.Faction]++;
+            _factionToActiveDroneNum[drone.Faction]++;
         }
 
         private void Drone_Deactivated(object sender, EventArgs e)
         {
             IDroneController drone = sender.Parse<IDroneController>();
-            _factionToActiveDronesCount[drone.Faction]--;
-        }
-
-        public bool ShouldPlaySound(Faction faction)
-        {
-            Assert.IsTrue(_factionToActiveDronesCount.ContainsKey(faction));
-
-            int numOfActiveDrones = _factionToActiveDronesCount[faction];
-            bool shouldPlaySound = numOfActiveDrones < _maxActiveDroneAudioSources;
-            Logging.Log(Tags.DRONE_FEEDBACK, $"Faction: {faction}  Active drone #: {numOfActiveDrones}  shouldMakeSound: {shouldPlaySound}");
-            return shouldPlaySound;
+            _factionToActiveDroneNum[drone.Faction]--;
         }
     }
 }
