@@ -12,7 +12,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     /// If you have a lot of drones they make a heck of a racket.  So limit the number
     /// of drones that make a sound.
     /// </summary>
-    /// FELIX  Use, test
     public class DroneMonitor : IDroneMonitor
     {
         private readonly IDroneFactory _droneFactory;
@@ -51,6 +50,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         {
             IDroneController drone = sender.Parse<IDroneController>();
             _factionToActiveDroneNum[drone.Faction]--;
+
+            Assert.IsTrue(_factionToActiveDroneNum[drone.Faction] >= 0);
         }
     }
 }
