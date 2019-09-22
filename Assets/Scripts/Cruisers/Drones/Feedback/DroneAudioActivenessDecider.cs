@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             _maxActiveDroneAudioSources = maxActiveDroneAudioSources;
         }
 
-        public bool ShouldDroneAudioBeActive(Faction droneFaction)
+        public bool ShouldHaveAudio(Faction droneFaction)
         {
             Assert.IsTrue(_droneMonitor.FactionToActiveDroneNum.ContainsKey(droneFaction));
 

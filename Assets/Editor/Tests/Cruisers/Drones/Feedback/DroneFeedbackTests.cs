@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _spawnPositionFinder = Substitute.For<ISpawnPositionFinder>();
 
             _droneAudioActivenessDecider = Substitute.For<IDroneAudioActivenessDecider>();
-            _droneAudioActivenessDecider.ShouldDroneAudioBeActive(Faction.Reds).Returns(true, false);
+            _droneAudioActivenessDecider.ShouldHaveAudio(Faction.Reds).Returns(true, false);
 
             _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneAudioActivenessDecider, Faction.Reds);
 
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(0));
 
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
-            _droneAudioActivenessDecider.DidNotReceiveWithAnyArgs().ShouldDroneAudioBeActive(default);
+            _droneAudioActivenessDecider.DidNotReceiveWithAnyArgs().ShouldHaveAudio(default);
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
 
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
 
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
-            _droneAudioActivenessDecider.Received(2).ShouldDroneAudioBeActive(Faction.Reds);
+            _droneAudioActivenessDecider.Received(2).ShouldHaveAudio(Faction.Reds);
             _dronePool.Received().GetItem(_activationArgs1);
             _dronePool.Received().GetItem(_activationArgs2);
         }
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Check unsubscribed
             _droneConsumer.DroneNumChanged += Raise.EventWith(new DroneNumChangedEventArgs(2));
             _spawnPositionFinder.DidNotReceiveWithAnyArgs().FindSpawnPosition(default);
-            _droneAudioActivenessDecider.DidNotReceiveWithAnyArgs().ShouldDroneAudioBeActive(default);
+            _droneAudioActivenessDecider.DidNotReceiveWithAnyArgs().ShouldHaveAudio(default);
             _dronePool.DidNotReceiveWithAnyArgs().GetItem(default);
         }
     }
