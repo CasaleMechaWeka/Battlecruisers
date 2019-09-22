@@ -1,30 +1,30 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    // FELIX  use, test
     public class DroneAudioActivenessDecider : IDroneAudioActivenessDecider
     {
-        private readonly IDroneMonitor _droneMonitor;
+        private readonly IReadOnlyDictionary<Faction, int> _factionToActiveDroneNum;
         private readonly int _maxActiveDroneAudioSources;
 
         private const int DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
 
-        public DroneAudioActivenessDecider(IDroneMonitor droneMonitor, int maxActiveDroneAudioSources = DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES)
+        public DroneAudioActivenessDecider(IReadOnlyDictionary<Faction, int> factionToActiveDroneNum, int maxActiveDroneAudioSources = DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES)
         {
-            Assert.IsNotNull(droneMonitor);
+            Assert.IsNotNull(factionToActiveDroneNum);
 
-            _droneMonitor = droneMonitor;
+            _factionToActiveDroneNum = factionToActiveDroneNum;
             _maxActiveDroneAudioSources = maxActiveDroneAudioSources;
         }
 
         public bool ShouldHaveAudio(Faction droneFaction)
         {
-            Assert.IsTrue(_droneMonitor.FactionToActiveDroneNum.ContainsKey(droneFaction));
+            Assert.IsTrue(_factionToActiveDroneNum.ContainsKey(droneFaction));
 
-            int numOfActiveDrones = _droneMonitor.FactionToActiveDroneNum[droneFaction];
+            int numOfActiveDrones = _factionToActiveDroneNum[droneFaction];
             bool shouldPlaySound = numOfActiveDrones < _maxActiveDroneAudioSources;
             Logging.Log(Tags.DRONE_FEEDBACK, $"Faction: {droneFaction}  Active drone #: {numOfActiveDrones}  shouldMakeSound: {shouldPlaySound}");
 

@@ -18,6 +18,8 @@ namespace BattleCruisers.Utils.Factories
 {
     public class FactoryProvider : IFactoryProvider
     {
+        private IDroneMonitor _droneMonitor;
+
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
@@ -66,9 +68,8 @@ namespace BattleCruisers.Utils.Factories
             Assert.IsNotNull(uiManager);
 
             IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
-            DroneAudioActivenessDecider
-                = new DroneAudioActivenessDecider(
-                    new DroneMonitor(droneFactory));
+            _droneMonitor = new DroneMonitor(droneFactory);
+            DroneAudioActivenessDecider = new DroneAudioActivenessDecider(_droneMonitor.FactionToActiveDroneNum);
 
             PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
             PoolProviders = poolProviders;
