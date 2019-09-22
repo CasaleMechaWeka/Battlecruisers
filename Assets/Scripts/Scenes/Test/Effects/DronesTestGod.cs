@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -22,7 +23,8 @@ namespace BattleCruisers.Scenes.Test.Effects
                 newDrone.Activate(
                     new DroneActivationArgs(
                         position: RandomisePosition(parentObject.transform.position),
-                        playAudio: true));
+                        playAudio: true,
+                        faction: Faction.Blues));
                 //Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
             }
         }

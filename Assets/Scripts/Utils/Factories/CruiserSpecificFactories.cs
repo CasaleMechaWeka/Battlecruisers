@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.Sound;
@@ -12,9 +13,10 @@ namespace BattleCruisers.Utils.Factories
     public class CruiserSpecificFactories : ICruiserSpecificFactories
     {
         public IAircraftProvider AircraftProvider { get; }
+        public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
+        public IDroneFeedbackFactory DroneFeedbackFactory { get; }
         public IGlobalBoostProviders GlobalBoostProviders { get; }
         public ITurretStatsFactory TurretStatsFactory { get; }
-        public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public ICruiserTargetFactoriesProvider Targets { get; }
 
         public CruiserSpecificFactories(
@@ -31,6 +33,13 @@ namespace BattleCruisers.Utils.Factories
             TurretStatsFactory = new TurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
             BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new CruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
+
+            DroneFeedbackFactory
+                = new DroneFeedbackFactory(
+                    factoryProvider.PoolProviders.DronePool,
+                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                    factoryProvider.DroneMonitor,
+                    parentCruiser.Faction);
         }
     }
 }

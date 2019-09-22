@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,6 +11,8 @@ namespace BattleCruisers.Effects
         private IRandomGenerator _random;
         private Animation _animation;
         private AudioSource _audioSource;
+
+        public Faction Faction { get; private set; }
 
         public event EventHandler Activated;
         public event EventHandler Deactivated;
@@ -34,6 +37,8 @@ namespace BattleCruisers.Effects
             gameObject.SetActive(true);
 
             _audioSource.gameObject.SetActive(activationArgs.PlayAudio);
+
+            Faction = activationArgs.Faction;
 
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);

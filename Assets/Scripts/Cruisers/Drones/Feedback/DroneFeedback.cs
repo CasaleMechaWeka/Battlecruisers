@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly IDroneMonitor _droneMonitor;
+        private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
 
         public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
@@ -21,7 +23,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             IDroneConsumerInfo droneConsumerInfo, 
             IPool<IDroneController, DroneActivationArgs> dronePool, 
             ISpawnPositionFinder spawnPositionFinder,
-            IDroneMonitor droneMonitor)
+            IDroneMonitor droneMonitor,
+            Faction faction)
         {
             Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder, droneMonitor);
 
@@ -29,6 +32,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
             _droneMonitor = droneMonitor;
+            _faction = faction;
             _drones = new List<IDroneController>();
 
             _droneConsumerInfo.DroneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
@@ -56,7 +60,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 DroneActivationArgs activationArgs
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
-                        playAudio: _droneMonitor.ShouldDroneMakeSound);
+                        playAudio: _droneMonitor.ShouldDroneMakeSound,
+                        _faction);
                 IDroneController droneToAdd = _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);
             }

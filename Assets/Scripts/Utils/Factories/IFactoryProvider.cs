@@ -21,7 +21,7 @@ namespace BattleCruisers.Utils.Factories
         IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
         IDeferrerProvider DeferrerProvider { get; }
-        IDroneFeedbackFactory DroneFeedbackFactory { get; }
+        IDroneMonitor DroneMonitor { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IMovementControllerFactory MovementControllerFactory { get; }
         IPoolProviders PoolProviders { get; }

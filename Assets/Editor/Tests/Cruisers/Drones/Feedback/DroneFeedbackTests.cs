@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers.Drones;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Effects;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -35,14 +36,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneMonitor = Substitute.For<IDroneMonitor>();
             _droneMonitor.ShouldDroneMakeSound.Returns(true, false);
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor, Faction.Reds);
 
             _spawnPosition1 = new Vector2(4, 3);
             _spawnPosition2 = new Vector2(6, 7);
             _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo).Returns(_spawnPosition1, _spawnPosition2);
 
-            _activationArgs1 = new DroneActivationArgs(_spawnPosition1, true);
-            _activationArgs2 = new DroneActivationArgs(_spawnPosition2, false);
+            _activationArgs1 = new DroneActivationArgs(_spawnPosition1, true, Faction.Reds);
+            _activationArgs2 = new DroneActivationArgs(_spawnPosition2, false, Faction.Reds);
 
             _drone1 = Substitute.For<IDroneController>();
             _drone2 = Substitute.For<IDroneController>();
@@ -56,7 +57,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _droneConsumer.NumOfDrones.Returns(2);
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _dronePool, _spawnPositionFinder, _droneMonitor, Faction.Reds);
 
             // Create feedback for initial number of drones
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);

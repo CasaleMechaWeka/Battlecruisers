@@ -21,7 +21,7 @@ namespace BattleCruisers.Utils.Factories
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
-        public IDroneFeedbackFactory DroneFeedbackFactory { get; private set; }
+        public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
         public IPrefabFactory PrefabFactory { get; }
@@ -66,17 +66,11 @@ namespace BattleCruisers.Utils.Factories
             Assert.IsNotNull(uiManager);
 
             IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
-            IDroneMonitor droneMonitor = new DroneMonitor(droneFactory);
+            DroneMonitor = new DroneMonitor(droneFactory);
 
             PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
-
-            DroneFeedbackFactory
-                = new DroneFeedbackFactory(
-                    poolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
-                    droneMonitor);
         }
 	}
 }

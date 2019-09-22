@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
@@ -11,17 +12,20 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly IDroneMonitor _droneMonitor;
+        private readonly Faction _faction;
 
         public DroneFeedbackFactory(
             IPool<IDroneController, DroneActivationArgs> dronePool, 
             ISpawnPositionFinder spawnPositionFinder,
-            IDroneMonitor droneMonitor)
+            IDroneMonitor droneMonitor,
+            Faction faction)
         {
-            Helper.AssertIsNotNull(dronePool, spawnPositionFinder, droneMonitor);
+            Helper.AssertIsNotNull(dronePool, spawnPositionFinder, droneMonitor, faction);
 
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
             _droneMonitor = droneMonitor;
+            _faction = faction;
         }
 
         public IDroneFeedback CreateFeedback(IDroneConsumer droneConsumer, Vector2 position, Vector2 size)
@@ -32,7 +36,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     new DroneConsumerInfo(droneConsumer, position, size),
                     _dronePool,
                     _spawnPositionFinder,
-                    _droneMonitor);
+                    _droneMonitor,
+                    _faction);
         }
 
         public IDroneFeedback CreateDummyFeedback()
