@@ -20,6 +20,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         private const int DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
 
+        // FELIX
+        public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum => throw new NotImplementedException();
+
         public DroneMonitor(IDroneFactory droneFactory, int maxActiveDroneAudioSources = DEFAULT_MAX_ACTIVE_DRONE_AUDIO_SOURCES)
         {
             Assert.IsNotNull(droneFactory);
