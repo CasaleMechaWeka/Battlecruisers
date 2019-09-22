@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
@@ -15,7 +16,15 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private int _numOfActiveDrones = 0;
         private const int MAX_ACTIVE_DRONE_AUDIO_SOURCES = 4;
 
-        public bool ShouldDroneMakeSound => _numOfActiveDrones < MAX_ACTIVE_DRONE_AUDIO_SOURCES;
+        public bool ShouldDroneMakeSound
+        {
+            get
+            {
+                bool shouldMakeSound = _numOfActiveDrones < MAX_ACTIVE_DRONE_AUDIO_SOURCES;
+                Logging.Log(Tags.DRONE_FEEDBACK, $"Active drone #: {_numOfActiveDrones}  shouldMakeSound: {shouldMakeSound}");
+                return shouldMakeSound;
+            }
+        }
 
         public DroneMonitor(IDroneFactory droneFactory)
         {

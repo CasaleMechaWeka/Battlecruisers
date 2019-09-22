@@ -66,6 +66,7 @@ namespace BattleCruisers.Utils.Factories
             Assert.IsNotNull(uiManager);
 
             IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
+            IDroneMonitor droneMonitor = new DroneMonitor(droneFactory);
 
             PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
             PoolProviders = poolProviders;
@@ -75,7 +76,7 @@ namespace BattleCruisers.Utils.Factories
                 = new DroneFeedbackFactory(
                     poolProviders.DronePool,
                     new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
-                    new DroneMonitor(droneFactory));
+                    droneMonitor);
         }
 	}
 }
