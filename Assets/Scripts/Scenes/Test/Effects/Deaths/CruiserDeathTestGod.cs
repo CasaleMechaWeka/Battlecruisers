@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             CreateAndDestroyCruiser();
         }
 
-        private static void CreateAndDestroyCruiser()
+        private void CreateAndDestroyCruiser()
         {
             Cruiser cruiser = FindObjectOfType<Cruiser>();
             Assert.IsNotNull(cruiser);
@@ -55,6 +55,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
             cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);
+            DestroyCruiser(cruiser);
+        }
+
+        protected virtual void DestroyCruiser(Cruiser cruiser)
+        {
             cruiser.Destroy();
         }
     }
