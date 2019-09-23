@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public float VelocityInMPerS => EffectiveMaxVelocityInMPerS;
         protected virtual float PositionEqualityMarginInM => 0.5f;
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Aircraft;
-        protected override ISoundKey UnitReadySoundKey => SoundKeys.Completed.ShipReady;
+        protected override ISoundKey UnitReadySoundKey => SoundKeys.Completed.AircraftReady;
         protected override bool ShowSmokeWhenDestroyed => true;
 
         protected IMovementController DummyMovementController { get; private set; }
