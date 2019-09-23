@@ -37,7 +37,7 @@ namespace BattleCruisers.Cruisers
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private IManagedDisposable _fogOfWarManager;
+        private IManagedDisposable _fogOfWarManager, _unitReadySignal;
         private SmokeGroupInitialiser _smokeGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private const float ON_DEATH_GRAVITY_SCALE = 0.01f;
@@ -153,6 +153,10 @@ namespace BattleCruisers.Cruisers
                     args.FactoryProvider.Targets,
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     args.EnemyCruiser.Faction);
+
+            UnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<UnitReadySignalInitialiser>();
+            Assert.IsNotNull(unitReadySignalInitialiser);
+            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
