@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Use, test
     public class UnitReadySignal : IManagedDisposable
     {
         private readonly ICruiserUnitMonitor _unitMonitor;
