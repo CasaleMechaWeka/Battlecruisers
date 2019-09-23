@@ -40,7 +40,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override TargetType TargetType => TargetType.Ships;
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Ship;
-        protected override ISoundKey UnitReadySoundKey => SoundKeys.Completed.ShipReady;
         protected override float OnDeathGravityScale => 0.2f;
 
         /// <summary>

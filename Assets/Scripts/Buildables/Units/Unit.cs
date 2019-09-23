@@ -47,8 +47,6 @@ namespace BattleCruisers.Buildables.Units
         protected override bool IsDroneConsumerFocusable => false;
 
         protected abstract ISoundKey EngineSoundKey { get; }
-        // FELIX  Remove?
-        protected abstract ISoundKey UnitReadySoundKey { get; }
         protected virtual float OnDeathGravityScale => 1;
         #endregion Properties
 
@@ -85,7 +83,6 @@ namespace BattleCruisers.Buildables.Units
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
-            _factoryProvider.Sound.SoundPlayer.PlaySound(UnitReadySoundKey, Position);
             PlayEngineSound();
         }
 
