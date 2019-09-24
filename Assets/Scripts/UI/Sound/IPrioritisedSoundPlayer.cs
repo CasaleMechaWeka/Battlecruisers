@@ -2,6 +2,7 @@
 {
     public interface IPrioritisedSoundPlayer
     {
+        bool Enabled { get; set; }
         void PlaySound(PrioritisedSoundKey soundKey);
     }
 }
