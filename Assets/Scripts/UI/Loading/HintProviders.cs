@@ -38,7 +38,8 @@ namespace BattleCruisers.UI.Loading
                 "Each cruiser has a unique benefit and a unique slot arrangement.  Choose your cruiser wisely!",
                 "Frequently check on the enemy cruiser to avoid nasty surprises!",
                 "Local boosters significantly increase adjacent turret fire rates, shield recharge rates and factory production rates.  They are well worth building!",
-                "It makes more sense to construct new builder bays one at a time instead of at the same time, so you get the benefit of a completed builder bay as soon as possible."
+                "It makes more sense to construct new builder bays one at a time instead of at the same time, so you get the benefit of a completed builder bay as soon as possible.",
+                "You can pause and resume building units by clicking the factory and selecting the unit you want to pause or resume."
             };
         }
     }
