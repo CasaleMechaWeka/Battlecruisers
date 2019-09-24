@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils.BattleScene
             _gameEndHandler = gameEndHandler;
         }
 
-        // May or may not happen
+        // May or may not happen (ie, user may quit from menu, in which case no cruiser is destroyed)
         private void _cruiserDestroyedMonitor_CruiserDestroyed(object sender, CruiserDestroyedEventArgs e)
         {
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
