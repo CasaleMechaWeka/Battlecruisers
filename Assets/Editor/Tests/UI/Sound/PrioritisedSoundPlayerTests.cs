@@ -22,6 +22,20 @@ namespace BattleCruisers.Tests.UI.Sound
         }
 
         [Test]
+        public void InitialState()
+        {
+            Assert.IsTrue(_prioritisedSoundPlayer.Enabled);
+        }
+
+        [Test]
+        public void PlaySound_Disabled_DoesNothing()
+        {
+            _prioritisedSoundPlayer.Enabled = false;
+            _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
+            _singleSoundPlayer.DidNotReceiveWithAnyArgs().PlaySound(default);
+        }
+
+        [Test]
         public void PlaySound_FirstSound_Plays()
         {
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);

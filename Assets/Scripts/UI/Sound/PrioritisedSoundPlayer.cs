@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.Sound
     /// If a sound is requested while another sound is in progress, only plays
     /// the new sound if it has higher priority than the current sound.
     /// </summary>
-    /// FELIX  Update test :)
     public class PrioritisedSoundPlayer : IPrioritisedSoundPlayer
     {
         private readonly ISingleSoundPlayer _soundPlayer;
