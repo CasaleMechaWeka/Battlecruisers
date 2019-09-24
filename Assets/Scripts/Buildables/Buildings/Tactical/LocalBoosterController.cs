@@ -5,12 +5,14 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class LocalBoosterController : TacticalBuilding
     {
         private IBoostProvider _boostProvider;
+        private ParticleSystem _boosterGlow;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Booster;
         public override bool IsBoostable => true;
@@ -20,7 +22,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
+
             _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
+
+            _boosterGlow = transform.FindNamedComponent<ParticleSystem>("LocalBoosterMasterGlow");
+            _boosterGlow.gameObject.SetActive(false);
         }
 
         protected override void OnBuildableCompleted()
@@ -33,7 +39,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             {
                 slot.BoostProviders.Add(_boostProvider);
             }
-		}
+
+            _boosterGlow.gameObject.SetActive(true);
+        }
 
         protected override void OnDestroyed()
         {
@@ -43,6 +51,8 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
             {
                 slot.BoostProviders.Remove(_boostProvider);
             }
+
+            _boosterGlow.gameObject.SetActive(false);
         }
     }
 }
