@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private ICameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
         private ITime _time;
+        private IPrioritisedSoundPlayer _soundPlayer;
 
         private IBuilding _playerBuilding, _aiBuilding;
         private IShip _playerShip, _aiShip;
@@ -46,6 +48,9 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _cameraFocuser = Substitute.For<ICameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _time = Substitute.For<ITime>();
+
+            _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
+            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
 
             _gameEndHandler
                 = new GameEndHandler(
@@ -110,6 +115,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             _time.Received().TimeScale = 1;
 
+            _soundPlayer.Received().Enabled = false;
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
             Assert.IsFalse(_navigationPermitter.IsMatch);

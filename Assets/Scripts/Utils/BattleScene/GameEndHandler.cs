@@ -60,7 +60,6 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
-            // FELIX  Update tests :)
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
