@@ -12,8 +12,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		private float _maxHealth;
 		private bool _followDamagable;
 
+        // FELIX   Remove :D
         private Vector2 _offset;
-		public Vector2 Offset
+        public Vector2 Offset
         {
             get => _offset;
             set
@@ -43,22 +44,25 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			OnProgressChanged(_damagable.Health / _maxHealth);
 		}
 
+        // FELIX   Remove :D
 		void LateUpdate()
-		{
+        {
 			if (_followDamagable)
 			{
                 UpdatePosition();
-			}
+            }
 		}
 
+        // FELIX   Remove :D
         private void UpdatePosition()
         {
-            Vector3 parentPosition = _damagable.GameObject.transform.position;
-            transform.position 
-                = new Vector3(
-                    parentPosition.x + Offset.x,
-                    parentPosition.y + Offset.y,
-                    parentPosition.z);
+                // FELIX  TEMP
+            //Vector3 parentPosition = _damagable.GameObject.transform.position;
+            //transform.position 
+            //    = new Vector3(
+            //        parentPosition.x + Offset.x,
+            //        parentPosition.y + Offset.y,
+            //        parentPosition.z);
 		}
 	}
 }
