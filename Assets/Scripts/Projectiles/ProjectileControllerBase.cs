@@ -28,7 +28,7 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier _damageApplier;
         private ITarget _parent;
         private IPool<IExplosion, Vector3> _explosionPool;
-        private TrailRenderer _trailRenderer;
+        private TrailRenderer[] _trailRenderers;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -82,8 +82,8 @@ namespace BattleCruisers.Projectiles
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
-            _trailRenderer = GetComponentInChildren<TrailRenderer>();
-            Assert.IsNotNull(_trailRenderer);
+            _trailRenderers = GetComponentsInChildren<TrailRenderer>();
+            Assert.IsNotNull(_trailRenderers);
 
             IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
@@ -98,7 +98,11 @@ namespace BattleCruisers.Projectiles
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
-            _trailRenderer.Clear();
+
+            foreach (TrailRenderer trailRenderer in _trailRenderers)
+            {
+                trailRenderer.Clear();
+            }
 
 			_projectileStats = activationArgs.ProjectileStats;
 			_targetFilter = activationArgs.TargetFilter;
