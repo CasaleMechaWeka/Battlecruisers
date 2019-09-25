@@ -14,7 +14,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
-		
+
+        private const float OPTIMAL_RANGE_BUFFER_IN_M = 1;
+
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Destroyer;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
@@ -31,7 +33,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float FindOptimalArmamentRangeInM()
         {
             // This is the range at which an enemy mortar will be able to attack :)
-            return _mortar.RangeInM + Size.x / 2;
+            return _mortar.RangeInM + Size.x / 2 + OPTIMAL_RANGE_BUFFER_IN_M;
         }
 
         protected override IList<IBarrelWrapper> GetTurrets()
