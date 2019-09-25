@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 			_damagable = damagable;
 			_maxHealth = _damagable.Health;
-			Offset = (Vector2)transform.position;
+			Offset = transform.position;
 			_followDamagable = followDamagable;
 
 			damagable.HealthChanged += Damagable_HealthChanged;
