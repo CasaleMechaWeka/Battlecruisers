@@ -56,14 +56,14 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
         [Test]
         public void FindHealthBarOffset_XOffset0()
         {
-            _healthBar.Offset.Returns(new Vector3(0, 1, 2));
+            _healthBar.Offset.Returns(new Vector2(0, 1));
             Assert.AreEqual(_healthBar.Offset, _calculator.FindHealthBarOffset(_building, _slot));
         }
 
         [Test]
         public void FindHealthBarOffset_XOffsetNot0_IsNotMirrored()
         {
-            _healthBar.Offset.Returns(new Vector3(63, 1, 2));
+            _healthBar.Offset.Returns(new Vector2(63, 1));
             _slot.Transform.IsMirroredAcrossYAxis.Returns(false);
 
             Assert.AreEqual(_healthBar.Offset, _calculator.FindHealthBarOffset(_building, _slot));
@@ -73,10 +73,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
         [Test]
         public void FindHealthBarOffset_XOffsetNot0_IsMirrored()
         {
-            _healthBar.Offset.Returns(new Vector3(63, 1, 2));
+            _healthBar.Offset.Returns(new Vector2(63, 1));
             _slot.Transform.IsMirroredAcrossYAxis.Returns(true);
 
-            Vector3 expectedOffset = new Vector3(-63, 1, 2);
+            Vector2 expectedOffset = new Vector2(-63, 1);
 
             Assert.AreEqual(expectedOffset, _calculator.FindHealthBarOffset(_building, _slot));
         }

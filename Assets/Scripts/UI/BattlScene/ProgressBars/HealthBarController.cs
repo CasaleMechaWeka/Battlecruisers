@@ -12,8 +12,8 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 		private float _maxHealth;
 		private bool _followDamagable;
 
-        private Vector3 _offset;
-		public Vector3 Offset
+        private Vector2 _offset;
+		public Vector2 Offset
         {
             get => _offset;
             set
@@ -53,7 +53,12 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
         private void UpdatePosition()
         {
-			transform.position = _damagable.GameObject.transform.position + Offset;
+            Vector3 parentPosition = _damagable.GameObject.transform.position;
+            transform.position 
+                = new Vector3(
+                    parentPosition.x + Offset.x,
+                    parentPosition.y + Offset.y,
+                    parentPosition.z);
 		}
 	}
 }

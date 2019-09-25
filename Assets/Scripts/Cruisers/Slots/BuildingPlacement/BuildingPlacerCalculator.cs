@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
                 + (parentSlot.Transform.Right * horizontalChange);
         }
 
-        public Vector3 FindHealthBarOffset(IBuilding building, ISlot parentSlot)
+        public Vector2 FindHealthBarOffset(IBuilding building, ISlot parentSlot)
         {
             if (building.HealthBar.Offset.x == 0
                 || !parentSlot.Transform.IsMirroredAcrossYAxis)
@@ -29,10 +29,9 @@ namespace BattleCruisers.Cruisers.Slots.BuildingPlacement
             }
 
             return
-                new Vector3(
+                new Vector2(
                     -building.HealthBar.Offset.x,
-                    building.HealthBar.Offset.y,
-                    building.HealthBar.Offset.z);
+                    building.HealthBar.Offset.y);
         }
     }
 }

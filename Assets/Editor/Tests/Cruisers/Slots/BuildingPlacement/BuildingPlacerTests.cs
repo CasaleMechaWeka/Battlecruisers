@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots.BuildingPlacement
             Vector3 expectedSpawnPosition = new Vector3(1, 2, 3);
             _calculator.FindSpawnPosition(_building, _slot).Returns(expectedSpawnPosition);
 
-            Vector3 expectedHealthBarOffset = new Vector3(4, 5, 6);
+            Vector2 expectedHealthBarOffset = new Vector3(4, 5);
             _calculator.FindHealthBarOffset(_building, _slot).Returns(expectedHealthBarOffset);
 
             _placer.PlaceBuilding(_building, _slot);

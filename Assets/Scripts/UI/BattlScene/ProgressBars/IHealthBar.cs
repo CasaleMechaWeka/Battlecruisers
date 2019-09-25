@@ -5,6 +5,6 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
     public interface IHealthBar : IGameObject
     {
-        Vector3 Offset { get; set; }
+        Vector2 Offset { get; set; }
     }
 }
