@@ -53,7 +53,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
             // Convert from -180 to 180 to 0 > 360
             if (shouldConvert)
             {
-                Debug.Log($"clampedAngle: {clampedAngle}");
                 clampedAngle += 360;
             }
 
