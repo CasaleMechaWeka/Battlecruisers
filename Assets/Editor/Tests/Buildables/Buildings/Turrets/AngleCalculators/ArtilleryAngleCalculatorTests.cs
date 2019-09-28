@@ -6,8 +6,7 @@ using NUnit.Framework;
 using System;
 using UnityEngine;
 
-// FELIX  Fix namespace :)
-namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
+namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
 {
     public class ArtilleryAngleCalculatorTests
 	{
