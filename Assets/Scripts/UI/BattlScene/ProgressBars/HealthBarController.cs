@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
                 = new Vector3(
                     parentPosition.x + Offset.x,
                     parentPosition.y + Offset.y,
-                    parentPosition.z);
+                    transform.position.z);
 		}
 	}
 }
