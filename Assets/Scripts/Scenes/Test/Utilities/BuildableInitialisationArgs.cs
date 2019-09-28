@@ -85,6 +85,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
             boostFactory = boostFactory ?? new BoostFactory();
+            ICamera mainCamera = Camera.main != null ? new CameraBC(Camera.main) : Substitute.For<ICamera>();
 
             FactoryProvider
                 = CreateFactoryProvider(
@@ -100,7 +101,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
-                    soundPlayer ?? new SoundPlayer(soundFetcher, new AudioClipPlayer(), new CameraBC(Camera.main)),
+                    soundPlayer ?? new SoundPlayer(soundFetcher, new AudioClipPlayer(), mainCamera),
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
                             new AssignerFactory(),
