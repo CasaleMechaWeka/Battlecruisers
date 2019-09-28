@@ -16,7 +16,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.PositionValidators
 
         public bool IsValid(Vector2 targetPosition, Vector2 sourcePosition, bool isSourceMirrored)
         {
-            float distanceInM = Vector2.Distance(targetPosition, sourcePosition);
+            // FELIX  Undo?
+            // FELIX  Really interested in x distance...
+            // FELIX  Update tests?
+            float distanceInM = Mathf.Abs(targetPosition.x - sourcePosition.x);
+            //float distanceInM = Vector2.Distance(targetPosition, sourcePosition);
             return
                 distanceInM >= _minRangeInM
                 && Helper.IsFacingTarget(targetPosition, sourcePosition, isSourceMirrored);

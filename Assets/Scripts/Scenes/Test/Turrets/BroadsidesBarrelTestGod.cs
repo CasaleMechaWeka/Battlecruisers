@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test
                     doubleBarrel,
                     _updaterProvider.PerFrameUpdater,
                     targetFilter: new ExactMatchTargetFilter() { Target = target },
-                    angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), doubleBarrel.ProjectileStats));
+                    angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), doubleBarrel.ProjectileStats, new AngleConverter()));
 
             doubleBarrel.Initialise(barrelControllerArgs);
 		}

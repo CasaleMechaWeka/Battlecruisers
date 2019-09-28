@@ -14,16 +14,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     public abstract class GravityAffectedAngleCalculator : AngleCalculator
 	{
         private readonly IProjectileFlightStats _projectileFlightStats;
+        private readonly IAngleConverter _angleConverter;
         private readonly float _adjustedGravity;
 
         protected abstract bool UseLargerAngle { get; }
 
-        public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats) 
+        // FELIX  Angle converter should be 2nd not 3rd parameter :)
+        public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats, IAngleConverter angleConverter) 
             : base(angleHelper)
         {
+            Helper.AssertIsNotNull(projectileFlightStats, angleConverter);
             Assert.IsTrue(projectileFlightStats.GravityScale > 0);
 
             _projectileFlightStats = projectileFlightStats;
+            _angleConverter = angleConverter;
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
         }
 
@@ -52,9 +56,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             float angleInRadians = UseLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-            Logging.Verbose(Tags.ANGLE_CALCULATORS, angleInDegrees + "*");
+            // FELIX  Update tests :)
+            angleInDegrees = _angleConverter.ConvertToUnsigned(angleInDegrees);
 
-			return angleInDegrees;
+            Logging.Verbose(
+                Tags.ANGLE_CALCULATORS, 
+                $"source: {sourcePosition}  target: {targetPosition}  isSourceMirrored: {isSourceMirrored}  UseLargerAngle: {UseLargerAngle}  " +
+                $"firstAngleInRadians: {firstAngleInRadians}  secondAngleInRadians: {secondAngleInRadians}  angleInDegrees: {angleInDegrees}*");
+
+            return angleInDegrees;
 		}
 	}
 }

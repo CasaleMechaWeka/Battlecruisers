@@ -37,11 +37,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
         /// </summary>
         public float LimitAngle(float desiredAngleInDegrees)
         {
-            // Don't create string messages to reduce memory usage
-            Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES);  //, desiredAngleInDegrees + " should be >= " + MIN_DESIRED_ANGLE_IN_DEGREES);
-            Assert.IsTrue(desiredAngleInDegrees <= MAX_DESIRED_ANGLE_IN_DEGREES);  //, desiredAngleInDegrees + " should be <= " + MAX_DESIRED_ANGLE_IN_DEGREES);
+            // FELIX  Undo :P
+            Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES, desiredAngleInDegrees + " should be >= " + MIN_DESIRED_ANGLE_IN_DEGREES);
+            Assert.IsTrue(desiredAngleInDegrees <= MAX_DESIRED_ANGLE_IN_DEGREES, desiredAngleInDegrees + " should be <= " + MAX_DESIRED_ANGLE_IN_DEGREES);
+            //// Don't create string messages to reduce memory usage
+            //Assert.IsTrue(desiredAngleInDegrees >= MIN_DESIRED_ANGLE_IN_DEGREES);  //, desiredAngleInDegrees + " should be >= " + MIN_DESIRED_ANGLE_IN_DEGREES);
+            //Assert.IsTrue(desiredAngleInDegrees <= MAX_DESIRED_ANGLE_IN_DEGREES);  //, desiredAngleInDegrees + " should be <= " + MAX_DESIRED_ANGLE_IN_DEGREES);
 
             // Convert from 0 > 360 to -180 to 180
+            // FELIX  Use IAngleConverter :)
             bool shouldConvert = desiredAngleInDegrees > 180;
             if (shouldConvert)
             {
@@ -51,6 +55,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters
             float clampedAngle = Mathf.Clamp(desiredAngleInDegrees, _minAngle, _maxAngle);
 
             // Convert from -180 to 180 to 0 > 360
+            // FELIX  Use IAngleConverter :)
             if (shouldConvert)
             {
                 clampedAngle += 360;

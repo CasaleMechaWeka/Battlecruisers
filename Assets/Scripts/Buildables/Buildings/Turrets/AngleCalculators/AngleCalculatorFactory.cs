@@ -5,10 +5,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     public class AngleCalculatorFactory : IAngleCalculatorFactory
 	{
         private readonly IAngleHelper _angleHelper;
+        private readonly IAngleConverter _angleConverter;
 
         public AngleCalculatorFactory()
         {
             _angleHelper = new AngleHelper();
+            _angleConverter = new AngleConverter();
         }
 
         public IAngleHelper CreateAngleHelper()
@@ -23,12 +25,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
         public IAngleCalculator CreateArtilleryAngleCalculator(IProjectileFlightStats projectileFlightStats)
 		{
-            return new ArtilleryAngleCalculator(_angleHelper, projectileFlightStats);
+            return new ArtilleryAngleCalculator(_angleHelper, projectileFlightStats, _angleConverter);
 		}
 
 		public IAngleCalculator CreateMortarAngleCalculator(IProjectileFlightStats projectileFlightStats)
 		{
-            return new MortarAngleCalculator(_angleHelper, projectileFlightStats);
+            return new MortarAngleCalculator(_angleHelper, projectileFlightStats, _angleConverter);
 		}
 
 		public IAngleCalculator CreateStaticAngleCalculator(float desiredAngleInDegrees)

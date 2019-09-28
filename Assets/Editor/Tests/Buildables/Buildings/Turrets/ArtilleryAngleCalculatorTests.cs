@@ -21,7 +21,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
             _angleHelper = Substitute.For<IAngleHelper>();
             _projectileFlightStats = Substitute.For<IProjectileFlightStats>();
             _projectileFlightStats.GravityScale.Returns(1);
-            _angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _projectileFlightStats);
+            // FELIX  Fix :)
+            _angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _projectileFlightStats, null);
 
             _targetPosition = new Vector2(0, 0);
 		}
