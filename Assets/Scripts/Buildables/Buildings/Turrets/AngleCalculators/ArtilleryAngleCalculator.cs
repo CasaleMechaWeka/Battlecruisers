@@ -7,8 +7,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         // Choose smaller angle, because we want the artillery to fire in a flat arc instead of a high arc.
         protected override bool UseLargerAngle => false;
 
-        public ArtilleryAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats, IAngleConverter angleConverter)
-            : base(angleHelper, projectileFlightStats, angleConverter)
+        public ArtilleryAngleCalculator(IAngleHelper angleHelper, IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats)
+            : base(angleHelper, angleConverter, projectileFlightStats)
         {
         }
     }

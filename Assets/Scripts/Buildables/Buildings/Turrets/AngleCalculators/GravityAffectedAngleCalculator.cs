@@ -13,21 +13,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
     /// </summary>
     public abstract class GravityAffectedAngleCalculator : AngleCalculator
 	{
-        private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly IAngleConverter _angleConverter;
+        private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
 
         protected abstract bool UseLargerAngle { get; }
 
-        // FELIX  Angle converter should be 2nd not 3rd parameter :)
-        public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IProjectileFlightStats projectileFlightStats, IAngleConverter angleConverter) 
+        public GravityAffectedAngleCalculator(IAngleHelper angleHelper, IAngleConverter angleConverter, IProjectileFlightStats projectileFlightStats) 
             : base(angleHelper)
         {
-            Helper.AssertIsNotNull(projectileFlightStats, angleConverter);
+            Helper.AssertIsNotNull(angleConverter, projectileFlightStats);
             Assert.IsTrue(projectileFlightStats.GravityScale > 0);
 
-            _projectileFlightStats = projectileFlightStats;
             _angleConverter = angleConverter;
+            _projectileFlightStats = projectileFlightStats;
             _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
         }
 
