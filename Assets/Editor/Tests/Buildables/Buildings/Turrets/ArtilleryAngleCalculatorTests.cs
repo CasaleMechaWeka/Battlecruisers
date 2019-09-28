@@ -6,12 +6,14 @@ using NUnit.Framework;
 using System;
 using UnityEngine;
 
+// FELIX  Fix namespace :)
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 {
-    public class ArtilleryAngleCalculatorTests 
+    public class ArtilleryAngleCalculatorTests
 	{
 		private IAngleCalculator _angleCalculator;
         private IAngleHelper _angleHelper;
+        private IAngleConverter _angleConverter;
         private IProjectileFlightStats _projectileFlightStats;
         private Vector2 _targetPosition;
 
@@ -19,10 +21,14 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
 		public void TestSetup()
 		{
             _angleHelper = Substitute.For<IAngleHelper>();
+            _angleConverter = Substitute.For<IAngleConverter>();
             _projectileFlightStats = Substitute.For<IProjectileFlightStats>();
             _projectileFlightStats.GravityScale.Returns(1);
-            // FELIX  Fix :)
-            _angleCalculator = new ArtilleryAngleCalculator(_angleHelper, null, _projectileFlightStats);
+            _angleCalculator = new ArtilleryAngleCalculator(_angleHelper, _angleConverter, _projectileFlightStats);
+
+            _angleConverter
+                .ConvertToUnsigned(Arg.Any<float>())
+                .Returns(args => (float)args[0]);
 
             _targetPosition = new Vector2(0, 0);
 		}
@@ -61,6 +67,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
             Vector2 source = new Vector2(maxRange, 0);
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true);
 
+            _angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
 			Assert.AreEqual(45, Mathf.Round(angleInDegrees));
 		}
 
@@ -74,7 +81,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
             Vector2 source = new Vector2(maxRange, 0);
 			float angleInDegrees = _angleCalculator.FindDesiredAngle(source, _targetPosition, isSourceMirrored: true);
 
+            _angleConverter.ReceivedWithAnyArgs().ConvertToUnsigned(default);
 			Assert.IsTrue(angleInDegrees < 45);
-		}
+        }
 	}
 }

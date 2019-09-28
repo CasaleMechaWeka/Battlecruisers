@@ -55,7 +55,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
             float angleInRadians = UseLargerAngle ? Mathf.Max(firstAngleInRadians, secondAngleInRadians) : Mathf.Min(firstAngleInRadians, secondAngleInRadians);
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
-            // FELIX  Update tests :)
             angleInDegrees = _angleConverter.ConvertToUnsigned(angleInDegrees);
 
             Logging.Verbose(
