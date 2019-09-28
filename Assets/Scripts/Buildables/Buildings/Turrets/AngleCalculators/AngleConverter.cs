@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
-    // FELIX  use, test
     public class AngleConverter : IAngleConverter
     {
         private const float MIN_UNSIGNED_ANGLE_IN_DEGREES = 0;
