@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 			aircraftToDestroy.PatrolPoints = patrolPoints;
             helper.InitialiseUnit(aircraftToDestroy, aircraftFaction);
 			aircraftToDestroy.StartConstruction();
-            Invoke("DestroyAircraft", time: 1);
+            Invoke("DestroyAircraft", time: 2);
 
             blockingAircraft.UseDummyMovementController = true;
             helper.InitialiseUnit(blockingAircraft, turretFaction);
