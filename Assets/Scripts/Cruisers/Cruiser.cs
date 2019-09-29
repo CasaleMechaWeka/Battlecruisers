@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
@@ -37,7 +38,7 @@ namespace BattleCruisers.Cruisers
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private IManagedDisposable _fogOfWarManager, _unitReadySignal;
+        private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
         private SmokeGroupInitialiser _smokeGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private const float ON_DEATH_GRAVITY_SCALE = 0.01f;
@@ -157,6 +158,10 @@ namespace BattleCruisers.Cruisers
             UnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<UnitReadySignalInitialiser>();
             Assert.IsNotNull(unitReadySignalInitialiser);
             _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
+
+            DroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<DroneSoundFeedbackInitialiser>();
+            Assert.IsNotNull(droneSoundFeedbackInitialiser);
+            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;

@@ -18,6 +18,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using UnityCommon.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Cruisers
@@ -101,6 +102,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
+                _factoryProvider.DroneMonitor.PlayerCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -134,6 +136,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
+                _factoryProvider.DroneMonitor.AICruiserHasActiveDrones,
                 isPlayerCruiser: false);
         }
 
@@ -150,6 +153,7 @@ namespace BattleCruisers.Cruisers
             IRankedTargetTracker userChosenTargetTracker,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             bool isPlayerCruiser)
         {
             ICruiserSpecificFactories cruiserSpecificFactories
@@ -185,7 +189,8 @@ namespace BattleCruisers.Cruisers
                     buildProgressCalculator,
                     buildingDoubleClickHandler,
                     cruiserDoubleClickHandler,
-                    fogOfWarManager);
+                    fogOfWarManager,
+                    parentCruiserHasActiveDrones);
 
             cruiser.Initialise(cruiserArgs);
         }

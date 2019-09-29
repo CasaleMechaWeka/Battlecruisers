@@ -47,6 +47,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
+using UnityCommon.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -522,7 +523,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     buildProgressCalculator: Substitute.For<IBuildProgressCalculator>(),
                     buildingDoubleClickHandler: Substitute.For<IDoubleClickHandler<IBuilding>>(),
                     cruiserDoubleClickHandler: Substitute.For<IDoubleClickHandler<ICruiser>>(),
-                    fogOfWarManager: Substitute.For<IManagedDisposable>());
+                    fogOfWarManager: Substitute.For<IManagedDisposable>(),
+                    parentCruiserHasActiveDrones: Substitute.For<IBroadcastingProperty<bool>>());
 
             cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);

@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using UnityCommon.Properties;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers
@@ -34,6 +35,7 @@ namespace BattleCruisers.Cruisers
         public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
         public IManagedDisposable FogOfWarManager { get; }
+        public IBroadcastingProperty<bool> HasActiveDrones { get; }
 
         public CruiserArgs(
             Faction faction, 
@@ -52,7 +54,8 @@ namespace BattleCruisers.Cruisers
             IBuildProgressCalculator buildProgressCalculator,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
-            IManagedDisposable fogOfWarManager)
+            IManagedDisposable fogOfWarManager,
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser, 
@@ -68,7 +71,8 @@ namespace BattleCruisers.Cruisers
                 buildProgressCalculator,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                fogOfWarManager);
+                fogOfWarManager,
+                parentCruiserHasActiveDrones);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -87,6 +91,7 @@ namespace BattleCruisers.Cruisers
             BuildingDoubleClickHandler = buildingDoubleClickHandler;
             CruiserDoubleClickHandler = cruiserDoubleClickHandler;
             FogOfWarManager = fogOfWarManager;
+            HasActiveDrones = parentCruiserHasActiveDrones;
         }
     }
 }

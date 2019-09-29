@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.Cruisers
 {
@@ -33,5 +34,6 @@ namespace BattleCruisers.Cruisers
         IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
         IManagedDisposable FogOfWarManager { get; }
+        IBroadcastingProperty<bool> HasActiveDrones { get; }
     }
 }
