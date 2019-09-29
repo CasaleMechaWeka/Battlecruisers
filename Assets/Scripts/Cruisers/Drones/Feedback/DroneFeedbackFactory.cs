@@ -11,20 +11,17 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     {
         private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
-        private readonly IDroneAudioActivenessDecider _droneAudioActivenessDecider;
         private readonly Faction _faction;
 
         public DroneFeedbackFactory(
             IPool<IDroneController, DroneActivationArgs> dronePool, 
             ISpawnPositionFinder spawnPositionFinder,
-            IDroneAudioActivenessDecider droneAudioActivenessDecider,
             Faction faction)
         {
-            Helper.AssertIsNotNull(dronePool, spawnPositionFinder, droneAudioActivenessDecider, faction);
+            Helper.AssertIsNotNull(dronePool, spawnPositionFinder, faction);
 
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
-            _droneAudioActivenessDecider = droneAudioActivenessDecider;
             _faction = faction;
         }
 
@@ -36,7 +33,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     new DroneConsumerInfo(droneConsumer, position, size),
                     _dronePool,
                     _spawnPositionFinder,
-                    _droneAudioActivenessDecider,
                     _faction);
         }
 

@@ -23,7 +23,6 @@ namespace BattleCruisers.Scenes.Test.Effects
                 newDrone.Activate(
                     new DroneActivationArgs(
                         position: RandomisePosition(parentObject.transform.position),
-                        playAudio: true,
                         faction: Faction.Blues));
                 //Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
             }

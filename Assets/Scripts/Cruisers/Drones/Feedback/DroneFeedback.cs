@@ -8,12 +8,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
+    // FELIX Update tests :)
     public class DroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
         private readonly IPool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
-        private readonly IDroneAudioActivenessDecider _droneAudioActivenessDecider;
         private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
 
@@ -23,15 +23,13 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             IDroneConsumerInfo droneConsumerInfo, 
             IPool<IDroneController, DroneActivationArgs> dronePool, 
             ISpawnPositionFinder spawnPositionFinder,
-            IDroneAudioActivenessDecider droneAudioActivenessDecider,
             Faction faction)
         {
-            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder, droneAudioActivenessDecider);
+            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder);
 
             _droneConsumerInfo = droneConsumerInfo;
             _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
-            _droneAudioActivenessDecider = droneAudioActivenessDecider;
             _faction = faction;
             _drones = new List<IDroneController>();
 
@@ -60,7 +58,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 DroneActivationArgs activationArgs
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
-                        playAudio: _droneAudioActivenessDecider.ShouldHaveAudio(_faction),
                         _faction);
                 IDroneController droneToAdd = _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);

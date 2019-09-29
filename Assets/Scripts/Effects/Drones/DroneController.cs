@@ -10,7 +10,6 @@ namespace BattleCruisers.Effects.Drones
     {
         private IRandomGenerator _random;
         private Animation _animation;
-        private AudioSource _audioSource;
 
         public Faction Faction { get; private set; }
 
@@ -25,9 +24,6 @@ namespace BattleCruisers.Effects.Drones
             _animation = GetComponentInChildren<Animation>();
             Assert.IsNotNull(_animation);
 
-            _audioSource = GetComponentInChildren<AudioSource>();
-            Assert.IsNotNull(_audioSource);
-
             gameObject.SetActive(false);
         }
 
@@ -35,8 +31,6 @@ namespace BattleCruisers.Effects.Drones
         {
             gameObject.transform.position = activationArgs.Position;
             gameObject.SetActive(true);
-
-            _audioSource.gameObject.SetActive(activationArgs.PlayAudio);
 
             Faction = activationArgs.Faction;
 

@@ -21,10 +21,6 @@ namespace BattleCruisers.Utils.Factories
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
-
-        // FELIX  Remove
-        public IDroneAudioActivenessDecider DroneAudioActivenessDecider { get; private set; }
-
         public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
@@ -71,7 +67,6 @@ namespace BattleCruisers.Utils.Factories
 
             IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
             DroneMonitor = new DroneMonitor(droneFactory);
-            DroneAudioActivenessDecider = new DroneAudioActivenessDecider(DroneMonitor.FactionToActiveDroneNum);
 
             PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
             PoolProviders = poolProviders;
