@@ -28,9 +28,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         private void _parentCruiserHasActiveDrones_ValueChanged(object sender, EventArgs e)
         {
+            Logging.Log(Tags.DRONE_FEEDBACK, $"{_parentCruiserHasActiveDrones.Value}");
+
             if (_parentCruiserHasActiveDrones.Value)
             {
-                _audioSource.Play();
+                _audioSource.Play(isSpatial: true, loop: true);
             }
             else
             {
