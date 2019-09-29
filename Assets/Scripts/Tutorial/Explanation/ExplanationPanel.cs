@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Explanation
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tutorial.Explanation
         public IExplanationDismissButton OkButton { get; private set; }
         public IExplanationDismissButton DoneButton { get; private set; }
 
-        public void Initialise()
+        public void Initialise(ISoundPlayer soundPlayer)
         {
             TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
             Assert.IsNotNull(textDisplayer);
@@ -17,11 +18,11 @@ namespace BattleCruisers.Tutorial.Explanation
             TextDisplayer = textDisplayer;
 
             ExplanationDismissButton okButton = transform.FindNamedComponent<ExplanationDismissButton>("OkButton");
-            okButton.Initialise();
+            okButton.Initialise(soundPlayer);
             OkButton = okButton;
 
             ExplanationDismissButton doneButton = transform.FindNamedComponent<ExplanationDismissButton>("DoneButton");
-            doneButton.Initialise();
+            doneButton.Initialise(soundPlayer);
             DoneButton = doneButton;
         }
     }

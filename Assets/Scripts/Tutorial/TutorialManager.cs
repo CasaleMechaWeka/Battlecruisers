@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial
 
             ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
             Assert.IsNotNull(explanationPanel);
-            explanationPanel.Initialise();
+            explanationPanel.Initialise(tutorialArgs.PlayerCruiser.FactoryProvider.Sound.SoundPlayer);
             _explanationPanel = explanationPanel;
 
             ITutorialStepsFactory stepsFactory 

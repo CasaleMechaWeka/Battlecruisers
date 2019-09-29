@@ -11,6 +11,7 @@ namespace BattleCruisers.Tutorial.Explanation
 
         protected override void OnClicked()
         {
+            base.OnClicked();
             Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
