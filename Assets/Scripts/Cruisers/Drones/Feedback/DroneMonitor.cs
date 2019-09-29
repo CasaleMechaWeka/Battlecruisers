@@ -20,9 +20,12 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
-        // FELIX  Implement, test 
-        public IBroadcastingProperty<bool> PlayerCruiserHasActiveDrones => throw new NotImplementedException();
-        public IBroadcastingProperty<bool> AICruiserHasActiveDrones => throw new NotImplementedException();
+        // FELIX  test 
+        private readonly ISettableBroadcastingProperty<bool> _playerCruiserHasActiveDrones;
+        public IBroadcastingProperty<bool> PlayerCruiserHasActiveDrones { get; }
+
+        private readonly ISettableBroadcastingProperty<bool> _aiCruiserHasActiveDrones;
+        public IBroadcastingProperty<bool> AICruiserHasActiveDrones { get; }
 
         public DroneMonitor(IDroneFactory droneFactory)
         {
@@ -37,6 +40,12 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 { Faction.Reds, 0 }
             };
             FactionToActiveDroneNum = new ReadOnlyDictionary<Faction, int>(_factionToActiveDroneNum);
+
+            _playerCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
+            PlayerCruiserHasActiveDrones = new BroadcastingProperty<bool>(_playerCruiserHasActiveDrones);
+
+            _aiCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
+            AICruiserHasActiveDrones = new BroadcastingProperty<bool>(_aiCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
@@ -49,14 +58,22 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         {
             IDroneController drone = sender.Parse<IDroneController>();
             _factionToActiveDroneNum[drone.Faction]++;
+            UpdateDroneActiveness();
         }
 
         private void Drone_Deactivated(object sender, EventArgs e)
         {
             IDroneController drone = sender.Parse<IDroneController>();
             _factionToActiveDroneNum[drone.Faction]--;
+            UpdateDroneActiveness();
 
             Assert.IsTrue(_factionToActiveDroneNum[drone.Faction] >= 0);
+        }
+
+        private void UpdateDroneActiveness()
+        {
+            _playerCruiserHasActiveDrones.Value = _factionToActiveDroneNum[Faction.Blues] != 0;
+            _aiCruiserHasActiveDrones.Value = _factionToActiveDroneNum[Faction.Reds] != 0;
         }
     }
 }
