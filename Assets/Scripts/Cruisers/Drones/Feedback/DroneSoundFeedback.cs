@@ -5,7 +5,6 @@ using UnityCommon.Properties;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    // FELIX  use, test
     /// <summary>
     /// If the parent cruiser has any active drones, play the drones sound.
     /// Otherwise, stop playing the drones sound.
@@ -20,10 +19,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             Helper.AssertIsNotNull(parentCruiserHasActiveDrones, audioSource);
 
             _parentCruiserHasActiveDrones = parentCruiserHasActiveDrones;
-            _parentCruiserHasActiveDrones.ValueChanged += _parentCruiserHasActiveDrones_ValueChanged;
-
             _audioSource = audioSource;
-            _audioSource.Stop();
+
+            _parentCruiserHasActiveDrones.ValueChanged += _parentCruiserHasActiveDrones_ValueChanged;
         }
 
         private void _parentCruiserHasActiveDrones_ValueChanged(object sender, EventArgs e)
