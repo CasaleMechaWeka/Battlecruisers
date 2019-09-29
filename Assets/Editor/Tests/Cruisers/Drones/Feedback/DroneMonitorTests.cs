@@ -47,6 +47,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
 
             Assert.IsTrue(_droneMonitor.FactionToActiveDroneNum.ContainsKey(Faction.Reds));
             Assert.AreEqual(0, _droneMonitor.FactionToActiveDroneNum[Faction.Reds]);
+
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: false);
         }
 
         [Test]
@@ -54,6 +56,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _redDrone1.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 1, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: true);
         }
 
         [Test]
@@ -68,10 +71,12 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             // Activation
             _redDrone1.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 1, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: true);
 
             // Deactivation
             _redDrone1.Deactivated += Raise.Event();
             AssertDroneNum(redDroneNum: 0, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: false);
         }
 
         [Test]
@@ -79,39 +84,55 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _redDrone1.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 1, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: true);
 
             _blueDrone2.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 1, blueDroneNum: 1);
+            AssertDroneActivnessStatus(playerHasActiveDrone: true, aiHasActiveDrone: true);
 
             _redDrone2.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 2, blueDroneNum: 1);
+            AssertDroneActivnessStatus(playerHasActiveDrone: true, aiHasActiveDrone: true);
 
             _blueDrone2.Deactivated += Raise.Event();
             AssertDroneNum(redDroneNum: 2, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: true);
 
             _redDrone1.Deactivated += Raise.Event();
             AssertDroneNum(redDroneNum: 1, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: true);
 
             _blueDrone1.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 1, blueDroneNum: 1);
+            AssertDroneActivnessStatus(playerHasActiveDrone: true, aiHasActiveDrone: true);
 
             _redDrone2.Deactivated += Raise.Event();
             AssertDroneNum(redDroneNum: 0, blueDroneNum: 1);
+            AssertDroneActivnessStatus(playerHasActiveDrone: true, aiHasActiveDrone: false);
 
             _blueDrone2.Activated += Raise.Event();
             AssertDroneNum(redDroneNum: 0, blueDroneNum: 2);
+            AssertDroneActivnessStatus(playerHasActiveDrone: true, aiHasActiveDrone: false);
 
             _blueDrone2.Deactivated += Raise.Event();
             AssertDroneNum(redDroneNum: 0, blueDroneNum: 1);
+            AssertDroneActivnessStatus(playerHasActiveDrone: true, aiHasActiveDrone: false);
 
             _blueDrone1.Deactivated += Raise.Event();
             AssertDroneNum(redDroneNum: 0, blueDroneNum: 0);
+            AssertDroneActivnessStatus(playerHasActiveDrone: false, aiHasActiveDrone: false);
         }
 
         private void AssertDroneNum(int redDroneNum, int blueDroneNum)
         {
             Assert.AreEqual(redDroneNum, _droneMonitor.FactionToActiveDroneNum[Faction.Reds]);
             Assert.AreEqual(blueDroneNum, _droneMonitor.FactionToActiveDroneNum[Faction.Blues]);
+        }
+
+        private void AssertDroneActivnessStatus(bool playerHasActiveDrone, bool aiHasActiveDrone)
+        {
+            Assert.AreEqual(playerHasActiveDrone, _droneMonitor.PlayerCruiserHasActiveDrones.Value);
+            Assert.AreEqual(aiHasActiveDrone, _droneMonitor.AICruiserHasActiveDrones.Value);
         }
     }
 }

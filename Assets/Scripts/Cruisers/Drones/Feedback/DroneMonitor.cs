@@ -20,7 +20,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
 
-        // FELIX  test 
         private readonly ISettableBroadcastingProperty<bool> _playerCruiserHasActiveDrones;
         public IBroadcastingProperty<bool> PlayerCruiserHasActiveDrones { get; }
 
