@@ -6,6 +6,10 @@ using UnityCommon.Properties;
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     // FELIX  use, test
+    /// <summary>
+    /// If the parent cruiser has any active drones, play the drones sound.
+    /// Otherwise, stop playing the drones sound.
+    /// </summary>
     public class DroneSoundFeedback
     {
         private readonly IBroadcastingProperty<bool> _parentCruiserHasActiveDrones;
