@@ -4,6 +4,7 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityCommon.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
@@ -18,6 +19,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
+
+        // FELIX  Implement, test 
+        public IBroadcastingProperty<bool> PlayerCruiserHasActiveDrones => throw new NotImplementedException();
+        public IBroadcastingProperty<bool> AICruiserHasActiveDrones => throw new NotImplementedException();
 
         public DroneMonitor(IDroneFactory droneFactory)
         {
