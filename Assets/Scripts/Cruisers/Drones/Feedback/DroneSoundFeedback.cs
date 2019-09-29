@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     /// If the parent cruiser has any active drones, play the drones sound.
     /// Otherwise, stop playing the drones sound.
     /// </summary>
-    public class DroneSoundFeedback
+    public class DroneSoundFeedback : IManagedDisposable
     {
         private readonly IBroadcastingProperty<bool> _parentCruiserHasActiveDrones;
         private readonly IAudioSource _audioSource;
@@ -36,6 +36,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             {
                 _audioSource.Stop();
             }
+        }
+
+        public void DisposeManagedState()
+        {
+            _parentCruiserHasActiveDrones.ValueChanged -= _parentCruiserHasActiveDrones_ValueChanged;
         }
     }
 }
