@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    // FELIX Update tests :)
     public class DroneFeedback : IDroneFeedback
     {
         private readonly IDroneConsumerInfo _droneConsumerInfo;
