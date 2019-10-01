@@ -11,8 +11,8 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
         {
             Assert.IsNotNull(slot);
 
-            ParticleSystem singleBoostEffect = transform.FindNamedComponent<ParticleSystem>("SingleBoostEffect");
-            ParticleSystem doubleBoostEffect = transform.FindNamedComponent<ParticleSystem>("DoubleBoostEffect");
+            Transform singleBoostEffect = transform.FindNamedComponent<Transform>("SingleBoostEffect");
+            Transform doubleBoostEffect = transform.FindNamedComponent<Transform>("DoubleBoostEffect");
 
             return
                 new SlotBoostFeedbackMonitor(
