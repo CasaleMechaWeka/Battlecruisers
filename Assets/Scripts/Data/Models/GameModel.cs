@@ -35,6 +35,10 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
+        // FELIX  TEMP
+        [SerializeField]
+        public NewItems<HullKey> newHulls;
+
 		public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial
@@ -73,6 +77,8 @@ namespace BattleCruisers.Data.Models
 
             _completedLevels = new List<CompletedLevel>();
             CompletedLevels = _completedLevels.AsReadOnly();
+
+            newHulls = new NewItems<HullKey>();
 		}
 
 		public GameModel(
@@ -147,14 +153,15 @@ namespace BattleCruisers.Data.Models
 		{
 			GameModel other = obj as GameModel;
 
-			return other != null
+            return other != null
                 && other.HasAttemptedTutorial == HasAttemptedTutorial
-				&& other.NumOfLevelsCompleted == NumOfLevelsCompleted
+                && other.NumOfLevelsCompleted == NumOfLevelsCompleted
                 && PlayerLoadout.SmartEquals(other.PlayerLoadout)
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
-				&& Enumerable.SequenceEqual(UnlockedHulls, other.UnlockedHulls)
-				&& Enumerable.SequenceEqual(UnlockedBuildings, other.UnlockedBuildings)
-				&& Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits)
+                && newHulls.SmartEquals(other.newHulls)
+                && Enumerable.SequenceEqual(UnlockedHulls, other.UnlockedHulls)
+                && Enumerable.SequenceEqual(UnlockedBuildings, other.UnlockedBuildings)
+                && Enumerable.SequenceEqual(UnlockedUnits, other.UnlockedUnits)
                 && Enumerable.SequenceEqual(CompletedLevels, other.CompletedLevels);
 		}
 

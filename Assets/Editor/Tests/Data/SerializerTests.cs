@@ -41,6 +41,7 @@ namespace BattleCruisers.Tests.Data
 				unlockedHulls: CreateUnlockedHulls(),
 				unlockedBuildings: CreateUnlockedBuildings(),
 				unlockedUnits: CreateUnlockedUnits());
+            _originalGameModel.newHulls.AddItem(new HullKey("sup"));
 
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy));
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Harder));
