@@ -18,6 +18,10 @@ namespace BattleCruisers.Data.Models
         ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
 
+        NewItems<HullKey> NewHulls { get; }
+        NewItems<BuildingKey> NewBuildings { get; }
+        NewItems<UnitKey> NewUnits { get; }
+
         void AddUnlockedHull(HullKey hull);
         void AddUnlockedBuilding(BuildingKey building);
         void AddUnlockedUnit(UnitKey unit);
