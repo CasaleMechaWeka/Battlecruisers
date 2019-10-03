@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
@@ -13,14 +12,14 @@ namespace BattleCruisers.Data.Models
     public class NewItems<TItem> where TItem : PrefabKey
     {
         [SerializeField]
-        private List<TItem> _items;
+        private ObservableCollection<TItem> _items;
 
-        public ReadOnlyCollection<TItem> Items { get; }
+        public ReadOnlyObservableCollection<TItem> Items { get; }
 
         public NewItems()
         {
-            _items = new List<TItem>();
-            Items = _items.AsReadOnly();
+            _items = new ObservableCollection<TItem>();
+            Items = new ReadOnlyObservableCollection<TItem>(_items);
         }
 
         public void AddItem(TItem newItem)
