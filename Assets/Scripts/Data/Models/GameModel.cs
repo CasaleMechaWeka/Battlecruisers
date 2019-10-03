@@ -194,7 +194,18 @@ namespace BattleCruisers.Data.Models
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(HasAttemptedTutorial, NumOfLevelsCompleted, PlayerLoadout, LastBattleResult, _unlockedHulls, _unlockedUnits, _unlockedBuildings, _completedLevels);
+            return this.GetHashCode(
+                HasAttemptedTutorial, 
+                NumOfLevelsCompleted, 
+                PlayerLoadout, 
+                LastBattleResult, 
+                _unlockedHulls, 
+                _unlockedUnits, 
+                _unlockedBuildings, 
+                _completedLevels,
+                NewHulls,
+                NewBuildings,
+                NewUnits);
         }
     }
 }
