@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
+using System.Collections.Specialized;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -29,6 +30,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override bool IsNew(IGameModel gameModel)
         {
             return gameModel.NewBuildings.Items.Contains(Key);
+        }
+
+        protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
+        {
+            gameModel.NewBuildings.Items.Parse<INotifyCollectionChanged>().CollectionChanged += (sender, e) => UpdateNewItemMarkVisibility();
         }
     }
 }

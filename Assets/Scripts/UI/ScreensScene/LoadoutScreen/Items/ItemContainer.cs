@@ -20,6 +20,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     /// </summary>
     public abstract class ItemContainer : MonoBehaviour
     {
+        private IGameModel _gameModel;
+        private NewItemMark _newItemMark;
+
         public IItemButton Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
@@ -29,8 +32,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer);
 
+            _gameModel = gameModel;
+
             LockedItem lockedItem = GetComponentInChildren<LockedItem>(includeInactive: true);
             Assert.IsNotNull(lockedItem);
+
+            _newItemMark = GetComponentInChildren<NewItemMark>(includeInactive: true);
+            Assert.IsNotNull(_newItemMark);
 
             ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer);
 
@@ -38,7 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
 
-            // FELIX  NEXT  Show new symbol if is new :)
+            UpdateNewItemMarkVisibility();
+            SetupNewMarkVisibilityCallback(gameModel);
 
             return itemButton;
         }
@@ -57,5 +66,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         protected abstract bool IsUnlocked(IGameModel gameModel);
         protected abstract bool IsNew(IGameModel gameModel);
+        protected abstract void SetupNewMarkVisibilityCallback(IGameModel gameModel);
+
+        protected void UpdateNewItemMarkVisibility()
+        {
+            _newItemMark.IsVisible = IsNew(_gameModel);
+        }
     }
 }
