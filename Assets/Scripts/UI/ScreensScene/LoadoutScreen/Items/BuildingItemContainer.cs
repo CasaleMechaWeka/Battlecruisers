@@ -8,10 +8,27 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         public PrefabKeyName buildingKeyName;
 
+        private BuildingKey _key;
+        private BuildingKey Key
+        {
+            get
+            {
+                if (_key == null)
+                {
+                    _key = StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
+                }
+                return _key;
+            }
+        }
+
         protected override bool IsUnlocked(IGameModel gameModel)
         {
-            BuildingKey buildingKey = StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
-            return gameModel.UnlockedBuildings.Contains(buildingKey);
+            return gameModel.UnlockedBuildings.Contains(Key);
+        }
+
+        protected override bool IsNew(IGameModel gameModel)
+        {
+            return gameModel.NewBuildings.Items.Contains(Key);
         }
     }
 }

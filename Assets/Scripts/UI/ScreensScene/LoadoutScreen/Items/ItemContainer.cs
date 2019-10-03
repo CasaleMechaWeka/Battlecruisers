@@ -38,6 +38,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
 
+            // FELIX  NEXT  Show new symbol if is new :)
+
             return itemButton;
         }
 
@@ -54,5 +56,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
 
         protected abstract bool IsUnlocked(IGameModel gameModel);
+        protected abstract bool IsNew(IGameModel gameModel);
     }
 }

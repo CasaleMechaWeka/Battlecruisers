@@ -42,5 +42,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             return gameModel.UnlockedHulls.Contains(HullKey);
         }
+
+        protected override bool IsNew(IGameModel gameModel)
+        {
+            return gameModel.NewHulls.Items.Contains(HullKey);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<TItem> _items;
 
-        public IReadOnlyCollection<TItem> Items { get; }
+        public ReadOnlyCollection<TItem> Items { get; }
 
         public NewItems()
         {
