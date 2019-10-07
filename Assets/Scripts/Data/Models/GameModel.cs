@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -172,6 +173,24 @@ namespace BattleCruisers.Data.Models
         public IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory)
         {
             return _unlockedUnits.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
+        }
+
+        [OnDeserialized()]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            // For backwards compatability, when this class did not have these fields
+            if (_newHulls == null)
+            {
+                _newHulls = new NewItems<HullKey>();
+            }
+            if (_newBuildings == null)
+            {
+                _newBuildings = new NewItems<BuildingKey>();
+            }
+            if (_newUnits == null)
+            {
+                _newUnits = new NewItems<UnitKey>();
+            }
         }
 
         public override bool Equals(object obj)
