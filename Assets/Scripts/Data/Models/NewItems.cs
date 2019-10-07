@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Data.Models
 {
-    // FELIX  Interface, test, test serialization!
     [Serializable]
     public class NewItems<TItem> where TItem : PrefabKey
     {
@@ -24,11 +23,13 @@ namespace BattleCruisers.Data.Models
 
         public void AddItem(TItem newItem)
         {
+            Logging.LogMethod(Tags.MODELS);
             _items.Add(newItem);
         }
 
         public bool RemoveItem(TItem oldItem)
         {
+            Logging.LogMethod(Tags.MODELS);
             return _items.Remove(oldItem);
         }
 

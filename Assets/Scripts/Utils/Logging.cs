@@ -88,6 +88,7 @@ namespace BattleCruisers.Utils
         public const string EXPLOSIONS = "Explosions";
         public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
+        public const string MODELS = "Model";
         public const string POOLS = "Pools";
         public const string PREDICTORS = "TargetPositionPredictors";
         public const string PYRAMID = "Pyramid";
@@ -197,6 +198,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.EXPLOSIONS, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.MODELS, true);
+            //tagsToActivenecss.Add(Tags.MODELS, false);
             tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
