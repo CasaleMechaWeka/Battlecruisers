@@ -11,8 +11,7 @@ using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    // FELIX  Make abstract
-    public class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler
+    public abstract class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler
     {
         private IItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
@@ -23,8 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public ItemType itemType;
 
-        // FELIX  Provide from child classes :)
-        public ItemFamily itemFamily;
+        protected abstract ItemFamily ItemFamily { get; }
 
         private bool IsSelected
         {
@@ -84,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             return _hasUnlockedItem
                 && (_itemFamilyToCompare.Value == null
-                    || _itemFamilyToCompare.Value == itemFamily);
+                    || _itemFamilyToCompare.Value == ItemFamily);
         }
 
         private void UpdateSelectedFeedback()
@@ -99,11 +97,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         }
 
         protected abstract void SetupNewMarkVisibilityCallback(IGameModel gameModel);
-        protected abstract bool IsNew(IGameModel gameModel);
+        protected abstract bool HasNewItems(IGameModel gameModel);
 
         protected void UpdateNewItemMarkVisibility()
         {
-            _newItemMark.IsVisible = IsNew(_gameModel);
+            Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
+            _newItemMark.IsVisible = HasNewItems(_gameModel);
+            Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
         }
     }
 }
