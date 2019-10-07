@@ -41,9 +41,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 
             // FELIX  TEMP
-            _dataProvider.GameModel.NewHulls.AddItem(StaticPrefabKeys.Hulls.Longbow);
-            _dataProvider.GameModel.NewBuildings.AddItem(StaticPrefabKeys.Buildings.AntiShipTurret);
-            _dataProvider.GameModel.NewUnits.AddItem(StaticPrefabKeys.Units.ArchonBattleship);
+            if (!_dataProvider.GameModel.NewHulls.Items.Contains(StaticPrefabKeys.Hulls.Longbow))
+            {
+                _dataProvider.GameModel.NewHulls.AddItem(StaticPrefabKeys.Hulls.Longbow);
+            }
+            if (!_dataProvider.GameModel.NewBuildings.Items.Contains(StaticPrefabKeys.Buildings.AntiShipTurret))
+            {
+                _dataProvider.GameModel.NewBuildings.AddItem(StaticPrefabKeys.Buildings.AntiShipTurret);
+            }
+            if (!_dataProvider.GameModel.NewUnits.Items.Contains(StaticPrefabKeys.Units.ArchonBattleship))
+            {
+                _dataProvider.GameModel.NewUnits.AddItem(StaticPrefabKeys.Units.ArchonBattleship);
+            }
 
 
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);

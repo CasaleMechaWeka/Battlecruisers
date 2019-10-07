@@ -36,5 +36,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             gameModel.NewBuildings.Items.Parse<INotifyCollectionChanged>().CollectionChanged += (sender, e) => UpdateNewItemMarkVisibility();
         }
+
+        protected override void MakeOld(IGameModel gameModel)
+        {
+            gameModel.NewBuildings.RemoveItem(Key);
+        }
     }
 }

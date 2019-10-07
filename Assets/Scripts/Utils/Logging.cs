@@ -45,6 +45,7 @@ namespace BattleCruisers.Utils
 		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
 
         // UI
+		public const string LOADOUT_SCREEN = "LoadoutScreen";
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
         public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
@@ -52,7 +53,7 @@ namespace BattleCruisers.Utils
 		public const string UI_MANAGER = "UIManager";
 
         // AI
-		public const string AI = "AI";
+        public const string AI = "AI";
 		public const string AI_BUILD_ORDERS = "AIBuildOrders";
 		public const string AI_TASKS = "Tasks";
         public const string DRONE_CONUMSER_FOCUS_MANAGER = "DroneConsumerFocusManager";
@@ -151,6 +152,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
 
             // UI
+            // FELIX
+            tagsToActiveness.Add(Tags.LOADOUT_SCREEN, true);
+            //tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);

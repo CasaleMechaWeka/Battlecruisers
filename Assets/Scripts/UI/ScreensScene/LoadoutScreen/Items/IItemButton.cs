@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using System;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -8,5 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         bool IsUnlocked { get; }
         IComparableItem Item { get; }
         Color Color { set; }
+
+        event EventHandler Clicked;
     }
 }
