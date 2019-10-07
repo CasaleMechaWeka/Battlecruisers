@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
@@ -37,6 +38,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
+
+
+            // FELIX  TEMP
+            _dataProvider.GameModel.NewHulls.AddItem(StaticPrefabKeys.Hulls.Longbow);
+            _dataProvider.GameModel.NewBuildings.AddItem(StaticPrefabKeys.Buildings.AntiShipTurret);
+            _dataProvider.GameModel.NewUnits.AddItem(StaticPrefabKeys.Units.ArchonBattleship);
+
 
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
