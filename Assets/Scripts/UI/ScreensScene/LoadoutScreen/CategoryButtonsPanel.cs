@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityCommon.Properties;
@@ -11,15 +12,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public void Initialise(
             IItemPanelsController itemPanels, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
-            ISoundPlayer soundPlayer)
+            ISoundPlayer soundPlayer,
+            IGameModel gameModel)
         {
-            Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, soundPlayer);
+            Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, soundPlayer, gameModel);
 
             ItemCategoryButton[] buttons = GetComponentsInChildren<ItemCategoryButton>(includeInactive: true);
 
             foreach (ItemCategoryButton button in buttons)
             {
-                button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare);
+                button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel);
             }
         }
     }
