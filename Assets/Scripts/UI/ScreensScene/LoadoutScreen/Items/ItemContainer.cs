@@ -50,8 +50,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             itemButton.IsVisible = isItemUnlocked;
 
             UpdateNewItemMarkVisibility();
-            // FELIX  Remove?
-            //SetupNewMarkVisibilityCallback(gameModel);
 
             return itemButton;
         }
@@ -79,12 +77,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected abstract bool IsNew(IGameModel gameModel);
         protected abstract void MakeOld(IGameModel gameModel);
 
-        // FELIX  Remove?  Only happens when clicked, and we're already handling that :/
-        protected abstract void SetupNewMarkVisibilityCallback(IGameModel gameModel);
-
-        // FELIX  Make private?
-        protected void UpdateNewItemMarkVisibility()
+        private void UpdateNewItemMarkVisibility()
         {
+            Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
             _newItemMark.IsVisible = IsNew(_gameModel);
             Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
         }

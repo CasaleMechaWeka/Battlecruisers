@@ -4,7 +4,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using System.Collections.Specialized;
 using UnityCommon.Properties;
 using UnityEngine.Assertions;
 
@@ -47,11 +46,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override bool IsNew(IGameModel gameModel)
         {
             return gameModel.NewHulls.Items.Contains(HullKey);
-        }
-
-        protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
-        {
-            gameModel.NewHulls.Items.Parse<INotifyCollectionChanged>().CollectionChanged += (sender, e) => UpdateNewItemMarkVisibility();
         }
 
         protected override void MakeOld(IGameModel gameModel)
