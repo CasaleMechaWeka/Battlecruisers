@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
@@ -39,26 +38,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
-
-
-            //// FELIX  TEMP
-            //if (!_dataProvider.GameModel.NewHulls.Items.Contains(StaticPrefabKeys.Hulls.Longbow))
-            //{
-            //    _dataProvider.GameModel.NewHulls.AddItem(StaticPrefabKeys.Hulls.Longbow);
-            //}
-            //if (!_dataProvider.GameModel.NewBuildings.Items.Contains(StaticPrefabKeys.Buildings.AntiShipTurret))
-            //{
-            //    _dataProvider.GameModel.NewBuildings.AddItem(StaticPrefabKeys.Buildings.AntiShipTurret);
-            //}
-            //if (!_dataProvider.GameModel.NewUnits.Items.Contains(StaticPrefabKeys.Units.ArchonBattleship))
-            //{
-            //    _dataProvider.GameModel.NewUnits.AddItem(StaticPrefabKeys.Units.ArchonBattleship);
-            //}
-            //if (!_dataProvider.GameModel.NewUnits.Items.Contains(StaticPrefabKeys.Units.Destroyer))
-            //{
-            //    _dataProvider.GameModel.NewUnits.AddItem(StaticPrefabKeys.Units.Destroyer);
-            //}
-
 
             ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
             Assert.IsNotNull(itemDetailsPanel);
