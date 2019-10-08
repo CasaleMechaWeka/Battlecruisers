@@ -191,6 +191,12 @@ namespace BattleCruisers.Scenes
 
             string hint = !_applicationModel.IsTutorial ? _hintProvider.GetHint() : null;
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, hint);
+            CleanUp();
 		}
-	}
+
+        private void CleanUp()
+        {
+            loadoutScreen.DisposeManagedState();
+        }
+    }
 }

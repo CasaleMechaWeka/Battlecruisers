@@ -11,7 +11,7 @@ using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public abstract class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler
+    public abstract class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler, IManagedDisposable
     {
         private IItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
@@ -105,5 +105,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _newItemMark.IsVisible = HasNewItems(_gameModel);
             Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
         }
+
+        public void DisposeManagedState()
+        {
+            CleanUp(_gameModel);
+        }
+
+        protected abstract void CleanUp(IGameModel gameModel);
     }
 }

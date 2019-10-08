@@ -19,7 +19,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
         {
-            gameModel.NewBuildings.Items.Parse<INotifyCollectionChanged>().CollectionChanged += (sender, e) => UpdateNewItemMarkVisibility();
+            gameModel.NewBuildings.Items.Parse<INotifyCollectionChanged>().CollectionChanged += BuildingItemsCagetoryButton_CollectionChanged;
+        }
+
+        private void BuildingItemsCagetoryButton_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UpdateNewItemMarkVisibility();
         }
 
         private ItemType BuildingCategoryToItemType(BuildingCategory buildingCategory)
@@ -44,6 +49,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 default:
                     throw new ArgumentException($"Unknown building category: {buildingCategory}");
             }
+        }
+
+        protected override void CleanUp(IGameModel gameModel)
+        {
+            gameModel.NewBuildings.Items.Parse<INotifyCollectionChanged>().CollectionChanged -= BuildingItemsCagetoryButton_CollectionChanged;
         }
     }
 }

@@ -16,13 +16,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class LoadoutScreenController : ScreenController, ICancellable
+    public class LoadoutScreenController : ScreenController, ICancellable, IManagedDisposable
     {
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourController _loadoutItemColourController;
+        private CategoryButtonsPanel _categoryButtonsPanel;
 
         public void Initialise(
             ISoundPlayer soundPlayer,
@@ -110,9 +111,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
 
-            CategoryButtonsPanel categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
-            Assert.IsNotNull(categoryButtonsPanel);
-            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel);
+            _categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
+            Assert.IsNotNull(_categoryButtonsPanel);
+            _categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel);
 
             ShowPlayerHull();
 
@@ -133,6 +134,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             _comparingFamilyTracker.SetComparingFamily(null);
             _screensSceneGod.GoToHomeScreen();
+        }
+
+        public void DisposeManagedState()
+        {
+            _categoryButtonsPanel.DisposeManagedState();
         }
     }
 }

@@ -19,7 +19,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
         {
-            gameModel.NewUnits.Items.Parse<INotifyCollectionChanged>().CollectionChanged += (sender, e) => UpdateNewItemMarkVisibility();
+            gameModel.NewUnits.Items.Parse<INotifyCollectionChanged>().CollectionChanged += UnitItemsCategoryButton_CollectionChanged;
+        }
+
+        private void UnitItemsCategoryButton_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UpdateNewItemMarkVisibility();
         }
 
         private ItemType UnitCategoryToItemType(UnitCategory unitCategory)
@@ -35,6 +40,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 default:
                     throw new ArgumentException($"Unsupported unit category: {unitCategory}");
             }
+        }
+
+        protected override void CleanUp(IGameModel gameModel)
+        {
+            gameModel.NewUnits.Items.Parse<INotifyCollectionChanged>().CollectionChanged -= UnitItemsCategoryButton_CollectionChanged;
         }
     }
 }

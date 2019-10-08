@@ -7,8 +7,10 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class CategoryButtonsPanel : MonoBehaviour
+    public class CategoryButtonsPanel : MonoBehaviour, IManagedDisposable
     {
+        private ItemCategoryButton[] _buttons;
+
         public void Initialise(
             IItemPanelsController itemPanels, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
@@ -17,11 +19,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, soundPlayer, gameModel);
 
-            ItemCategoryButton[] buttons = GetComponentsInChildren<ItemCategoryButton>(includeInactive: true);
+            _buttons = GetComponentsInChildren<ItemCategoryButton>(includeInactive: true);
 
-            foreach (ItemCategoryButton button in buttons)
+            foreach (ItemCategoryButton button in _buttons)
             {
                 button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel);
+            }
+        }
+
+        public void DisposeManagedState()
+        {
+            foreach (ItemCategoryButton button in _buttons)
+            {
+                button.DisposeManagedState();
             }
         }
     }

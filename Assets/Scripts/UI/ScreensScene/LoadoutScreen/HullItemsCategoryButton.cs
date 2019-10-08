@@ -16,7 +16,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
         {
-            gameModel.NewHulls.Items.Parse<INotifyCollectionChanged>().CollectionChanged += (sender, e) => UpdateNewItemMarkVisibility();
+            gameModel.NewHulls.Items.Parse<INotifyCollectionChanged>().CollectionChanged += HullItemsCategoryButton_CollectionChanged;
+        }
+
+        private void HullItemsCategoryButton_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UpdateNewItemMarkVisibility();
+        }
+
+        protected override void CleanUp(IGameModel gameModel)
+        {
+            gameModel.NewHulls.Items.Parse<INotifyCollectionChanged>().CollectionChanged -= HullItemsCategoryButton_CollectionChanged;
         }
     }
 }
