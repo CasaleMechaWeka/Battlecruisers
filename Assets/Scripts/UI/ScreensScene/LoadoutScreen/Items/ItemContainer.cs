@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     /// Contains:
     /// + Item button
     /// + Locked item placeholder
+    /// + New item mark
     /// 
     /// Shows the item button if the item has been unlocked, otherwise shows
     /// the locked placholder.
