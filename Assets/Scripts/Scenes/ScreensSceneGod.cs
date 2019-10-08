@@ -96,8 +96,7 @@ namespace BattleCruisers.Scenes
             // TEMP  Go to specific screen :)
             //GoToSettingsScreen();
             //GoToLevelsScreen();
-            // FELIX  TEMP
-            GoToLoadoutScreen();
+            //GoToLoadoutScreen();
         }
         
         private void GoToPostBattleScreen()
