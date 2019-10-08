@@ -153,9 +153,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
 
             // UI
-            // FELIX
-            tagsToActiveness.Add(Tags.LOADOUT_SCREEN, true);
-            //tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
+            tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
@@ -198,9 +196,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.EXPLOSIONS, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.MODELS, true);
-            //tagsToActivenecss.Add(Tags.MODELS, false);
+            tagsToActiveness.Add(Tags.MODELS, false);
             tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
