@@ -5,6 +5,7 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -36,14 +37,15 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
-        [SerializeField]
-        private NewItems<HullKey> _newHulls;
+        // FELIX ???
+        //[SerializeField]
+        //private NewItems<HullKey> _newHulls;
 
-        [SerializeField]
-        private NewItems<BuildingKey> _newBuildings;
+        //[SerializeField]
+        //private NewItems<BuildingKey> _newBuildings;
 
-        [SerializeField]
-        private NewItems<UnitKey> _newUnits;
+        //[SerializeField]
+        //private NewItems<UnitKey> _newUnits;
 
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
@@ -70,23 +72,28 @@ namespace BattleCruisers.Data.Models
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
 
-        public NewItems<HullKey> NewHulls
-        {
-            get => _newHulls;
-            set => _newHulls = value;
-        }
+        public NewItems<HullKey> NewHulls { get; set; }
+        public NewItems<BuildingKey> NewBuildings { get; set; }
+        public NewItems<UnitKey> NewUnits { get; set; }
 
-        public NewItems<BuildingKey> NewBuildings
-        { 
-            get => _newBuildings; 
-            set => _newBuildings = value; 
-        }
+        // FELIX
+        //public NewItems<HullKey> NewHulls
+        //{
+        //    get => _newHulls;
+        //    set => _newHulls = value;
+        //}
 
-        public NewItems<UnitKey> NewUnits
-        { 
-            get => _newUnits; 
-            set => _newUnits = value; 
-        }
+        //public NewItems<BuildingKey> NewBuildings
+        //{ 
+        //    get => _newBuildings; 
+        //    set => _newBuildings = value; 
+        //}
+
+        //public NewItems<UnitKey> NewUnits
+        //{ 
+        //    get => _newUnits; 
+        //    set => _newUnits = value; 
+        //}
 
         public GameModel()
         {
@@ -102,9 +109,13 @@ namespace BattleCruisers.Data.Models
             _completedLevels = new List<CompletedLevel>();
             CompletedLevels = _completedLevels.AsReadOnly();
 
-            _newHulls = new NewItems<HullKey>();
-            _newBuildings = new NewItems<BuildingKey>();
-            _newUnits = new NewItems<UnitKey>();
+            NewHulls = new NewItems<HullKey>();
+            NewBuildings = new NewItems<BuildingKey>();
+            NewUnits = new NewItems<UnitKey>();
+            // FELIX  TEMP
+            //_newHulls = new NewItems<HullKey>();
+            //_newBuildings = new NewItems<BuildingKey>();
+            //_newUnits = new NewItems<UnitKey>();
         }
 
         public GameModel(
@@ -180,19 +191,41 @@ namespace BattleCruisers.Data.Models
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
         {
+            // FELIX  TEMP
             // For backwards compatability, when this class did not have these fields
-            if (_newHulls == null)
+            if (NewHulls == null)
             {
-                _newHulls = new NewItems<HullKey>();
+                NewHulls = new NewItems<HullKey>();
             }
-            if (_newBuildings == null)
+            if (NewBuildings == null)
             {
-                _newBuildings = new NewItems<BuildingKey>();
+                NewBuildings = new NewItems<BuildingKey>();
             }
-            if (_newUnits == null)
+            if (NewUnits == null)
             {
-                _newUnits = new NewItems<UnitKey>();
+                NewUnits = new NewItems<UnitKey>();
             }
+            //// For backwards compatability, when this class did not have these fields
+            //if (_newHulls == null)
+            //{
+            //    _newHulls = new NewItems<HullKey>();
+            //}
+            //if (_newBuildings == null)
+            //{
+            //    _newBuildings = new NewItems<BuildingKey>();
+            //}
+            //if (_newUnits == null)
+            //{
+            //    _newUnits = new NewItems<UnitKey>();
+            //}
+
+            // FELIX  TEMP
+            //((INotifyCollectionChanged)NewHulls.Items).CollectionChanged += GameModel_CollectionChanged;
+        }
+
+        private void GameModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public override bool Equals(object obj)
