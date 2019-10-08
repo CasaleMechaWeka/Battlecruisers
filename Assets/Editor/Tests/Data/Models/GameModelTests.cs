@@ -6,8 +6,7 @@ using BattleCruisers.Data.Settings;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
-// FELIX  Update namespace
-namespace BattleCruisers.Tests.Data
+namespace BattleCruisers.Tests.Data.Models
 {
     public class GameModelTests
 	{
