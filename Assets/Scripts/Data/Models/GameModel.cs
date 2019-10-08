@@ -5,7 +5,6 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.Serialization;
 using UnityEngine;
@@ -37,16 +36,6 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
-        // FELIX ???
-        //[SerializeField]
-        //private NewItems<HullKey> _newHulls;
-
-        //[SerializeField]
-        //private NewItems<BuildingKey> _newBuildings;
-
-        //[SerializeField]
-        //private NewItems<UnitKey> _newUnits;
-
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial
@@ -76,25 +65,6 @@ namespace BattleCruisers.Data.Models
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
 
-        // FELIX
-        //public NewItems<HullKey> NewHulls
-        //{
-        //    get => _newHulls;
-        //    set => _newHulls = value;
-        //}
-
-        //public NewItems<BuildingKey> NewBuildings
-        //{ 
-        //    get => _newBuildings; 
-        //    set => _newBuildings = value; 
-        //}
-
-        //public NewItems<UnitKey> NewUnits
-        //{ 
-        //    get => _newUnits; 
-        //    set => _newUnits = value; 
-        //}
-
         public GameModel()
         {
             _unlockedHulls = new List<HullKey>();
@@ -112,10 +82,6 @@ namespace BattleCruisers.Data.Models
             NewHulls = new NewItems<HullKey>();
             NewBuildings = new NewItems<BuildingKey>();
             NewUnits = new NewItems<UnitKey>();
-            // FELIX  TEMP
-            //_newHulls = new NewItems<HullKey>();
-            //_newBuildings = new NewItems<BuildingKey>();
-            //_newUnits = new NewItems<UnitKey>();
         }
 
         public GameModel(
@@ -191,7 +157,6 @@ namespace BattleCruisers.Data.Models
         [OnDeserialized()]
         internal void OnDeserializedMethod(StreamingContext context)
         {
-            // FELIX  TEMP
             // For backwards compatability, when this class did not have these fields
             if (NewHulls == null)
             {
@@ -205,27 +170,6 @@ namespace BattleCruisers.Data.Models
             {
                 NewUnits = new NewItems<UnitKey>();
             }
-            //// For backwards compatability, when this class did not have these fields
-            //if (_newHulls == null)
-            //{
-            //    _newHulls = new NewItems<HullKey>();
-            //}
-            //if (_newBuildings == null)
-            //{
-            //    _newBuildings = new NewItems<BuildingKey>();
-            //}
-            //if (_newUnits == null)
-            //{
-            //    _newUnits = new NewItems<UnitKey>();
-            //}
-
-            // FELIX  TEMP
-            //((INotifyCollectionChanged)NewHulls.Items).CollectionChanged += GameModel_CollectionChanged;
-        }
-
-        private void GameModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public override bool Equals(object obj)
