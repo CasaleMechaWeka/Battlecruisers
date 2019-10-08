@@ -9,7 +9,7 @@ using UnityAsserts = UnityEngine.Assertions;
 // FELIX  Update namespace
 namespace BattleCruisers.Tests.Data
 {
-    public class GameModelTests 
+    public class GameModelTests
 	{
 		private IGameModel _gameModel;
 
@@ -34,8 +34,11 @@ namespace BattleCruisers.Tests.Data
 		public void AddUnlockedHull()
 		{
 			Assert.IsFalse(_gameModel.UnlockedHulls.Contains(_hull));
+			Assert.IsFalse(_gameModel.NewHulls.Items.Contains(_hull));
+
 			_gameModel.AddUnlockedHull(_hull);
 			Assert.IsTrue(_gameModel.UnlockedHulls.Contains(_hull));
+			Assert.IsTrue(_gameModel.NewHulls.Items.Contains(_hull));
 		}
 
 		[Test]
@@ -51,8 +54,12 @@ namespace BattleCruisers.Tests.Data
 		public void AddUnlockedBuilding()
 		{
 			Assert.IsFalse(_gameModel.UnlockedBuildings.Contains(_building));
-			_gameModel.AddUnlockedBuilding(_building);
+			Assert.IsFalse(_gameModel.NewBuildings.Items.Contains(_building));
+
+            _gameModel.AddUnlockedBuilding(_building);
+
 			Assert.IsTrue(_gameModel.UnlockedBuildings.Contains(_building));
+			Assert.IsTrue(_gameModel.NewBuildings.Items.Contains(_building));
 		}
 
 		[Test]
@@ -68,8 +75,12 @@ namespace BattleCruisers.Tests.Data
 		public void AddUnlockedUnit()
 		{
 			Assert.IsFalse(_gameModel.UnlockedUnits.Contains(_unit));
-			_gameModel.AddUnlockedUnit(_unit);
+			Assert.IsFalse(_gameModel.NewUnits.Items.Contains(_unit));
+
+            _gameModel.AddUnlockedUnit(_unit);
+            
 			Assert.IsTrue(_gameModel.UnlockedUnits.Contains(_unit));
+			Assert.IsTrue(_gameModel.NewUnits.Items.Contains(_unit));
 		}
 
 		[Test]
