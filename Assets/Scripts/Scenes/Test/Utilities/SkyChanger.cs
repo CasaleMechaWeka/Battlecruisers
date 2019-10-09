@@ -25,13 +25,21 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             IList<string> skyNames = new List<string>()
             {
-                SkyMaterials.Blue,
-                SkyMaterials.BlueCloudy,
-                SkyMaterials.BlueDeep,
-                SkyMaterials.Sunset,
-                SkyMaterials.SunsetCloudy,
-                SkyMaterials.SunsetWeirdClouds,
-                SkyMaterials.White
+                //SkyMaterials.Blue,
+                //SkyMaterials.BlueCloudy,
+                //SkyMaterials.BlueDeep,
+                //SkyMaterials.Sunset,
+                //SkyMaterials.SunsetCloudy,
+                //SkyMaterials.SunsetWeirdClouds,
+                //SkyMaterials.White
+                SkyMaterials.HDAfternoon,
+                SkyMaterials.HDDusk,
+                SkyMaterials.HDMidday,
+                SkyMaterials.HDMidnight,
+                SkyMaterials.HDPurple,
+                SkyMaterials.HDPurpleClouds,
+                SkyMaterials.HDPurpleDark,
+                SkyMaterials.HDSunset
             };
 
             IList<Material> skyMaterials = new List<Material>();
