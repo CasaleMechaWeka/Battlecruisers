@@ -198,8 +198,8 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Blue", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(2, "Deep Blue", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Sleeper, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(1, "Blue", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.Blue, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(2, "Deep Blue", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.BlueDeep, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
                 new Level(3, "Twilight", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.SunsetCloudy, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
                 new Level(4, "White", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.White, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
                 new Level(5, "Sunset", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
