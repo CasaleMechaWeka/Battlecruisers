@@ -4,6 +4,7 @@ using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -12,8 +13,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private Skybox _skybox;
         private ICircularList<Material> _skies;
 
+        public Text skyName;
+
         void Start()
         {
+            Assert.IsNotNull(skyName);
+
             _skies = FindSkyMaterials();
 
             _skybox = FindObjectOfType<Skybox>();
@@ -56,6 +61,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void ChangeSky()
         {
             _skybox.material = _skies.Next();
+            skyName.text = _skybox.material.name;
         }
     }
 }
