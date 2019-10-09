@@ -37,14 +37,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 //SkyMaterials.SunsetCloudy,
                 //SkyMaterials.SunsetWeirdClouds,
                 //SkyMaterials.White
-                SkyMaterials.HDAfternoon,
-                SkyMaterials.HDDusk,
                 SkyMaterials.HDMidday,
-                SkyMaterials.HDMidnight,
+                SkyMaterials.HDAfternoon,
+                SkyMaterials.HDSunset,
                 SkyMaterials.HDPurple,
+                SkyMaterials.HDDusk,
                 SkyMaterials.HDPurpleClouds,
-                SkyMaterials.HDPurpleDark,
-                SkyMaterials.HDSunset
+                SkyMaterials.HDMidnight,
+                SkyMaterials.HDPurpleDark
             };
 
             IList<Material> skyMaterials = new List<Material>();
