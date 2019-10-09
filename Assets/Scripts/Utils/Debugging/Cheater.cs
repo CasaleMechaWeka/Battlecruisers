@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
 {
@@ -9,9 +10,12 @@ namespace BattleCruisers.Utils.Debugging
     public class Cheater : MonoBehaviour
     {
         public int droneBoostNumber;
+        public Canvas hudCanvas;
 
         void Start()
         {
+            Assert.IsNotNull(hudCanvas);
+
             if (!Debug.isDebugBuild)
             {
                 Destroy(gameObject);
@@ -49,6 +53,11 @@ namespace BattleCruisers.Utils.Debugging
                 {
                     playerCruiser.DroneManager.NumOfDrones += droneBoostNumber;
                 }
+            }
+            // T = Toggle UI
+            else if (Input.GetKeyUp(KeyCode.T))
+            {
+                hudCanvas.gameObject.SetActive(!hudCanvas.gameObject.activeSelf);
             }
         }
 
