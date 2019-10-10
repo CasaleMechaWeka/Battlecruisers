@@ -2,7 +2,7 @@
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Performance.Projectiles
+namespace BattleCruisers.Scenes.Test.Performance
 {
     public class BulletPerformanceTestGod : TurretBarrelControllerTestGod
     {
