@@ -9,9 +9,9 @@ namespace BattleCruisers.UI.Cameras.Helpers
         /// </returns>
         public bool IsScroll(Vector2 delta)
         {
-            // Heavily weighted towards choosing vertical change (zoom)
+            // Weighted towards choosing vertical change (zoom)
             // over horizontal change (scroll)
-            return Mathf.Abs(delta.x) >= 4 * Mathf.Abs(delta.y);
+            return Mathf.Abs(delta.x) >= 2 * Mathf.Abs(delta.y);
         }
     }
 }

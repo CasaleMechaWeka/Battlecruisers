@@ -17,28 +17,28 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         [Test]
         public void Scroll()
         {
-            Vector2 delta = new Vector2(4.0001f, 1);
+            Vector2 delta = new Vector2(2.0001f, 1);
             Assert.IsTrue(_recogniser.IsScroll(delta));
         }
 
         [Test]
         public void Scroll_DespiteNegative()
         {
-            Vector2 delta = new Vector2(-4.0001f, 1);
+            Vector2 delta = new Vector2(-2.0001f, 1);
             Assert.IsTrue(_recogniser.IsScroll(delta));
         }
 
         [Test]
         public void Zoom()
         {
-            Vector2 delta = new Vector2(4, 1);
+            Vector2 delta = new Vector2(2, 1);
             Assert.IsTrue(_recogniser.IsScroll(delta));
         }
 
         [Test]
         public void Zoom_DespiteNegative()
         {
-            Vector2 delta = new Vector2(4, -1);
+            Vector2 delta = new Vector2(2, -1);
             Assert.IsTrue(_recogniser.IsScroll(delta));
         }
     }
