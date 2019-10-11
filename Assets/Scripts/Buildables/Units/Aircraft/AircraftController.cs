@@ -87,7 +87,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Assert.IsNotNull(_spriteRenderer);
 
             _aircraftTrail = transform.FindNamedComponent<TrailRenderer>("AircraftTrail");
-            _aircraftTrail.enabled = false;
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -101,6 +100,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
+            // Needs to happen before we are moved to a new position and have our game object enabled, otherwise get trail from last death position.
+            _aircraftTrail.Clear();
+
             base.Activate(activationArgs);
 
             _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
@@ -123,7 +125,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
-            _aircraftTrail.enabled = true;
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -244,9 +245,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             CleanUp();
         }
 
-        protected virtual void CleanUp()
-        {
-            _aircraftTrail.enabled = false;
-        }
+        protected virtual void CleanUp() { }
     }
 }
