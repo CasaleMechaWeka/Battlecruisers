@@ -1,5 +1,5 @@
-﻿using System;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
+using System;
 using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers
