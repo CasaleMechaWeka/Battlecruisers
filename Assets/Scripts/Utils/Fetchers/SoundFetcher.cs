@@ -10,7 +10,7 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class SoundFetcher : ISoundFetcher
     {
-        private const string SOUND_ROOT_DIR = "Sounds";
+        private const string SOUND_ROOT_DIR = "Assets/Resources_moved/Sounds";
         private const char PATH_SEPARATOR = '/';
 
         public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
