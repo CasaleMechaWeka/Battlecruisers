@@ -14,6 +14,8 @@ namespace BattleCruisers.Utils.Fetchers
         private const int NUM_OF_BOMBER_SPRITES = 8;
         private const string FIGHTER_SPRITE_NAME = "fighter";
         private const int NUM_OF_FIGHTER_SPRITES = 7;
+        private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
+        private const string SPRITES_FILE_EXTENSION = ".png";
 
         public SpriteProvider(ISpriteFetcher spriteFetcher)
         {
@@ -23,12 +25,17 @@ namespace BattleCruisers.Utils.Fetchers
 
         public async Task<IList<ISpriteWrapper>> GetBomberSpritesAsync()
         {
-            return await GetAircraftSpritesAsync(BOMBER_SPRITE_NAME, NUM_OF_BOMBER_SPRITES);
+            return await GetAircraftSpritesAsync(GetSpritePath(BOMBER_SPRITE_NAME), NUM_OF_BOMBER_SPRITES);
         }
 
         public async Task<IList<ISpriteWrapper>> GetFighterSpritesAsync()
         {
-            return await GetAircraftSpritesAsync(FIGHTER_SPRITE_NAME, NUM_OF_FIGHTER_SPRITES);
+            return await GetAircraftSpritesAsync(GetSpritePath(FIGHTER_SPRITE_NAME), NUM_OF_FIGHTER_SPRITES);
+        }
+
+        private string GetSpritePath(string spriteName)
+        {
+            return UNIT_SPRITES_PATH + spriteName + SPRITES_FILE_EXTENSION;
         }
 
         /// <returns>
@@ -36,7 +43,7 @@ namespace BattleCruisers.Utils.Fetchers
         /// (side on view, no wings showing) and the last sprite being the most
         /// turned (top view, both wings fully showing).
         /// </returns>
-        public async Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(string spritePath, int expectedNumOfSprites)
+        private async Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(string spritePath, int expectedNumOfSprites)
         {
             IList<ISpriteWrapper> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(spritePath);
             Assert.AreEqual(expectedNumOfSprites, aircraftSprites.Count);
