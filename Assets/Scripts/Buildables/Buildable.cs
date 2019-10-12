@@ -457,7 +457,7 @@ namespace BattleCruisers.Buildables
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
 
-            _factoryProvider.Sound.SoundPlayer.PlaySound(DeathSoundKey, transform.position);
+            _factoryProvider.Sound.SoundPlayer.PlaySoundAsync(DeathSoundKey, transform.position);
         }
 
         protected void SetupDroneConsumer(int numOfDrones, bool showDroneFeedback)

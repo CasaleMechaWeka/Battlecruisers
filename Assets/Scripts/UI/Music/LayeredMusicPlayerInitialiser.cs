@@ -2,24 +2,25 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Music
 {
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
-        public ILayeredMusicPlayer CreatePlayer(
+        public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
             ISoundFetcher soundFetcher,
             SoundKeyPair soundKeys)
         {
             Helper.AssertIsNotNull(soundFetcher, soundKeys);
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
-            IAudioClipWrapper primaryClip = soundFetcher.GetSound(soundKeys.PrimaryKey);
+            IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);
             primarySource.clip = primaryClip.AudioClip;
 
             AudioSource secondarySource = transform.FindNamedComponent<AudioSource>("SecondaryAudioSource");
-            IAudioClipWrapper secondaryClip = soundFetcher.GetSound(soundKeys.SecondaryKey);
+            IAudioClipWrapper secondaryClip = await soundFetcher.GetSoundAsync(soundKeys.SecondaryKey);
             secondarySource.clip = secondaryClip.AudioClip;
 
             return 

@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.Sound
                     || soundKey.Priority > _lastSoundKey.Priority))
             {
                 _lastSoundKey = soundKey;
-                _soundPlayer.PlaySound(soundKey.Key);
+                _soundPlayer.PlaySoundAsync(soundKey.Key);
             }
         }
     }

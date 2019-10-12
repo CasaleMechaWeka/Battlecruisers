@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Laser;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -37,7 +38,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             _laserImpact.Initialise();
         }
 
-        public void Initialise(
+        public async void Initialise(
             ITargetFilter targetFilter, 
             float damagePerS, 
             ITarget parent, 
@@ -59,7 +60,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             };
             _collisionDetector = new LaserCollisionDetector(contactFilter, targetFilter);
 
-            _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource, soundFetcher);
+            _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
+            _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
 		}
 
 		public void FireLaser(float angleInDegrees, bool isSourceMirrored)

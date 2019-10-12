@@ -83,7 +83,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
                     if (Health == maxHealth)
                     {
-                        _soundPlayer.PlaySound(SoundKeys.Shields.FullyCharged, Position);
+                        _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
                     }
                 }
 			}
@@ -98,7 +98,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		protected override void OnTakeDamage()
 		{
 			_timeSinceDamageInS = 0;
-            _soundPlayer.PlaySound(SoundKeys.Shields.HitWhileActive, Position);
+            _soundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
         }
 
         private void EnableShield()
@@ -111,7 +111,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		{
             visuals.SetActive(false);
             circleCollider.enabled = false;
-            _soundPlayer.PlaySound(SoundKeys.Shields.FullyDepleted, Position);
+            _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
 		}
 	}
 }

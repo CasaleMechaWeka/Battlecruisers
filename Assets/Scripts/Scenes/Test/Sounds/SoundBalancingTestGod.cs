@@ -15,14 +15,14 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private ILayeredMusicPlayer _musicPlayer;
         private AudioListener _audioListener;
 
-        protected override void Start()
+        protected async override void Start()
         {
             base.Start();
 
             LayeredMusicPlayerInitialiser musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(musicInitialiser);
             _musicPlayer
-                = musicInitialiser.CreatePlayer(
+                = await musicInitialiser.CreatePlayerAsync(
                     new SoundFetcher(),
                     SoundKeys.Music.Background.Juggernaut);
 

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
@@ -6,9 +7,13 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     {
         public float burstEndDelayInS;
 
-        protected override IProjectileSpawnerSoundPlayer CreateSoundPlayer(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize, IAudioSource audioSource)
+        protected override async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
+            ISoundPlayerFactory soundPlayerFactory, 
+            ISoundKey firingSound, 
+            int burstSize, 
+            IAudioSource audioSource)
         {
-            return soundPlayerFactory.CreateLongSoundPlayer(firingSound, audioSource, burstSize, burstEndDelayInS);
+            return await soundPlayerFactory.CreateLongSoundPlayerAsync(firingSound, audioSource, burstSize, burstEndDelayInS);
         }
     }
 }

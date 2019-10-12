@@ -3,6 +3,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Tests.UI.Sound
 {
@@ -24,13 +25,14 @@ namespace BattleCruisers.Tests.UI.Sound
             _soundKey = Substitute.For<ISoundKey>();
             _soundToPlay = Substitute.For<IAudioClipWrapper>();
 
-            _soundFetcher.GetSound(_soundKey).Returns(_soundToPlay);
+            // FELIX  Check test :)
+            _soundFetcher.GetSoundAsync(_soundKey).Returns(Task.FromResult(_soundToPlay));
         }
 
         [Test]
         public void PlaySound()
         {
-            _soundPlayer.PlaySound(_soundKey);
+            _soundPlayer.PlaySoundAsync(_soundKey);
 
             _audioSource.Received().Stop();
             _audioSource.Received().AudioClip = _soundToPlay;

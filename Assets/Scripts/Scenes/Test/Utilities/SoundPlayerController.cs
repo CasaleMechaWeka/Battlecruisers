@@ -30,12 +30,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             if (playAtObjectLocation)
             {
-                _soundPlayer.PlaySound(_soundKey, transform.position);
+                _soundPlayer.PlaySoundAsync(_soundKey, transform.position);
             }
             else
             {
                 // Play sound at camera location (always full volume)
-                _soundPlayer.PlaySound(_soundKey);
+                _soundPlayer.PlaySoundAsync(_soundKey);
             }
         }
     }

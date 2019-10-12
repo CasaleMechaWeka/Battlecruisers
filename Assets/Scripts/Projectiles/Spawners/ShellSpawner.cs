@@ -3,6 +3,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,7 +13,7 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
         private IProjectileSpawnerSoundPlayer _soundPlayer;
 
-        public void Initialise(IProjectileSpawnerArgs args, ITargetFilter targetFilter, ISoundKey firingSound)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ITargetFilter targetFilter, ISoundKey firingSound)
         {
             base.Initialise(args, targetFilter);
 
@@ -20,7 +21,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer = soundPlayerInitialiser.CreateSoundPlayer(args.FactoryProvider.Sound.SoundPlayerFactory, firingSound, args.BurstSize);
+            _soundPlayer = await soundPlayerInitialiser.CreateSoundPlayerAsync(args.FactoryProvider.Sound.SoundPlayerFactory, firingSound, args.BurstSize);
         }
 
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)

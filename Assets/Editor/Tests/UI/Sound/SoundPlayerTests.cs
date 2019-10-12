@@ -4,6 +4,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -31,14 +32,15 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _audioClip = Substitute.For<IAudioClipWrapper>();
             _soundKey = Substitute.For<ISoundKey>();
-            _soundFetcher.GetSound(_soundKey).Returns(_audioClip);
+            // FELIX  Check tests :)
+            _soundFetcher.GetSoundAsync(_soundKey).Returns(Task.FromResult(_audioClip));
         }
 
         [Test]
         public void PlaySound_ProvideNoPosition_UsesMainCameraPosition()
         {
             _camera.Transform.Position.Returns(new Vector3(99, 88, 77));
-            _soundPlayer.PlaySound(_soundKey);
+            _soundPlayer.PlaySoundAsync(_soundKey);
             _audioClipPlayer.Received().PlaySound(_audioClip, _camera.Transform.Position);
         }
 
@@ -46,7 +48,7 @@ namespace BattleCruisers.Tests.UI.Sound
         public void PlaySound_ProvidePosition()
         {
             Vector2 soundPosition = new Vector2(2, 3);
-            _soundPlayer.PlaySound(_soundKey, soundPosition);
+            _soundPlayer.PlaySoundAsync(_soundKey, soundPosition);
             _audioClipPlayer.Received().PlaySound(_audioClip, soundPosition);
         }
     }

@@ -1,12 +1,17 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public class ShortSoundPlayerInitialiser : ProjectileSoundPlayerInitialiser
     {
-        protected override IProjectileSpawnerSoundPlayer CreateSoundPlayer(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize, IAudioSource audioSource)
+        protected override async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
+            ISoundPlayerFactory soundPlayerFactory, 
+            ISoundKey firingSound, 
+            int burstSize, 
+            IAudioSource audioSource)
         {
-            return soundPlayerFactory.CreateShortSoundPlayer(firingSound, audioSource);
+            return await soundPlayerFactory.CreateShortSoundPlayerAsync(firingSound, audioSource);
         }
     }
 }

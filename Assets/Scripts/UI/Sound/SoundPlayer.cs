@@ -2,6 +2,7 @@
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
@@ -21,15 +22,15 @@ namespace BattleCruisers.UI.Sound
             _soleCamera = soleCamera;
         }
 
-        public void PlaySound(ISoundKey soundKey)
+        public async Task PlaySoundAsync(ISoundKey soundKey)
         {
             // Play sound at camera location.  Assumes there is only one camera in the game.
-            PlaySound(soundKey, _soleCamera.Transform.Position);
+            await PlaySoundAsync(soundKey, _soleCamera.Transform.Position);
         }
 
-        public void PlaySound(ISoundKey soundKey, Vector2 position)
+        public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
-            IAudioClipWrapper sound = _soundFetcher.GetSound(soundKey);
+            IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
             _audioClipPlayer.PlaySound(sound, position);
         }
     }

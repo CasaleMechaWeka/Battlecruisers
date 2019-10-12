@@ -168,7 +168,7 @@ namespace BattleCruisers.Scenes
 			{
                 _currentScreen.OnDismissing();
 				_currentScreen.gameObject.SetActive(false);
-                _soundPlayer.PlaySound(SoundKeys.UI.ScreenChange);
+                _soundPlayer.PlaySoundAsync(SoundKeys.UI.ScreenChange);
 			}
 
 			_currentScreen = destinationScreen;

@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Music
         {
             if (!soundKeyToPlay.Equals(_currentlyPlaying))
             {
-                _soundPlayer.PlaySound(soundKeyToPlay, loop);
+                _soundPlayer.PlaySoundAsync(soundKeyToPlay, loop);
                 _currentlyPlaying = soundKeyToPlay;
             }
         }

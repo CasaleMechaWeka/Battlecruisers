@@ -2,6 +2,7 @@
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
@@ -18,15 +19,15 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
             _deferrer = deferrer;
         }
 
-        public IProjectileSpawnerSoundPlayer CreateShortSoundPlayer(ISoundKey firingSound, IAudioSource audioSource)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource)
         {
-            IAudioClipWrapper sound = _soundFetcher.GetSound(firingSound);
+            IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
             return new ShortSoundPlayer(sound, audioSource);
         }
 
-        public IProjectileSpawnerSoundPlayer CreateLongSoundPlayer(ISoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS)
         {
-            IAudioClipWrapper sound = _soundFetcher.GetSound(firingSound);
+            IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(firingSound);
             return new LongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);
         }
     }

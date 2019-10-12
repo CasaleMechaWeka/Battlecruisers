@@ -32,14 +32,14 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             _prioritisedSoundPlayer.Enabled = false;
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.DidNotReceiveWithAnyArgs().PlaySound(default);
+            _singleSoundPlayer.DidNotReceiveWithAnyArgs().PlaySoundAsync(default);
         }
 
         [Test]
         public void PlaySound_FirstSound_Plays()
         {
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.Received().PlaySound(_lowPrioritySound.Key);
+            _singleSoundPlayer.Received().PlaySoundAsync(_lowPrioritySound.Key);
         }
 
         [Test]
@@ -47,12 +47,12 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             // First sound
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.Received().PlaySound(_lowPrioritySound.Key);
+            _singleSoundPlayer.Received().PlaySoundAsync(_lowPrioritySound.Key);
 
             // Second sound
             _singleSoundPlayer.IsPlayingSound.Returns(true);
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.Received().PlaySound(_lowPrioritySound.Key);
+            _singleSoundPlayer.Received().PlaySoundAsync(_lowPrioritySound.Key);
         }
 
         [Test]
@@ -60,12 +60,12 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             // First sound
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.Received().PlaySound(_lowPrioritySound.Key);
+            _singleSoundPlayer.Received().PlaySoundAsync(_lowPrioritySound.Key);
 
             // Second sound
             _singleSoundPlayer.IsPlayingSound.Returns(true);
             _prioritisedSoundPlayer.PlaySound(_highPrioritySound);
-            _singleSoundPlayer.Received().PlaySound(_highPrioritySound.Key);
+            _singleSoundPlayer.Received().PlaySoundAsync(_highPrioritySound.Key);
         }
 
         [Test]
@@ -73,13 +73,13 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             // First sound
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.Received().PlaySound(_lowPrioritySound.Key);
+            _singleSoundPlayer.Received().PlaySoundAsync(_lowPrioritySound.Key);
 
             // Second sound
             _singleSoundPlayer.ClearReceivedCalls();
             _singleSoundPlayer.IsPlayingSound.Returns(true);
             _prioritisedSoundPlayer.PlaySound(_lowPrioritySound);
-            _singleSoundPlayer.DidNotReceiveWithAnyArgs().PlaySound(null);
+            _singleSoundPlayer.DidNotReceiveWithAnyArgs().PlaySoundAsync(null);
         }
     }
 }

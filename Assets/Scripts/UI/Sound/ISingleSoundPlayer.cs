@@ -1,10 +1,12 @@
-﻿namespace BattleCruisers.UI.Sound
+﻿using System.Threading.Tasks;
+
+namespace BattleCruisers.UI.Sound
 {
     public interface ISingleSoundPlayer
     {
         bool IsPlayingSound { get; }
 
-        void PlaySound(ISoundKey soundKey, bool loop = false);
+        Task PlaySoundAsync(ISoundKey soundKey, bool loop = false);
         void Stop();
     }
 }

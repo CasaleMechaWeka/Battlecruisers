@@ -163,7 +163,7 @@ namespace BattleCruisers.Projectiles
 
             if (ImpactSoundKey != null)
             {
-                _factoryProvider.Sound.SoundPlayer.PlaySound(ImpactSoundKey, transform.position);
+                _factoryProvider.Sound.SoundPlayer.PlaySoundAsync(ImpactSoundKey, transform.position);
             }
 
 			RemoveFromScene();

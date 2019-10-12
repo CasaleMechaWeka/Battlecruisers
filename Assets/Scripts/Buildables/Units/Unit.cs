@@ -59,12 +59,12 @@ namespace BattleCruisers.Buildables.Units
             _audioSource = new AudioSourceBC(audioSource);
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override async void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
 		{
             base.Initialise(uiManager, factoryProvider);
 			
             Assert.IsTrue(maxVelocityInMPerS > 0);
-            _engineAudioClip = _factoryProvider.Sound.SoundFetcher.GetSound(EngineSoundKey);
+            _engineAudioClip = await _factoryProvider.Sound.SoundFetcher.GetSoundAsync(EngineSoundKey);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)

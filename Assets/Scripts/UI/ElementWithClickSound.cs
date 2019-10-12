@@ -21,7 +21,7 @@ namespace BattleCruisers.UI
         {
             if (ClickSound != null)
             {
-                _soundPlayer.PlaySound(ClickSound);
+                _soundPlayer.PlaySoundAsync(ClickSound);
             }
         }
     }

@@ -246,7 +246,7 @@ namespace BattleCruisers.Cruisers
         {
             base.OnDestroyed();
 
-            FactoryProvider.Sound.SoundPlayer.PlaySound(SoundKeys.Deaths.Cruiser, Position);
+            FactoryProvider.Sound.SoundPlayer.PlaySoundAsync(SoundKeys.Deaths.Cruiser, Position);
 
             // Make cruiser sink
             _rigidBody.bodyType = RigidbodyType2D.Dynamic;

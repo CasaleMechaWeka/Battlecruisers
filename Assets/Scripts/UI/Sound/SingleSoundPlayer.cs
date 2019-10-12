@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Sound
 {
@@ -25,10 +26,10 @@ namespace BattleCruisers.UI.Sound
             _audioSource = audioSource;
         }
 
-        public void PlaySound(ISoundKey soundKey, bool loop = false)
+        public async Task PlaySoundAsync(ISoundKey soundKey, bool loop = false)
         {
             // Not playing sound spatially, so position is irrelevant.
-            IAudioClipWrapper soundToPlay = _soundFetcher.GetSound(soundKey);
+            IAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
             _audioSource.Stop();
             _audioSource.AudioClip = soundToPlay;
             _audioSource.Play(isSpatial: false, loop: loop);

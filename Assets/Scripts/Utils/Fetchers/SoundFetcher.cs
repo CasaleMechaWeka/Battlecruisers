@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
@@ -10,18 +13,20 @@ namespace BattleCruisers.Utils.Fetchers
         private const string SOUND_ROOT_DIR = "Sounds";
         private const char PATH_SEPARATOR = '/';
 
-        // PERF  Cache AudioClips?
-        public IAudioClipWrapper GetSound(ISoundKey soundKey)
+        public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
-            AudioClip audioClip = Resources.Load<AudioClip>(soundPath);
 
-            if (audioClip == null)
+            AsyncOperationHandle<AudioClip> handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
+            await handle.Task;
+
+            if (handle.Status != AsyncOperationStatus.Succeeded
+                || handle.Result == null)
             {
-                throw new ArgumentException("Invalid sound path: " + soundPath);
+                throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
             }
 
-            return new AudioClipWrapper(audioClip);
+            return new AudioClipWrapper(handle.Result);
         }
 
         private string CreateSoundPath(ISoundKey soundKey)

@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Data.Static;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Projectiles.Spawners.Laser
@@ -10,17 +8,14 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         private readonly ILaserRenderer _laserRenderer;
         private readonly IAudioSource _audioSource;
 
-        public LaserSoundPlayer(ILaserRenderer laserRenderer, IAudioSource audioSource, ISoundFetcher soundFetcher)
+        public LaserSoundPlayer(ILaserRenderer laserRenderer, IAudioSource audioSource)
         {
-            Helper.AssertIsNotNull(laserRenderer, audioSource, soundFetcher);
+            Helper.AssertIsNotNull(laserRenderer, audioSource);
 
             _laserRenderer = laserRenderer;
             _audioSource = audioSource;
 
             _laserRenderer.LaserVisibilityChanged += _laserRenderer_LaserVisibilityChanged;
-
-            IAudioClipWrapper laserSound = soundFetcher.GetSound(SoundKeys.Firing.Laser);
-            _audioSource.AudioClip = laserSound;
         }
 
         private void _laserRenderer_LaserVisibilityChanged(object sender, LaserVisibilityChangedEventArgs e)

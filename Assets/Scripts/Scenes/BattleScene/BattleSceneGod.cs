@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
-        private void Start()
+        private async void Start()
         {
             Assert.raiseExceptions = true;
 
@@ -170,7 +170,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Audio
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             ILayeredMusicPlayer layeredMusicPlayer
-                = components.MusicPlayerInitialiser.CreatePlayer(
+                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys);
             _audioInitialiser
@@ -186,7 +186,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Other
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel.CloudStats, RandomGenerator.Instance);
-            components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
+            await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
             _gameEndMonitor 
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(

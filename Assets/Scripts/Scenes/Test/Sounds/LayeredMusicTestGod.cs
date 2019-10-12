@@ -9,11 +9,11 @@ namespace BattleCruisers.Scenes.Test.Sounds
     {
         private ILayeredMusicPlayer _musicPlayer;
 
-        void Start()
+        async void Start()
         {
             LayeredMusicPlayerInitialiser initialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             _musicPlayer
-                = initialiser.CreatePlayer(
+                = await initialiser.CreatePlayerAsync(
                     new SoundFetcher(),
                     //SoundKeys.Music.Background.Sleeper);
                     //SoundKeys.Music.Background.Nothing);
