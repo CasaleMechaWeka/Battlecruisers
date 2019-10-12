@@ -188,7 +188,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Other
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel.CloudStats, RandomGenerator.Instance);
-            components.SkyboxInitialiser.Initialise(cameraComponents.Skybox, currentLevel);
+            components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
             _gameEndMonitor 
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(

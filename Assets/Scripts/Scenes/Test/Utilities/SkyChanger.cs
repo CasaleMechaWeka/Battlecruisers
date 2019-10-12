@@ -2,6 +2,7 @@
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -15,18 +16,18 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public Text skyName;
 
-        void Start()
+        async void Start()
         {
             Assert.IsNotNull(skyName);
 
-            _skies = FindSkyMaterials();
+            _skies = await FindSkyMaterialsAsync();
 
             _skybox = FindObjectOfType<Skybox>();
             Assert.IsNotNull(_skybox);
             ChangeSky();
         }
 
-        private ICircularList<Material> FindSkyMaterials()
+        private async Task<ICircularList<Material>> FindSkyMaterialsAsync()
         {
             IList<string> skyNames = new List<string>()
             {
@@ -52,7 +53,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             foreach (string skyName in skyNames)
             {
-                skyMaterials.Add(materialFetcher.GetMaterial(skyName));
+                skyMaterials.Add(await materialFetcher.GetMaterialAsync(skyName));
             }
 
             return new CircularList<Material>(skyMaterials);

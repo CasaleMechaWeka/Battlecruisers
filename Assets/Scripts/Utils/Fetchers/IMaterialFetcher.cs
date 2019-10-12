@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers
 {
     public interface IMaterialFetcher
     {
-        Material GetMaterial(string materialName);
+        Task<Material> GetMaterialAsync(string materialName);
     }
 }

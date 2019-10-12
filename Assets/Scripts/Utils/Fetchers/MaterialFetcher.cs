@@ -1,22 +1,25 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
     public class MaterialFetcher : IMaterialFetcher
     {
-        private const string MATERIAL_ROOT_PATH = "Materials/";
-
-        public Material GetMaterial(string materialName)
+        public async Task<Material> GetMaterialAsync(string materialName)
         {
-            Material material = Resources.Load<Material>(MATERIAL_ROOT_PATH + materialName);
-
-            if (material == null)
+            AsyncOperationHandle<Material> handle = Addressables.LoadAssetAsync<Material>(materialName);
+            await handle.Task;
+            
+            if (handle.Status != AsyncOperationStatus.Succeeded
+                || handle.Result == null)
             {
-                throw new ArgumentException("Invalid material name: " + materialName);
+                throw new ArgumentException("Failed to retrieve material: " + materialName);
             }
 
-            return material;
+            return handle.Result;
         }
     }
 }
