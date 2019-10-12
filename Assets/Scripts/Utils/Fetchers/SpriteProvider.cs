@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers
@@ -21,10 +22,12 @@ namespace BattleCruisers.Utils.Fetchers
             _spriteFetcher = spriteFetcher;
         }
 
-        public IList<ISpriteWrapper> GetBomberSprites()
+        public async Task<IList<ISpriteWrapper>> GetBomberSpritesAsync()
         {
             string spritePath = GetBomberFilePath();
-            return GetAircraftSprites(spritePath, NUM_OF_BOMBER_SPRITES);
+            // FELIX
+            return await GetAircraftSpritesAsync(BOMBER_SPRITE_NAME, NUM_OF_BOMBER_SPRITES);
+            //return await GetAircraftSpritesAsync(spritePath, NUM_OF_BOMBER_SPRITES);
         }
 
         private string GetBomberFilePath()
@@ -32,10 +35,12 @@ namespace BattleCruisers.Utils.Fetchers
             return AIRCRAFT_SPRITES_BASE_PATH + BOMBER_SPRITE_NAME;
         }
 
-        public IList<ISpriteWrapper> GetFighterSprites()
+        public async Task<IList<ISpriteWrapper>> GetFighterSpritesAsync()
         {
             string spritePath = GetFighterFilePath();
-            return GetAircraftSprites(spritePath, NUM_OF_FIGHTER_SPRITES);
+            // FELIX
+            return await GetAircraftSpritesAsync(FIGHTER_SPRITE_NAME, NUM_OF_FIGHTER_SPRITES);
+            //return await GetAircraftSpritesAsync(spritePath, NUM_OF_FIGHTER_SPRITES);
         }
 
         private string GetFighterFilePath()
@@ -48,9 +53,9 @@ namespace BattleCruisers.Utils.Fetchers
         /// (side on view, no wings showing) and the last sprite being the most
         /// turned (top view, both wings fully showing).
         /// </returns>
-        public IList<ISpriteWrapper> GetAircraftSprites(string spritePath, int expectedNumOfSprites)
+        public async Task<IList<ISpriteWrapper>> GetAircraftSpritesAsync(string spritePath, int expectedNumOfSprites)
         {
-            IList<ISpriteWrapper> aircraftSprites = _spriteFetcher.GetMultiSprites(spritePath);
+            IList<ISpriteWrapper> aircraftSprites = await _spriteFetcher.GetMultiSpritesAsync(spritePath);
             Assert.AreEqual(expectedNumOfSprites, aircraftSprites.Count);
 
             // Reverse order, because the sprites are provided in most turned to 

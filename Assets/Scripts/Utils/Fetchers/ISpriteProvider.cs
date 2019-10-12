@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Utils.Fetchers
 {
     public interface ISpriteProvider
     {
-        IList<ISpriteWrapper> GetBomberSprites();
-        IList<ISpriteWrapper> GetFighterSprites();
+        Task<IList<ISpriteWrapper>> GetBomberSpritesAsync();
+        Task<IList<ISpriteWrapper>> GetFighterSpritesAsync();
     }
 }

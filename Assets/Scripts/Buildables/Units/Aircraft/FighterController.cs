@@ -90,7 +90,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     safeZone: _aircraftProvider.FighterSafeZone);
 		}
 
-		protected override void OnBuildableCompleted()
+		protected async override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
@@ -120,7 +120,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			SetupTargetDetection();
 
-            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooser(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
 		}
 
 		/// <summary>

@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
@@ -23,15 +24,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             _spriteProvider = spriteProvider;
         }
 
-        public ISpriteChooser CreateBomberSpriteChooser(IVelocityProvider maxVelocityProvider)
+        public async Task<ISpriteChooser> CreateBomberSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
         {
-            IList<ISpriteWrapper> bomberSprites = _spriteProvider.GetBomberSprites();
+            IList<ISpriteWrapper> bomberSprites = await _spriteProvider.GetBomberSpritesAsync();
             return new SpriteChooser(_assignerFactory, bomberSprites, maxVelocityProvider, BOMBER_ASSIGNER_BASE_CUTOFF);
         }
 		
-		public ISpriteChooser CreateFighterSpriteChooser(IVelocityProvider maxVelocityProvider)
+		public async Task<ISpriteChooser> CreateFighterSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
 		{
-            IList<ISpriteWrapper> fighterSprites = _spriteProvider.GetFighterSprites();
+            IList<ISpriteWrapper> fighterSprites = await _spriteProvider.GetFighterSpritesAsync();
             return new SpriteChooser(_assignerFactory, fighterSprites, maxVelocityProvider, FIGHTER_ASSIGNER_BASE_CUTOFF);
 		}
 

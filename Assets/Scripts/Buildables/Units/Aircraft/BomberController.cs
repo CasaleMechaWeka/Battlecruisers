@@ -104,7 +104,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bombSpawner.Initialise(spawnerArgs, targetFilter);
 		}
 		
-		protected override void OnBuildableCompleted()
+		protected async override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
@@ -113,7 +113,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			_targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
 			_targetProcessor.AddTargetConsumer(this);
 
-            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooser(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public TargetValue targetValue;
         public override TargetValue TargetValue => targetValue;
 
-        protected override void OnBuildableCompleted()
+        protected async override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 ActiveMovementController = DummyMovementController;
 			}
 
-            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooser(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateFighterSpriteChooserAsync(this);
 		}
 
 		public void SetTargetType(TargetType targetType)
