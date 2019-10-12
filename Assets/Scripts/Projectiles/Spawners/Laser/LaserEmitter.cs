@@ -5,6 +5,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -38,7 +39,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             _laserImpact.Initialise();
         }
 
-        public async void Initialise(
+        public async Task InitialiseAsync(
             ITargetFilter targetFilter, 
             float damagePerS, 
             ITarget parent, 

@@ -2,6 +2,7 @@
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -31,10 +32,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _rocketStats;
         }
 
-		public override void Initialise(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
-            base.Initialise(args);
-
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
                 rocketSpawner.Initialise(args.Parent, _rocketStats, TurretStats.BurstSize, args.FactoryProvider);

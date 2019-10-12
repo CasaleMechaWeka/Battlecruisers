@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		public void Initialise(IExactMatchTargetFilter targetFilter, IBarrelControllerArgs args)
 		{
-            base.Initialise(args);
+            base.InitialiseAsync(args);
 
 			_exactMatchTargetFilter = targetFilter;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);

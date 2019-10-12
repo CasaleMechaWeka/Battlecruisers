@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -91,7 +92,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return new DamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
-        public virtual void Initialise(IBarrelControllerArgs args)
+        public async Task InitialiseAsync(IBarrelControllerArgs args)
 		{
             Assert.IsNotNull(args);
 
@@ -114,9 +115,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager);
 
+            await InternalInitialiseAsync(args);
+
             _updater = args.Updater;
             _updater.Updated += _updater_Updated;
         }
+
+        protected virtual async Task InternalInitialiseAsync(IBarrelControllerArgs args) { }
 
         private void _updater_Updated(object sender, EventArgs e)
         {

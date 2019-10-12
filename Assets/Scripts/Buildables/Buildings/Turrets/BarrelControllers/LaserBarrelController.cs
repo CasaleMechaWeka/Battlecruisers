@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -52,11 +53,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return new DamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
-        public override void Initialise(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
-            base.Initialise(args);
-            _laserEmitter
-                .Initialise(
+            await 
+                _laserEmitter.InitialiseAsync(
                     args.TargetFilter, 
                     _laserTurretStats.damagePerS, 
                     args.Parent, 

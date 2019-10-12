@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -29,15 +30,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsTrue(_shellSpawners.Length != 0);
 		}
 
-        public override void Initialise(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
-            base.Initialise(args);
-
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                spawner.InitialiseAsync(spawnerArgs, args.TargetFilter, args.SpawnerSoundKey);
+                await spawner.InitialiseAsync(spawnerArgs, args.TargetFilter, args.SpawnerSoundKey);
             }
 		}
 

@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test
                         _updaterProvider.PerFrameUpdater,
                         angleCalculator: CreateAngleCalculator(barrel.ProjectileStats));
 
-                barrel.Initialise(barrelControllerArgs);
+                barrel.InitialiseAsync(barrelControllerArgs);
 			}
 		}
 

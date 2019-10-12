@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test
 			barrel.Target = target;
 			
             IBarrelControllerArgs barrelControllerArgs = _helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
-            barrel.Initialise(barrelControllerArgs);
+            barrel.InitialiseAsync(barrelControllerArgs);
 		}
 	}
 }

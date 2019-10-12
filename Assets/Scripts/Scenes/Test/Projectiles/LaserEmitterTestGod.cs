@@ -127,7 +127,7 @@ namespace BattleCruisers.Scenes.Test
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
             ITarget parent = Substitute.For<ITarget>();
             laserEmitter
-                .Initialise(
+                .InitialiseAsync(
                     targetFilter, 
                     damagePerS: 100, 
                     parent: parent, 

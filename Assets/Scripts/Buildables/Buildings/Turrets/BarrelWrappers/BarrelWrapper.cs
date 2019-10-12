@@ -184,7 +184,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
         {
-            barrel.Initialise(args);
+            barrel.InitialiseAsync(args);
         }
 
         protected virtual ITargetFilter CreateTargetFilter()

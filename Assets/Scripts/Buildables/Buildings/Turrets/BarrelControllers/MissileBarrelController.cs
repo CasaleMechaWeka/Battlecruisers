@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,10 +23,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _missileSpawners = new CircularList<MissileSpawner>(missileSpawners);
         }
 
-        public override void Initialise(IBarrelControllerArgs args)
-		{
-            base.Initialise(args);
-
+        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
+        {
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);
 
             foreach (MissileSpawner missileSpawner in _missileSpawners.Items)

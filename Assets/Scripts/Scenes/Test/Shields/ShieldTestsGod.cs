@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Shields
                     _updaterProvider.PerFrameUpdater,
                     targetFilter);
 
-            turret.Initialise(barrelControllerArgs);
+            turret.InitialiseAsync(barrelControllerArgs);
 			turret.Target = shield;
 		}
 	}

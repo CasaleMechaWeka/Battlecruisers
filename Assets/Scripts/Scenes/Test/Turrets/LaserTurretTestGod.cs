@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
                     targetFilter: new DummyTargetFilter(isMatchResult: true),
                     rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 
-            laserBarrel.Initialise(barrelControllerArgs);
+            laserBarrel.InitialiseAsync(barrelControllerArgs);
             
 
             // Setup target

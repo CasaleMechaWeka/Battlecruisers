@@ -116,7 +116,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                     SoundKeys.Firing.BigCannon);
 
-            _barrelController.Initialise(args);
+            _barrelController.InitialiseAsync(args);
 
 			SetupTargetDetection();
 
