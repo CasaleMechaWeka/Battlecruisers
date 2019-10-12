@@ -10,7 +10,6 @@ namespace BattleCruisers.Utils.Fetchers
     {
         private readonly ISpriteFetcher _spriteFetcher;
 
-        private const string AIRCRAFT_SPRITES_BASE_PATH = "Sprites/Buildables/Units/Aircraft/";
         private const string BOMBER_SPRITE_NAME = "bomber";
         private const int NUM_OF_BOMBER_SPRITES = 8;
         private const string FIGHTER_SPRITE_NAME = "fighter";
@@ -24,28 +23,12 @@ namespace BattleCruisers.Utils.Fetchers
 
         public async Task<IList<ISpriteWrapper>> GetBomberSpritesAsync()
         {
-            string spritePath = GetBomberFilePath();
-            // FELIX
             return await GetAircraftSpritesAsync(BOMBER_SPRITE_NAME, NUM_OF_BOMBER_SPRITES);
-            //return await GetAircraftSpritesAsync(spritePath, NUM_OF_BOMBER_SPRITES);
-        }
-
-        private string GetBomberFilePath()
-        {
-            return AIRCRAFT_SPRITES_BASE_PATH + BOMBER_SPRITE_NAME;
         }
 
         public async Task<IList<ISpriteWrapper>> GetFighterSpritesAsync()
         {
-            string spritePath = GetFighterFilePath();
-            // FELIX
             return await GetAircraftSpritesAsync(FIGHTER_SPRITE_NAME, NUM_OF_FIGHTER_SPRITES);
-            //return await GetAircraftSpritesAsync(spritePath, NUM_OF_FIGHTER_SPRITES);
-        }
-
-        private string GetFighterFilePath()
-        {
-            return AIRCRAFT_SPRITES_BASE_PATH + FIGHTER_SPRITE_NAME;
         }
 
         /// <returns>
