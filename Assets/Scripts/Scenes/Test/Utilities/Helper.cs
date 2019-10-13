@@ -63,16 +63,21 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
+        public IPrefabFactory PrefabFactory { get; }
+
+        // FELIX  Remove default parameters, should be handled by factory :)
         public Helper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES, 
             float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
             IDeferrer deferrer = null,
-            IUpdaterProvider updaterProvider = null)
+            IUpdaterProvider updaterProvider = null,
+            IPrefabFactory prefabFactory = null)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             _deferrer = deferrer;
             _updaterProvider = updaterProvider;
+            PrefabFactory = prefabFactory;
 		}
 
         public void InitialiseBuilding(
@@ -532,6 +537,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiser.Initialise(cruiserArgs);
         }
 
+        // FELIX  Remove :)
         public static async Task<IPrefabFactory> CreatePrefabFactoryAsync()
         {
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
