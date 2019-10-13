@@ -1,23 +1,33 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFetcher : IPrefabFetcher
     {
-        public TPrefab GetPrefab<TPrefab>(IPrefabKey prefabKey) where TPrefab : class
+        private const string PREFAB_FILE_EXTENSION = ".prefab";
+
+        public async Task<TPrefab> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class
         {
-            GameObject gameObject = Resources.Load(prefabKey.PrefabPath) as GameObject;
-            if (gameObject == null)
+            string addressableKey = prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
+
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
+            await handle.Task;
+
+            if (handle.Status != AsyncOperationStatus.Succeeded
+                || handle.Result == null)
             {
-                throw new ArgumentException("Invalid prefab path: " + prefabKey.PrefabPath);
+                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
             }
 
-            TPrefab prefabObject = gameObject.GetComponent<TPrefab>();
+            TPrefab prefabObject = handle.Result.GetComponent<TPrefab>();
             if (prefabObject == null)
             {
-                throw new ArgumentException($"Prefab does not contain a component of type: {typeof(TPrefab)}.  Prefab path: {prefabKey.PrefabPath}");
+                throw new ArgumentException($"Prefab does not contain a component of type: {typeof(TPrefab)}.  Addressable key: {addressableKey}");
             }
             return prefabObject;
         }

@@ -1,9 +1,10 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Utils.Fetchers
 {
     public interface IPrefabFetcher
     {
-        TPrefab GetPrefab<TPrefab>(IPrefabKey prefabKey) where TPrefab : class;
+        Task<TPrefab> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class;
     }
 }
