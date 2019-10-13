@@ -85,8 +85,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public CountdownController CreateDeleteCountdown(Transform parent)
         {
-            CountdownController countdownPrefab = _prefabCache.GetCountdown();
-            CountdownController newCountdown = Object.Instantiate(countdownPrefab);
+            CountdownController newCountdown = Object.Instantiate(_prefabCache.Countdown);
             newCountdown.transform.SetParent(parent, worldPositionStays: false);
             newCountdown.Initialise();
             return newCountdown;
@@ -114,8 +113,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public IDroneController CreateDrone()
         {
-            DroneController prefab = _prefabCache.GetDrone();
-            DroneController newDrone = Object.Instantiate(prefab);
+            DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
             newDrone.Initialise(_randomGenerator);
             return newDrone;
         }

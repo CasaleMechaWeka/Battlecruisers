@@ -12,16 +12,15 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// FELIX  Implement, use, test
     public interface IPrefabCache
     {
+        // Single prefab caches
+        CountdownController Countdown { get; }
+        DroneController Drone { get; }
+
         // Multiple prefab caches
         BuildableWrapper<IBuilding> GetBuilding(IPrefabKey key);
         BuildableWrapper<IUnit> GetUnit(IPrefabKey key);
         Cruiser GetCruiser(IPrefabKey key);
         ExplosionController GetExplosion(IPrefabKey key);
-
-        // Single prefab caches
-        // FELIX  Convert to properties :)
-        CountdownController GetCountdown();
-        DroneController GetDrone();
 
         // Multiple untyped prefab caches
         TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey);
