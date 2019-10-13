@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Data.Static
 {
@@ -38,7 +39,28 @@ namespace BattleCruisers.Data.Static
 			public static BuildingKey Ultralisk { get; } = new BuildingKey(BuildingCategory.Ultra, "Ultralisk");
             public static BuildingKey KamikazeSignal { get; } = new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal");
             public static BuildingKey Broadsides { get; } = new BuildingKey(BuildingCategory.Ultra, "Broadsides");
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        // Factories
+                        AirFactory, NavalFactory, DroneStation,
+                        // Tactical
+                        ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower,
+                        // Defence
+                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil,
+                        // Offence
+                        Artillery, RocketLauncher, Railgun,
+                        // Ultras
+                        DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides
+                    };
+                }
+            }
         }
+
 
         public static class Units
         {
@@ -53,6 +75,20 @@ namespace BattleCruisers.Data.Static
             public static UnitKey Frigate { get; } = new UnitKey(UnitCategory.Naval, "Frigate");
             public static UnitKey Destroyer { get; } = new UnitKey(UnitCategory.Naval, "Destroyer");
             public static UnitKey ArchonBattleship { get; } = new UnitKey(UnitCategory.Naval, "ArchonBattleship");
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        // Aircraft
+                        Bomber, Fighter, Gunship, TestAircraft,
+                        // Ships
+                        AttackBoat, Frigate, Destroyer, ArchonBattleship
+                    };
+                }
+            }
 		}
 
 		public static class Hulls
@@ -65,6 +101,17 @@ namespace BattleCruisers.Data.Static
 			public static HullKey Raptor { get; } = new HullKey("Raptor");
 			public static HullKey Rockjaw { get; } = new HullKey("Rockjaw");
 			public static HullKey Trident { get; } = new HullKey("Trident");
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident
+                    };
+                }
+            }
 		}
 
         public static class UI
@@ -84,6 +131,17 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey Explosion100 { get; } = new ExplosionKey("Explosion1.0");
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
             public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        BulletImpact, Explosion75, Explosion100, Explosion150, Explosion500
+                    };
+                }
+            }
         }
 
         public static class Projectiles
@@ -99,6 +157,19 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
             public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
             public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        Bullet, ShellSmall, ShellLarge, 
+                        MissileSmall, MissileMedium, MissileLarge, 
+                        Bomb, Nuke, Rocket
+                    };
+                }
+            }
         }
 	}
 }

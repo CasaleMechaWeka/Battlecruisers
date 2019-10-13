@@ -9,6 +9,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// </summary>
     public interface IPrefabCacheFactory
     {
-        Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcherLEGACY prefabFetcher);
+        Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher);
     }
 }
