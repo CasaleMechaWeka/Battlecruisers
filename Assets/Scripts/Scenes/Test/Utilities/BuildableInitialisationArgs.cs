@@ -29,6 +29,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine;
+using UnityEngine.Assertions;
 using BcUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -52,6 +53,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
+            // FELIX  Remove
             IPrefabFactory prefabFactory = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
@@ -73,6 +75,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUpdaterProvider updaterProvider = null,
             ITurretStatsFactory turretStatsFactory = null)
         {
+            Assert.IsNotNull(helper);
+
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
@@ -80,7 +84,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
             ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
-            prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcherLEGACY());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
@@ -89,7 +92,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             FactoryProvider
                 = CreateFactoryProvider(
-                    prefabFactory,
+                    helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
                     angleCalculatorFactory ?? new AngleCalculatorFactory(),
                     targetPositionPredictorFactory ?? new TargetPositionPredictorFactory(),

@@ -51,6 +51,7 @@ using System.Threading.Tasks;
 using UnityCommon.PlatformAbstractions;
 using UnityCommon.Properties;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -73,6 +74,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUpdaterProvider updaterProvider = null,
             IPrefabFactory prefabFactory = null)
 		{
+            Assert.IsNotNull(prefabFactory);
+            // Other parameters are ok to be null
+
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             _deferrer = deferrer;

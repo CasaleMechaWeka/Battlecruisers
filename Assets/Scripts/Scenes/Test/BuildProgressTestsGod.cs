@@ -9,19 +9,30 @@ namespace BattleCruisers.Scenes.Test
 	{
         public GameObject dummyEnemyCruiser;
 
-		void Start() 
+		async void Start() 
 		{
-            Helper helper = new Helper(buildSpeedMultiplier: 5);
+            Building[] buildings = FindObjectsOfType<Building>();
+            SetActiveness(buildings, false);
+
+            Helper helper = await HelperFactory.CreateHelper(buildSpeedMultiplier: 5);
 			
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
 
-            IBuilding[] buildings = FindObjectsOfType<Building>();
-            foreach (IBuilding building in buildings)
+            foreach (Building building in buildings)
             {
+                building.GameObject.SetActive(true);
                 helper.InitialiseBuilding(building, enemyCruiser: enemyCruiser);
                 building.CompletedBuildable += (sender, e) => building.InitiateDelete();
                 building.StartConstruction();
             }
 		}
+
+        private void SetActiveness(Building[] buildings, bool isActive)
+        {
+            foreach (Building building in buildings)
+            {
+                building.GameObject.SetActive(isActive);
+            }
+        }
 	}
 }

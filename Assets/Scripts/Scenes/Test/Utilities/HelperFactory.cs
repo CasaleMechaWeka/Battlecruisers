@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
-        public async Task<Helper> CreateHelper(
+        public static async Task<Helper> CreateHelper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES,
             float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
             IDeferrer deferrer = null,
