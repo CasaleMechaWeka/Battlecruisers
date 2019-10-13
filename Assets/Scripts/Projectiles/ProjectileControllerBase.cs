@@ -17,7 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public abstract class ProjectileControllerBase<TActivationArgs, TStats> : MonoBehaviour,
+    public abstract class ProjectileControllerBase<TActivationArgs, TStats> : Projectile,
         IRemovable,
         IPoolable<TActivationArgs> 
             where TActivationArgs : ProjectileActivationArgs<TStats>
