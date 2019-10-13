@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup gunships
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
 
             BuildableGroupController gunshipsGroup = FindObjectOfType<BuildableGroupController>();
             if (gunshipsGroup != null)

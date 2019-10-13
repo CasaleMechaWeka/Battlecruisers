@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup fighters
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
 
             InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, prefabFactory, leftFighterGroup, leftSpawnPosition);
             InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, prefabFactory, rightFighterGroup, rightSpawnPosition);

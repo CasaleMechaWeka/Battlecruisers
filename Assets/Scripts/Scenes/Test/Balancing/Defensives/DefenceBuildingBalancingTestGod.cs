@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         protected override void Initialise()
         {
-            _prefabFactory = new PrefabFactory(new PrefabFetcher());
+            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
         }
 
         protected override void InitialiseScenario(DefenceBuildingBalancingTest scenario)

@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup bombers
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
 
             BuildableGroupController bombersGroup = FindObjectOfType<BuildableGroupController>();
             BuildableInitialisationArgs groupArgs

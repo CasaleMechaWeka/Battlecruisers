@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             base.Start();
 
             _helper = new Helper(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.DEFAULT, updaterProvider: _updaterProvider);
-            _prefabFactory = new PrefabFactory(new PrefabFetcher());
+            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
 
             // Setup target 1
             Vector2 target1Position = new Vector2(-3, 0);

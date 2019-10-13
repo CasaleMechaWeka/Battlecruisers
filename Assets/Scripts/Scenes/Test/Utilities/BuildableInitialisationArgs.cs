@@ -80,7 +80,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
             ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
-            prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcher());
+            prefabFactory = prefabFactory ?? new PrefabFactory(new PrefabFetcherLEGACY());
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();

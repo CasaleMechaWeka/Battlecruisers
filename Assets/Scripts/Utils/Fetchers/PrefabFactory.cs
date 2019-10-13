@@ -20,10 +20,10 @@ namespace BattleCruisers.Utils.Fetchers
     // PERF  Cache prefabs, so only need to retrieve the first time :)  Hm, maybe Unity already does this?
     public class PrefabFactory : IPrefabFactory
 	{
-		private readonly IPrefabFetcher _prefabFetcher;
+		private readonly IPrefabFetcherLEGACY _prefabFetcher;
         private readonly IRandomGenerator _randomGenerator;
 
-		public PrefabFactory(IPrefabFetcher prefabFetcher)
+		public PrefabFactory(IPrefabFetcherLEGACY prefabFetcher)
 		{
             Assert.IsNotNull(prefabFetcher);
 

@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         void Start()
         {
-            _prefabFactory = new PrefabFactory(new PrefabFetcher());
+            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
             _random = RandomGenerator.Instance;
         }
 

@@ -71,7 +71,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             // Common setup
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcher());
+            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             NavigationPermitters navigationPermitters = new NavigationPermitters();
 
