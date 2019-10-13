@@ -64,7 +64,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
-        public IPrefabFactory PrefabFactory { get; }
+        private IPrefabFactory _prefabFactory;
+        public IPrefabFactory PrefabFactory
+        {
+            get
+            {
+                Assert.IsNotNull(_prefabFactory);
+                return _prefabFactory;
+            }
+        }
 
         // FELIX  Remove default parameters, should be handled by factory :)
         public Helper(
@@ -74,14 +82,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUpdaterProvider updaterProvider = null,
             IPrefabFactory prefabFactory = null)
 		{
-            Assert.IsNotNull(prefabFactory);
-            // Other parameters are ok to be null
-
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             _deferrer = deferrer;
             _updaterProvider = updaterProvider;
-            PrefabFactory = prefabFactory;
+            _prefabFactory = prefabFactory;
 		}
 
         public void InitialiseBuilding(

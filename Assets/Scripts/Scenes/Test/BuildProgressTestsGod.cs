@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test
             Building[] buildings = FindObjectsOfType<Building>();
             SetActiveness(buildings, false);
 
-            Helper helper = await HelperFactory.CreateHelper(buildSpeedMultiplier: 5);
+            Helper helper = await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: 5);
 			
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
 

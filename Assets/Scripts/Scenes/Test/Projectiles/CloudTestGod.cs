@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
         {
             base.Start();
 
-            Helper helper = new Helper();
+            Helper helper = HelperFactory.CreateHelperNoPrefabFactory();
 
             CloudStatsController cloudStatsController = GetComponentInChildren<CloudStatsController>();
             Assert.IsNotNull(cloudStatsController);
