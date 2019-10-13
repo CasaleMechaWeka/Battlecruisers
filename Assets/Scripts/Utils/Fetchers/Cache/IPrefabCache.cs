@@ -10,7 +10,6 @@ using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
 {
-    /// FELIX  Implement, use, test
     public interface IPrefabCache
     {
         // Single prefab caches
