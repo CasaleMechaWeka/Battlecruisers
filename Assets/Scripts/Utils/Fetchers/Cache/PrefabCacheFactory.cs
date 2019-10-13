@@ -8,7 +8,9 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Utils.Timers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -18,7 +20,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// <summary>
     /// Retrieving an addressable (such as a prefab) is an async operation.  To avoid async
     /// spread, this all prefabs are loaded at once (at the level start).  This means
-    /// consuming code can remain synchronous.  Loading all prefabs takes about 7 seconds.
+    /// consuming code can remain synchronous.  Loading all prefabs takes about 2 seconds.
     /// </summary>
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
     public class PrefabCacheFactory : IPrefabCacheFactory
@@ -66,31 +68,37 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private async Task<IMultiCache<TPrefab>> CreateMultiCacheAsync<TPrefab>(IPrefabFetcher prefabFetcher, IList<IPrefabKey> prefabKeys)
             where TPrefab : class
         {
-            IDictionary<IPrefabKey, TPrefab> _keyToPrefab = await CreatePrefabs<TPrefab>(prefabFetcher, prefabKeys);
+            IDictionary<IPrefabKey, TPrefab> _keyToPrefab = await GetPrefabs<TPrefab>(prefabFetcher, prefabKeys);
             return new MultiCache<TPrefab>(_keyToPrefab);
         }
 
         private async Task<IUntypedMultiCache<TPrefabBase>> CreateUntypedMultiCacheAsync<TPrefabBase>(IPrefabFetcher prefabFetcher, IList<IPrefabKey> prefabKeys)
             where TPrefabBase : class
         {
-            IDictionary<IPrefabKey, TPrefabBase> _keyToPrefab = await CreatePrefabs<TPrefabBase>(prefabFetcher, prefabKeys);
+            IDictionary<IPrefabKey, TPrefabBase> _keyToPrefab = await GetPrefabs<TPrefabBase>(prefabFetcher, prefabKeys);
             return new UntypedMultiCache<TPrefabBase>(_keyToPrefab);
         }
 
-        private async Task<IDictionary<IPrefabKey, TPrefab>> CreatePrefabs<TPrefab>(
+        private async Task<IDictionary<IPrefabKey, TPrefab>> GetPrefabs<TPrefab>(
             IPrefabFetcher prefabFetcher, 
             IList<IPrefabKey> prefabKeys) 
                 where TPrefab : class
         {
-            IDictionary<IPrefabKey, TPrefab> _keyToPrefab = new Dictionary<IPrefabKey, TPrefab>();
+            IDictionary<IPrefabKey, TPrefab> keyToPrefab = new ConcurrentDictionary<IPrefabKey, TPrefab>();
 
-            foreach (IPrefabKey prefabKey in prefabKeys)
-            {
-                TPrefab prefab = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
-                _keyToPrefab.Add(prefabKey, prefab);
-            }
+            IEnumerable<Task> prefabTasks = prefabKeys.Select(prefabKey => GetPrefab(prefabFetcher, keyToPrefab, prefabKey));
+            await Task.WhenAll(prefabTasks);
+            return keyToPrefab;
+        }
 
-            return _keyToPrefab;
+        private async Task GetPrefab<TPrefab>( 
+            IPrefabFetcher prefabFetcher,
+            IDictionary<IPrefabKey, TPrefab> keyToPrefab, 
+            IPrefabKey prefabKey)
+                where TPrefab : class
+        {
+            TPrefab prefab = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            keyToPrefab.Add(prefabKey, prefab);
         }
     }
 }
