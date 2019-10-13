@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
@@ -23,6 +24,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         ExplosionController GetExplosion(IPrefabKey key);
 
         // Multiple untyped prefab caches
-        TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey);
+        TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey) where TProjectile : Projectile;
     }
 }
