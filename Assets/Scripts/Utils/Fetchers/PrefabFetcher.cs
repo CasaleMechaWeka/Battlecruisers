@@ -9,11 +9,12 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFetcher : IPrefabFetcher
     {
+        private const string PREFAB_ROOT_DIR = "Assets/Resources_moved/";
         private const string PREFAB_FILE_EXTENSION = ".prefab";
 
         public async Task<TPrefab> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class
         {
-            string addressableKey = prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
+            string addressableKey = PREFAB_ROOT_DIR + prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
 
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
             await handle.Task;
