@@ -10,6 +10,7 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Utils.Timers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
@@ -17,27 +18,39 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// <summary>
     /// Retrieving an addressable (such as a prefab) is an async operation.  To avoid async
     /// spread, this all prefabs are loaded at once (at the level start).  This means
-    /// consuming code can remain synchronous.  Loading all prefabs takes about 6 seconds.
+    /// consuming code can remain synchronous.  Loading all prefabs takes about 7 seconds.
     /// </summary>
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
     public class PrefabCacheFactory : IPrefabCacheFactory
     {
         public async Task<IPrefabCache> CreatePrefabCacheAsync(IPrefabFetcher prefabFetcher)
         {
+            Debug.Log("CreatePrefabCacheAsync()  START  0 of 7");
             Assert.IsNotNull(prefabFetcher);
 
             // Multiple prefab caches
             IMultiCache<BuildableWrapper<IBuilding>> buildings = await CreateMultiCacheAsync<BuildableWrapper<IBuilding>>(prefabFetcher, StaticPrefabKeys.Buildings.AllKeys);
+            Debug.Log("CreatePrefabCacheAsync()  1 of 7");
+
             IMultiCache<BuildableWrapper<IUnit>> units = await CreateMultiCacheAsync<BuildableWrapper<IUnit>>(prefabFetcher, StaticPrefabKeys.Units.AllKeys);
+            Debug.Log("CreatePrefabCacheAsync()  2 of 7");
+
             IMultiCache<Cruiser> cruisers = await CreateMultiCacheAsync<Cruiser>(prefabFetcher, StaticPrefabKeys.Hulls.AllKeys);
+            Debug.Log("CreatePrefabCacheAsync()  3 of 7");
+
             IMultiCache<ExplosionController> explosions = await CreateMultiCacheAsync<ExplosionController>(prefabFetcher, StaticPrefabKeys.Explosions.AllKeys);
+            Debug.Log("CreatePrefabCacheAsync()  4 of 7");
 
             // Multiple untyped prefab caches
             IUntypedMultiCache<Projectile> projectiles = await CreateUntypedMultiCacheAsync<Projectile>(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys);
+            Debug.Log("CreatePrefabCacheAsync()  5 of 7");
 
             // Single prefab caches
             CountdownController countdown = await prefabFetcher.GetPrefabAsync<CountdownController>(StaticPrefabKeys.UI.DeleteCountdown);
+            Debug.Log("CreatePrefabCacheAsync()  6 of 7");
+
             DroneController drone = await prefabFetcher.GetPrefabAsync<DroneController>(StaticPrefabKeys.Effects.BuilderDrone);
+            Debug.Log("CreatePrefabCacheAsync()  END  7 of 7");
 
             return
                 new PrefabCache(

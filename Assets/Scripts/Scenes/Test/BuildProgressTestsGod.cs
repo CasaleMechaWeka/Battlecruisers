@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class BuildProgressTestsGod : MonoBehaviour 
-	{
+    public class BuildProgressTestsGod : MonoBehaviour
+    {
         public GameObject dummyEnemyCruiser;
 
-		async void Start() 
-		{
+        async void Start()
+        {
             Building[] buildings = FindObjectsOfType<Building>();
-            SetActiveness(buildings, false);
+            Helper.SetActiveness(buildings, false);
 
             Helper helper = await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: 5);
-			
+
             ICruiser enemyCruiser = helper.CreateCruiser(dummyEnemyCruiser);
 
             foreach (Building building in buildings)
@@ -25,14 +25,6 @@ namespace BattleCruisers.Scenes.Test
                 building.CompletedBuildable += (sender, e) => building.InitiateDelete();
                 building.StartConstruction();
             }
-		}
-
-        private void SetActiveness(Building[] buildings, bool isActive)
-        {
-            foreach (Building building in buildings)
-            {
-                building.GameObject.SetActive(isActive);
-            }
         }
-	}
+    }
 }

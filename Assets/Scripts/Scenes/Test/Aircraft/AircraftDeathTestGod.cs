@@ -8,13 +8,16 @@ namespace BattleCruisers.Scenes.Test.Aircraft
     {
         private AircraftController[] _aircraftList;
 
-        void Start()
+        async void Start()
         {
-            Helper helper = new Helper();
             _aircraftList = FindObjectsOfType<AircraftController>();
+            Helper.SetActiveness(_aircraftList, false);
+
+            Helper helper = await HelperFactory.CreateHelperAsync();
 
             foreach (AircraftController aircraft in _aircraftList)
             {
+                aircraft.GameObject.SetActive(true);
                 helper.InitialiseUnit(aircraft);
                 aircraft.StartConstruction();
             }
