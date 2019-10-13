@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Defensives
@@ -11,9 +12,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         protected abstract IPrefabKey BasicDefenceBuildingKey { get; }
         protected abstract IPrefabKey AdvancedDefenceBuildingKey { get; }
 
-        protected override void Initialise()
+        // FELIX  Try test scene :)  Will break, InitialiseScenario will have null _prefabFactory :(
+        protected async override void InitialiseAsync()
         {
-            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            _prefabFactory = await Helper.CreatePrefabFactoryAsync();
         }
 
         protected override void InitialiseScenario(DefenceBuildingBalancingTest scenario)

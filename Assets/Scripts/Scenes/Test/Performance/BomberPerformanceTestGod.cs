@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
@@ -18,7 +17,8 @@ namespace BattleCruisers.Scenes.Test.Performance
         public List<Vector2> bomberPatrolPoints;
         public Vector2 spawnPosition;
 
-        protected override void Start()
+        // FELIX  Try test scene :)
+        protected async override void Start()
         {
             base.Start();
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup bombers
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            IPrefabFactory prefabFactory = await Helper.CreatePrefabFactoryAsync();
 
             BuildableGroupController bombersGroup = FindObjectOfType<BuildableGroupController>();
             BuildableInitialisationArgs groupArgs

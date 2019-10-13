@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
     /// <summary>
     /// Retrieving an addressable (such as a prefab) is an async operation.  To avoid async
     /// spread, this all prefabs are loaded at once (at the level start).  This means
-    /// consuming code can remain synchronous.
+    /// consuming code can remain synchronous.  Loading all prefabs takes about 6 seconds.
     /// </summary>
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
     public class PrefabCacheFactory : IPrefabCacheFactory

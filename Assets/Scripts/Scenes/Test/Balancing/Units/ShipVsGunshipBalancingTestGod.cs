@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
@@ -6,9 +7,9 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     {
         private IPrefabFactory _prefabFactory;
 
-        protected override void Initialise()
+        protected override async void InitialiseAsync()
         {
-            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            _prefabFactory = await Helper.CreatePrefabFactoryAsync();
         }
 
         protected override void InitialiseScenario(ShipVsGunshipBalancingTest scenario)

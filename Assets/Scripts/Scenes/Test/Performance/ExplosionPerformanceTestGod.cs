@@ -1,27 +1,34 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Utils;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
     public class ExplosionPerformanceTestGod : MonoBehaviour
     {
         private IPrefabFactory _prefabFactory;
-        private IRandomGenerator _random;
+        private BCUtils.IRandomGenerator _random;
 
         public float spawnRadiusXInM = 8;
         public float spawnRadiusYInM = 5;
 
-        void Start()
+        async void Start()
         {
-            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
-            _random = RandomGenerator.Instance;
+            _prefabFactory = await Helper.CreatePrefabFactoryAsync();
+            _random = BCUtils.RandomGenerator.Instance;
         }
 
         private void Update()
         {
+            if (_prefabFactory == null)
+            {
+                // Async initialistion not complete
+                return;
+            }
+
             IExplosion explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.Explosion75);
             explosion.Activate(FindRandomSpawnPosition());
         }

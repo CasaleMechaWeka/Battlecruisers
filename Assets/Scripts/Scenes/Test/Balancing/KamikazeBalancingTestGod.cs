@@ -10,9 +10,9 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         public float scenarioDelayInS;
 
-        protected override void Initialise()
+        protected override void InitialiseAsync()
         {
-            base.Initialise();
+            base.InitialiseAsync();
 
             Assert.IsTrue(scenarioDelayInS >= 0);
 

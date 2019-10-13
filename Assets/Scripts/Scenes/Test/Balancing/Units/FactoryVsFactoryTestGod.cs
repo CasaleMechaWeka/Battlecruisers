@@ -1,14 +1,16 @@
-﻿using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
+    // FELIX  Try test scene :)
     public class FactoryVsFactoryTestGod : MultiCameraTestGod<FactoryVsFactoryTest>
     {
         private IPrefabFactory _prefabFactory;
 
-        protected override void Initialise()
+        protected async override void InitialiseAsync()
         {
-            _prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            _prefabFactory = await Helper.CreatePrefabFactoryAsync();
         }
 
         protected override void InitialiseScenario(FactoryVsFactoryTest scenario)

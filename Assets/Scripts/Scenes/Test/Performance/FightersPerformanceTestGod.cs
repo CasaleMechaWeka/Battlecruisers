@@ -10,13 +10,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
+    // FELIX  Try test scene :)
     public class FightersPerformanceTestGod : TestGodBase
     {
         public List<Vector2> patrolPoints;
         public Vector2 leftSpawnPosition, rightSpawnPosition;
         public BuildableGroupController leftFighterGroup, rightFighterGroup;
 
-        protected override void Start()
+        protected async override void Start()
         {
             base.Start();
 
@@ -27,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup fighters
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            IPrefabFactory prefabFactory = await Helper.CreatePrefabFactoryAsync();
 
             InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, prefabFactory, leftFighterGroup, leftSpawnPosition);
             InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, prefabFactory, rightFighterGroup, rightSpawnPosition);

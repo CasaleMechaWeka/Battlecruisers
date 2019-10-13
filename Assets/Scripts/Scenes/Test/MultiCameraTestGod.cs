@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test
         {
             base.Start();
 
-            Initialise();
+            InitialiseAsync();
 
             IList<Camera> cameras = new List<Camera>()
             {
@@ -60,7 +60,7 @@ namespace BattleCruisers.Scenes.Test
             ToggleCamera();
         }
 
-        protected virtual void Initialise() { }
+        protected virtual void InitialiseAsync() { }
 
         protected abstract void InitialiseScenario(TTest scenario);
 
