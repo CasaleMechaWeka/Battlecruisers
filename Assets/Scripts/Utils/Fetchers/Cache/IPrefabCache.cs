@@ -19,6 +19,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         ExplosionController GetExplosion(IPrefabKey key);
 
         // Single prefab caches
+        // FELIX  Convert to properties :)
         CountdownController GetCountdown();
         DroneController GetDrone();
 
