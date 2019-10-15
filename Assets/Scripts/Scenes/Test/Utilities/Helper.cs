@@ -47,6 +47,7 @@ using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityCommon.PlatformAbstractions;
 using UnityCommon.Properties;
@@ -555,6 +556,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         public static void SetActiveness<TMonoBehaviour>(TMonoBehaviour[] gameObjects, bool isActive)
+            where TMonoBehaviour : MonoBehaviour
+        {
+            SetActiveness(gameObjects.ToList(), isActive);
+        }
+
+        public static void SetActiveness<TMonoBehaviour>(IList<TMonoBehaviour> gameObjects, bool isActive)
             where TMonoBehaviour : MonoBehaviour
         {
             foreach (TMonoBehaviour gameObject in gameObjects)

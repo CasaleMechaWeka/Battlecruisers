@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,13 +15,24 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 		public BomberController bomberToLeft, bomberToRight;
 		public List<Vector2> leftPatrolPoints, rightPatrolPoints;
 
-		void Start() 
+		async void Start() 
 		{
-			Helper helper = new Helper();
-
 			AirFactory factory = FindObjectOfType<AirFactory>();
+
+            IList<MonoBehaviour> gameObjects = new List<MonoBehaviour>()
+            {
+                bomberToLeft,
+                bomberToRight,
+                factory
+            };
+            Helper.SetActiveness(gameObjects, false);
+
+            Helper helper = await HelperFactory.CreateHelperAsync();
+
+            // Factory
             helper.InitialiseBuilding(factory, Faction.Blues);
 
+            // Bombers
             IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
             ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter: targetFilter);
@@ -34,6 +44,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             IAircraftProvider rightAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: rightPatrolPoints);
             helper.InitialiseUnit(bomberToRight, Faction.Reds, aircraftProvider: rightAircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Left);
             bomberToRight.StartConstruction();
-		}
-	}
+
+            Helper.SetActiveness(gameObjects, true);
+        }
+    }
 }
