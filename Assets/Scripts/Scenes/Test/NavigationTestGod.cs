@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
@@ -21,10 +22,8 @@ namespace BattleCruisers.Scenes.Test
         public float smoothTime = 0.15f;
         public bool useCorners = true;
 
-        protected override void Start()
+        protected override void Setup(Helper helper)
         {
-            base.Start();
-
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             IBroadcastingFilter navigationWheelEnabledFilter = new StaticBroadcastingFilter(isMatch: true);
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
@@ -87,7 +86,7 @@ namespace BattleCruisers.Scenes.Test
 
         protected virtual void Update()
         {
-            _cameraAdjuster.AdjustCamera();
+            _cameraAdjuster?.AdjustCamera();
             //Debug.Log("Camera position: " + _camera.Transform.Position + "  Orthographic size: " + _camera.OrthographicSize);
         }
     }
