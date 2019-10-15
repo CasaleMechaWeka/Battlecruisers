@@ -15,8 +15,8 @@ namespace BattleCruisers.Scenes.Test
         protected virtual async void Start()
         {
             // Deactivate all game objects (to avoid update loop while we are initialising)
-            IList<MonoBehaviour> gameObjects = GetGameObjects();
-            Helper.SetActiveness(gameObjects, false);
+            IList<GameObject> gameObjects = GetGameObjects();
+            SetActiveness(gameObjects, false);
 
             // Async initialisation
             UpdaterProvider updaterProvider = GetComponentInChildren<UpdaterProvider>();
@@ -30,19 +30,27 @@ namespace BattleCruisers.Scenes.Test
             Setup(helper);
 
             // Activate all game objects.  Everything should be initialised now, so update loops should work.
-            Helper.SetActiveness(gameObjects, true);
+            SetActiveness(gameObjects, true);
         }
 
-        protected virtual void Setup(Helper helper) { }
-
-        protected virtual IList<MonoBehaviour> GetGameObjects()
+        private void SetActiveness(IList<GameObject> gameObjects, bool isActive)
         {
-            return new List<MonoBehaviour>();
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.SetActive(isActive);
+            }
+        }
+
+        protected virtual IList<GameObject> GetGameObjects()
+        {
+            return new List<GameObject>();
         }
 
         protected virtual async Task<Helper> CreateHelper(IUpdaterProvider updaterProvider)
         {
             return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider);
         }
+
+        protected virtual void Setup(Helper helper) { }
     }
 }

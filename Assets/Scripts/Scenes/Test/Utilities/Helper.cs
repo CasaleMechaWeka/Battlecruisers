@@ -555,12 +555,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return new PrefabFactory(prefabCache);
         }
 
+        // FELIX  Remove?
         public static void SetActiveness<TMonoBehaviour>(TMonoBehaviour[] gameObjects, bool isActive)
             where TMonoBehaviour : MonoBehaviour
         {
             SetActiveness(gameObjects.ToList(), isActive);
         }
 
+        // FELIX  Remove?
         public static void SetActiveness<TMonoBehaviour>(IList<TMonoBehaviour> gameObjects, bool isActive)
             where TMonoBehaviour : MonoBehaviour
         {
