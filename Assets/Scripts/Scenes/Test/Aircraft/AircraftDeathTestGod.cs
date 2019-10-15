@@ -1,23 +1,25 @@
-﻿using BattleCruisers.Buildables.Units.Aircraft;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
-    public class AircraftDeathTestGod : MonoBehaviour
+    public class AircraftDeathTestGod : TestGodBase
     {
         private AircraftController[] _aircraftList;
 
-        async void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
             _aircraftList = FindObjectsOfType<AircraftController>();
-            Helper.SetActiveness(_aircraftList, false);
+            return _aircraftList.Select(aircraft => aircraft.GameObject).ToList();
+        }
 
-            Helper helper = await HelperFactory.CreateHelperAsync();
-
+        protected override void Setup(Helper helper)
+        {
             foreach (AircraftController aircraft in _aircraftList)
             {
-                aircraft.GameObject.SetActive(true);
                 helper.InitialiseUnit(aircraft);
                 aircraft.StartConstruction();
             }
