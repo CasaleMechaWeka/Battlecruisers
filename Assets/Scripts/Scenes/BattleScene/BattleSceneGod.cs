@@ -51,6 +51,7 @@ namespace BattleCruisers.Scenes.BattleScene
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
             components.Initialise();
+            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             LandingSceneGod.MusicPlayer?.Stop();
@@ -103,7 +104,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     dataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
-                    navigationPermitters);
+                    navigationPermitters,
+                    components.UpdaterProvider.SwitchableUpdater);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser
@@ -217,6 +219,9 @@ namespace BattleCruisers.Scenes.BattleScene
                 leftPanelComponents, 
                 rightPanelComponents, 
                 uiManager);
+
+            // Do not enable updates until asynchronous loading is complete.
+            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
         }
 
         private IBattleSceneHelper CreateHelper(

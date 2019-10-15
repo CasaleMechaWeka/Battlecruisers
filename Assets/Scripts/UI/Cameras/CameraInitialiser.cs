@@ -11,6 +11,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
+using System;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -35,9 +36,12 @@ namespace BattleCruisers.UI.Cameras
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
-            NavigationPermitters navigationPermitters)
+            NavigationPermitters navigationPermitters,
+            ISwitchableUpdater switchableUpdater)
         {
-            Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationPermitters);
+            Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
+
+            switchableUpdater.Updated += SwitchableUpdater_Updated;
 
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
@@ -194,7 +198,7 @@ namespace BattleCruisers.UI.Cameras
             }
         }
 
-        public void Update()
+        private void SwitchableUpdater_Updated(object sender, EventArgs e)
         {
             _cameraAdjuster.AdjustCamera();
         }
