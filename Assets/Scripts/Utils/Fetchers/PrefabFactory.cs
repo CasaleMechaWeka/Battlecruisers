@@ -60,7 +60,7 @@ namespace BattleCruisers.Utils.Fetchers
 		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : class, IBuildable
 		{
 			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
-			buildableWrapperPrefab.Initialise();
+			buildableWrapperPrefab.StaticInitialise();
 			return buildableWrapperPrefab;
 		}
 
@@ -73,7 +73,7 @@ namespace BattleCruisers.Utils.Fetchers
 
 			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
 			buildableWrapper.gameObject.SetActive(true);
-			buildableWrapper.Initialise();
+			buildableWrapper.StaticInitialise();
             buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
 			return buildableWrapper.Buildable;
 		}
@@ -97,7 +97,7 @@ namespace BattleCruisers.Utils.Fetchers
             CountdownController countdownPrefab = _prefabFetcher.GetPrefab<CountdownController>(StaticPrefabKeys.UI.DeleteCountdown);
             CountdownController newCountdown = Object.Instantiate(countdownPrefab);
             newCountdown.transform.SetParent(parent, worldPositionStays: false);
-            newCountdown.Initialise();
+            newCountdown.StaticInitialise();
             return newCountdown;
         }
 
@@ -125,7 +125,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             DroneController prefab = _prefabFetcher.GetPrefab<DroneController>(StaticPrefabKeys.Effects.BuilderDrone);
             DroneController newDrone = Object.Instantiate(prefab);
-            newDrone.Initialise(_randomGenerator);
+            newDrone.StaticInitialise();
             return newDrone;
         }
     }

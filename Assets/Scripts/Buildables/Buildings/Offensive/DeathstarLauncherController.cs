@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             base.StaticInitialise(parent, healthBar);
 
             // Need satellite to be initialised to be able to access damage capabilities.
-            satellitePrefab.Initialise();
+            satellitePrefab.StaticInitialise();
 
             foreach (IDamageCapability damageCapability in satellitePrefab.Buildable.DamageCapabilities)
             {

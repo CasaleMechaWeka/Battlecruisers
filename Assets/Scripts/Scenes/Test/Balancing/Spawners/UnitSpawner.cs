@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Spawners
             IBuildableWrapper<IUnit> unitWrapperPrefab = _prefabFactory.GetUnitWrapperPrefab(buildableKey);
             BuildableWrapper<IUnit> unitWrapper = Object.Instantiate(unitWrapperPrefab.UnityObject);
             unitWrapper.gameObject.SetActive(true);
-            unitWrapper.Initialise();
+            unitWrapper.StaticInitialise();
             IUnit unit = unitWrapper.Buildable;
             _helper.InitialiseUnit(unit, args);
             return unit;

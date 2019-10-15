@@ -4,13 +4,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public class BuildableWrapper<TBuildable> : MonoBehaviour, IBuildableWrapper<TBuildable> where TBuildable : class, IBuildable
+    public class BuildableWrapper<TBuildable> : Prefab, IBuildableWrapper<TBuildable> where TBuildable : class, IBuildable
 	{
         public TBuildable Buildable { get; private set; }
 
         public BuildableWrapper<TBuildable> UnityObject => this;
 
-        public void Initialise()
+        public override void StaticInitialise()
 		{
             Buildable = GetComponentInChildren<TBuildable>();
 			Assert.IsNotNull(Buildable);

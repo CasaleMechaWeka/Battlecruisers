@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Projectiles
+﻿namespace BattleCruisers.Projectiles
 {
-    // Created for caching purposes (see UntypedMultiCache)
-    public abstract class Projectile : MonoBehaviour { }
+    public abstract class Projectile : Prefab { }
 }

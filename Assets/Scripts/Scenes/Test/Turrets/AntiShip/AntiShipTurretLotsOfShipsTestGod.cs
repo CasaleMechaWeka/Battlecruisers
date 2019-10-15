@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
 			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
-            unitPrefab.Initialise();
+            unitPrefab.StaticInitialise();
 
             // Factory
             Factory factory = FindObjectOfType<Factory>();

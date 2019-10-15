@@ -8,7 +8,7 @@ namespace BattleCruisers.Scenes.Test
         void Start()
         {
             CountdownController countdown = FindObjectOfType<CountdownController>();
-            countdown.Initialise();
+            countdown.StaticInitialise();
             countdown.Begin(() => { });
         }
     }

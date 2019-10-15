@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Target : MonoBehaviour, ITarget
+    public abstract class Target : Prefab , ITarget
     {
         protected IHealthTracker _healthTracker;
         protected ITime _time;
@@ -72,7 +72,7 @@ namespace BattleCruisers.Buildables
 			}
         }
 
-        public virtual void StaticInitialise()
+        public override void StaticInitialise()
 		{
             _healthTracker = new HealthTracker(maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;

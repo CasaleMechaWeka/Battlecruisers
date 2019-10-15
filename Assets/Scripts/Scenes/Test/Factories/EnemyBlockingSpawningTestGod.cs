@@ -15,8 +15,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 		{
             base.Start();
 
-			archonPrefab.Initialise();
-            attackBoatPrefab.Initialise();
+			archonPrefab.StaticInitialise();
+            attackBoatPrefab.StaticInitialise();
 
 			Helper helper = new Helper(updaterProvider: _updaterProvider);
 

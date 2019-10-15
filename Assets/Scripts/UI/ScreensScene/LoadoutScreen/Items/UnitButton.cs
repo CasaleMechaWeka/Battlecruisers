@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             base.Initialise(soundPlayer, itemDetailsManager, comparingItemFamily);
 
             Assert.IsNotNull(unit);
-            unit.Initialise();
+            unit.StaticInitialise();
         }
 
         protected override void OnClicked()

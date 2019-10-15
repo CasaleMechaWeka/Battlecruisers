@@ -66,7 +66,7 @@ namespace BattleCruisers.Utils.Fetchers
 
 			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
 			buildableWrapper.gameObject.SetActive(true);
-			buildableWrapper.Initialise();
+			buildableWrapper.StaticInitialise();
             buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
 			return buildableWrapper.Buildable;
 		}
@@ -87,7 +87,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             CountdownController newCountdown = Object.Instantiate(_prefabCache.Countdown);
             newCountdown.transform.SetParent(parent, worldPositionStays: false);
-            newCountdown.Initialise();
+            newCountdown.StaticInitialise();
             return newCountdown;
         }
 
@@ -114,7 +114,7 @@ namespace BattleCruisers.Utils.Fetchers
         public IDroneController CreateDrone()
         {
             DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
-            newDrone.Initialise(_randomGenerator);
+            newDrone.StaticInitialise();
             return newDrone;
         }
     }

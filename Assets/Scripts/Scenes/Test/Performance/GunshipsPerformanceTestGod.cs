@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Performance
         {
             base.Start();
 
-            shipPrefab.Initialise();
+            shipPrefab.StaticInitialise();
 
             Helper helper = new Helper(updaterProvider: _updaterProvider);
 

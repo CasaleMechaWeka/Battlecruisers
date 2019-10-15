@@ -8,11 +8,10 @@
     /// This is so that as the buildable's rotation changes (eg, fighter), the healthbar
     /// rotation remains the same.
     /// </summary>
-    public interface IBuildableWrapper<TBuildable> where TBuildable : class, IBuildable
-	{
+    public interface IBuildableWrapper<TBuildable> : IPrefab 
+        where TBuildable : class, IBuildable
+    {
         TBuildable Buildable { get; }
         BuildableWrapper<TBuildable> UnityObject { get; }
-
-        void Initialise();
 	}
 }

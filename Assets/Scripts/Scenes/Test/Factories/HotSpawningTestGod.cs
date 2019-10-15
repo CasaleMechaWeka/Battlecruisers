@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Factories
         {
             base.Start();
 
-            unitPrefab.Initialise();
+            unitPrefab.StaticInitialise();
 
             Helper helper = new Helper(buildSpeedMultiplier: 5, updaterProvider: _updaterProvider);
 

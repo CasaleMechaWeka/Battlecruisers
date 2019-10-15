@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers
 {
-    public class MonoBehaviourWrapper : MonoBehaviour, IGameObject
+    public class MonoBehaviourWrapper : Prefab, IGameObject
     {
         public Vector3 Position
         {

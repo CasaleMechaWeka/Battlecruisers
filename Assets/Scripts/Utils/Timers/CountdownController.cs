@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers
 {
-    public class CountdownController : MonoBehaviour
+    public class CountdownController : Prefab
     {
         private TextMesh _countdownText;
         private ICountdown _countdown;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Timers
 
         public bool IsInProgress => gameObject.activeSelf;
 
-        public void Initialise()
+        public override void StaticInitialise()
         {
             _countdownText = GetComponent<TextMesh>();
             Assert.IsNotNull(_countdownText);

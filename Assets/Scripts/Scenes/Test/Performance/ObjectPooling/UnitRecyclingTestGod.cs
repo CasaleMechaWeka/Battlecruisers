@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
             base.Start();
 
             Assert.IsNotNull(unitPrefab);
-            unitPrefab.Initialise();
+            unitPrefab.StaticInitialise();
 
             Helper helper = new Helper(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.FAST, updaterProvider: _updaterProvider);
 
