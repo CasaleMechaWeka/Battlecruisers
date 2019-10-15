@@ -13,6 +13,7 @@ using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
-		private PrefabFactory _prefabFactory;
+		private IPrefabFactory _prefabFactory;
 		private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
@@ -40,12 +41,15 @@ namespace BattleCruisers.Scenes
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
 
-		void Start()
+		async void Start()
 		{
             Assert.raiseExceptions = true;
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
 
-			_prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            _prefabFactory = new PrefabFactoryNEW(prefabCache);
+
             _applicationModel = ApplicationModelProvider.ApplicationModel;
 			_dataProvider = _applicationModel.DataProvider;
 			_gameModel = _dataProvider.GameModel;

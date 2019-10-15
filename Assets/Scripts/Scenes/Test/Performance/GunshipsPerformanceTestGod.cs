@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Performance
         public Vector2 spawnPosition;
         public UnitWrapper shipPrefab;
 
-        protected override void Start()
+        protected override async void Start()
         {
             base.Start();
 
@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup gunships
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            IPrefabFactory prefabFactory = await Helper.CreatePrefabFactoryAsync();
 
             BuildableGroupController gunshipsGroup = FindObjectOfType<BuildableGroupController>();
             if (gunshipsGroup != null)
