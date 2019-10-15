@@ -10,33 +10,38 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
-    public class BombingSpriteChooserTestGod : MonoBehaviour
+    public class BombingSpriteChooserTestGod : TestGodBase
     {
+        private AirFactory _factory;
+        private BomberController _bomber;
+
         public List<Vector2> patrolPoints;
 
-        async void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            AirFactory factory = FindObjectOfType<AirFactory>();
-            factory.GameObject.SetActive(false);
+            _factory = FindObjectOfType<AirFactory>();
+            _bomber = FindObjectOfType<BomberController>();
 
-            BomberController bomber = FindObjectOfType<BomberController>();
-            bomber.GameObject.SetActive(false);
+            return new List<GameObject>()
+            {
+                _factory.GameObject,
+                _bomber.GameObject
+            };
+        }
 
-            Helper helper = await HelperFactory.CreateHelperAsync();
-
+        protected override void Setup(Helper helper)
+        {
             // Factory
-            helper.InitialiseBuilding(factory, Faction.Blues);
-            factory.GameObject.SetActive(true);
+            helper.InitialiseBuilding(_factory, Faction.Blues);
 
             // Bomber
-            IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
-            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter: targetFilter);
+            IList<TargetType> targetTypes = new List<TargetType>() { _factory.TargetType };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_factory.Faction, targetTypes);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_factory.GameObject, targetFilter: targetFilter);
 
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: patrolPoints);
-            helper.InitialiseUnit(bomber, Faction.Reds, aircraftProvider: aircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Right);
-            bomber.StartConstruction();
-            bomber.GameObject.SetActive(true);
+            helper.InitialiseUnit(_bomber, Faction.Reds, aircraftProvider: aircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Right);
+            _bomber.StartConstruction();
         }
     }
 }
