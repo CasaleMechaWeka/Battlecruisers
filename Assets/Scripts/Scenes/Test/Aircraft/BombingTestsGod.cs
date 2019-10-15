@@ -10,32 +10,34 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
-    public class BombingTestsGod : MonoBehaviour 
+    public class BombingTestsGod : TestGodBase
 	{
-		public BomberController bomberToLeft, bomberToRight;
+        private AirFactory _factory;
+
+        public BomberController bomberToLeft, bomberToRight;
 		public List<Vector2> leftPatrolPoints, rightPatrolPoints;
 
-		async void Start() 
-		{
-			AirFactory factory = FindObjectOfType<AirFactory>();
+        protected override IList<GameObject> GetGameObjects()
+        {
+			_factory = FindObjectOfType<AirFactory>();
 
-            IList<MonoBehaviour> gameObjects = new List<MonoBehaviour>()
+            return new List<GameObject>()
             {
-                bomberToLeft,
-                bomberToRight,
-                factory
+                _factory.GameObject,
+                bomberToLeft.GameObject,
+                bomberToRight.GameObject
             };
-            Helper.SetActiveness(gameObjects, false);
+        }
 
-            Helper helper = await HelperFactory.CreateHelperAsync();
-
+        protected override void Setup(Helper helper)
+        {
             // Factory
-            helper.InitialiseBuilding(factory, Faction.Blues);
+            helper.InitialiseBuilding(_factory, Faction.Blues);
 
             // Bombers
-            IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
-            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter: targetFilter);
+            IList<TargetType> targetTypes = new List<TargetType>() { _factory.TargetType };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_factory.Faction, targetTypes);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_factory.GameObject, targetFilter: targetFilter);
 
             IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
             helper.InitialiseUnit(bomberToLeft, Faction.Reds, aircraftProvider: leftAircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Right);
@@ -44,8 +46,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             IAircraftProvider rightAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: rightPatrolPoints);
             helper.InitialiseUnit(bomberToRight, Faction.Reds, aircraftProvider: rightAircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Left);
             bomberToRight.StartConstruction();
-
-            Helper.SetActiveness(gameObjects, true);
         }
     }
 }
