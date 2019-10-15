@@ -21,7 +21,8 @@ namespace BattleCruisers.Utils.BattleScene.Update
 
         void Update()
         {
-            if (_enabledFilter.IsMatch)
+            if (_enabledFilter != null 
+                && _enabledFilter.IsMatch)
             {
                 Updated?.Invoke(this, EventArgs.Empty);
             }
