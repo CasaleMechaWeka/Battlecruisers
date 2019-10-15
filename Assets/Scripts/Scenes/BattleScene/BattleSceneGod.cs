@@ -19,6 +19,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityCommon.PlatformAbstractions;
@@ -71,7 +72,9 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             // Common setup
-            IPrefabFactory prefabFactory = new PrefabFactory(new PrefabFetcherLEGACY());
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            IPrefabFactory prefabFactory = new PrefabFactoryNEW(prefabCache);
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             NavigationPermitters navigationPermitters = new NavigationPermitters();
 
