@@ -69,7 +69,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IPrefabFetcher prefabFetcher,
             IList<IPrefabKey> prefabKeys,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab)
-                where TPrefab : class
+                where TPrefab : class, IPrefab
         {
             IEnumerable<Task> prefabTasks = prefabKeys.Select(prefabKey => GetPrefab(prefabFetcher, keyToPrefab, prefabKey));
             await Task.WhenAll(prefabTasks);
@@ -79,9 +79,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IPrefabFetcher prefabFetcher,
             IDictionary<IPrefabKey, TPrefab> keyToPrefab, 
             IPrefabKey prefabKey)
-                where TPrefab : class
+                where TPrefab : class, IPrefab
         {
             TPrefab prefab = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            prefab.StaticInitialise();
             keyToPrefab.Add(prefabKey, prefab);
         }
 
@@ -89,9 +90,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IPrefabFetcher prefabFetcher,
             IPrefabKey prefabKey,
             Container<TPrefab> prefabContainer)
-                where TPrefab : class
+                where TPrefab : class, IPrefab
         {
             prefabContainer.Value = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            prefabContainer.Value.StaticInitialise();
         }
     }
 }
