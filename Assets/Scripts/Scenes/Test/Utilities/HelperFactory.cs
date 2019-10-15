@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            IPrefabFactory prefabFactory = new PrefabFactoryNEW(prefabCache);
+            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache);
 
             return
                 new Helper(

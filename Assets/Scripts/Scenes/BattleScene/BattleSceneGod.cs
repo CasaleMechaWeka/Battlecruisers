@@ -75,7 +75,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Common setup
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            IPrefabFactory prefabFactory = new PrefabFactoryNEW(prefabCache);
+            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache);
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             NavigationPermitters navigationPermitters = new NavigationPermitters();
 

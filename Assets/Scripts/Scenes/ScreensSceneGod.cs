@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            _prefabFactory = new PrefabFactoryNEW(prefabCache);
+            _prefabFactory = new PrefabFactory(prefabCache);
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
 			_dataProvider = _applicationModel.DataProvider;

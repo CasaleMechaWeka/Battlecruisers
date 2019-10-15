@@ -551,7 +551,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            return new PrefabFactoryNEW(prefabCache);
+            return new PrefabFactory(prefabCache);
         }
 
         public static void SetActiveness<TMonoBehaviour>(TMonoBehaviour[] gameObjects, bool isActive)

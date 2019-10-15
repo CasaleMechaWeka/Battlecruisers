@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
@@ -11,29 +10,29 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    // PERF  Cache prefabs, so only need to retrieve the first time :)  Hm, maybe Unity already does this?
     public class PrefabFactory : IPrefabFactory
 	{
-		private readonly IPrefabFetcherLEGACY _prefabFetcher;
+		private readonly IPrefabCache _prefabCache;
         private readonly IRandomGenerator _randomGenerator;
 
-		public PrefabFactory(IPrefabFetcherLEGACY prefabFetcher)
+		public PrefabFactory(IPrefabCache prefabCache)
 		{
-            Assert.IsNotNull(prefabFetcher);
+            Assert.IsNotNull(prefabCache);
 
-			_prefabFetcher = prefabFetcher;
+			_prefabCache = prefabCache;
             _randomGenerator = RandomGenerator.Instance;
         }
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
 		{
-            return GetBuildableWrapperPrefab<IBuilding>(buildingKey);
+            return _prefabCache.GetBuilding(buildingKey);
 		}
 
 		public IBuilding CreateBuilding(
@@ -46,7 +45,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
 		{
-            return GetBuildableWrapperPrefab<IUnit>(unitKey);
+            return _prefabCache.GetUnit(unitKey);
 		}
 
         public IUnit CreateUnit(
@@ -55,13 +54,6 @@ namespace BattleCruisers.Utils.Fetchers
             IFactoryProvider factoryProvider)
 		{
             return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
-		}
-
-		private BuildableWrapper<TBuildable> GetBuildableWrapperPrefab<TBuildable>(IPrefabKey buildableKey) where TBuildable : class, IBuildable
-		{
-			BuildableWrapper<TBuildable> buildableWrapperPrefab = _prefabFetcher.GetPrefab<BuildableWrapper<TBuildable>>(buildableKey);
-			buildableWrapperPrefab.StaticInitialise();
-			return buildableWrapperPrefab;
 		}
 
 		private TBuildable CreateBuildable<TBuildable>(
@@ -80,9 +72,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
         {
-            Cruiser cruiser = _prefabFetcher.GetPrefab<Cruiser>(hullKey);
-            cruiser.StaticInitialise();
-            return cruiser;
+            return _prefabCache.GetCruiser(hullKey);
         }
 
         public Cruiser CreateCruiser(Cruiser cruiserPrefab)
@@ -94,8 +84,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public CountdownController CreateDeleteCountdown(Transform parent)
         {
-            CountdownController countdownPrefab = _prefabFetcher.GetPrefab<CountdownController>(StaticPrefabKeys.UI.DeleteCountdown);
-            CountdownController newCountdown = Object.Instantiate(countdownPrefab);
+            CountdownController newCountdown = Object.Instantiate(_prefabCache.Countdown);
             newCountdown.transform.SetParent(parent, worldPositionStays: false);
             newCountdown.StaticInitialise();
             return newCountdown;
@@ -103,7 +92,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public IExplosion CreateExplosion(ExplosionKey explosionKey)
         {
-            ExplosionController explosionPrefab = _prefabFetcher.GetPrefab<ExplosionController>(explosionKey);
+            ExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
             ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             return newExplosion.Initialise();
         }
@@ -115,7 +104,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             Assert.IsNotNull(factoryProvider);
 
-            TProjectile prefab = _prefabFetcher.GetPrefab<TProjectile>(prefabKey);
+            TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
             TProjectile projectile = Object.Instantiate(prefab);
             projectile.Initialise(factoryProvider);
             return projectile;
@@ -123,8 +112,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public IDroneController CreateDrone()
         {
-            DroneController prefab = _prefabFetcher.GetPrefab<DroneController>(StaticPrefabKeys.Effects.BuilderDrone);
-            DroneController newDrone = Object.Instantiate(prefab);
+            DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
             newDrone.StaticInitialise();
             return newDrone;
         }
