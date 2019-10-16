@@ -11,16 +11,24 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// Created because I had an issue where the fighter's patrolling behaviour
     /// was stuffed :P  Hence have test scene specifically for checking this.
     /// </summary>
-    public class PatrollingFighterTestGod : MonoBehaviour 
+    public class PatrollingFighterTestGod : TestGodBase
 	{
-		void Start() 
-		{
-			Helper helper = new Helper();
+        private FighterController _fighter;
 
-            FighterController fighter = FindObjectOfType<FighterController>();
+        protected override IList<GameObject> GetGameObjects()
+        {
+            _fighter = FindObjectOfType<FighterController>();
+            return new List<GameObject>()
+            {
+                _fighter.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
             IAircraftProvider provider = CreateAircraftProvider();
-            helper.InitialiseUnit(fighter, aircraftProvider: provider);
-            fighter.StartConstruction();
+            helper.InitialiseUnit(_fighter, aircraftProvider: provider);
+            _fighter.StartConstruction();
 		}
 
         private IAircraftProvider CreateAircraftProvider()
