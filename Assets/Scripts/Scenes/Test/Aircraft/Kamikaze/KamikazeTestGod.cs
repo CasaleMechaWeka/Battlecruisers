@@ -8,22 +8,42 @@ using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 {
     public class KamikazeTestGod : TestGodBase
     {
+        private IFactory _target;
+        private TurretController[] _aaTurrets;
+        private AircraftController[] _aircraftList;
+        private KamikazeSignal _kamikazeSignal;
+
         public int kamikaziDelayInS = 1;
 
-        protected override async void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _target = FindObjectOfType<Factory>();
+            _kamikazeSignal = FindObjectOfType<KamikazeSignal>();
+            _aaTurrets = FindObjectsOfType<TurretController>();
+            _aircraftList = FindObjectsOfType<AircraftController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            List<GameObject> gameObjects = new List<GameObject>()
+            {
+                _target.GameObject,
+                _kamikazeSignal.GameObject
+            };
+            gameObjects.AddRange(_aaTurrets.Select(turret => turret.GameObject));
+            gameObjects.AddRange(_aircraftList.Select(aircraft => aircraft.GameObject));
 
+            return gameObjects;
+        }
+
+        protected async override void Setup(Helper helper)
+        {
             // Setup target
-            IFactory _target = FindObjectOfType<Factory>();
             helper.InitialiseBuilding(_target);
             _target.StartConstruction();
 
@@ -32,28 +52,25 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 
             // Setup AA
-            TurretController[] aaTurrets = FindObjectsOfType<TurretController>();
-            foreach (TurretController aaTurret in aaTurrets)
+            foreach (TurretController aaTurret in _aaTurrets)
             {
                 helper.InitialiseBuilding(aaTurret);
                 aaTurret.StartConstruction();
             }
 
             // Setup aircraft
-            AircraftController[] aircraftList = FindObjectsOfType<AircraftController>();
-            foreach (AircraftController aircraft in aircraftList)
+            foreach (AircraftController aircraft in _aircraftList)
             {
                 helper.InitialiseUnit(aircraft);
                 aircraft.StartConstruction();
             }
 
             // Setup kamikaze signal.  When completed, aircraft switches to patrol movement controller.
-            KamikazeSignal kamikazeSignal = FindObjectOfType<KamikazeSignal>();
-            helper.InitialiseBuilding(kamikazeSignal, enemyCruiser: enemyCruiser);
+            helper.InitialiseBuilding(_kamikazeSignal, enemyCruiser: enemyCruiser);
 
             await Task.Delay(kamikaziDelayInS * 1000);
 
-            kamikazeSignal.StartConstruction();
+            _kamikazeSignal.StartConstruction();
         }
     }
 }
