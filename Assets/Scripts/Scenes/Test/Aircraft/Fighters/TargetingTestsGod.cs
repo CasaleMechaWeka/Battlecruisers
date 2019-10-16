@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
@@ -18,28 +18,35 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// </summary>
     public class TargetingTestsGod : TestGodBase 
 	{
-		private Helper helper;
+		private FighterController _fighter;
+        private TestAircraftController _target;
 
-		public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
+        public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
 
-        protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _fighter = FindObjectOfType<FighterController>();
+            _target = FindObjectOfType<TestAircraftController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _fighter.GameObject,
+                _target.GameObject
+            };
+        }
 
+        protected override void Setup(Helper helper)
+        {
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
-            FighterController fighter = FindObjectOfType<FighterController>();
 			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
-            helper.InitialiseUnit(fighter, Faction.Reds, aircraftProvider: aircraftProvider, enemyCruiser: blueCruiser);
-			fighter.StartConstruction();
+            helper.InitialiseUnit(_fighter, Faction.Reds, aircraftProvider: aircraftProvider, enemyCruiser: blueCruiser);
+			_fighter.StartConstruction();
 
-			TestAircraftController target = FindObjectOfType<TestAircraftController>();
-			target.PatrolPoints = targetPatrolPoints;
-            helper.InitialiseUnit(target, faction: Faction.Blues);
-			target.StartConstruction();
-            Helper.SetupUnitForUnitMonitor(target, blueCruiser);
+			_target.PatrolPoints = targetPatrolPoints;
+            helper.InitialiseUnit(_target, faction: Faction.Blues);
+			_target.StartConstruction();
+            Helper.SetupUnitForUnitMonitor(_target, blueCruiser);
 		}
 	}
 }

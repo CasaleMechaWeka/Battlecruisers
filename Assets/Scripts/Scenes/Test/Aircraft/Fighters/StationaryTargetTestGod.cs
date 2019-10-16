@@ -5,43 +5,51 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 {
     public class StationaryTargetTestGod : TestGodBase
 	{
-		private Helper _helper;
-
 		public FighterController fighter1, fighter2, fighter3;
 		public TestAircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 
-        protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            return new List<GameObject>()
+            {
+                fighter1.GameObject,
+                targetAircraft1.GameObject,
+                fighter2.GameObject,
+                targetAircraft2.GameObject,
+                fighter3.GameObject,
+                targetAircraft3.GameObject
+            };
+        }
 
-            _helper = new Helper(updaterProvider: _updaterProvider);
+        protected override void Setup(Helper helper)
+        {
+            SetupPair(helper, fighter1, targetAircraft1);
+            SetupPair(helper, fighter2, targetAircraft2);
+            SetupPair(helper, fighter3, targetAircraft3);
+        }
 
-            SetupPair(fighter1, targetAircraft1);
-			SetupPair(fighter2, targetAircraft2);
-			SetupPair(fighter3, targetAircraft3);
-		}
-
-		private void SetupPair(FighterController fighter, TestAircraftController target)
+        private void SetupPair(Helper helper, FighterController fighter, TestAircraftController target)
 		{
-            ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
-            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
+            ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
+            ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
 
             // Target
             target.UseDummyMovementController = true;
-            _helper.InitialiseUnit(target, faction: Faction.Blues);
+            helper.InitialiseUnit(target, faction: Faction.Blues);
 			target.StartConstruction();
             Helper.SetupUnitForUnitMonitor(target, blueCruiser);
 
             // Fighter
             IList<TargetType> targetTypes = new List<TargetType>() { target.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(target.Faction, targetTypes);
-            ITargetFactories targetFactories = _helper.CreateTargetFactories(target.GameObject, redCruiser, blueCruiser, _updaterProvider, targetFilter);
-            _helper.InitialiseUnit(fighter, faction: Faction.Reds, targetFactories: targetFactories);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject, redCruiser, blueCruiser, _updaterProvider, targetFilter);
+            helper.InitialiseUnit(fighter, faction: Faction.Reds, targetFactories: targetFactories);
 			fighter.StartConstruction();
 		}
 	}
