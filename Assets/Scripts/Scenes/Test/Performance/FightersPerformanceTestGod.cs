@@ -4,25 +4,19 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
-    // FELIX  Try test scene :)
     public class FightersPerformanceTestGod : TestGodBase
     {
         public List<Vector2> patrolPoints;
         public Vector2 leftSpawnPosition, rightSpawnPosition;
         public BuildableGroupController leftFighterGroup, rightFighterGroup;
 
-        protected async override void Start()
+        protected override void Setup(Helper helper)
         {
-            base.Start();
-
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
-
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
