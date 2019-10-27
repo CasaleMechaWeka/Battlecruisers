@@ -3,10 +3,11 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -19,28 +20,36 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
 		public List<Vector2> bomberPatrolPoints;
 
-		protected override void Start() 
-		{
-            base.Start();
-
+        protected async override Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
+        {
             IDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(deferrer);
 
-            Helper helper = new Helper(deferrer: deferrer, updaterProvider: _updaterProvider);
+            return await HelperFactory.CreateHelperAsync(deferrer: deferrer, updaterProvider: updaterProvider);
+        }
 
-
-			// Set up turret
+        protected override IList<GameObject> GetGameObjects()
+        {
 			_antiAirTurret = FindObjectOfType<TurretController>();
 			Assert.IsNotNull(_antiAirTurret);
 
+            _bomber = FindObjectOfType<BomberController>();
+			Assert.IsNotNull(_bomber);
+
+            return new List<GameObject>()
+            {
+                _antiAirTurret.GameObject,
+                _bomber.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+			// Set up turret
             helper.InitialiseBuilding(_antiAirTurret, faction: Faction.Reds);
 			_antiAirTurret.StartConstruction();
 
-
 			// Set up bomber
-			_bomber = FindObjectOfType<BomberController>();
-			Assert.IsNotNull(_bomber);
-
             IList<TargetType> targetTypes = new List<TargetType>() { _antiAirTurret.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, targetTypes);
             ITargetFactories targetFactories = helper.CreateTargetFactories(_antiAirTurret.GameObject, targetFilter: targetFilter);
