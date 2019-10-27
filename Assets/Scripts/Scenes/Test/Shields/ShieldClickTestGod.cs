@@ -1,18 +1,28 @@
 ﻿using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
-    public class ShieldClickTestGod : MonoBehaviour
+    public class ShieldClickTestGod : TestGodBase
     {
-        void Start()
-        {
-            Helper helper = new Helper();
+        private ShieldGenerator _shield;
 
-            ShieldGenerator shield = FindObjectOfType<ShieldGenerator>();
-            helper.InitialiseBuilding(shield);
-            shield.StartConstruction();
+        protected override List<GameObject> GetGameObjects()
+        {
+            _shield = FindObjectOfType<ShieldGenerator>();
+
+            return new List<GameObject>()
+            {
+                _shield.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            helper.InitialiseBuilding(_shield);
+            _shield.StartConstruction();
         }
     }
 }
