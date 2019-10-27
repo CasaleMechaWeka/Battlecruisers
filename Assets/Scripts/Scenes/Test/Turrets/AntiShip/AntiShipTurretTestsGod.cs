@@ -2,24 +2,35 @@
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
     public class AntiShipTurretTestsGod : TestGodBase
 	{
-        protected override void Start()
+        private AttackBoatController _boat;
+        private TurretController _turret;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _boat = FindObjectOfType<AttackBoatController>();
+            _turret = FindObjectOfType<TurretController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _boat.GameObject,
+                _turret.GameObject
+            };
+        }
 
-            AttackBoatController boat = FindObjectOfType<AttackBoatController>();
-            helper.InitialiseUnit(boat, Faction.Blues);
-			boat.StartConstruction();
+        protected override void Setup(Helper helper)
+        {
+            helper.InitialiseUnit(_boat, Faction.Blues);
+			_boat.StartConstruction();
 
-            TurretController turret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(turret, Faction.Reds);
-			turret.StartConstruction();
+            helper.InitialiseBuilding(_turret, Faction.Reds);
+			_turret.StartConstruction();
 		}
 	}
 }
