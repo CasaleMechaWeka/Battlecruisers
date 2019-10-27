@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 using BcUtils = BattleCruisers.Utils;
 
@@ -10,26 +11,34 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
     public class DeathstarTestGod : TestGodBase
 	{
-		private Helper _helper;
-
         public Building leftTarget, rightTarget;
 		public DeathstarController leftDeathstar, rightDeathstar;
 
-        protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            return new List<GameObject>()
+            {
+                leftTarget.GameObject,
+                rightTarget.GameObject,
+                leftDeathstar.GameObject,
+                rightDeathstar.GameObject
+            };
+        }
 
-            _helper = new Helper(updaterProvider: _updaterProvider);
-
-            SetupPair(leftTarget, rightDeathstar, Faction.Blues);
-			SetupPair(rightTarget, leftDeathstar, Faction.Reds);
+        protected override void Setup(Helper helper)
+        {
+            SetupPair(helper, leftTarget, rightDeathstar, Faction.Blues);
+			SetupPair(helper, rightTarget, leftDeathstar, Faction.Reds);
 		}
 
-		private void SetupPair(IBuilding target, DeathstarController deathstar, Faction targetFaction)
+		private void SetupPair(
+            Helper helper,
+            IBuilding target, 
+            DeathstarController deathstar, 
+            Faction targetFaction)
 		{
 			// Setup target
-            _helper.InitialiseBuilding(target, targetFaction);
-			
+            helper.InitialiseBuilding(target, targetFaction);
 			
 			// Setup deathstar
 			Faction deathstarFaction = BcUtils.Helper.GetOppositeFaction(targetFaction);
@@ -38,7 +47,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             Vector2 enemyCruiserPosition = target.Position;
             IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, BcUtils.RandomGenerator.Instance);
 			
-            _helper.InitialiseUnit(deathstar, deathstarFaction, aircraftProvider: aircraftProvider);
+            helper.InitialiseUnit(deathstar, deathstarFaction, aircraftProvider: aircraftProvider);
 			deathstar.StartConstruction();
 		}
 	}
