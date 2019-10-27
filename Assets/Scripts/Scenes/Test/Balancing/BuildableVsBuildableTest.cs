@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using NSubstitute;
@@ -51,11 +50,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
             }
         }
 
-        public void Initialise(IPrefabFactory prefabFactory, TestUtils.Helper helper, IUpdaterProvider updaterProvider)
+        public void Initialise(TestUtils.Helper baseHelper)
         {
-            Helper.AssertIsNotNull(prefabFactory, helper, updaterProvider);
+            Assert.IsNotNull(baseHelper);
 
-            _helper = helper;
+            _helper = baseHelper;
             _isScenarioOver = false;
 
             _deferrer = GetComponent<TimeScaleDeferrer>();
@@ -67,8 +66,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
             // Create left buildable group
             BuildableGroupController leftGroupController = transform.FindNamedComponent<BuildableGroupController>("LeftGroup");
             Vector2 leftSpawnPosition = new Vector2(transform.position.x - LeftOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition, updaterProvider, blueCruiser, redCruiser);
-            _leftGroup = leftGroupController.Initialise(prefabFactory, _helper, leftGroupArgs, leftSpawnPosition);
+            TestUtils.BuildableInitialisationArgs leftGroupArgs = CreateLeftGroupArgs(_helper, leftSpawnPosition, _helper.UpdaterProvider, blueCruiser, redCruiser);
+            _leftGroup = leftGroupController.Initialise(_helper.PrefabFactory, _helper, leftGroupArgs, leftSpawnPosition);
             _leftGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             foreach (IBuildable buildable in _leftGroup.Buildables)
@@ -82,8 +81,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
             // Create right buildable group
             BuildableGroupController rightGroupController = transform.FindNamedComponent<BuildableGroupController>("RightGroup");
             Vector2 rightSpawnPosition = new Vector2(transform.position.x + RightOffsetInM, transform.position.y);
-            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition, updaterProvider, redCruiser, blueCruiser);
-            _rightGroup = rightGroupController.Initialise(prefabFactory, _helper, rightGroupArgs, rightSpawnPosition);
+            TestUtils.BuildableInitialisationArgs rightGroupArgs = CreateRightGroupArgs(_helper, rightSpawnPosition, _helper.UpdaterProvider, redCruiser, blueCruiser);
+            _rightGroup = rightGroupController.Initialise(_helper.PrefabFactory, _helper, rightGroupArgs, rightSpawnPosition);
             _rightGroup.BuildablesDestroyed += (sender, e) => OnScenarioComplete();
 
             foreach (IBuildable buildable in _rightGroup.Buildables)

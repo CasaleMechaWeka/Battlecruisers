@@ -8,8 +8,6 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
@@ -32,9 +30,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private int _numOfDefenceBuildngsDestroyed;
         private IDeferrer _deferrer;
 
-        protected IUpdaterProvider _updaterProvider;
         protected TestUtils.Helper _helper;
-        protected IPrefabFactory _prefabFactory;
 
         public int numOfUnitDrones;
         public int numOfBasicDefenceBuildings;
@@ -49,25 +45,22 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         public Camera Camera { get; private set; }
 
         public void Initialise(
-            IPrefabFactory prefabFactory, 
+            TestUtils.Helper baseHelper,
             IPrefabKey unitKey, 
             IPrefabKey basicDefenceBuildingKey, 
-            IPrefabKey advancedDefenceBuildingKey,
-            IUpdaterProvider updaterProvider)
+            IPrefabKey advancedDefenceBuildingKey)
         {
-            Helper.AssertIsNotNull(prefabFactory, unitKey, basicDefenceBuildingKey, advancedDefenceBuildingKey, updaterProvider);
+            Helper.AssertIsNotNull(baseHelper, unitKey, basicDefenceBuildingKey, advancedDefenceBuildingKey);
             Assert.IsTrue(numOfUnitDrones > 0);
             Assert.IsTrue(numOfBasicDefenceBuildings >= 0);
             Assert.IsTrue(numOfAdvancedDefenceBuildings >= 0);
 
             _offensiveUnitKey = unitKey;
             _numOfDefenceBuildings = numOfBasicDefenceBuildings + numOfAdvancedDefenceBuildings;
-            _helper = new TestUtils.Helper(numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
-            _prefabFactory = prefabFactory;
+            _helper = new TestUtils.Helper(baseHelper, numOfUnitDrones, buildSpeedMultiplier: BuildSpeedMultipliers.DEFAULT);
             _defenceBuildings = new List<IBuilding>(_numOfDefenceBuildings);
             _completedOffensiveUnits = new List<ITarget>();
             _numOfDefenceBuildngsDestroyed = 0;
-            _updaterProvider = updaterProvider;
 
             _deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(_deferrer);
@@ -93,7 +86,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             // by the factory's GlobalTargetFinder
             _offensiveFactory = CreateFactory(blueCruiser, redCruiser);
 
-            IBuildableSpawner buildingSpawner = new BuildingSpawner(_prefabFactory, _helper);
+            IBuildableSpawner buildingSpawner = new BuildingSpawner(_helper.PrefabFactory, _helper);
 
             int basicBuildingsXPos = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
             Vector2 basicBuildingsSpawnPos = new Vector2(basicBuildingsXPos, 0);
@@ -102,7 +95,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                     _helper, 
                     Faction.Reds, 
                     parentCruiserDirection: Direction.Left,
-                    updaterProvider: _updaterProvider,
+                    updaterProvider: _helper.UpdaterProvider,
                     parentCruiser: redCruiser,
                     enemyCruiser: blueCruiser,
                     deferrer: _deferrer);
@@ -153,13 +146,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         private int FindBuildingCost(IPrefabKey buildingKey, int numOfBuildings)
         {
-            IBuildableWrapper<IBuilding> building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            IBuildableWrapper<IBuilding> building = _helper.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
             return (int)building.Buildable.CostInDroneS * numOfBuildings;
         }
 
         private float FindUnitCost(IPrefabKey unitKey)
         {
-            IBuildableWrapper<IUnit> unit = _prefabFactory.GetUnitWrapperPrefab(unitKey);
+            IBuildableWrapper<IUnit> unit = _helper.PrefabFactory.GetUnitWrapperPrefab(unitKey);
             return unit.Buildable.CostInDroneS;
         }
 
@@ -172,7 +165,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             {
                 _offensiveFactory.CompletedBuildable += (factory, eventArgs) =>
                 {
-                    _offensiveFactory.StartBuildingUnit(_prefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
+                    _offensiveFactory.StartBuildingUnit(_helper.PrefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
                     _offensiveFactory.UnitCompleted += Factory_CompletedUnit;
                 };
 

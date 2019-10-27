@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
 using System.Linq;

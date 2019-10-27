@@ -3,12 +3,14 @@ using System.Linq;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
     public abstract class MultiCameraTestGod<TTest> : TestGodBase where TTest : MonoBehaviour, ITestScenario
     {
         private ICircularList<Camera> _cameras;
+        protected Helper _baseHelper;
 
         public Camera overviewCamera;
 
@@ -33,7 +35,9 @@ namespace BattleCruisers.Scenes.Test
 
         protected override void Setup(Helper helper)
         {
-            InitialiseAsync(helper);
+            Assert.IsNotNull(helper);
+
+            _baseHelper = helper;
 
             IList<Camera> cameras = new List<Camera>()
             {
@@ -58,9 +62,6 @@ namespace BattleCruisers.Scenes.Test
 
             ToggleCamera();
         }
-
-        // FELIX  Rename, not async :)
-        protected virtual void InitialiseAsync(Helper helper) { }
 
         protected abstract void InitialiseScenario(TTest scenario);
 

@@ -11,10 +11,9 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         public float scenarioDelayInS;
 
-        // FELIX  Cache Helper in parent class :)
-        protected override void InitialiseAsync(Helper parentHelper)
+        protected override void Setup(Helper parentHelper)
         {
-            base.InitialiseAsync(parentHelper);
+            base.Setup(parentHelper);
 
             Assert.IsTrue(scenarioDelayInS >= 0);
 

@@ -19,14 +19,14 @@ namespace BattleCruisers.Scenes.Test.Performance
 		public UnitWrapper unitPrefab;
         public List<Vector2> patrolPoints;
 
-        protected override void InitialiseAsync(TestUtils.Helper parentHelper)
+        protected override void Setup(TestUtils.Helper baseHelper)
         {
-            base.InitialiseAsync(parentHelper);
+            base.Setup(baseHelper);
 
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(timeScaleDeferrer);
 
-            TestUtils.Helper helper = new TestUtils.Helper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
+            TestUtils.Helper helper = new TestUtils.Helper(baseHelper, deferrer: timeScaleDeferrer);
    
             // Initialise prefab
 			unitPrefab.StaticInitialise();

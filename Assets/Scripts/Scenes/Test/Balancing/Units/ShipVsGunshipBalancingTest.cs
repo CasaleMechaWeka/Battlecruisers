@@ -6,8 +6,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,21 +23,18 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private const int GUNSHIP_PATROLLING_RANGE_IN_M = 20;
 
         protected TestUtils.Helper _helper;
-        protected IPrefabFactory _prefabFactory;
 
         public int numOfDrones;
         public PrefabKeyName shipPrefabKeyName;
 
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory, IUpdaterProvider updaterProvider)
+        public void Initialise(TestUtils.Helper baseHelper)
         {
-            Helper.AssertIsNotNull(prefabFactory, updaterProvider);
+            Helper.AssertIsNotNull(baseHelper);
             Assert.IsTrue(numOfDrones > 0);
 
-
-            _prefabFactory = prefabFactory;
-            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
+            _helper = new TestUtils.Helper(baseHelper, numOfDrones: numOfDrones, BuildSpeedMultipliers.DEFAULT);
             _completedUnits = new List<ITarget>();
 
             IPrefabKey gunshipKey = StaticPrefabKeys.Units.Gunship;
@@ -47,8 +42,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             ShowScenarioDetails(shipKey, gunshipKey);
 
-            IBuildableWrapper<IUnit> ship = _prefabFactory.GetUnitWrapperPrefab(shipKey);
-            IBuildableWrapper<IUnit> gunship = _prefabFactory.GetUnitWrapperPrefab(gunshipKey);
+            IBuildableWrapper<IUnit> ship = _helper.PrefabFactory.GetUnitWrapperPrefab(shipKey);
+            IBuildableWrapper<IUnit> gunship = _helper.PrefabFactory.GetUnitWrapperPrefab(gunshipKey);
 
             _aircraftKillCount = InitialiseKillCount("ShipsKillCount", gunship.Buildable);
             _shipsKillCount = InitialiseKillCount("AircraftKillCount", ship.Buildable);
