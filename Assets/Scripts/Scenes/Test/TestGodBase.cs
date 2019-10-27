@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test
             }
         }
 
-        protected virtual IList<GameObject> GetGameObjects()
+        protected virtual List<GameObject> GetGameObjects()
         {
             return new List<GameObject>();
         }

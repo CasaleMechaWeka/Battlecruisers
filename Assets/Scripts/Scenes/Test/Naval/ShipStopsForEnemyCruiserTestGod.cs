@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Naval
     {
         private ShipController _ship;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _ship = FindObjectOfType<ShipController>();
             Assert.IsNotNull(_ship);

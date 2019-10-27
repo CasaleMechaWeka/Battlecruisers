@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
         public BuildingWrapper targetPrefab;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _deathstar = FindObjectOfType<DeathstarController>();
             return new List<GameObject>()

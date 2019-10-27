@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         private SatelliteLauncherController _launcher;
         private AirFactory _target;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _launcher = FindObjectOfType<SatelliteLauncherController>();
             _target = FindObjectOfType<AirFactory>();

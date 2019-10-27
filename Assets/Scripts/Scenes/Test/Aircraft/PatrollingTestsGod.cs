@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
         public List<GameObject> patrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
 			_aircraft = FindObjectOfType<TestAircraftController>();
 

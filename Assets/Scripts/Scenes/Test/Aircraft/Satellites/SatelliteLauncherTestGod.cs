@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
         private SatelliteLauncherController[] _launchers;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _launchers = FindObjectsOfType<SatelliteLauncherController>();
             return

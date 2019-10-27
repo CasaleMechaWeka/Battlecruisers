@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         public Building leftTarget, rightTarget;
 		public DeathstarController leftDeathstar, rightDeathstar;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             return new List<GameObject>()
             {

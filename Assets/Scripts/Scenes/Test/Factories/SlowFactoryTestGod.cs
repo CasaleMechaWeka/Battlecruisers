@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Factories
             return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: 5, updaterProvider: updaterProvider);
         }
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _factory = FindObjectOfType<Factory>();
 

@@ -14,10 +14,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
         private FighterController _fighter;
         private TestAircraftController[] _targets;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _targets = FindObjectsOfType<TestAircraftController>();
-            IList<GameObject> gameObjects = _targets.Select(target => target.GameObject).ToList();
+            List<GameObject> gameObjects = _targets.Select(target => target.GameObject).ToList();
 
             _fighter = FindObjectOfType<FighterController>();
             gameObjects.Add(_fighter.GameObject);

@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		public TestAircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 		public List<Vector2> patrolPoints1, patrolPoints2, patrolPoints3;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             return new List<GameObject>()
             {

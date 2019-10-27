@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
         private AirFactory _target;
         private TurretController _turret;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _target = FindObjectOfType<AirFactory>();
             _turret = FindObjectOfType<TurretController>();

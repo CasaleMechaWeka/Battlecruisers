@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Naval
     {
         private ShipController _attackBoat;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _attackBoat = FindObjectOfType<ShipController>();
 

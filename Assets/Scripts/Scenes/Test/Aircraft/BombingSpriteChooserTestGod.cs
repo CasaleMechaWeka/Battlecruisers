@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
         public List<Vector2> patrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _factory = FindObjectOfType<AirFactory>();
             _bomber = FindObjectOfType<BomberController>();

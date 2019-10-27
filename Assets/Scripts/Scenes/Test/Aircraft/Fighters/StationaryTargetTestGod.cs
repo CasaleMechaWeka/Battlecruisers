@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 		public FighterController fighter1, fighter2, fighter3;
 		public TestAircraftController targetAircraft1, targetAircraft2, targetAircraft3;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             return new List<GameObject>()
             {

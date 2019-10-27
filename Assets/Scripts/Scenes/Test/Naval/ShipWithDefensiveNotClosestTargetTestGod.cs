@@ -14,10 +14,9 @@ namespace BattleCruisers.Scenes.Test.Naval
         private TurretController[] _turrets;
         private IBuilding _navalFactory;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
-            // FELIX  Change return type to concrete type :P
-            List<GameObject> gameObjects = (List<GameObject>)base.GetGameObjects();
+            List<GameObject> gameObjects = base.GetGameObjects();
 
             _turrets = FindObjectsOfType<TurretController>();
             IList<GameObject> turretGameObjects

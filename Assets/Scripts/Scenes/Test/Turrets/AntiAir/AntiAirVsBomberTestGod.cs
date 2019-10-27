@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
             return await HelperFactory.CreateHelperAsync(deferrer: deferrer, updaterProvider: updaterProvider);
         }
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
 			_antiAirTurret = FindObjectOfType<TurretController>();
 			Assert.IsNotNull(_antiAirTurret);

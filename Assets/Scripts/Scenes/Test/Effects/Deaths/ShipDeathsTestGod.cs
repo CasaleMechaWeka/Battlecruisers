@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
         private ShipController[] _ships;
         private IDeferrer _deferrer;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _ships = FindObjectsOfType<ShipController>();
             return

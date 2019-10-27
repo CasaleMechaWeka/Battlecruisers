@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 	{
         public FighterController rightFighter, leftFighter;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             return new List<GameObject>()
             {

@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
         public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _fighter = FindObjectOfType<FighterController>();
             _target = FindObjectOfType<TestAircraftController>();

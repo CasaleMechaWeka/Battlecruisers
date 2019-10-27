@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
     {
         private SpySatelliteController _satellite;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _satellite = FindObjectOfType<SpySatelliteController>();
             return new List<GameObject>()

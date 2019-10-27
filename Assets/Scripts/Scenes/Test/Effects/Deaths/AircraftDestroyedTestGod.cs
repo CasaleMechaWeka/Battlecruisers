@@ -13,11 +13,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
         public TestAircraftController aircraftToDestroy, blockingAircraft;
 		public List<Vector2> patrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _turrets = FindObjectsOfType<TurretController>();
 
-            IList<GameObject> gameObjects
+            List<GameObject> gameObjects
                 = _turrets
                     .Select(turret => turret.GameObject)
                     .ToList();

@@ -26,12 +26,12 @@ namespace BattleCruisers.Scenes.Test.Effects
         private TestAircraftController _aircraft;
         private ProjectileController[] _projectiles;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _aircraft = FindObjectOfType<TestAircraftController>();
             _projectiles = FindObjectsOfType<ProjectileController>();
 
-            IList<GameObject> gameObjects
+            List<GameObject> gameObjects
                 = _projectiles
                     .Select(projectile => projectile.gameObject)
                     .ToList();

@@ -16,12 +16,12 @@ namespace BattleCruisers.Scenes.Test.Balancing.Range
         private IBuilding _mortar;
         private IUnit[] _destroyers;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _mortar = FindObjectOfType<TurretController>();
             _destroyers = FindObjectsOfType<ShipController>();
 
-            IList<GameObject> gameObjects
+            List<GameObject> gameObjects
                 = _destroyers
                     .Select(destroyer => destroyer.GameObject)
                     .ToList();

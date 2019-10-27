@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Naval
 
         public List<Vector2> leftSidePatrolPoints, rightSidePatrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _battleships = FindObjectsOfType<ArchonBattleshipController>();
             _planes = FindObjectsOfType<TestAircraftController>();

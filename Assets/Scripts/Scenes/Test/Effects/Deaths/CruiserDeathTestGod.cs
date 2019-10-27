@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
     {
         private Cruiser _cruiser;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _cruiser = FindObjectOfType<Cruiser>();
             Assert.IsNotNull(_cruiser);

@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 		public Factory leftFactory, rightFactory;
 		public UnitWrapper archonPrefab, attackBoatPrefab;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             return new List<GameObject>()
             {

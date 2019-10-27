@@ -18,10 +18,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft
 
         public List<Vector2> gunshipPatrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _ships = FindObjectsOfType<AttackBoatController>();
-            IList<GameObject> gameObjects = _ships.Select(ship => ship.GameObject).ToList();
+            List<GameObject> gameObjects = _ships.Select(ship => ship.GameObject).ToList();
 
             _gunship = FindObjectOfType<GunShipController>();
             gameObjects.Add(_gunship.GameObject);

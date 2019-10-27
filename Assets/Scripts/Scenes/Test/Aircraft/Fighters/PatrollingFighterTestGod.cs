@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 	{
         private FighterController _fighter;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _fighter = FindObjectOfType<FighterController>();
             return new List<GameObject>()

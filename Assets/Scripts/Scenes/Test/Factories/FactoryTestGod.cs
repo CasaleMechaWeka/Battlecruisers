@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Factories
         protected virtual Faction FactoryFacingLeftFaction => Faction.Blues;
 		protected virtual Faction FactoryFacingRightFaction => Faction.Blues;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             return new List<GameObject>()
             {

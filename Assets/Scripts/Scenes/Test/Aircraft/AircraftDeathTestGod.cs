@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
     {
         private AircraftController[] _aircraftList;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _aircraftList = FindObjectsOfType<AircraftController>();
             return _aircraftList.Select(aircraft => aircraft.GameObject).ToList();

@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
         private LaserBarrelController _laserBarrel;
         private AirFactory _airFactory;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _laserBarrel = FindObjectOfType<LaserBarrelController>();
             _airFactory = FindObjectOfType<AirFactory>();

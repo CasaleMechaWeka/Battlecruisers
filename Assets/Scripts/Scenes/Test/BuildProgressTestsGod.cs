@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test
 
         public GameObject dummyEnemyCruiser;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _buildings = FindObjectsOfType<Building>();
             return 

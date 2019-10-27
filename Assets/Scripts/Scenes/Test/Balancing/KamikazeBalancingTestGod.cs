@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         public float scenarioDelayInS;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             Assert.IsTrue(scenarioDelayInS >= 0);
 

@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Naval
 
         public TestAircraftController inRangeLowPriorityTarget, inRangeHighPriorityTarget, outOfRangeLowPriorityTarget;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _boat = FindObjectOfType<ShipController>();
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.Naval
                 outOfRangeLowPriorityTarget
             };
 
-            IList<GameObject> gameObjects
+            List<GameObject> gameObjects
                 = _targets
                     .Select(target => target.GameObject)
                     .ToList();

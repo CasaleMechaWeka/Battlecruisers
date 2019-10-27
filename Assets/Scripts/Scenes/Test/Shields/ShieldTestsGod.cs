@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Shields
         private ShieldGenerator _shield;
         private BarrelController _turret;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _shield = FindObjectOfType<ShieldGenerator>();
             Assert.IsNotNull(_shield);

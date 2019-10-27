@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 
         public int kamikaziDelayInS = 1;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _target = FindObjectOfType<Factory>();
             _kamikazeSignal = FindObjectOfType<KamikazeSignal>();

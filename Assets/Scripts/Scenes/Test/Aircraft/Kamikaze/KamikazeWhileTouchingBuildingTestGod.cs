@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 
         public List<Vector2> aircraftPatrolPoints;
 
-        protected override IList<GameObject> GetGameObjects()
+        protected override List<GameObject> GetGameObjects()
         {
             _target = FindObjectOfType<Factory>();
             _kamikazeSignal = FindObjectOfType<KamikazeSignal>();
