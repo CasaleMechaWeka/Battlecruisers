@@ -4,39 +4,47 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class NukeLauncherTestGod : CameraToggleTestGod
 	{
-		protected override void Start()
+        private AirFactory _baseTarget;
+        private NukeLauncherController _launcher;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _baseTarget = FindObjectOfType<AirFactory>();
+			_launcher = FindObjectOfType<NukeLauncherController>();
 
+            return new List<GameObject>()
+            {
+                _baseTarget.GameObject,
+                _launcher.GameObject
+            };
+        }
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
-
-
+        protected override void Setup(Helper helper)
+        {
 			// Setup targets
-            AirFactory basetarget = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(basetarget);
+            helper.InitialiseBuilding(_baseTarget);
 
-            DroneStation[] targets = FindObjectsOfType<DroneStation>();
-            foreach (DroneStation target in targets)
+            DroneStation[] _targets = FindObjectsOfType<DroneStation>();
+            foreach (DroneStation target in _targets)
             {
                 helper.InitialiseBuilding(target);
             }
 
-
 			// Setup nuke launcher
-			ICruiser enemyCruiser = helper.CreateCruiser(basetarget.GameObject);
+			ICruiser enemyCruiser = helper.CreateCruiser(_baseTarget.GameObject);
 			IExactMatchTargetFilter targetFilter = Substitute.For<IExactMatchTargetFilter>();
-			targetFilter.IsMatch(basetarget).Returns(true);
-            ITargetFactories targetFactories = helper.CreateTargetFactories(basetarget.GameObject, exactMatchTargetFilter: targetFilter);
+			targetFilter.IsMatch(_baseTarget).Returns(true);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_baseTarget.GameObject, exactMatchTargetFilter: targetFilter);
 
-			NukeLauncherController launcher = FindObjectOfType<NukeLauncherController>();
-            helper.InitialiseBuilding(launcher, enemyCruiser: enemyCruiser, targetFactories: targetFactories);
-			launcher.StartConstruction();
+            helper.InitialiseBuilding(_launcher, enemyCruiser: enemyCruiser, targetFactories: targetFactories);
+			_launcher.StartConstruction();
 		}
 	}
 }
