@@ -139,7 +139,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
 		protected virtual void CeaseFire() { }
 
-        public void CleanUp()
+        public virtual void CleanUp()
         {
             if (_updater != null)
             {

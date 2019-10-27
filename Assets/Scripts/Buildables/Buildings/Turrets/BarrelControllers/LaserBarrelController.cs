@@ -73,6 +73,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
 			_laserEmitter.StopLaser();
 		}
-	}
+
+        public override void CleanUp()
+        {
+            base.CleanUp();
+
+            CeaseFire();
+            _laserEmitter.DisposeManagedState();
+        }
+    }
 }
 
