@@ -6,6 +6,8 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -17,15 +19,19 @@ namespace BattleCruisers.Scenes.Test
 
 		public RocketController rocketPrefab;
 
-        protected override void Start()
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
-
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
-
-            
-            // Setup target
 			_target = FindObjectOfType<Building>();
+
+            return new List<GameObject>()
+            {
+                _target.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            // Setup target
             helper.InitialiseBuilding(_target, Faction.Blues);
 			_target.StartConstruction();
 			_target.Destroyed += (sender, e) => CancelInvoke("FireRocket");
