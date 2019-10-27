@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             }
         }
 
-        protected async override Task<Helper> CreateHelper(IUpdaterProvider updaterProvider)
+        protected async override Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
             return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, buildSpeedMultiplier: buildSpeedMultiplier);

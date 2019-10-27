@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test
             updaterProvider.Initialise();
             _updaterProvider = updaterProvider;
 
-            Helper helper = await CreateHelper(updaterProvider);
+            Helper helper = await CreateHelperAsync(updaterProvider);
 
             // Child class initialisation
             Setup(helper);
@@ -45,8 +45,8 @@ namespace BattleCruisers.Scenes.Test
         {
             return new List<GameObject>();
         }
-
-        protected virtual async Task<Helper> CreateHelper(IUpdaterProvider updaterProvider)
+        
+        protected virtual async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider);
         }

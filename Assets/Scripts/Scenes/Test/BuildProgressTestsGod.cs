@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test
                     .ToList();
         }
 
-        protected async override Task<Helper> CreateHelper(IUpdaterProvider updaterProvider)
+        protected async override Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: 5, updaterProvider: updaterProvider);
         }
