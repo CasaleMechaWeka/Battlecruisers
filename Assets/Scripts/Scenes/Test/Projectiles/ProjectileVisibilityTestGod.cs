@@ -2,24 +2,37 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Projectiles
 {
     public class ProjectileVisibilityTestGod : NavigationTestGod
     {
-        protected override void Start()
+        private Artillery _artillery;
+        private AirFactory _airFactory;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _artillery = FindObjectOfType<Artillery>();
+            _airFactory = FindObjectOfType<AirFactory>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _artillery.GameObject,
+                _airFactory.GameObject
+            };
+        }
 
-            Artillery artillery = FindObjectOfType<Artillery>();
-            helper.InitialiseBuilding(artillery, Faction.Blues);
-            artillery.StartConstruction();
+        protected override void Setup(Helper helper)
+        {
+            base.Setup(helper);
 
-            AirFactory airFactory = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(airFactory, Faction.Reds);
-            airFactory.StartConstruction();
+            helper.InitialiseBuilding(_artillery, Faction.Blues);
+            _artillery.StartConstruction();
+
+            helper.InitialiseBuilding(_airFactory, Faction.Reds);
+            _airFactory.StartConstruction();
         }
     }
 }
