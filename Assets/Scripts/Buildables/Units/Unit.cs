@@ -54,17 +54,11 @@ namespace BattleCruisers.Buildables.Units
         {
             base.StaticInitialise(parent, healthBar);
 
+            Assert.IsTrue(maxVelocityInMPerS > 0);
+
             AudioSource audioSource = transform.FindNamedComponent<AudioSource>("AudioSource");
             Assert.IsNotNull(audioSource);
             _audioSource = new AudioSourceBC(audioSource);
-        }
-
-        public override async void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
-		{
-            base.Initialise(uiManager, factoryProvider);
-			
-            Assert.IsTrue(maxVelocityInMPerS > 0);
-            _engineAudioClip = await _factoryProvider.Sound.SoundFetcher.GetSoundAsync(EngineSoundKey);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -83,11 +77,16 @@ namespace BattleCruisers.Buildables.Units
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
-            PlayEngineSound();
+            PlayEngineSoundAsync();
         }
 
-        protected void PlayEngineSound()
+        protected async void PlayEngineSoundAsync()
         {
+            if (_engineAudioClip == null)
+            {
+                _engineAudioClip = await _factoryProvider.Sound.SoundFetcher.GetSoundAsync(EngineSoundKey);
+            }
+
             _audioSource.AudioClip = _engineAudioClip;
             _audioSource.Play(isSpatial: true, loop: true);
         }

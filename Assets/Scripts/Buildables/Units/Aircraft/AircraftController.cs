@@ -185,7 +185,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             // Restart engine sound, which gets paused when we set the game
             // object to inactive.
-            PlayEngineSound();
+            PlayEngineSoundAsync();
 
             _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
 			_kamikazeController.gameObject.SetActive(true);
