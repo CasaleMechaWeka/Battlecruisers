@@ -13,9 +13,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         protected abstract IPrefabKey AdvancedDefenceBuildingKey { get; }
 
         // FELIX  Try test scene :)  Will break, InitialiseScenario will have null _prefabFactory :(
-        protected async override void InitialiseAsync()
+        protected async override void InitialiseAsync(Helper parentHelper)
+        // FELIX  Cache Helper in parent class :)
         {
-            _prefabFactory = await Helper.CreatePrefabFactoryAsync();
+            //_prefabFactory = await Helper.CreatePrefabFactoryAsync();
         }
 
         protected override void InitialiseScenario(DefenceBuildingBalancingTest scenario)

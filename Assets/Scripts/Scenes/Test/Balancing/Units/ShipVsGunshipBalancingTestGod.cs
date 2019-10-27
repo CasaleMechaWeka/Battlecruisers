@@ -7,9 +7,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     {
         private IPrefabFactory _prefabFactory;
 
-        protected override async void InitialiseAsync()
+        protected override async void InitialiseAsync(Helper parentHelper)
         {
-            _prefabFactory = await Helper.CreatePrefabFactoryAsync();
+            // FELIX  Cache Helper in parent class :)
+            //_prefabFactory = await Helper.CreatePrefabFactoryAsync();
         }
 
         protected override void InitialiseScenario(ShipVsGunshipBalancingTest scenario)

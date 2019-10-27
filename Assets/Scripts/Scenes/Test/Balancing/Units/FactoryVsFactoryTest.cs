@@ -20,7 +20,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
     {
         private IKillCountController _leftKillCount, _rightKillCount;
         private IList<ITarget> _completedUnits;
-        private IPrefabFactory _prefabFactory;
 
 		protected IFactory _leftFactory, _rightFactory;
         protected TestUtils.Helper _helper;
@@ -31,16 +30,19 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
         public Camera Camera { get; private set; }
 
-        public void Initialise(IPrefabFactory prefabFactory, IUpdaterProvider updaterProvider)
+        public void Initialise(TestUtils.Helper parentHelper)
         {
-            Assert.IsNotNull(prefabFactory);
+            Assert.IsNotNull(parentHelper);
             Assert.IsTrue(numOfDrones > 0);
 
             _deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            _prefabFactory = prefabFactory;
-            _helper = new TestUtils.Helper(numOfDrones, BuildSpeedMultipliers.DEFAULT, updaterProvider: updaterProvider);
+            _helper
+                = new TestUtils.Helper(
+                    parentHelper,
+                    numOfDrones,
+                    BuildSpeedMultipliers.DEFAULT);
             _completedUnits = new List<ITarget>();
 
             IPrefabKey leftUnitKey = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(leftUnitKeyName);
@@ -48,15 +50,15 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             ShowScenarioDetails(leftUnitKey, rightUnitKey);
 
-            IBuildableWrapper<IUnit> leftUnit = _prefabFactory.GetUnitWrapperPrefab(leftUnitKey);
-            IBuildableWrapper<IUnit> rightUnit = _prefabFactory.GetUnitWrapperPrefab(rightUnitKey);
+            IBuildableWrapper<IUnit> leftUnit = parentHelper.PrefabFactory.GetUnitWrapperPrefab(leftUnitKey);
+            IBuildableWrapper<IUnit> rightUnit = parentHelper.PrefabFactory.GetUnitWrapperPrefab(rightUnitKey);
 
             _leftKillCount = InitialiseKillCount("LeftFactoryKillCount", rightUnit.Buildable);
             _rightKillCount = InitialiseKillCount("RightFactoryKillCount", leftUnit.Buildable);
 
 
             // Initlialise factories
-            IFactory[] factories = GetComponentsInChildren<IFactory>();
+            IFactory[] factories = GetComponentsInChildren<IFactory>(includeInactive: true);
             Assert.IsTrue(factories.Length == 2);
             factories = factories.OrderBy(factory => factory.Position.x).ToArray();
 
@@ -69,8 +71,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             ICruiser blueCruiser = _helper.CreateCruiser(Direction.Left, Faction.Blues);
             ICruiser redCruiser = _helper.CreateCruiser(Direction.Right, Faction.Reds);
 
-            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime, _rightKillCount, redCruiser, blueCruiser, updaterProvider);
-            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime, _leftKillCount, blueCruiser, redCruiser, updaterProvider);
+            InitialiseFactory(_leftFactory, Faction.Reds, Direction.Right, leftUnit, leftFactoryWaitTime, _rightKillCount, redCruiser, blueCruiser, _helper.UpdaterProvider);
+            InitialiseFactory(_rightFactory, Faction.Blues, Direction.Left, rightUnit, rightFactoryWaitTime, _leftKillCount, blueCruiser, redCruiser, _helper.UpdaterProvider);
 
 
             // Hide camera
@@ -139,6 +141,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             factory.CompletedBuildable += (sender, e) => OnFactoryCompleted(factory, unitWrapper, waitTimeInS, killCounter);
             factory.Destroyed += (sender, e) => OnScenarioComplete();
 
+            factory.GameObject.SetActive(true);
             factory.StartConstruction();
             TestUtils.Helper.SetupFactoryForUnitMonitor(factory, parentCruiser);
         }

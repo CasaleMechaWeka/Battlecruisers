@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.Threading;
+﻿using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing
@@ -10,9 +11,10 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         public float scenarioDelayInS;
 
-        protected override void InitialiseAsync()
+        // FELIX  Cache Helper in parent class :)
+        protected override void InitialiseAsync(Helper parentHelper)
         {
-            base.InitialiseAsync();
+            base.InitialiseAsync(parentHelper);
 
             Assert.IsTrue(scenarioDelayInS >= 0);
 

@@ -61,9 +61,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
         private readonly IDeferrer _deferrer;
-        private readonly IUpdaterProvider _updaterProvider;
 
         private const int DEFAULT_NUM_OF_DRONES = 10;
+
+        public IUpdaterProvider UpdaterProvider { get; }
 
         private IPrefabFactory _prefabFactory;
         public IPrefabFactory PrefabFactory
@@ -86,9 +87,24 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             _deferrer = deferrer;
-            _updaterProvider = updaterProvider;
+            UpdaterProvider = updaterProvider;
             _prefabFactory = prefabFactory;
 		}
+
+        public Helper(
+            Helper helper,
+            int? numOfDrones = null,
+            float? buildSpeedMultiplier = null,
+            IDeferrer deferrer = null,
+            IUpdaterProvider updaterProvider = null,
+            IPrefabFactory prefabFactory = null)
+        {
+            _numOfDrones = numOfDrones ?? helper._numOfDrones;
+            _buildSpeedMultiplier = buildSpeedMultiplier ?? helper._buildSpeedMultiplier;
+            _deferrer = deferrer ?? helper._deferrer;
+            UpdaterProvider = updaterProvider ?? helper.UpdaterProvider;
+            _prefabFactory = prefabFactory ?? helper._prefabFactory;
+        }
 
         public void InitialiseBuilding(
             IBuilding building,
@@ -132,7 +148,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
                     deferrer: _deferrer,
-                    updaterProvider: _updaterProvider);
+                    updaterProvider: UpdaterProvider);
 
             InitialiseBuilding(building, args, parentSlot);
         }
@@ -195,7 +211,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 					parentCruiserDirection,
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
-                    updaterProvider: _updaterProvider);
+                    updaterProvider: UpdaterProvider);
 
             InitialiseUnit(unit, args);
 		}

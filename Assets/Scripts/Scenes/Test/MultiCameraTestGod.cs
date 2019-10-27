@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
@@ -30,11 +31,9 @@ namespace BattleCruisers.Scenes.Test
             }
         }
 
-        protected override void Start()
+        protected override void Setup(Helper helper)
         {
-            base.Start();
-
-            InitialiseAsync();
+            InitialiseAsync(helper);
 
             IList<Camera> cameras = new List<Camera>()
             {
@@ -60,7 +59,8 @@ namespace BattleCruisers.Scenes.Test
             ToggleCamera();
         }
 
-        protected virtual void InitialiseAsync() { }
+        // FELIX  Rename, not async :)
+        protected virtual void InitialiseAsync(Helper helper) { }
 
         protected abstract void InitialiseScenario(TTest scenario);
 
