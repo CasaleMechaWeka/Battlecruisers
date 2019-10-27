@@ -2,24 +2,33 @@
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Threading;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
-    public class ShipDeathsTestGod : MonoBehaviour
+    public class ShipDeathsTestGod : TestGodBase
     {
+        private ShipController[] _ships;
         private IDeferrer _deferrer;
 
-        void Start()
+        protected override IList<GameObject> GetGameObjects()
+        {
+            _ships = FindObjectsOfType<ShipController>();
+            return
+                _ships
+                    .Select(ship => ship.GameObject)
+                    .ToList();
+        }
+
+        protected override void Setup(Helper helper)
         {
             _deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            Helper helper = new Helper();
-            ShipController[] ships = FindObjectsOfType<ShipController>();
-
-            foreach (ShipController ship in ships)
+            foreach (ShipController ship in _ships)
             {
                 helper.InitialiseUnit(ship);
                 ship.StartConstruction();
