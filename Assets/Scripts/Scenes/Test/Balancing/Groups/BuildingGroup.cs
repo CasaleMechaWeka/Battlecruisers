@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
@@ -11,18 +10,17 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
         public BuildingGroup(
             IPrefabKey buildableKey, 
             int numOfBuildables, 
-            IPrefabFactory prefabFactory, 
             Helper helper, 
             BuildableInitialisationArgs args,
             Vector2 spawnPosition, 
             float spacingMultiplier) 
-            : base(buildableKey, numOfBuildables, prefabFactory, helper, args, spawnPosition, spacingMultiplier)
+            : base(buildableKey, numOfBuildables, helper, args, spawnPosition, spacingMultiplier)
         {
         }
 
-        protected override IBuildableSpawner CreateSpawner(IPrefabFactory prefabFactory, Helper helper)
+        protected override IBuildableSpawner CreateSpawner(Helper helper)
         {
-            return new BuildingSpawner(prefabFactory, helper);
+            return new BuildingSpawner(helper);
         }
     }
 }

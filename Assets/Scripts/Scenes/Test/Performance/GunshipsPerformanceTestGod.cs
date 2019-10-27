@@ -31,7 +31,6 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup gunships
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
-            IPrefabFactory prefabFactory = await Helper.CreatePrefabFactoryAsync();
 
             BuildableGroupController gunshipsGroup = FindObjectOfType<BuildableGroupController>();
             if (gunshipsGroup != null)
@@ -44,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Performance
                         updaterProvider: _updaterProvider,
                         enemyCruiser: redCruiser,
                         parentCruiser: blueCruiser);
-                gunshipsGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+                gunshipsGroup.Initialise(helper, groupArgs, spawnPosition);
             }
 
             // Setup naval factory

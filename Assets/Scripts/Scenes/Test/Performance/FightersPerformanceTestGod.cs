@@ -28,10 +28,9 @@ namespace BattleCruisers.Scenes.Test.Performance
 
             // Setup fighters
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
-            IPrefabFactory prefabFactory = await Helper.CreatePrefabFactoryAsync();
 
-            InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, prefabFactory, leftFighterGroup, leftSpawnPosition);
-            InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, prefabFactory, rightFighterGroup, rightSpawnPosition);
+            InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, leftFighterGroup, leftSpawnPosition);
+            InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, rightFighterGroup, rightSpawnPosition);
         }
 
         private void InitialiseGroup(
@@ -39,7 +38,6 @@ namespace BattleCruisers.Scenes.Test.Performance
             ICruiser enemyCruiser, 
             ICruiser parentCruiser, 
             IAircraftProvider aircraftProvider,
-            IPrefabFactory prefabFactory,
             BuildableGroupController fightersGroupController,
             Vector2 spawnPosition)
         {
@@ -56,7 +54,7 @@ namespace BattleCruisers.Scenes.Test.Performance
                     updaterProvider: _updaterProvider,
                     enemyCruiser: enemyCruiser,
                     parentCruiser: parentCruiser);
-            IBuildableGroup fightersGroup = fightersGroupController.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+            IBuildableGroup fightersGroup = fightersGroupController.Initialise(helper, groupArgs, spawnPosition);
 
             foreach (IBuildable fighter in fightersGroup.Buildables)
             {

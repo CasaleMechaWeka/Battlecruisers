@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,30 +13,35 @@ namespace BattleCruisers.Scenes.Test.Performance
 {
     public class BomberPerformanceTestGod : TestGodBase
     {
+        private AirFactory _factory;
+
         public List<Vector2> bomberPatrolPoints;
         public Vector2 spawnPosition;
 
-        // FELIX  Try test scene :)
-        protected async override void Start()
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _factory = FindObjectOfType<AirFactory>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _factory.gameObject
+            };
+        }
 
+        protected override void Setup(Helper helper)
+        {
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
             // Setup target
-            AirFactory factory = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(factory, Faction.Reds);
+            helper.InitialiseBuilding(_factory, Faction.Reds);
 
-            IList<TargetType> targetTypes = new List<TargetType>() { factory.TargetType };
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(factory.Faction, targetTypes);
-            ITargetFactories targetFactories = helper.CreateTargetFactories(factory.GameObject, targetFilter: targetFilter);
+            IList<TargetType> targetTypes = new List<TargetType>() { _factory.TargetType };
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_factory.Faction, targetTypes);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_factory.GameObject, targetFilter: targetFilter);
 
             // Setup bombers
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
-            IPrefabFactory prefabFactory = await Helper.CreatePrefabFactoryAsync();
 
             BuildableGroupController bombersGroup = FindObjectOfType<BuildableGroupController>();
             BuildableInitialisationArgs groupArgs
@@ -49,7 +53,7 @@ namespace BattleCruisers.Scenes.Test.Performance
                     enemyCruiser: redCruiser,
                     parentCruiser: blueCruiser,
                     targetFactories: targetFactories);
-            bombersGroup.Initialise(prefabFactory, helper, groupArgs, spawnPosition);
+            bombersGroup.Initialise(helper, groupArgs, spawnPosition);
         }
     }
 }

@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             // by the factory's GlobalTargetFinder
             _offensiveFactory = CreateFactory(blueCruiser, redCruiser);
 
-            IBuildableSpawner buildingSpawner = new BuildingSpawner(_helper.PrefabFactory, _helper);
+            IBuildableSpawner buildingSpawner = new BuildingSpawner(_helper);
 
             int basicBuildingsXPos = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
             Vector2 basicBuildingsSpawnPos = new Vector2(basicBuildingsXPos, 0);

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.Test.Balancing.Spawners;
+using BattleCruisers.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BattleCruisers.Buildables;
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Scenes.Test.Balancing.Spawners;
-using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -26,19 +25,18 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
         protected BuildableGroup(
             IPrefabKey buildableKey, 
             int numOfBuildables, 
-            IPrefabFactory prefabFactory, 
             TestUtils.Helper helper,
             TestUtils.BuildableInitialisationArgs args,
             Vector2 spawnPosition,
             float spacingMultiplier)
         {
-            Helper.AssertIsNotNull(buildableKey, prefabFactory, helper, args);
+            Helper.AssertIsNotNull(buildableKey, helper, args);
             Assert.IsTrue(numOfBuildables > 0);
 
             BuildableKey = buildableKey;
             NumOfBuildables = numOfBuildables;
 			
-            IBuildableSpawner spawner = CreateSpawner(prefabFactory, helper);
+            IBuildableSpawner spawner = CreateSpawner(helper);
 			
             _aliveBuildables = spawner.SpawnBuildables(BuildableKey, NumOfBuildables, args, spawnPosition, spacingMultiplier);
 
@@ -50,7 +48,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
             Buildables = new ReadOnlyCollection<IBuildable>(_aliveBuildables);
         }
 
-        protected abstract IBuildableSpawner CreateSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper);
+        protected abstract IBuildableSpawner CreateSpawner(TestUtils.Helper helper);
 
         private void Buildable_Destroyed(object sender, DestroyedEventArgs e)
         {

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TestUtils = BattleCruisers.Scenes.Test.Utilities;
@@ -12,16 +11,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Spawners
 {
     public abstract class BuildableSpawner : IBuildableSpawner
     {
-        protected readonly IPrefabFactory _prefabFactory;
         protected readonly TestUtils.Helper _helper;
 
         public const float DEFAULT_SPACING_MULTIPLIER = 1.2f;
 
-        protected BuildableSpawner(IPrefabFactory prefabFactory, TestUtils.Helper helper)
+        protected BuildableSpawner(TestUtils.Helper helper)
         {
-            Helper.AssertIsNotNull(prefabFactory, helper);
-
-            _prefabFactory = prefabFactory;
+            Assert.IsNotNull(helper);
             _helper = helper;
         }
 

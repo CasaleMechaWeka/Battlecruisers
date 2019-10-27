@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
@@ -22,20 +21,18 @@ namespace BattleCruisers.Scenes.Test.Balancing.Groups
         }
 
         public IBuildableGroup Initialise(
-            IPrefabFactory prefabFactory,
             Helper helper,
             BuildableInitialisationArgs args,
             Vector2 spawnPosition)
         {
             IPrefabKey buildableKey = GetBuildableKey(prefabKeyName);
-            return CreateGroup(buildableKey, prefabFactory, helper, args, spawnPosition);
+            return CreateGroup(buildableKey, helper, args, spawnPosition);
         }
 
         protected abstract IPrefabKey GetBuildableKey(BCUtils.PrefabKeyName prefabKeyName);
 
         protected abstract IBuildableGroup CreateGroup(
             IPrefabKey buildableKey,
-            IPrefabFactory prefabFactory, 
             Helper helper, 
             BuildableInitialisationArgs args, 
             Vector2 spawnPosition);
