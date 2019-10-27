@@ -5,38 +5,49 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
     public class AttackBoatUserChosenTargetTestGod : TestGodBase 
 	{
+        private ShipController _boat;
+        private IList<TestAircraftController> _targets;
         private IUserChosenTargetManager _userChosenTargetManager;
 
         public TestAircraftController inRangeLowPriorityTarget, inRangeHighPriorityTarget, outOfRangeLowPriorityTarget;
 
-        protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _boat = FindObjectOfType<ShipController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
-
-            ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
-
-            // Ship
-            ShipController boat = FindObjectOfType<ShipController>();
-            _userChosenTargetManager = new UserChosenTargetManager();
-            helper.InitialiseUnit(boat, Faction.Blues, userChosenTargetManager: _userChosenTargetManager, enemyCruiser: redCruiser);
-            boat.StartConstruction();
-
-            // Targets
-            IList<TestAircraftController> targets = new List<TestAircraftController>()
+            _targets = new List<TestAircraftController>()
             {
                 inRangeLowPriorityTarget,
                 inRangeHighPriorityTarget,
                 outOfRangeLowPriorityTarget
             };
-            foreach (TestAircraftController target in targets)
+
+            IList<GameObject> gameObjects
+                = _targets
+                    .Select(target => target.GameObject)
+                    .ToList();
+            gameObjects.Add(_boat.GameObject);
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
+
+            // Ship
+            _userChosenTargetManager = new UserChosenTargetManager();
+            helper.InitialiseUnit(_boat, Faction.Blues, userChosenTargetManager: _userChosenTargetManager, enemyCruiser: redCruiser);
+            _boat.StartConstruction();
+
+            // Targets
+            foreach (TestAircraftController target in _targets)
             {
                 target.UseDummyMovementController = true;
                 target.SetTargetType(TargetType.Ships);
