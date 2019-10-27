@@ -1,5 +1,6 @@
-﻿using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Utils.Threading;
+﻿using BattleCruisers.Utils.Threading;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Balancing
@@ -11,20 +12,19 @@ namespace BattleCruisers.Scenes.Test.Balancing
 
         public float scenarioDelayInS;
 
-        protected override void Setup(Helper parentHelper)
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Setup(parentHelper);
-
             Assert.IsTrue(scenarioDelayInS >= 0);
 
             _deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(_deferrer);
+
+            return base.GetGameObjects();
         }
 
         protected override void InitialiseScenario(BuildableVsBuildableTest scenario)
         {
             _deferrer.Defer(() => base.InitialiseScenario(scenario), _cumulativeDelayInS);
-
             _cumulativeDelayInS += scenarioDelayInS;
         }
     }
