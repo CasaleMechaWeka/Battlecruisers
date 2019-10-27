@@ -1,7 +1,11 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
+using NSubstitute;
+using UnityCommon.Properties;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects
 {
@@ -16,6 +20,7 @@ namespace BattleCruisers.Scenes.Test.Effects
         {
             base.Setup(helper);
 
+            // Drones
             for (int i = 0; i < numOfDrones; ++i)
             {
                 DroneController newDrone = Instantiate(dronePrefab);
@@ -26,6 +31,16 @@ namespace BattleCruisers.Scenes.Test.Effects
                         faction: Faction.Blues));
                 //Debug.Log($"Created drone #{i} at position: {newDrone.transform.position}");
             }
+
+            // Drones sound
+            DroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = FindObjectOfType<DroneSoundFeedbackInitialiser>();
+            Assert.IsNotNull(droneSoundFeedbackInitialiser);
+
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones = Substitute.For<IBroadcastingProperty<bool>>();
+            parentCruiserHasActiveDrones.Value.Returns(true);
+
+            droneSoundFeedbackInitialiser.Initialise(parentCruiserHasActiveDrones);
+            parentCruiserHasActiveDrones.ValueChanged += Raise.Event();
         }
 
         private Vector2 RandomisePosition(Vector2 originalPosition)
