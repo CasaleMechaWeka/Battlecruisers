@@ -6,10 +6,13 @@ using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
@@ -18,20 +21,40 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
 {
     public class KamikazeRecyclingTestGod : TestGodBase
     {
+        private IFactory _target;
+        private AirFactory _airFactory;
+        private KamikazeSignal[] _kamikazeSignals;
+
         public UnitWrapper bomberPrefab;
         public int kamikazeDelayInS = 5;
 
-        protected override void Start()
+        protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            base.Start();
+            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.FAST, updaterProvider: updaterProvider);
+        }
 
+        protected override List<GameObject> GetGameObjects()
+        {
+            _target = FindObjectOfType<NavalFactory>();
+            _airFactory = FindObjectOfType<AirFactory>();
+            _kamikazeSignals = FindObjectsOfType<KamikazeSignal>();
+
+            List<GameObject> gameObjects
+                = _kamikazeSignals
+                    .Select(kamikazeSignal => kamikazeSignal.GameObject)
+                    .ToList();
+            gameObjects.Add(_target.GameObject);
+            gameObjects.Add(_airFactory.GameObject);
+
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
             Assert.IsNotNull(bomberPrefab);
             Assert.IsTrue(bomberPrefab.GetComponentInChildren<BomberController>() != null);
 
-            Helper helper = new Helper(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.FAST, updaterProvider: _updaterProvider);
-
             // Setup target
-            IFactory _target = FindObjectOfType<NavalFactory>();
             helper.InitialiseBuilding(_target);
             _target.StartConstruction();
 
@@ -48,18 +71,16 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
             };
             aircraftProvider.FindBomberPatrolPoints(default).ReturnsForAnyArgs(bomberPatrolPonts);
 
-            AirFactory airFactory = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(airFactory, aircraftProvider: aircraftProvider);
-            airFactory.StartConstruction();
-            airFactory.CompletedBuildable += (sender, e) => airFactory.StartBuildingUnit(bomberPrefab);
+            helper.InitialiseBuilding(_airFactory, aircraftProvider: aircraftProvider);
+            _airFactory.StartConstruction();
+            _airFactory.CompletedBuildable += (sender, e) => _airFactory.StartBuildingUnit(bomberPrefab);
 
             // Setup kamikaze signals
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
-            KamikazeSignal[] kamikazeSignals = FindObjectsOfType<KamikazeSignal>();
             
-            for (int i = 0; i < kamikazeSignals.Length; ++i)
+            for (int i = 0; i < _kamikazeSignals.Length; ++i)
             {
-                KamikazeSignal kamikazeSignal = kamikazeSignals[i];
+                KamikazeSignal kamikazeSignal = _kamikazeSignals[i];
 
                 timeScaleDeferrer.Defer(() =>
                 {
