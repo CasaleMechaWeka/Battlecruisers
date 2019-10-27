@@ -2,6 +2,10 @@
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Offensive;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.BattleScene.Update;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
@@ -13,15 +17,17 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
         private SatelliteLauncherController[] _launchers;
 
-		protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
-
-            float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
-            Helper helper = new Helper(buildSpeedMultiplier: buildSpeedMultiplier, updaterProvider: _updaterProvider);
-
             _launchers = FindObjectsOfType<SatelliteLauncherController>();
+            return
+                _launchers
+                .Select(launcher => launcher.GameObject)
+                .ToList();
+        }
 
+        protected override void Setup(Helper helper)
+        {
             foreach (SatelliteLauncherController launcher in _launchers)
             {
                 Vector2 parentCruiserPosition = launcher.transform.position;
@@ -31,6 +37,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
                 helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);
                 launcher.StartConstruction();
             }
+        }
+
+        protected async override Task<Helper> CreateHelper(IUpdaterProvider updaterProvider)
+        {
+            float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
+            return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, buildSpeedMultiplier: buildSpeedMultiplier);
         }
 
         public void DestroyLaunchers()
