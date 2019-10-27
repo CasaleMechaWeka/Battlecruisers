@@ -3,6 +3,8 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
@@ -11,14 +13,19 @@ namespace BattleCruisers.Scenes.Test.Factories
 		public Factory leftFactory, rightFactory;
 		public UnitWrapper archonPrefab, attackBoatPrefab;
 
-		protected override void Start()
-		{
-            base.Start();
+        protected override IList<GameObject> GetGameObjects()
+        {
+            return new List<GameObject>()
+            {
+                leftFactory.GameObject,
+                rightFactory.GameObject
+            };
+        }
 
+        protected override void Setup(Helper helper)
+        {
 			archonPrefab.StaticInitialise();
             attackBoatPrefab.StaticInitialise();
-
-			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             // Factory building archon
             helper.InitialiseBuilding(leftFactory, Faction.Reds, parentCruiserDirection: Direction.Right);
