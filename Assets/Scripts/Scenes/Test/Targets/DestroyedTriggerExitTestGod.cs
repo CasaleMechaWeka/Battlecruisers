@@ -2,21 +2,29 @@
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetDetectors;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Targets
 {
-    public class DestroyedTriggerExitTestGod : MonoBehaviour
+    public class DestroyedTriggerExitTestGod : TestGodBase
     {
         private AttackBoatController _ship;
         public CircleTargetDetectorController _detector;
 
-        void Start()
+        protected override List<GameObject> GetGameObjects()
         {
-            Helper helper = new Helper();
-
-            // Setup target attack boats
             _ship = FindObjectOfType<AttackBoatController>();
+
+            return new List<GameObject>()
+            {
+                _ship.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            // Setup target attack boats
             helper.InitialiseUnit(_ship, Faction.Reds);
             _ship.StartConstruction();
 
