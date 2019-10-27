@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
@@ -12,17 +13,33 @@ namespace BattleCruisers.Scenes.Test.Naval
     {
         private Faction _leftBattleshipFaction;
         private Faction _rightBattleshipFaction;
+        private ArchonBattleshipController[] _battleships;
+        private TestAircraftController[] _planes;
 
         public List<Vector2> leftSidePatrolPoints, rightSidePatrolPoints;
 
-        protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _battleships = FindObjectsOfType<ArchonBattleshipController>();
+            _planes = FindObjectsOfType<TestAircraftController>();
 
+            List<GameObject> gameObjects
+                = _battleships
+                    .Select(battleship => battleship.GameObject)
+                    .ToList();
+            List<GameObject> planeGameObjects 
+                = _planes
+                    .Select(plane => plane.GameObject)
+                    .ToList();
+            gameObjects.AddRange(planeGameObjects);
+
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
             _leftBattleshipFaction = Faction.Reds;
             _rightBattleshipFaction = Faction.Blues;
-
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             SetupBattleships(helper);
             SetupPlanes(helper);
@@ -30,9 +47,7 @@ namespace BattleCruisers.Scenes.Test.Naval
 
         private void SetupBattleships(Helper helper)
         {
-            ArchonBattleshipController[] battleships = FindObjectsOfType<ArchonBattleshipController>();
-
-            foreach (ArchonBattleshipController battleship in battleships)
+            foreach (ArchonBattleshipController battleship in _battleships)
             {
                 Vector3 position = battleship.transform.position;
                 Faction faction = GetBattleshipFaction(position);
@@ -44,9 +59,8 @@ namespace BattleCruisers.Scenes.Test.Naval
 
         private void SetupPlanes(Helper helper)
         {
-            TestAircraftController[] planes = FindObjectsOfType<TestAircraftController>();
 
-            foreach (TestAircraftController plane in planes)
+            foreach (TestAircraftController plane in _planes)
             {
                 Vector3 position = plane.transform.position;
                 Faction faction = BCUtils.Helper.GetOppositeFaction(GetBattleshipFaction(position));
