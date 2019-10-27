@@ -3,30 +3,38 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.Factories;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class RailgunTestGod : TestGodBase 
 	{
-        protected override void Start()
+        private IBuilding _target;
+        private IBuilding _railgun;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _target = FindObjectOfType<AirFactory>();
+            _railgun = FindObjectOfType<TurretController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _railgun.GameObject
+            };
+        }
 
-
+        protected override void Setup(Helper helper)
+        {
 			// Setup target
-            IBuilding target = FindObjectOfType<AirFactory>();
-			helper.InitialiseBuilding(target, Faction.Reds);
-			target.StartConstruction();
-
+			helper.InitialiseBuilding(_target, Faction.Reds);
+			_target.StartConstruction();
 
 			// Setup railgun
-            IBuilding railgun = FindObjectOfType<TurretController>();
-            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject);
-			helper.InitialiseBuilding(railgun, Faction.Blues, targetFactories: targetFactories);
-			railgun.StartConstruction();
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject);
+			helper.InitialiseBuilding(_railgun, Faction.Blues, targetFactories: targetFactories);
+			_railgun.StartConstruction();
 		}
 	}
 }
