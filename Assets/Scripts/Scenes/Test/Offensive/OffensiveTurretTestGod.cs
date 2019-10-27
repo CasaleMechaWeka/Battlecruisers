@@ -3,34 +3,42 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class OffensiveTurretTestGod : CameraToggleTestGod
 	{
-        protected override void Start()
+        private AirFactory _target;
+        private TurretController _turret;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+			_target = FindObjectOfType<AirFactory>();
+            _turret = FindObjectOfType<TurretController>();
 
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _turret.GameObject
+            };
+        }
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
-
-
+        protected override void Setup(Helper helper)
+        {
 			// Setup target
-			AirFactory target = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(target, Faction.Blues);
-			target.StartConstruction();
-
+            helper.InitialiseBuilding(_target, Faction.Blues);
+			_target.StartConstruction();
 
 			// Setup turret
-            TurretController turret = FindObjectOfType<TurretController>();
 			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
-				Target = target
+				Target = _target
 			};
-            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject, targetFilter: targetFilter);
-            helper.InitialiseBuilding(turret, Faction.Reds, targetFactories: targetFactories);
-			turret.StartConstruction();
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
+            helper.InitialiseBuilding(_turret, Faction.Reds, targetFactories: targetFactories);
+			_turret.StartConstruction();
 		}
 	}
 }
