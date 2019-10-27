@@ -5,13 +5,26 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class MissileTestsGod : MonoBehaviour 
+    public class MissileTestsGod : TestGodBase
 	{
-		protected void SetupMissiles(ITarget target)
+        private MissileController[] _missiles;
+
+        protected override List<GameObject> GetGameObjects()
+        {
+            _missiles = FindObjectsOfType<MissileController>();
+            return
+                _missiles
+                    .Select(missile => missile.gameObject)
+                    .ToList();
+        }
+
+        protected void SetupMissiles(ITarget target)
 		{
 			// Setup missiles
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
@@ -24,9 +37,7 @@ namespace BattleCruisers.Scenes.Test
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
             ITarget parent = Substitute.For<ITarget>();
 
-            MissileController[] missiles = FindObjectsOfType<MissileController>();
-
-            foreach (MissileController missile in missiles)
+            foreach (MissileController missile in _missiles)
 			{
                 missile.Initialise(args.FactoryProvider);
                 missile.Activate(

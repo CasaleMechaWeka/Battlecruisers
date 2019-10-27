@@ -1,23 +1,32 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Scenes.Test.Utilities;
+﻿using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class MissileMovingTargetTestsGod : MissileTestsGod 
+    public class MissileMovingTargetTestsGod : MissileTestsGod
 	{
-		public List<Vector2> targetPatrolPoints;
+        private TestAircraftController _target;
 
-		void Start () 
-		{
-			Helper helper = new Helper();
+        public List<Vector2> targetPatrolPoints;
 
-			TestAircraftController target = FindObjectOfType<TestAircraftController>();
-			target.PatrolPoints = targetPatrolPoints;
-            helper.InitialiseUnit(target);
-			target.StartConstruction();
+        protected override List<GameObject> GetGameObjects()
+        {
+            List<GameObject> gameObjects = base.GetGameObjects();
 
-			SetupMissiles(target);
+            _target = FindObjectOfType<TestAircraftController>();
+            gameObjects.Add(_target.GameObject);
+
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
+			_target.PatrolPoints = targetPatrolPoints;
+            helper.InitialiseUnit(_target);
+			_target.StartConstruction();
+
+			SetupMissiles(_target);
 		}
 	}
 }
