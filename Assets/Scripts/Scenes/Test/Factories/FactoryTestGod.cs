@@ -4,6 +4,8 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
@@ -15,13 +17,18 @@ namespace BattleCruisers.Scenes.Test.Factories
         protected virtual Faction FactoryFacingLeftFaction => Faction.Blues;
 		protected virtual Faction FactoryFacingRightFaction => Faction.Blues;
 
-		protected override void Start()
-		{
-            base.Start();
+        protected override IList<GameObject> GetGameObjects()
+        {
+            return new List<GameObject>()
+            {
+                factoryFacingRight.GameObject,
+                factoryFacingLeft.GameObject
+            };
+        }
 
+        protected override void Setup(Helper helper)
+        {
 			unitPrefab.StaticInitialise();
-
-			Helper helper = new Helper(updaterProvider: _updaterProvider);
 
             ICruiser leftCruiser = helper.CreateCruiser(Direction.Right, FactoryFacingRightFaction);
             ICruiser rightCruiser = helper.CreateCruiser(Direction.Left, FactoryFacingLeftFaction);
