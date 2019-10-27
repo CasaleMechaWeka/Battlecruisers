@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
         public bool showNukeExplosion = false;
         public Vector2 explosionPosition = new Vector2(0, 1);
 
-        protected override void DestroyCruiser(Cruiser cruiser)
+        protected override void DestroyCruiser(Helper helper, Cruiser cruiser)
         {
             Assert.IsNotNull(deferrer);
             Assert.IsNotNull(deathPrefab);
@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             {
                 Destroy(cruiser.gameObject);
 
-                ShowProjectileExplosion(explosionPosition);
+                ShowProjectileExplosion(helper, explosionPosition);
 
                 GameObject deathInstance = Instantiate(deathPrefab);
                 deathInstance.transform.position = cruiser.Position;
@@ -32,9 +32,9 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             delayInS: deathTimeInS);
         }
 
-        private void ShowProjectileExplosion(Vector2 explosionPosition)
+        private void ShowProjectileExplosion(Helper helper, Vector2 explosionPosition)
         {
-            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(new Helper());
+            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(helper);
 
             if (showArtilleryExplosion)
             {

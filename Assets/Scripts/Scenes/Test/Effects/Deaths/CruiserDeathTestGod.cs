@@ -1,26 +1,38 @@
-﻿using BattleCruisers.Cruisers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
-    public class CruiserDeathTestGod : MonoBehaviour
+    public class CruiserDeathTestGod : TestGodBase
     {
-        void Start()
+        private Cruiser _cruiser;
+
+        protected override IList<GameObject> GetGameObjects()
         {
-            CreateAndDestroyCruiser();
+            _cruiser = FindObjectOfType<Cruiser>();
+            Assert.IsNotNull(_cruiser);
+
+            return new List<GameObject>()
+            {
+                _cruiser.GameObject
+            };
         }
 
-        private void CreateAndDestroyCruiser()
+        protected override void Setup(Helper helper)
         {
-            Cruiser cruiser = FindObjectOfType<Cruiser>();
-            Assert.IsNotNull(cruiser);
-            Helper.SetupCruiser(cruiser);
-            DestroyCruiser(cruiser);
+            CreateAndDestroyCruiser(helper);
         }
 
-        protected virtual void DestroyCruiser(Cruiser cruiser)
+        private void CreateAndDestroyCruiser(Helper helper)
+        {
+            helper.SetupCruiser(_cruiser);
+            DestroyCruiser(helper, _cruiser);
+        }
+
+        protected virtual void DestroyCruiser(Helper helper, Cruiser cruiser)
         {
             cruiser.Destroy();
         }

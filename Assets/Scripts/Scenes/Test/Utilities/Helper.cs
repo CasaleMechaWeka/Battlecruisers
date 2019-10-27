@@ -532,7 +532,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             unit.Destroyed += destroyedHandler;
         }
 
-        public static void SetupCruiser(Cruiser cruiser)
+        public void SetupCruiser(Cruiser cruiser)
         {
             ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();

@@ -11,17 +11,14 @@ namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class NukeVsCruiserTestGod : CameraToggleTestGod
 	{
-		protected override void Start()
+        protected override void Setup(Helper helper)
         {
-            base.Start();
-
             // Setup cruiser
             Cruiser cruiser = FindObjectOfType<Cruiser>();
             Assert.IsNotNull(cruiser);
-            Helper.SetupCruiser(cruiser);
+            helper.SetupCruiser(cruiser);
 
             // Setup shield
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
             ShieldGenerator shield = FindObjectOfType<ShieldGenerator>();
             Assert.IsNotNull(shield);
             helper.InitialiseBuilding(shield, Faction.Reds);
