@@ -3,35 +3,49 @@ using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
     public class ShieldDetectionTestGod : TestGodBase
 	{
-		protected override void Start () 
-		{
-            base.Start();
+        private ShieldGenerator[] _shields;
+        private AttackBoatController[] _attackBoats;
 
-			Helper helper = new Helper(updaterProvider: _updaterProvider);
+        protected override List<GameObject> GetGameObjects()
+        {
+			_shields = FindObjectsOfType<ShieldGenerator>();
+			Assert.IsTrue(_shields.Length > 0);
+            List<GameObject> gameObjects
+                = _shields
+                    .Select(shield => shield.GameObject)
+                    .ToList();
 
+			_attackBoats = FindObjectsOfType<AttackBoatController>();
+			Assert.IsTrue(_attackBoats.Length > 0);
+            List<GameObject> boatGameObjects
+                = _attackBoats
+                    .Select(boat => boat.GameObject)
+                    .ToList();
 
+            gameObjects.AddRange(boatGameObjects);
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
 			// Setup shields
-			ShieldGenerator[] shields = FindObjectsOfType<ShieldGenerator>();
-			Assert.IsTrue(shields.Length > 0);
-
-			foreach (ShieldGenerator shield in shields)
+			foreach (ShieldGenerator shield in _shields)
 			{
                 helper.InitialiseBuilding(shield, Faction.Blues);
 				shield.StartConstruction();
 			}
 
-
 			// Setup attack boats
-			AttackBoatController[] attackBoats = FindObjectsOfType<AttackBoatController>();
-			Assert.IsTrue(attackBoats.Length > 0);
-
-			foreach (AttackBoatController attackBoat in attackBoats)
+			foreach (AttackBoatController attackBoat in _attackBoats)
 			{
                 helper.InitialiseUnit(attackBoat, Faction.Reds, parentCruiserDirection: Direction.Left);
 				attackBoat.StartConstruction();
