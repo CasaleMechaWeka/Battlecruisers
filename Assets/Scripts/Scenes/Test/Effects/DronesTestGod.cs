@@ -12,13 +12,14 @@ namespace BattleCruisers.Scenes.Test.Effects
         public int numOfDrones = 10;
         public float spawnRadiusInM = 0.5f;
 
-        protected override void Start()
+        protected override void Setup(Utilities.Helper helper)
         {
-            base.Start();
+            base.Setup(helper);
 
             for (int i = 0; i < numOfDrones; ++i)
             {
                 DroneController newDrone = Instantiate(dronePrefab);
+                newDrone.StaticInitialise();
                 newDrone.Activate(
                     new DroneActivationArgs(
                         position: RandomisePosition(parentObject.transform.position),
