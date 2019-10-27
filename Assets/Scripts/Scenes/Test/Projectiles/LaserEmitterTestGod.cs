@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -42,7 +44,6 @@ namespace BattleCruisers.Scenes.Test
 
 	public class LaserEmitterTestGod : TestGodBase
 	{
-		private Helper _helper;
 		private Faction _enemyFaction;
 		private ISoundFetcher _soundFetcher;
         private IList<LaserTest<IBuilding>> _stationaryTargets;
@@ -52,14 +53,31 @@ namespace BattleCruisers.Scenes.Test
 		public TestAircraftController targetRightMoving, targetMovingLeft;
 		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving, laserEmitterRightMoving;
 
-		protected override void Start () 
-		{
-            base.Start();
-
+        protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
+        {
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(timeScaleDeferrer);
 
-			_helper = new Helper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
+            return await HelperFactory.CreateHelperAsync(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
+        }
+
+        protected override List<GameObject> GetGameObjects()
+        {
+            return new List<GameObject>()
+            {
+                targetRightLevel.GameObject,
+                targetRightLevelBlockingEnemy.GameObject,
+                targetRightLevelBlockingFriendly.GameObject,
+                targetLeftLevel.GameObject,
+                targetLeftAngled.GameObject,
+                targetRightAngled.GameObject,
+                targetRightMoving.GameObject,
+                targetMovingLeft.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
 			_enemyFaction = Faction.Blues;
 			Faction friendlyFaction = Faction.Reds;
             _soundFetcher = new SoundFetcher();
@@ -68,7 +86,7 @@ namespace BattleCruisers.Scenes.Test
 			_stationaryTargets = CreateStationaryTargetTests();
             foreach (LaserTest<IBuilding> test in _stationaryTargets)
             {
-                _helper.InitialiseBuilding(test.Target, _enemyFaction);
+                helper.InitialiseBuilding(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
                 SetupLaser(test.LaserStats.Laser);
@@ -79,17 +97,17 @@ namespace BattleCruisers.Scenes.Test
 
 			foreach (LaserTest<IUnit> test in _movingTargets)
 			{
-                _helper.InitialiseUnit(test.Target, _enemyFaction);
+                helper.InitialiseUnit(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
                 SetupLaser(test.LaserStats.Laser);
 			}
 
 			// Blocking targets
-			_helper.InitialiseBuilding(targetRightLevelBlockingEnemy, _enemyFaction);
+			helper.InitialiseBuilding(targetRightLevelBlockingEnemy, _enemyFaction);
 			targetRightLevelBlockingEnemy.StartConstruction();
 
-			_helper.InitialiseBuilding(targetRightLevelBlockingFriendly, friendlyFaction);
+			helper.InitialiseBuilding(targetRightLevelBlockingFriendly, friendlyFaction);
 			targetRightLevelBlockingFriendly.StartConstruction();
 
 
