@@ -15,9 +15,9 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private ILayeredMusicPlayer _musicPlayer;
         private AudioListener _audioListener;
 
-        protected async override void Start()
+        protected async override void Setup(Helper helper)
         {
-            base.Start();
+            base.Setup(helper);
 
             LayeredMusicPlayerInitialiser musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(musicInitialiser);
@@ -80,7 +80,10 @@ namespace BattleCruisers.Scenes.Test.Sounds
         {
             base.Update();
 
-            Debug.Log($"Audio listener position: {_audioListener.transform.position}");
+            if (_audioListener != null)
+            {
+                Debug.Log($"Audio listener position: {_audioListener.transform.position}");
+            }
         }
     }
 }
