@@ -1,19 +1,30 @@
 ﻿using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class MissileStationaryTargetTestsGod : MissileTestsGod 
 	{
-		void Start () 
-		{
-			Helper helper = new Helper();
+        private TestAircraftController _target;
 
-			TestAircraftController target = FindObjectOfType<TestAircraftController>();
-            target.UseDummyMovementController = true;
-            helper.InitialiseUnit(target);
-			target.StartConstruction();
+        protected override List<GameObject> GetGameObjects()
+        {
+            List<GameObject> gameObjects = base.GetGameObjects();
 
-			SetupMissiles(target);
+            _target = FindObjectOfType<TestAircraftController>();
+            gameObjects.Add(_target.GameObject);
+
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            _target.UseDummyMovementController = true;
+            helper.InitialiseUnit(_target);
+			_target.StartConstruction();
+
+			SetupMissiles(_target);
 		}
 	}
 }
