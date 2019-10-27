@@ -6,19 +6,32 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class RocketMovementTestGod : MonoBehaviour 
+    public class RocketMovementTestGod : TestGodBase
 	{
-		void Start()
-		{
-			// Setup target
-			Helper helper = new Helper();
-			AirFactory target = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(target);
+        private AirFactory _target;
+        private RocketController _rocket;
 
+        protected override List<GameObject> GetGameObjects()
+        {
+			_target = FindObjectOfType<AirFactory>();
+			_rocket = FindObjectOfType<RocketController>();
+
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _rocket.gameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+			// Setup target
+            helper.InitialiseBuilding(_target);
 
             // Setup rocket
             ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
@@ -27,24 +40,23 @@ namespace BattleCruisers.Scenes.Test
 
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
-				Target = target
+				Target = _target
 			};
 			
-            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
             ITarget parent = Substitute.For<ITarget>();
             parent.Faction.Returns(Faction.Blues);
 
-			RocketController rocket = FindObjectOfType<RocketController>();
-            rocket.Initialise(args.FactoryProvider);
-            rocket.Activate(
+            _rocket.Initialise(args.FactoryProvider);
+            _rocket.Activate(
                 new TargetProviderActivationArgs<ICruisingProjectileStats>(
-                    rocket.Position,
+                    _rocket.Position,
                     rocketStats,
                     initialVelocity,
                     targetFilter,
                     parent,
-                    target));
+                    _target));
         }
 	}
 }
