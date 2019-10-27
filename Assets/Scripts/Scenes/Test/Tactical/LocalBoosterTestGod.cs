@@ -12,22 +12,32 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Tactical
 {
     public class LocalBoosterTestGod : TestGodBase
     {
-        protected override void Start()
+        private AirFactory _target;
+        private TurretController _turret;
+
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _target = FindObjectOfType<AirFactory>();
+            _turret = FindObjectOfType<TurretController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _turret.GameObject
+            };
+        }
 
-
+        protected override void Setup(Helper helper)
+        {
             // Setup target
-            AirFactory target = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(target, Faction.Reds);
-            target.StartConstruction();
+            helper.InitialiseBuilding(_target, Faction.Reds);
+            _target.StartConstruction();
 			
 			
 			// Setup artillery slot
@@ -43,13 +53,12 @@ namespace BattleCruisers.Scenes.Test.Tactical
             // Setup artillery
             IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter()
             {
-                Target = target
+                Target = _target
             };
-            ITargetFactories targetFactories = helper.CreateTargetFactories(target.GameObject, targetFilter: targetFilter);
+            ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
 
-            TurretController turret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(turret, Faction.Blues, targetFactories: targetFactories, parentSlot: slotToBoost);
-            turret.StartConstruction();
+            helper.InitialiseBuilding(_turret, Faction.Blues, targetFactories: targetFactories, parentSlot: slotToBoost);
+            _turret.StartConstruction();
 
 
             // Setup local booster
