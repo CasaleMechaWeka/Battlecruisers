@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -10,22 +11,32 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class NukeMovementTestGod : MonoBehaviour 
+    public class NukeMovementTestGod : TestGodBase
 	{
-		void Start()
-		{
-			// Setup target
-			Helper helper = new Helper();
-			AirFactory target = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(target);
+        private AirFactory _target;
+        private NukeController _nuke;
 
+        protected override List<GameObject> GetGameObjects()
+        {
+			_target = FindObjectOfType<AirFactory>();
+			_nuke = FindObjectOfType<NukeController>();
+
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _nuke.gameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+			// Setup target
+            helper.InitialiseBuilding(_target);
 
 			// Setup nuke
-			NukeController nuke = FindObjectOfType<NukeController>();
-
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
-				Target = target
+				Target = _target
 			};
 
             INukeStats nukeStats = GetComponent<NukeProjectileStats>();
@@ -34,16 +45,16 @@ namespace BattleCruisers.Scenes.Test
 
 			ITarget parent = Substitute.For<ITarget>();
 
-            nuke.Initialise(args.FactoryProvider);
-            nuke.Activate(
+            _nuke.Initialise(args.FactoryProvider);
+            _nuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
-                    nuke.Position,
+                    _nuke.Position,
                     nukeStats,
                     Vector2.zero,
                     targetFilter,
                     parent,
-                    target));
-            nuke.Launch();
+                    _target));
+            _nuke.Launch();
 		}
 	}
 }
