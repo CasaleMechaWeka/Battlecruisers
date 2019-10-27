@@ -7,6 +7,8 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.Factories;
 using NSubstitute;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects
@@ -19,15 +21,29 @@ namespace BattleCruisers.Scenes.Test.Effects
     /// 
     /// The problem is with the Game2DWater asset we bought, and I'm sick of debugging it :P
     /// </summary>
-    public class SeaSplashTestGod : MonoBehaviour
+    public class SeaSplashTestGod : TestGodBase
     {
-        private void Start()
+        private TestAircraftController _aircraft;
+        private ProjectileController[] _projectiles;
+
+        protected override IList<GameObject> GetGameObjects()
         {
-            TestAircraftController aircraft = FindObjectOfType<TestAircraftController>();
-            Helper helper = new Helper();
-            helper.InitialiseUnit(aircraft);
-            aircraft.StartConstruction();
-            aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
+            _aircraft = FindObjectOfType<TestAircraftController>();
+            _projectiles = FindObjectsOfType<ProjectileController>();
+
+            IList<GameObject> gameObjects
+                = _projectiles
+                    .Select(projectile => projectile.gameObject)
+                    .ToList();
+            gameObjects.Add(_aircraft.GameObject);
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            helper.InitialiseUnit(_aircraft);
+            _aircraft.StartConstruction();
+            _aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
 
             IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
             IProjectileStats projectileStats = Substitute.For<IProjectileStats>();
@@ -35,8 +51,7 @@ namespace BattleCruisers.Scenes.Test.Effects
             ITarget parent = Substitute.For<ITarget>();
             ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
 
-            ProjectileController[] projectiles = FindObjectsOfType<ProjectileController>();
-            foreach (ProjectileController projectile in projectiles)
+            foreach (ProjectileController projectile in _projectiles)
             {
                 projectile.Initialise(factoryProvider);
                 projectile.Activate(
