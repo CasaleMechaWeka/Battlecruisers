@@ -4,40 +4,52 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
     public class ShieldTestsGod : TestGodBase 
 	{
-        protected override void Start()
+        private ShieldGenerator _shield;
+        private BarrelController _turret;
+
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _shield = FindObjectOfType<ShieldGenerator>();
+            Assert.IsNotNull(_shield);
 
-            Helper helper = new Helper();
+            _turret = FindObjectOfType<BarrelController>();
+            Assert.IsNotNull(_turret);
 
+            return new List<GameObject>()
+            {
+                _shield.GameObject,
+                _turret.gameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
             // Setup shield
-            ShieldGenerator shield = FindObjectOfType<ShieldGenerator>();
-            Assert.IsNotNull(shield);
-            helper.InitialiseBuilding(shield, Faction.Reds);
-            shield.StartConstruction();
+            helper.InitialiseBuilding(_shield, Faction.Reds);
+            _shield.StartConstruction();
 
             // Setup turret
-            BarrelController turret = FindObjectOfType<BarrelController>();
-            turret.StaticInitialise();
+            _turret.StaticInitialise();
 
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
-            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(shield.Faction, targetTypes);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_shield.Faction, targetTypes);
 
             IBarrelControllerArgs barrelControllerArgs
                 = helper
                     .CreateBarrelControllerArgs(
-                    turret,
+                    _turret,
                     _updaterProvider.PerFrameUpdater,
                     targetFilter);
 
-            turret.InitialiseAsync(barrelControllerArgs);
-			turret.Target = shield;
+            _turret.InitialiseAsync(barrelControllerArgs);
+			_turret.Target = _shield;
 		}
 	}
 }
