@@ -25,6 +25,8 @@ namespace BattleCruisers.Utils.Timers
         {
             Helper.AssertIsNotNull(prefix, suffix);
 
+            gameObject.SetActive(true);
+
             _prefix = prefix;
             _suffix = suffix;
 

@@ -94,7 +94,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             ShowScenarioDetails();
 
             // Start timer
-            _timer = GetComponentInChildren<TimerController>();
+            _timer = GetComponentInChildren<TimerController>(includeInactive: true);
             if (_timer != null)
             {
                 _timer.Initialise("Time Elapsed: ", "s");
