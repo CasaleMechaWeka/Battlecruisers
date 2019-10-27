@@ -1,27 +1,40 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Tactical;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 {
-    public class KamikazeWhileTouchingBuildingTestGod : MonoBehaviour
+    public class KamikazeWhileTouchingBuildingTestGod : TestGodBase
     {
+        private IFactory _target;
         private KamikazeSignal _kamikazeSignal;
+        private TestAircraftController _aircraft;
 
         public List<Vector2> aircraftPatrolPoints;
 
-        void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            Helper helper = new Helper();
+            _target = FindObjectOfType<Factory>();
+            _kamikazeSignal = FindObjectOfType<KamikazeSignal>();
+            _aircraft = FindObjectOfType<TestAircraftController>();
 
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _kamikazeSignal.GameObject,
+                _aircraft.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
             // Setup target
-            IFactory _target = FindObjectOfType<Factory>();
             helper.InitialiseBuilding(_target);
             _target.StartConstruction();
 
@@ -30,14 +43,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 
             // Setup kamikaze signal
-            _kamikazeSignal = FindObjectOfType<KamikazeSignal>();
             helper.InitialiseBuilding(_kamikazeSignal, enemyCruiser: enemyCruiser);
 
             // Setup aircraft
-            TestAircraftController aircraft = FindObjectOfType<TestAircraftController>();
-            aircraft.PatrolPoints = aircraftPatrolPoints;
-            helper.InitialiseUnit(aircraft);
-            aircraft.StartConstruction();
+            _aircraft.PatrolPoints = aircraftPatrolPoints;
+            helper.InitialiseUnit(_aircraft);
+            _aircraft.StartConstruction();
 
             // When completed, aircraft switches to patrol movement controller.
             // Hence wait a bit after completed before setting kamikaze
