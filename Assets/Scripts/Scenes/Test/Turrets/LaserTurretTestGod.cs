@@ -3,37 +3,46 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
     public class LaserTurretTestGod : TestGodBase
     {
-        protected override void Start()
+        private LaserBarrelController _laserBarrel;
+        private AirFactory _airFactory;
+
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _laserBarrel = FindObjectOfType<LaserBarrelController>();
+            _airFactory = FindObjectOfType<AirFactory>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _laserBarrel.gameObject,
+                _airFactory.GameObject
+            };
+        }
 
-
+        protected override void Setup(Helper helper)
+        {
             // Setup laser barrel
-            LaserBarrelController laserBarrel = FindObjectOfType<LaserBarrelController>();
-            laserBarrel.StaticInitialise();
+            _laserBarrel.StaticInitialise();
 
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
-                    laserBarrel,
+                    _laserBarrel,
                     _updaterProvider.PerFrameUpdater,
                     targetFilter: new DummyTargetFilter(isMatchResult: true),
                     rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 
-            laserBarrel.InitialiseAsync(barrelControllerArgs);
+            _laserBarrel.InitialiseAsync(barrelControllerArgs);
             
-
             // Setup target
-            AirFactory airFactory = FindObjectOfType<AirFactory>();
-            helper.InitialiseBuilding(airFactory);
-            airFactory.Destroyed += (sender, e) => laserBarrel.Target = null;
-			laserBarrel.Target = airFactory;
+            helper.InitialiseBuilding(_airFactory);
+            _airFactory.Destroyed += (sender, e) => _laserBarrel.Target = null;
+			_laserBarrel.Target = _airFactory;
 	    }
 	}
 }
