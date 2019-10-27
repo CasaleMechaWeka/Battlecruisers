@@ -8,15 +8,15 @@ namespace BattleCruisers.Scenes.Test.Naval
 {
     public class ShipAttackingCruiserTestGod : TestGodBase
     {
-        private ShipController _attackBoat;
+        private ShipController _ship;
 
         protected override List<GameObject> GetGameObjects()
         {
-            _attackBoat = FindObjectOfType<ShipController>();
+            _ship = FindObjectOfType<ShipController>();
 
             return new List<GameObject>()
             {
-                _attackBoat.GameObject
+                _ship.GameObject
             };
         }
 
@@ -27,8 +27,8 @@ namespace BattleCruisers.Scenes.Test.Naval
             fakeCruiser.Initialise(Faction.Reds);
 
             // Setup ship
-            helper.InitialiseUnit(_attackBoat, Faction.Blues);
-            _attackBoat.StartConstruction();
+            helper.InitialiseUnit(_ship, Faction.Blues);
+            _ship.StartConstruction();
         }
     }
 }

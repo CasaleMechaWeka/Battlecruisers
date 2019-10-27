@@ -1,20 +1,36 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
     public class ShipWithAircraftTestGod : ShipTestsGod
 	{
-		public List<Vector2> leftSidePatrolPoints, rightSidePatrolPoints;
+        private TestAircraftController[] _planes;
 
-		protected override void OnStart()
+        public List<Vector2> leftSidePatrolPoints, rightSidePatrolPoints;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            Helper helper = new Helper();
-            TestAircraftController[] planes = FindObjectsOfType<TestAircraftController>();
+            List<GameObject> gameObjects = base.GetGameObjects();
 
-            foreach (TestAircraftController plane in planes)
+            _planes = FindObjectsOfType<TestAircraftController>();
+            IList<GameObject> planeGameObjects
+                = _planes
+                    .Select(plane => plane.GameObject)
+                    .ToList();
+
+            gameObjects.AddRange(planeGameObjects);
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            base.Setup(helper);
+
+            foreach (TestAircraftController plane in _planes)
             {
                 Faction faction;
 
