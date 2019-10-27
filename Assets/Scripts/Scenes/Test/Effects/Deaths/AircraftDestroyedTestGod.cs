@@ -1,22 +1,34 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class AircraftDestroyedTestGod : TestGodBase 
 	{
+        private TurretController[] _turrets;
         public TestAircraftController aircraftToDestroy, blockingAircraft;
 		public List<Vector2> patrolPoints;
 
-		protected override void Start() 
-		{
-            base.Start();
+        protected override IList<GameObject> GetGameObjects()
+        {
+            _turrets = FindObjectsOfType<TurretController>();
 
-			Helper helper = new Helper(updaterProvider: _updaterProvider);
+            IList<GameObject> gameObjects
+                = _turrets
+                    .Select(turret => turret.GameObject)
+                    .ToList();
+            gameObjects.Add(aircraftToDestroy.GameObject);
+            gameObjects.Add(blockingAircraft.GameObject);
 
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
             Faction aircraftFaction = Faction.Blues;
             Faction turretFaction = Faction.Reds;
 
@@ -31,9 +43,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             blockingAircraft.StartConstruction();
 
             // Initialise turrets
-            TurretController[] turrets = FindObjectsOfType<TurretController>();
-
-            foreach (TurretController turret in turrets)
+            foreach (TurretController turret in _turrets)
             {
                 helper.InitialiseBuilding(turret, turretFaction);
                 turret.StartConstruction();
