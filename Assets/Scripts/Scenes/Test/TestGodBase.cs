@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test
     {
         protected IUpdaterProvider _updaterProvider;
 
-        // FELIX  Don't make virtual :)  Should use Setup() instead :)
+        // FELIX  Make sealed :)  Should use Setup() instead :)
         protected virtual async void Start()
         {
             // Deactivate all game objects (to avoid update loop while we are initialising)

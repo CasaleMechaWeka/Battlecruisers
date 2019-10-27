@@ -1,28 +1,51 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Scenes.Test.Utilities;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
     public class ShipWithDefensiveNotClosestTargetTestGod : ShipStopsForEnemyCruiserTestGod
 	{
-		protected override void Start()
-		{
-            base.Start();
+        private TurretController[] _turrets;
+        private IBuilding _navalFactory;
+
+        protected override IList<GameObject> GetGameObjects()
+        {
+            // FELIX  Change return type to concrete type :P
+            List<GameObject> gameObjects = (List<GameObject>)base.GetGameObjects();
+
+            _turrets = FindObjectsOfType<TurretController>();
+            IList<GameObject> turretGameObjects
+                = _turrets
+                    .Select(turret => turret.GameObject)
+                    .ToList();
+            gameObjects.AddRange(turretGameObjects);
+
+            _navalFactory = FindObjectOfType<NavalFactory>();
+            gameObjects.Add(_navalFactory.GameObject);
+
+            return gameObjects;
+        }
+
+        protected override void Setup(Helper helper)
+        {
+            base.Setup(helper);
 
             // Turrets
-            TurretController[] turrets = FindObjectsOfType<TurretController>();
-            foreach (TurretController turret in turrets)
+            foreach (TurretController turret in _turrets)
             {
-                _helper.InitialiseBuilding(turret, Faction.Reds);
+                helper.InitialiseBuilding(turret, Faction.Reds);
                 turret.StartConstruction();
 			}
 
             // Non turret target
-            IBuilding navalFactory = FindObjectOfType<NavalFactory>();
-            _helper.InitialiseBuilding(navalFactory, Faction.Reds);
-            navalFactory.StartConstruction();
+            helper.InitialiseBuilding(_navalFactory, Faction.Reds);
+            _navalFactory.StartConstruction();
         }
 	}
 }

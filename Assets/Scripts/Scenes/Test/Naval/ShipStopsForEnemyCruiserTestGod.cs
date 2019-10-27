@@ -1,25 +1,34 @@
-﻿using BattleCruisers.Buildables;
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetTrackers;
 using NSubstitute;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
     public class ShipStopsForEnemyCruiserTestGod : TestGodBase
     {
-        protected Helper _helper;
+        private ShipController _ship;
 
-        protected override void Start()
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _ship = FindObjectOfType<ShipController>();
+            Assert.IsNotNull(_ship);
 
-            _helper = new Helper(updaterProvider: _updaterProvider);
+            return new List<GameObject>()
+            {
+                _ship.GameObject
+            };
+        }
 
-            BuildableInitialisationArgs redArgs = new BuildableInitialisationArgs(_helper, faction: Faction.Reds);
+        protected override void Setup(Helper helper)
+        {
+            BuildableInitialisationArgs redArgs = new BuildableInitialisationArgs(helper, faction: Faction.Reds);
 
             EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = FindObjectOfType<EnemyShipBlockerInitialiser>();
             Assert.IsNotNull(enemyShipBlockerInitialiser);
@@ -29,13 +38,11 @@ namespace BattleCruisers.Scenes.Test.Naval
                     redArgs.CruiserSpecificFactories.Targets.TrackerFactory,
                     Faction.Blues);
 
-            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
+            ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
             redCruiser.BlockedShipsTracker.Returns(enemyShipBlockerTargetTracker);
 
-            ShipController ship = FindObjectOfType<ShipController>();
-            Assert.IsNotNull(ship);
-            _helper.InitialiseUnit(ship, enemyCruiser: redCruiser);
-            ship.StartConstruction();
+            helper.InitialiseUnit(_ship, enemyCruiser: redCruiser);
+            _ship.StartConstruction();
         }
     }
 }
