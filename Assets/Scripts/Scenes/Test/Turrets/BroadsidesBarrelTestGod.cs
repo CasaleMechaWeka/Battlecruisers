@@ -3,34 +3,45 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class BroadsidesBarrelTestGod : TestGodBase
 	{
-        protected override void Start()
+        private Factory _target;
+        private BarrelController _doubleBarrel;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _target = FindObjectOfType<Factory>();
+            _doubleBarrel = FindObjectOfType<BarrelController>();
 
+            return new List<GameObject>()
+            {
+                _target.GameObject,
+                _doubleBarrel.gameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
             // Initialise target
-            Helper helper = new Helper();
-            Factory target = FindObjectOfType<Factory>();
-            helper.InitialiseBuilding(target);
-
+            helper.InitialiseBuilding(_target);
 
             // Initialise double barrel
-            BarrelController doubleBarrel = FindObjectOfType<BarrelController>();
-			doubleBarrel.StaticInitialise();
-			doubleBarrel.Target = target;
+			_doubleBarrel.StaticInitialise();
+			_doubleBarrel.Target = _target;
 
             IBarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
-                    doubleBarrel,
+                    _doubleBarrel,
                     _updaterProvider.PerFrameUpdater,
-                    targetFilter: new ExactMatchTargetFilter() { Target = target },
-                    angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), new AngleConverter(), doubleBarrel.ProjectileStats));
+                    targetFilter: new ExactMatchTargetFilter() { Target = _target },
+                    angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), new AngleConverter(), _doubleBarrel.ProjectileStats));
 
-            doubleBarrel.InitialiseAsync(barrelControllerArgs);
+            _doubleBarrel.InitialiseAsync(barrelControllerArgs);
 		}
 	}
 }

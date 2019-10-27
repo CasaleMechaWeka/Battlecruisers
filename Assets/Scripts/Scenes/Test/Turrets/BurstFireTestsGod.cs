@@ -2,28 +2,37 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class BurstFireTestsGod : TestGodBase
 	{
-        private Helper _helper;
         public BarrelController barrel1, barrel2, barrel3;
 		public GameObject target1, target2, target3;
 
-        protected override void Start()
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
-
-            _helper = new Helper();
-
-            InitialisePair(barrel1, target1);
-            InitialisePair(barrel2, target2);
-            InitialisePair(barrel3, target3);
+            return new List<GameObject>()
+            {
+                barrel1.gameObject,
+                barrel2.gameObject,
+                barrel3.gameObject,
+                target1,
+                target2,
+                target3
+            };
         }
 
-        private void InitialisePair(BarrelController barrel, GameObject targetGameObject)
+        protected override void Setup(Helper helper)
+        {
+            InitialisePair(helper, barrel1, target1);
+            InitialisePair(helper, barrel2, target2);
+            InitialisePair(helper, barrel3, target3);
+        }
+
+        private void InitialisePair(Helper helper, BarrelController barrel, GameObject targetGameObject)
 		{
 			barrel.StaticInitialise();
 			
@@ -32,7 +41,7 @@ namespace BattleCruisers.Scenes.Test
 			target.Position.Returns(targetPosition);
 			barrel.Target = target;
 			
-            IBarrelControllerArgs barrelControllerArgs = _helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
+            IBarrelControllerArgs barrelControllerArgs = helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
             barrel.InitialiseAsync(barrelControllerArgs);
 		}
 	}
