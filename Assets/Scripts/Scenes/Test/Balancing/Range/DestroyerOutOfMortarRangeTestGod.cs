@@ -5,27 +5,40 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Range
 {
     public class DestroyerOutOfMortarRangeTestGod : TestGodBase
     {
-        protected override void Start()
+        private IBuilding _mortar;
+        private IUnit[] _destroyers;
+
+        protected override IList<GameObject> GetGameObjects()
         {
-            base.Start();
+            _mortar = FindObjectOfType<TurretController>();
+            _destroyers = FindObjectsOfType<ShipController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            IList<GameObject> gameObjects
+                = _destroyers
+                    .Select(destroyer => destroyer.GameObject)
+                    .ToList();
+            gameObjects.Add(_mortar.GameObject);
+            return gameObjects;
+        }
 
+        protected override void Setup(Helper helper)
+        {
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
             // Initialise mortar
-            IBuilding mortar = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(mortar, Faction.Reds, parentCruiserDirection: Direction.Left);
-            mortar.StartConstruction();
+            helper.InitialiseBuilding(_mortar, Faction.Reds, parentCruiserDirection: Direction.Left);
+            _mortar.StartConstruction();
 
             // Initialise destroyers
-            IUnit[] destroyers = FindObjectsOfType<ShipController>();
-            foreach (IUnit destroyer in destroyers)
+            foreach (IUnit destroyer in _destroyers)
             {
                 helper.InitialiseUnit(destroyer, Faction.Blues, parentCruiserDirection: Direction.Right, parentCruiser: blueCruiser);
                 destroyer.StartConstruction();
