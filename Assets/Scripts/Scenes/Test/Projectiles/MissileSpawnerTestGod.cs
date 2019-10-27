@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class MissileSpawnerTestGod : MonoBehaviour 
+    public class MissileSpawnerTestGod : TestGodBase
 	{
 		private MissileSpawner _missileSpawner;
 		private TestAircraftController _target;
@@ -19,11 +19,19 @@ namespace BattleCruisers.Scenes.Test
 		public MissileController missilePrefab;
 		public List<Vector2> targetPatrolPoints;
 
-		void Start()
-		{
-			// Setup target
-			Helper helper = new Helper();
+        protected override List<GameObject> GetGameObjects()
+        {
 			_target = FindObjectOfType<TestAircraftController>();
+
+            return new List<GameObject>()
+            {
+                _target.GameObject
+            };
+        }
+
+        protected override void Setup(Helper helper)
+        {
+			// Setup target
 			_target.PatrolPoints = targetPatrolPoints;
             helper.InitialiseUnit(_target);
             _target.StartConstruction();
