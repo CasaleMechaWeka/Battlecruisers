@@ -2,29 +2,42 @@
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiAir
 {
     public class AntiAirTurretIgnoresSatellitesTestGod : TestGodBase
     {
-        protected override void Start()
+        private AircraftController[] _aircraftList;
+        private TurretController _turret;
+
+        protected override List<GameObject> GetGameObjects()
         {
-            base.Start();
+            _aircraftList = FindObjectsOfType<AircraftController>();
+            _turret = FindObjectOfType<TurretController>();
 
-            Helper helper = new Helper(updaterProvider: _updaterProvider);
+            List<GameObject> gameObjects
+                = _aircraftList
+                    .Select(aircraft => aircraft.GameObject)
+                    .ToList();
+            gameObjects.Add(_turret.GameObject);
+            return gameObjects;
+        }
 
+        protected override void Setup(Helper helper)
+        {
             // Aircraft
-            AircraftController[] aircraftList = FindObjectsOfType<AircraftController>();
-            foreach (AircraftController aircraft in aircraftList)
+            foreach (AircraftController aircraft in _aircraftList)
             {
                 helper.InitialiseUnit(aircraft, Faction.Blues);
                 aircraft.StartConstruction();
             }
 
             // Turret
-            TurretController turret = FindObjectOfType<TurretController>();
-            helper.InitialiseBuilding(turret, Faction.Reds);
-            turret.StartConstruction();
+            helper.InitialiseBuilding(_turret, Faction.Reds);
+            _turret.StartConstruction();
         }
     }
 }
