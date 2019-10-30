@@ -53,8 +53,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
-            // FELIX  Remove
-            IPrefabFactory prefabFactory = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IAngleCalculatorFactory angleCalculatorFactory = null,
