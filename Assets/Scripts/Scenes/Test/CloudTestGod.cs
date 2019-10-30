@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
 
-// FELIX  Namespace :)
-namespace BattleCruisers.Scenes.Test.Projectiles
+namespace BattleCruisers.Scenes.Test
 {
     public class CloudTestGod : NavigationTestGod
     {
