@@ -41,14 +41,11 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using UnityCommon.PlatformAbstractions;
 using UnityCommon.Properties;
 using UnityEngine;
@@ -561,14 +558,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);
-        }
-
-        // FELIX  Remove :)
-        public static async Task<IPrefabFactory> CreatePrefabFactoryAsync()
-        {
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            return new PrefabFactory(prefabCache);
         }
     }
 }
