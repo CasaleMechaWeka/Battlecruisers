@@ -24,8 +24,6 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _soundKey = Substitute.For<ISoundKey>();
             _soundToPlay = Substitute.For<IAudioClipWrapper>();
-
-            // FELIX  Check test :)
             _soundFetcher.GetSoundAsync(_soundKey).Returns(Task.FromResult(_soundToPlay));
         }
 
