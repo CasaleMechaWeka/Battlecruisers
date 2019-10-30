@@ -4,7 +4,7 @@
     {
         protected override void InitialiseScenario(AccuracyTest scenario)
         {
-            scenario.Initialise(_updaterProvider);
+            scenario.Initialise(_baseHelper);
         }
 
         protected override float OrderBy(AccuracyTest scenario)

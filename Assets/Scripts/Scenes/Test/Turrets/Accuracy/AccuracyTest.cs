@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -15,9 +14,9 @@ namespace BattleCruisers.Scenes.Test.Turrets.Accuracy
     {
         public Camera Camera { get; private set; }
 
-        public void Initialise(IUpdaterProvider updaterProvider)
+        public void Initialise(Helper helper)
         {
-            Assert.IsNotNull(updaterProvider);
+            Assert.IsNotNull(helper);
 
             // Show accuracy
             ITurretStats stats = GetComponentInChildren<ITurretStats>();
@@ -28,9 +27,6 @@ namespace BattleCruisers.Scenes.Test.Turrets.Accuracy
             // Hide camera
             Camera = GetComponentInChildren<Camera>();
             Camera.enabled = false;
-
-
-            Helper helper = new Helper(updaterProvider: updaterProvider);
 
 
             // Setup target
