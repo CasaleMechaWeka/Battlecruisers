@@ -5,15 +5,14 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
 
+// FELIX  Namespace :)
 namespace BattleCruisers.Scenes.Test.Projectiles
 {
     public class CloudTestGod : NavigationTestGod
     {
-        protected override void Start()
+        protected override void Setup(Helper helper)
         {
-            base.Start();
-
-            Helper helper = HelperFactory.CreateHelperNoPrefabFactory();
+            base.Setup(helper);
 
             CloudStatsController cloudStatsController = GetComponentInChildren<CloudStatsController>();
             Assert.IsNotNull(cloudStatsController);

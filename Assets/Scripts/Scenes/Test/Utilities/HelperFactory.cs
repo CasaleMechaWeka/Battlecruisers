@@ -29,20 +29,5 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     updaterProvider,
                     prefabFactory);
         }
-
-        public static Helper CreateHelperNoPrefabFactory(
-            int numOfDrones = DEFAULT_NUM_OF_DRONES,
-            float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
-            IDeferrer deferrer = null,
-            IUpdaterProvider updaterProvider = null)
-        {
-            return
-                new Helper(
-                    numOfDrones,
-                    buildSpeedMultiplier,
-                    deferrer,
-                    updaterProvider,
-                    prefabFactory: null);
-        }
     }
 }
