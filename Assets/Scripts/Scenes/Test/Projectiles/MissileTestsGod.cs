@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test
                     .ToList();
         }
 
-        protected void SetupMissiles(ITarget target)
+        protected void SetupMissiles(Helper helper, ITarget target)
 		{
 			// Setup missiles
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test
 
             IProjectileStats missileStats = GetComponent<ProjectileStats>();
 			Vector2 initialVelocity = new Vector2(5, 5);
-            BuildableInitialisationArgs args = new BuildableInitialisationArgs(new Helper());
+            BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
             ITarget parent = Substitute.For<ITarget>();
 
             foreach (MissileController missile in _missiles)

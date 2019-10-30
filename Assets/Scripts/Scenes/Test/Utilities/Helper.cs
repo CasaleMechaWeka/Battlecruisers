@@ -73,13 +73,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
         }
 
-        // FELIX  Remove default parameters, should be handled by factory :)
         public Helper(
-            int numOfDrones = DEFAULT_NUM_OF_DRONES, 
-            float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
-            IDeferrer deferrer = null,
-            IUpdaterProvider updaterProvider = null,
-            IPrefabFactory prefabFactory = null)
+            int numOfDrones, 
+            float buildSpeedMultiplier,
+            IDeferrer deferrer,
+            IUpdaterProvider updaterProvider,
+            IPrefabFactory prefabFactory)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;

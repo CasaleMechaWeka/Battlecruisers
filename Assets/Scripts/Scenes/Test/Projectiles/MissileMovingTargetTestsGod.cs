@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
             helper.InitialiseUnit(_target);
 			_target.StartConstruction();
 
-			SetupMissiles(_target);
+			SetupMissiles(helper, _target);
 		}
 	}
 }
