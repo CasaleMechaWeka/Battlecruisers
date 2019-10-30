@@ -28,6 +28,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 
         protected override void Setup(Helper helper)
         {
+            base.Setup(helper);
+
             foreach (SatelliteLauncherController launcher in _launchers)
             {
                 Vector2 parentCruiserPosition = launcher.transform.position;

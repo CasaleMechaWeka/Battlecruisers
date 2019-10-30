@@ -27,7 +27,9 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
         protected override void Setup(Helper helper)
         {
-			// Setup target
+            base.Setup(helper);
+
+            // Setup target
             helper.InitialiseBuilding(_target, Faction.Blues);
 			_target.StartConstruction();
 

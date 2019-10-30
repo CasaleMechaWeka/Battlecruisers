@@ -38,6 +38,8 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
         protected override void Setup(Helper helper)
         {
+            base.Setup(helper);
+
             // Setup cruiser
             helper.SetupCruiser(_cruiser);
 

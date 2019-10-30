@@ -28,7 +28,9 @@ namespace BattleCruisers.Scenes.Test.Offensive
 
         protected override void Setup(Helper helper)
         {
-			// Setup targets
+            base.Setup(helper);
+
+            // Setup targets
             helper.InitialiseBuilding(_baseTarget);
 
             DroneStation[] _targets = FindObjectsOfType<DroneStation>();
