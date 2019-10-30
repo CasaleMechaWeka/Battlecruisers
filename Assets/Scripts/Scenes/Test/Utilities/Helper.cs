@@ -570,22 +570,5 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             return new PrefabFactory(prefabCache);
         }
-
-        // FELIX  Remove?
-        public static void SetActiveness<TMonoBehaviour>(TMonoBehaviour[] gameObjects, bool isActive)
-            where TMonoBehaviour : MonoBehaviour
-        {
-            SetActiveness(gameObjects.ToList(), isActive);
-        }
-
-        // FELIX  Remove?
-        public static void SetActiveness<TMonoBehaviour>(IList<TMonoBehaviour> gameObjects, bool isActive)
-            where TMonoBehaviour : MonoBehaviour
-        {
-            foreach (TMonoBehaviour gameObject in gameObjects)
-            {
-                gameObject.gameObject.SetActive(isActive);
-            }
-        }
     }
 }
