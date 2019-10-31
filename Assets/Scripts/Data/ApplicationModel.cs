@@ -2,9 +2,6 @@
 
 namespace BattleCruisers.Data
 {
-    /// <summary>
-    /// Static class that allows scenes to communicate with each other.
-    /// </summary>
     public class ApplicationModel : IApplicationModel
     {
         public int SelectedLevel { get; set; }
