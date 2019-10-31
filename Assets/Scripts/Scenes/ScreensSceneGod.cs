@@ -18,6 +18,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -101,6 +102,8 @@ namespace BattleCruisers.Scenes
             //GoToSettingsScreen();
             //GoToLevelsScreen();
             //GoToLoadoutScreen();
+
+            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
         }
         
         private void GoToPostBattleScreen()

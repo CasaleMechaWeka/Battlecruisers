@@ -14,6 +14,7 @@ namespace BattleCruisers.Scenes
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
         private bool _isInitialised = false;
+        private string _lastSceneLoaded;
 
 		public static ILoadingScreen LoadingScreen { get; private set; }
         public static ISceneNavigator SceneNavigator { get; private set; }
@@ -75,7 +76,19 @@ namespace BattleCruisers.Scenes
                 yield return null;
             }
 			
+            while (_lastSceneLoaded != sceneName)
+            {
+                float waitIntervalInS = 0.01f;
+                Logging.Verbose(Tags.SCENE_NAVIGATION, $"{sceneName}  waiting another: {waitIntervalInS}s");
+                yield return new WaitForSeconds(waitIntervalInS);
+            }
+
             Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
+        }
+
+        public void SceneLoaded(string sceneName)
+        {
+            _lastSceneLoaded = sceneName;
         }
     }
 }
