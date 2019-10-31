@@ -201,9 +201,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, true);
-            //tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
+            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.TIME, false);
 
