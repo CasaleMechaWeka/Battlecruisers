@@ -222,6 +222,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+
+            sceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
         }
 
         private IBattleSceneHelper CreateHelper(
