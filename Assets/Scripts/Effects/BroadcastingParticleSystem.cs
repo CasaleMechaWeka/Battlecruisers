@@ -26,7 +26,7 @@ namespace BattleCruisers.Effects
 
         private void OnParticleSystemStopped()
         {
-            Logging.Log(Tags.EXPLOSIONS, $"{_particleSystem}");
+            Logging.Verbose(Tags.EXPLOSIONS, $"{_particleSystem}");
 
             Stopped?.Invoke(this, EventArgs.Empty);
         }
