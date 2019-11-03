@@ -17,6 +17,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
+using System;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine.Assertions;
 
@@ -55,8 +56,14 @@ namespace BattleCruisers.Scenes.BattleScene
                 case Difficulty.Normal:
                     return BuildSpeedMultipliers.POINT_7_DEFAULT;
 
-                default:
+                case Difficulty.Hard:
                     return BuildSpeedMultipliers.DEFAULT;
+
+                case Difficulty.Harder:
+                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
+
+                default:
+                    throw new ArgumentException($"Unkown difficulty: {settingsManager.AIDifficulty}");
             }
         }
 
