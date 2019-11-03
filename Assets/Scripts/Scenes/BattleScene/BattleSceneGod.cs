@@ -54,7 +54,6 @@ namespace BattleCruisers.Scenes.BattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-            LandingSceneGod.MusicPlayer?.Stop();
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
@@ -174,6 +173,7 @@ namespace BattleCruisers.Scenes.BattleScene
             helper.InitialiseUIManager(args);
 
             // Audio
+            LandingSceneGod.MusicPlayer?.Stop();
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
