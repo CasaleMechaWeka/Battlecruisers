@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             {
                 if (!_target.SmartEquals(value))
                 {
-                    Logging.Log(Tags.CAMERA_TARGET_PROVIDER, $"{_target} > {value}");
+                    Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"{_target} > {value}");
 
                     _target = value;
                     TargetChanged?.Invoke(this, EventArgs.Empty);
