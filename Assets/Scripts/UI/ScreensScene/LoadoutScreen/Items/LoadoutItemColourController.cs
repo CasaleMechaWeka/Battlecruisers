@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -56,6 +57,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             if (selectedItem != null)
             {
+                // FELIX  Remove :)
+                var sameRef = _itemToButton.Keys.FirstOrDefault(key => ReferenceEquals(key, selectedItem));
+                var sameName = _itemToButton.Keys.FirstOrDefault(key => key.Name == selectedItem.Name);
+
                 Assert.IsTrue(_itemToButton.ContainsKey(selectedItem));
                 SelectedButton = _itemToButton[selectedItem];
             }
