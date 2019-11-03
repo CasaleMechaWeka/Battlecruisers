@@ -43,7 +43,7 @@ namespace BattleCruisers.UI
 
         protected void SetAlpha(float alpha)
         {
-            Logging.Log(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}  alpha: {alpha}");
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}  alpha: {alpha}");
 
             if (Graphic != null)
             {

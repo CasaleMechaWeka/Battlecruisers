@@ -18,7 +18,7 @@ namespace BattleCruisers.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Logging.Log(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             OnClicked();
         }
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI
 
         public virtual void OnPointerDown(PointerEventData eventData)
         {
-            Logging.Log(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             _isPressed = true;
 
@@ -39,7 +39,7 @@ namespace BattleCruisers.UI
 
         public virtual void OnPointerUp(PointerEventData eventData)
         {
-            Logging.Log(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             _isPressed = false;
 
@@ -58,7 +58,7 @@ namespace BattleCruisers.UI
 
         public virtual void OnPointerEnter(PointerEventData eventData)
         {
-            Logging.Log(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             _isHover = true;
 
@@ -72,7 +72,7 @@ namespace BattleCruisers.UI
 
         public virtual void OnPointerExit(PointerEventData eventData)
         {
-            Logging.Log(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             _isHover = false;
 
