@@ -18,19 +18,19 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
-            Logging.LogMethod(Tags.SWIPE_NAVIGATION);
+            Logging.VerboseMethod(Tags.SWIPE_NAVIGATION);
             DragStart?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
         }
 
         public virtual void OnDrag(PointerEventData eventData)
         {
-            Logging.Log(Tags.SWIPE_NAVIGATION, $"delta: {eventData.delta}");
+            Logging.Verbose(Tags.SWIPE_NAVIGATION, $"delta: {eventData.delta}");
             Drag?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
         }
 
         public virtual void OnEndDrag(PointerEventData eventData)
         {
-            Logging.LogMethod(Tags.SWIPE_NAVIGATION);
+            Logging.VerboseMethod(Tags.SWIPE_NAVIGATION);
             DragEnd?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
         }
     }

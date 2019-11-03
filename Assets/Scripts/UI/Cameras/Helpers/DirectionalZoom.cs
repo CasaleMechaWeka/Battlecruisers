@@ -24,21 +24,21 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public ICameraTarget ZoomOut(float orthographicSizeDelta)
         {
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
 
             // Find target camera orthographic size
             float targetOrthographicSize = _camera.OrthographicSize + orthographicSizeDelta;
             targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
 
             // Find target camera x position
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
             float targetXPosition = Mathf.Clamp(_camera.Transform.Position.x, validXPositions.Min, validXPositions.Max);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
             // Find target camera y position
             float targetYPosition = _cameraCalculator.FindCameraYPosition(targetOrthographicSize);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
 
             return
                 new CameraTarget(
@@ -48,12 +48,12 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public ICameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition)
         {
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
 
             // Find target camera orthographic size
             float targetOrthographicSize = _camera.OrthographicSize - orthographicSizeDelta;
             targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetOrthographicSize: {targetOrthographicSize}  currentOrthographicSize: {_camera.OrthographicSize}");
 
             // Find target camera x position, zoom towards contact point
             Vector3 contactWorldPosition = _camera.ScreenToWorldPoint(contactPosition);
@@ -65,15 +65,15 @@ namespace BattleCruisers.UI.Cameras.Helpers
                     targetOrthographicSize,
                     _camera.Aspect,
                     _camera.Transform.Position.z);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"contactWorldPosition: {contactWorldPosition}  contactZoomPosition: {contactZoomPosition}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"contactWorldPosition: {contactWorldPosition}  contactZoomPosition: {contactZoomPosition}");
 
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize);
             float targetXPosition = Mathf.Clamp(contactZoomPosition.x, validXPositions.Min, validXPositions.Max);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
 
             // Find target camera y position
             float targetYPosition = _cameraCalculator.FindCameraYPosition(targetOrthographicSize);
-            Logging.Log(Tags.DIRECTIONAL_ZOOM, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
+            Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"targetYPosition: {targetYPosition}  currentYPosition: {_camera.Transform.Position.y}");
 
             return
                 new CameraTarget(
