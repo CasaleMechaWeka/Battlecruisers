@@ -25,7 +25,7 @@ namespace BattleCruisers.Utils.Clamping
             float maxX = _pyramid.BottomRightVertex.x;
             float clampedX = Mathf.Clamp(position.x, minX, maxX);
 
-            Logging.Log(Tags.PYRAMID, $"originalX: {position.x}  clampedX: {clampedX}  minX: {minX}  maxX: {maxX}");
+            Logging.Verbose(Tags.PYRAMID, $"originalX: {position.x}  clampedX: {clampedX}  minX: {minX}  maxX: {maxX}");
 
             float minY = _pyramid.BottomLeftVertex.y;
             float maxY = _pyramid.FindMaxY(clampedX);
