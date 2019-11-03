@@ -17,26 +17,25 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IBroadcastingProperty<HullKey> _selectedHull;
         private RectTransform _selectedFeedback;
 
-        private Cruiser _cruiser;
-        public override IComparableItem Item => _cruiser;
+        private Cruiser _cruiserPrefab;
+        public override IComparableItem Item => _cruiserPrefab;
 
         public void Initialise(
             ISoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
-            IBroadcastingProperty<HullKey> selectedHull,
-            // FELIX  Move to base class
-            IPrefabFactory prefabFactory)
+            Cruiser cruiserPrefab,
+            IBroadcastingProperty<HullKey> selectedHull)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
 
-            Helper.AssertIsNotNull(selectedHull, hullKey);
+            Helper.AssertIsNotNull(hullKey, cruiserPrefab, selectedHull);
 
             _hullKey = hullKey;
+            _cruiserPrefab = cruiserPrefab;
             _selectedHull = selectedHull;
             _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
-            _cruiser = prefabFactory.GetCruiserPrefab(hullKey);
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
 
@@ -59,11 +58,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {
-                _itemDetailsManager.ShowDetails(_cruiser);
+                _itemDetailsManager.ShowDetails(_cruiserPrefab);
             }
             else
             {
-                _itemDetailsManager.CompareWithSelectedItem(_cruiser);
+                _itemDetailsManager.CompareWithSelectedItem(_cruiserPrefab);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
         }

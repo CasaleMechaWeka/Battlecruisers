@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound;
@@ -8,15 +9,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public class UnitButton : ItemButton
     {
-        public UnitWrapper unit;
-        public override IComparableItem Item => unit.Buildable;
+        private IBuildableWrapper<IUnit> _unitPrefab;
+        public override IComparableItem Item => _unitPrefab.Buildable;
 
-        public override void Initialise(ISoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingItemFamily)
+        public void Initialise(
+            ISoundPlayer soundPlayer, 
+            IItemDetailsManager itemDetailsManager, 
+            IComparingItemFamilyTracker comparingItemFamily,
+            IBuildableWrapper<IUnit> unitPrefab)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingItemFamily);
 
-            Assert.IsNotNull(unit);
-            unit.StaticInitialise();
+            Assert.IsNotNull(unitPrefab);
+            _unitPrefab = unitPrefab;
         }
 
         protected override void OnClicked()
@@ -25,11 +30,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {
-                _itemDetailsManager.ShowDetails(unit.Buildable);
+                _itemDetailsManager.ShowDetails(_unitPrefab.Buildable);
             }
             else
             {
-                _itemDetailsManager.CompareWithSelectedItem(unit.Buildable);
+                _itemDetailsManager.CompareWithSelectedItem(_unitPrefab.Buildable);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
         }

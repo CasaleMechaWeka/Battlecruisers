@@ -56,18 +56,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             return itemButton;
         }
 
-        protected virtual ItemButton InitialiseItemButton(
-            IItemDetailsManager itemDetailsManager, 
+        protected abstract ItemButton InitialiseItemButton(
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory)
-        {
-            ItemButton itemButton = GetComponentInChildren<ItemButton>(includeInactive: true);
-            Assert.IsNotNull(itemButton);
-            itemButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker);
-            return itemButton;
-        }
+            IPrefabFactory prefabFactory);
 
         private void ItemButton_Clicked(object sender, EventArgs e)
         {

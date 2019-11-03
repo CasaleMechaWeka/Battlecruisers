@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
@@ -34,9 +35,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             ISoundPlayer soundPlayer,
             IPrefabFactory prefabFactory)
         {
+            Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);
             HullButton hullButton = GetComponentInChildren<HullButton>(includeInactive: true);
             Assert.IsNotNull(hullButton);
-            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, selectedHull, prefabFactory);
+            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull);
             return hullButton;
         }
 
