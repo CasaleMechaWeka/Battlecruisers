@@ -100,10 +100,10 @@ namespace BattleCruisers.Utils
 	
 	public static class Logging
 	{
-        //private const bool LOG_ALL = true;
-        private const bool LOG_ALL = false;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        private const bool LOG_ALL = true;
+        //private const bool LOG_ALL = false;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
