@@ -86,7 +86,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _comparingFamilyTracker, 
                     dataProvider.GameModel, 
                     selectCruiserButton.SelectedHull, 
-                    soundPlayer);
+                    soundPlayer,
+                    prefabFactory);
 
             _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
 

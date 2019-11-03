@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using System;
 using UnityCommon.Properties;
 using UnityEngine;
@@ -16,24 +17,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IBroadcastingProperty<HullKey> _selectedHull;
         private RectTransform _selectedFeedback;
 
-        public Cruiser cruiser;
-        public override IComparableItem Item => cruiser;
+        private Cruiser _cruiser;
+        public override IComparableItem Item => _cruiser;
 
         public void Initialise(
             ISoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
-            IBroadcastingProperty<HullKey> selectedHull)
+            IBroadcastingProperty<HullKey> selectedHull,
+            // FELIX  Move to base class
+            IPrefabFactory prefabFactory)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
 
-            Helper.AssertIsNotNull(cruiser, selectedHull, hullKey);
+            Helper.AssertIsNotNull(selectedHull, hullKey);
 
             _hullKey = hullKey;
             _selectedHull = selectedHull;
             _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
-            cruiser.StaticInitialise();
+            _cruiser = prefabFactory.GetCruiserPrefab(hullKey);
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
 
@@ -56,11 +59,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {
-                _itemDetailsManager.ShowDetails(cruiser);
+                _itemDetailsManager.ShowDetails(_cruiser);
             }
             else
             {
-                _itemDetailsManager.CompareWithSelectedItem(cruiser);
+                _itemDetailsManager.CompareWithSelectedItem(_cruiser);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
         }

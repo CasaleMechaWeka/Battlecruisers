@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -46,9 +47,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISoundPlayer soundPlayer)
+            ISoundPlayer soundPlayer,
+            IPrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
 
             _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
 
@@ -57,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer);
+                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                 allItemButtons.AddRange(panelItemButtons);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();

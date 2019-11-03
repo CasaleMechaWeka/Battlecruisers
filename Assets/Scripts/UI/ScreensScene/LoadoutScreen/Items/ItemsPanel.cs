@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 using UnityCommon.Properties;
 using System.Collections.Generic;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -21,9 +22,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISoundPlayer soundPlayer)
+            ISoundPlayer soundPlayer,
+            IPrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);
 
             ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
             IList<IItemButton> buttons = new List<IItemButton>();
@@ -32,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             foreach (ItemContainer itemContainer in itemContainers)
             {
-                IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer);
+                IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                 buttons.Add(button);
                 HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
             }

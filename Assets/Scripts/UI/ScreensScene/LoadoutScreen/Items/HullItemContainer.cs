@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityCommon.Properties;
 using UnityEngine.Assertions;
 
@@ -30,11 +31,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamilyTracker, 
             IBroadcastingProperty<HullKey> selectedHull,
-            ISoundPlayer soundPlayer)
+            ISoundPlayer soundPlayer,
+            IPrefabFactory prefabFactory)
         {
             HullButton hullButton = GetComponentInChildren<HullButton>(includeInactive: true);
             Assert.IsNotNull(hullButton);
-            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, selectedHull);
+            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, selectedHull, prefabFactory);
             return hullButton;
         }
 

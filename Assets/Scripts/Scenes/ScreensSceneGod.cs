@@ -75,6 +75,7 @@ namespace BattleCruisers.Scenes
             if (_musicPlayer == null)
             {
                 _musicPlayer = Substitute.For<IMusicPlayer>();
+                _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
 

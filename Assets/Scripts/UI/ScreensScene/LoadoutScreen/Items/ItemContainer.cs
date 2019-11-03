@@ -4,6 +4,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using System;
 using UnityCommon.Properties;
 using UnityEngine;
@@ -30,9 +31,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISoundPlayer soundPlayer)
+            ISoundPlayer soundPlayer,
+            IPrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
 
             _gameModel = gameModel;
 
@@ -42,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _newItemMark = GetComponentInChildren<NewItemMark>(includeInactive: true);
             Assert.IsNotNull(_newItemMark);
 
-            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer);
+            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, prefabFactory);
             itemButton.Clicked += ItemButton_Clicked;
 
             bool isItemUnlocked = IsUnlocked(gameModel);
@@ -58,7 +60,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISoundPlayer soundPlayer)
+            ISoundPlayer soundPlayer,
+            IPrefabFactory prefabFactory)
         {
             ItemButton itemButton = GetComponentInChildren<ItemButton>(includeInactive: true);
             Assert.IsNotNull(itemButton);
