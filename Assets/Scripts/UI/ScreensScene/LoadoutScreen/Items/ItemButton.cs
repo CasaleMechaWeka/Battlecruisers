@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public event EventHandler Clicked;
 
-        public virtual void Initialise(ISoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
+        protected virtual void Initialise(ISoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
             base.Initialise(soundPlayer);
 

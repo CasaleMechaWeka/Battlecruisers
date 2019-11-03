@@ -1,6 +1,15 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using UnityCommon.Properties;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -19,6 +28,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 }
                 return _key;
             }
+        }
+
+        protected override ItemButton InitialiseItemButton(
+            IItemDetailsManager itemDetailsManager, 
+            IComparingItemFamilyTracker comparingFamilyTracker, 
+            IBroadcastingProperty<HullKey> selectedHull, 
+            ISoundPlayer soundPlayer, 
+            IPrefabFactory prefabFactory)
+        {
+            IBuildableWrapper<IBuilding> buildingPrefab = prefabFactory.GetBuildingWrapperPrefab(Key);
+            BuildingButton buildingButton = GetComponentInChildren<BuildingButton>(includeInactive: true);
+            Assert.IsNotNull(buildingButton);
+            buildingButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, buildingPrefab);
+            return buildingButton;
         }
 
         protected override bool IsUnlocked(IGameModel gameModel)

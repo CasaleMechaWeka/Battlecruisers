@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound;
@@ -8,15 +9,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public class BuildingButton : ItemButton
     {
-        public BuildingWrapper building;
-        public override IComparableItem Item => building.Buildable;
+        public IBuildableWrapper<IBuilding> _buildingPrefab;
+        public override IComparableItem Item => _buildingPrefab.Buildable;
 
-        public override void Initialise(ISoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
+        public void Initialise(
+            ISoundPlayer soundPlayer, 
+            IItemDetailsManager itemDetailsManager, 
+            IComparingItemFamilyTracker comparingFamiltyTracker,
+            IBuildableWrapper<IBuilding> buildingPrefab)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
 
-            Assert.IsNotNull(building);
-            building.StaticInitialise();
+            Assert.IsNotNull(buildingPrefab);
+            _buildingPrefab = buildingPrefab;
         }
 
         protected override void OnClicked()
@@ -25,11 +30,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             if (_comparingFamiltyTracker.ComparingFamily.Value == null)
             {
-                _itemDetailsManager.ShowDetails(building.Buildable);
+                _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
             }
             else
             {
-                _itemDetailsManager.CompareWithSelectedItem(building.Buildable);
+                _itemDetailsManager.CompareWithSelectedItem(_buildingPrefab.Buildable);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
         }
