@@ -18,7 +18,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -79,7 +78,6 @@ namespace BattleCruisers.Scenes
             }
 
 
-            _musicPlayer.PlayScreensSceneMusic();
             homeScreen.Initialise(_soundPlayer, this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager);
 
@@ -104,6 +102,7 @@ namespace BattleCruisers.Scenes
             //GoToLevelsScreen();
             //GoToLoadoutScreen();
 
+            _musicPlayer.PlayScreensSceneMusic();
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
         }
         
