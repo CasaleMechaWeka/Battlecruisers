@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         public TPoolable GetItem(TArgs activationArgs)
         {
-            Logging.LogMethod(Tags.POOLS);
+            Logging.Log(Tags.POOLS, $"{typeof(TPoolable)}");
 
             TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
             item.Activate(activationArgs);
@@ -39,7 +39,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         private TPoolable CreateItem()
         {
-            Logging.Log(Tags.POOLS, $"{_itemFactory} {++_createCount}");
+            Logging.Log(Tags.POOLS, $"{typeof(TPoolable)}: {_itemFactory} {++_createCount}");
 
             TPoolable item = _itemFactory.CreateItem();
             item.Deactivated += Item_Deactivated;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         private void Item_Deactivated(object sender, EventArgs e)
         {
-            Logging.LogMethod(Tags.POOLS);
+            Logging.Log(Tags.POOLS, $"{typeof(TPoolable)}");
             _items.Push(sender.Parse<TPoolable>());
         }
     }
