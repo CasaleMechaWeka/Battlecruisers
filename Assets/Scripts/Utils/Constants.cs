@@ -30,6 +30,7 @@
         public const float POINT_3_DEFAULT = 0.6f;
         public const float POINT_7_DEFAULT = 1.4f;
         public const float DEFAULT = 2;
+        public const float ONE_AND_A_QUARTER_DEFAULT = 2.5f;
         public const float ONE_AND_A_HALF_DEFAULT = 3;
         public const float DEFAULT_TUTORIAL = 8;
         public const float FAST = 50;

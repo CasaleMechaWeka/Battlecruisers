@@ -66,10 +66,10 @@ namespace BattleCruisers.AI
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {
                 case Difficulty.Easy:
-                case Difficulty.Normal:
-                case Difficulty.Hard:
                     return aiFactory.CreateBasicAI(levelInfo);
 
+                case Difficulty.Normal:
+                case Difficulty.Hard:
                 case Difficulty.Harder:
                     return aiFactory.CreateAdaptiveAI(levelInfo);
 
