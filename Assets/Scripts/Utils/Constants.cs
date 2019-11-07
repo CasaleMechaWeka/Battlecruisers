@@ -27,7 +27,7 @@
 
     public static class BuildSpeedMultipliers
     {
-        public const float POINT_3_DEFAULT = 0.6f;
+        public const float HALF_DEFAULT = 1;
         public const float POINT_7_DEFAULT = 1.4f;
         public const float DEFAULT = 2;
         public const float ONE_AND_A_QUARTER_DEFAULT = 2.5f;
