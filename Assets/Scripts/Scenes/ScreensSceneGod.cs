@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes
 
             // TEMP  For showing PostBattleScreen :)
             //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
-            ////_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
+            //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
             //_applicationModel.ShowPostBattleScreen = true;
             //_applicationModel.IsTutorial = true;
 

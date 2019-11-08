@@ -22,8 +22,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		public Text title;
 		public GameObject unlockedItemSection;
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage;
+        public LevelNameController levelName;
 
-		private const string VICTORY_TITLE = "Sweet as!";
+        private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
@@ -43,13 +44,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postTutorialMessage, 
                 completedGameMessage, 
                 defeatMessage,
-                victoryNoLootMessage);
+                victoryNoLootMessage,
+                levelName);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
 
+            levelName.Initialise(applicationModel);
             SetupBackground();
 
             if (_applicationModel.IsTutorial)
