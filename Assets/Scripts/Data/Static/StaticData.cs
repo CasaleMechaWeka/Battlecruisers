@@ -198,40 +198,40 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Blue", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(2, "Deep Blue", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(3, "Twilight", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(4, "White", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(5, "Sunset", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(6, "Speckled Blue", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(7, "Dark Sunset", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(1, "Daisy", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(2, "Rain", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(3, "Jurassic Wolf", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
 
                 // Set 2
-                new Level(8, "Twilight", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(9, "White", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(10, "Deep Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(11, "Dark Sunset", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(12, "Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(13, "Speckled Blue", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(14, "Sunset", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(9, "Magic", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
 
                 // Set 3
-                new Level(15, "Speckled Blue", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(16, "Dark Sunset", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(17, "White", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(18, "Sunset", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(19, "Blue", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(20, "Twilight", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(21, "Deep Blue", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(15, "Drone Millionaire", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
 
                 // Set 4
-                new Level(22, "Sunset", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(23, "Blue", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(24, "Dark Sunset", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
-                new Level(25, "Speckled Blue", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
-                new Level(26, "Deep Blue", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
-                new Level(27, "White", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
-                new Level(28, "Twilight", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow))
+                new Level(22, "Big Pond", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(23, "Indecision", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(24, "Premature", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Slow)),
+                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow)),
+                new Level(26, "Goldrush", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidday, CreateCloudStats(CloudDensity.Low, CloudMovementSpeed.Fast)),
+                new Level(27, "Dawn", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk, CreateCloudStats(CloudDensity.Medium, CloudMovementSpeed.Fast)),
+                new Level(28, "Mastery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDSunset, CreateCloudStats(CloudDensity.High, CloudMovementSpeed.Slow))
             };
 		}
 
