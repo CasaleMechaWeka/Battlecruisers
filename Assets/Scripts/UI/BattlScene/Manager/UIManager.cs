@@ -3,8 +3,10 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -15,6 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
+        private IPrioritisedSoundPlayer _soundPlayer;
 
         private ITarget _shownItem;
         private ITarget ShownItem
@@ -46,6 +49,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _detailsManager = args.DetailsManager;
             _playerCruiser = args.PlayerCruiser;
             _aiCruiser = args.AICruiser;
+            _soundPlayer = args.SoundPlayer;
         }
 
         private void _shownItem_Destroyed(object sender, DestroyedEventArgs e)
@@ -85,8 +89,14 @@ namespace BattleCruisers.UI.BattleScene.Manager
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
+            bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+
+            if (!wasAnySlotHighlighted)
+            {
+                // FELIX  Update tests
+                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.NoBuildingSlotsLeft);
+            }
         }
 
 		public virtual void SelectBuilding(IBuilding building)

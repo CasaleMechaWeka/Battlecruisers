@@ -169,7 +169,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser,
                     aiCruiser,
                     leftPanelComponents.BuildMenu,
-                    itemDetailsManager);
+                    itemDetailsManager,
+                    factoryProvider.Sound.PrioritisedSoundPlayer);
             helper.InitialiseUIManager(args);
 
             // Audio

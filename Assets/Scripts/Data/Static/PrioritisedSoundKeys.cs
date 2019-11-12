@@ -35,6 +35,7 @@ namespace BattleCruisers.Data.Static
             {
                 public static PrioritisedSoundKey UnderAttack { get; } = new PrioritisedSoundKey(SoundKeys.Events.CruiserUnderAttack, SoundPriority.Normal);
                 public static PrioritisedSoundKey SignificantlyDamaged { get; } = new PrioritisedSoundKey(SoundKeys.Events.CruiserSignificantlyDamaged, SoundPriority.High);
+                public static PrioritisedSoundKey NoBuildingSlotsLeft { get; } = new PrioritisedSoundKey(SoundKeys.Events.NoBuildingSlotsLeft , SoundPriority.VeryHigh);
             }
 
             public static class Drones

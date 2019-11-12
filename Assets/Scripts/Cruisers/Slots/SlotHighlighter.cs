@@ -31,7 +31,10 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public SlotHighlighter(ISlotAccessor slotAccessor, ISlotFilter highlightableFilter, ICruiserBuildingMonitor parentCruiserBuildingMonitor)
+        public SlotHighlighter(
+            ISlotAccessor slotAccessor, 
+            ISlotFilter highlightableFilter, 
+            ICruiserBuildingMonitor parentCruiserBuildingMonitor)
 		{
             Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);
 
@@ -49,11 +52,13 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
+        // FELIX  Update tests :)
         // Only highlight one slot type at a time
-        public void HighlightAvailableSlots(SlotType slotType)
+        public bool HighlightAvailableSlots(SlotType slotType)
 		{
 			UnhighlightSlots();
 
+            bool wasAnySlotHighlighted = false;
 			_highlightedSlotType = slotType;
 
 			foreach (ISlot slot in _slotAccessor.GetSlots(slotType))
@@ -61,8 +66,11 @@ namespace BattleCruisers.Cruisers.Slots
                 if (_highlightableFilter.IsMatch(slot))
 				{
                     slot.IsVisible = true;
+                    wasAnySlotHighlighted = true;
 				}
 			}
+
+            return wasAnySlotHighlighted;
 		}
 
 		public void UnhighlightSlots()

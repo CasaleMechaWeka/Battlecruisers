@@ -78,6 +78,7 @@ namespace BattleCruisers.Data.Static
             // Cruiser
             public static ISoundKey CruiserUnderAttack { get; } = new SoundKey(SoundType.Events, "cruiser-under-attack");
             public static ISoundKey CruiserSignificantlyDamaged { get; } = new SoundKey(SoundType.Events, "cruiser-significantly-damaged");
+            public static ISoundKey NoBuildingSlotsLeft { get; } = new SoundKey(SoundType.Events, "no-building-slots-left");
             
             // Drones
             public static ISoundKey DronesNewDronesReady { get; } = new SoundKey(SoundType.Events, "drones-new-drones-ready");
