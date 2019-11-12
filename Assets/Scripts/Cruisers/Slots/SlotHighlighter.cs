@@ -52,7 +52,6 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        // FELIX  Update tests :)
         // Only highlight one slot type at a time
         public bool HighlightAvailableSlots(SlotType slotType)
 		{

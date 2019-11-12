@@ -55,9 +55,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(true);
             
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
 
             _slot2.Received().IsVisible = true;
+            Assert.IsTrue(wasAnySlotHighlighted);
         }
 
         [Test]
@@ -67,9 +68,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(false);
 
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
 
             _slot2.DidNotReceive().IsVisible = true;
+            Assert.IsFalse(wasAnySlotHighlighted);
         }
 
         [Test]
