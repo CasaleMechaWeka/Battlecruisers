@@ -94,7 +94,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
             if (!wasAnySlotHighlighted)
             {
-                // FELIX  Update tests
                 _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.NoBuildingSlotsLeft);
             }
         }
