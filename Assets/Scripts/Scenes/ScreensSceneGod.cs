@@ -102,7 +102,6 @@ namespace BattleCruisers.Scenes
             //GoToLevelsScreen();
             //GoToLoadoutScreen();
 
-            _musicPlayer.PlayScreensSceneMusic();
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
         }
         
