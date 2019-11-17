@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly ISettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
 
-        public const float SCROLL_SCALE = 32;
+        public const float SCROLL_SCALE = 16;
 
         public ScrollCalculator(
             ICamera camera,
