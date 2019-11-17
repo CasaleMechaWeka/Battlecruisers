@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Music
 
         public void PlayVictoryMusic()
         {
-            PlayMusic(SoundKeys.Music.Victory, loop: false);
+            PlayMusic(SoundKeys.Music.Victory);
         }
 
         public void PlayDefeatMusic()
