@@ -172,24 +172,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.PrioritisedSoundPlayer);
             helper.InitialiseUIManager(args);
 
-            // Audio
-            LandingSceneGod.MusicPlayer?.Stop();
-            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
-            ILayeredMusicPlayer layeredMusicPlayer
-                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
-                    currentLevel.MusicKeys);
-            _audioInitialiser
-                = new AudioInitialiser(
-                    helper,
-                    layeredMusicPlayer,
-                    playerCruiser,
-                    aiCruiser,
-                    components.Deferrer,
-                    time,
-                    battleCompletionHandler);
-
             // Other
+            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel.CloudStats, RandomGenerator.Instance);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
@@ -208,6 +192,22 @@ namespace BattleCruisers.Scenes.BattleScene
                         cameraComponents.CameraFocuser,
                         navigationPermitters.NavigationFilter,
                         time));
+
+            // Audio
+            LandingSceneGod.MusicPlayer?.Stop();
+            ILayeredMusicPlayer layeredMusicPlayer
+                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
+                    factoryProvider.Sound.SoundFetcher,
+                    currentLevel.MusicKeys);
+            _audioInitialiser
+                = new AudioInitialiser(
+                    helper,
+                    layeredMusicPlayer,
+                    playerCruiser,
+                    aiCruiser,
+                    components.Deferrer,
+                    time,
+                    battleCompletionHandler);
 
             StartTutorialIfNecessary(
                 prefabFactory, 
