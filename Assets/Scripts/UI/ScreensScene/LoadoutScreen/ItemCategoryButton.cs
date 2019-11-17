@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Models;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -39,11 +40,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             ISoundPlayer soundPlayer, 
             IItemPanelsController itemPanels, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
-            IGameModel gameModel)
+            IGameModel gameModel,
+            IList<IItemButton> itemButtons)
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, gameModel);
+            Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, gameModel, itemButtons);
 
             _itemPanels = itemPanels;
             _itemPanels.PotentialMatchChange += _itemPanels_PotentialMatchChange;
@@ -64,6 +66,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(_newItemMark);
             SetupNewMarkVisibilityCallback(_gameModel);
             UpdateNewItemMarkVisibility();
+
+            foreach (IItemButton button in itemButtons)
+            {
+                button.Clicked += (sender, e) => UpdateNewItemMarkVisibility();
+            }
 
             Enabled = ShouldBeEnabled();
         }
