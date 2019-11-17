@@ -194,11 +194,11 @@ namespace BattleCruisers.Scenes.BattleScene
                         time));
 
             // Audio
-            LandingSceneGod.MusicPlayer?.Stop();
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys);
+            LandingSceneGod.MusicPlayer?.Stop();
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
