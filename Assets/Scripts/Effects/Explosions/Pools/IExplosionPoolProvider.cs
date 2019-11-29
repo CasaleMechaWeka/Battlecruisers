@@ -5,6 +5,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
 {
     public interface IExplosionPoolProvider
     {
+        IPool<IExplosion, Vector3> DummyPool { get; }
         IPool<IExplosion, Vector3> BulletImpactPool { get; }
         IPool<IExplosion, Vector3> MuzzleFlashPool { get; }
 

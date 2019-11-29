@@ -9,6 +9,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
+        public IPool<IExplosion, Vector3> DummyPool { get; }
         public IPool<IExplosion, Vector3> BulletImpactPool { get; }
         public IPool<IExplosion, Vector3> MuzzleFlashPool { get; }
         public IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
@@ -20,6 +21,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         {
             Assert.IsNotNull(prefabFactory);
 
+            DummyPool = new DummyPool<IExplosion, Vector3>();
             BulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
             MuzzleFlashPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.MuzzleFlash);
             SmallExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion75);
