@@ -10,6 +10,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
     public class ExplosionPoolProvider : IExplosionPoolProvider
     {
         public IPool<IExplosion, Vector3> BulletImpactPool { get; }
+        public IPool<IExplosion, Vector3> MuzzleFlashPool { get; }
         public IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
         public IPool<IExplosion, Vector3> MediumExplosionsPool { get; }
         public IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
@@ -20,6 +21,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             Assert.IsNotNull(prefabFactory);
 
             BulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
+            MuzzleFlashPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.MuzzleFlash);
             SmallExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion75);
             MediumExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion100);
             LargeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion150);
@@ -38,6 +40,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public void SetInitialCapacity()
         {
             BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
+            MuzzleFlashPool.AddCapacity(InitialCapacity.MUZZLE_FLASH);
             SmallExplosionsPool.AddCapacity(InitialCapacity.SMALL);
             MediumExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
             LargeExplosionsPool.AddCapacity(InitialCapacity.LARGE);
