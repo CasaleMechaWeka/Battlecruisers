@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -21,11 +22,17 @@ namespace BattleCruisers.Buildables.Units
         private IAudioSource _audioSource;
 
         public UnitCategory category;
-
 		public Rigidbody2D rigidBody;
 
-		#region Properties
-		public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
+        /// <summary>
+        /// For most buildables the in game sprite is used on buttons.  However for some planes
+        /// that have multiple sprites (eg: bomber), can use a nicer sprite designed for the UI.
+        /// </summary>
+        public Sprite uiFriendlySprite;
+        public override Sprite Sprite => uiFriendlySprite != null ? uiFriendlySprite : base.Sprite;
+
+        #region Properties
+        public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
 		public UnitCategory Category => category;
 		public override Vector2 Velocity => rigidBody.velocity;
         public virtual bool IsUltra => false;

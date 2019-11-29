@@ -169,7 +169,7 @@ namespace BattleCruisers.Buildables
         }
 
         #region IComparableItem
-        Sprite IComparableItem.Sprite => _buildableProgress.FillableImage.sprite;
+        public virtual Sprite Sprite => _buildableProgress.FillableImage.sprite;
         string IComparableItem.Description => description;
         string IComparableItem.Name => buildableName;
         #endregion IComparableItem
