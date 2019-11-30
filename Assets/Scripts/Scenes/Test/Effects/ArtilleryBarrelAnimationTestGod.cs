@@ -1,36 +1,26 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Effects;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects
 {
     public class ArtilleryBarrelAnimationTestGod : MonoBehaviour
     {
-        public Animator artilleryAnimator;
+        private BarrelAnimation _barrelAnimation;
 
         void Start()
         {
-            Debug.Log("Yo");
+            Debug.Log("Start()");
 
-            // FELIX  NEXT  Look at animator properties while debugging?  Find state names?
-            //artilleryAnimator.enabled = false;
-            Debug.Log($"artilleryAnimator.enabled: {artilleryAnimator.enabled}");
-
-            //string stateName = "BANANAS";
-            string stateName = "ArtilleryBarrel";
-            int stateId = Animator.StringToHash(stateName);
-            string layerName = artilleryAnimator.GetLayerName(0);
-            Debug.Log($"layerName: {layerName}");
-            bool hasState = artilleryAnimator.HasState(layerIndex: 0, stateID: stateId);
-            Debug.Log($"Has state {stateName}: {hasState}");
+            _barrelAnimation = FindObjectOfType<BarrelAnimation>();
+            Assert.IsNotNull(_barrelAnimation);
+            _barrelAnimation.Initialise();
         }
 
         public void PlayAnimation()
         {
-            Debug.Log("PlayAnimation");
-
-            artilleryAnimator.enabled = true;
-            //artilleryAnimator.Play("GIBBERISH");
-            //artilleryAnimator.Play("ArtilleryBarrel");
-            artilleryAnimator.Play("ArtilleryBarrel", layer: -1, normalizedTime: 0);
+            Debug.Log("PlayAnimation()");
+            _barrelAnimation.Play();
         }
     }
 }
