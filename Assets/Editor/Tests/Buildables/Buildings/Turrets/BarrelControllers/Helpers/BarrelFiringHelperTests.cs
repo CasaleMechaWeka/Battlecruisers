@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         private IBarrelController _barrelController;
         private IAccuracyAdjuster _accuracyAdjuster;
         private IFireIntervalManager _fireIntervalManager;
+        private IAnimation _barrelFiringAnimation;
 
         private BarrelAdjustmentResult _onTargetResult, _notOnTargetResult;
         private ITurretStats _turretStats;
@@ -28,8 +30,9 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _barrelController = Substitute.For<IBarrelController>();
             _accuracyAdjuster = Substitute.For<IAccuracyAdjuster>();
             _fireIntervalManager = Substitute.For<IFireIntervalManager>();
+            _barrelFiringAnimation = Substitute.For<IAnimation>();
 
-            _helper = new BarrelFiringHelper(_barrelController, _accuracyAdjuster, _fireIntervalManager);
+            _helper = new BarrelFiringHelper(_barrelController, _accuracyAdjuster, _fireIntervalManager, _barrelFiringAnimation);
 
             _onTargetResult
                 = new BarrelAdjustmentResult(
@@ -134,12 +137,14 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         {
             _barrelController.DidNotReceiveWithAnyArgs().Fire(default);
             _fireIntervalManager.DidNotReceive().OnFired();
+            _barrelFiringAnimation.DidNotReceive().Play();
         }
 
         private void Expect_Fire(float fireAngle)
         {
             _barrelController.Received().Fire(fireAngle);
             _fireIntervalManager.Received().OnFired();
+            _barrelFiringAnimation.Received().Play();
         }
     }
 }

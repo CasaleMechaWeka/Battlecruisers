@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -113,7 +114,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.AngleLimiter,
                     args.AttackablePositionFinder);
 
-            _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager);
+            // FELIX  Move IAnimation to barrel controller args :)
+            _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager, new DummyAnimation());
 
             await InternalInitialiseAsync(args);
 
