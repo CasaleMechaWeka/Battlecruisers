@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects;
 using BattleCruisers.Targets;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -26,6 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             Faction enemyFaction,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null);
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
+            IAnimation barrelFiringAnimation = null);
 	}
 }

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -32,6 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
         public ISoundKey SpawnerSoundKey { get; }
+        public IAnimation BarrelFiringAnimation { get; }
 
         public BarrelControllerArgs(
             IUpdater updater,
@@ -48,7 +50,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ITarget parent,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
-            ISoundKey firingSound = null)
+            ISoundKey firingSound = null,
+            IAnimation barrelFiringAnimation = null)
         {
             Helper.AssertIsNotNull(
                 updater,
@@ -81,6 +84,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             LocalBoostProviders = localBoostProviders;
             GlobalFireRateBoostProviders = globalFireRateBoostProvider;
             SpawnerSoundKey = firingSound;
+            BarrelFiringAnimation = barrelFiringAnimation ?? new DummyAnimation();
         }
     }
 }

@@ -6,6 +6,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Stats;
@@ -109,7 +110,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             Faction enemyFaction,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null)
+            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
+            IAnimation barrelFiringAnimation = null)
         {
             Helper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
 
@@ -133,7 +135,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         attackablePositionFinder, 
                         firingSound, 
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders);
+                        globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                        barrelFiringAnimation);
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -160,7 +163,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IAttackablePositionFinder attackablePositionFinder,
             ISoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProvider)
+            ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
+            IAnimation barrelFiringAnimation)
         {
             IUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
 
@@ -179,7 +183,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 parent,
                 localBoostProviders,
                 globalFireRateBoostProvider,
-                firingSound);
+                firingSound,
+                barrelFiringAnimation);
         }
 
         protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)

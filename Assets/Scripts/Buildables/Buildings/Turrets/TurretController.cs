@@ -28,6 +28,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
+
+            // FELIX  Remove null check.  If not needed should be using dummy object :)
 		}
 
 		protected override void OnBuildableCompleted()

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -31,5 +32,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         ISoundKey SpawnerSoundKey { get; }
         ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
+        IAnimation BarrelFiringAnimation { get; }
     }
 }
