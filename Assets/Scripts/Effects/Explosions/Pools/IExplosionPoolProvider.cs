@@ -6,7 +6,6 @@ namespace BattleCruisers.Effects.Explosions.Pools
     public interface IExplosionPoolProvider
     {
         IPool<IExplosion, Vector3> BulletImpactPool { get; }
-        IPool<IExplosion, Vector3> MuzzleFlashPool { get; }
 
         // Radius 0.75m => Bomber, mortar, SAM site
         IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
