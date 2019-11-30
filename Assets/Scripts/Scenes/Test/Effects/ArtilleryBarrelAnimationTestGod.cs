@@ -13,6 +13,14 @@ namespace BattleCruisers.Scenes.Test.Effects
             // FELIX  NEXT  Look at animator properties while debugging?  Find state names?
             //artilleryAnimator.enabled = false;
             Debug.Log($"artilleryAnimator.enabled: {artilleryAnimator.enabled}");
+
+            //string stateName = "BANANAS";
+            string stateName = "ArtilleryBarrel";
+            int stateId = Animator.StringToHash(stateName);
+            string layerName = artilleryAnimator.GetLayerName(0);
+            Debug.Log($"layerName: {layerName}");
+            bool hasState = artilleryAnimator.HasState(layerIndex: 0, stateID: stateId);
+            Debug.Log($"Has state {stateName}: {hasState}");
         }
 
         public void PlayAnimation()
