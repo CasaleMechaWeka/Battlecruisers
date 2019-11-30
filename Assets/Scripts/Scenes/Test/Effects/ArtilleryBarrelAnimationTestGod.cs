@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Effects
         {
             Debug.Log("Yo");
 
-            artilleryAnimator.enabled = false;
+            //artilleryAnimator.enabled = false;
             Debug.Log($"artilleryAnimator.enabled: {artilleryAnimator.enabled}");
         }
     }
