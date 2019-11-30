@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects.BarrelRecoil;
+﻿using BattleCruisers.Effects;
+using BattleCruisers.Effects.BarrelRecoil;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,15 +7,15 @@ namespace BattleCruisers.Scenes.Test.Effects
 {
     public class ArtilleryBarrelAnimationTestGod : MonoBehaviour
     {
-        private BarrelAnimation _barrelAnimation;
+        private IAnimation _barrelAnimation;
 
         void Start()
         {
             Debug.Log("Start()");
 
-            _barrelAnimation = FindObjectOfType<BarrelAnimation>();
-            Assert.IsNotNull(_barrelAnimation);
-            _barrelAnimation.Initialise();
+            BarrelAnimationInitialiser barrelAnimationInitialiser = FindObjectOfType<BarrelAnimationInitialiser>();
+            Assert.IsNotNull(barrelAnimationInitialiser);
+            _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
         }
 
         public void PlayAnimation()

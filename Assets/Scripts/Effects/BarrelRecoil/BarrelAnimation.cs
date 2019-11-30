@@ -3,18 +3,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.BarrelRecoil
 {
-    public class BarrelAnimation : MonoBehaviour, IAnimation
+    public class BarrelAnimation : IAnimation
     {
-        private Animator _animator;
+        private readonly Animator _animator;
 
         private const string BARREL_ANIMATION_STATE = "BarrelAnimation";
         private const int DEFAULT_ANIMATION_LAYER_INDEX = 0;
 
-        public void Initialise()
+        public BarrelAnimation(Animator animator)
         {
-            _animator = GetComponent<Animator>();
-            Assert.IsNotNull(_animator);
-            _animator.enabled = false;
+            _animator = animator;
 
             int stateId = Animator.StringToHash(BARREL_ANIMATION_STATE);
             Assert.IsTrue(_animator.HasState(DEFAULT_ANIMATION_LAYER_INDEX, stateId));
