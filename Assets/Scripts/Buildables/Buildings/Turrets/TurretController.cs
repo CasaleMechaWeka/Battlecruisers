@@ -41,16 +41,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             List<SpriteRenderer> renderers = _barrelWrapper.Renderers.ToList();
-            renderers.Add(GetBaseRenderer());
+            renderers.AddRange(GetBaseRenderers());
             return renderers;
         }
 
-        protected virtual SpriteRenderer GetBaseRenderer()
+        protected virtual SpriteRenderer[] GetBaseRenderers()
         {
 			GameObject turretBase = transform.Find("Base").gameObject;
-            SpriteRenderer turretBaseRenderer = turretBase.GetComponent<SpriteRenderer>();
-			Assert.IsNotNull(turretBaseRenderer);
-            return turretBaseRenderer;
+            SpriteRenderer[] turretBaseRenderers = turretBase.GetComponentsInChildren<SpriteRenderer>();
+			Assert.IsTrue(turretBaseRenderers.Length > 0);
+            return turretBaseRenderers;
         }
 
         protected override void OnDestroyed()

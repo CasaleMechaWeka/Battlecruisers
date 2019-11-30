@@ -9,11 +9,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.TeslaCoil;
 
-        protected override SpriteRenderer GetBaseRenderer()
+        protected override SpriteRenderer[] GetBaseRenderers()
         {
             SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(mainRenderer);
-            return mainRenderer;
+            return new SpriteRenderer[]
+            {
+                mainRenderer
+            };
         }
 	}
 }
