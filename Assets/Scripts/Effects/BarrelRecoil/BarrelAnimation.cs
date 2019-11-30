@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.BarrelRecoil
 {
     public class BarrelAnimation : MonoBehaviour, IAnimation
     {

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Effects;
+﻿using BattleCruisers.Effects.BarrelRecoil;
 using UnityEngine;
 using UnityEngine.Assertions;
 
