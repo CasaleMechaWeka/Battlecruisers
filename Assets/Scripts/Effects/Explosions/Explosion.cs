@@ -1,26 +1,22 @@
-﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    public class Explosion : IExplosion
+    public class Explosion : ParticleSystemGroup, IExplosion
     {
         private readonly IGameObject _explosionController;
-        private readonly IBroadcastingParticleSystem[] _particleSystems;
         private int _systemsCompletedCount = 0;
 
         public event EventHandler Deactivated;
 
         public Explosion(IGameObject explosionController, IBroadcastingParticleSystem[] particleSystems)
+            : base(particleSystems)
         {
-            Helper.AssertIsNotNull(explosionController, particleSystems);
-            Assert.IsTrue(particleSystems.Length != 0);
-
+            Assert.IsNotNull(explosionController);
             _explosionController = explosionController;
-            _particleSystems = particleSystems;
 
             foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
             {
@@ -47,10 +43,7 @@ namespace BattleCruisers.Effects.Explosions
             _explosionController.IsVisible = true;
             _explosionController.Position = position;
 
-            foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
-            {
-                particleSystem.Play();
-            }
+            Play();
         }
     }
 }
