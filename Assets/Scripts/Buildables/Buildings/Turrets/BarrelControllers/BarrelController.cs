@@ -19,6 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IBarrelFiringHelper _firingHelper;
         private IFireIntervalManager _fireIntervalManager;
         private IUpdater _updater;
+        private IParticleSystemGroup _muzzleFlash;
         protected ITargetFilter _targetFilter;
 
         protected IProjectileStats _projectileStats;
@@ -63,6 +64,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _baseTurretStats = SetupTurretStats();
             _turretStatsWrapper = new TurretStatsWrapper(_baseTurretStats);
             _fireIntervalManager = SetupFireIntervalManager(TurretStats);
+
+            IParticleSystemGroupInitialiser muzzleFlashInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("MuzzleFlash");
+            _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
         }
 		
 		protected virtual IProjectileStats GetProjectileStats()
@@ -114,8 +118,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.AngleLimiter,
                     args.AttackablePositionFinder);
 
-            // FELIX  Pass real muzzle flash :)
-            _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager, args.BarrelFiringAnimation, new DummyParticleSystemGroup());
+            _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager, args.BarrelFiringAnimation, _muzzleFlash);
 
             await InternalInitialiseAsync(args);
 
