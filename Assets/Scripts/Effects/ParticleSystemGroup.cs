@@ -2,9 +2,8 @@
 
 namespace BattleCruisers.Effects
 {
-    // FELIX  Interface
-    public class ParticleSystemGroup
-    { 
+    public class ParticleSystemGroup : IParticleSystemGroup
+    {
         protected readonly IBroadcastingParticleSystem[] _particleSystems;
 
         public ParticleSystemGroup(IBroadcastingParticleSystem[] particleSystems)
