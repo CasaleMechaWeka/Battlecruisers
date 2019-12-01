@@ -22,9 +22,6 @@ namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
             };
         }
 
-        // FELIX  NEXT
-        // 1. Remove redundant sprites
-        // 3. Use BarrelAnimationInitialiser in inspector :)
         protected override void Setup(Helper helper)
         {
             base.Setup(helper);
