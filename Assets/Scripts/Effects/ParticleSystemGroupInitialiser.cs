@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Effects
 {
-    public class ParticleSystemGroupController : MonoBehaviourWrapper
+    public class ParticleSystemGroupInitialiser : MonoBehaviourWrapper, IParticleSystemGroupInitialiser
     {
         public IParticleSystemGroup CreateParticleSystemGroup()
         {
