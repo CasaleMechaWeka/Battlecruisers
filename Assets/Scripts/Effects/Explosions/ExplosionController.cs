@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Effects.Explosions
+﻿using BattleCruisers.Effects.ParticleSystems;
+
+namespace BattleCruisers.Effects.Explosions
 {
     public class ExplosionController : ParticleSystemGroupInitialiser
     {

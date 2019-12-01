@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Effects;
-using BattleCruisers.Effects.Explosions;
+﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.ParticleSystems
 {
     public class ParticleSystemGroupInitialiser : MonoBehaviourWrapper, IParticleSystemGroupInitialiser
     {

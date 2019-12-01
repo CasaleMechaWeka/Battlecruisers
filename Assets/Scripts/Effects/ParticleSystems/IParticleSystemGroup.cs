@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Effects
+﻿namespace BattleCruisers.Effects.ParticleSystems
 {
     public interface IParticleSystemGroup
     {

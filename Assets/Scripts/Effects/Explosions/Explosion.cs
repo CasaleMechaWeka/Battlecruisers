@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;

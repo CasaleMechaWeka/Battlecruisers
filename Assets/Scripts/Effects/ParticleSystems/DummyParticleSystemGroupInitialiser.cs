@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.ParticleSystems
 {
     public class DummyParticleSystemGroupInitialiser : MonoBehaviour, IParticleSystemGroupInitialiser
     {

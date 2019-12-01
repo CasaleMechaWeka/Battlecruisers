@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.ParticleSystems
 {
     public interface IBroadcastingParticleSystem
     {

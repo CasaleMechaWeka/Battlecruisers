@@ -1,6 +1,5 @@
-﻿namespace BattleCruisers.Effects
+﻿namespace BattleCruisers.Effects.ParticleSystems
 {
-    // FELIX  Create ParticleSystems namespace :P
     public interface IParticleSystemGroupInitialiser
     {
         IParticleSystemGroup CreateParticleSystemGroup();

@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Effects
+namespace BattleCruisers.Effects.ParticleSystems
 {
     public class BroadcastingParticleSystem : MonoBehaviour, IBroadcastingParticleSystem
     {
