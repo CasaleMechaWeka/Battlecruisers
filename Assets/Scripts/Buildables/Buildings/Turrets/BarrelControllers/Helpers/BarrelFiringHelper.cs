@@ -1,32 +1,33 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Effects;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    // FELIX  Add barrel animation
-    // FELIX  Add muzzle flash explosion
-    // FELIX  Update tests :)
     public class BarrelFiringHelper : IBarrelFiringHelper
     {
         private readonly IBarrelController _barrelController;
         private readonly IAccuracyAdjuster _accuracyAdjuster;
         private readonly IFireIntervalManager _fireIntervalManager;
         private readonly IAnimation _barrelFiringAnimation;
+        private readonly IParticleSystemGroup _muzzleFlash;
 
         public BarrelFiringHelper(
             IBarrelController barrelController, 
             IAccuracyAdjuster accuracyAdjuster, 
             IFireIntervalManager fireIntervalManager,
-            IAnimation barrelFiringAnimation)
+            IAnimation barrelFiringAnimation,
+            IParticleSystemGroup muzzleFlash)
         {
-            Helper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFiringAnimation);
+            Helper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFiringAnimation, muzzleFlash);
 
             _barrelController = barrelController;
             _accuracyAdjuster = accuracyAdjuster;
             _fireIntervalManager = fireIntervalManager;
             _barrelFiringAnimation = barrelFiringAnimation;
+            _muzzleFlash = muzzleFlash;
         }
 
         public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
@@ -67,6 +68,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"fireAngleInDegrees: {fireAngleInDegrees}");
             _barrelController.Fire(fireAngleInDegrees);
             _barrelFiringAnimation.Play();
+            _muzzleFlash.Play();
             _fireIntervalManager.OnFired();
         }
     }
