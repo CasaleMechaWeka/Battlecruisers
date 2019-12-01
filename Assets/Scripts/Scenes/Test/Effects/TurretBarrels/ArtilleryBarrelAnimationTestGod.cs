@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Effects;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +8,6 @@ namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
 {
     public class ArtilleryBarrelAnimationTestGod : TestGodBase
     {
-        private IAnimation _barrelAnimation;
-
         public TurretController turret;
 
         protected override List<GameObject> GetGameObjects()
@@ -29,12 +26,6 @@ namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
 
             helper.InitialiseBuilding(turret);
             turret.StartConstruction();
-        }
-
-        public void PlayAnimation()
-        {
-            Debug.Log("PlayAnimation()");
-            _barrelAnimation.Play();
         }
     }
 }
