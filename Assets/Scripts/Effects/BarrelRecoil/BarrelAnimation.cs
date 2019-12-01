@@ -13,15 +13,23 @@ namespace BattleCruisers.Effects.BarrelRecoil
         public BarrelAnimation(Animator animator)
         {
             _animator = animator;
-
-            int stateId = Animator.StringToHash(BARREL_ANIMATION_STATE);
-            Assert.IsTrue(_animator.HasState(DEFAULT_ANIMATION_LAYER_INDEX, stateId));
         }
 
         public void Play()
         {
+            CheckAnimationState();
             _animator.enabled = true;
             _animator.Play(BARREL_ANIMATION_STATE, layer: -1, normalizedTime: 0);
+        }
+
+        /// <summary>
+        /// If the game object is inactive, Animator.HasState() always returns false.
+        /// Hence cannot perform this check at construction in case the game object is inactive.
+        /// </summary>
+        private void CheckAnimationState()
+        {
+            int stateId = Animator.StringToHash(BARREL_ANIMATION_STATE);
+            Assert.IsTrue(_animator.HasState(DEFAULT_ANIMATION_LAYER_INDEX, stateId));
         }
     }
 }
