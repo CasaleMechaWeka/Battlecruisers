@@ -39,7 +39,6 @@ namespace BattleCruisers.Cruisers
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
-        private SmokeGroupInitialiser _smokeGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
         private const float ON_DEATH_GRAVITY_SCALE = 0.01f;
 
@@ -109,9 +108,6 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
-            _smokeGroup = GetComponentInChildren<SmokeGroupInitialiser>(includeInactive: true);
-            Assert.IsNotNull(_smokeGroup);
-
             _rigidBody = GetComponent<Rigidbody2D>();
             Assert.IsNotNull(_rigidBody);
 
@@ -144,8 +140,6 @@ namespace BattleCruisers.Cruisers
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
-
-            _smokeGroup.Initialise(this, showSmokeWhenDestroyed: true);
 
             EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponentInChildren<EnemyShipBlockerInitialiser>();
             Assert.IsNotNull(enemyShipBlockerInitialiser);
