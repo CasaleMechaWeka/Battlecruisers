@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -12,6 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public abstract class TurretController : Building
 	{
+        private IAnimation _barrelAnimation;
 		protected IBarrelWrapper _barrelWrapper;
 
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building2;
@@ -29,7 +31,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 			_barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
 
-            // FELIX  Remove null check.  If not needed should be using dummy object :)
+            IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
+            Assert.IsNotNull(barrelAnimationInitialiser);
+            _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
 		}
 
 		protected override void OnBuildableCompleted()
@@ -37,7 +41,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             base.OnBuildableCompleted();
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, FiringSound, _parentSlot.BoostProviders, TurretFireRateBoostProviders);
+            _barrelWrapper
+                .Initialise(
+                this, 
+                _factoryProvider, 
+                _cruiserSpecificFactories, 
+                enemyFaction, 
+                FiringSound, 
+                _parentSlot.BoostProviders, 
+                TurretFireRateBoostProviders,
+                _barrelAnimation);
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()
