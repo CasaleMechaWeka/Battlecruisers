@@ -3,7 +3,7 @@ using BattleCruisers.Effects.BarrelRecoil;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test.Effects
+namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
 {
     public class ArtilleryBarrelAnimationTestGod : MonoBehaviour
     {
