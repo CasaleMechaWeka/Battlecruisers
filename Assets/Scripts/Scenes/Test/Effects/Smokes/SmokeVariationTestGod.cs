@@ -3,7 +3,7 @@ using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test.Effects
+namespace BattleCruisers.Scenes.Test.Effects.Smokes
 {
     public class SmokeVariationTestGod : MonoBehaviour
     {
