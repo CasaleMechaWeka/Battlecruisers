@@ -12,38 +12,40 @@ namespace BattleCruisers.Effects.Smoke
 
             static Ship()
             {
-                Weak
-                    = new SmokeStatistics(
-                        startLifetime: new Range<float>(3, 4),
-                        startSpeed: 0.85f,
-                        rateOverTime: 6,
-                        rateOverDistance: 16,
-                        burstsCount: 0,
-                        edgeRadius: 0.001f,
-                        noiseStrength: 0.01f,
-                        startSize: 0.05f);
+                Weak = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(3, 4),
+                    StartSpeed = 0.85f,
+                    RateOverTime = 6,
+                    RateOverDistance = 16,
+                    BurstsCount = 0,
+                    EdgeRadius = 0.001f,
+                    NoiseStrength = 0.01f,
+                    StartSize = 0.05f
+                };
+                Normal = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(3, 4),
+                    StartSpeed = 1,
+                    RateOverTime = 6,
+                    RateOverDistance = 16,
+                    BurstsCount = 30,
+                    EdgeRadius = 0.1f,
+                    NoiseStrength = 0.05f,
+                    StartSize = 0.1f
+                };
 
-                Normal
-                    = new SmokeStatistics(
-                        startLifetime: new Range<float>(3, 4),
-                        startSpeed: 1,
-                        rateOverTime: 6,
-                        rateOverDistance: 16,
-                        burstsCount: 30,
-                        edgeRadius: 0.1f,
-                        noiseStrength: 0.05f,
-                        startSize: 0.1f);
-                
-                Strong
-                    = new SmokeStatistics(
-                        startLifetime: new Range<float>(6, 4),
-                        startSpeed: 1,
-                        rateOverTime: 4,
-                        rateOverDistance: 12,
-                        burstsCount: 50,
-                        edgeRadius: 0.2f,
-                        noiseStrength: 0.1f,
-                        startSize: 0.3f);
+                Strong = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(6, 4),
+                    StartSpeed = 1,
+                    RateOverTime = 4,
+                    RateOverDistance = 12,
+                    BurstsCount = 50,
+                    EdgeRadius = 0.2f,
+                    NoiseStrength = 0.1f,
+                    StartSize = 0.3f
+                };
             }
         }
 
