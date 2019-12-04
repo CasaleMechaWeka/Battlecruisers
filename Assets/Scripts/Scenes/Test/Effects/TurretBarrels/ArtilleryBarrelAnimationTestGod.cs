@@ -1,22 +1,22 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
 {
     public class ArtilleryBarrelAnimationTestGod : TestGodBase
     {
-        public TurretController turret;
+        private TurretController[] _turrets;
 
         protected override List<GameObject> GetGameObjects()
         {
-            Assert.IsNotNull(turret);
-            return new List<GameObject>()
-            { 
-                turret.GameObject
-            };
+            _turrets = FindObjectsOfType<TurretController>();
+            return
+                _turrets
+                    .Select(turret => turret.GameObject)
+                    .ToList();
         }
 
         protected override void Setup(Helper helper)
@@ -24,8 +24,11 @@ namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
             base.Setup(helper);
             Debug.Log("Setup()");
 
-            helper.InitialiseBuilding(turret);
-            turret.StartConstruction();
+            foreach (TurretController turret in _turrets)
+            {
+                helper.InitialiseBuilding(turret);
+                turret.StartConstruction();
+            }
         }
     }
 }
