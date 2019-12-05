@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Smoke
 {
-    // FELIX  Interface
-    public class SmokeChanger
+    public class SmokeChanger : ISmokeChanger
     {
         public void Change(ParticleSystem smoke, SmokeStatistics smokeStats)
         {
