@@ -37,7 +37,7 @@ namespace BattleCruisers.Effects.Smoke
 
                 Strong = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(6, 4),
+                    StartLifetime = new Range<float>(4, 6),
                     StartSpeed = 1,
                     RateOverTime = 4,
                     RateOverDistance = 12,
@@ -45,6 +45,78 @@ namespace BattleCruisers.Effects.Smoke
                     EdgeRadius = 0.2f,
                     NoiseStrength = 0.1f,
                     StartSize = 0.3f
+                };
+            }
+        }
+
+        public static class Building
+        {
+            public static SmokeStatistics Weak { get; }
+            public static SmokeStatistics Normal { get; }
+            public static SmokeStatistics Strong { get; }
+
+            static Building()
+            {
+                Weak = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(2.5f, 3.5f),
+                    StartSpeed = 0.25f,
+                    StartSize = 0.005f,
+                    NoiseStrength = 0.005f,
+                    VelocityOverLifetimeY = 0.3f
+                };
+
+                Normal = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(2.5f, 3.5f),
+                    StartSpeed = 0.5f,
+                    StartSize = 0.02f,
+                    NoiseStrength = 0.02f,
+                    VelocityOverLifetimeY = 0.5f
+                };
+
+                Strong = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(3.5f, 5),
+                    StartSpeed = 1,
+                    RateOverTime = 4,
+                    StartSize = 0.05f,
+                    NoiseStrength = 0.03f,
+                    VelocityOverLifetimeY = 1
+                };
+            }
+        }
+
+        public static class Aircraft
+        {
+            public static SmokeStatistics Weak { get; }
+            public static SmokeStatistics Normal { get; }
+            public static SmokeStatistics Strong { get; }
+
+            static Aircraft()
+            {
+                Weak = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(0.3f, 0.45f),
+                    StartSize = 0.02f,
+                    RateOverTime = 2,
+                    RateOverDistance = 24
+                };
+
+                Normal = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(1.5f, 2),
+                    StartSize = 0.08f,
+                    RateOverTime = 2,
+                    RateOverDistance = 18
+                };
+
+                Strong = new SmokeStatistics()
+                {
+                    StartLifetime = new Range<float>(4, 6),
+                    StartSize = 0.2f,
+                    RateOverTime = 2,
+                    RateOverDistance = 12
                 };
             }
         }
