@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
 
             shipSmoke.Play();
             aircraftSmoke.Play();
-            shipSmoke.Play();
+            buildingSmoke.Play();
 
             _smokeChanger = new SmokeChanger();
         }
