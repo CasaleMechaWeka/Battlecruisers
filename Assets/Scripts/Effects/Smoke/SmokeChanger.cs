@@ -78,7 +78,7 @@ namespace BattleCruisers.Effects.Smoke
             if (smokeStats.VelocityOverLifetimeY != null)
             {
                 ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule = smoke.velocityOverLifetime;
-                velocityOverLifetimeModule.orbitalOffsetYMultiplier = (float)smokeStats.VelocityOverLifetimeY;
+                velocityOverLifetimeModule.yMultiplier = (float)smokeStats.VelocityOverLifetimeY;
             }
         }
 
