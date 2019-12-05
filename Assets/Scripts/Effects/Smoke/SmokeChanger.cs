@@ -77,11 +77,8 @@ namespace BattleCruisers.Effects.Smoke
         {
             if (smokeStats.VelocityOverLifetimeY != null)
             {
-                // FELIX  Check this is right :P
-                // FELIX  Avoid duplicate code with other 3 curves :)
                 ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule = smoke.velocityOverLifetime;
-                //ParticleSystem.MinMaxCurve velocityCurve = velocityOverLifetimeModule.speedModifier;
-                //velocityCurve.curveMultiplier = smokeSta
+                velocityOverLifetimeModule.orbitalOffsetYMultiplier = (float)smokeStats.VelocityOverLifetimeY;
             }
         }
 

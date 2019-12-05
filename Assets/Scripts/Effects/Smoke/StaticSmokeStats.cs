@@ -79,7 +79,6 @@ namespace BattleCruisers.Effects.Smoke
                 {
                     StartLifetime = new Range<float>(3.5f, 5),
                     StartSpeed = 1,
-                    RateOverTime = 4,
                     StartSize = 0.05f,
                     NoiseStrength = 0.03f,
                     VelocityOverLifetimeY = 1
