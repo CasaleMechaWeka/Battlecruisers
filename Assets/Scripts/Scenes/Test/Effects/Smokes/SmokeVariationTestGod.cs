@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
                     new List<SmokeStrength> { SmokeStrength.None, SmokeStrength.Weak, SmokeStrength.Normal, SmokeStrength.Strong });
 
             _smoke = FindObjectOfType<Smoke>();
-            _smoke.Initialise();
+            _smoke.Initialise(new SmokeChanger());
 
             ChangeSmokeStrength();
         }

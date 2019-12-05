@@ -14,6 +14,7 @@ namespace BattleCruisers.Effects.Smoke
     /// </summary>
     public class Smoke : MonoBehaviour, ISmoke
     {
+        private ISmokeChanger _smokeChanger;
         private ParticleSystem _particleSystem;
 
         private SmokeStrength _smokeStrength;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Effects.Smoke
                 {
                     _smokeStrength = value;
 
-                    SmokeStats smokeStats = GetStatsForStrength(_smokeStrength);
+                    SmokeStatistics smokeStats = GetStatsForStrength(_smokeStrength);
 
                     if (smokeStats != null)
                     {
@@ -41,25 +42,23 @@ namespace BattleCruisers.Effects.Smoke
             }
         }
 
-        public void Initialise()
+        public void Initialise(ISmokeChanger smokeChanger)
         {
+            Assert.IsNotNull(smokeChanger);
+            _smokeChanger = smokeChanger;
+
             _particleSystem = GetComponent<ParticleSystem>();
             Assert.IsNotNull(_particleSystem);
             _particleSystem.Pause();
         }
 
-        private void ApplySmokeStats(SmokeStats smokeStats)
+        private void ApplySmokeStats(SmokeStatistics smokeStats)
         {
-            ParticleSystem.MainModule mainModule = _particleSystem.main;
-            mainModule.startLifetime = new ParticleSystem.MinMaxCurve(smokeStats.StartLifetimeMin, smokeStats.StartLifetimeMax);
-            mainModule.maxParticles = smokeStats.MaxNumberOfParticles;
-
-            ParticleSystem.EmissionModule emissionModule = _particleSystem.emission;
-            emissionModule.rateOverTime = smokeStats.EmissionRatePerS;
+            _smokeChanger.Change(_particleSystem, smokeStats);
         }
 
         // Would normally make abstract, but see class summary comment.
-        protected virtual SmokeStats GetStatsForStrength(SmokeStrength strength)
+        protected virtual SmokeStatistics GetStatsForStrength(SmokeStrength strength)
         {
             throw new NotImplementedException();
         }

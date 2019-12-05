@@ -16,7 +16,7 @@ namespace BattleCruisers.Effects.Smoke
         {
             Smoke smoke = GetComponent<Smoke>();
             Assert.IsNotNull(smoke);
-            smoke.Initialise();
+            smoke.Initialise(new SmokeChanger());
 
             _smokeEmitter
                 = new SmokeEmitter(
