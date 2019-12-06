@@ -35,7 +35,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _barrelFiringAnimation = Substitute.For<IAnimation>();
             _muzzleFlash = Substitute.For<IParticleSystemGroup>();
 
-            _helper = new BarrelFiringHelper(_barrelController, _accuracyAdjuster, _fireIntervalManager, _barrelFiringAnimation, _muzzleFlash);
+            // FELIX  Fix :D
+            _helper = new BarrelFiringHelper(_barrelController, _accuracyAdjuster, _fireIntervalManager, _barrelFiringAnimation, _muzzleFlash, null);
 
             _onTargetResult
                 = new BarrelAdjustmentResult(

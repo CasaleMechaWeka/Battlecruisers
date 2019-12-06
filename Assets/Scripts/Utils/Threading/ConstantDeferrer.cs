@@ -6,19 +6,19 @@ namespace BattleCruisers.Utils.Threading
     public class ConstantDeferrer : IConstantDeferrer
     {
         private readonly IDeferrer _deferrer;
-        private readonly float _delayInMs;
+        private readonly float _delayInS;
 
-        public ConstantDeferrer(IDeferrer deferrer, float delayInMs)
+        public ConstantDeferrer(IDeferrer deferrer, float delayInS)
         {
             Assert.IsNotNull(deferrer);
 
             _deferrer = deferrer;
-            _delayInMs = delayInMs;
+            _delayInS = delayInS;
         }
 
         public void Defer(Action action)
         {
-            _deferrer.Defer(action, _delayInMs);
+            _deferrer.Defer(action, _delayInS);
         }
     }
 }

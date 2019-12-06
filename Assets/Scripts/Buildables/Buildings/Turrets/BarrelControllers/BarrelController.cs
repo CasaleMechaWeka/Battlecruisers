@@ -7,6 +7,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Threading;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -119,7 +120,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.AngleLimiter,
                     args.AttackablePositionFinder);
 
-            _firingHelper = new BarrelFiringHelper(this, args.AccuracyAdjuster, _fireIntervalManager, GetBarrelFiringAnimation(args), _muzzleFlash);
+            _firingHelper 
+                = new BarrelFiringHelper(
+                    this, 
+                    args.AccuracyAdjuster, 
+                    _fireIntervalManager, 
+                    GetBarrelFiringAnimation(args), 
+                    _muzzleFlash,
+                    CreateConstantDeferrer(args.FactoryProvider.DeferrerProvider.Deferrer));
 
             await InternalInitialiseAsync(args);
 
@@ -130,6 +138,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected virtual IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)
         {
             return args.BarrelFiringAnimation;
+        }
+
+        protected virtual IConstantDeferrer CreateConstantDeferrer(IDeferrer deferrer)
+        {
+            return new DummyConstantDeferrer();
         }
 
         protected virtual async Task InternalInitialiseAsync(IBarrelControllerArgs args) { }

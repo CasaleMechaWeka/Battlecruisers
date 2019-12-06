@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using BattleCruisers.Effects;
+﻿using BattleCruisers.Effects;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -13,23 +12,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class BroadsidesTurretBarrelController : ShellTurretBarrelController
     {
         private IAnimation _barrelAnimation;
-        private IDeferrer _deferrer;
 
-        public float delayInMs;
+        public float delayInS;
 
         public override void StaticInitialise()
         {
             base.StaticInitialise();
 
+            Assert.IsTrue(delayInS >= 0);
+
             IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
             Assert.IsNotNull(barrelAnimationInitialiser);
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
-        }
-
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
-        {
-            await base.InternalInitialiseAsync(args);
-            _deferrer = args.FactoryProvider.DeferrerProvider.Deferrer; ;
         }
 
         protected override IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)
@@ -37,9 +31,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _barrelAnimation;
         }
 
-        public override void Fire(float angleInDegrees)
+        protected override IConstantDeferrer CreateConstantDeferrer(IDeferrer deferrer)
         {
-            _deferrer.Defer(() => base.Fire(angleInDegrees), delayInMs / 1000);
+            return new ConstantDeferrer(deferrer, delayInS);
         }
     }
 }
