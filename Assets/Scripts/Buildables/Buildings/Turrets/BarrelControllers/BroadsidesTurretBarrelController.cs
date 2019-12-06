@@ -1,0 +1,29 @@
+﻿using BattleCruisers.Effects;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
+{
+    /// <summary>
+    /// The firing animation is per turret barrel, instead of for the whole
+    /// turret building (ie, no animation outside of the turret barrel).
+    /// Hence need a custom way of grabbing this animation.
+    /// </summary>
+    public class BroadsidesTurretBarrelController : ShellTurretBarrelController
+    {
+        private IAnimation _barrelAnimation;
+
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+
+            IAnimationInitialiser barrelAnimationInitialiser = GetComponent<IAnimationInitialiser>();
+            Assert.IsNotNull(barrelAnimationInitialiser);
+            _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
+        }
+
+        protected override IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)
+        {
+            return _barrelAnimation;
+        }
+    }
+}
