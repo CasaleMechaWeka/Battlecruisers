@@ -439,7 +439,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             IAttackablePositionFinder attackablePositionFinder = null)
         {
-            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this);
+            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: _deferrer);
 
             return
                 new BarrelControllerArgs(

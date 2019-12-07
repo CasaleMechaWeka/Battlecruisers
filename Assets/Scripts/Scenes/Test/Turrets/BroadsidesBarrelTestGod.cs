@@ -3,8 +3,12 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -12,6 +16,14 @@ namespace BattleCruisers.Scenes.Test
 	{
         private Factory _target;
         private BarrelController _doubleBarrel;
+
+        protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
+        {
+            IDeferrer deferrer = GetComponent<IDeferrer>();
+            Assert.IsNotNull(deferrer);
+
+            return await HelperFactory.CreateHelperAsync(deferrer: deferrer, updaterProvider: updaterProvider);
+        }
 
         protected override List<GameObject> GetGameObjects()
         {
