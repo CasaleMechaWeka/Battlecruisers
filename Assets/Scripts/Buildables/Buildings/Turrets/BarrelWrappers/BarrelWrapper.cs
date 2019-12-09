@@ -136,7 +136,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         firingSound, 
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        barrelFiringAnimation);
+                        barrelFiringAnimation ?? GetBarrelAnimation());
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
@@ -247,6 +247,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
         {
             return updaterProvider.BarrelControllerUpdater;
+        }
+
+        private IAnimation GetBarrelAnimation()
+        {
+            IAnimationInitialiser animationInitialiser = GetComponent<IAnimationInitialiser>();
+            return animationInitialiser != null ? animationInitialiser.CreateAnimation() : null;
         }
 
         public void DisposeManagedState()
