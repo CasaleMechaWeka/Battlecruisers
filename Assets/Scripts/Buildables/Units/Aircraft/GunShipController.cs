@@ -77,9 +77,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		}
 
 		protected override async void OnBuildableCompleted()
-		{
-			base.OnBuildableCompleted();
+        {
+            base.OnBuildableCompleted();
 
+            Faction enemyFaction = SetupTargetDetection();
+
+            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
+
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
+        }
+
+        private Faction SetupTargetDetection()
+        {
             // Create target processor => For following enemies
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
@@ -98,20 +107,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
-            _hoverTargetDetectorProvider 
+            _hoverTargetDetectorProvider
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
-                    Transform, 
+                    Transform,
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
-
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
-
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
-		}
+            return enemyFaction;
+        }
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)
         {
