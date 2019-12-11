@@ -14,6 +14,8 @@ namespace BattleCruisers.Utils.Fetchers
         private const int NUM_OF_BOMBER_SPRITES = 8;
         private const string FIGHTER_SPRITE_NAME = "fighter";
         private const int NUM_OF_FIGHTER_SPRITES = 7;
+        private const string GUNSHIP_SPRITE_NAME = "gunship";
+        private const int NUM_OF_GUNSHIP_SPRITES = 7;
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
 
@@ -31,6 +33,11 @@ namespace BattleCruisers.Utils.Fetchers
         public async Task<IList<ISpriteWrapper>> GetFighterSpritesAsync()
         {
             return await GetAircraftSpritesAsync(GetSpritePath(FIGHTER_SPRITE_NAME), NUM_OF_FIGHTER_SPRITES);
+        }
+
+        public async Task<IList<ISpriteWrapper>> GetGunshipSpritesAsync()
+        {
+            return await GetAircraftSpritesAsync(GetSpritePath(GUNSHIP_SPRITE_NAME), NUM_OF_GUNSHIP_SPRITES);
         }
 
         private string GetSpritePath(string spriteName)

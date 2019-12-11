@@ -76,7 +76,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 		}
 
-		protected override void OnBuildableCompleted()
+		protected override async void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
@@ -109,6 +109,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
+
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
 		}
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)

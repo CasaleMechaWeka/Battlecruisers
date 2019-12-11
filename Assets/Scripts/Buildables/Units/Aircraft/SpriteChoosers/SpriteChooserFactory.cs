@@ -15,6 +15,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 
         private const float BOMBER_ASSIGNER_BASE_CUTOFF = 0.9f;
         private const float FIGHTER_ASSIGNER_BASE_CUTOFF = 0.9f;
+        private const float GUNSHIP_ASSIGNER_BASE_CUTOFF = 0.9f;
 
         public SpriteChooserFactory(IAssignerFactory assignerFactory, ISpriteProvider spriteProvider)
         {
@@ -35,6 +36,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             IList<ISpriteWrapper> fighterSprites = await _spriteProvider.GetFighterSpritesAsync();
             return new SpriteChooser(_assignerFactory, fighterSprites, maxVelocityProvider, FIGHTER_ASSIGNER_BASE_CUTOFF);
 		}
+
+        public async Task<ISpriteChooser> CreateGunshipSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
+        {
+            IList<ISpriteWrapper> gunshipSprites = await _spriteProvider.GetGunshipSpritesAsync();
+            return new SpriteChooser(_assignerFactory, gunshipSprites, maxVelocityProvider, GUNSHIP_ASSIGNER_BASE_CUTOFF);
+        }
 
         public ISpriteChooser CreateDummySpriteChooser(Sprite sprite)
         {
