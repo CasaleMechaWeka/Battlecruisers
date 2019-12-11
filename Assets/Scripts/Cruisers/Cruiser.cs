@@ -69,6 +69,10 @@ namespace BattleCruisers.Cruisers
         public int NumOfDrones => numOfDrones;
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
+        // FELIX  Null assert once all cruisers have this :)
+        public IGameObject deathPrefab;
+        public IGameObject DeathPrefab => deathPrefab;
+
 
         // ICruiserController
         public bool IsAlive => !IsDestroyed;
