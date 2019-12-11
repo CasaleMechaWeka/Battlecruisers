@@ -8,7 +8,10 @@ namespace BattleCruisers.Data.Static
         {
             public static ISoundKey Aircraft { get; } = new SoundKey(SoundType.Deaths, "aircraft");
             public static ISoundKey Ship { get; } = new SoundKey(SoundType.Deaths, "ship");
+
+            // FELIX  Remove
             public static ISoundKey Cruiser { get; } = new SoundKey(SoundType.Deaths, "cruiser");
+
             public static ISoundKey Building1 { get; } = new SoundKey(SoundType.Deaths, "building1");
             public static ISoundKey Building2 { get; } = new SoundKey(SoundType.Deaths, "building2");
             public static ISoundKey Building3 { get; } = new SoundKey(SoundType.Deaths, "building3");
