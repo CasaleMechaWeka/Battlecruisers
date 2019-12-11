@@ -6,8 +6,10 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects;
 using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.Helpers
@@ -21,6 +23,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         private IFireIntervalManager _fireIntervalManager;
         private IAnimation _barrelFiringAnimation;
         private IParticleSystemGroup _muzzleFlash;
+        private IConstantDeferrer _deferrer;
 
         private BarrelAdjustmentResult _onTargetResult, _notOnTargetResult;
         private ITurretStats _turretStats;
@@ -34,9 +37,9 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _fireIntervalManager = Substitute.For<IFireIntervalManager>();
             _barrelFiringAnimation = Substitute.For<IAnimation>();
             _muzzleFlash = Substitute.For<IParticleSystemGroup>();
+            _deferrer = Substitute.For<IConstantDeferrer>();
 
-            // FELIX  Fix :D
-            _helper = new BarrelFiringHelper(_barrelController, _accuracyAdjuster, _fireIntervalManager, _barrelFiringAnimation, _muzzleFlash, null);
+            _helper = new BarrelFiringHelper(_barrelController, _accuracyAdjuster, _fireIntervalManager, _barrelFiringAnimation, _muzzleFlash, _deferrer);
 
             _onTargetResult
                 = new BarrelAdjustmentResult(
@@ -49,6 +52,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _barrelController.TurretStats.Returns(_turretStats);
 
             _target = Substitute.For<ITarget>();
+
+            _deferrer.Defer(Arg.Invoke());
         }
 
         [Test]
@@ -139,6 +144,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 
         private void Expect_NoFire()
         {
+            _deferrer.DidNotReceiveWithAnyArgs().Defer(default);
             _barrelController.DidNotReceiveWithAnyArgs().Fire(default);
             _fireIntervalManager.DidNotReceive().OnFired();
             _barrelFiringAnimation.DidNotReceive().Play();
@@ -147,6 +153,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
 
         private void Expect_Fire(float fireAngle)
         {
+            _deferrer.Received().Defer(Arg.Any<Action>());
             _barrelController.Received().Fire(fireAngle);
             _fireIntervalManager.Received().OnFired();
             _barrelFiringAnimation.Received().Play();
