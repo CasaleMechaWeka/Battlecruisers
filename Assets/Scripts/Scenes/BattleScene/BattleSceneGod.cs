@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Death;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;

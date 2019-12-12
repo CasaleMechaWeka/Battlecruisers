@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Death;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;

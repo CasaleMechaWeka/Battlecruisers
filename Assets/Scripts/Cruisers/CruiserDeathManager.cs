@@ -3,9 +3,8 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Cruisers.Death
+namespace BattleCruisers.Cruisers
 {
-    // FELIX  move up namespace :P
     public class CruiserDeathManager
     {
         public CruiserDeathManager(ICruiser playerCruiser, ICruiser aiCruiser)
