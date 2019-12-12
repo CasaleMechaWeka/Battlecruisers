@@ -70,8 +70,8 @@ namespace BattleCruisers.Cruisers
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
         // FELIX  Null assert once all cruisers have this :)
-        public IGameObject deathPrefab;
-        public IGameObject DeathPrefab => deathPrefab;
+        public GameObject deathPrefab;
+        public GameObject DeathPrefab => deathPrefab;
 
 
         // ICruiserController

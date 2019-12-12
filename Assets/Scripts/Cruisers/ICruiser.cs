@@ -9,6 +9,7 @@ using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers
 {
@@ -25,7 +26,7 @@ namespace BattleCruisers.Cruisers
         IFactoryProvider FactoryProvider { get; }
         ICruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
-        IGameObject DeathPrefab { get; }
+        GameObject DeathPrefab { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
         void MakeInvincible();
