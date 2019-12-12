@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Death;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
@@ -41,6 +42,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private ITutorialProvider _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
         private BuildableButtonColourController _buildableButtonColourController;
+        private CruiserDeathManager _cruiserDeathManager;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -173,6 +175,7 @@ namespace BattleCruisers.Scenes.BattleScene
             helper.InitialiseUIManager(args);
 
             // Other
+            _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel.CloudStats, RandomGenerator.Instance);

@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Death
 {
+    // FELIX  move up namespace :P
     public class CruiserDeathManager
     {
         public CruiserDeathManager(ICruiser playerCruiser, ICruiser aiCruiser)
