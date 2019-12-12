@@ -10,7 +10,6 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
@@ -29,7 +28,6 @@ namespace BattleCruisers.Cruisers
 		private IUIManager _uiManager;
         private ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
-        private Rigidbody2D _rigidBody;
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
@@ -39,7 +37,6 @@ namespace BattleCruisers.Cruisers
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private const float ON_DEATH_GRAVITY_SCALE = 0.01f;
 
         public int numOfDrones;
         public float yAdjustmentInM;
@@ -110,9 +107,6 @@ namespace BattleCruisers.Cruisers
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
-
-            _rigidBody = GetComponent<Rigidbody2D>();
-            Assert.IsNotNull(_rigidBody);
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
@@ -237,25 +231,6 @@ namespace BattleCruisers.Cruisers
         void Update()
         {
             RepairManager.Repair(_time.DeltaTime);
-        }
-
-        protected override void OnDestroyed()
-        {
-            base.OnDestroyed();
-
-            FactoryProvider.Sound.SoundPlayer.PlaySoundAsync(SoundKeys.Deaths.Cruiser, Position);
-
-            // Make cruiser sink
-            _rigidBody.bodyType = RigidbodyType2D.Dynamic;
-            _rigidBody.gravityScale = ON_DEATH_GRAVITY_SCALE;
-
-            // Make cruiser rear sink first
-            _rigidBody.AddTorque(0.75f, ForceMode2D.Impulse);
-        }
-
-        protected override void InternalDestroy()
-        {
-            // Do not destroy game object, to give time for cruiser to sink
         }
 
         public void MakeInvincible()
