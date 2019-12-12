@@ -66,7 +66,6 @@ namespace BattleCruisers.Cruisers
         public int NumOfDrones => numOfDrones;
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
-        // FELIX  Null assert once all cruisers have this :)
         public GameObject deathPrefab;
         public GameObject DeathPrefab => deathPrefab;
 
@@ -92,6 +91,8 @@ namespace BattleCruisers.Cruisers
         public override void StaticInitialise()
         {
             base.StaticInitialise();
+
+            Assert.IsNotNull(deathPrefab);
 
             _renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
