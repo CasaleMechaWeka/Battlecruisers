@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Death;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,14 +24,13 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         protected override void Setup(Helper helper)
         {
-            CreateAndDestroyCruiser(playerCruiser, helper);
-            CreateAndDestroyCruiser(aiCruiser, helper);
-        }
+            helper.SetupCruiser(playerCruiser);
+            helper.SetupCruiser(aiCruiser);
 
-        private void CreateAndDestroyCruiser(Cruiser cruiser, Helper helper)
-        {
-            helper.SetupCruiser(cruiser);
-            cruiser.Destroy();
+            CruiserDeathManager cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
+
+            playerCruiser.Destroy();
+            aiCruiser.Destroy();
         }
     }
 }
