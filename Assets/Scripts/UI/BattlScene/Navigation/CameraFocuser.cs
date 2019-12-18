@@ -21,7 +21,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             FocusCamera(_positionProvider.PlayerCruiserPosition);
         }
 
-        // FELIX  Update tests :)
         public void FocusOnPlayerCruiserZoomedOut()
         {
             FocusCamera(_positionProvider.PlayerCruiserZoomedOutPosition, snapToCorners: false);
