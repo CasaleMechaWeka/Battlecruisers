@@ -131,8 +131,7 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator, 
                     settingsManager, 
                     settings, 
-                    updater,
-                    navigationPermitters.SwipeFilter);
+                    updater);
 
             return
                 new CompositeCameraTargetProvider(
@@ -147,8 +146,7 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculator cameraCalculator, 
             ISettingsManager settingsManager, 
             ICameraCalculatorSettings settings, 
-            TogglableUpdater updater,
-            IBroadcastingFilter swipeEnabledFilter)
+            TogglableUpdater updater)
         {
             ISystemInfo systemInfo = new SystemInfoBC();
             IDirectionalZoom directionalZoom
