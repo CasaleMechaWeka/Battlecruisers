@@ -4,20 +4,13 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public enum PositionChangeSource
-    {
-        NavigationWheel,
-        CameraFocuser,
-        Other
-    }
-
     public class PositionChangedEventArgs : EventArgs
     {
-        public PositionChangeSource Source { get; }
+        public bool SnapToCorners { get; }
 
-        public PositionChangedEventArgs(PositionChangeSource source)
+        public PositionChangedEventArgs(bool snapToCorners)
         {
-            this.Source = source;
+            SnapToCorners = snapToCorners;
         }
     }
 
@@ -27,6 +20,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         event EventHandler<PositionChangedEventArgs> CenterPositionChanged;
 
-        void SetCenterPosition(Vector2 centerPosition, PositionChangeSource source);
+        /// <param name="snapToCorners">
+        /// True if positions in the corners of the navigation wheel pyramid should snap
+        /// to those corner positions.  False if the navigation wheel should respect
+        /// the given centerPosition without adjustments.
+        /// </param>
+        void SetCenterPosition(Vector2 centerPosition, bool snapToCorners);
     }
 }

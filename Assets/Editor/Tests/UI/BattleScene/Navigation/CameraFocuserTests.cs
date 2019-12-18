@@ -30,42 +30,42 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiser()
         {
             _cameraFocuser.FocusOnPlayerCruiser();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserPosition, PositionChangeSource.CameraFocuser);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserPosition, snapToCorners: true);
         }
 
         [Test]
         public void FocusOnPlayerNavalFactory()
         {
             _cameraFocuser.FocusOnPlayerNavalFactory();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, PositionChangeSource.CameraFocuser);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, snapToCorners: true);
         }
 
         [Test]
         public void FocusOnAICruiser()
         {
             _cameraFocuser.FocusOnAICruiser();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserPosition, PositionChangeSource.CameraFocuser);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserPosition, snapToCorners: true);
         }
 
         [Test]
         public void FocusOnAINavalFactory()
         {
             _cameraFocuser.FocusOnAINavalFactory();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AINavalFactoryPosition, PositionChangeSource.CameraFocuser);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.AINavalFactoryPosition, snapToCorners: true);
         }
 
         [Test]
         public void FocusOnMidLeft()
         {
             _cameraFocuser.FocusMidLeft();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.MidLeftPosition, PositionChangeSource.CameraFocuser);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.MidLeftPosition, snapToCorners: true);
         }
 
         [Test]
         public void FocusOnOverview()
         {
             _cameraFocuser.FocusOnOverview();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.OverviewPosition, PositionChangeSource.CameraFocuser);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.OverviewPosition, snapToCorners: true);
         }
     }
 }

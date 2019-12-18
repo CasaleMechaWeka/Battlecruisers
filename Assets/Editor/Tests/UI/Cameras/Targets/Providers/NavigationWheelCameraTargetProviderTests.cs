@@ -45,7 +45,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         public void NavigationWheelCenterPositionChanged_FindsNewTarget_CornersFinder()
         {
             _cornersCameraTargetFinder.ClearReceivedCalls();
-            _navigationWheel.CenterPositionChanged += Raise.EventWith(new PositionChangedEventArgs(PositionChangeSource.NavigationWheel));
+            _navigationWheel.CenterPositionChanged += Raise.EventWith(new PositionChangedEventArgs(snapToCorners: true));
 
             _cornersCameraTargetFinder.Received().FindCameraTarget();
             _cameraTargetFinder.DidNotReceive().FindCameraTarget();
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         public void NavigationWheelCenterPositionChanged_FindsNewTarget_NormalFinder()
         {
             _cornersCameraTargetFinder.ClearReceivedCalls();
-            _navigationWheel.CenterPositionChanged += Raise.EventWith(new PositionChangedEventArgs(PositionChangeSource.Other));
+            _navigationWheel.CenterPositionChanged += Raise.EventWith(new PositionChangedEventArgs(snapToCorners: false));
 
             _cameraTargetFinder.Received().FindCameraTarget();
             _cornersCameraTargetFinder.DidNotReceive().FindCameraTarget();

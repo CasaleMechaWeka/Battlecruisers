@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public Vector2 CenterPosition
         {
             get { return _centerPosition; }
-            private set { SetCenterPosition(value, PositionChangeSource.NavigationWheel); }
+            private set { SetCenterPosition(value, snapToCorners: true); }
         }
 
         private Image _wheel;
@@ -94,7 +94,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             // empty
         }
 
-        public void SetCenterPosition(Vector2 centerPosition, PositionChangeSource source)
+        public void SetCenterPosition(Vector2 centerPosition, bool snapToCorners)
         {
             Vector2 desiredCenterPosition = centerPosition;
             Vector2 clampedCenterPosition = _positionClamper.Clamp(desiredCenterPosition);
@@ -105,7 +105,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             Logging.Verbose(Tags.NAVIGATION_WHEEL, $"desiredCenterPosition: {desiredCenterPosition}  clampedCenterPosition: {clampedCenterPosition}  clampedBottomLeftPosition: {clampedBottomLeftPosition}");
 
-            CenterPositionChanged?.Invoke(this, new PositionChangedEventArgs(source));
+            CenterPositionChanged?.Invoke(this, new PositionChangedEventArgs(snapToCorners));
         }
     }
 }
