@@ -21,6 +21,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             FocusCamera(_positionProvider.PlayerCruiserPosition);
         }
 
+        public void FocusOnPlayerCruiserZoomedOut()
+        {
+            FocusCamera(_positionProvider.PlayerCruiserZoomedOutPosition, PositionChangeSource.Other);
+        }
+
         public void FocusOnPlayerNavalFactory()
         {
             FocusCamera(_positionProvider.PlayerNavalFactoryPosition);
@@ -29,6 +34,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public void FocusOnAICruiser()
         {
             FocusCamera(_positionProvider.AICruiserPosition);
+        }
+
+        public void FocusOnAICruiserZoomedOut()
+        {
+            FocusCamera(_positionProvider.AICruiserZoomedOutPosition, PositionChangeSource.Other);
         }
 
         public void FocusOnAINavalFactory()
@@ -46,9 +56,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             FocusCamera(_positionProvider.OverviewPosition);
         }
 
-        private void FocusCamera(Vector2 centerPosition)
+        private void FocusCamera(Vector2 centerPosition, PositionChangeSource positionChangeSource = PositionChangeSource.CameraFocuser)
         {
-            _navigationWheel.SetCenterPosition(centerPosition, PositionChangeSource.CameraFocuser);
+            // FELIX  Do not use source, intead pass bool saying whether to snap to corners?  Or separate method?
+            _navigationWheel.SetCenterPosition(centerPosition, positionChangeSource);
         }
     }
 }

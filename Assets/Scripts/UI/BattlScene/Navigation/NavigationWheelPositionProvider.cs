@@ -10,11 +10,17 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     public class NavigationWheelPositionProvider : INavigationWheelPositionProvider
     {
         public Vector2 PlayerCruiserPosition { get; }
+        public Vector2 PlayerCruiserZoomedOutPosition { get; }
         public Vector2 AICruiserPosition { get; }
+        public Vector2 AICruiserZoomedOutPosition { get; }
         public Vector2 MidLeftPosition { get; }
         public Vector2 AINavalFactoryPosition { get; }
         public Vector2 PlayerNavalFactoryPosition { get; }
         public Vector2 OverviewPosition { get; }
+
+        // FELIX
+        private const float CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE = 10;
+        //private const float CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE = 7;
 
         public NavigationWheelPositionProvider(
             IPyramid navigationPanelArea, 
@@ -44,6 +50,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             Vector3 aiCruiserNavalFactoryTargetPosition = new Vector3(aiCruiserBowSlotXPosition, float.MinValue);
             ICameraTarget aiCruiserNavalFactoryTarget = new CameraTarget(aiCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
             AINavalFactoryPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
+
+            // Player cruiser zoomed out position
+            // FELIX  Beautify :)
+            ICameraTarget playerCruiserZoomedOutTarget = new CameraTarget(new Vector3(playerCruiser.Position.x, float.MinValue), CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
+            PlayerCruiserZoomedOutPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserZoomedOutTarget);
+
+            // AI cruiser zoomed out position
+            ICameraTarget aiCruiserZoomedOutTarget = new CameraTarget(aiCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
+            AICruiserZoomedOutPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserZoomedOutTarget);
         }
     }
 }

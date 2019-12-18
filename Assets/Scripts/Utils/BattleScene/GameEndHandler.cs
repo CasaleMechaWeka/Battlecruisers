@@ -78,11 +78,11 @@ namespace BattleCruisers.Utils.BattleScene
         {
             if (losingCruiser.IsPlayerCruiser)
             {
-                _cameraFocuser.FocusOnPlayerCruiser();
+                _cameraFocuser.FocusOnPlayerCruiserZoomedOut();
             }
             else
             {
-                _cameraFocuser.FocusOnAICruiser();
+                _cameraFocuser.FocusOnAICruiserZoomedOut();
             }
         }
 
