@@ -1,20 +1,24 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils.Factories;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
 {
     // TEMP  Turn this class off for final game :P
     public class Cheater : MonoBehaviour
     {
+        private IFactoryProvider _factoryProvider;
+
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
-        void Start()
+        public void Initialise(IFactoryProvider factoryProvider)
         {
-            Assert.IsNotNull(hudCanvas);
+            Helper.AssertIsNotNull(hudCanvas, factoryProvider);
+
+            _factoryProvider = factoryProvider;
 
             if (!Debug.isDebugBuild)
             {
@@ -58,6 +62,12 @@ namespace BattleCruisers.Utils.Debugging
             else if (Input.GetKeyUp(KeyCode.T))
             {
                 hudCanvas.gameObject.SetActive(!hudCanvas.gameObject.activeSelf);
+            }
+            // N = Nuke
+            else if (Input.GetKeyUp(KeyCode.N))
+            {
+                Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
             }
         }
 
