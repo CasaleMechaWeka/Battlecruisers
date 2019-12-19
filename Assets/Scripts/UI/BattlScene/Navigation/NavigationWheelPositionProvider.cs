@@ -50,9 +50,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             AINavalFactoryPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
 
             // Player cruiser zoomed out position
-            // FELIX  TEMP :P
-            ICameraTarget playerCruiserZoomedOutTarget = new CameraTarget(playerCruiser.Position, 20);
-            //ICameraTarget playerCruiserZoomedOutTarget = new CameraTarget(playerCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
+            ICameraTarget playerCruiserZoomedOutTarget = new CameraTarget(playerCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
             PlayerCruiserZoomedOutPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserZoomedOutTarget);
 
             // AI cruiser zoomed out position
