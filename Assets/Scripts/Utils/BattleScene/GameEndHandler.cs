@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.BattleScene
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
-        private const float POST_GAME_WAIT_TIME_IN_S = 5;
+        private const float POST_GAME_WAIT_TIME_IN_S = 10;
 
         public GameEndHandler(
             ICruiser playerCruiser, 
