@@ -10,6 +10,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
+        // FELIX  Update tests
+        private readonly ICameraTargetProvider _trumpTargetProvider;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
 
@@ -32,20 +34,22 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
         }
 
-        public ICameraTarget Target => ActiveTargetProvider.Target;
+        public ICameraTarget Target => _trumpTargetProvider.Target ?? ActiveTargetProvider.Target;
 
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
             IUserInputCameraTargetProvider primaryTargetProvider,
             IUserInputCameraTargetProvider secondaryTargetProvider,
+            ICameraTargetProvider trumpTargetProvider,
             INavigationWheel navigationWheel,
             ICameraNavigationWheelCalculator navigationWheelCalculator)
         {
-            Helper.AssertIsNotNull(primaryTargetProvider, secondaryTargetProvider, navigationWheel, navigationWheelCalculator);
+            Helper.AssertIsNotNull(primaryTargetProvider, secondaryTargetProvider, trumpTargetProvider, navigationWheel, navigationWheelCalculator);
 
             _primaryTargetProvider = primaryTargetProvider;
             _secondaryTargetProvider = secondaryTargetProvider;
+            _trumpTargetProvider = trumpTargetProvider;
             _navigationWheel = navigationWheel;
             _navigationWheelCalculator = navigationWheelCalculator;
 

@@ -29,6 +29,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
                 = new CompositeCameraTargetProvider(
                     _primaryTargetProvider,
                     _secondaryTargetProvider,
+                    // FELIX  Fix :)
+                    null,
                     _navigationWheel,
                     _navigationWheelCalculator);
 
