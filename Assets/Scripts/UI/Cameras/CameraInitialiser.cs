@@ -137,6 +137,8 @@ namespace BattleCruisers.UI.Cameras
                 new CompositeCameraTargetProvider(
                     primaryCameraTargetProvider,
                     secondaryCameraTargetProvider,
+                    // FELIX  Fix :)
+                    null,
                     navigationWheelPanel.NavigationWheel,
                     cameraNavigationWheelCalculator);
         }
