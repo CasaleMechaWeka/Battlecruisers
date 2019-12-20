@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.Cameras.Targets.Providers;
+using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
@@ -8,13 +9,18 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     {
         private readonly INavigationWheelPositionProvider _positionProvider;
         private readonly INavigationWheel _navigationWheel;
+        private readonly IStaticCameraTargetProvider _trumpCameraTargetProvider;
 
-        public CameraFocuser(INavigationWheelPositionProvider positionProvider, INavigationWheel navigationWheel)
+        public CameraFocuser(
+            INavigationWheelPositionProvider positionProvider, 
+            INavigationWheel navigationWheel,
+            IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
-            Helper.AssertIsNotNull(positionProvider, navigationWheel);
+            Helper.AssertIsNotNull(positionProvider, navigationWheel, trumpCameraTargetProvider);
 
             _positionProvider = positionProvider;
             _navigationWheel = navigationWheel;
+            _trumpCameraTargetProvider = trumpCameraTargetProvider;
         }
 
         public void FocusOnPlayerCruiser()
@@ -60,6 +66,16 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private void FocusCamera(Vector2 centerPosition, bool snapToCorners = true)
         {
             _navigationWheel.SetCenterPosition(centerPosition, snapToCorners);
+        }
+
+        public void FocusOnPlayerCruiserNuke()
+        {
+            _trumpCameraTargetProvider.SetTarget(_positionProvider.PlayerCruiserNukedTarget);
+        }
+
+        public void FocusOnAICruiserNuke()
+        {
+            _trumpCameraTargetProvider.SetTarget(_positionProvider.AICruiserNukedTarget);
         }
     }
 }

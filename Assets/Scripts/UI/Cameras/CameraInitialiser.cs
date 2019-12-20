@@ -50,6 +50,7 @@ namespace BattleCruisers.UI.Cameras
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
+            IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider();
 
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
                 = new CameraNavigationWheelCalculator(
@@ -68,7 +69,8 @@ namespace BattleCruisers.UI.Cameras
                     navigationWheelPanel,
                     playerCruiser,
                     aiCruiser,
-                    navigationPermitters);
+                    navigationPermitters,
+                    trumpCameraTargetProvider);
 
             ITime time = TimeBC.Instance;
 
@@ -93,7 +95,10 @@ namespace BattleCruisers.UI.Cameras
                 new CameraComponents(
                     _cameraAdjuster,
                     navigationWheelPanel.NavigationWheel,
-                    new CameraFocuser(navigationWheelPositionProvider, navigationWheelPanel.NavigationWheel),
+                    new CameraFocuser(
+                        navigationWheelPositionProvider, 
+                        navigationWheelPanel.NavigationWheel,
+                        trumpCameraTargetProvider),
                     skybox);
         }
 
@@ -106,7 +111,8 @@ namespace BattleCruisers.UI.Cameras
             INavigationWheelPanel navigationWheelPanel,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            NavigationPermitters navigationPermitters)
+            NavigationPermitters navigationPermitters,
+            IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
@@ -137,8 +143,7 @@ namespace BattleCruisers.UI.Cameras
                 new CompositeCameraTargetProvider(
                     primaryCameraTargetProvider,
                     secondaryCameraTargetProvider,
-                    // FELIX  Fix :)
-                    null,
+                    trumpCameraTargetProvider,
                     navigationWheelPanel.NavigationWheel,
                     cameraNavigationWheelCalculator);
         }

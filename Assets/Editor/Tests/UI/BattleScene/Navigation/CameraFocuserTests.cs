@@ -16,7 +16,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         {
             _positionProvider = Substitute.For<INavigationWheelPositionProvider>();
             _navigationWheel = Substitute.For<INavigationWheel>();
-            _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel);
+            // FELIX  Fix :P
+            _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel, null);
 
             _positionProvider.PlayerCruiserPosition.Returns(new Vector2(7, 7));
             _positionProvider.PlayerCruiserDeathPosition.Returns(new Vector2(77, 88));
