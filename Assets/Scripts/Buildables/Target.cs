@@ -126,9 +126,9 @@ namespace BattleCruisers.Buildables
 
             if (_healthTracker.RemoveHealth(damageAmount))
             {
-	            OnTakeDamage();
-
                 Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
+
+	            OnTakeDamage();
 
                 if (wasFullHealth)
                 {
