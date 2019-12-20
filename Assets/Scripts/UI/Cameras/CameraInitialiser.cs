@@ -86,7 +86,8 @@ namespace BattleCruisers.UI.Cameras
                     cameraNavigationWheelCalculator,
                     settings.ValidOrthographicSizes,
                     playerCruiser,
-                    aiCruiser);
+                    aiCruiser,
+                    camera);
 
             Skybox skybox = GetComponent<Skybox>();
             Assert.IsNotNull(skybox);

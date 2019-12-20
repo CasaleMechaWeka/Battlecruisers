@@ -78,7 +78,9 @@ namespace BattleCruisers.Utils.BattleScene
         {
             if (losingCruiser.IsPlayerCruiser)
             {
-                _cameraFocuser.FocusOnPlayerCruiserDeath();
+                // FELIX  Only do this if nuked :)
+                _cameraFocuser.FocusOnPlayerCruiserNuke();
+                //_cameraFocuser.FocusOnPlayerCruiserDeath();
             }
             else
             {
