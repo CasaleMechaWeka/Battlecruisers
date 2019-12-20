@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             FocusCamera(_positionProvider.PlayerCruiserPosition);
         }
 
-        public void FocusOnPlayerCruiserZoomedOut()
+        public void FocusOnPlayerCruiserDeath()
         {
             FocusCamera(_positionProvider.PlayerCruiserDeathPosition, snapToCorners: false);
         }
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             FocusCamera(_positionProvider.AICruiserPosition);
         }
 
-        public void FocusOnAICruiserZoomedOut()
+        public void FocusOnAICruiserDeath()
         {
             FocusCamera(_positionProvider.AICruiserDeathPosition, snapToCorners: false);
         }

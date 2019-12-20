@@ -38,7 +38,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnPlayerCruiserZoomedOut()
         {
-            _cameraFocuser.FocusOnPlayerCruiserZoomedOut();
+            _cameraFocuser.FocusOnPlayerCruiserDeath();
             _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserDeathPosition, snapToCorners: false);
         }
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [Test]
         public void FocusOnAICruiserZoomedOut()
         {
-            _cameraFocuser.FocusOnAICruiserZoomedOut();
+            _cameraFocuser.FocusOnAICruiserDeath();
             _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserDeathPosition, snapToCorners: false);
         }
 

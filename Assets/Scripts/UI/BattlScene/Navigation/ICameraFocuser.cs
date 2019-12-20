@@ -3,10 +3,10 @@
     public interface ICameraFocuser
     {
         void FocusOnPlayerCruiser();
-        void FocusOnPlayerCruiserZoomedOut();
+        void FocusOnPlayerCruiserDeath();
         void FocusOnPlayerNavalFactory();
         void FocusOnAICruiser();
-        void FocusOnAICruiserZoomedOut();
+        void FocusOnAICruiserDeath();
         void FocusOnAINavalFactory();
         void FocusMidLeft();
         void FocusOnOverview();
