@@ -13,12 +13,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public Vector2 PlayerCruiserDeathPosition { get; }
         public Vector2 AICruiserPosition { get; }
         public Vector2 AICruiserDeathPosition { get; }
+        public ICameraTarget PlayerCruiserNukedTarget { get; }
+        public ICameraTarget AICruiserNukedTarget { get; }
         public Vector2 MidLeftPosition { get; }
         public Vector2 AINavalFactoryPosition { get; }
         public Vector2 PlayerNavalFactoryPosition { get; }
         public Vector2 OverviewPosition { get; }
 
-        private const float CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE = 10;
+        private const float CRUISER_DEATH_ORTHOGRAPHIC_SIZE = 10;
+        private const float NUKE_ORTHOGRAPHIC_SIZE = 30;
 
         public NavigationWheelPositionProvider(
             IPyramid navigationPanelArea, 
@@ -32,6 +35,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             PlayerCruiserPosition = navigationPanelArea.BottomLeftVertex;
             AICruiserPosition = navigationPanelArea.BottomRightVertex;
             OverviewPosition = navigationPanelArea.TopCenterVertex;
+            PlayerCruiserNukedTarget = new CameraTarget(playerCruiser.Position, NUKE_ORTHOGRAPHIC_SIZE);
+            AICruiserNukedTarget = new CameraTarget(aiCruiser.Position, NUKE_ORTHOGRAPHIC_SIZE);
 
             float midLeftX = navigationPanelArea.BottomLeftVertex.x + navigationPanelArea.Width / 4;
             float midLeftY = navigationPanelArea.FindMaxY(midLeftX);
@@ -49,13 +54,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             ICameraTarget aiCruiserNavalFactoryTarget = new CameraTarget(aiCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
             AINavalFactoryPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
 
-            // Player cruiser zoomed out position
-            ICameraTarget playerCruiserZoomedOutTarget = new CameraTarget(playerCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
-            PlayerCruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserZoomedOutTarget);
+            // Player cruiser death position
+            ICameraTarget playerCruiserDeathTarget = new CameraTarget(playerCruiser.Position, CRUISER_DEATH_ORTHOGRAPHIC_SIZE);
+            PlayerCruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserDeathTarget);
 
-            // AI cruiser zoomed out position
-            ICameraTarget aiCruiserZoomedOutTarget = new CameraTarget(aiCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
-            AICruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserZoomedOutTarget);
+            // AI cruiser death position
+            ICameraTarget aiCruiserDeathTarget = new CameraTarget(aiCruiser.Position, CRUISER_DEATH_ORTHOGRAPHIC_SIZE);
+            AICruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserDeathTarget);
         }
     }
 }
