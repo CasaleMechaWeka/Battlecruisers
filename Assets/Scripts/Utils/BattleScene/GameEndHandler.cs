@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
@@ -74,18 +75,37 @@ namespace BattleCruisers.Utils.BattleScene
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory), POST_GAME_WAIT_TIME_IN_S);
         }
 
+        // FELIX  Abstract
+        // FELIX  Update tests :)
         private void FocusOnLosingCruiser(ICruiser losingCruiser)
         {
             if (losingCruiser.IsPlayerCruiser)
             {
-                // FELIX  Only do this if nuked :)
-                _cameraFocuser.FocusOnPlayerCruiserNuke();
-                //_cameraFocuser.FocusOnPlayerCruiserDeath();
+                if (IsNukeCauseOfDeath(losingCruiser))
+                {
+                    _cameraFocuser.FocusOnPlayerCruiserNuke();
+                }
+                else
+                {
+                    _cameraFocuser.FocusOnPlayerCruiserDeath();
+                }
             }
             else
             {
-                _cameraFocuser.FocusOnAICruiserDeath();
+                if (IsNukeCauseOfDeath(losingCruiser))
+                {
+                    _cameraFocuser.FocusOnAICruiserNuke();
+                }
+                else
+                {
+                    _cameraFocuser.FocusOnAICruiserDeath();
+                }
             }
+        }
+
+        private bool IsNukeCauseOfDeath(ICruiser losingCruiser)
+        {
+            return losingCruiser.LastDamagedSource is NukeLauncherController;
         }
 
         private void DestroyCruiserBuildables(ICruiser cruiser)

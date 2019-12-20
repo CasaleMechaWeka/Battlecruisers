@@ -29,6 +29,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public GameObject GameObject { get; set; }
+        public ITarget LastDamagedSource { get; set; }
 
         public event EventHandler<DamagedEventArgs> Damaged;
         public event EventHandler HealthChanged;

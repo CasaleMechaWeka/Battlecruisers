@@ -30,6 +30,7 @@ namespace BattleCruisers.Buildables
 		float Health { get; }
         float MaxHealth { get; }
 		GameObject GameObject { get; }
+        ITarget LastDamagedSource { get; }
 
         event EventHandler<DamagedEventArgs> Damaged;
 		event EventHandler HealthChanged;

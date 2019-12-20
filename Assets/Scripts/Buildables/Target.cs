@@ -64,6 +64,8 @@ namespace BattleCruisers.Buildables
 
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
+        public ITarget LastDamagedSource { get; private set; }
+
         protected void AddAttackCapability(TargetType attackCapability)
         {
             if (!_attackCapabilities.Contains(attackCapability))
@@ -126,6 +128,8 @@ namespace BattleCruisers.Buildables
 
             if (_healthTracker.RemoveHealth(damageAmount))
             {
+                LastDamagedSource = damageSource;
+
 	            OnTakeDamage();
 
                 Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
