@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // FELIX  Update tests :)
     public class CameraFocuser : ICameraFocuser
     {
         private readonly INavigationWheelPositionProvider _positionProvider;
@@ -23,7 +24,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnPlayerCruiserZoomedOut()
         {
-            FocusCamera(_positionProvider.PlayerCruiserZoomedOutPosition, snapToCorners: false);
+            FocusCamera(_positionProvider.PlayerCruiserDeathPosition, snapToCorners: false);
         }
 
         public void FocusOnPlayerNavalFactory()
@@ -38,7 +39,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnAICruiserZoomedOut()
         {
-            FocusCamera(_positionProvider.AICruiserZoomedOutPosition, snapToCorners: false);
+            FocusCamera(_positionProvider.AICruiserDeathPosition, snapToCorners: false);
         }
 
         public void FocusOnAINavalFactory()

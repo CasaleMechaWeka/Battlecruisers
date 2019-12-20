@@ -19,10 +19,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel);
 
             _positionProvider.PlayerCruiserPosition.Returns(new Vector2(7, 7));
-            _positionProvider.PlayerCruiserZoomedOutPosition.Returns(new Vector2(77, 88));
+            _positionProvider.PlayerCruiserDeathPosition.Returns(new Vector2(77, 88));
             _positionProvider.PlayerNavalFactoryPosition.Returns(new Vector2(4, 4));
             _positionProvider.AICruiserPosition.Returns(new Vector2(-3, -3));
-            _positionProvider.AICruiserZoomedOutPosition.Returns(new Vector2(-33, -11));
+            _positionProvider.AICruiserDeathPosition.Returns(new Vector2(-33, -11));
             _positionProvider.AINavalFactoryPosition.Returns(new Vector2(-9, 9));
             _positionProvider.MidLeftPosition.Returns(new Vector2(-1, 1));
             _positionProvider.OverviewPosition.Returns(new Vector2(762, 681));
@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiserZoomedOut()
         {
             _cameraFocuser.FocusOnPlayerCruiserZoomedOut();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserZoomedOutPosition, snapToCorners: false);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserDeathPosition, snapToCorners: false);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnAICruiserZoomedOut()
         {
             _cameraFocuser.FocusOnAICruiserZoomedOut();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserZoomedOutPosition, snapToCorners: false);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserDeathPosition, snapToCorners: false);
         }
 
         [Test]

@@ -10,9 +10,9 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     public class NavigationWheelPositionProvider : INavigationWheelPositionProvider
     {
         public Vector2 PlayerCruiserPosition { get; }
-        public Vector2 PlayerCruiserZoomedOutPosition { get; }
+        public Vector2 PlayerCruiserDeathPosition { get; }
         public Vector2 AICruiserPosition { get; }
-        public Vector2 AICruiserZoomedOutPosition { get; }
+        public Vector2 AICruiserDeathPosition { get; }
         public Vector2 MidLeftPosition { get; }
         public Vector2 AINavalFactoryPosition { get; }
         public Vector2 PlayerNavalFactoryPosition { get; }
@@ -51,11 +51,11 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
             // Player cruiser zoomed out position
             ICameraTarget playerCruiserZoomedOutTarget = new CameraTarget(playerCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
-            PlayerCruiserZoomedOutPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserZoomedOutTarget);
+            PlayerCruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserZoomedOutTarget);
 
             // AI cruiser zoomed out position
             ICameraTarget aiCruiserZoomedOutTarget = new CameraTarget(aiCruiser.Position, CRUISER_ZOOMED_OUT_ORTHOGRAPHIC_SIZE);
-            AICruiserZoomedOutPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserZoomedOutTarget);
+            AICruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserZoomedOutTarget);
         }
     }
 }
