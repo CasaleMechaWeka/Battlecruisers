@@ -6,9 +6,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Damage
 {
+    // FELIX  Update tests :)
     public class CruiserDamageMonitor : ICruiserDamageMonitor, IManagedDisposable
     {
         private readonly ICruiser _cruiser;
+
+        public ITarget LastCruiserDamageSource { get; private set; }
 
         public event EventHandler CruiserOrBuildingDamaged;
 
@@ -34,6 +37,7 @@ namespace BattleCruisers.Cruisers.Damage
 
         private void OnCruiserOrBuildingDamaged(object sender, DamagedEventArgs e)
         {
+            LastCruiserDamageSource = e.DamageSource;
             CruiserOrBuildingDamaged?.Invoke(this, EventArgs.Empty);
         }
 
