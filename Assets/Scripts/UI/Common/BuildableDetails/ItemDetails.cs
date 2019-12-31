@@ -12,8 +12,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem>, IHidable
         where TItem : class, ITarget, IComparableItem
 	{
-		private Text _itemName, _itemDescription;
-		private Image _itemImage;
+		public Text itemName, itemDescription;
+		public Image itemImage;
         private StatsController<TItem> _statsController;
         
         protected TItem _item;
@@ -22,9 +22,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 		public void Initialise()
         {
-            _itemName = transform.FindNamedComponent<Text>("LeftColumn/ItemName");
-            _itemDescription = transform.FindNamedComponent<Text>("LeftColumn/ItemDescription");
-            _itemImage = transform.FindNamedComponent<Image>("RightColumn/ItemImage");
+            Helper.AssertIsNotNull(itemName, itemDescription, itemImage);
 
             _statsController = GetStatsController();
             Assert.IsNotNull(_statsController);
@@ -45,9 +43,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _item = item;
 			
             _statsController.ShowStats(item, itemToCompareTo);
-            _itemName.text = item.Name;
-            _itemDescription.text = item.Description;
-            _itemImage.sprite = item.Sprite;
+            itemName.text = item.Name;
+            itemDescription.text = item.Description;
+            itemImage.sprite = item.Sprite;
 
 			gameObject.SetActive(true);
 		}
