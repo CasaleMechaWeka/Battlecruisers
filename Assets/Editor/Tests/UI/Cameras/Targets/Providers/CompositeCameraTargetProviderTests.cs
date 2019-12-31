@@ -10,11 +10,11 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class CompositeCameraTargetProviderTests
     {
-        private ICameraTargetProvider _compositeTargetProvider;
+        private ICameraTargetProvider _compositeTargetProvider, _trumpTargetProvider;
         private IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
         private INavigationWheel _navigationWheel;
         private ICameraNavigationWheelCalculator _navigationWheelCalculator;
-        private ICameraTarget _primaryTarget, _secondaryTarget;
+        private ICameraTarget _primaryTarget, _secondaryTarget, _trumpTarget;
         private int _targetChangedCount;
 
         [SetUp]
@@ -22,6 +22,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         {
             _primaryTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
             _secondaryTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
+            _trumpTargetProvider = Substitute.For<ICameraTargetProvider>();
             _navigationWheel = Substitute.For<INavigationWheel>();
             _navigationWheelCalculator = Substitute.For<ICameraNavigationWheelCalculator>();
 
@@ -29,8 +30,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
                 = new CompositeCameraTargetProvider(
                     _primaryTargetProvider,
                     _secondaryTargetProvider,
-                    // FELIX  Fix :)
-                    null,
+                    _trumpTargetProvider,
                     _navigationWheel,
                     _navigationWheelCalculator);
 
@@ -42,6 +42,9 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
             _secondaryTarget = Substitute.For<ICameraTarget>();
             _secondaryTargetProvider.Target.Returns(_secondaryTarget);
+
+            _trumpTarget = Substitute.For<ICameraTarget>();
+            _trumpTargetProvider.Target.Returns((ICameraTarget)null);
         }
 
         [Test]
@@ -49,6 +52,13 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         {
             // Navigatoin wheel starts as active target provider
             Assert.AreSame(_primaryTarget, _compositeTargetProvider.Target);
+        }
+
+        [Test]
+        public void TrumpCameraTargetProvider()
+        {
+            _trumpTargetProvider.Target.Returns(_trumpTarget);
+            Assert.AreSame(_trumpTarget, _compositeTargetProvider.Target);
         }
 
         [Test]

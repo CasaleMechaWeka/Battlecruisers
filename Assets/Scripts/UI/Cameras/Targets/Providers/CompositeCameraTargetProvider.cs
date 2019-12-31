@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
-        // FELIX  Update tests
         private readonly ICameraTargetProvider _trumpTargetProvider;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
