@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IArtificialIntelligence _ai;
         private IBattleCompletionHandler _battleCompletionHandler;
         private IDeferrer _deferrer;
-        private ICameraFocuser _cameraFocuser;
+        private ICruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
         private ITime _time;
         private IPrioritisedSoundPlayer _soundPlayer;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _ai = Substitute.For<IArtificialIntelligence>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
             _deferrer = Substitute.For<IDeferrer>();
-            _cameraFocuser = Substitute.For<ICameraFocuser>();
+            _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _time = Substitute.For<ITime>();
 
@@ -119,7 +119,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
             Assert.IsFalse(_navigationPermitter.IsMatch);
-            _cameraFocuser.Received().FocusOnAICruiser();
+            _cameraFocuser.Received().FocusOnLosingCruiser(_aiCruiser);
 
             // Check losing cruiser buildables were destroyed
             _aiBuilding.Received().Destroy();
@@ -148,7 +148,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
             Assert.IsFalse(_navigationPermitter.IsMatch);
-            _cameraFocuser.Received().FocusOnPlayerCruiser();
+            _cameraFocuser.Received().FocusOnLosingCruiser(_playerCruiser);
 
             // Check losing cruiser buildables were destroyed
             _aiBuilding.DidNotReceive().Destroy();

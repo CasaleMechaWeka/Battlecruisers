@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
@@ -19,7 +18,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IArtificialIntelligence _ai;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
-        private readonly ICameraFocuser _cameraFocuser;
+        private readonly ICruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
         private readonly ITime _time;
 
@@ -32,8 +31,8 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser aiCruiser, 
             IArtificialIntelligence ai, 
             IBattleCompletionHandler battleCompletionHandler, 
-            IDeferrer deferrer, 
-            ICameraFocuser cameraFocuser, 
+            IDeferrer deferrer,
+            ICruiserDeathCameraFocuser cameraFocuser, 
             IPermitter navigationPermitter,
             ITime time)
         {
@@ -65,7 +64,8 @@ namespace BattleCruisers.Utils.BattleScene
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;
-            FocusOnLosingCruiser(losingCruiser);
+            // FELIX  Update tests :)
+            _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
 
@@ -73,39 +73,6 @@ namespace BattleCruisers.Utils.BattleScene
             _time.TimeScale = 1;
 
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory), POST_GAME_WAIT_TIME_IN_S);
-        }
-
-        // FELIX  Abstract
-        // FELIX  Update tests :)
-        private void FocusOnLosingCruiser(ICruiser losingCruiser)
-        {
-            if (losingCruiser.IsPlayerCruiser)
-            {
-                if (IsNukeCauseOfDeath(losingCruiser))
-                {
-                    _cameraFocuser.FocusOnPlayerCruiserNuke();
-                }
-                else
-                {
-                    _cameraFocuser.FocusOnPlayerCruiserDeath();
-                }
-            }
-            else
-            {
-                if (IsNukeCauseOfDeath(losingCruiser))
-                {
-                    _cameraFocuser.FocusOnAICruiserNuke();
-                }
-                else
-                {
-                    _cameraFocuser.FocusOnAICruiserDeath();
-                }
-            }
-        }
-
-        private bool IsNukeCauseOfDeath(ICruiser losingCruiser)
-        {
-            return losingCruiser.LastDamagedSource is NukeLauncherController;
         }
 
         private void DestroyCruiserBuildables(ICruiser cruiser)

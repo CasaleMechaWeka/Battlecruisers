@@ -92,14 +92,18 @@ namespace BattleCruisers.UI.Cameras
             Skybox skybox = GetComponent<Skybox>();
             Assert.IsNotNull(skybox);
 
+            CameraFocuser cameraFocuser 
+                = new CameraFocuser(
+                    navigationWheelPositionProvider,
+                    navigationWheelPanel.NavigationWheel,
+                    trumpCameraTargetProvider);
+            
             return
                 new CameraComponents(
                     _cameraAdjuster,
                     navigationWheelPanel.NavigationWheel,
-                    new CameraFocuser(
-                        navigationWheelPositionProvider, 
-                        navigationWheelPanel.NavigationWheel,
-                        trumpCameraTargetProvider),
+                    cameraFocuser,
+                    new CruiserDeathCameraFocuser(cameraFocuser),
                     skybox);
         }
 

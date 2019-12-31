@@ -192,7 +192,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         ai,
                         battleCompletionHandler,
                         components.Deferrer,
-                        cameraComponents.CameraFocuser,
+                        cameraComponents.CruiserDeathCameraFocuser,
                         navigationPermitters.NavigationFilter,
                         time));
             Cheater cheater = GetComponentInChildren<Cheater>();
