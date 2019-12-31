@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -10,14 +12,17 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         private ICameraFocuser _cameraFocuser;
         private INavigationWheelPositionProvider _positionProvider;
         private INavigationWheel _navigationWheel;
+        private IStaticCameraTargetProvider _trumpCameraTargetProvider;
+        private ICameraTarget _playerCruiserCameraTarget, _aiCruiserCameraTarget;
 
         [SetUp]
         public void TestSetup()
         {
             _positionProvider = Substitute.For<INavigationWheelPositionProvider>();
             _navigationWheel = Substitute.For<INavigationWheel>();
-            // FELIX  Fix :P
-            _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel, null);
+            _trumpCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
+
+            _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel, _trumpCameraTargetProvider);
 
             _positionProvider.PlayerCruiserPosition.Returns(new Vector2(7, 7));
             _positionProvider.PlayerCruiserDeathPosition.Returns(new Vector2(77, 88));
@@ -27,6 +32,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             _positionProvider.AINavalFactoryPosition.Returns(new Vector2(-9, 9));
             _positionProvider.MidLeftPosition.Returns(new Vector2(-1, 1));
             _positionProvider.OverviewPosition.Returns(new Vector2(762, 681));
+
+            _playerCruiserCameraTarget = Substitute.For<ICameraTarget>();
+            _positionProvider.PlayerCruiserNukedTarget.Returns(_playerCruiserCameraTarget);
+            
+            _aiCruiserCameraTarget = Substitute.For<ICameraTarget>();
+            _positionProvider.AICruiserNukedTarget.Returns(_aiCruiserCameraTarget);
         }
 
         [Test]
@@ -83,6 +94,20 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         {
             _cameraFocuser.FocusOnOverview();
             _navigationWheel.Received().SetCenterPosition(_positionProvider.OverviewPosition, snapToCorners: true);
+        }
+
+        [Test]
+        public void FocusOnPlayerCruiserNuke()
+        {
+            _cameraFocuser.FocusOnPlayerCruiserNuke();
+            _trumpCameraTargetProvider.Received().SetTarget(_playerCruiserCameraTarget);
+        }
+
+        [Test]
+        public void FocusOnAICruiserNuke()
+        {
+            _cameraFocuser.FocusOnAICruiserNuke();
+            _trumpCameraTargetProvider.Received().SetTarget(_aiCruiserCameraTarget);
         }
     }
 }

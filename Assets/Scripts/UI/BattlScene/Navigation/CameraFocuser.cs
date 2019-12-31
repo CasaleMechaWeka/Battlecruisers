@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  Update tests :)
     public class CameraFocuser : ICameraFocuser
     {
         private readonly INavigationWheelPositionProvider _positionProvider;
