@@ -124,12 +124,11 @@ namespace BattleCruisers.Buildables
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
 		{
+            LastDamagedSource = damageSource;
             bool wasFullHealth = IsFullHealth;
 
             if (_healthTracker.RemoveHealth(damageAmount))
             {
-                LastDamagedSource = damageSource;
-
 	            OnTakeDamage();
 
                 Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
