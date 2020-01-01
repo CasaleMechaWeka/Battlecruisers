@@ -64,7 +64,6 @@ namespace BattleCruisers.Utils.BattleScene
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;
-            // FELIX  Update tests :)
             _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
