@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  test
     public class CruiserDeathCameraFocuser : ICruiserDeathCameraFocuser
     {
         private readonly ICameraFocuser _cameraFocuser;
