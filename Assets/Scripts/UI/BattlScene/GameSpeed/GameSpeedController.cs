@@ -20,10 +20,14 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         private ICommand _increaseSpeedCommand, _decreaseSpeedCommand;
         private ButtonController _increaseSpeedButton, _decreaseSpeedButton;
 
+        public float maxSpeed = DEFAULT_MAX_GAME_SPEED;
+        public float minSpeed = DEFAULT_MIN_GAME_SPEED;
+        public bool freezeGameAtStart = false;
+
         // TEMP:  For end game, limit max speed to x4?
-        private const float MAX_GAME_SPEED = 4;
+        private const float DEFAULT_MAX_GAME_SPEED = 4;
         //private const float MAX_GAME_SPEED = 32;
-        private const float MIN_GAME_SPEED = 0.125f;
+        private const float DEFAULT_MIN_GAME_SPEED = 0.125f;
         private const float SPEED_CHANGE_FACTOR = 2;
 
         private const string SPEED_PREFIX = "x";
@@ -41,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             }
         }
 
-        void Start()
+        void Awake()
         {
             _time = TimeBC.Instance;
 
@@ -57,6 +61,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             _decreaseSpeedCommand = new Command(DecreaseSpeedCommandExecute, CanDecreaseSpeedCommandExecute);
             _decreaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("DecreaseSpeedButton");
             _decreaseSpeedButton.Initialise(soundPlayer, _decreaseSpeedCommand);
+
+            if (freezeGameAtStart)
+            {
+                GameSpeed = 0;
+            }
         }
 
         void Update()
@@ -75,17 +84,24 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private bool CanIncreaseSpeedCommandExecute()
         {
-            return GameSpeed < MAX_GAME_SPEED;
+            return GameSpeed < DEFAULT_MAX_GAME_SPEED;
         }
 
         private void IncreaseSpeedCommandExecute()
         {
-            GameSpeed *= SPEED_CHANGE_FACTOR;
+            if (GameSpeed == 0)
+            {
+                GameSpeed = minSpeed;
+            }
+            else
+            {
+                GameSpeed *= SPEED_CHANGE_FACTOR;
+            }
         }
 
         private bool CanDecreaseSpeedCommandExecute()
         {
-            return GameSpeed > MIN_GAME_SPEED;
+            return GameSpeed > DEFAULT_MIN_GAME_SPEED;
         }
 
         private void DecreaseSpeedCommandExecute()
