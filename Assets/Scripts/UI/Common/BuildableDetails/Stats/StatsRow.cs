@@ -1,27 +1,21 @@
-﻿using BattleCruisers.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public abstract class StatsRow : MonoBehaviour
 	{
-        private Image _comparisonFeedbackBackground;
-        private Text _rowLabel;
+        private CanvasGroup _canvasGroup;
 
         public virtual void Initialise()
         {
-            _comparisonFeedbackBackground = GetComponent<Image>();
-            Assert.IsNotNull(_comparisonFeedbackBackground);
-
-            _rowLabel = transform.FindNamedComponent<Text>("RowLabel");
+            _canvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(_canvasGroup);
         }
 
 		public void ShowResult(ComparisonResult comparisonResult)
 		{
-			_comparisonFeedbackBackground.color = comparisonResult.BackgroundColor;
-            _rowLabel.color = comparisonResult.ForegroundColor;
+            _canvasGroup.alpha = comparisonResult.RowAlpha;
 		}
 	}
 }

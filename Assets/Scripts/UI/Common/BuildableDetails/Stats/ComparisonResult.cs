@@ -1,52 +1,40 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.UI.Common.BuildableDetails.Stats
+﻿namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public interface IComparisonResult
 	{
-		Color BackgroundColor { get; }
-		Color ForegroundColor { get; }
+        float RowAlpha { get; }
 	}
 
 	public abstract class ComparisonResult : IComparisonResult
 	{
-        protected class BackgroundColors
+        protected class Alpha
         {
-		    public static Color NEUTRAL = Color.clear;
-            public static Color BETTER = Color.white;
-            public static Color WORSE = Color.clear;
+		    public static float NEUTRAL = 1;
+            public static float BETTER = 1;
+            public static float WORSE = 0.5f;
         }
 
-        protected class ForegroundColors
-        {
-            public static Color NEUTRAL = Color.white;
-            public static Color BETTER = Color.black;
-            public static Color WORSE = Color.white;
-        }
+        public float RowAlpha { get; }
 
-		public Color BackgroundColor { get; }
-        public Color ForegroundColor { get; }
-
-        protected ComparisonResult(Color backgroundColor, Color textColor)
+        protected ComparisonResult(float rowAlpha)
 		{
-			BackgroundColor = backgroundColor;
-            ForegroundColor = textColor;
+            RowAlpha = rowAlpha;
 		}
 	}
 
 	public class NeutralResult : ComparisonResult
 	{
-		public NeutralResult() : base(BackgroundColors.NEUTRAL, ForegroundColors.NEUTRAL) { }
+		public NeutralResult() : base(Alpha.NEUTRAL) { }
 	}
 
 	public class BetterResult : ComparisonResult
 	{
-		public BetterResult() : base(BackgroundColors.BETTER, ForegroundColors.BETTER) { }
+		public BetterResult() : base(Alpha.BETTER) { }
 	}
 
 	public class WorseResult : ComparisonResult
 	{
-		public WorseResult() : base(BackgroundColors.WORSE, ForegroundColors.WORSE) { }
+		public WorseResult() : base(Alpha.WORSE) { }
 	}
 }
 

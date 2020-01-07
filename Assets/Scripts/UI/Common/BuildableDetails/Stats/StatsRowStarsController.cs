@@ -30,7 +30,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 			{
                 StarController star = _stars[i];
                 star.Enabled = i < statRating;
-                star.Color = comparisonResult.ForegroundColor;
 			}
 		}
 	}
