@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
         private StatsRowNumberController _dronesRow, _buildTimeRow;
         private StatsRowStarsController _healthRow, _antiShipDamageRow, _antiAirDamageRow, _antiCruiserDamageRow;
 
-		private const string BUILD_TIME_SUFFIX = " s";
+		private const string BUILD_TIME_SUFFIX = "s";
 
         public override void Initialise()
         {
