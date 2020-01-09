@@ -23,6 +23,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         private LaserImpact _laserImpact;
         private IDeltaTimeProvider _deltaTimeProvider;
 
+        // FELIX  Add muzzle flash particle system :)  Inject, not all laser emitters want a real muzzle flash :/
+
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
 		void Awake() 

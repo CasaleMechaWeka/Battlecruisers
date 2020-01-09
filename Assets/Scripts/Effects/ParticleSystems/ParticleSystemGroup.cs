@@ -21,5 +21,7 @@ namespace BattleCruisers.Effects.ParticleSystems
                 particleSystem.Play();
             }
         }
+
+        // FELIX  Add Stop() :)
     }
 }
