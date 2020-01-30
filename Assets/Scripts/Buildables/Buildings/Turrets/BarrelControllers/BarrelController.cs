@@ -100,13 +100,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         }
 
         public async Task InitialiseAsync(IBarrelControllerArgs args)
-		{
+        {
             Assert.IsNotNull(args);
 
             _targetFilter = args.TargetFilter;
-            _turretStatsWrapper.TurretStats 
+            _turretStatsWrapper.TurretStats
                 = args.CruiserSpecificFactories.TurretStatsFactory.CreateBoostedTurretStats(
-                    _baseTurretStats, 
+                    _baseTurretStats,
                     args.LocalBoostProviders,
                     args.GlobalFireRateBoostProviders);
 
@@ -120,20 +120,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.AngleLimiter,
                     args.AttackablePositionFinder);
 
-            // FELIX  Virtual method?
-            IBarrelFirer barrelFirer
-                = new BarrelFirer(
-                    this,
-                    GetBarrelFiringAnimation(args),
-                    _muzzleFlash,
-                    CreateConstantDeferrer(args.FactoryProvider.DeferrerProvider.Deferrer));
-
-            _firingHelper 
+            _firingHelper
                 = new BarrelFiringHelper(
-                    this, 
-                    args.AccuracyAdjuster, 
-                    _fireIntervalManager, 
-                    barrelFirer);
+                    this,
+                    args.AccuracyAdjuster,
+                    _fireIntervalManager,
+                    CreateFirer(args));
 
             await InternalInitialiseAsync(args);
 
@@ -141,14 +133,18 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _updater.Updated += _updater_Updated;
         }
 
+        protected virtual IBarrelFirer CreateFirer(IBarrelControllerArgs args)
+        {
+            return 
+                new BarrelFirer(
+                    this,
+                    GetBarrelFiringAnimation(args),
+                    _muzzleFlash);
+        }
+
         protected virtual IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)
         {
             return args.BarrelFiringAnimation;
-        }
-
-        protected virtual IConstantDeferrer CreateConstantDeferrer(IDeferrer deferrer)
-        {
-            return new DummyConstantDeferrer();
         }
 
         protected virtual async Task InternalInitialiseAsync(IBarrelControllerArgs args) { }
