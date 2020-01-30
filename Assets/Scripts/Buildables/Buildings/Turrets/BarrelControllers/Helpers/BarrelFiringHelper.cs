@@ -7,6 +7,7 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
+    // FELIX  Update tests
     public class BarrelFiringHelper : IBarrelFiringHelper
     {
         private readonly IBarrelController _barrelController;
