@@ -1,9 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Effects;
-using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
@@ -13,26 +10,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         private readonly IBarrelController _barrelController;
         private readonly IAccuracyAdjuster _accuracyAdjuster;
         private readonly IFireIntervalManager _fireIntervalManager;
-        private readonly IAnimation _barrelFiringAnimation;
-        private readonly IParticleSystemGroup _muzzleFlash;
-        private readonly IConstantDeferrer _deferrer;
+        private readonly IBarrelFirer _barrelFirer;
 
         public BarrelFiringHelper(
-            IBarrelController barrelController, 
-            IAccuracyAdjuster accuracyAdjuster, 
+            IBarrelController barrelController,
+            IAccuracyAdjuster accuracyAdjuster,
             IFireIntervalManager fireIntervalManager,
-            IAnimation barrelFiringAnimation,
-            IParticleSystemGroup muzzleFlash,
-            IConstantDeferrer deferrer)
+            IBarrelFirer barrelFirer)
         {
-            Helper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFiringAnimation, muzzleFlash, deferrer);
+            Helper.AssertIsNotNull(barrelController, accuracyAdjuster, fireIntervalManager, barrelFirer);
 
             _barrelController = barrelController;
             _accuracyAdjuster = accuracyAdjuster;
             _fireIntervalManager = fireIntervalManager;
-            _barrelFiringAnimation = barrelFiringAnimation;
-            _muzzleFlash = muzzleFlash;
-            _deferrer = deferrer;
+            _barrelFirer = barrelFirer;
         }
 
         public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
@@ -53,11 +44,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 }
                 else if (barrelAdjustmentResult.IsOnTarget)
                 {
-                    float fireAngleInDegrees 
+                    float fireAngleInDegrees
                         = _accuracyAdjuster.FindAngleInDegrees(
-                            barrelAdjustmentResult.DesiredAngleInDegrees, 
-                            _barrelController.ProjectileSpawnerPosition, 
-                            barrelAdjustmentResult.PredictedTargetPosition, 
+                            barrelAdjustmentResult.DesiredAngleInDegrees,
+                            _barrelController.ProjectileSpawnerPosition,
+                            barrelAdjustmentResult.PredictedTargetPosition,
                             _barrelController.IsSourceMirrored);
 
                     Fire(fireAngleInDegrees);
@@ -72,17 +63,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         {
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"fireAngleInDegrees: {fireAngleInDegrees}");
 
-            _deferrer.Defer(() => DelayedFire(fireAngleInDegrees));
+            _barrelFirer.Fire(fireAngleInDegrees);
             _fireIntervalManager.OnFired();
-        }
-
-        private void DelayedFire(float fireAngleInDegrees)
-        {
-            Logging.VerboseMethod(Tags.BARREL_CONTROLLER);
-
-            _barrelController.Fire(fireAngleInDegrees);
-            _barrelFiringAnimation.Play();
-            _muzzleFlash.Play();
         }
     }
 }

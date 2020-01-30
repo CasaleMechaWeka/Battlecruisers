@@ -120,14 +120,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.AngleLimiter,
                     args.AttackablePositionFinder);
 
+            // FELIX  Virtual method?
+            IBarrelFirer barrelFirer
+                = new BarrelFirer(
+                    this,
+                    GetBarrelFiringAnimation(args),
+                    _muzzleFlash,
+                    CreateConstantDeferrer(args.FactoryProvider.DeferrerProvider.Deferrer));
+
             _firingHelper 
                 = new BarrelFiringHelper(
                     this, 
                     args.AccuracyAdjuster, 
                     _fireIntervalManager, 
-                    GetBarrelFiringAnimation(args), 
-                    _muzzleFlash,
-                    CreateConstantDeferrer(args.FactoryProvider.DeferrerProvider.Deferrer));
+                    barrelFirer);
 
             await InternalInitialiseAsync(args);
 
