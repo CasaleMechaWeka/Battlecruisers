@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Laser;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -21,9 +22,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 		private float _damagePerS;
         private ITarget _parent;
         private LaserImpact _laserImpact;
+        private IParticleSystemGroup _laserMuzzleEffect;
         private IDeltaTimeProvider _deltaTimeProvider;
-
-        // FELIX  Add muzzle flash particle system :)  Inject, not all laser emitters want a real muzzle flash :/
 
 		public LayerMask unitsLayerMask, shieldsLayerMask;
 
@@ -39,6 +39,10 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
             _laserImpact.Initialise();
+
+            IParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = GetComponentInChildren<IParticleSystemGroupInitialiser>();
+            Assert.IsNotNull(laserMuzzleEffectInitialiser);
+            _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
         }
 
         public async Task InitialiseAsync(
@@ -75,6 +79,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 			{
                 _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
                 _laserImpact.Show(collision.CollisionPoint);
+                _laserMuzzleEffect.Play();
 
 				float damage = _deltaTimeProvider.DeltaTime * _damagePerS;
                 collision.Target.TakeDamage(damage, _parent);
@@ -85,6 +90,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 		{
             _laserRenderer.HideLaser();
             _laserImpact.Hide();
+            _laserMuzzleEffect.Stop();
 		}
 
         public void DisposeManagedState()
