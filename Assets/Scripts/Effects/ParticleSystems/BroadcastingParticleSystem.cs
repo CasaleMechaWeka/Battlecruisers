@@ -24,6 +24,11 @@ namespace BattleCruisers.Effects.ParticleSystems
             _particleSystem.Play();
         }
 
+        public void Stop()
+        {
+            _particleSystem.Stop();
+        }
+
         private void OnParticleSystemStopped()
         {
             Logging.Verbose(Tags.EXPLOSIONS, $"{_particleSystem}");

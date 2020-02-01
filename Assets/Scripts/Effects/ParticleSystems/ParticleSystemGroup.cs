@@ -22,6 +22,12 @@ namespace BattleCruisers.Effects.ParticleSystems
             }
         }
 
-        // FELIX  Add Stop() :)
+        public void Stop()
+        {
+            foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
+            {
+                particleSystem.Stop();
+            }
+        }
     }
 }

@@ -3,5 +3,6 @@
     public class DummyParticleSystemGroup : IParticleSystemGroup
     {
         public void Play() { }
+        public void Stop() { }
     }
 }

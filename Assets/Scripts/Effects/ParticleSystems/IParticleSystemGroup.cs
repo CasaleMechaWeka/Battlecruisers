@@ -3,5 +3,6 @@
     public interface IParticleSystemGroup
     {
         void Play();
+        void Stop();
     }
 }

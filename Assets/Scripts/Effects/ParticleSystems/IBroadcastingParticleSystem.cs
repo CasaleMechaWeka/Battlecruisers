@@ -7,5 +7,6 @@ namespace BattleCruisers.Effects.ParticleSystems
         event EventHandler Stopped;
 
         void Play();
+        void Stop();
     }
 }
