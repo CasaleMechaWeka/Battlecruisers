@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    // FELIX  Test
     public class BarrelFirer : IBarrelFirer
     {
         private readonly IBarrelController _barrelController;
