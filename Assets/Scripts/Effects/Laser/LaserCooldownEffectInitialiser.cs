@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Laser
 {
-    public class LaserCooldownEffectInitialiser : MonoBehaviour
+    public class LaserCooldownEffectInitialiser : MonoBehaviour, ILaserCooldownEffectInitialiser
     {
         public IManagedDisposable CreateLaserCooldownEffect(IFireIntervalManager fireIntervalManager)
         {
