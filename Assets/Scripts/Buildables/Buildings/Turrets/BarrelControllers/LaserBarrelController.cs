@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Effects.Laser;
 using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 	{
         private LaserTurretStats _laserTurretStats;
 		private LaserEmitter _laserEmitter;
+        private IManagedDisposable _laserCooldownEffect;
 
         public override Vector3 ProjectileSpawnerPosition => _laserEmitter.transform.position;
         public override bool CanFireWithoutTarget => false;
@@ -20,9 +22,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
             base.StaticInitialise();
 
-            // Laser emitter
-            _laserEmitter = gameObject.GetComponentInChildren<LaserEmitter>();
+            _laserEmitter = GetComponentInChildren<LaserEmitter>();
             Assert.IsNotNull(_laserEmitter);
+
+            ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
+            Assert.IsNotNull(laserCooldownEffectInitialiser);
+            _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_fireIntervalManager);
         }
 
         protected override TurretStats SetupTurretStats()

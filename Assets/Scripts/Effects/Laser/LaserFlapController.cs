@@ -6,7 +6,7 @@ namespace BattleCruisers.Effects.Laser
     // FELIX  use :)
     public class LaserFlapController : MonoBehaviour, ILaserFlap
     {
-        public Animator _flapAnimator;
+        private Animator _flapAnimator;
 
         private const string CLOSED_STATE = "ClosedFlap";
         private const string OPENED_STATE = "OpenedFlap";

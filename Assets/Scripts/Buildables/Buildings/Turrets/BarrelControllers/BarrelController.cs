@@ -19,10 +19,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     {
         private IBarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
-        private IFireIntervalManager _fireIntervalManager;
         private IUpdater _updater;
         private IParticleSystemGroup _muzzleFlash;
         protected ITargetFilter _targetFilter;
+        protected IFireIntervalManager _fireIntervalManager;
 
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
