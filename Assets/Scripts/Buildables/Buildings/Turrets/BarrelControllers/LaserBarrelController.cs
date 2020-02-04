@@ -24,10 +24,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             _laserEmitter = GetComponentInChildren<LaserEmitter>();
             Assert.IsNotNull(_laserEmitter);
-
-            ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
-            Assert.IsNotNull(laserCooldownEffectInitialiser);
-            _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_fireIntervalManager);
         }
 
         protected override TurretStats SetupTurretStats()
@@ -60,6 +56,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
+            ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
+            Assert.IsNotNull(laserCooldownEffectInitialiser);
+            _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_fireIntervalManager);
+
             await 
                 _laserEmitter.InitialiseAsync(
                     args.TargetFilter, 

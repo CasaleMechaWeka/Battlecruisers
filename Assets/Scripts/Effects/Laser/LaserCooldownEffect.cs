@@ -21,9 +21,16 @@ namespace BattleCruisers.Effects.Laser
             _overheatingSmoke = overheatingSmoke;
 
             _fireIntervalManager.ShouldFire.ValueChanged += ShouldFire_ValueChanged;
+
+            PlayEffects();
         }
 
         private void ShouldFire_ValueChanged(object sender, EventArgs e)
+        {
+            PlayEffects();
+        }
+
+        private void PlayEffects()
         {
             if (_fireIntervalManager.ShouldFire.Value)
             {
