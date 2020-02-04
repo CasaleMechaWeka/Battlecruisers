@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         {
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"_fireIntervalManager.ShouldFire: {_fireIntervalManager.ShouldFire}");
 
-            if (_fireIntervalManager.ShouldFire)
+            if (_fireIntervalManager.ShouldFire.Value)
             {
                 if (_barrelController.TurretStats.IsInBurst
                     && (_barrelController.CurrentTarget != null

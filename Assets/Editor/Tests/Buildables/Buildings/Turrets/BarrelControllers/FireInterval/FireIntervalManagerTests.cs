@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.Fi
         [Test]
         public void ShouldFire()
         {
-            Assert.IsTrue(_manager.ShouldFire);
+            Assert.IsTrue(_manager.ShouldFire.Value);
             bool compilerBribe = _firingState.Received().ShouldFire;
         }
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.Fi
 
         private void Assert_ChangedToWaitingState()
         {
-            Assert.IsFalse(_manager.ShouldFire);
+            Assert.IsFalse(_manager.ShouldFire.Value);
         }
     }
 }

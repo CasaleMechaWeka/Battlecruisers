@@ -60,17 +60,17 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldNotFire_DoesNotFire()
         {
-            _fireIntervalManager.ShouldFire.Returns(false);
+            _fireIntervalManager.ShouldFire.Value.Returns(false);
 
             Assert.IsFalse(_helper.TryFire(_onTargetResult));
-            bool compilerBribe = _fireIntervalManager.Received().ShouldFire;
+            bool compilerBribe = _fireIntervalManager.ShouldFire.Received().Value;
             Expect_NoFire();
         }
 
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_NotInBurst_NotOnTarget_DoesNotFire()
         {
-            _fireIntervalManager.ShouldFire.Returns(true);
+            _fireIntervalManager.ShouldFire.Value.Returns(true);
             _turretStats.IsInBurst.Returns(false);
 
             Assert.IsFalse(_helper.TryFire(_notOnTargetResult));
@@ -80,7 +80,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_InBurst_NoTarget_CannotFireWithoutTarget_NotOnTarget_DoesNotFire()
         {
-            _fireIntervalManager.ShouldFire.Returns(true);
+            _fireIntervalManager.ShouldFire.Value.Returns(true);
             _turretStats.IsInBurst.Returns(true);
             _barrelController.CurrentTarget.Returns((ITarget)null);
             _barrelController.CanFireWithoutTarget.Returns(false);
@@ -92,7 +92,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_InBurst_HasTarget_Fires()
         {
-            _fireIntervalManager.ShouldFire.Returns(true);
+            _fireIntervalManager.ShouldFire.Value.Returns(true);
             _turretStats.IsInBurst.Returns(true);
             _barrelController.CurrentTarget.Returns(_target);
 
@@ -106,7 +106,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_InBurst_NoTarget_CanFireWithoutTarget_Fires()
         {
-            _fireIntervalManager.ShouldFire.Returns(true);
+            _fireIntervalManager.ShouldFire.Value.Returns(true);
             _turretStats.IsInBurst.Returns(true);
             _barrelController.CurrentTarget.Returns((ITarget)null);
             _barrelController.CanFireWithoutTarget.Returns(true);
@@ -121,7 +121,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         [Test]
         public void TryFire_FireIntervalManager_ShouldFire_NotInBurst_OnTarget_Fires()
         {
-            _fireIntervalManager.ShouldFire.Returns(true);
+            _fireIntervalManager.ShouldFire.Value.Returns(true);
             _turretStats.IsInBurst.Returns(false);
 
             Vector3 projectileSpawnerPosition = new Vector3(17, 71, 171);
