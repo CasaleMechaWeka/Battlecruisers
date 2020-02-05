@@ -3,7 +3,6 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    // FELIX  Use, Test
     public class DeferredBarrelFirer : IBarrelFirer
     {
         private readonly IBarrelFirer _coreFirer;
