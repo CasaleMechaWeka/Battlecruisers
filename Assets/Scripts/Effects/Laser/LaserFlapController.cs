@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Laser
 {
-    // FELIX  use :)
     public class LaserFlapController : MonoBehaviour, ILaserFlap
     {
         private Animator _flapAnimator;
