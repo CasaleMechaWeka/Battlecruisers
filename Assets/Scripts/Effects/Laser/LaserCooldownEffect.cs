@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.Effects.Laser
 {
-    // FELIX  use, test :)
     public class LaserCooldownEffect : IManagedDisposable
     {
         private readonly IFireIntervalManager _fireIntervalManager;
