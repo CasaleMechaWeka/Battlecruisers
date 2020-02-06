@@ -225,11 +225,26 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        protected override void OnDeathWhileCompleted()
+        protected override void InternalDestroy()
         {
-            base.OnDeathWhileCompleted();
+            if (BuildableState == BuildableState.Completed)
+            {
+                OnDeathWhileCompleted();
+            }
+            else
+            {
+                base.InternalDestroy();
+            }
+        }
 
+        private void OnDeathWhileCompleted()
+        {
             Logging.LogMethod(Tags.AIRCRAFT);
+            HealthBar.IsVisible = false;
+
+            // Make gravity take effect
+            rigidBody.bodyType = RigidbodyType2D.Dynamic;
+            rigidBody.gravityScale = OnDeathGravityScale;
 
             // Pass on current velocity
             rigidBody.AddForce(Velocity, ForceMode2D.Impulse);

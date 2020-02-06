@@ -148,27 +148,6 @@ namespace BattleCruisers.Buildables.Units
             _audioSource.Stop();
         }
 
-        protected override void InternalDestroy()
-        {
-            if (BuildableState == BuildableState.Completed)
-            {
-                OnDeathWhileCompleted();
-            }
-            else
-            {
-                base.InternalDestroy();
-            }
-        }
-
-        protected virtual void OnDeathWhileCompleted()
-        {
-            HealthBar.IsVisible = false;
-
-            // Make gravity take effect
-            rigidBody.bodyType = RigidbodyType2D.Dynamic;
-            rigidBody.gravityScale = OnDeathGravityScale;
-        }
-
         void IRemovable.RemoveFromScene()
         {
             base.InternalDestroy();

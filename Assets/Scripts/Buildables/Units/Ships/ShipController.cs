@@ -184,22 +184,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.OnDestroyed();
         }
 
-        protected override void OnDeathWhileCompleted()
-        {
-            base.OnDeathWhileCompleted();
-
-            StopMoving();
-
-            // Disable turrets
-            foreach (IBarrelWrapper turret in _turrets)
-            {
-                turret.DisposeManagedState();
-            }
-
-            // Make ship rear sink first
-            rigidBody.AddTorque(0.75f, ForceMode2D.Impulse);
-        }
-
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             List<SpriteRenderer> renderers = base.GetInGameRenderers();
