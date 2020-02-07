@@ -171,5 +171,23 @@ namespace BattleCruisers.Data.Static
                 }
             }
         }
-	}
+
+        public static class ShipDeaths
+        {
+            public static ShipDeathKey Archon { get; } = new ShipDeathKey("Archon");
+            // FELIX  Add others :)
+
+            public static IList<IPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        // FELIX  Add others :)
+                        Archon
+                    };
+                }
+            }
+        }
+    }
 }
