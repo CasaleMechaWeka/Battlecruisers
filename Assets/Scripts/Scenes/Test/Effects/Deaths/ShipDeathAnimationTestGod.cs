@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units.Ships;
+using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Threading;
 using System;
 using System.Collections.Generic;
@@ -11,24 +13,44 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class ShipDeathAnimationTestGod : TestGodBase
     {
-        private ShipController[] _ships;
+        private IList<IPoolable<Vector3>> _shipDeaths;
         private IDeferrer _deferrer;
+        // FELIX  Tidy :)
+        private ShipController[] _ships;
+
+        protected override List<GameObject> GetGameObjects()
+        {
+            ShipDeathInitialiser[] shipDeathInitialisers = FindObjectsOfType<ShipDeathInitialiser>();
+            _shipDeaths
+                = shipDeathInitialisers
+                    .Select(initialiser => initialiser.CreateShipDeath())
+                    .ToList();
+
+            return
+                shipDeathInitialisers
+                    .Select(initialiser => initialiser.gameObject)
+                    .ToList();
 
             // FELIX
-        //protected override List<GameObject> GetGameObjects()
-        //{
-        //    _ships = FindObjectsOfType<ShipController>();
-        //    return
-        //        _ships
-        //            .Select(ship => ship.GameObject)
-        //            .ToList();
-        //}
+            //_ships = FindObjectsOfType<ShipController>();
+            //return
+            //    _ships
+            //        .Select(ship => ship.GameObject)
+            //        .ToList();
+        }
 
         protected override void Setup(Helper helper)
         {
+            _deferrer = GetComponent<TimeScaleDeferrer>();
+            Assert.IsNotNull(_deferrer);
+
+            foreach (IPoolable<Vector3> shipDeath in _shipDeaths)
+            {
+                shipDeath.Activate(new Vector3(7, 0.25f));
+                shipDeath.Deactivated += (sender, e) => _deferrer.Defer(() => shipDeath.Activate(new Vector3(7, 0.25f)), delayInS: 1);
+            }
+
             // FELIX
-            //_deferrer = GetComponent<TimeScaleDeferrer>();
-            //Assert.IsNotNull(_deferrer);
 
             //foreach (ShipController ship in _ships)
             //{

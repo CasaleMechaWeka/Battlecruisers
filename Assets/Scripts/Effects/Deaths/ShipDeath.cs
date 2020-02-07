@@ -34,12 +34,16 @@ namespace BattleCruisers.Effects.Deaths
 
         private void _sinkingAnimation_AnimationDone(object sender, EventArgs e)
         {
+            Logging.LogMethod(Tags.DEATHS);
+
             _shipDeathController.IsVisible = false;
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
         public void Activate(Vector3 activationArgs)
         {
+            Logging.LogMethod(Tags.DEATHS);
+            
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
 

@@ -83,9 +83,12 @@ namespace BattleCruisers.Utils
         public const string CRUISER = "Cruiser";
         public const string UNIT_TARGETS = "UnitTargets";
 
+        // Effects
+        public const string DEATHS = "Deaths";
+        public const string EXPLOSIONS = "Explosions";
+
         // Other
         public const string BOOST = "Boost";
-        public const string EXPLOSIONS = "Explosions";
         public const string GENERIC = "Generic";
         public const string LOCAL_BOOSTER = "LocalBooster";
         public const string MODELS = "Model";
@@ -192,9 +195,14 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
+            // Effects
+            // FELIX
+            tagsToActiveness.Add(Tags.DEATHS, true);
+            //tagsToActiveness.Add(Tags.DEATHS, false);
+            tagsToActiveness.Add(Tags.EXPLOSIONS, false);
+
             // Other
             tagsToActiveness.Add(Tags.BOOST, false);
-            tagsToActiveness.Add(Tags.EXPLOSIONS, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
