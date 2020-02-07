@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
@@ -21,6 +22,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         BuildableWrapper<IUnit> GetUnit(IPrefabKey key);
         Cruiser GetCruiser(IPrefabKey key);
         ExplosionController GetExplosion(IPrefabKey key);
+        ShipDeathInitialiser GetShipDeath(IPrefabKey key);
 
         // Multiple untyped prefab caches
         TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey) where TProjectile : Projectile;

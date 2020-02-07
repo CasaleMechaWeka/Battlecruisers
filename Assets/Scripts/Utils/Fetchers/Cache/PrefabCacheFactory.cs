@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
@@ -42,6 +43,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
             IDictionary<IPrefabKey, ExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, ExplosionController>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Explosions.AllKeys, keyToExplosion));
+            
+            IDictionary<IPrefabKey, ShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, ShipDeathInitialiser>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.ShipDeaths.AllKeys, keyToDeath));
 
             IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
@@ -60,6 +64,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<BuildableWrapper<IUnit>>(keyToUnit),
                     new MultiCache<Cruiser>(keyToCruiser),
                     new MultiCache<ExplosionController>(keyToExplosion),
+                    new MultiCache<ShipDeathInitialiser>(keyToDeath),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
                     countdownContainer.Value,
                     droneContainer.Value);

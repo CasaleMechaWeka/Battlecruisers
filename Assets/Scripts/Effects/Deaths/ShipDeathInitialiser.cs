@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Deaths
 {
-    public class ShipDeathInitialiser : MonoBehaviour
+    public class ShipDeathInitialiser : MonoBehaviourWrapper
     {
         public IPoolable<Vector3> CreateShipDeath()
         {
