@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
@@ -95,6 +96,13 @@ namespace BattleCruisers.Utils.Fetchers
             ExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
             ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             return newExplosion.Initialise();
+        }
+
+        public IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey)
+        {
+            ShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
+            ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
+            return newShipDeath.CreateShipDeath();
         }
 
         public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)

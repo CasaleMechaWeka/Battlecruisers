@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
@@ -29,6 +30,7 @@ namespace BattleCruisers.Utils.Fetchers
         CountdownController CreateDeleteCountdown(Transform parent);
 
         IExplosion CreateExplosion(ExplosionKey explosionKey);
+        IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
 
         TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
