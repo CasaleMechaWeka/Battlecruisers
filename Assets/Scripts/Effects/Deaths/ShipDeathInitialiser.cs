@@ -10,7 +10,7 @@ namespace BattleCruisers.Effects.Deaths
 {
     public class ShipDeathInitialiser : MonoBehaviourWrapper
     {
-        public IPoolable<Vector3> CreateShipDeath()
+        public IShipDeath CreateShipDeath()
         {
             BroadcastingAnimationController sinkingAnimation = GetComponent<BroadcastingAnimationController>();
             Assert.IsNotNull(sinkingAnimation);

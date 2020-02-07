@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using UnityEngine;
 namespace BattleCruisers.Effects.Deaths
 {
     // FELIX  Use, test
-    public class ShipDeath : IPoolable<Vector3>
+    public class ShipDeath : IShipDeath
     {
         private readonly IGameObject _shipDeathController;
         private readonly IBroadcastingAnimation _sinkingAnimation;

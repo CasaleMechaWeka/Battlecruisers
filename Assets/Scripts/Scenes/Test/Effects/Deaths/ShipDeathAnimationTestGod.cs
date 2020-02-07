@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class ShipDeathAnimationTestGod : TestGodBase
     {
-        private IList<IPoolable<Vector3>> _shipDeaths;
+        private IList<IShipDeath> _shipDeaths;
         private IDeferrer _deferrer;
         // FELIX  Tidy :)
         private ShipController[] _ships;
@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             _deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(_deferrer);
 
-            foreach (IPoolable<Vector3> shipDeath in _shipDeaths)
+            foreach (IShipDeath shipDeath in _shipDeaths)
             {
                 shipDeath.Activate(new Vector3(7, 0.25f));
                 shipDeath.Deactivated += (sender, e) => _deferrer.Defer(() => shipDeath.Activate(new Vector3(7, 0.25f)), delayInS: 1);
