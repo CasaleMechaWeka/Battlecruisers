@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
@@ -12,6 +13,9 @@ namespace BattleCruisers.Utils.Factories
     {
         private ExplosionPoolProvider _explosionPoolProvider;
         public IExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;
+
+        private ShipDeathPoolProvider _shipDeathPoolProvider;
+        public IShipDeathPoolProvider ShipDeathPoolProvider => _shipDeathPoolProvider;
 
         private ProjectilePoolProvider _projectilePoolProvider;
         public IProjectilePoolProvider ProjectilePoolProvider => _projectilePoolProvider;
@@ -32,6 +36,7 @@ namespace BattleCruisers.Utils.Factories
             Helper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 
             _explosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
+            _shipDeathPoolProvider = new ShipDeathPoolProvider(factoryProvider.PrefabFactory);
             _projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
@@ -42,6 +47,7 @@ namespace BattleCruisers.Utils.Factories
         public void SetInitialCapacities()
         {
             _explosionPoolProvider.SetInitialCapacity();
+            _shipDeathPoolProvider.SetInitialCapacity();
             _projectilePoolProvider.SetInitialCapacity();
             _unitPoolProvider.SetInitialCapacity();
             _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
