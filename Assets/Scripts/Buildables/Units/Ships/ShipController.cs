@@ -3,18 +3,24 @@ using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects.Deaths;
+using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -34,12 +40,14 @@ namespace BattleCruisers.Buildables.Units.Ships
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
+        private IPool<IShipDeath, Vector3> _deathPool;
 
         private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
         public override TargetType TargetType => TargetType.Ships;
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Ship;
+        // FELIX  Remove.  Move up from Unit to AircraftController
         protected override float OnDeathGravityScale => 0.2f;
 
         /// <summary>
@@ -71,6 +79,8 @@ namespace BattleCruisers.Buildables.Units.Ships
             _targetProcessorWrapper = transform.FindNamedComponent<ShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
         }
 
+        protected abstract IList<IBarrelWrapper> GetTurrets();
+
         private void FindDamageStats()
         {
             IList<IDamageCapability> antiAirDamageCapabilities = GetDamageCapabilities(TargetType.Aircraft);
@@ -95,9 +105,16 @@ namespace BattleCruisers.Buildables.Units.Ships
                     .ToList();
         }
 
-        protected abstract IList<IBarrelWrapper> GetTurrets();
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        {
+            base.Initialise(uiManager, factoryProvider);
 
-		protected override void OnBuildableCompleted()
+            IShipDeathPoolChooser shipDeathPoolChooser = GetComponent<IShipDeathPoolChooser>();
+            Assert.IsNotNull(shipDeathPoolChooser);
+            _deathPool = shipDeathPoolChooser.ChoosePool(factoryProvider.PoolProviders.ShipDeathPoolProvider);
+        }
+
+        protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
@@ -182,6 +199,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             CleanUp();
             base.OnDestroyed();
+        }
+
+        protected override void OnDeathWhileCompleted()
+        {
+            // FELIX
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()

@@ -225,19 +225,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        protected override void InternalDestroy()
-        {
-            if (BuildableState == BuildableState.Completed)
-            {
-                OnDeathWhileCompleted();
-            }
-            else
-            {
-                base.InternalDestroy();
-            }
-        }
-
-        private void OnDeathWhileCompleted()
+        protected override void OnDeathWhileCompleted()
         {
             Logging.LogMethod(Tags.AIRCRAFT);
             HealthBar.IsVisible = false;

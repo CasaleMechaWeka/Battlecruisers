@@ -148,6 +148,20 @@ namespace BattleCruisers.Buildables.Units
             _audioSource.Stop();
         }
 
+        protected override void InternalDestroy()
+        {
+            if (BuildableState == BuildableState.Completed)
+            {
+                OnDeathWhileCompleted();
+            }
+            else
+            {
+                base.InternalDestroy();
+            }
+        }
+
+        protected abstract void OnDeathWhileCompleted();
+
         void IRemovable.RemoveFromScene()
         {
             base.InternalDestroy();
