@@ -6,6 +6,7 @@ namespace BattleCruisers.Effects
 {
     public class BroadcastingAnimationController : MonoBehaviour, IBroadcastingAnimation
     {
+        // FELIX  Tidy :P
         private Animator _animator;
 
         private const string BARREL_ANIMATION_STATE = "BarrelAnimation";
@@ -20,6 +21,7 @@ namespace BattleCruisers.Effects
 
         public void Play()
         {
+            // FELIX  Plays automatically???
             //CheckAnimationState();
             //_animator.enabled = true;
             //_animator.Play(BARREL_ANIMATION_STATE, layer: -1, normalizedTime: 0);
