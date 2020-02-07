@@ -441,6 +441,11 @@ namespace BattleCruisers.Buildables
 
         protected override void InternalDestroy()
         {
+            Deactivate();
+        }
+
+        protected void Deactivate()
+        {
             _parent.SetActive(false);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }

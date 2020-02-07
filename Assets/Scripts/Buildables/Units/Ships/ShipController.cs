@@ -203,7 +203,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void OnDeathWhileCompleted()
         {
-            // FELIX
+            // FELIX  Update prefabs to be in right position automatically :)
+            _deathPool.GetItem(Position);
+            Deactivate();
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()
