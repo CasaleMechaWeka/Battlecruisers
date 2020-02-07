@@ -46,6 +46,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
+        public int DEFAULT_LEVEL = 1;
+
         private async void Start()
         {
             Assert.raiseExceptions = true;
@@ -62,7 +64,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (applicationModel.SelectedLevel == -1)
             {
                 // TEMP  Force level I'm currently testing :)
-                applicationModel.SelectedLevel = 1;
+                applicationModel.SelectedLevel = DEFAULT_LEVEL;
 
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
