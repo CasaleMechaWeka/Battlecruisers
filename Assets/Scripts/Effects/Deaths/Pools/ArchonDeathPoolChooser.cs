@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Deaths.Pools
 {
-    public class ArchonDeathPoolChooser : MonoBehaviour, IArchonDeathPoolChooser
+    public class ArchonDeathPoolChooser : MonoBehaviour, IShipDeathPoolChooser
     {
         public IPool<IShipDeath, Vector3> ChoosePool(IShipDeathPoolProvider shipDeathPoolProvider)
         {
