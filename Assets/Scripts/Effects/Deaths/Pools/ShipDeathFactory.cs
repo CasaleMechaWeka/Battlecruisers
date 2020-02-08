@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Deaths.Pools
 {
-    // FELIX  Test :)
     public class ShipDeathFactory : IPoolableFactory<IShipDeath, Vector3>
     {
         private readonly IPrefabFactory _prefabFactory;
