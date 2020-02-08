@@ -7,12 +7,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Deaths
 {
-    // FELIX  Use, test
     public class ShipDeath : IShipDeath
     {
         private readonly IGameObject _shipDeathController;
         private readonly IBroadcastingAnimation _sinkingAnimation;
-        private IList<IParticleSystemGroup> _effects;
+        private readonly IList<IParticleSystemGroup> _effects;
 
         public event EventHandler Deactivated;
 
