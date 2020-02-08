@@ -174,8 +174,10 @@ namespace BattleCruisers.Data.Static
 
         public static class ShipDeaths
         {
+            public static ShipDeathKey AttackBoat { get; } = new ShipDeathKey("AttackBoat");
+            public static ShipDeathKey Frigate { get; } = new ShipDeathKey("Frigate");
+            public static ShipDeathKey Destroyer { get; } = new ShipDeathKey("Destroyer");
             public static ShipDeathKey Archon { get; } = new ShipDeathKey("Archon");
-            // FELIX  Add others :)
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -183,7 +185,9 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        // FELIX  Add others :)
+                        AttackBoat,
+                        Frigate,
+                        Destroyer,
                         Archon
                     };
                 }
