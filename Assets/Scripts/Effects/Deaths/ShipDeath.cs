@@ -29,6 +29,8 @@ namespace BattleCruisers.Effects.Deaths
 
             // Assume sinking animaion takes longer than other effects.
             _sinkingAnimation.AnimationDone += _sinkingAnimation_AnimationDone;
+
+            _shipDeathController.IsVisible = false;
         }
 
         private void _sinkingAnimation_AnimationDone(object sender, EventArgs e)
