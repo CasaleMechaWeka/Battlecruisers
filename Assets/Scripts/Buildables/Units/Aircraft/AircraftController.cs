@@ -32,6 +32,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public float cruisingAltitudeInM;
 
         private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
+        private const float ON_DEATH_GRAVITY_SCALE = 1;
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
         public override TargetType TargetType => TargetType.Aircraft;
@@ -232,7 +233,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             // Make gravity take effect
             rigidBody.bodyType = RigidbodyType2D.Dynamic;
-            rigidBody.gravityScale = OnDeathGravityScale;
+            rigidBody.gravityScale = ON_DEATH_GRAVITY_SCALE;
 
             // Pass on current velocity
             rigidBody.AddForce(Velocity, ForceMode2D.Impulse);

@@ -54,7 +54,6 @@ namespace BattleCruisers.Buildables.Units
         protected override bool IsDroneConsumerFocusable => false;
 
         protected abstract ISoundKey EngineSoundKey { get; }
-        protected virtual float OnDeathGravityScale => 1;
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)

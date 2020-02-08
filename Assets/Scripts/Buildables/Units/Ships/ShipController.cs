@@ -47,8 +47,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override TargetType TargetType => TargetType.Ships;
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Ship;
-        // FELIX  Remove.  Move up from Unit to AircraftController
-        protected override float OnDeathGravityScale => 0.2f;
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of
