@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Deaths
