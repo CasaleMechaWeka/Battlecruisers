@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
@@ -13,7 +14,9 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 
         public virtual bool IsMatch(ITarget target)
         {
-            return target.Faction == _factionToDetect;
+            bool result = target.Faction == _factionToDetect;
+            Logging.Log(Tags.TARGET_FILTER, $"result: {result}  _factionToDetect: {_factionToDetect}");
+            return result;
         }
     }
 }

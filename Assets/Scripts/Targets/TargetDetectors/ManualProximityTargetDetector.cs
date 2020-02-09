@@ -40,12 +40,12 @@ namespace BattleCruisers.Targets.TargetDetectors
         public void Detect()
         {
             ISet<ITarget> newInRangeTargets = FindInRangeTargets();
-            Logging.Verbose(Tags.TARGET_DETECTOR, $"Current targets: {_currentInRangeTargets.Count}  new targets: {newInRangeTargets.Count}");
+            Logging.Verbose(Tags.MANUAL_TARGET_DETECTOR, $"Current targets: {_currentInRangeTargets.Count}  new targets: {newInRangeTargets.Count}");
 
             IList<ITarget> exitedTargets = DetectExitedTargets(newInRangeTargets);
             foreach (ITarget exitedTarget in exitedTargets)
             {
-                Logging.Log(Tags.TARGET_DETECTOR, $"Lost target: {exitedTarget}");
+                Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"Lost target: {exitedTarget}");
 
                 _currentInRangeTargets.Remove(exitedTarget);
                 TargetExited?.Invoke(this, new TargetEventArgs(exitedTarget));
@@ -90,7 +90,7 @@ namespace BattleCruisers.Targets.TargetDetectors
             {
                 if (!_currentInRangeTargets.Contains(newInRangeTarget))
                 {
-                    Logging.Log(Tags.TARGET_DETECTOR, $"Found new target: {newInRangeTarget}");
+                    Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"Found new target: {newInRangeTarget}");
 
                     _currentInRangeTargets.Add(newInRangeTarget);
                     TargetEntered?.Invoke(this, new TargetEventArgs(newInRangeTarget));

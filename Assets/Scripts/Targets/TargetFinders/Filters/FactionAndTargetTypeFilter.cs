@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Targets.TargetFinders.Filters
 {
@@ -15,9 +16,11 @@ namespace BattleCruisers.Targets.TargetFinders.Filters
 
 		public override bool IsMatch(ITarget target)
 		{
-			return 
-                base.IsMatch(target)
-				&& _targetTypes.Contains(target.TargetType);
-		}
-	}
+			bool result 
+                = base.IsMatch(target)
+				    && _targetTypes.Contains(target.TargetType);
+            Logging.Log(Tags.TARGET_FILTER, $"result: {result}  targetType: {target.TargetType}");
+            return result;
+        }
+    }
 }

@@ -63,7 +63,9 @@ namespace BattleCruisers.Targets.TargetTrackers
         // PERF  Hashset instead of list?
         public bool ContainsTarget(ITarget target)
         {
-            return _targets.Contains(target);
+            bool result =_targets.Contains(target);
+            Logging.Log(Tags.TARGET_TRACKER, $"result: {result}  _targets.Count: {_targets.Count}");
+            return result;
         }
 
         public void DisposeManagedState()

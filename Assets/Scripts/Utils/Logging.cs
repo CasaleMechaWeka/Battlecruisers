@@ -36,6 +36,7 @@ namespace BattleCruisers.Utils
 		// Targets
 		public const string TARGET = "Target";
 		public const string TARGET_DETECTOR = "TargetDetector";
+		public const string MANUAL_TARGET_DETECTOR = "ManualProximityTargetDetector";
 		public const string TARGET_FINDER = "TargetFinder";
 		public const string TARGET_FILTER = "TargetFilter";
         public const string TARGET_PROCESSORS = "TargetProcessors";
@@ -106,8 +107,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -148,6 +149,7 @@ namespace BattleCruisers.Utils
             // Targets
             tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
+            tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.TARGET_FILTER, false);
             tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);

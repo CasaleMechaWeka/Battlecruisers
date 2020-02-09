@@ -73,7 +73,12 @@ namespace BattleCruisers.Movement.Deciders
 
         private void DecideMovement()
         {
-            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER, $"enemy:  {_blockingEnemyProvider.Target}  friend: {_blockingFriendlyProvider.Target}  target:  { _highestPriorityTarget}");
+            Logging.Log(Tags.SHIP_MOVEMENT_DECIDER,
+                $"enemy:  {_blockingEnemyProvider.Target}"
+                + $"  friend: {_blockingFriendlyProvider.Target}"
+                + $"  HaveReachedEnemyCruiser: {HaveReachedEnemyCruiser()}"
+                + $"  target:  { _highestPriorityTarget}"
+                + $"  IsHighestPriorityTargetInRange: {IsHighestPriorityTargetInRange()}");
 
             if (!_ship.IsMoving)
             {
@@ -98,7 +103,9 @@ namespace BattleCruisers.Movement.Deciders
 
         private bool IsHighestPriorityTargetInRange()
         {
-            return _rangeHelper.IsTargetInRange(_highestPriorityTarget);
+            return 
+                _highestPriorityTarget != null
+                && _rangeHelper.IsTargetInRange(_highestPriorityTarget);
         }
 
         private bool HaveReachedEnemyCruiser()
