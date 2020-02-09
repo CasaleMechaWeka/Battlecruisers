@@ -11,7 +11,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    // FELIX  Test crazy build progress logic??
     public class UnitButtonController : BuildableButtonController
 	{
         // The unit wrapper is always the same for this button.  In contrast 
@@ -20,8 +19,31 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private IUnitClickHandler _unitClickHandler;
         private IUnitBuildProgress _unitBuildProgress;
 
-        // FELIX  Make privat property
 		private IFactory _currentFactory;
+        private IFactory CurrentFactory
+        {
+            get => _currentFactory;
+            set
+            {
+                if (_currentFactory != null)
+                {
+                    _currentFactory.CompletedBuildable -= _currentFactory_CompletedBuildable;
+                    
+                    if (_currentFactory.BuildableState != BuildableState.Completed)
+                    {
+                        _currentFactory.CompletedBuildable += _currentFactory_CompletedBuildable;
+                    }
+                }
+
+                _currentFactory = value;
+                _unitBuildProgress.Factory = value;
+
+                if (_currentFactory != null)
+                {
+                    _currentFactory.CompletedBuildable -= _currentFactory_CompletedBuildable;
+                }
+            }
+        }
 
         public override bool IsMatch
 		{
@@ -29,8 +51,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			{
 				return 
                     base.IsMatch
-                    && _currentFactory != null
-                    && _currentFactory.BuildableState == BuildableState.Completed;
+                    && CurrentFactory != null
+                    && CurrentFactory.BuildableState == BuildableState.Completed;
 			}
 		}
 
@@ -56,23 +78,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public override void OnPresenting(object activationParameter)
 		{
-			_currentFactory = activationParameter.Parse<IFactory>();
-            _unitBuildProgress.Factory = _currentFactory;
-
-			if (_currentFactory.BuildableState != BuildableState.Completed)
-			{
-				_currentFactory.CompletedBuildable += _factory_CompletedBuildable;
-			}
-
+			CurrentFactory = activationParameter.Parse<IFactory>();
             TriggerPotentialMatchChange();
 
 			// Usually have this at the start of the overriding method, but 
 			// do not want parent to call ShouldBeEnabled() until we have
-			// set our _factory field.
+			// set our factory field.
 			base.OnPresenting(activationParameter);
 		}
 
-        private void _factory_CompletedBuildable(object sender, EventArgs e)
+        private void _currentFactory_CompletedBuildable(object sender, EventArgs e)
 		{
             TriggerPotentialMatchChange();
 		}
@@ -80,16 +95,13 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public override void OnDismissing()
 		{
 			base.OnDismissing();
-
-			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
-			_currentFactory = null;
-            _unitBuildProgress.Factory = null;
+            CurrentFactory = null;
         }
 
         protected override void HandleClick(bool isButtonEnabled)
         {
-            Assert.IsNotNull(_currentFactory);
-            _unitClickHandler.HandleClick(isButtonEnabled, _unitWrapper, _currentFactory);
+            Assert.IsNotNull(CurrentFactory);
+            _unitClickHandler.HandleClick(isButtonEnabled, _unitWrapper, CurrentFactory);
 		}
 	}
 }
