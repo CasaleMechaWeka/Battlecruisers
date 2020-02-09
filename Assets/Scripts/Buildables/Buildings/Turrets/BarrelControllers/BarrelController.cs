@@ -7,7 +7,6 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Threading;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
