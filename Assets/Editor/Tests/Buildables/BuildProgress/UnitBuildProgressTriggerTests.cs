@@ -17,7 +17,8 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _buildProgressFeedback = Substitute.For<IBuildProgressFeedback>();
 
-            _unitBuildProgress = new UnitBuildProgressTrigger(_unitName, _buildProgressFeedback);
+            // FELIX  Fix :P
+            //_unitBuildProgress = new UnitBuildProgressTrigger(_unitName, _buildProgressFeedback);
         }
 
         [Test]

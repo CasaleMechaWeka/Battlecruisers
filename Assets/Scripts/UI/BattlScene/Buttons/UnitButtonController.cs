@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Assert.IsNotNull(feedbackWrapper);
             IBuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
 
-            _unitBuildProgress = new UnitBuildProgressTrigger(unitWrapper.Buildable.Name, buildProgressFeedback);
+            _unitBuildProgress = new UnitBuildProgressTrigger(new UnitBuildProgress(unitWrapper.Buildable.Name, buildProgressFeedback));
         }
 
 		public override void OnPresenting(object activationParameter)

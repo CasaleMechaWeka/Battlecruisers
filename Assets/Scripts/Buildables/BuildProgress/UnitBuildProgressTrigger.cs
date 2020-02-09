@@ -9,10 +9,16 @@ namespace BattleCruisers.Buildables.BuildProgress
     // FELIX  test :)
     public class UnitBuildProgressTrigger : IUnitBuildProgressTrigger
     {
-        private readonly string _unitName;
-        private readonly IBuildProgressFeedback _buildProgressFeedback;
+        private readonly IUnitBuildProgress _unitBuildProgress;
 
         private IFactory _factory;
+
+        public UnitBuildProgressTrigger(IUnitBuildProgress unitBuildProgress)
+        {
+            Assert.IsNotNull(unitBuildProgress);
+            _unitBuildProgress = unitBuildProgress;
+        }
+
         public IFactory Factory
         {
             private get => _factory;
@@ -38,15 +44,6 @@ namespace BattleCruisers.Buildables.BuildProgress
             }
         }
 
-        public UnitBuildProgressTrigger(string unitName, IBuildProgressFeedback buildProgressFeedback)
-        {
-            Assert.IsFalse(string.IsNullOrWhiteSpace(unitName));
-            Assert.IsNotNull(buildProgressFeedback);
-
-            _unitName = unitName;
-            _buildProgressFeedback = buildProgressFeedback;
-        }
-
         private void _factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
             ShowBuildProgressIfNecessary(e.StartedUnit);
@@ -62,17 +59,9 @@ namespace BattleCruisers.Buildables.BuildProgress
             ShowBuildProgressIfNecessary(_factory.UnitWrapper?.Buildable);
         }
 
-        private void ShowBuildProgressIfNecessary(IUnit unitUnderConstruction)
+        private void ShowBuildProgressIfNecessary(IUnit unit)
         {
-            if (unitUnderConstruction != null
-                && unitUnderConstruction.Name == _unitName)
-            {
-                _buildProgressFeedback.ShowBuildProgress(unitUnderConstruction, _factory);
-            }
-            else
-            {
-                _buildProgressFeedback.HideBuildProgress();
-            }
+            _unitBuildProgress.ShowBuildProgressIfNecessary(unit, _factory);
         }
     }
 }
