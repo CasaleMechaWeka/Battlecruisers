@@ -1,7 +1,7 @@
 ﻿using UnityCommon.Properties;
 using UnityEngine;
 
-namespace BattleCruisers.Utils.BattleScene
+namespace BattleCruisers.Utils.BattleScene.Lifetime
 {
     public class LifetimeEventBroadcaster : MonoBehaviour, ILifetimeEventBroadcaster
     {

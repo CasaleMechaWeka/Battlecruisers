@@ -1,6 +1,6 @@
 ﻿using UnityCommon.Properties;
 
-namespace BattleCruisers.Utils.BattleScene
+namespace BattleCruisers.Utils.BattleScene.Lifetime
 {
     public interface ILifetimeEventBroadcaster
     {
