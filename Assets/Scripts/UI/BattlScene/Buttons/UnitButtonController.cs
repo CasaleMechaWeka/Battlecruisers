@@ -85,6 +85,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private void _currentFactory_NewUnitChosen(object sender, EventArgs e)
         {
             _buildProgressFeedback.HideBuildProgress();
+            ShowBuildProgressIfNecessary(_currentFactory.UnitWrapper?.Buildable);
         }
 
         private void ShowBuildProgressIfNecessary(IUnit unitUnderConstruction)
