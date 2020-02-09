@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  test :)
     public class UnitBuildProgressTrigger : IUnitBuildProgressTrigger
     {
         private readonly IUnitBuildProgress _unitBuildProgress;
@@ -26,7 +25,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             {
                 if (_factory != null)
                 {
-                    _factory.UnitStarted -= _factory_StartedBuildingUnit;
+                    _factory.UnitStarted -= _factory_UnitStarted;
                     _factory.NewUnitChosen -= _factory_NewUnitChosen;
                     _factory.UnitUnderConstructionDestroyed -= _factory_UnitUnderConstructionDestroyed;
                 }
@@ -37,14 +36,14 @@ namespace BattleCruisers.Buildables.BuildProgress
                 {
                     ShowBuildProgressIfNecessary(_factory.UnitUnderConstruction);
 
-                    _factory.UnitStarted += _factory_StartedBuildingUnit;
+                    _factory.UnitStarted += _factory_UnitStarted;
                     _factory.NewUnitChosen += _factory_NewUnitChosen;
                     _factory.UnitUnderConstructionDestroyed += _factory_UnitUnderConstructionDestroyed;
                 }
             }
         }
 
-        private void _factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
+        private void _factory_UnitStarted(object sender, UnitStartedEventArgs e)
         {
             ShowBuildProgressIfNecessary(e.StartedUnit);
         }
