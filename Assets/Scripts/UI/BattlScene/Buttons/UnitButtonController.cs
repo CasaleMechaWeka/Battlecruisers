@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
@@ -18,9 +17,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         // The unit wrapper is always the same for this button.  In contrast 
         // the factory can change
 		private IBuildableWrapper<IUnit> _unitWrapper;
-		private IFactory _currentFactory;
         private IUnitClickHandler _unitClickHandler;
-        private IBuildProgressFeedback _buildProgressFeedback;
+        private IUnitBuildProgress _unitBuildProgress;
+
+        // FELIX  Make privat property
+		private IFactory _currentFactory;
 
         public override bool IsMatch
 		{
@@ -48,23 +49,20 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             BuildProgressFeedbackWrapper feedbackWrapper = GetComponentInChildren<BuildProgressFeedbackWrapper>();
             Assert.IsNotNull(feedbackWrapper);
-            _buildProgressFeedback = feedbackWrapper.CreateFeedback();
+            IBuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
+
+            _unitBuildProgress = new UnitBuildProgress(unitWrapper.Buildable.Name, buildProgressFeedback);
         }
 
 		public override void OnPresenting(object activationParameter)
 		{
 			_currentFactory = activationParameter.Parse<IFactory>();
+            _unitBuildProgress.Factory = _currentFactory;
 
 			if (_currentFactory.BuildableState != BuildableState.Completed)
 			{
 				_currentFactory.CompletedBuildable += _factory_CompletedBuildable;
 			}
-
-            _currentFactory.UnitStarted += _currentFactory_StartedBuildingUnit;
-            _currentFactory.NewUnitChosen += _currentFactory_NewUnitChosen;
-            _currentFactory.UnitUnderConstructionDestroyed += _currentFactory_UnitUnderConstructionDestroyed;
-
-            ShowBuildProgressIfNecessary(_currentFactory.UnitUnderConstruction);
 
             TriggerPotentialMatchChange();
 
@@ -79,45 +77,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             TriggerPotentialMatchChange();
 		}
 
-        private void _currentFactory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
-        {
-            ShowBuildProgressIfNecessary(e.StartedUnit);
-        }
-
-        private void _currentFactory_NewUnitChosen(object sender, EventArgs e)
-        {
-            ShowBuildProgressIfNecessary(_currentFactory.UnitWrapper?.Buildable);
-        }
-
-        private void _currentFactory_UnitUnderConstructionDestroyed(object sender, EventArgs e)
-        {
-            ShowBuildProgressIfNecessary(_currentFactory.UnitWrapper?.Buildable);
-        }
-
-        private void ShowBuildProgressIfNecessary(IUnit unitUnderConstruction)
-        {
-            if (unitUnderConstruction != null
-                && unitUnderConstruction.Name == _unitWrapper.Buildable.Name)
-            {
-                _buildProgressFeedback.ShowBuildProgress(unitUnderConstruction, _currentFactory);
-            }
-            else
-            {
-                _buildProgressFeedback.HideBuildProgress();
-            }
-        }
-
 		public override void OnDismissing()
 		{
 			base.OnDismissing();
 
-            _buildProgressFeedback.HideBuildProgress();
 			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
-            _currentFactory.UnitStarted -= _currentFactory_StartedBuildingUnit;
-            _currentFactory.NewUnitChosen -= _currentFactory_NewUnitChosen;
-            _currentFactory.UnitUnderConstructionDestroyed -= _currentFactory_UnitUnderConstructionDestroyed;
 			_currentFactory = null;
-		}
+            _unitBuildProgress.Factory = null;
+        }
 
         protected override void HandleClick(bool isButtonEnabled)
         {
