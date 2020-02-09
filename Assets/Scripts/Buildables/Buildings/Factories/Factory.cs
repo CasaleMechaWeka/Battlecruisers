@@ -28,6 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		public event EventHandler<UnitStartedEventArgs> UnitStarted;
         public event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         public event EventHandler NewUnitChosen;
+        public event EventHandler UnitUnderConstructionDestroyed;
 
         #region Properties
         protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building3;
@@ -162,6 +163,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         private void UnitUnderConstruction_Destroyed(object sender, DestroyedEventArgs e)
         {
             CleanUpUnitUnderConstruction();
+            UnitUnderConstructionDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

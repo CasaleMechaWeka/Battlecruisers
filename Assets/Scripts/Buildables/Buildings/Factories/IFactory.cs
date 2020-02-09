@@ -23,5 +23,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         event EventHandler<UnitStartedEventArgs> UnitStarted;
 		event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         event EventHandler NewUnitChosen;
+        event EventHandler UnitUnderConstructionDestroyed;
 	}
 }

@@ -12,6 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // FELIX  Test crazy build progress logic??
     public class UnitButtonController : BuildableButtonController
 	{
         // The unit wrapper is always the same for this button.  In contrast 
@@ -61,6 +62,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             _currentFactory.UnitStarted += _currentFactory_StartedBuildingUnit;
             _currentFactory.NewUnitChosen += _currentFactory_NewUnitChosen;
+            _currentFactory.UnitUnderConstructionDestroyed += _currentFactory_UnitUnderConstructionDestroyed;
 
             ShowBuildProgressIfNecessary(_currentFactory.UnitUnderConstruction);
 
@@ -88,6 +90,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             ShowBuildProgressIfNecessary(_currentFactory.UnitWrapper?.Buildable);
         }
 
+        private void _currentFactory_UnitUnderConstructionDestroyed(object sender, EventArgs e)
+        {
+            ShowBuildProgressIfNecessary(_currentFactory.UnitWrapper?.Buildable);
+        }
+
         private void ShowBuildProgressIfNecessary(IUnit unitUnderConstruction)
         {
             if (unitUnderConstruction != null
@@ -109,6 +116,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 			_currentFactory.CompletedBuildable -= _factory_CompletedBuildable;
             _currentFactory.UnitStarted -= _currentFactory_StartedBuildingUnit;
             _currentFactory.NewUnitChosen -= _currentFactory_NewUnitChosen;
+            _currentFactory.UnitUnderConstructionDestroyed -= _currentFactory_UnitUnderConstructionDestroyed;
 			_currentFactory = null;
 		}
 
