@@ -8,7 +8,7 @@ namespace BattleCruisers.Utils.BattleScene.Lifetime
         private ISettableBroadcastingProperty<bool> _isPaused;
         public IBroadcastingProperty<bool> IsPaused { get; private set; }
 
-        public void Initialise()
+        void Awake()
         {
             _isPaused = new SettableBroadcastingProperty<bool>(initialValue: false);
             IsPaused = new BroadcastingProperty<bool>(_isPaused);

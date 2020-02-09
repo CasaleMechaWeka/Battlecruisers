@@ -59,11 +59,16 @@ namespace BattleCruisers.UI.BattleScene
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             IMaskHighlightable speedButtonPanel = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
-            SetupMainMenuButtons(soundPlayer, pauseGameManager, battleCompletionHandler);
+            IMainMenuManager mainMenuManager = CreateMainMenuManager(pauseGameManager, battleCompletionHandler);
+            SetupMainMenuButtons(soundPlayer, mainMenuManager);
             SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
-            return new RightPanelComponents(informator, speedButtonPanel);
+            return 
+                new RightPanelComponents(
+                    informator, 
+                    speedButtonPanel, 
+                    mainMenuManager);
         }
 
         private IInformatorPanel SetupInformator(
@@ -94,10 +99,13 @@ namespace BattleCruisers.UI.BattleScene
             return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButtons(ISoundPlayer soundPlayer, IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
+        private IMainMenuManager CreateMainMenuManager(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
         {
-            IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
+            return new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
+        }
 
+        private void SetupMainMenuButtons(ISoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
+        {
             MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);
             mainMenuButton.Initialise(soundPlayer, mainMenuManager);

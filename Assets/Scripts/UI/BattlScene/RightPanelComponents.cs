@@ -8,13 +8,18 @@ namespace BattleCruisers.UI.BattleScene
     {
         public IInformatorPanel InformatorPanel { get; }
         public IMaskHighlightable SpeedButtonPanel { get; }
+        public IMainMenuManager MainMenuManager { get; }
 
-        public RightPanelComponents(IInformatorPanel informatorPanel, IMaskHighlightable speedButtonPanel)
+        public RightPanelComponents(
+            IInformatorPanel informatorPanel, 
+            IMaskHighlightable speedButtonPanel,
+            IMainMenuManager mainMenuManager)
         {
-            Helper.AssertIsNotNull(informatorPanel, speedButtonPanel);
+            Helper.AssertIsNotNull(informatorPanel, speedButtonPanel, mainMenuManager);
 
             InformatorPanel = informatorPanel;
             SpeedButtonPanel = speedButtonPanel;
+            MainMenuManager = mainMenuManager;
         }
     }
 }

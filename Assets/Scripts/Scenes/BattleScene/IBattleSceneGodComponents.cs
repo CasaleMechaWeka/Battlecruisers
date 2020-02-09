@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -13,5 +14,6 @@ namespace BattleCruisers.Scenes.BattleScene
         ICamera Camera { get; }
         IUpdaterProvider UpdaterProvider { get; }
         LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
+        ILifetimeEventBroadcaster LifetimeEvents { get; }
     }
 }

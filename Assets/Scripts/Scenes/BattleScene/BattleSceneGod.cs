@@ -17,6 +17,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
@@ -43,6 +44,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private UserTargetTracker _userTargetTracker;
         private BuildableButtonColourController _buildableButtonColourController;
         private CruiserDeathManager _cruiserDeathManager;
+        private LifetimeManager _lifetimeManager;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -162,6 +164,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     pauseGameManager,
                     battleCompletionHandler,
                     factoryProvider.Sound.SoundPlayer);
+            _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, playerCruiserUserChosenTargetManager, new UserTargetsColourChanger());
