@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  Interface, use, test :)
     public class UnitBuildProgress : IUnitBuildProgress
     {
         private readonly string _unitName;
