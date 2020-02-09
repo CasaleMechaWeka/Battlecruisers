@@ -237,6 +237,11 @@ namespace BattleCruisers.Buildables.Units.Ships
 
                 _friendDetectorProvider.DisposeManagedState();
                 _friendDetectorProvider = null;
+
+                foreach (IBarrelWrapper turret in _turrets)
+                {
+                    turret.DisposeManagedState();
+                }
             }
         }
     }
