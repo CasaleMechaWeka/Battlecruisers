@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.BuildProgress
 {
     // FELIX  test :)
-    public class UnitBuildProgress : IUnitBuildProgress
+    public class UnitBuildProgressTrigger : IUnitBuildProgressTrigger
     {
         private readonly string _unitName;
         private readonly IBuildProgressFeedback _buildProgressFeedback;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             }
         }
 
-        public UnitBuildProgress(string unitName, IBuildProgressFeedback buildProgressFeedback)
+        public UnitBuildProgressTrigger(string unitName, IBuildProgressFeedback buildProgressFeedback)
         {
             Assert.IsFalse(string.IsNullOrWhiteSpace(unitName));
             Assert.IsNotNull(buildProgressFeedback);

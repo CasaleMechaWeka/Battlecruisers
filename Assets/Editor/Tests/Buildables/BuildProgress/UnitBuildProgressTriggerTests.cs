@@ -6,9 +6,9 @@ using BattleCruisers.Buildables.BuildProgress;
 
 namespace BattleCruisers.Tests.Buildables.BuildProgress
 {
-    public class UnitBuildProgressTests
+    public class UnitBuildProgressTriggerTests
     {
-        private IUnitBuildProgress _unitBuildProgress;
+        private IUnitBuildProgressTrigger _unitBuildProgress;
         private string _unitName = "Turtle";
         private IBuildProgressFeedback _buildProgressFeedback;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _buildProgressFeedback = Substitute.For<IBuildProgressFeedback>();
 
-            _unitBuildProgress = new UnitBuildProgress(_unitName, _buildProgressFeedback);
+            _unitBuildProgress = new UnitBuildProgressTrigger(_unitName, _buildProgressFeedback);
         }
 
         [Test]

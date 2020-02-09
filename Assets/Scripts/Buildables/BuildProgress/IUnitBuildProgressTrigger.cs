@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    public interface IUnitBuildProgress
+    public interface IUnitBuildProgressTrigger
     {
         IFactory Factory { set; }
     }
