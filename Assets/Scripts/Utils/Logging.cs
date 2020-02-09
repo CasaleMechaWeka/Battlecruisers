@@ -205,9 +205,7 @@ namespace BattleCruisers.Utils
             // Other
             tagsToActiveness.Add(Tags.BOOST, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.LIFETIME_EVENTS, true);
-            //tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
+            tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
             tagsToActiveness.Add(Tags.POOLS, false);
