@@ -113,6 +113,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		protected override void OnUpdate()
 		{
 			if (UnitWrapper != null 
+                && !_isUnitPaused.Value
 				&& (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
 				&& _unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable))
 			{
