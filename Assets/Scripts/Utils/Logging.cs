@@ -91,6 +91,7 @@ namespace BattleCruisers.Utils
         // Other
         public const string BOOST = "Boost";
         public const string GENERIC = "Generic";
+        public const string LIFETIME_EVENTS = "LifetimeEvents";
         public const string LOCAL_BOOSTER = "LocalBooster";
         public const string MODELS = "Model";
         public const string POOLS = "Pools";
@@ -204,6 +205,9 @@ namespace BattleCruisers.Utils
             // Other
             tagsToActiveness.Add(Tags.BOOST, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.LIFETIME_EVENTS, true);
+            //tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
             tagsToActiveness.Add(Tags.POOLS, false);
