@@ -145,7 +145,7 @@ namespace BattleCruisers.Cruisers
                 = enemyShipBlockerInitialiser.Initialise(
                     args.FactoryProvider.Targets,
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
-                    args.EnemyCruiser.Faction);
+                    Helper.GetOppositeFaction(Faction));
 
             UnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<UnitReadySignalInitialiser>();
             Assert.IsNotNull(unitReadySignalInitialiser);
