@@ -3,7 +3,6 @@ using System;
 
 namespace BattleCruisers.Utils.BattleScene.Lifetime
 {
-    // FELIX  Use, test
     public class LifetimeManager
     {
         private readonly ILifetimeEventBroadcaster _lifetimeEvents;
