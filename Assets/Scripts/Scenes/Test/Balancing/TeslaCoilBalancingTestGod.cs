@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Offensive;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -20,12 +22,17 @@ namespace BattleCruisers.Scenes.Test.Balancing
             return gameObjects;
         }
 
+        protected override IBuilding GetTarget()
+        {
+            return FindObjectOfType<ShieldGenerator>();
+        }
+
         protected override void Setup(Helper helper)
         {
             base.Setup(helper);
 
             helper.InitialiseBuilding(_tesla, Faction.Blues);
 			_tesla.StartConstruction();
-		}
+        }
 	}
 }

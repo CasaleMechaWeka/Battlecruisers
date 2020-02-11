@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
@@ -10,12 +11,12 @@ namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class OffensiveTurretTestGod : CameraToggleTestGod
 	{
-        private AirFactory _target;
+        private IBuilding _target;
         private TurretController _turret;
 
         protected override List<GameObject> GetGameObjects()
         {
-			_target = FindObjectOfType<AirFactory>();
+            _target = GetTarget();
             _turret = FindObjectOfType<TurretController>();
 
             return new List<GameObject>()
@@ -23,6 +24,11 @@ namespace BattleCruisers.Scenes.Test.Offensive
                 _target.GameObject,
                 _turret.GameObject
             };
+        }
+
+        protected virtual IBuilding GetTarget()
+        {
+            return FindObjectOfType<AirFactory>();
         }
 
         protected override void Setup(Helper helper)
