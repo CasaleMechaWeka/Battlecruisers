@@ -22,7 +22,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         {
             if (e.IsLaserVisible)
             {
-                _audioSource.Play(isSpatial: true, loop: false);
+                _audioSource.Play(isSpatial: true, loop: true);
             }
             else
             {
