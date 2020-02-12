@@ -46,6 +46,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		{
 			base.Initialise(soundPlayer);
 
+            Helper.AssertIsNotNull(buildableImage, buildableName, droneLevel);
             Helper.AssertIsNotNull(buildable, shouldBeEnabledFilter);
 
 			Buildable = buildable;
