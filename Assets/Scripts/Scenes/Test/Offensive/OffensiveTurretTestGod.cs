@@ -4,8 +4,12 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
@@ -29,6 +33,14 @@ namespace BattleCruisers.Scenes.Test.Offensive
         protected virtual IBuilding GetTarget()
         {
             return FindObjectOfType<AirFactory>();
+        }
+
+        protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
+        {
+            TimeScaleDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
+            // Is ok for deferrer to be null :)
+
+            return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, deferrer: deferrer);
         }
 
         protected override void Setup(Helper helper)
