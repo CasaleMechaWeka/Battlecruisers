@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,6 +23,8 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		private Vector2 _currentTargetPoint;
 
 		private const float CRUISING_ALTITUDE_MARGIN_PROPORTION = 0.25f;
+        private const float MIN_SMOOTH_TIME_IN_S = 1;
+        private const float MAX_SMOOTH_TIME_IN_S = 10;
 
 		public RocketMovementController(
             Rigidbody2D rigidBody, 
@@ -57,6 +60,19 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
 			return _currentTargetPoint;
 		}
-	}
-}
 
+        protected override float FindVelocitySmoothTime()
+        {
+            if (Velocity.magnitude == 0)
+            {
+                return MAX_SMOOTH_TIME_IN_S;
+            }
+
+            float smoothTimeInS = _maxVelocityProvider.VelocityInMPerS / Velocity.magnitude;
+            float clampedSmoothTimeInS = Mathf.Clamp(smoothTimeInS, MIN_SMOOTH_TIME_IN_S, MAX_SMOOTH_TIME_IN_S);
+
+            Logging.Verbose(Tags.MOVEMENT, $"clampedSmoothTimeInS: {clampedSmoothTimeInS}  smoothTimeInS: {smoothTimeInS}");
+            return clampedSmoothTimeInS;
+        }
+    }
+}
