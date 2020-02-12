@@ -179,9 +179,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
             // Movement
-            // FELIX
-            tagsToActiveness.Add(Tags.MOVEMENT, true);
-            //tagsToActiveness.Add(Tags.MOVEMENT, false);
+            tagsToActiveness.Add(Tags.MOVEMENT, false);
             tagsToActiveness.Add(Tags.ROTATION_HELPER, false);
             tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
