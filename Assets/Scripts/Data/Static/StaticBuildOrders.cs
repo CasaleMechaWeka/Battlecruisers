@@ -28,8 +28,9 @@ namespace BattleCruisers.Data.Static
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                         new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
-                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator)
-					};
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation)
+                    };
 				}
 			}
 			
@@ -106,9 +107,11 @@ namespace BattleCruisers.Data.Static
 						new OffensivePrefabKeyWrapper(),
 						new AntiAirPrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
 						new OffensivePrefabKeyWrapper(),
                         new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
                         new OffensivePrefabKeyWrapper()
 					};
 				}
@@ -198,6 +201,8 @@ namespace BattleCruisers.Data.Static
 						new OffensivePrefabKeyWrapper(),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new OffensivePrefabKeyWrapper(),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation)
 					};
