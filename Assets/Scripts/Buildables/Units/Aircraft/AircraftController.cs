@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public float cruisingAltitudeInM;
 
         private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
-        private const float ON_DEATH_GRAVITY_SCALE = 1;
+        private const float ON_DEATH_GRAVITY_SCALE = 0.4f;
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
         public override TargetType TargetType => TargetType.Aircraft;
