@@ -160,7 +160,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private void OnFactoryCompletedUnit(IBuildable completedUnit, IKillCountController killCounter)
         {
             _completedUnits.Add(completedUnit);
-            completedUnit.Destroyed += (sender, e) => killCounter.KillCount++;
+
+            void Unit_Destroyed(object sender, DestroyedEventArgs e)
+            {
+                killCounter.KillCount++;
+                completedUnit.Destroyed -= Unit_Destroyed;
+            }
+            completedUnit.Destroyed += Unit_Destroyed;
         }
 
         protected void OnScenarioComplete()

@@ -184,6 +184,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)
         {
             _unitKillCount.KillCount++;
+            e.DestroyedTarget.Destroyed -= Unit_Destroyed;
         }
 
         private void Building_Destroyed(object sender, DestroyedEventArgs e)
