@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private bool _haveDroppedBombOnRun = false;
         private bool _isAtCruisingHeight = false;
 
-        private const float TURN_AROUND_DISTANCE_MULTIPLIER = 1.15f;
+        private const float TURN_AROUND_DISTANCE_MULTIPLIER = 1.5f;
         private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
 		#region Properties
