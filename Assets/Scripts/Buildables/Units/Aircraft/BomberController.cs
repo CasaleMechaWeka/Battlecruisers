@@ -27,8 +27,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private bool _haveDroppedBombOnRun = false;
         private bool _isAtCruisingHeight = false;
 
-		private const float TURN_AROUND_DISTANCE_MULTIPLIER = 2;
-		private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
+        private const float TURN_AROUND_DISTANCE_MULTIPLIER = 1.15f;
+        private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
 
 		#region Properties
 		private ITarget _target;
@@ -189,6 +189,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void TurnAround()
 		{
+            Logging.Log(Tags.AIRCRAFT, $"Position: {Position}");
+
 			Vector2 newTargetVelocity = new Vector2(EffectiveMaxVelocityInMPerS, 0);
 			if (rigidBody.velocity.x > 0)
 			{
