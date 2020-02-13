@@ -236,7 +236,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private float FindTimeBombWillTravel(float verticalDistanceInM)
 		{
-			return Mathf.Sqrt(2 * verticalDistanceInM / Constants.GRAVITY);
+			return Mathf.Sqrt(2 * verticalDistanceInM / (_bombStats.GravityScale * Constants.GRAVITY));
 		}
 
 		protected override void OnBoostChanged()
