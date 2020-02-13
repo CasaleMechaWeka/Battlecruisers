@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Pools
                 case "Fighter":
                     return _unitPoolProvider.FighterPool;
 
-                case "Turtle Gunship":
+                case "Gunship":
                     return _unitPoolProvider.GunshipPool;
 
                 case "Test Aircraft":
