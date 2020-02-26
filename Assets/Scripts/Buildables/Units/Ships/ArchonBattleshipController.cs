@@ -27,8 +27,10 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             get
             {
-                // Rear missile launcher and direct fire anti sea will both also be in range.
-                return _missileLauncherFront.RangeInM;
+                // FELIX  Fix :P
+                return 12;
+                //// Rear missile launcher and direct fire anti sea will both also be in range.
+                //return _missileLauncherFront.RangeInM;
             }
         }
 
@@ -39,22 +41,23 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
 
-            _directFireAntiSea = transform.FindNamedComponent<IBarrelWrapper>("GravityAffectedAntiSea");
-            turrets.Add(_directFireAntiSea);
+            // FELIX  Fix :P
+            //_directFireAntiSea = transform.FindNamedComponent<IBarrelWrapper>("GravityAffectedAntiSea");
+            //turrets.Add(_directFireAntiSea);
 
-            // Missile launchers
-            _missileLauncherFront = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherFront");
-            turrets.Add(_missileLauncherFront);
+            //// Missile launchers
+            //_missileLauncherFront = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherFront");
+            //turrets.Add(_missileLauncherFront);
 
-            _missileLauncherRear = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherRear");
-            turrets.Add(_missileLauncherRear);
+            //_missileLauncherRear = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherRear");
+            //turrets.Add(_missileLauncherRear);
 
-            // Anti air
-            _directFireAntiAir1 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir1");
-            turrets.Add(_directFireAntiAir1);
+            //// Anti air
+            //_directFireAntiAir1 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir1");
+            //turrets.Add(_directFireAntiAir1);
 
-            _directFireAntiAir2 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir2");
-            turrets.Add(_directFireAntiAir2);
+            //_directFireAntiAir2 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir2");
+            //turrets.Add(_directFireAntiAir2);
 
             return turrets;
         }
@@ -63,11 +66,12 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
 
-            _directFireAntiSea.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
-            _missileLauncherFront.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
-            _missileLauncherRear.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
-            _directFireAntiAir1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
-            _directFireAntiAir2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
+            // FELIX  Fix :P
+            //_directFireAntiSea.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
+            //_missileLauncherFront.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
+            //_missileLauncherRear.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
+            //_directFireAntiAir1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
+            //_directFireAntiAir2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
         }
     }
 }
