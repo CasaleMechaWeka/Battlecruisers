@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables
             Buildable = GetComponentInChildren<TBuildable>();
 			Assert.IsNotNull(Buildable);
 
-            HealthBarController healthBar = GetComponentInChildren<HealthBarController>(includeInactive: true);
+            HealthBarController healthBar = GetComponentInChildren<HealthBarController>();
             Assert.IsNotNull(healthBar);
 
             Buildable.StaticInitialise(gameObject, healthBar);

@@ -254,7 +254,7 @@ namespace BattleCruisers.Buildables
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
 
-            _healthBar.Initialise(this);
+            _healthBar.Initialise(this, followDamagable: true);
 
             _parent.SetActive(false);
         }
@@ -283,8 +283,6 @@ namespace BattleCruisers.Buildables
 
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-
-            HealthBar.FollowDamagable = true;
         }
 
         private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
@@ -451,7 +449,6 @@ namespace BattleCruisers.Buildables
         protected void Deactivate()
         {
             _parent.SetActive(false);
-            HealthBar.FollowDamagable = false;
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
