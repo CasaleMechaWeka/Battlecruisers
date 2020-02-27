@@ -10,7 +10,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 	{
 		private IDamagable _damagable;
 		private float _maxHealth;
-		private bool _followDamagable;
+
+        // FELIX  Make private again, remove from interface
+        public bool FollowDamagable { get; set; } = false;
 
         private Vector2 _offset;
 		public Vector2 Offset
@@ -23,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             }
         }
 
-		public void Initialise(IDamagable damagable, bool followDamagable = false)
+		public void Initialise(IDamagable damagable)
 		{
 			Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
 
@@ -33,7 +35,6 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 			_damagable = damagable;
 			_maxHealth = _damagable.Health;
 			Offset = transform.position;
-			_followDamagable = followDamagable;
 
 			damagable.HealthChanged += Damagable_HealthChanged;
 		}
@@ -45,7 +46,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
 		void LateUpdate()
 		{
-			if (_followDamagable)
+			if (FollowDamagable)
 			{
                 UpdatePosition();
 			}

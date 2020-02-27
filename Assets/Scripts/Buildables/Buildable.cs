@@ -77,7 +77,9 @@ namespace BattleCruisers.Buildables
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
         public ICruiser ParentCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
-        public IHealthBar HealthBar { get; private set; }
+
+        private HealthBarController _healthBar;
+        public IHealthBar HealthBar => _healthBar;
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
@@ -189,9 +191,7 @@ namespace BattleCruisers.Buildables
             Helper.AssertIsNotNull(parent, healthBar);
 
             _parent = parent;
-
-            healthBar.Initialise(this, followDamagable: true);
-            HealthBar = healthBar;
+            _healthBar = healthBar;
 
             _buildableProgress = gameObject.GetComponentInChildren<BuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
@@ -254,6 +254,8 @@ namespace BattleCruisers.Buildables
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
 
+            _healthBar.Initialise(this);
+
             _parent.SetActive(false);
         }
 
@@ -281,6 +283,8 @@ namespace BattleCruisers.Buildables
 
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+
+            HealthBar.FollowDamagable = true;
         }
 
         private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
@@ -447,6 +451,7 @@ namespace BattleCruisers.Buildables
         protected void Deactivate()
         {
             _parent.SetActive(false);
+            HealthBar.FollowDamagable = false;
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
