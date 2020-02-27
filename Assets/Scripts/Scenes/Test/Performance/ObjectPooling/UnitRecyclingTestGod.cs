@@ -14,11 +14,13 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
     public class UnitRecyclingTestGod : TestGodBase
     {
         private Factory _factory;
+        
         public UnitWrapper unitPrefab;
+        public float buildSpeedMultiplier = BCUtils.BuildSpeedMultipliers.FAST;
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.FAST, updaterProvider: updaterProvider);
+            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: buildSpeedMultiplier, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()
