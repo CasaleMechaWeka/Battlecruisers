@@ -17,6 +17,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
         
         public UnitWrapper unitPrefab;
         public float buildSpeedMultiplier = BCUtils.BuildSpeedMultipliers.FAST;
+        public float timeToDieInS = 1;
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
@@ -45,7 +46,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
             helper.InitialiseBuilding(_factory);
             _factory.StartConstruction();
             _factory.CompletedBuildable += (sender, e) => _factory.StartBuildingUnit(unitPrefab);
-            _factory.UnitCompleted += (sender, e) => deferrer.Defer(e.CompletedUnit.Destroy, delayInS: 1);
+            _factory.UnitCompleted += (sender, e) => deferrer.Defer(e.CompletedUnit.Destroy, delayInS: timeToDieInS);
         }
     }
 }
