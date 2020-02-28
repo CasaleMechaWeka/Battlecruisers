@@ -11,6 +11,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     public class AttackBoatController : ShipController
 	{
 		private IBarrelWrapper _antiSeaTurret;
+        public GameObject pistonAnimation;
 
         public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
         protected override ISoundKey EngineSoundKey => SoundKeys.Engines.AtatckBoat;
@@ -24,6 +25,12 @@ namespace BattleCruisers.Buildables.Units.Ships
                         base.MaskHighlightableSize.x * 1.5f,
                         base.MaskHighlightableSize.y * 2);
             }
+        }
+
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+            Assert.IsNotNull(pistonAnimation);
         }
 
         protected override IList<IBarrelWrapper> GetTurrets()
@@ -42,5 +49,17 @@ namespace BattleCruisers.Buildables.Units.Ships
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _antiSeaTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
 		}
-	}
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            pistonAnimation.SetActive(true);
+        }
+
+        protected override void Deactivate()
+        {
+            base.Deactivate();
+            pistonAnimation.SetActive(false);
+        }
+    }
 }

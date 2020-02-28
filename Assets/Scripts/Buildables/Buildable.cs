@@ -446,7 +446,7 @@ namespace BattleCruisers.Buildables
             Deactivate();
         }
 
-        protected void Deactivate()
+        protected virtual void Deactivate()
         {
             _parent.SetActive(false);
             Deactivated?.Invoke(this, EventArgs.Empty);
