@@ -8,8 +8,8 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
-    public class DestroyerController : ShipController
-	{
+    public class DestroyerController : AnimatedShipController
+    {
         private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir, _samSite, _missileLauncher;
 
         private float _optimalArmamentRangeInM;
