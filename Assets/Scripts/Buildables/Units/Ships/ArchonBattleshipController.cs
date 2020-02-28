@@ -2,18 +2,50 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
     public class ArchonBattleshipController : ShipController
     {
         private IBarrelWrapper _directFireAntiSea, _directFireAntiAir1, _directFireAntiAir2, _missileLauncherFront, _missileLauncherRear;
+        private IBroadcastingAnimation _unfurlAnimation;
+
+        public GameObject bones;
 
         public override bool IsUltra => true;
+
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
+
+            Assert.IsNotNull(bones);
+
+            _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
+            Assert.IsNotNull(_unfurlAnimation);
+            _unfurlAnimation.AnimationDone += _unfurlAnimation_AnimationDone;
+        }
+
+        protected override void OnShipCompleted()
+        {
+            // Show bones, starting unfurl animation
+            bones.SetActive(true);
+
+            // Delay normal setup (movement, turrets) until the unfurl animation has completed
+        }
+
+        private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
+        {
+            base.OnShipCompleted();
+        }
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
@@ -72,6 +104,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             //_missileLauncherRear.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
             //_directFireAntiAir1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
             //_directFireAntiAir2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
+        }
+
+        protected override void Deactivate()
+        {
+            base.Deactivate();
+            bones.SetActive(false);
         }
     }
 }

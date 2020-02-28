@@ -115,12 +115,23 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
+            OnShipCompleted();
+        }
 
-            _directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
-
+        protected virtual void OnShipCompleted()
+        {
             InitialiseTurrets();
+            SetupMovement();
+        }
 
-			_movementTargetProcessor = SetupTargetProcessorWrapper();
+        // Turrets start attacking targets as soon as they are initialised, so
+        // only initialise them once the ship has been completed.
+        protected abstract void InitialiseTurrets();
+
+        protected void SetupMovement()
+        {
+            _directionMultiplier = FacingDirection == Direction.Right ? 1 : -1;
+            _movementTargetProcessor = SetupTargetProcessorWrapper();
             _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
             _movementTargetProcessor.AddTargetConsumer(_movementDecider);
         }
@@ -132,10 +143,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.ShipProviders);
         }
-
-        // Turrets start attacking targets as soon as they are initialised, so
-        // only initialise them once the ship has been completed.
-        protected abstract void InitialiseTurrets();
 
         private ITargetProcessor SetupTargetProcessorWrapper()
         {
@@ -226,16 +233,17 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             if (BuildableState == BuildableState.Completed)
             {
-                _movementDecider.DisposeManagedState();
+                // Archon delays initialisation beyond unit completion, hence these may not be initialised.
+                _movementDecider?.DisposeManagedState();
                 _movementDecider = null;
 
-                _movementTargetProcessor.DisposeManagedState();
+                _movementTargetProcessor?.DisposeManagedState();
                 _movementTargetProcessor = null;
 
-                _enemyDetectorProvider.DisposeManagedState();
+                _enemyDetectorProvider?.DisposeManagedState();
                 _enemyDetectorProvider = null;
 
-                _friendDetectorProvider.DisposeManagedState();
+                _friendDetectorProvider?.DisposeManagedState();
                 _friendDetectorProvider = null;
 
                 foreach (IBarrelWrapper turret in _turrets)
