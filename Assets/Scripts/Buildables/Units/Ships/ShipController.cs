@@ -214,7 +214,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
-            List<SpriteRenderer> renderers = base.GetInGameRenderers();
+            List<SpriteRenderer> renderers = GetMainRenderer();
 
             foreach (IBarrelWrapper turret in _turrets)
             {
@@ -222,6 +222,11 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
 
             return renderers;
+        }
+
+        protected virtual List<SpriteRenderer> GetMainRenderer()
+        {
+            return base.GetInGameRenderers();
         }
 
         public void DisableMovement()

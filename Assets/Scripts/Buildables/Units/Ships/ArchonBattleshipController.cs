@@ -106,6 +106,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             //_directFireAntiAir2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
         }
 
+        protected override List<SpriteRenderer> GetMainRenderer()
+        {
+            // Like turrets, the archon has no main renderer :)
+            return new List<SpriteRenderer>();
+        }
+
         protected override void Deactivate()
         {
             base.Deactivate();
