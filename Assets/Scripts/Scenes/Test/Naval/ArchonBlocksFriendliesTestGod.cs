@@ -18,10 +18,11 @@ namespace BattleCruisers.Scenes.Test.Naval
         {
             BCUtils.Helper.AssertIsNotNull(archon, attackBoat);
 
+            attackBoat.GameObject.SetActive(false);
+
             return new List<GameObject>()
             {
-                archon.GameObject,
-                attackBoat.GameObject
+                archon.GameObject
             };
         }
 
@@ -32,7 +33,8 @@ namespace BattleCruisers.Scenes.Test.Naval
             helper.InitialiseUnit(archon, parentCruiser: cruiser);
             archon.StartConstruction();
             Helper.SetupUnitForUnitMonitor(archon, cruiser);
-
+            
+            attackBoat.GameObject.SetActive(true);
             helper.InitialiseUnit(attackBoat, parentCruiser: cruiser);
             attackBoat.StartConstruction();
             Helper.SetupUnitForUnitMonitor(attackBoat, cruiser);
