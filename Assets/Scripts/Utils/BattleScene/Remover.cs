@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Buildables;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.BattleScene
 {
@@ -11,6 +12,14 @@ namespace BattleCruisers.Utils.BattleScene
             if (removable != null)
             {
                 removable.RemoveFromScene();
+                return;
+            }
+
+            IRemovable targetRemovable = collider.GetComponent<ITargetProxy>()?.Target as IRemovable;
+
+            if (targetRemovable != null)
+            {
+                targetRemovable.RemoveFromScene();
             }
 		}
 	}

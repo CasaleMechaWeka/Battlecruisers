@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
             foreach (Collider2D collider in colliders)
             {
-                IUnit blockingUnit = collider.GetComponent<IUnit>();
+                IUnit blockingUnit = collider.GetComponent<ITargetProxy>()?.Target as IUnit;
 
                 if (blockingUnit != null
                     && blockingUnit.TargetType == unitToSpawn.TargetType)
