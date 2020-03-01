@@ -33,6 +33,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
             Assert.IsNotNull(_unfurlAnimation);
             _unfurlAnimation.AnimationDone += _unfurlAnimation_AnimationDone;
+
+            TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>();
+            foreach (TargetProxy targetProxy in colliderTargetProxies)
+            {
+                targetProxy.Initialise(this);
+            }
         }
 
         protected override void OnShipCompleted()
