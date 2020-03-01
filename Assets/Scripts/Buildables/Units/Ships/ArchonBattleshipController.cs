@@ -22,6 +22,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public GameObject bones;
 
         public override bool IsUltra => true;
+        public override Vector2 Size => base.Size * 2;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
