@@ -36,7 +36,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 
             foreach (Collider2D collider in colliders)
             {
-				ITarget target = collider.gameObject.GetComponent<ITarget>();
+				ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
                 if (target != null 
                     && !target.IsDestroyed

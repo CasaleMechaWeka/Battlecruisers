@@ -45,8 +45,8 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         private ITarget GetTarget(Collider2D collider)
 		{
-			ITarget target = collider.gameObject.GetComponent<ITarget>();
-            Assert.IsNotNull(target, "Should only collide with game objects that have a ITarget component.");
+			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+            Assert.IsNotNull(target, "Should only collide with game objects that have a ITargetProxy component.");
 			return target;
 		}
 

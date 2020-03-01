@@ -146,7 +146,7 @@ namespace BattleCruisers.Projectiles
 		{
             Logging.LogMethod(Tags.SHELLS);
 
-			ITarget target = collider.gameObject.GetComponent<ITarget>();
+			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
 			if (target != null 
                 && !target.IsDestroyed

@@ -45,7 +45,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
                 RaycastHit2D result = results[i];
                 Assert.IsNotNull(result.collider);
 
-                ITarget target = result.collider.gameObject.GetComponent<ITarget>();
+                ITarget target = result.collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
                 if (target != null 
                     && !target.IsDestroyed

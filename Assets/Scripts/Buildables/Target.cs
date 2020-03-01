@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Target : Prefab , ITarget
+    public abstract class Target : Prefab , ITarget, ITargetProxy
     {
         protected IHealthTracker _healthTracker;
         protected ITime _time;
@@ -65,6 +65,7 @@ namespace BattleCruisers.Buildables
         private List<TargetType> _attackCapabilities;
         public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
         public ITarget LastDamagedSource { get; private set; }
+        ITarget ITargetProxy.Target => this;
 
         protected void AddAttackCapability(TargetType attackCapability)
         {

@@ -48,7 +48,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
-			ITarget target = collider.gameObject.GetComponent<ITarget>();
+			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
 			if (target != null 
                 && !target.IsDestroyed
