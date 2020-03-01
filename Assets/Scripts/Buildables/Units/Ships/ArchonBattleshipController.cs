@@ -16,9 +16,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class ArchonBattleshipController : ShipController
     {
-        private IBarrelWrapper _directFireAntiSea, _directFireAntiAir1, _directFireAntiAir2, _missileLauncherFront, _missileLauncherRear;
         private IBroadcastingAnimation _unfurlAnimation;
 
+        public BarrelWrapper laser;
         public GameObject bones;
 
         public override bool IsUltra => true;
@@ -28,13 +28,13 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise(parent, healthBar);
 
-            Assert.IsNotNull(bones);
+            Helper.AssertIsNotNull(bones, laser);
 
             _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
             Assert.IsNotNull(_unfurlAnimation);
             _unfurlAnimation.AnimationDone += _unfurlAnimation_AnimationDone;
 
-            TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>();
+            TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>(includeInactive: true);
             foreach (TargetProxy targetProxy in colliderTargetProxies)
             {
                 targetProxy.Initialise(this);
@@ -51,6 +51,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
+            // FELIX  StaticInitialise() happens multiple time.  Will this be called multiple time for recycled archons?
             base.OnShipCompleted();
         }
 
@@ -66,10 +67,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             get
             {
-                // FELIX  Fix :P
-                return 12;
-                //// Rear missile launcher and direct fire anti sea will both also be in range.
-                //return _missileLauncherFront.RangeInM;
+                return laser.RangeInM;
             }
         }
 
@@ -78,39 +76,16 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {
-            IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
-
-            // FELIX  Fix :P
-            //_directFireAntiSea = transform.FindNamedComponent<IBarrelWrapper>("GravityAffectedAntiSea");
-            //turrets.Add(_directFireAntiSea);
-
-            //// Missile launchers
-            //_missileLauncherFront = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherFront");
-            //turrets.Add(_missileLauncherFront);
-
-            //_missileLauncherRear = transform.FindNamedComponent<IBarrelWrapper>("MissileLauncherRear");
-            //turrets.Add(_missileLauncherRear);
-
-            //// Anti air
-            //_directFireAntiAir1 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir1");
-            //turrets.Add(_directFireAntiAir1);
-
-            //_directFireAntiAir2 = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir2");
-            //turrets.Add(_directFireAntiAir2);
-
-            return turrets;
+            return new List<IBarrelWrapper>()
+            { 
+                laser 
+            };
         }
 
         protected override void InitialiseTurrets()
         {
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-
-            // FELIX  Fix :P
-            //_directFireAntiSea.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
-            //_missileLauncherFront.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
-            //_missileLauncherRear.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
-            //_directFireAntiAir1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
-            //_directFireAntiAir2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
+            laser.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
         }
 
         protected override List<SpriteRenderer> GetMainRenderer()
