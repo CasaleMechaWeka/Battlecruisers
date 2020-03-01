@@ -30,6 +30,7 @@ namespace BattleCruisers.Utils
         public const string ANGLE_CALCULATORS = "AngleCalculators";
         public const string BARREL_CONTROLLER = "BarrelController";
         public const string BARREL_WRAPPER = "BarrelWrapper";
+        public const string LASER = "Laser";
         public const string PROJECTILE_SPAWNER = "ProjectileSpawner";
         public const string SHELLS = "Shells";
 
@@ -142,8 +143,13 @@ namespace BattleCruisers.Utils
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
 			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
-            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.LASER, true);
+            //tagsToActiveness.Add(Tags.LASER, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 

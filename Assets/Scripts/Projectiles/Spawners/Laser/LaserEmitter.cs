@@ -52,6 +52,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             ISoundFetcher soundFetcher, 
             IDeltaTimeProvider deltaTimeProvider)
         {
+            Logging.Verbose(Tags.LASER, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             Helper.AssertIsNotNull(targetFilter, parent, soundFetcher, deltaTimeProvider);
             Assert.IsTrue(damagePerS > 0);
 
@@ -73,10 +74,14 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
 		public void FireLaser(float angleInDegrees, bool isSourceMirrored)
 		{
+            Logging.LogMethod(Tags.LASER);
+
             ILaserCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
 			
 			if (collision != null)
 			{
+                Logging.Log(Tags.LASER, $"Have a collision with: {collision.Target} at {collision.CollisionPoint}");
+
                 _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
                 _laserImpact.Show(collision.CollisionPoint);
                 _laserMuzzleEffect.Play();
@@ -88,6 +93,8 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
 		public void StopLaser()
 		{
+            Logging.LogMethod(Tags.LASER);
+
             _laserRenderer.HideLaser();
             _laserImpact.Hide();
             _laserMuzzleEffect.Stop();
