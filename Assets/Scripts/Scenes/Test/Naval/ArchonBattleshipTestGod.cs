@@ -5,7 +5,6 @@ using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Naval
 {
@@ -14,26 +13,15 @@ namespace BattleCruisers.Scenes.Test.Naval
         private Faction _leftBattleshipFaction;
         private Faction _rightBattleshipFaction;
         private ArchonBattleshipController[] _battleships;
-        private TestAircraftController[] _planes;
-
-        public List<Vector2> leftSidePatrolPoints, rightSidePatrolPoints;
 
         protected override List<GameObject> GetGameObjects()
         {
             _battleships = FindObjectsOfType<ArchonBattleshipController>();
-            _planes = FindObjectsOfType<TestAircraftController>();
 
-            List<GameObject> gameObjects
-                = _battleships
+            return
+                _battleships
                     .Select(battleship => battleship.GameObject)
                     .ToList();
-            List<GameObject> planeGameObjects 
-                = _planes
-                    .Select(plane => plane.GameObject)
-                    .ToList();
-            gameObjects.AddRange(planeGameObjects);
-
-            return gameObjects;
         }
 
         protected override void Setup(Helper helper)
@@ -42,7 +30,6 @@ namespace BattleCruisers.Scenes.Test.Naval
             _rightBattleshipFaction = Faction.Blues;
 
             SetupBattleships(helper);
-            SetupPlanes(helper);
         }
 
         private void SetupBattleships(Helper helper)
@@ -57,20 +44,6 @@ namespace BattleCruisers.Scenes.Test.Naval
 			}
         }
 
-        private void SetupPlanes(Helper helper)
-        {
-
-            foreach (TestAircraftController plane in _planes)
-            {
-                Vector3 position = plane.transform.position;
-                Faction faction = BCUtils.Helper.GetOppositeFaction(GetBattleshipFaction(position));
-                plane.PatrolPoints = GetPatrolPoints(position);
-
-                helper.InitialiseUnit(plane, faction);
-                plane.StartConstruction();
-            }
-        }
-
         private Faction GetBattleshipFaction(Vector3 unitPosition)
         {
             return unitPosition.x > 0 ? _rightBattleshipFaction : _leftBattleshipFaction;
@@ -79,11 +52,6 @@ namespace BattleCruisers.Scenes.Test.Naval
         private Direction GetBattleshipDirection(Vector3 unitPosition)
         {
             return unitPosition.x > 0 ? Direction.Left : Direction.Right;
-        }
-
-        private List<Vector2> GetPatrolPoints(Vector3 aircraftPosition)
-        {
-            return aircraftPosition.x > 0 ? rightSidePatrolPoints : leftSidePatrolPoints;
         }
     }
 }
