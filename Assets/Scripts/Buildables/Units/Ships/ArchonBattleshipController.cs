@@ -51,7 +51,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
-            // FELIX  StaticInitialise() happens multiple time.  Will this be called multiple time for recycled archons?
             base.OnShipCompleted();
         }
 
