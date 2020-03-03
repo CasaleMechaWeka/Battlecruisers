@@ -6,15 +6,14 @@ using UnityCommon.Properties;
 
 namespace BattleCruisers.Effects.Laser
 {
-    // FELIX  Update tests
     public class LaserCooldownEffect : IManagedDisposable
     {
         private readonly IBroadcastingProperty<bool> _isLaserFiring;
         private readonly ILaserFlap _laserFlap;
         private readonly IParticleSystemGroup _overheatingSmoke;
-        private readonly IDebouncer _laselStoppdDebouncer;
+        private readonly IDebouncer _laserStoppdDebouncer;
 
-        private bool _laserIsActive = false;
+        private bool _laserIsActive;
         private bool LaserIsActive
         {
             get => _laserIsActive;
@@ -45,11 +44,9 @@ namespace BattleCruisers.Effects.Laser
             _isLaserFiring = isLaserFiring;
             _laserFlap = laserFlap;
             _overheatingSmoke = overheatingSmoke;
-            _laselStoppdDebouncer = laserStoppedDebouncer;
+            _laserStoppdDebouncer = laserStoppedDebouncer;
 
             _isLaserFiring.ValueChanged += _isLaserFiring_ValueChanged;
-
-            // FELIX  May need to open flap???
         }
 
         private void _isLaserFiring_ValueChanged(object sender, EventArgs e)
@@ -59,9 +56,10 @@ namespace BattleCruisers.Effects.Laser
             {
                 LaserIsActive = true;
             }
-            else
+            else if (!_isLaserFiring.Value
+                && LaserIsActive)
             {
-                _laselStoppdDebouncer.Debounce(LaserStopped);
+                _laserStoppdDebouncer.Debounce(LaserStopped);
             }
         }
 

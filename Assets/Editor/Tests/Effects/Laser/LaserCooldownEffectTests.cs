@@ -1,103 +1,81 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Effects.Laser;
+﻿using BattleCruisers.Effects.Laser;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.Tests.Effects.Laser
 {
     public class LaserCooldownEffectTests
     {
         private IManagedDisposable _laserCooldownEffect;
-        private IFireIntervalManager _fireIntervalManager;
+        private IBroadcastingProperty<bool> _isLaserFiring;
         private ILaserFlap _laserFlap;
         private IParticleSystemGroup _overheatingSmoke;
+        private IDebouncer _laserStoppdDebouncer;
+        private Action _debouncedAction;
 
         [SetUp]
         public void TestSetup()
         {
-            _fireIntervalManager = Substitute.For<IFireIntervalManager>();
+            _isLaserFiring = Substitute.For<IBroadcastingProperty<bool>>();
             _laserFlap = Substitute.For<ILaserFlap>();
             _overheatingSmoke = Substitute.For<IParticleSystemGroup>();
+            _laserStoppdDebouncer = Substitute.For<IDebouncer>();
+
+            _laserCooldownEffect
+                = new LaserCooldownEffect(
+                    _isLaserFiring,
+                    _laserFlap,
+                    _overheatingSmoke,
+                    _laserStoppdDebouncer);
+
+            _laserStoppdDebouncer.Debounce(Arg.Do<Action>(x => _debouncedAction = x));
         }
 
         [Test]
-        public void Constructor_ShouldFire()
+        public void IsLaserFiring_True()
         {
-            _fireIntervalManager.ShouldFire.Value.Returns(true);
-            CreateLaserEffect();
-            AssertPlayEffects(shouldFire: true);
-        }
+            // False => True
+            _isLaserFiring.Value.Returns(true);
+            _isLaserFiring.ValueChanged += Raise.Event();
 
-        [Test]
-        public void Constructor_ShouldNotFire()
-        {
-            _fireIntervalManager.ShouldFire.Value.Returns(false);
-            CreateLaserEffect();
-            AssertPlayEffects(shouldFire: false);
-        }
+            _laserFlap.Received().CloseFlap();
 
-        [Test]
-        public void ShouldFire_ValueChanged_ToTrue()
-        {
-            CreateLaserEffect();
-            ClearReceivedCalls();
-
-            _fireIntervalManager.ShouldFire.Value.Returns(true);
-            _fireIntervalManager.ShouldFire.ValueChanged += Raise.Event();
-
-            AssertPlayEffects(shouldFire: true);
-        }
-
-        [Test]
-        public void ShouldFire_ValueChanged_ToFalse()
-        {
-            CreateLaserEffect();
-            ClearReceivedCalls();
-
-            _fireIntervalManager.ShouldFire.Value.Returns(false);
-            _fireIntervalManager.ShouldFire.ValueChanged += Raise.Event();
-
-            AssertPlayEffects(shouldFire: false);
-        }
-
-        [Test]
-        public void DisposeManagedState()
-        {
-            CreateLaserEffect();
-            ClearReceivedCalls();
-            _laserCooldownEffect.DisposeManagedState();
-
-            _fireIntervalManager.ShouldFire.Value.Returns(true);
-            _fireIntervalManager.ShouldFire.ValueChanged += Raise.Event();
-
+            // True => True
+            _laserFlap.ClearReceivedCalls();
+            _isLaserFiring.ValueChanged += Raise.Event();
             _laserFlap.DidNotReceive().CloseFlap();
         }
 
-        private void CreateLaserEffect()
+        [Test]
+        public void IsLaserFiring_False()
         {
-            // FELIX  Fix
-            _laserCooldownEffect = new LaserCooldownEffect(null, _laserFlap, _overheatingSmoke, null);
-        }
+            // False => False
+            _isLaserFiring.Value.Returns(false);
+            _isLaserFiring.ValueChanged += Raise.Event();
 
-        private void AssertPlayEffects(bool shouldFire)
-        {
-            if (shouldFire)
-            {
-                _laserFlap.Received().CloseFlap();
-            }
-            else
-            {
-                _laserFlap.Received().OpenFlap();
-                _overheatingSmoke.Received().Play();
-            }
-        }
+            Assert.IsNull(_debouncedAction);
 
-        private void ClearReceivedCalls()
-        {
+            // False => True
+            _isLaserFiring.Value.Returns(true);
+            _isLaserFiring.ValueChanged += Raise.Event();
             _laserFlap.ClearReceivedCalls();
-            _overheatingSmoke.ClearReceivedCalls();
+
+            // True => False
+            _isLaserFiring.Value.Returns(false);
+            _isLaserFiring.ValueChanged += Raise.Event();
+
+            Assert.IsNotNull(_debouncedAction);
+            _laserFlap.DidNotReceive().OpenFlap();
+            _overheatingSmoke.DidNotReceive().Play();
+
+            _debouncedAction.Invoke();
+            _laserFlap.Received().OpenFlap();
+            _overheatingSmoke.Received().Play();
         }
     }
 }
