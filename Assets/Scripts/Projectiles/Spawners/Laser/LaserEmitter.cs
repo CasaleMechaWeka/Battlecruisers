@@ -8,33 +8,37 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Threading.Tasks;
 using UnityCommon.PlatformAbstractions;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners.Laser
 {
-    public class LaserEmitter : MonoBehaviour, IManagedDisposable
-	{
+    public class LaserEmitter : MonoBehaviour, ILaserEmitter
+    {
         private ILaserRenderer _laserRenderer;
         private ILaserCollisionDetector _collisionDetector;
         private IAudioSource _audioSource;
         private ILaserSoundPlayer _laserSoundPlayer;
-		private float _damagePerS;
+        private float _damagePerS;
         private ITarget _parent;
         private LaserImpact _laserImpact;
         private IParticleSystemGroup _laserMuzzleEffect;
         private IDeltaTimeProvider _deltaTimeProvider;
 
-		public LayerMask unitsLayerMask, shieldsLayerMask;
+        public LayerMask unitsLayerMask, shieldsLayerMask;
 
-		void Awake() 
-		{
+        private ISettableBroadcastingProperty<bool> _isLaserFiring;
+        public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
+
+        void Awake()
+        {
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
 
             AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
-			_audioSource = new AudioSourceBC(audioSource);
+            _audioSource = new AudioSourceBC(audioSource);
 
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
@@ -46,10 +50,10 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         }
 
         public async Task InitialiseAsync(
-            ITargetFilter targetFilter, 
-            float damagePerS, 
-            ITarget parent, 
-            ISoundFetcher soundFetcher, 
+            ITargetFilter targetFilter,
+            float damagePerS,
+            ITarget parent,
+            ISoundFetcher soundFetcher,
             IDeltaTimeProvider deltaTimeProvider)
         {
             Logging.Verbose(Tags.LASER, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
@@ -70,35 +74,41 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
             _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
-		}
 
-		public void FireLaser(float angleInDegrees, bool isSourceMirrored)
-		{
+            _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
+            IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
+        }
+
+        public void FireLaser(float angleInDegrees, bool isSourceMirrored)
+        {
             Logging.LogMethod(Tags.LASER);
 
             ILaserCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
-			
-			if (collision != null)
-			{
+
+            if (collision != null)
+            {
                 Logging.Log(Tags.LASER, $"Have a collision with: {collision.Target} at {collision.CollisionPoint}");
 
                 _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
                 _laserImpact.Show(collision.CollisionPoint);
                 _laserMuzzleEffect.Play();
 
-				float damage = _deltaTimeProvider.DeltaTime * _damagePerS;
+                float damage = _deltaTimeProvider.DeltaTime * _damagePerS;
                 collision.Target.TakeDamage(damage, _parent);
-			}
-		}
 
-		public void StopLaser()
-		{
+                _isLaserFiring.Value = true;
+            }
+        }
+
+        public void StopLaser()
+        {
             Logging.LogMethod(Tags.LASER);
 
             _laserRenderer.HideLaser();
             _laserImpact.Hide();
             _laserMuzzleEffect.Stop();
-		}
+            _isLaserFiring.Value = false;
+        }
 
         public void DisposeManagedState()
         {

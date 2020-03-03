@@ -1,50 +1,78 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Effects.ParticleSystems;
+﻿using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 using System;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.Effects.Laser
 {
+    // FELIX  Update tests
     public class LaserCooldownEffect : IManagedDisposable
     {
-        private readonly IFireIntervalManager _fireIntervalManager;
+        private readonly IBroadcastingProperty<bool> _isLaserFiring;
         private readonly ILaserFlap _laserFlap;
         private readonly IParticleSystemGroup _overheatingSmoke;
+        private readonly IDebouncer _laselStoppdDebouncer;
 
-        public LaserCooldownEffect(IFireIntervalManager fireIntervalManager, ILaserFlap laserFlap, IParticleSystemGroup overheatingSmoke)
+        private bool _laserIsActive = false;
+        private bool LaserIsActive
         {
-            Helper.AssertIsNotNull(fireIntervalManager, laserFlap, overheatingSmoke);
+            get => _laserIsActive;
+            set
+            {
+                _laserIsActive = value;
 
-            _fireIntervalManager = fireIntervalManager;
+                if (_laserIsActive)
+                {
+                    _laserFlap.CloseFlap();
+                }
+                else
+                {
+                    _laserFlap.OpenFlap();
+                    _overheatingSmoke.Play();
+                }
+            }
+        }
+
+        public LaserCooldownEffect(
+            IBroadcastingProperty<bool> isLaserFiring, 
+            ILaserFlap laserFlap, 
+            IParticleSystemGroup overheatingSmoke,
+            IDebouncer laserStoppedDebouncer)
+        {
+            Helper.AssertIsNotNull(isLaserFiring, laserFlap, overheatingSmoke, laserStoppedDebouncer);
+
+            _isLaserFiring = isLaserFiring;
             _laserFlap = laserFlap;
             _overheatingSmoke = overheatingSmoke;
+            _laselStoppdDebouncer = laserStoppedDebouncer;
 
-            _fireIntervalManager.ShouldFire.ValueChanged += ShouldFire_ValueChanged;
+            _isLaserFiring.ValueChanged += _isLaserFiring_ValueChanged;
 
-            PlayEffects();
+            // FELIX  May need to open flap???
         }
 
-        private void ShouldFire_ValueChanged(object sender, EventArgs e)
+        private void _isLaserFiring_ValueChanged(object sender, EventArgs e)
         {
-            PlayEffects();
-        }
-
-        private void PlayEffects()
-        {
-            if (_fireIntervalManager.ShouldFire.Value)
+            if (_isLaserFiring.Value
+                && !LaserIsActive)
             {
-                _laserFlap.CloseFlap();
+                LaserIsActive = true;
             }
             else
             {
-                _laserFlap.OpenFlap();
-                _overheatingSmoke.Play();
+                _laselStoppdDebouncer.Debounce(LaserStopped);
             }
+        }
+
+        private void LaserStopped()
+        {
+            LaserIsActive = false;
         }
 
         public void DisposeManagedState()
         {
-            _fireIntervalManager.ShouldFire.ValueChanged -= ShouldFire_ValueChanged;
+            _isLaserFiring.ValueChanged -= _isLaserFiring_ValueChanged;
         }
     }
 }

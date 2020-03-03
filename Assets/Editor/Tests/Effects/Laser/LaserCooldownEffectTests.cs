@@ -77,7 +77,8 @@ namespace BattleCruisers.Tests.Effects.Laser
 
         private void CreateLaserEffect()
         {
-            _laserCooldownEffect = new LaserCooldownEffect(_fireIntervalManager, _laserFlap, _overheatingSmoke);
+            // FELIX  Fix
+            _laserCooldownEffect = new LaserCooldownEffect(null, _laserFlap, _overheatingSmoke, null);
         }
 
         private void AssertPlayEffects(bool shouldFire)

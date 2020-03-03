@@ -56,10 +56,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
-            ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
-            Assert.IsNotNull(laserCooldownEffectInitialiser);
-            _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_fireIntervalManager);
-
             await 
                 _laserEmitter.InitialiseAsync(
                     args.TargetFilter, 
@@ -67,6 +63,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.Parent, 
                     args.FactoryProvider.Sound.SoundFetcher, 
                     args.Updater);
+
+            ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
+            Assert.IsNotNull(laserCooldownEffectInitialiser);
+            _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_laserEmitter);
 		}
 
         public override void Fire(float angleInDegrees)
