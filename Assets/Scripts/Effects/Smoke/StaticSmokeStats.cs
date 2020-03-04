@@ -29,7 +29,7 @@ namespace BattleCruisers.Effects.Smoke
                     StartSpeed = 1,
                     RateOverTime = 6,
                     RateOverDistance = 16,
-                    BurstsCount = 30,
+                    BurstsCount = 4,
                     EdgeRadius = 0.1f,
                     NoiseStrength = 0.05f,
                     StartSize = 0.1f
@@ -41,7 +41,7 @@ namespace BattleCruisers.Effects.Smoke
                     StartSpeed = 1,
                     RateOverTime = 4,
                     RateOverDistance = 12,
-                    BurstsCount = 50,
+                    BurstsCount = 8,
                     EdgeRadius = 0.2f,
                     NoiseStrength = 0.1f,
                     StartSize = 0.3f
