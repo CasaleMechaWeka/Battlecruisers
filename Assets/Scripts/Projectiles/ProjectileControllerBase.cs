@@ -38,12 +38,11 @@ namespace BattleCruisers.Projectiles
 
 		protected Rigidbody2D _rigidBody;
 
-        private IMovementController _movementController;
-
         public event EventHandler Destroyed;
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
 
+        private IMovementController _movementController;
         protected IMovementController MovementController
         {
             get { return _movementController; }
