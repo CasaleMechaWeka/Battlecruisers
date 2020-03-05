@@ -10,8 +10,6 @@ namespace BattleCruisers.Cruisers.Slots
     {
 		private readonly IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
 
-		private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
-
         public SlotAccessor(IDictionary<SlotType, ReadOnlyCollection<ISlot>> slots)
 		{
             Assert.IsNotNull(slots);
