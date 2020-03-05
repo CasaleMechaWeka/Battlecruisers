@@ -33,6 +33,7 @@ namespace BattleCruisers.Data.Static
         {
             public static ISoundKey AntiAir { get; } = new SoundKey(SoundType.Firing, "anti-air");
             public static ISoundKey Artillery { get; } = new SoundKey(SoundType.Firing, "artillery");
+            public static ISoundKey AttackBoat { get; } = new SoundKey(SoundType.Firing, "attack-boat");
             public static ISoundKey Broadsides { get; } = new SoundKey(SoundType.Firing, "broadsides");
 			public static ISoundKey BigCannon { get; } = new SoundKey(SoundType.Firing, "big-cannon");
             public static ISoundKey Laser { get; } = new SoundKey(SoundType.Firing, "laser");
