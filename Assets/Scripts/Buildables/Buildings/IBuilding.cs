@@ -10,8 +10,8 @@ namespace BattleCruisers.Buildables.Buildings
 		Factory, Defence, Offence, Tactical, Ultra
 	}
 
-    // Explicitly set integner values, because the Unity inspector binds
-    // to the interger values.  So now, if I decide to modify the enum
+    // Explicitly set integer values, because the Unity inspector binds
+    // to the integer values.  So now, if I decide to modify the enum
     // I don't need to adjust every single prefab that uses this enum.  
     // Thanks Manya!
     public enum BuildingFunction
