@@ -46,17 +46,6 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)
-        {
-            Assert.IsTrue(_slots.ContainsKey(slotType));
-
-            return
-                _slots[slotType]
-                    .Where(slot => slot.IsFree)
-                    .ToList()
-                    .AsReadOnly();
-        }
-
         public ISlot GetFreeSlot(SlotSpecification slotSpecification)
 		{
             return slotSpecification.PreferFromFront ?

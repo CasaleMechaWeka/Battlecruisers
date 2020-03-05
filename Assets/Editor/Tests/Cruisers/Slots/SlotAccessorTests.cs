@@ -121,26 +121,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion GetSlots
 
-        #region GetFreeSlots
-        [Test]
-        public void GetFreeSlots_NonExistantType_Throws()
-        {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _slotAccessor.GetFreeSlots(SlotType.Utility));
-        }
-
-        [Test]
-        public void GetFreeSlots()
-        {
-            _genericDeckSlot.IsFree.Returns(true);
-            _antiShipDeckSlot.IsFree.Returns(false);
-
-            ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
-
-            Assert.AreEqual(1, deckSlots.Count);
-            Assert.IsTrue(deckSlots.Contains(_genericDeckSlot));
-        }
-        #endregion GetFreeSlots
-
         #region GetFreeSlot
         [Test]
         public void GetFreeSlot_PreferFront_ReturnsFrontSlot()

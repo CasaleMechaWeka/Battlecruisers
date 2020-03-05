@@ -18,8 +18,6 @@ namespace BattleCruisers.Cruisers.Slots
         /// </returns>
         ReadOnlyCollection<ISlot> GetSlots(SlotSpecification slotSpecification);
 
-        // FELIX  Unused, remove?
-        ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType);
 		ISlot GetFreeSlot(SlotSpecification slotSpecification);
         ISlot GetSlot(IBuilding building);
         int GetSlotCount(SlotType slotType);
