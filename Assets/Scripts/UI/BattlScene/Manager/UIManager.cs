@@ -90,7 +90,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
-            bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
 
             if (!wasAnySlotHighlighted)
             {

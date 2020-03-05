@@ -17,6 +17,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         private ISlotFilter _highlightableFilter;
         private ICruiserBuildingMonitor _parentCruiserBuildingMonitor;
         private ISlot _slot1, _slot2;
+        private SlotSpecification _slotSpec1, _slotSpec2;
         private ReadOnlyCollection<ISlot> _slotsToReturn1, _slotsToReturn2;
         private IList<ISlot> _mutableSlotsToReturn1, _mutableSlotsToReturn2;
         private IBuilding _building;
@@ -34,9 +35,11 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             _slot1 = Substitute.For<ISlot>();
             _slot1.Type.Returns(SlotType.Deck);
+            _slotSpec1 = new SlotSpecification(_slot1.Type);
 
             _slot2 = Substitute.For<ISlot>();
             _slot2.Type.Returns(SlotType.Platform);
+            _slotSpec2 = new SlotSpecification(_slot2.Type);
 
             _mutableSlotsToReturn1 = new List<ISlot>();
             _slotsToReturn1 = new ReadOnlyCollection<ISlot>(_mutableSlotsToReturn1);
@@ -52,10 +55,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void HighlightAvailableSlots_HighlightsMatchingSlots()
         {
             _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(true);
             
-            bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slotSpec2);
 
             _slot2.Received().IsVisible = true;
             Assert.IsTrue(wasAnySlotHighlighted);
@@ -65,10 +68,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void HighlightAvailableSlots_DoesNotHighlightsNonMatchingSlots()
         {
             _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(false);
 
-            bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slotSpec2);
 
             _slot2.DidNotReceive().IsVisible = true;
             Assert.IsFalse(wasAnySlotHighlighted);
@@ -79,18 +82,18 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         {
             // First highlight
             _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
 
             _highlightableFilter.IsMatch(_slot2).Returns(true);
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            _slotHighlighter.HighlightAvailableSlots(_slotSpec2);
             _slot2.Received().IsVisible = true;
 
             // Second highlight
             _mutableSlotsToReturn1.Add(_slot1);
-            _slotAccessor.GetSlots(_slot1.Type).Returns(_slotsToReturn1);
+            _slotAccessor.GetSlots(_slotSpec1).Returns(_slotsToReturn1);
 
             _highlightableFilter.IsMatch(_slot1).Returns(true);
-            _slotHighlighter.HighlightAvailableSlots(_slot1.Type);
+            _slotHighlighter.HighlightAvailableSlots(_slotSpec1);
 
             _slot2.Received().IsVisible = false;
             _slot1.Received().IsVisible = true;
@@ -102,11 +105,11 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void UnhighlightSlots_FreeSlotsOfTypeVisible_Unhighlights()
         {
             _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
 
             // Highlight slots
             _slot2.IsFree.Returns(true);
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            _slotHighlighter.HighlightAvailableSlots(_slotSpec2);
 
             // Unhighlight slots
             _slotHighlighter.UnhighlightSlots();
@@ -148,10 +151,10 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         {
             // Highlight slots
             _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(true);
 
-            _slotHighlighter.HighlightAvailableSlots(_slot2.Type);
+            _slotHighlighter.HighlightAvailableSlots(_slotSpec2);
 
             _slot2.Received().IsVisible = true;
 
@@ -169,7 +172,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         {
             // Make a slot match the highlightable filter
             _mutableSlotsToReturn2.Add(_slot2);
-            _slotAccessor.GetSlots(_slot2.Type).Returns(_slotsToReturn2);
+            _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(true);
 
             // Building destroyed

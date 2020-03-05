@@ -9,11 +9,18 @@ namespace BattleCruisers.Cruisers.Slots
     public class SlotAccessor : ISlotAccessor
     {
 		private readonly IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
+        private readonly ReadOnlyCollection<ISlot> _antiShipSlots;
 
         public SlotAccessor(IDictionary<SlotType, ReadOnlyCollection<ISlot>> slots)
 		{
             Assert.IsNotNull(slots);
+
             _slots = slots;
+            _antiShipSlots
+                = slots[SlotType.Deck]
+                    .Where(slot => slot.BuildingFunctionAffinity == BuildingFunction.AntiShip)
+                    .ToList()
+                    .AsReadOnly();
         }
 
 		public bool IsSlotAvailable(SlotSpecification slotSpecification)
@@ -23,10 +30,20 @@ namespace BattleCruisers.Cruisers.Slots
                     .Any(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
-        public ReadOnlyCollection<ISlot> GetSlots(SlotType slotType)
+        public ReadOnlyCollection<ISlot> GetSlots(SlotSpecification slotSpecification)
         {
-            Assert.IsTrue(_slots.ContainsKey(slotType));
-            return _slots[slotType];
+            Assert.IsNotNull(slotSpecification);
+            Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
+
+            if (slotSpecification.BuildingFunction == BuildingFunction.AntiShip
+                && slotSpecification.SlotType == SlotType.Deck)
+            {
+                return _antiShipSlots;
+            }
+            else
+            {
+                return _slots[slotSpecification.SlotType];
+            }
         }
 
         public ReadOnlyCollection<ISlot> GetFreeSlots(SlotType slotType)

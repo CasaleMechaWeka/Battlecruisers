@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
@@ -52,7 +53,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
         {
             ISlot bowSlot 
                 = _playerCruiser.SlotAccessor
-                    .GetSlots(SlotType.Bow)
+                    .GetSlots(new SlotSpecification(SlotType.Bow))
                     .FirstOrDefault();
 
             Assert.IsNotNull(bowSlot);

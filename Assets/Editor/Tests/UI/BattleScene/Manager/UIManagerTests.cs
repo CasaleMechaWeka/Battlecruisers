@@ -98,12 +98,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             buildingWrapper.Buildable.Returns(_building);
-            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType).Returns(true);
+            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification).Returns(true);
 
             _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
-            _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
             _detailsManager.Received().ShowDetails(buildingWrapper.Buildable);
             _soundPlayer.DidNotReceiveWithAnyArgs().PlaySound(default);
         }
@@ -113,12 +113,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             buildingWrapper.Buildable.Returns(_building);
-            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType).Returns(false);
+            _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification).Returns(false);
 
             _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
-            _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification.SlotType);
+            _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
             _detailsManager.Received().ShowDetails(buildingWrapper.Buildable);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Cruiser.NoBuildingSlotsLeft);
         }
