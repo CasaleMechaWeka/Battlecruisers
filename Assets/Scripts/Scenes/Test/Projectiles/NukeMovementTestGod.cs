@@ -6,8 +6,10 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -15,6 +17,8 @@ namespace BattleCruisers.Scenes.Test
 	{
         private AirFactory _target;
         private NukeController _nuke;
+
+        public AudioClip impactSound;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -30,7 +34,9 @@ namespace BattleCruisers.Scenes.Test
 
         protected override void Setup(Helper helper)
         {
-			// Setup target
+            Assert.IsNotNull(impactSound);
+
+            // Setup target
             helper.InitialiseBuilding(_target);
 
 			// Setup nuke
@@ -53,6 +59,7 @@ namespace BattleCruisers.Scenes.Test
                     Vector2.zero,
                     targetFilter,
                     parent,
+                    new AudioClipWrapper(impactSound),
                     _target));
             _nuke.Launch();
 		}

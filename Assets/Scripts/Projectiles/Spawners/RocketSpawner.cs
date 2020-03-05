@@ -31,6 +31,7 @@ namespace BattleCruisers.Projectiles.Spawners
                     rocketVelocity,
                     targetFilter,
                     _parent,
+                    _impactSound,
                     target);
             _projectilePool.GetItem(activationArgs);
 		}

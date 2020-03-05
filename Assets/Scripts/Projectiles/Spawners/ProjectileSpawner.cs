@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,10 +21,14 @@ namespace BattleCruisers.Projectiles.Spawners
 		protected IFactoryProvider _factoryProvider;
         protected IPool<TProjectile, TProjectileArgs> _projectilePool;
 
+        protected IAudioClipWrapper _impactSound;
+        public AudioClip impactSound;
+
         public void Initialise(IProjectileSpawnerArgs args)
         {
-            Helper.AssertIsNotNull(args);
+            Helper.AssertIsNotNull(impactSound, args);
 
+            _impactSound = new AudioClipWrapper(impactSound);
             _parent = args.Parent;
             _projectileStats = args.ProjectileStats;
             _factoryProvider = args.FactoryProvider;

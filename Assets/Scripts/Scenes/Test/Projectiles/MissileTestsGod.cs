@@ -4,16 +4,20 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class MissileTestsGod : TestGodBase
 	{
         private MissileController[] _missiles;
+
+        public AudioClip impactSound;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -26,6 +30,8 @@ namespace BattleCruisers.Scenes.Test
 
         protected void SetupMissiles(Helper helper, ITarget target)
 		{
+            Assert.IsNotNull(impactSound);
+
 			// Setup missiles
 			IExactMatchTargetFilter targetFilter = new ExactMatchTargetFilter() 
 			{
@@ -47,6 +53,7 @@ namespace BattleCruisers.Scenes.Test
                         initialVelocity,
                         targetFilter,
                         parent,
+                        new AudioClipWrapper(impactSound),
                         target));
             }
 		}

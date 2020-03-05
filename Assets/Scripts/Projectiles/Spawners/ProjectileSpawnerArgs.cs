@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Spawners
         public IFactoryProvider FactoryProvider { get; }
 
         public ProjectileSpawnerArgs(
-            ITarget parent, 
+            ITarget parent,
             IProjectileStats projectileStats, 
             int burstSize,
             IFactoryProvider factoryProvider)

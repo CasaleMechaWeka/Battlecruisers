@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 
 		public SiloHalfController leftSiloHalf, rightSiloHalf;
 		public NukeController nukeMissilePrefab;
+
+		private IAudioClipWrapper _nukeImpactSound;
+		public AudioClip nukeImpactSound;
 
 		private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
 		private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
@@ -60,6 +64,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsNotNull(_nukeStats);
             AddAttackCapability(TargetType.Cruiser);
             AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
+
+			Assert.IsNotNull(nukeImpactSound);
+			_nukeImpactSound = new AudioClipWrapper(nukeImpactSound);
 		}
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -101,6 +108,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
                     Vector2.zero,
                     targetFilter,
                     this,
+					_nukeImpactSound,
                     _enemyCruiser));
 
             // Make nuke face upwards (rotation is set in Initialise() above)

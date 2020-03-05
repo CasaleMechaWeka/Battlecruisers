@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,8 +17,9 @@ namespace BattleCruisers.Projectiles.ActivationArgs
             Vector2 initialVelocityInMPerS, 
             ITargetFilter targetFilter, 
             ITarget parent,
+            IAudioClipWrapper impactSound,
             ITarget target) 
-            : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent)
+            : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)
         {
             Assert.IsNotNull(target);
             Target = target;

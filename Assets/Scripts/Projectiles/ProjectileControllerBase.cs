@@ -6,11 +6,11 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,6 +26,7 @@ namespace BattleCruisers.Projectiles
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private ITarget _parent;
+        private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
         private TrailRenderer[] _trailRenderers;
         protected IFactoryProvider _factoryProvider;
@@ -65,9 +66,6 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-        // By default have no impact sound
-        protected virtual ISoundKey ImpactSoundKey => null;
-
         public Vector3 Position => transform.position;
 
         public void Initialise(IFactoryProvider factoryProvider)
@@ -104,6 +102,7 @@ namespace BattleCruisers.Projectiles
 
 			_targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
+            _impactSound = activationArgs.ImpactSound;
 
             _rigidBody.velocity = activationArgs.InitialVelocityInMPerS;
             _rigidBody.gravityScale = activationArgs.ProjectileStats.GravityScale;
@@ -157,15 +156,9 @@ namespace BattleCruisers.Projectiles
         protected virtual void DestroyProjectile()
         {
             ShowExplosion();
-
-            if (ImpactSoundKey != null)
-            {
-                _factoryProvider.Sound.SoundPlayer.PlaySoundAsync(ImpactSoundKey, transform.position);
-            }
-
+            _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
 			RemoveFromScene();
 		}
-
 
         private void ShowExplosion()
         {

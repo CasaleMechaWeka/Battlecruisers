@@ -19,6 +19,7 @@ namespace BattleCruisers.Projectiles.Spawners
                     missileVelocity,
                     targetFilter,
                     _parent,
+                    _impactSound,
                     target);
 
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}");

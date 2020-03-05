@@ -5,11 +5,13 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Effects
 {
@@ -26,6 +28,8 @@ namespace BattleCruisers.Scenes.Test.Effects
         private TestAircraftController _aircraft;
         private ProjectileController[] _projectiles;
 
+        public AudioClip impactSound;
+
         protected override List<GameObject> GetGameObjects()
         {
             _aircraft = FindObjectOfType<TestAircraftController>();
@@ -41,6 +45,8 @@ namespace BattleCruisers.Scenes.Test.Effects
 
         protected override void Setup(Helper helper)
         {
+            Assert.IsNotNull(impactSound);
+
             helper.InitialiseUnit(_aircraft);
             _aircraft.StartConstruction();
             _aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
@@ -60,7 +66,8 @@ namespace BattleCruisers.Scenes.Test.Effects
                         projectileStats,
                         Vector2.zero,
                         targetFilter,
-                        parent));
+                        parent,
+                        new AudioClipWrapper(impactSound)));
             }
         }
 

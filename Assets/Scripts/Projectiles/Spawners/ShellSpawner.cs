@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class ShellSpawner : BaseShellSpawner<ProjectileController>
+    public class ShellSpawner : BaseShellSpawner
 	{
         private IProjectileSpawnerSoundPlayer _soundPlayer;
 
@@ -33,7 +33,8 @@ namespace BattleCruisers.Projectiles.Spawners
                     _projectileStats,
                     shellVelocity,
                     _targetFilter,
-                    _parent);
+                    _parent,
+                    _impactSound);
             _projectilePool.GetItem(activationArgs);
 
             _soundPlayer.OnProjectileFired();

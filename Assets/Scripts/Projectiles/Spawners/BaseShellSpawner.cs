@@ -5,8 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public abstract class BaseShellSpawner<TProjectile> : ProjectileSpawner<TProjectile, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
-        where TProjectile : ProjectileControllerBase<ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public abstract class BaseShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
 	{
 		protected ITargetFilter _targetFilter;
 

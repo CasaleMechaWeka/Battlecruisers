@@ -5,9 +5,11 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -15,6 +17,8 @@ namespace BattleCruisers.Scenes.Test
 	{
         private AirFactory _target;
         private RocketController _rocket;
+
+        public AudioClip impactSound;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -30,6 +34,8 @@ namespace BattleCruisers.Scenes.Test
 
         protected override void Setup(Helper helper)
         {
+            Assert.IsNotNull(impactSound);
+
 			// Setup target
             helper.InitialiseBuilding(_target);
 
@@ -56,6 +62,7 @@ namespace BattleCruisers.Scenes.Test
                     initialVelocity,
                     targetFilter,
                     parent,
+                    new AudioClipWrapper(impactSound),
                     _target));
         }
 	}
