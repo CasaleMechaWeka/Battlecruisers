@@ -23,7 +23,6 @@ namespace BattleCruisers.Projectiles
             where TActivationArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
     {
-        private IProjectileStats _projectileStats;
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private ITarget _parent;
@@ -104,7 +103,6 @@ namespace BattleCruisers.Projectiles
                 trailRenderer.Clear();
             }
 
-			_projectileStats = activationArgs.ProjectileStats;
 			_targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
 
