@@ -31,6 +31,11 @@ namespace BattleCruisers.UI.Sound
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
             IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+            PlaySound(sound, position);
+        }
+
+        public void PlaySound(IAudioClipWrapper sound, Vector2 position)
+        {
             _audioClipPlayer.PlaySound(sound, position);
         }
     }
