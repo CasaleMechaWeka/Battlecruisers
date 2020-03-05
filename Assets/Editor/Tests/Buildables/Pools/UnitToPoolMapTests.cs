@@ -61,7 +61,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         [Test]
         public void GetPool_Gunship()
         {
-            _aircraft.Name.Returns("Turtle Gunship");
+            _aircraft.Name.Returns("Gunship");
             IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_aircraft);
             Assert.AreSame(_unitPoolProvider.GunshipPool, pool);
         }

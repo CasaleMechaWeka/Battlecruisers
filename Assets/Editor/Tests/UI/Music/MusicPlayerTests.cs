@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayVictoryMusic()
         {
             _musicPlayer.PlayVictoryMusic();
-            _soundPlayer.Received().PlaySoundAsync(SoundKeys.Music.Victory, loop: false);
+            _soundPlayer.Received().PlaySoundAsync(SoundKeys.Music.Victory, loop: true);
         }
 
         [Test]
