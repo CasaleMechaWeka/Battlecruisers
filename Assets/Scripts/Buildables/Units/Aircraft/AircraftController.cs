@@ -16,11 +16,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Seabed;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider
-	{
+    public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider, ISeabedImpactable
+    {
         private KamikazeController _kamikazeController;
 		private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
@@ -33,6 +35,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
         private const float ON_DEATH_GRAVITY_SCALE = 0.4f;
+        // FELIX
+        //private const float SEABED_PARK_TIME_IN_S = 1;
+        private const float SEABED_PARK_TIME_IN_S = 10;
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
         public override TargetType TargetType => TargetType.Aircraft;
@@ -250,5 +255,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         protected virtual void CleanUp() { }
+
+        // FELIX  Create interface?
+        /// <summary>
+        /// Stop movement, wait until smoke trail has dissipated before removing
+        /// game object from scene.  Otherwise smoke trail insta-disappears :P
+        /// </summary>
+        public void OnHitSeabed()
+        {
+            // Freeze unit
+            rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            rigidBody.velocity = new Vector2(0, 0);
+
+            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, SEABED_PARK_TIME_IN_S);
+        }
     }
 }

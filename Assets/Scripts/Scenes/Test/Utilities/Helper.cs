@@ -184,25 +184,26 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
             IUserChosenTargetManager userChosenTargetManager = null)
 		{
-			BuildableInitialisationArgs args
-				= new BuildableInitialisationArgs(
-					this,
-					faction,
-					uiManager,
-					parentCruiser,
-					enemyCruiser,
-					aircraftProvider,
+            BuildableInitialisationArgs args
+                = new BuildableInitialisationArgs(
+                    this,
+                    faction,
+                    uiManager,
+                    parentCruiser,
+                    enemyCruiser,
+                    aircraftProvider,
                     targetFactories,
-					movementControllerFactory,
-					angleCalculatorFactory,
-					targetPositionPredictorFactory,
-					flightPointsProviderFactory,
+                    movementControllerFactory,
+                    angleCalculatorFactory,
+                    targetPositionPredictorFactory,
+                    flightPointsProviderFactory,
                     boostFactory,
                     globalBoostProviders,
                     damageApplierFactory,
-					parentCruiserDirection,
+                    parentCruiserDirection,
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
+                    deferrer: _deferrer,
                     updaterProvider: UpdaterProvider);
 
             InitialiseUnit(unit, args);
