@@ -11,8 +11,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
-// FELIX  Update namespace to match implementation :)
-namespace BattleCruisers.Tests.Buildables
+namespace BattleCruisers.Tests.Buildables.Repairables
 {
     public class RepairManagerTests
 	{
