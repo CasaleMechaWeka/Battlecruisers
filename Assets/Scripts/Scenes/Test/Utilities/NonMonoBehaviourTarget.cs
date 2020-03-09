@@ -30,6 +30,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public float MaxHealth { get; set; }
         public GameObject GameObject { get; set; }
         public ITarget LastDamagedSource { get; set; }
+        public Vector2 DroneAreaSize { get; set; }
+        public Vector2 DroneAreaPosition { get; set; }
 
         public event EventHandler<DamagedEventArgs> Damaged;
         public event EventHandler HealthChanged;

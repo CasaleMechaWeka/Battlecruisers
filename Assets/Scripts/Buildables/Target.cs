@@ -25,6 +25,8 @@ namespace BattleCruisers.Buildables
         public virtual TargetValue TargetValue => TargetValue.Low;
         public virtual Vector2 Velocity => new Vector2(0, 0);
         public abstract Vector2 Size { get; }
+        public virtual Vector2 DroneAreaSize => Size;
+
         public ITransform Transform { get; private set; }
 
         public Quaternion Rotation
@@ -33,6 +35,7 @@ namespace BattleCruisers.Buildables
             set { transform.rotation = value; }
         }
 
+        public virtual Vector2 DroneAreaPosition => Position;
         public Vector2 Position
         {
             get { return transform.position; }

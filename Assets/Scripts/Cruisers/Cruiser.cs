@@ -47,9 +47,14 @@ namespace BattleCruisers.Cruisers
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
         public override Vector2 Size => _renderer.bounds.size;
+        public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
         
-		// IComparableItem
-		public string Description => description;
+        private Vector2 _droneAreaSize;
+        public override Vector2 DroneAreaSize => _droneAreaSize;
+
+
+        // IComparableItem
+        public string Description => description;
         public string Name => cruiserName;
 		public Sprite Sprite => _renderer.sprite;
 
@@ -113,6 +118,8 @@ namespace BattleCruisers.Cruisers
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
             PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
             UnitTargets = new UnitTargets(UnitMonitor);
+
+            _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
         }
 
         public virtual void Initialise(ICruiserArgs args)

@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             IDroneConsumer droneConsumer = _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
 
-            IDroneFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.Position, repairable.Size);
+            IDroneFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.DroneAreaPosition, repairable.DroneAreaSize);
             _repairableToFeedback.Add(repairable, droneNumFeedback);
 			
             if (repairable.RepairCommand.CanExecute)

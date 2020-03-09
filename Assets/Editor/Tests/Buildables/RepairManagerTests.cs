@@ -251,6 +251,7 @@ namespace BattleCruisers.Tests.Buildables
         {
             _cruiserRepairCommand.CanExecute.Returns(false);
             _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR).Returns(_cruiserDroneConsumer);
+            // FELIX  Fix.
             _feedbackFactory.CreateFeedback(_cruiserDroneConsumer, _cruiser.Position, _cruiser.Size).Returns(_cruiserFeedback);
 
             IRepairManager repairManager = new RepairManager(_feedbackFactory, _droneConsumerProvider, _cruiser);
