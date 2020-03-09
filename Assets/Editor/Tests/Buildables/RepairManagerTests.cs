@@ -11,6 +11,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
+// FELIX  Update namespace to match implementation :)
 namespace BattleCruisers.Tests.Buildables
 {
     public class RepairManagerTests
@@ -51,8 +52,8 @@ namespace BattleCruisers.Tests.Buildables
             _cruiser.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
             _cruiser.RepairCommand.Returns(_cruiserRepairCommand);
             _cruiserRepairCommand.Repairable.Returns(_cruiser);
-            _cruiser.Position.Returns(new Vector2(17, 93));
-            _cruiser.Size.Returns(new Vector2(28, 82));
+            _cruiser.DroneAreaPosition.Returns(new Vector2(17, 93));
+            _cruiser.DroneAreaSize.Returns(new Vector2(28, 82));
 
             // Building repairable
             _buildingRepairCommand = Substitute.For<IRepairCommand>();
@@ -60,8 +61,8 @@ namespace BattleCruisers.Tests.Buildables
             _building.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
             _building.RepairCommand.Returns(_buildingRepairCommand);
             _buildingRepairCommand.Repairable.Returns(_building);
-            _building.Position.Returns(new Vector2(7, 3));
-            _building.Size.Returns(new Vector2(8, 2));
+            _building.DroneAreaPosition.Returns(new Vector2(7, 3));
+            _building.DroneAreaSize.Returns(new Vector2(8, 2));
             _repairAmount = DELTA_TIME_IN_S * _cruiserDroneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S * BuildSpeedMultipliers.DEFAULT;
 
             UnityAsserts.Assert.raiseExceptions = true;
@@ -238,12 +239,12 @@ namespace BattleCruisers.Tests.Buildables
         {
             _buildingRepairCommand.CanExecute.Returns(true);
             _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR).Returns(_buildingDroneConsumer);
-            _feedbackFactory.CreateFeedback(_buildingDroneConsumer, _building.Position, _building.Size).Returns(_buildingFeedback);
+            _feedbackFactory.CreateFeedback(_buildingDroneConsumer, _building.DroneAreaPosition, _building.DroneAreaSize).Returns(_buildingFeedback);
 
             _cruiser.StartConstructingBuilding(_building);
 
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
-            _feedbackFactory.Received().CreateFeedback(_buildingDroneConsumer, _building.Position, _building.Size);
+            _feedbackFactory.Received().CreateFeedback(_buildingDroneConsumer, _building.DroneAreaPosition, _building.DroneAreaSize);
             _droneConsumerProvider.Received().ActivateDroneConsumer(_buildingDroneConsumer);
 		}
 
@@ -251,13 +252,12 @@ namespace BattleCruisers.Tests.Buildables
         {
             _cruiserRepairCommand.CanExecute.Returns(false);
             _droneConsumerProvider.RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR).Returns(_cruiserDroneConsumer);
-            // FELIX  Fix.
-            _feedbackFactory.CreateFeedback(_cruiserDroneConsumer, _cruiser.Position, _cruiser.Size).Returns(_cruiserFeedback);
+            _feedbackFactory.CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize).Returns(_cruiserFeedback);
 
             IRepairManager repairManager = new RepairManager(_feedbackFactory, _droneConsumerProvider, _cruiser);
 
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
-            _feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _cruiser.Position, _cruiser.Size);
+            _feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize);
 
             return repairManager;
 		}
