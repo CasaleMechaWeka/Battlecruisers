@@ -28,19 +28,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 if (_currentFactory != null)
                 {
                     _currentFactory.CompletedBuildable -= _currentFactory_CompletedBuildable;
-                    
-                    if (_currentFactory.BuildableState != BuildableState.Completed)
-                    {
-                        _currentFactory.CompletedBuildable += _currentFactory_CompletedBuildable;
-                    }
                 }
 
                 _currentFactory = value;
                 _unitBuildProgress.Factory = value;
 
-                if (_currentFactory != null)
+                if (_currentFactory != null
+                    && _currentFactory.BuildableState != BuildableState.Completed)
                 {
-                    _currentFactory.CompletedBuildable -= _currentFactory_CompletedBuildable;
+                    _currentFactory.CompletedBuildable += _currentFactory_CompletedBuildable;
                 }
             }
         }
