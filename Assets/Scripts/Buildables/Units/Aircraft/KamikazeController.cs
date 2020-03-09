@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private ITarget _targetToDamage;
 
-        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1.5f;
+        private const float KAMIKAZE_DAMAGE_MULTIPLIER = 2;
 
         public void Initialise(IUnit parentAircraft, IFactoryProvider factoryProvider, ITarget target)
         {
