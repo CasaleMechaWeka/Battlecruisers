@@ -60,6 +60,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
 		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
+        protected virtual bool IsOperational => BuildableState == BuildableState.Completed;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
@@ -236,19 +237,18 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void CleanUp()
         {
-            if (BuildableState == BuildableState.Completed)
+            if (IsOperational)
             {
-                // Archon delays initialisation beyond unit completion, hence these may not be initialised.
-                _movementDecider?.DisposeManagedState();
+                _movementDecider.DisposeManagedState();
                 _movementDecider = null;
 
-                _movementTargetProcessor?.DisposeManagedState();
+                _movementTargetProcessor.DisposeManagedState();
                 _movementTargetProcessor = null;
 
-                _enemyDetectorProvider?.DisposeManagedState();
+                _enemyDetectorProvider.DisposeManagedState();
                 _enemyDetectorProvider = null;
 
-                _friendDetectorProvider?.DisposeManagedState();
+                _friendDetectorProvider.DisposeManagedState();
                 _friendDetectorProvider = null;
 
                 foreach (IBarrelWrapper turret in _turrets)
