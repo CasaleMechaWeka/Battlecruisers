@@ -27,6 +27,10 @@ namespace BattleCruisers.Scenes.Test.Turrets
 
         protected override void Setup(Helper helper)
         {
+            // Setup target
+            helper.InitialiseBuilding(_airFactory);
+            _airFactory.Destroyed += (sender, e) => _laserBarrel.Target = null;
+            
             // Setup laser barrel
             _laserBarrel.StaticInitialise();
 
@@ -38,10 +42,6 @@ namespace BattleCruisers.Scenes.Test.Turrets
                     rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 
             _laserBarrel.InitialiseAsync(barrelControllerArgs);
-            
-            // Setup target
-            helper.InitialiseBuilding(_airFactory);
-            _airFactory.Destroyed += (sender, e) => _laserBarrel.Target = null;
 			_laserBarrel.Target = _airFactory;
 	    }
 	}
