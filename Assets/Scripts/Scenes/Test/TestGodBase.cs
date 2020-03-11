@@ -14,6 +14,9 @@ namespace BattleCruisers.Scenes.Test
 
         private async void Start()
         {
+            // Exceptions are lost in async code.  Turning exceptions off means we get a nice log message :)
+            Assert.raiseExceptions = false;
+
             // Deactivate all game objects (to avoid update loop while we are initialising)
             IList<GameObject> gameObjects = GetGameObjects();
             SetActiveness(gameObjects, false);
