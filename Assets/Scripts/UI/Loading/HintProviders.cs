@@ -24,8 +24,7 @@ namespace BattleCruisers.UI.Loading
                 "Build factories to produce units.",
                 "Builders automatically repair damaged buildings and your cruiser.",
                 "Buildings can be deleted by clicking them and then selecting the little trash can in the building details panel.",
-                "Click on a cruiser, unit or building to show more details.",
-                "Build ship turrets and mortars at the front of your cruiser so they are in range of enemy ships."
+                "Click on a cruiser, unit or building to show more details."
             };
         }
 
