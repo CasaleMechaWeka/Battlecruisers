@@ -76,7 +76,7 @@ namespace BattleCruisers.Scenes.Test
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
 			_enemyFaction = Faction.Blues;
 			Faction friendlyFaction = Faction.Reds;
@@ -89,7 +89,7 @@ namespace BattleCruisers.Scenes.Test
                 helper.InitialiseBuilding(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
-                SetupLaser(test.LaserStats.Laser);
+                await SetupLaserAsync(test.LaserStats.Laser);
             }
 
             // Moving targets
@@ -100,7 +100,7 @@ namespace BattleCruisers.Scenes.Test
                 helper.InitialiseUnit(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
-                SetupLaser(test.LaserStats.Laser);
+                await SetupLaserAsync(test.LaserStats.Laser);
 			}
 
 			// Blocking targets
@@ -139,12 +139,12 @@ namespace BattleCruisers.Scenes.Test
             return movingTargets;
         }
 
-        private void SetupLaser(LaserEmitter laserEmitter)
+        private async Task SetupLaserAsync(LaserEmitter laserEmitter)
         {
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
             ITarget parent = Substitute.For<ITarget>();
-            laserEmitter
+            await laserEmitter
                 .InitialiseAsync(
                     targetFilter, 
                     damagePerS: 100, 

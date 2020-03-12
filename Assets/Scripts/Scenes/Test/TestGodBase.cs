@@ -31,6 +31,7 @@ namespace BattleCruisers.Scenes.Test
 
             // Child class initialisation
             Setup(helper);
+            await SetupAsync(helper);
 
             // Activate all game objects.  Everything should be initialised now, so update loops should work.
             SetActiveness(gameObjects, true);
@@ -58,5 +59,6 @@ namespace BattleCruisers.Scenes.Test
         }
 
         protected virtual void Setup(Helper helper) { }
+        protected virtual Task SetupAsync(Helper hepler) => Task.CompletedTask;
     }
 }
