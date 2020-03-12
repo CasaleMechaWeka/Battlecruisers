@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers.Fog
     public class FogOfWar : MonoBehaviourWrapper
     {
         private const float STRONG_FOG_ALPHA = 1;
-        private const float WEAK_FOG_ALPHA = 0.08f;
+        private const float WEAK_FOG_ALPHA = 0.2f;
 
         public void Initialise(FogStrength fogStrength)
         {
