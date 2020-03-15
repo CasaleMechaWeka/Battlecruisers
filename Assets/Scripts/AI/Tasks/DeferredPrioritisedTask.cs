@@ -30,7 +30,7 @@ namespace BattleCruisers.AI.Tasks
         private readonly IDeferrer _deferrer;
         private readonly float _delayInS;
 
-        public const float DEFAULT_DELAY_IN_S = 1;
+        public const float DEFAULT_DELAY_IN_S = 1.5f;
         private const float MIN_DELAY_IN_S = 0.1f;
 
         public TaskPriority Priority => _baseTask.Priority;
