@@ -23,8 +23,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public abstract UnitCategory UnitCategory { get; }
 
-		private const float SPAWN_RADIUS_MULTIPLIER = 1.2f;
-
 		public event EventHandler<UnitStartedEventArgs> UnitStarted;
         public event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         public event EventHandler NewUnitChosen;
@@ -145,23 +143,25 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		}
 
 		protected virtual void Unit_BuildingStarted(object sender, EventArgs e) 
-		{ 
-			UnitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
+		{
+            Logging.Log(Tags.FACTORY, sender.ToString());
 
             IUnit unit = sender.Parse<IUnit>();
-
             UnitStarted?.Invoke(this, new UnitStartedEventArgs(unit));
 		}
 
 		private void Unit_CompletedBuildable(object sender, EventArgs e)
 		{
-			UnitCompleted?.Invoke(this, new UnitCompletedEventArgs(UnitUnderConstruction));
-
+            Logging.Log(Tags.FACTORY, sender.ToString());
+			
+            UnitCompleted?.Invoke(this, new UnitCompletedEventArgs(UnitUnderConstruction));
             CleanUpUnitUnderConstruction();
 		}
 
         private void UnitUnderConstruction_Destroyed(object sender, DestroyedEventArgs e)
         {
+            Logging.Log(Tags.FACTORY, sender.ToString());
+
             CleanUpUnitUnderConstruction();
             UnitUnderConstructionDestroyed?.Invoke(this, EventArgs.Empty);
         }
@@ -194,6 +194,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void DestroyUnitUnderConstruction()
 		{
+            Logging.LogMethod(Tags.FACTORY);
+
 			if (UnitUnderConstruction != null
                 && !UnitUnderConstruction.IsDestroyed
                 && UnitUnderConstruction.BuildableState != BuildableState.Completed)
@@ -204,23 +206,30 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
 		private void CleanUpUnitUnderConstruction()
 		{
-			UnitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
+            Logging.LogMethod(Tags.FACTORY);
+
+            UnitUnderConstruction.StartedConstruction -= Unit_BuildingStarted;
+            UnitUnderConstruction.CompletedBuildable -= Unit_CompletedBuildable;
             UnitUnderConstruction.Destroyed -= UnitUnderConstruction_Destroyed;
 			UnitUnderConstruction = null;
 		}
 
         public void StartBuildingUnit(IBuildableWrapper<IUnit> unit)
         {
+            Logging.Log(Tags.FACTORY, unit?.ToString());
             UnitWrapper = unit;
         }
 
         public void StopBuildingUnit()
         {
+            Logging.LogMethod(Tags.FACTORY);
             UnitWrapper = null;
         }
 
         public void PauseBuildingUnit()
         {
+            Logging.LogMethod(Tags.FACTORY);
+
             if (UnitWrapper != null
                 && !_isUnitPaused.Value)
             {
@@ -231,6 +240,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public void ResumeBuildingUnit()
         {
+            Logging.LogMethod(Tags.FACTORY);
+
             if (_isUnitPaused.Value)
             {
                 Assert.IsNotNull(UnitWrapper);
@@ -243,6 +254,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         private void EnsureDroneConsumerHasHighestPriority()
         {
+            Logging.LogMethod(Tags.FACTORY);
+
             if (DroneConsumer.State == DroneConsumerState.Idle)
             {
                 ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: false);
@@ -251,6 +264,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override void ToggleDroneConsumerFocusCommandExecute()
         {
+            Logging.Log(Tags.FACTORY, $"_isUnitPaused.Value: {_isUnitPaused.Value}");
+
             if (_isUnitPaused.Value)
             {
                 // Cannot focus on drone consumer if they are not activated.

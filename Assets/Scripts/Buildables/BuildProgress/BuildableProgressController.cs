@@ -15,6 +15,8 @@ namespace BattleCruisers.Buildables.BuildProgress
 
 		public void Initialise() 
 		{
+			Logging.LogMethod(Tags.PROGRESS_BARS);
+
 			_buildable = gameObject.GetComponentInInactiveParent<IBuildable>();
 			Assert.IsNotNull(_buildable);
 
@@ -32,6 +34,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
 		private void Buildable_StartedBuilding(object sender, EventArgs e)
 		{
+			Logging.Log(Tags.PROGRESS_BARS, $"Show build progress for {_buildable}");
 			gameObject.SetActive(true);
 		}
 		
@@ -45,6 +48,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 		
 		private void Buildable_CompletedOrDestroyedBuilding(object sender, EventArgs e)
 		{
+			Logging.Log(Tags.PROGRESS_BARS, $"Hide build progress for {_buildable}");
 			gameObject.SetActive(false);
 		}
 	}
