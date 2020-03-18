@@ -5,7 +5,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
@@ -13,8 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 	{
 		private BattleResult _lastBattleResult;
 		private int _totalNumOfLevels;
-
-        private Button _firstTimePlayButton, _continueButton, _selectLevelButton, _loadoutButton, _settingsButton, _tutorialButton, _quitButton;
 
         public void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
 		{
