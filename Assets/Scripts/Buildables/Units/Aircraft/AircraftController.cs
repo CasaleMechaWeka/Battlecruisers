@@ -28,6 +28,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
         private TrailRenderer _aircraftTrail;
+        private bool _onSeabed;
 
         protected ISpriteChooser _spriteChooser;
 
@@ -36,6 +37,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
         private const float ON_DEATH_GRAVITY_SCALE = 0.4f;
         private const float SEABED_PARK_TIME_IN_S = 10;
+        private const float SEABED_SAFE_POSITION_Y = -40;
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
         public override TargetType TargetType => TargetType.Aircraft;
@@ -125,6 +127,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ActiveMovementController = DummyMovementController;
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
+            _onSeabed = false;
 		}
 
 		protected override void OnBuildableCompleted()
@@ -264,9 +267,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         /// </summary>
         public void OnHitSeabed()
         {
+            Logging.Log(Tags.AIRCRAFT, this);
+
+            if (_onSeabed)
+            {
+                Logging.Warn(Tags.AIRCRAFT, $"Should not be called when already on seabed :/");
+                return;
+            }
+
             // Freeze unit
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
             rigidBody.velocity = new Vector2(0, 0);
+
+            // Move unit below seabed collider, so it does not recollide in subsequent frames.
+            Vector3 currentPosition = rigidBody.transform.position;
+            rigidBody.transform.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
             _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, SEABED_PARK_TIME_IN_S);
         }
