@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
@@ -33,14 +34,23 @@ namespace BattleCruisers.Effects.Explosions
 
             if (_systemsCompletedCount == _particleSystems.Length)
             {
-                _systemsCompletedCount = 0;
-                _explosionController.IsVisible = false;
-                Deactivated?.Invoke(this, EventArgs.Empty);
+                Deactivate();
             }
+        }
+
+        private void Deactivate()
+        {
+            Logging.Log(Tags.EXPLOSIONS, _explosionController.ToString());
+
+            _systemsCompletedCount = 0;
+            _explosionController.IsVisible = false;
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
         public void Activate(Vector3 position)
         {
+            Logging.Log(Tags.EXPLOSIONS, _explosionController.ToString());
+
             _explosionController.IsVisible = true;
             _explosionController.Position = position;
 
