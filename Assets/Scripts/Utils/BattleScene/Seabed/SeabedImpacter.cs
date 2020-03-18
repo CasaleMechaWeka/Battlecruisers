@@ -15,12 +15,10 @@ namespace BattleCruisers.Utils.BattleScene.Seabed
                 return;
             }
 
-            ISeabedImpactable targetImpactable = collider.GetComponent<ITargetProxy>()?.Target as ISeabedImpactable;
-
-            if (targetImpactable != null)
+            if (collider.GetComponent<ITargetProxy>()?.Target is ISeabedImpactable targetImpactable)
             {
                 targetImpactable.OnHitSeabed();
             }
-		}
+        }
 	}
 }
