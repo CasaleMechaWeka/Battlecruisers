@@ -64,7 +64,7 @@ namespace BattleCruisers.Movement.Velocity
 
                 // NOTE:  Am not using _rigidBody.MovePosition(), because that reacts weirdly
                 // for fighters when the fighter's rigidBody.transform.rotation is being
-                // excplicitly set (to get the fighter pointing the direction it's travelling).
+                // explicitly set (to get the fighter pointing the direction it's travelling).
                 _rigidBody.transform.position = moveToPosition;
 
                 // Have this inline so it will be stripped out when logs are excluded.
