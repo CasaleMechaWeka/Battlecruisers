@@ -130,21 +130,15 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
             // Units
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.AIRCRAFT, true);
-            //tagsToActiveness.Add(Tags.AIRCRAFT, false);
+            tagsToActiveness.Add(Tags.AIRCRAFT, false);
             tagsToActiveness.Add(Tags.FIGHTER, false);
             tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.BUILDABLE, true);
-            //tagsToActiveness.Add(Tags.BUILDABLE, false);
+            tagsToActiveness.Add(Tags.BUILDABLE, false);
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.FACTORY, true);
-            //tagsToActiveness.Add(Tags.FACTORY, false);
+            tagsToActiveness.Add(Tags.FACTORY, false);
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
@@ -170,9 +164,7 @@ namespace BattleCruisers.Utils
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.PROGRESS_BARS, true);
-            //tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+            tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
             tagsToActiveness.Add(Tags.UI, false);
