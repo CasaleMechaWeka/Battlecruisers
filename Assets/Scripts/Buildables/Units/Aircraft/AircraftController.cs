@@ -104,6 +104,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
+            Logging.LogMethod(Tags.AIRCRAFT);
+
             // Needs to happen before we are moved to a new position and have our game object enabled, otherwise get trail from last death position.
             _aircraftTrail.Clear();
 
@@ -218,6 +220,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void OnDestroyed()
         {
+            Logging.LogMethod(Tags.AIRCRAFT);
+
             base.OnDestroyed();
 
             _localBoosterBoostableGroup.BoostChanged -= _boostableGroup_BoostChanged;

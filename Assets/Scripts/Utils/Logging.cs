@@ -109,8 +109,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -130,15 +130,21 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
             // Units
-            tagsToActiveness.Add(Tags.AIRCRAFT, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.AIRCRAFT, true);
+            //tagsToActiveness.Add(Tags.AIRCRAFT, false);
             tagsToActiveness.Add(Tags.FIGHTER, false);
             tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
-            tagsToActiveness.Add(Tags.BUILDABLE, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.BUILDABLE, true);
+            //tagsToActiveness.Add(Tags.BUILDABLE, false);
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
-            tagsToActiveness.Add(Tags.FACTORY, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.FACTORY, true);
+            //tagsToActiveness.Add(Tags.FACTORY, false);
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
@@ -164,7 +170,9 @@ namespace BattleCruisers.Utils
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
-            tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.PROGRESS_BARS, true);
+            //tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
             tagsToActiveness.Add(Tags.UI, false);
@@ -230,6 +238,17 @@ namespace BattleCruisers.Utils
             [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
             Log(LoggingLevel.Normal, tag, string.Empty, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [Conditional("ENABLE_LOGS")]
+        public static void Log(
+            string tag,
+            object obj,
+            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+            [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
+            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Log(LoggingLevel.Normal, tag, obj?.ToString(), memberName, sourceFilePath, sourceLineNumber);
         }
 
         [Conditional("ENABLE_LOGS")]

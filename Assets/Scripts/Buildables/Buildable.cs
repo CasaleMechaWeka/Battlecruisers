@@ -240,6 +240,8 @@ namespace BattleCruisers.Buildables
         /// </summary>
         public virtual void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
         {
+            Logging.Log(Tags.BUILDABLE, this);
+
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
             Helper.AssertIsNotNull(uiManager, factoryProvider);
 
@@ -256,6 +258,7 @@ namespace BattleCruisers.Buildables
 
             _healthBar.Initialise(this, followDamagable: true);
 
+            Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
             _parent.SetActive(false);
         }
 
@@ -265,6 +268,7 @@ namespace BattleCruisers.Buildables
         /// </summary>
         public virtual void Activate(TActivationArgs activationArgs)
         {
+            Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(true);");
             Assert.IsNotNull(activationArgs);
 
             _parent.SetActive(true);
@@ -310,12 +314,12 @@ namespace BattleCruisers.Buildables
             IGlobalBoostProviders globalBoostProviders, 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
-            Logging.Log(Tags.BOOST, this.ToString());
+            Logging.Log(Tags.BOOST, this);
         }
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
         {
-            Logging.Log(Tags.BUILDABLE, this.ToString());
+            Logging.Log(Tags.BUILDABLE, this);
 
             if (DeleteCountdown.IsInProgress)
             {
@@ -333,7 +337,7 @@ namespace BattleCruisers.Buildables
 
         private void ClickHandler_DoubleClick(object sender, EventArgs e)
         {
-            Logging.Log(Tags.BUILDABLE, this.ToString());
+            Logging.Log(Tags.BUILDABLE, this);
             OnDoubleClick();
         }
 
@@ -361,7 +365,7 @@ namespace BattleCruisers.Buildables
 
         public void StartConstruction()
         {
-            Logging.Log(Tags.BUILDABLE, this.ToString());
+            Logging.Log(Tags.BUILDABLE, this);
 
             _healthTracker.SetMinHealth();
 
@@ -414,7 +418,7 @@ namespace BattleCruisers.Buildables
 
         protected virtual void OnBuildableCompleted()
         {
-            Logging.Log(Tags.BUILDABLE, this.ToString());
+            Logging.Log(Tags.BUILDABLE, this);
 
             CleanUpDroneConsumer();
 
@@ -448,6 +452,8 @@ namespace BattleCruisers.Buildables
 
         protected virtual void Deactivate()
         {
+            Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
+
             _parent.SetActive(false);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
@@ -469,7 +475,7 @@ namespace BattleCruisers.Buildables
 
         protected void SetupDroneConsumer(int numOfDrones, bool showDroneFeedback)
         {
-            Logging.Log(Tags.BUILDABLE, $"{this.ToString()}  numOfDrones: {numOfDrones}");
+            Logging.Log(Tags.BUILDABLE, $"{this}  numOfDrones: {numOfDrones}");
 
             Assert.IsNull(DroneConsumer);
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
@@ -484,7 +490,7 @@ namespace BattleCruisers.Buildables
 
         protected void CleanUpDroneConsumer()
         {
-            Logging.Log(Tags.BUILDABLE, this.ToString());
+            Logging.Log(Tags.BUILDABLE, this);
 
             Assert.IsNotNull(_droneFeedback);
             _droneFeedback.DisposeManagedState();
