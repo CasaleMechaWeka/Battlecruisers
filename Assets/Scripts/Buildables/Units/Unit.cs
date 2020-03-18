@@ -160,6 +160,7 @@ namespace BattleCruisers.Buildables.Units
 
         void IRemovable.RemoveFromScene()
         {
+            Logging.Log(Tags.BUILDABLE, this);
             base.InternalDestroy();
         }
 

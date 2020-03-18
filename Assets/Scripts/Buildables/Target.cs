@@ -173,5 +173,10 @@ namespace BattleCruisers.Buildables
         {
             return new List<SpriteRenderer>();
         }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}: {gameObject.GetInstanceID()}";
+        }
     }
 }
