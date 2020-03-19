@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Common.Click
         {
             if (_clickHandler != null)
             {
-                _clickHandler.OnClick(Time.time);
+                _clickHandler.OnClick(Time.unscaledTime);
             }
         }
     }
