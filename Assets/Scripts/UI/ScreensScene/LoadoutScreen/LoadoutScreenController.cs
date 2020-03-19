@@ -112,6 +112,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Cancel()
         {
+            _dataProvider.SaveGame();
             _comparingFamilyTracker.SetComparingFamily(null);
             _screensSceneGod.GoToHomeScreen();
         }
