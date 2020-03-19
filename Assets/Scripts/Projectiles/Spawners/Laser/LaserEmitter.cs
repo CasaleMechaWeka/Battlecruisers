@@ -112,6 +112,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
         public void DisposeManagedState()
         {
+            Logging.LogMethod(Tags.LASER);
             _laserSoundPlayer.DisposeManagedState();
         }
     }
