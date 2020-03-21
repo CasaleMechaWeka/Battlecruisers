@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.BattleScene.ProgressBars;
+﻿using BattleCruisers.Effects.Movement;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -6,36 +7,31 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public abstract class AnimatedShipController : ShipController
 	{
-        public Animator propulsionAnimation;
+        private IMovementEffects _movementEffects;
+        public MovementEffectInitialiser movementEffectInitialiser;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
-            Assert.IsNotNull(propulsionAnimation);
+            
+            Assert.IsNotNull(movementEffectInitialiser);
+            _movementEffects = movementEffectInitialiser.CreateMovementEffects();
         }
 
-        protected override void OnBuildableCompleted()
+        protected override void StartMovementEffects()
         {
-            base.OnBuildableCompleted();
-            propulsionAnimation.gameObject.SetActive(true);
+            _movementEffects.StartEffects();
         }
 
-        public override void StartMoving()
+        protected override void StopMovementEffects()
         {
-            base.StartMoving();
-            propulsionAnimation.speed = 1;
-        }
-
-        public override void StopMoving()
-        {
-            base.StopMoving();
-            propulsionAnimation.speed = 0;
+            _movementEffects.StopEffects();
         }
 
         protected override void Deactivate()
         {
             base.Deactivate();
-            propulsionAnimation.gameObject.SetActive(false);
+            _movementEffects.StopEffects();
         }
     }
 }

@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class TestGodBase : MonoBehaviour
     {
         protected IUpdaterProvider _updaterProvider;
+
+        public float buildSpeedMultiplier = BCUtils.BuildSpeedMultipliers.VERY_FAST;
 
         private async void Start()
         {
@@ -55,7 +58,11 @@ namespace BattleCruisers.Scenes.Test
             // May be null
             IDeferrer deferrer = GetComponent<IDeferrer>();
 
-            return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, deferrer: deferrer);
+            return 
+                await HelperFactory.CreateHelperAsync(
+                    updaterProvider: updaterProvider, 
+                    deferrer: deferrer,
+                    buildSpeedMultiplier: buildSpeedMultiplier);
         }
 
         protected virtual void Setup(Helper helper) { }
