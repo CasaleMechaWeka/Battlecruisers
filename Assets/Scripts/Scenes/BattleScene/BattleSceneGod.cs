@@ -200,7 +200,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         components.Deferrer,
                         cameraComponents.CruiserDeathCameraFocuser,
                         navigationPermitters.NavigationFilter,
-                        time));
+                        time,
+                        uiManager));
             Cheater cheater = GetComponentInChildren<Cheater>();
             Assert.IsNotNull(cheater);
             cheater.Initialise(factoryProvider);

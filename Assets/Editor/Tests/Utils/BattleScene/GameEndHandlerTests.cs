@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
@@ -28,6 +29,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private ICruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
         private ITime _time;
+        private IUIManager _uiManager;
         private IPrioritisedSoundPlayer _soundPlayer;
 
         private IBuilding _playerBuilding, _aiBuilding;
@@ -48,6 +50,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _time = Substitute.For<ITime>();
+            _uiManager = Substitute.For<IUIManager>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
@@ -61,7 +64,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _deferrer,
                     _cameraFocuser,
                     _navigationPermitter,
-                    _time);
+                    _time,
+                    _uiManager);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
@@ -133,6 +137,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             _deferrer.Received().Defer(Arg.Any<Action>(), Arg.Any<float>());
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: true);
+            _uiManager.Received().HideItemDetails();
+            _uiManager.Received().HideCurrentlyShownMenu();
         }
 
         [Test]
@@ -162,6 +168,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             _deferrer.Received().Defer(Arg.Any<Action>(), Arg.Any<float>());
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
+            _uiManager.Received().HideItemDetails();
+            _uiManager.Received().HideCurrentlyShownMenu();
         }
 
         [Test]
