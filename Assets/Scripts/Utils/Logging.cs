@@ -90,6 +90,7 @@ namespace BattleCruisers.Utils
         public const string EXPLOSIONS = "Explosions";
 
         // Other
+        public const string ALWAYS = "Always";
         public const string BOOST = "Boost";
         public const string GENERIC = "Generic";
         public const string LIFETIME_EVENTS = "LifetimeEvents";
@@ -205,6 +206,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.EXPLOSIONS, false);
 
             // Other
+            tagsToActiveness.Add(Tags.ALWAYS, true);
             tagsToActiveness.Add(Tags.BOOST, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);

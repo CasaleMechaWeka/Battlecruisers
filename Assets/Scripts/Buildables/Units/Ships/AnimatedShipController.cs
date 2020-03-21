@@ -18,6 +18,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             _movementEffects = movementEffectInitialiser.CreateMovementEffects();
         }
 
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _movementEffects.Show();
+        }
+
         protected override void StartMovementEffects()
         {
             _movementEffects.StartEffects();
@@ -31,7 +37,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override void Deactivate()
         {
             base.Deactivate();
-            _movementEffects.StopEffects();
+            _movementEffects.ResetAndHide();
         }
     }
 }
