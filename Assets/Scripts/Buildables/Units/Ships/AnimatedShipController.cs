@@ -6,7 +6,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public abstract class AnimatedShipController : ShipController
 	{
-        public GameObject propulsionAnimation;
+        public Animator propulsionAnimation;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
@@ -17,13 +17,25 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
-            propulsionAnimation.SetActive(true);
+            propulsionAnimation.gameObject.SetActive(true);
+        }
+
+        public override void StartMoving()
+        {
+            base.StartMoving();
+            propulsionAnimation.speed = 1;
+        }
+
+        public override void StopMoving()
+        {
+            base.StopMoving();
+            propulsionAnimation.speed = 0;
         }
 
         protected override void Deactivate()
         {
             base.Deactivate();
-            propulsionAnimation.SetActive(false);
+            propulsionAnimation.gameObject.SetActive(false);
         }
     }
 }

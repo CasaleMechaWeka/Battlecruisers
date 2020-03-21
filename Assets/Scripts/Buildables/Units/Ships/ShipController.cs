@@ -189,13 +189,13 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _targetFactories.HelperFactory.CreateShipRangeHelper(this));
         }
 
-		public void StartMoving()
+		public virtual void StartMoving()
 		{
 			Logging.LogMethod(Tags.SHIPS);
 			rigidBody.velocity = new Vector2(maxVelocityInMPerS * _directionMultiplier, 0);
 		}
 
-		public void StopMoving()
+		public virtual void StopMoving()
 		{
             Logging.LogMethod(Tags.SHIPS);
 			rigidBody.velocity = new Vector2(0, 0);
