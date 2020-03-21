@@ -10,6 +10,7 @@ namespace BattleCruisers.Utils.Debugging
     public class Cheater : MonoBehaviour
     {
         private IFactoryProvider _factoryProvider;
+        private float _lastGameSpeed;
 
         public int droneBoostNumber;
         public Canvas hudCanvas;
@@ -19,6 +20,7 @@ namespace BattleCruisers.Utils.Debugging
             Helper.AssertIsNotNull(hudCanvas, factoryProvider);
 
             _factoryProvider = factoryProvider;
+            _lastGameSpeed = 0;
 
             if (!Debug.isDebugBuild)
             {
@@ -68,6 +70,22 @@ namespace BattleCruisers.Utils.Debugging
             {
                 Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
+            }
+            // P = Pause
+            else if (Input.GetKeyUp(KeyCode.P))
+            {
+                if (_lastGameSpeed == 0
+                    && Time.timeScale != 0)
+                {
+                    _lastGameSpeed = Time.timeScale;
+                    Time.timeScale = 0;
+                }
+                else if (_lastGameSpeed != 0
+                    && Time.timeScale == 0)
+                {
+                    Time.timeScale = _lastGameSpeed;
+                    _lastGameSpeed = 0;
+                }
             }
         }
 
