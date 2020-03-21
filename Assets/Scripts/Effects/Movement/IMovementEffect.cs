@@ -1,7 +1,6 @@
 ﻿namespace BattleCruisers.Effects.Movement
 {
-    // FELIX  Rename to remove plural
-    public interface IMovementEffects
+    public interface IMovementEffect
     {
         void Show();
         void StartEffects();

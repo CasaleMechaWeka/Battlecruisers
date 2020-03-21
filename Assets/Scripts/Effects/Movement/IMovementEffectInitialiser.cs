@@ -2,6 +2,6 @@
 {
     public interface IMovementEffectInitialiser
     {
-        IMovementEffects CreateMovementEffects();
+        IMovementEffect CreateMovementEffects();
     }
 }

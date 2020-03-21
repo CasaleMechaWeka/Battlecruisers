@@ -5,7 +5,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 namespace BattleCruisers.Effects.Movement
 {
     // FELIX  Test
-    public class ShipMovementEffect : IMovementEffects
+    public class ShipMovementEffect : IMovementEffect
     {
         private readonly IGameObject _gameObject;
         private readonly IAnimator _animator;

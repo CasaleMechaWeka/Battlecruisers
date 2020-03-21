@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public abstract class AnimatedShipController : ShipController
 	{
-        private IMovementEffects _movementEffects;
+        private IMovementEffect _movementEffects;
         public MovementEffectInitialiser movementEffectInitialiser;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
