@@ -124,6 +124,9 @@ namespace BattleCruisers.UI.Cameras
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelFilter);
 
+            IPinchTracker pinchTracker = GetComponent<PinchTracker>();
+            Assert.IsNotNull(pinchTracker);
+
             ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetFinder cornerCameraTargetFinder
                 = new NavigationWheelCornersCameraTargetFinder(
@@ -143,7 +146,8 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator, 
                     settingsManager, 
                     settings, 
-                    updater);
+                    updater,
+                    pinchTracker);
 
             return
                 new CompositeCameraTargetProvider(
@@ -159,7 +163,8 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculator cameraCalculator, 
             ISettingsManager settingsManager, 
             ICameraCalculatorSettings settings, 
-            TogglableUpdater updater)
+            TogglableUpdater updater,
+            IPinchTracker pinchTracker)
         {
             ISystemInfo systemInfo = new SystemInfoBC();
             IDirectionalZoom directionalZoom
@@ -189,7 +194,7 @@ namespace BattleCruisers.UI.Cameras
                     new PinchZoomCameraTargetProvider(
                         zoomCalculator,
                         directionalZoom,
-                        new PinchTracker());
+                        pinchTracker);
 
                 return 
                     new SwipeCameraTargetProvider(
