@@ -1,13 +1,10 @@
 ﻿using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
 {
@@ -16,13 +13,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
         private Factory _factory;
         
         public UnitWrapper unitPrefab;
-        public float buildSpeedMultiplier = BCUtils.BuildSpeedMultipliers.FAST;
         public float timeToDieInS = 1;
-
-        protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
-        {
-            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: buildSpeedMultiplier, updaterProvider: updaterProvider);
-        }
 
         protected override List<GameObject> GetGameObjects()
         {
