@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             _zoomScale = zoomScale;
         }
 
-        public float FindOrthographicSizeDelta(float mouseScrollDeltaY)
+        public float FindMouseScrollOrthographicSizeDelta(float mouseScrollDeltaY)
         {
             // The more zoomed out the camera is, the greater our delta should be
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
@@ -47,6 +47,13 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 _zoomScale *
                 _time.UnscaledDeltaTime *
                 _zoomConverter.LevelToMultiplier(_settingsManager.ZoomSpeedLevel);
+        }
+
+        public float FindPinchZoomOrthographicSizeDelta(float pinchZoomDelta)
+        {
+            // FELIX  Own implementation :P
+            // FELIX  Test :)
+            return FindMouseScrollOrthographicSizeDelta(pinchZoomDelta);
         }
     }
 }

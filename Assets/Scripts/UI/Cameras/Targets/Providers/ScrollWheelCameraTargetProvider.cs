@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 RaiseUserInputStarted();
             }
 
-            float orthographicSizeDelta = _zoomCalculator.FindOrthographicSizeDelta(_input.MouseScrollDelta.y);
+            float orthographicSizeDelta = _zoomCalculator.FindMouseScrollOrthographicSizeDelta(_input.MouseScrollDelta.y);
 
             if (_input.MouseScrollDelta.y < 0)
             {

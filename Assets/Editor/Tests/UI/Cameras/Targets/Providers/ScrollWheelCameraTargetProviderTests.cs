@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _userInputEndedCount = 0;
             _cameraTargetProvider.UserInputEnded += (sender, e) => _userInputEndedCount++;
 
-            _zoomCalculator.FindOrthographicSizeDelta(default).ReturnsForAnyArgs(_orthograhpicSizeDelta);
+            _zoomCalculator.FindMouseScrollOrthographicSizeDelta(default).ReturnsForAnyArgs(_orthograhpicSizeDelta);
 
             _input.MousePosition.Returns(new Vector3(99, 98, 97));
 

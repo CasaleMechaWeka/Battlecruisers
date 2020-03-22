@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
             float expectedZoomDelta = Mathf.Abs(mouseScrollDeltaY) * _zoomDeltaMultiplier;
 
-            Assert.AreEqual(expectedZoomDelta, _calculator.FindOrthographicSizeDelta(mouseScrollDeltaY));
+            Assert.AreEqual(expectedZoomDelta, _calculator.FindMouseScrollOrthographicSizeDelta(mouseScrollDeltaY));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
             float expectedZoomDelta = Mathf.Abs(mouseScrollDeltaY) * _zoomDeltaMultiplier;
 
-            Assert.AreEqual(expectedZoomDelta, _calculator.FindOrthographicSizeDelta(mouseScrollDeltaY));
+            Assert.AreEqual(expectedZoomDelta, _calculator.FindMouseScrollOrthographicSizeDelta(mouseScrollDeltaY));
         }
     }
 }

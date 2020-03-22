@@ -116,7 +116,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _scrollRecogniser.IsScroll(_pointerEventData.Delta).Returns(false);
 
             float orthographicSizeDelta = 48.5f;
-            _zoomCalculator.FindOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
+            _zoomCalculator.FindMouseScrollOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
 
             ICameraTarget zoomInTarget = Substitute.For<ICameraTarget>();
             _directionalZoom.ZoomIn(orthographicSizeDelta, _pointerEventData.Position).Returns(zoomInTarget);
@@ -133,7 +133,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _scrollRecogniser.IsScroll(_pointerEventData.Delta).Returns(false);
 
             float orthographicSizeDelta = 48.5f;
-            _zoomCalculator.FindOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
+            _zoomCalculator.FindMouseScrollOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
 
             ICameraTarget zoomOutTarget = Substitute.For<ICameraTarget>();
             _directionalZoom.ZoomOut(orthographicSizeDelta).Returns(zoomOutTarget);
