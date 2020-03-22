@@ -74,6 +74,7 @@ namespace BattleCruisers.Utils
         // Camera
         public const string CAMERA = "Camera";
         public const string CAMERA_CALCULATOR = "CameraCalculator";
+        public const string CAMERA_FOCUSER = "CameraFocuser";
         public const string CAMERA_NAVIGATION_WHEEL_CALCULATOR = "CameraNavigationWheelCalculator";
         public const string CAMERA_TARGET_PROVIDER = "CameraTargetProvider";
         public const string DIRECTIONAL_ZOOM = "DirectionalZoom";
@@ -190,6 +191,7 @@ namespace BattleCruisers.Utils
             // Camera
             tagsToActiveness.Add(Tags.CAMERA, false);
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
+            tagsToActiveness.Add(Tags.CAMERA_FOCUSER, false);
             tagsToActiveness.Add(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, false);
             tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, false);
             tagsToActiveness.Add(Tags.DIRECTIONAL_ZOOM, false);
