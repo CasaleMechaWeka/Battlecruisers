@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
@@ -168,6 +169,8 @@ namespace BattleCruisers.UI.Cameras
                     settings.ValidOrthographicSizes);
 
             bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
+            // FELIX  TEMP
+            hasTouch = true;
 
             float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             ZoomCalculator zoomCalculator 
@@ -181,6 +184,13 @@ namespace BattleCruisers.UI.Cameras
             
             if (hasTouch)
             {
+                // FELIX  TEMP
+                return
+                    new PinchZoomCameraTargetProvider(
+                        zoomCalculator,
+                        directionalZoom,
+                        new PinchTracker());
+
                 return 
                     new SwipeCameraTargetProvider(
                         dragTracker,
