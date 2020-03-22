@@ -79,6 +79,7 @@ namespace BattleCruisers.Utils
         public const string CAMERA_TARGET_PROVIDER = "CameraTargetProvider";
         public const string DIRECTIONAL_ZOOM = "DirectionalZoom";
         public const string NAVIGATION_WHEEL = "NavigationWheel";
+        public const string PINCH = "Pinch";
         public const string SCROLL_WHEEL_NAVIGATION = "ScrollWheelNavigation";
         public const string SWIPE_NAVIGATION = "SwipeNavigation";
 
@@ -196,6 +197,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, false);
             tagsToActiveness.Add(Tags.DIRECTIONAL_ZOOM, false);
             tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.PINCH, true);
+            //tagsToActiveness.Add(Tags.PINCH, false);
             tagsToActiveness.Add(Tags.SCROLL_WHEEL_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SWIPE_NAVIGATION, false);
 
