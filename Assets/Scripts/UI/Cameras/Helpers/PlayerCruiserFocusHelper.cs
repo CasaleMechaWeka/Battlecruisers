@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
