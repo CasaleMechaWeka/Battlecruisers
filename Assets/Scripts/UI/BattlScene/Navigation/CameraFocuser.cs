@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnPlayerNavalFactory()
         {
-            FocusCamera(_positionProvider.PlayerNavalFactoryPosition);
+            FocusCamera(_positionProvider.PlayerNavalFactoryPosition, snapToCorners: false);
         }
 
         public void FocusOnAICruiser()
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnAINavalFactory()
         {
-            FocusCamera(_positionProvider.AINavalFactoryPosition);
+            FocusCamera(_positionProvider.AINavalFactoryPosition, snapToCorners: false);
         }
 
         public void FocusMidLeft()
