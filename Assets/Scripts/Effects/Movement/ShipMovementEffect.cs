@@ -4,14 +4,13 @@ using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Effects.Movement
 {
-    // FELIX  Test
     public class ShipMovementEffect : IMovementEffect
     {
         private readonly IGameObject _gameObject;
         private readonly IAnimator _animator;
         private readonly IBroadcastingParticleSystem _particleSystem;
 
-        private const string MOVEMENT_ANIMATION_STATE = "MovementAnimation";
+        public const string MOVEMENT_ANIMATION_STATE = "MovementAnimation";
 
         public ShipMovementEffect(
             IGameObject gameObject,
