@@ -7,7 +7,6 @@ using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
@@ -141,8 +140,8 @@ namespace BattleCruisers.UI.Cameras
                     coreCameraTargetFinder,
                     cornerCameraTargetFinder);
 
-            IUserInputCameraTargetProvider secondaryCameraTargetProvider 
-                = CreateSecondaryCameraTargetProvider(
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders 
+                = CreateCameraTargetProviders(
                     camera, 
                     cameraCalculator, 
                     settingsManager, 
@@ -151,12 +150,6 @@ namespace BattleCruisers.UI.Cameras
                     pinchTracker);
 
 
-            // FELIX  Remove legacy :P
-            IList<IUserInputCameraTargetProvider> cameraTargetProviders = new List<IUserInputCameraTargetProvider>()
-            {
-                secondaryCameraTargetProvider
-            };
-
             return
                 new CompositeCameraTargetProviderNEW(
                     navigationWheelCameraTargetProvider,
@@ -164,17 +157,9 @@ namespace BattleCruisers.UI.Cameras
                     trumpCameraTargetProvider,
                     navigationWheelPanel.NavigationWheel,
                     cameraNavigationWheelCalculator);
-
-            return
-                new CompositeCameraTargetProvider(
-                    navigationWheelCameraTargetProvider,
-                    secondaryCameraTargetProvider,
-                    trumpCameraTargetProvider,
-                    navigationWheelPanel.NavigationWheel,
-                    cameraNavigationWheelCalculator);
         }
 
-        private IUserInputCameraTargetProvider CreateSecondaryCameraTargetProvider(
+        private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera, 
             ICameraCalculator cameraCalculator, 
             ISettingsManager settingsManager, 
@@ -202,17 +187,18 @@ namespace BattleCruisers.UI.Cameras
                     settingsManager,
                     new ZoomLevelConverter(),
                     zoomScale);
-            
+
+            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>();
+
             if (hasTouch)
             {
-                // FELIX  TEMP
-                return
+                targetProviders.Add(
                     new PinchZoomCameraTargetProvider(
                         zoomCalculator,
                         directionalZoom,
-                        pinchTracker);
+                        pinchTracker));
 
-                return 
+                targetProviders.Add(
                     new SwipeCameraTargetProvider(
                         dragTracker,
                         new ScrollCalculator(
@@ -226,17 +212,19 @@ namespace BattleCruisers.UI.Cameras
                         cameraCalculator,
                         directionalZoom,
                         new ScrollRecogniser(),
-                        new BufferClamper(CAMERA_X_POSITION_BUFFER_IN_M));
+                        new BufferClamper(CAMERA_X_POSITION_BUFFER_IN_M)));
             }
             else
             {
-                return
+                targetProviders.Add(
                     new ScrollWheelCameraTargetProvider(
                         new InputBC(),
                         updater,
                         zoomCalculator,
-                        directionalZoom);
+                        directionalZoom));
             }
+
+            return targetProviders;
         }
 
         private void SwitchableUpdater_Updated(object sender, EventArgs e)

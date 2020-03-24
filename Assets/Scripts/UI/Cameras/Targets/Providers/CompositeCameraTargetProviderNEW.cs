@@ -46,11 +46,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 }
 
                 _activeTargetProvider = value;
-
-                if (_activeTargetProvider != null)
-                {
-                    _activeTargetProvider.TargetChanged += _activeTargetProvider_TargetChanged;
-                }
+                _activeTargetProvider.TargetChanged += _activeTargetProvider_TargetChanged;
             }
         }
 
