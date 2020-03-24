@@ -14,6 +14,7 @@ using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using System;
+using System.Collections.Generic;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -138,7 +139,7 @@ namespace BattleCruisers.UI.Cameras
                     new CornerIdentifier(
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
-            IUserInputCameraTargetProvider primaryCameraTargetProvider 
+            IUserInputCameraTargetProvider navigationWheelCameraTargetProvider 
                 = new NavigationWheelCameraTargetProvider(
                     navigationWheelPanel.NavigationWheel, 
                     coreCameraTargetFinder,
@@ -154,9 +155,24 @@ namespace BattleCruisers.UI.Cameras
                     updater,
                     pinchTracker);
 
+
+            // FELIX  Remove legacy :P
+            IList<IUserInputCameraTargetProvider> cameraTargetProviders = new List<IUserInputCameraTargetProvider>()
+            {
+                navigationWheelCameraTargetProvider,
+                secondaryCameraTargetProvider
+            };
+
+            return
+                new CompositeCameraTargetProviderNEW(
+                    cameraTargetProviders,
+                    trumpCameraTargetProvider,
+                    navigationWheelPanel.NavigationWheel,
+                    cameraNavigationWheelCalculator);
+
             return
                 new CompositeCameraTargetProvider(
-                    primaryCameraTargetProvider,
+                    navigationWheelCameraTargetProvider,
                     secondaryCameraTargetProvider,
                     trumpCameraTargetProvider,
                     navigationWheelPanel.NavigationWheel,
@@ -180,7 +196,7 @@ namespace BattleCruisers.UI.Cameras
 
             bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
             // FELIX  TEMP
-            hasTouch = true;
+            //hasTouch = true;
 
             float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             ZoomCalculator zoomCalculator 

@@ -17,6 +17,9 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IDebouncer _inputEndedDebouncer;
         private bool _duringUserInput;
 
+        // To avoid infinite loop of updating navigation wheel because navigation wheel just moved :P
+        public override bool UpdateNavigationWheel => false;
+
         public override int Priority => 5;
 
         public NavigationWheelCameraTargetProvider(

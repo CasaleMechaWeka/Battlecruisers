@@ -194,11 +194,11 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CAMERA_CALCULATOR, false);
             tagsToActiveness.Add(Tags.CAMERA_FOCUSER, false);
             tagsToActiveness.Add(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, false);
-            tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, false);
-            tagsToActiveness.Add(Tags.DIRECTIONAL_ZOOM, false);
             // FELIX
-            tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, true);
-            //tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, false);
+            tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, true);
+            //tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, false);
+            tagsToActiveness.Add(Tags.DIRECTIONAL_ZOOM, false);
+            tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, false);
             // FELIX
             tagsToActiveness.Add(Tags.PINCH, true);
             //tagsToActiveness.Add(Tags.PINCH, false);
