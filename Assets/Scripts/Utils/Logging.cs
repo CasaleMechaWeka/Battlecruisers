@@ -112,8 +112,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -196,7 +196,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CAMERA_NAVIGATION_WHEEL_CALCULATOR, false);
             tagsToActiveness.Add(Tags.CAMERA_TARGET_PROVIDER, false);
             tagsToActiveness.Add(Tags.DIRECTIONAL_ZOOM, false);
-            tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, true);
+            //tagsToActiveness.Add(Tags.NAVIGATION_WHEEL, false);
             // FELIX
             tagsToActiveness.Add(Tags.PINCH, true);
             //tagsToActiveness.Add(Tags.PINCH, false);

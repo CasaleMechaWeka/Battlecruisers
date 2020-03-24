@@ -12,6 +12,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.Timers;
 using System;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
@@ -60,6 +61,8 @@ namespace BattleCruisers.UI.Cameras
                     settings.ValidOrthographicSizes,
                     new ProportionCalculator());
 
+            ITime time = TimeBC.Instance;
+
             ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     camera,
@@ -71,9 +74,9 @@ namespace BattleCruisers.UI.Cameras
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,
-                    trumpCameraTargetProvider);
+                    trumpCameraTargetProvider,
+                    time);
 
-            ITime time = TimeBC.Instance;
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
@@ -118,7 +121,8 @@ namespace BattleCruisers.UI.Cameras
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
-            IStaticCameraTargetProvider trumpCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            ITime time)
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
@@ -138,7 +142,8 @@ namespace BattleCruisers.UI.Cameras
                 = new NavigationWheelCameraTargetProvider(
                     navigationWheelPanel.NavigationWheel, 
                     coreCameraTargetFinder,
-                    cornerCameraTargetFinder);
+                    cornerCameraTargetFinder,
+                    new Debouncer(time, debounceTimeInS: 0.2f));
 
             IUserInputCameraTargetProvider secondaryCameraTargetProvider 
                 = CreateSecondaryCameraTargetProvider(
