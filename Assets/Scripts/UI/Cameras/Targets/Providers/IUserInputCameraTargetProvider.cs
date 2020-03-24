@@ -4,9 +4,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     public interface IUserInputCameraTargetProvider : ICameraTargetProvider
     {
-        // FELIX  Remove!!!
-        bool UpdateNavigationWheel { get; }
-
         /// <summary>
         /// The higher the number the higher the priority.  This is so if we
         /// receive input from multiple camear target providers at the same time

@@ -13,9 +13,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraTargetFinder _navigationWheelCameraTargetFinder, _navigationWheelCornersCameraTargetFinder;
 
-        // To avoid infinite loop of updating navigation wheel because navigation wheel just moved :P
-        public override bool UpdateNavigationWheel => false;
-
         public override int Priority => 1;
 
         public NavigationWheelCameraTargetProvider(
