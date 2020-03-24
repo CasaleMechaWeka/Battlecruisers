@@ -8,7 +8,6 @@ using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
@@ -59,12 +58,7 @@ namespace BattleCruisers.Scenes.Test
                         new CornerCameraTargetProvider(_camera, cameraCalculator, settings, playerCruiser, aiCruiser));
             }
 
-            ICameraTargetProvider cameraTargetProvider 
-                = new NavigationWheelCameraTargetProvider(
-                    navigationWheelPanel.NavigationWheel, 
-                    cameraTargetFinder, 
-                    cornersTargetFinder,
-                    new Debouncer(TimeBC.Instance, debounceTimeInS: 0.2f));
+            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder, cornersTargetFinder);
 
             // Instant, jerky adjuster
             _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);

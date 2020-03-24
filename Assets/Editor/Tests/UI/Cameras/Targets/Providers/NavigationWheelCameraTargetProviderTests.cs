@@ -28,8 +28,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _cornersCameraTargetFinder = Substitute.For<ICameraTargetFinder>();
             _cornersCameraTargetFinder.FindCameraTarget().Returns(_target1, _target2);
 
-            // FELIX  Fix test :)
-            _cameraTargetProvider = new NavigationWheelCameraTargetProvider(_navigationWheel, _cameraTargetFinder, _cornersCameraTargetFinder, null);
+            _cameraTargetProvider = new NavigationWheelCameraTargetProvider(_navigationWheel, _cameraTargetFinder, _cornersCameraTargetFinder);
 
             _targetChangedCount = 0;
             _cameraTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;
