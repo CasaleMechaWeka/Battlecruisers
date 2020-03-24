@@ -15,6 +15,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IDirectionalZoom _directionalZoom;
         private bool _duringUserInput;
 
+        public override int Priority => 4;
+
         public ScrollWheelCameraTargetProvider(
             IInput input, 
             IUpdater updater,

@@ -4,6 +4,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     public abstract class UserInputCameraTargetProvider : CameraTargetProvider, IUserInputCameraTargetProvider
     {
+        public abstract int Priority { get; }
+
         public event EventHandler UserInputStarted;
         public event EventHandler UserInputEnded;
 

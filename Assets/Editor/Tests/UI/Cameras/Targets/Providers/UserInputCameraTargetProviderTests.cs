@@ -7,6 +7,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class DummyCameraTargetProvider : UserInputCameraTargetProvider
     {
+        public override int Priority => 1;
+
         public void SetTarget(ICameraTarget target)
         {
             Target = target;

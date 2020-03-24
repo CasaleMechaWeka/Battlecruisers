@@ -17,6 +17,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IDebouncer _inputEndedDebouncer;
         private bool _duringUserInput;
 
+        public override int Priority => 5;
+
         public NavigationWheelCameraTargetProvider(
             INavigationWheel navigationWheel,
             ICameraTargetFinder navigationWheelCameraTargetFinder,
