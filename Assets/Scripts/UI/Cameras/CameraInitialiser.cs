@@ -154,12 +154,12 @@ namespace BattleCruisers.UI.Cameras
             // FELIX  Remove legacy :P
             IList<IUserInputCameraTargetProvider> cameraTargetProviders = new List<IUserInputCameraTargetProvider>()
             {
-                navigationWheelCameraTargetProvider,
                 secondaryCameraTargetProvider
             };
 
             return
                 new CompositeCameraTargetProviderNEW(
+                    navigationWheelCameraTargetProvider,
                     cameraTargetProviders,
                     trumpCameraTargetProvider,
                     navigationWheelPanel.NavigationWheel,

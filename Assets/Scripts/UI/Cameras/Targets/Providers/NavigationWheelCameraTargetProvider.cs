@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         // To avoid infinite loop of updating navigation wheel because navigation wheel just moved :P
         public override bool UpdateNavigationWheel => false;
 
-        public override int Priority => 5;
+        public override int Priority => 1;
 
         public NavigationWheelCameraTargetProvider(
             INavigationWheel navigationWheel,

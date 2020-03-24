@@ -4,6 +4,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     public interface IUserInputCameraTargetProvider : ICameraTargetProvider
     {
+        // FELIX  Remove!!!
         bool UpdateNavigationWheel { get; }
 
         /// <summary>
