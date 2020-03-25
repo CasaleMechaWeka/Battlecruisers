@@ -124,9 +124,6 @@ namespace BattleCruisers.UI.Cameras
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelFilter);
 
-            IPinchTracker pinchTracker = GetComponent<PinchTracker>();
-            Assert.IsNotNull(pinchTracker);
-
             ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetFinder cornerCameraTargetFinder
                 = new NavigationWheelCornersCameraTargetFinder(
@@ -147,7 +144,6 @@ namespace BattleCruisers.UI.Cameras
                     settingsManager, 
                     settings, 
                     updater,
-                    pinchTracker,
                     trumpCameraTargetProvider);
 
             return
@@ -164,7 +160,6 @@ namespace BattleCruisers.UI.Cameras
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             TogglableUpdater updater,
-            IPinchTracker pinchTracker,
             IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
             ISystemInfo systemInfo = new SystemInfoBC();
@@ -173,6 +168,9 @@ namespace BattleCruisers.UI.Cameras
                     camera,
                     cameraCalculator,
                     settings.ValidOrthographicSizes);
+
+            IInput input = new InputBC();
+            IPinchTracker pinchTracker = new PinchTracker(input, updater);
 
             bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
 
@@ -219,7 +217,7 @@ namespace BattleCruisers.UI.Cameras
             {
                 targetProviders.Add(
                     new ScrollWheelCameraTargetProvider(
-                        new InputBC(),
+                        input,
                         updater,
                         zoomCalculator,
                         directionalZoom));
