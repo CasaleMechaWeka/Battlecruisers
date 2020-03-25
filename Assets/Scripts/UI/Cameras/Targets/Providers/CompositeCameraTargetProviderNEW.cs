@@ -16,9 +16,10 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// When multiple providers provide input choose the provider with the highest priority.
     /// 
     /// Priorities:
-    /// 4.  Scroll wheel
-    /// 3.  Pinch zoom
-    /// 2.  Swipe
+    /// 5. Static
+    /// 4. Scroll wheel
+    /// 3. Pinch zoom
+    /// 2. Swipe
     /// 1. Navigation wheel
     /// </summary>
     /// FELIX  Test.  Can copy legacy tests?
