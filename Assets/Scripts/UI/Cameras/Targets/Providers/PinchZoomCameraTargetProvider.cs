@@ -6,7 +6,6 @@ using System;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Test :)
     public class PinchZoomCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IZoomCalculator _zoomCalculator;
