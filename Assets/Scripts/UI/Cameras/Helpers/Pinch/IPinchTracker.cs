@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Pinch
 {
@@ -12,6 +13,19 @@ namespace BattleCruisers.UI.Cameras.Helpers.Pinch
         {
             Position = position;
             DeltaInM = deltaInM;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is PinchEventArgs other
+                && Position.SmartEquals(other.Position)
+                && DeltaInM == other.DeltaInM;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Position, DeltaInM);
         }
     }
 
