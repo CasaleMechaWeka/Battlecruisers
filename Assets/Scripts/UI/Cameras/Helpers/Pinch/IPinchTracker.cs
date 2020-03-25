@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-// FELIX  Remove?
 namespace BattleCruisers.UI.Cameras.Helpers.Pinch
 {
     public class PinchEventArgs : EventArgs
