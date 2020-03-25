@@ -1,6 +1,5 @@
 ﻿namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Test :)
     public class StaticCameraTargetProvider : UserInputCameraTargetProvider, IStaticCameraTargetProvider
     {
         public override int Priority => 5;
