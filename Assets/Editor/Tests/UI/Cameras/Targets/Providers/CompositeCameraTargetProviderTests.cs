@@ -4,114 +4,108 @@ using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class CompositeCameraTargetProviderTests
     {
-        private ICameraTargetProvider _compositeTargetProvider, _trumpTargetProvider;
-        private IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
+        private ICameraTargetProvider _compositeTargetProvider;
+        private IUserInputCameraTargetProvider _defaultTargetProvider, _highPriorityTargetProvider, _lowPriorityTargetProvider;
         private INavigationWheel _navigationWheel;
         private ICameraNavigationWheelCalculator _navigationWheelCalculator;
-        private ICameraTarget _primaryTarget, _secondaryTarget, _trumpTarget;
+        private ICameraTarget _defaultTarget, _highPriorityTarget, _lowPriorityTarget;
         private int _targetChangedCount;
 
         [SetUp]
         public void TestSetup()
         {
-            _primaryTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
-            _secondaryTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
-            _trumpTargetProvider = Substitute.For<ICameraTargetProvider>();
+            _defaultTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
+            _highPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
+            _lowPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
             _navigationWheel = Substitute.For<INavigationWheel>();
             _navigationWheelCalculator = Substitute.For<ICameraNavigationWheelCalculator>();
 
+            IList<IUserInputCameraTargetProvider> providers = new List<IUserInputCameraTargetProvider>()
+            {
+                _highPriorityTargetProvider,
+                _lowPriorityTargetProvider
+            };
+
             _compositeTargetProvider
-                = new CompositeCameraTargetProvider(
-                    _primaryTargetProvider,
-                    _secondaryTargetProvider,
-                    _trumpTargetProvider,
+                = new CompositeCameraTargetProviderNEW(
+                    _defaultTargetProvider,
+                    providers,
                     _navigationWheel,
                     _navigationWheelCalculator);
 
             _targetChangedCount = 0;
             _compositeTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;
 
-            _primaryTarget = Substitute.For<ICameraTarget>();
-            _primaryTargetProvider.Target.Returns(_primaryTarget);
+            _defaultTarget = Substitute.For<ICameraTarget>();
+            _defaultTargetProvider.Target.Returns(_defaultTarget);
+            _defaultTargetProvider.Priority.Returns(1);
 
-            _secondaryTarget = Substitute.For<ICameraTarget>();
-            _secondaryTargetProvider.Target.Returns(_secondaryTarget);
+            _highPriorityTarget = Substitute.For<ICameraTarget>();
+            _highPriorityTargetProvider.Target.Returns(_highPriorityTarget);
+            _highPriorityTargetProvider.Priority.Returns(3);
 
-            _trumpTarget = Substitute.For<ICameraTarget>();
-            _trumpTargetProvider.Target.Returns((ICameraTarget)null);
+            _lowPriorityTarget = Substitute.For<ICameraTarget>();
+            _lowPriorityTargetProvider.Target.Returns(_lowPriorityTarget);
+            _lowPriorityTargetProvider.Priority.Returns(2);
         }
 
         [Test]
         public void InitialState()
         {
-            // Navigatoin wheel starts as active target provider
-            Assert.AreSame(_primaryTarget, _compositeTargetProvider.Target);
+            Assert.AreSame(_defaultTarget, _compositeTargetProvider.Target);
         }
 
         [Test]
-        public void TrumpCameraTargetProvider()
+        public void UserInputStarted_HigherPriorityThanCurrent()
         {
-            _trumpTargetProvider.Target.Returns(_trumpTarget);
-            Assert.AreSame(_trumpTarget, _compositeTargetProvider.Target);
+            _highPriorityTargetProvider.UserInputStarted += Raise.Event();
+            Assert.AreEqual(_highPriorityTarget, _compositeTargetProvider.Target);
         }
 
         [Test]
-        public void PrimaryActive()
+        public void UserInputStarted_LowerPriorityThanCurrent()
         {
-            // Primary target changed => forwarded
-            _primaryTargetProvider.TargetChanged += Raise.Event();
+            // Default provider has lowest priority, so first need to replace with higher priority provider
+            _highPriorityTargetProvider.UserInputStarted += Raise.Event();
+            Assert.AreEqual(_highPriorityTarget, _compositeTargetProvider.Target);
+
+            // Now can show that lower priority provider is ignored
+            _lowPriorityTargetProvider.UserInputStarted += Raise.Event();
+            Assert.AreEqual(_highPriorityTarget, _compositeTargetProvider.Target);
+        }
+
+        [Test]
+        public void UserInputEnded_WhileNotActiveProvider()
+        {
+            _highPriorityTargetProvider.UserInputEnded += Raise.Event();
+            _navigationWheelCalculator.DidNotReceiveWithAnyArgs().FindNavigationWheelPosition(default);
+        }
+
+        [Test]
+        public void UserInputEnded_WhileActiveProvider()
+        {
+            _highPriorityTargetProvider.UserInputStarted += Raise.Event();
+            Vector2 targetCenterPosition = new Vector2(1, 2);
+            _navigationWheelCalculator.FindNavigationWheelPosition(_highPriorityTarget).Returns(targetCenterPosition);
+
+            _highPriorityTargetProvider.UserInputEnded += Raise.Event();
+
+            _navigationWheelCalculator.Received().FindNavigationWheelPosition(_highPriorityTarget);
+            _navigationWheel.Received().SetCenterPosition(targetCenterPosition, snapToCorners: false);
+        }
+
+        [Test]
+        public void _activeTargetProvider_TargetChanged()
+        {
+            _defaultTargetProvider.TargetChanged += Raise.Event();
             Assert.AreEqual(1, _targetChangedCount);
-            Assert.AreSame(_primaryTarget, _compositeTargetProvider.Target);
-
-            // Secondary target changed => ignored
-            _secondaryTargetProvider.TargetChanged += Raise.Event();
-            Assert.AreEqual(1, _targetChangedCount);
-            Assert.AreNotSame(_secondaryTarget, _compositeTargetProvider.Target);
-        }
-
-        [Test]
-        public void UserInputActive()
-        {
-            _secondaryTargetProvider.UserInputStarted += Raise.Event();
-
-            // Secondary target changed => forwarded
-            _secondaryTargetProvider.TargetChanged += Raise.Event();
-            Assert.AreEqual(1, _targetChangedCount);
-            Assert.AreSame(_secondaryTarget, _compositeTargetProvider.Target);
-
-            // Primary target changed => forwarded
-            _primaryTargetProvider.TargetChanged += Raise.Event();
-            Assert.AreEqual(1, _targetChangedCount);
-            Assert.AreNotSame(_primaryTarget, _compositeTargetProvider.Target);
-        }
-
-        [Test]
-        public void UserInputStarted_BecomesActive()
-        {
-            _secondaryTargetProvider.UserInputStarted += Raise.Event();
-            Assert.AreSame(_secondaryTarget, _compositeTargetProvider.Target);
-        }
-
-        [Test]
-        public void UserInputEnded_BecomesInactive()
-        {
-            Vector2 navigationWheelPosition = new Vector2(12, 21);
-            _navigationWheelCalculator.FindNavigationWheelPosition(_secondaryTarget).Returns(navigationWheelPosition);
-            
-            // Secondary provider becomes active
-            _secondaryTargetProvider.UserInputStarted += Raise.Event();
-
-            // Secondary provider becomes inactive
-            _secondaryTargetProvider.UserInputEnded += Raise.Event();
-
-            Assert.AreNotSame(_secondaryTarget, _compositeTargetProvider.Target);
-            _navigationWheel.Received().SetCenterPosition(navigationWheelPosition, snapToCorners: false);
         }
     }
 }
