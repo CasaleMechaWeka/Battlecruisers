@@ -2,16 +2,30 @@
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Remove :)
+    /// <summary>
+    /// Listens for user input from multiple camera target providers.
+    /// 
+    /// When a provider gives input, forward that input.
+    /// 
+    /// When multiple providers provide input choose the provider with the highest priority.
+    /// 
+    /// Priorities:
+    /// 5. Static
+    /// 4. Scroll wheel
+    /// 3. Pinch zoom
+    /// 2. Swipe
+    /// 1. Navigation wheel
+    /// </summary>
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
-        private readonly IUserInputCameraTargetProvider _primaryTargetProvider, _secondaryTargetProvider;
-        private readonly ICameraTargetProvider _trumpTargetProvider;
+        private readonly IUserInputCameraTargetProvider _defaultTargetProvider;
+        private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
 
@@ -21,6 +35,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             get { return _activeTargetProvider; }
             set
             {
+                Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"{_activeTargetProvider} > {value}");
                 Assert.IsNotNull(value);
                 Assert.IsFalse(ReferenceEquals(_activeTargetProvider, value));
 
@@ -34,41 +49,57 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
         }
 
-        public ICameraTarget Target => _trumpTargetProvider.Target ?? ActiveTargetProvider.Target;
+        public ICameraTarget Target => ActiveTargetProvider.Target;
 
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
-            IUserInputCameraTargetProvider primaryTargetProvider,
-            IUserInputCameraTargetProvider secondaryTargetProvider,
-            ICameraTargetProvider trumpTargetProvider,
+            IUserInputCameraTargetProvider defaultTargetProvider,
+            IList<IUserInputCameraTargetProvider> targetProviders,
             INavigationWheel navigationWheel,
             ICameraNavigationWheelCalculator navigationWheelCalculator)
         {
-            Helper.AssertIsNotNull(primaryTargetProvider, secondaryTargetProvider, trumpTargetProvider, navigationWheel, navigationWheelCalculator);
+            Helper.AssertIsNotNull(defaultTargetProvider, targetProviders, navigationWheel, navigationWheelCalculator);
 
-            _primaryTargetProvider = primaryTargetProvider;
-            _secondaryTargetProvider = secondaryTargetProvider;
-            _trumpTargetProvider = trumpTargetProvider;
+            _defaultTargetProvider = defaultTargetProvider;
+            _targetProviders = targetProviders;
             _navigationWheel = navigationWheel;
             _navigationWheelCalculator = navigationWheelCalculator;
 
-            ActiveTargetProvider = primaryTargetProvider;
+            ActiveTargetProvider = _defaultTargetProvider;
 
-            secondaryTargetProvider.UserInputStarted += SecondaryTargetProvider_UserInputStarted;
-            secondaryTargetProvider.UserInputEnded += SecondaryTargetProvider_UserInputEnded;
+            foreach (IUserInputCameraTargetProvider targetProvider in _targetProviders)
+            {
+                targetProvider.UserInputStarted += TargetProvider_UserInputStarted;
+                targetProvider.UserInputEnded += TargetProvider_UserInputEnded;
+            }
         }
 
-        private void SecondaryTargetProvider_UserInputStarted(object sender, EventArgs e)
+        private void TargetProvider_UserInputStarted(object sender, EventArgs e)
         {
-            ActiveTargetProvider = _secondaryTargetProvider;
+            Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"Active target provider: {_activeTargetProvider}");
+
+            IUserInputCameraTargetProvider startingProvider = sender.Parse<IUserInputCameraTargetProvider>();
+
+            if (startingProvider.Priority > ActiveTargetProvider.Priority)
+            {
+                ActiveTargetProvider = startingProvider;
+            }
         }
 
-        private void SecondaryTargetProvider_UserInputEnded(object sender, EventArgs e)
+        private void TargetProvider_UserInputEnded(object sender, EventArgs e)
         {
-            Vector2 targetCenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
-            _navigationWheel.SetCenterPosition(targetCenterPosition, snapToCorners: false);
-            ActiveTargetProvider = _primaryTargetProvider;
+            Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"Active target provider: {_activeTargetProvider}");
+
+            IUserInputCameraTargetProvider endingProvider = sender.Parse<IUserInputCameraTargetProvider>();
+
+            if (ReferenceEquals(ActiveTargetProvider, endingProvider))
+            {
+                Vector2 targetCenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
+                _navigationWheel.SetCenterPosition(targetCenterPosition, snapToCorners: false);
+
+                ActiveTargetProvider = _defaultTargetProvider;
+            }
         }
 
         private void _activeTargetProvider_TargetChanged(object sender, EventArgs e)

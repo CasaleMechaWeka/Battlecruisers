@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             };
 
             _compositeTargetProvider
-                = new CompositeCameraTargetProviderNEW(
+                = new CompositeCameraTargetProvider(
                     _defaultTargetProvider,
                     providers,
                     _navigationWheel,

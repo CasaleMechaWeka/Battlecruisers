@@ -151,7 +151,7 @@ namespace BattleCruisers.UI.Cameras
                     trumpCameraTargetProvider);
 
             return
-                new CompositeCameraTargetProviderNEW(
+                new CompositeCameraTargetProvider(
                     navigationWheelCameraTargetProvider,
                     cameraTargetProviders,
                     navigationWheelPanel.NavigationWheel,
