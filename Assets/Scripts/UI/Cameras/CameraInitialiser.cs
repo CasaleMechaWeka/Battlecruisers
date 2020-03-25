@@ -147,25 +147,25 @@ namespace BattleCruisers.UI.Cameras
                     settingsManager, 
                     settings, 
                     updater,
-                    pinchTracker);
-
+                    pinchTracker,
+                    trumpCameraTargetProvider);
 
             return
                 new CompositeCameraTargetProviderNEW(
                     navigationWheelCameraTargetProvider,
                     cameraTargetProviders,
-                    trumpCameraTargetProvider,
                     navigationWheelPanel.NavigationWheel,
                     cameraNavigationWheelCalculator);
         }
 
         private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
-            ICamera camera, 
-            ICameraCalculator cameraCalculator, 
-            ISettingsManager settingsManager, 
-            ICameraCalculatorSettings settings, 
+            ICamera camera,
+            ICameraCalculator cameraCalculator,
+            ISettingsManager settingsManager,
+            ICameraCalculatorSettings settings,
             TogglableUpdater updater,
-            IPinchTracker pinchTracker)
+            IPinchTracker pinchTracker,
+            IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
             ISystemInfo systemInfo = new SystemInfoBC();
             IDirectionalZoom directionalZoom
@@ -179,7 +179,7 @@ namespace BattleCruisers.UI.Cameras
             //hasTouch = true;
 
             float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
-            ZoomCalculator zoomCalculator 
+            ZoomCalculator zoomCalculator
                 = new ZoomCalculator(
                     camera,
                     TimeBC.Instance,
@@ -188,7 +188,10 @@ namespace BattleCruisers.UI.Cameras
                     new ZoomLevelConverter(),
                     zoomScale);
 
-            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>();
+            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>()
+            {
+                trumpCameraTargetProvider
+            };
 
             if (hasTouch)
             {

@@ -27,7 +27,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     {
         private readonly IUserInputCameraTargetProvider _defaultTargetProvider;
         private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
-        private readonly ICameraTargetProvider _trumpTargetProvider;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
 
@@ -51,23 +50,20 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
         }
 
-        public ICameraTarget Target => _trumpTargetProvider.Target ?? ActiveTargetProvider.Target;
+        public ICameraTarget Target => ActiveTargetProvider.Target;
 
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProviderNEW(
             IUserInputCameraTargetProvider defaultTargetProvider,
             IList<IUserInputCameraTargetProvider> targetProviders,
-            // FELIX  Can replace this with a CTP with the highest priority!  Emit events as StaticTarget is assigned :D
-            ICameraTargetProvider trumpTargetProvider,
             INavigationWheel navigationWheel,
             ICameraNavigationWheelCalculator navigationWheelCalculator)
         {
-            Helper.AssertIsNotNull(defaultTargetProvider, targetProviders, trumpTargetProvider, navigationWheel, navigationWheelCalculator);
+            Helper.AssertIsNotNull(defaultTargetProvider, targetProviders, navigationWheel, navigationWheelCalculator);
 
             _defaultTargetProvider = defaultTargetProvider;
             _targetProviders = targetProviders;
-            _trumpTargetProvider = trumpTargetProvider;
             _navigationWheel = navigationWheel;
             _navigationWheelCalculator = navigationWheelCalculator;
 
