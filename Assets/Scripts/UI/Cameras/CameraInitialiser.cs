@@ -122,7 +122,7 @@ namespace BattleCruisers.UI.Cameras
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
-            updater.Initialise(navigationPermitters.ScrollWheelFilter);
+            updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
             ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
             ICameraTargetFinder cornerCameraTargetFinder

@@ -6,15 +6,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     {
         public CompositeBroadcastingFilter NavigationFilter { get; }
         public BroadcastingFilter NavigationWheelFilter { get; }
-        public BroadcastingFilter ScrollWheelFilter { get; }
+        public BroadcastingFilter ScrollWheelAndPinchZoomFilter { get; }
         public BroadcastingFilter SwipeFilter { get; }
 
         public NavigationPermitters()
         {
             NavigationWheelFilter = new BroadcastingFilter(isMatch: true);
-            ScrollWheelFilter = new BroadcastingFilter(isMatch: true);
+            ScrollWheelAndPinchZoomFilter = new BroadcastingFilter(isMatch: true);
             SwipeFilter = new BroadcastingFilter(isMatch: true);
-            NavigationFilter = new CompositeBroadcastingFilter(true, NavigationWheelFilter, ScrollWheelFilter, SwipeFilter);
+            NavigationFilter = new CompositeBroadcastingFilter(true, NavigationWheelFilter, ScrollWheelAndPinchZoomFilter, SwipeFilter);
         }
     }
 }

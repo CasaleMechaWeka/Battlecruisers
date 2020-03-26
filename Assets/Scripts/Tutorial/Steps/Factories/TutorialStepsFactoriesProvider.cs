@@ -70,7 +70,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new ScrollWheelStepsFactory(
                     argsFactory,
                     featurePermitterStepFactory,
-                    tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelFilter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
                     explanationDismissableStepFactory);
 
             SwipeStepsFactory
@@ -78,6 +78,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
                     explanationDismissableStepFactory);
 
             EnemyCruiserStepsFactory
