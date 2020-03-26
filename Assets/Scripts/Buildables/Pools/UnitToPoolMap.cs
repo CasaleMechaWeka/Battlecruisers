@@ -66,7 +66,7 @@ namespace BattleCruisers.Buildables.Pools
                 case "Destroyer":
                     return _unitPoolProvider.DestroyerPool;
 
-                case "Archon Battleship":
+                case "Mann o' War":
                     return _unitPoolProvider.ArchonPool;
 
                 default:
