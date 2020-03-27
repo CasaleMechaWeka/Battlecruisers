@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             ICloudGenerationStats cloudStats
                 = new CloudGenerationStats(
                     cloudSpawnArea,
-                    cloudStatsController.density,
+                    cloudStatsController.legacyDensity,
                     cloudStatsController.movementSpeed);
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
