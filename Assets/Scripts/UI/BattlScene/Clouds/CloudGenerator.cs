@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
@@ -8,6 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     {
         private readonly ICloudFactory _cloudFactory;
         private readonly IRandomGenerator _random;
+        public const float CLOUD_Z_POSITION = 10;
 
         public CloudGenerator(ICloudFactory cloudFactory, IRandomGenerator random)
         {
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             while (areaUsed < targetArea)
             {
-                Vector3 spawnPosition = FindSpawnPosition(generationStats.CloudSpawnArea, generationStats.ZPositionRange);
+                Vector3 spawnPosition = FindSpawnPosition(generationStats.CloudSpawnArea);
                 ICloud newCloud = _cloudFactory.CreateCloud(spawnPosition);
                 newCloud.Initialise(cloudStats);
 
@@ -36,13 +36,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             }
         }
 
-        private Vector3 FindSpawnPosition(Rect spawnArea, IRange<float> zPositionRange)
+        private Vector3 FindSpawnPosition(Rect spawnArea)
         {
             float xPos = _random.Range(spawnArea.xMin, spawnArea.xMax);
             float yPos = _random.Range(spawnArea.yMin, spawnArea.yMax);
-            float zPos = _random.Range(zPositionRange.Min, zPositionRange.Max);
 
-            return new Vector3(xPos, yPos, zPos);
+            return new Vector3(xPos, yPos, CLOUD_Z_POSITION);
         }
     }
 }

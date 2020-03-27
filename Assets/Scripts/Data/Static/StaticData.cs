@@ -240,9 +240,8 @@ namespace BattleCruisers.Data.Static
             // -110 <= x <= 110
             //  10 <= y <= 60
             Rect cloudSpawnArea = new Rect(x: -110, y: 10, width: 220, height: 50);
-            IRange<float> zPositionRange = new Range<float>(0, 10);
 
-            return new CloudGenerationStats(cloudSpawnArea, zPositionRange, density, movementSpeed);
+            return new CloudGenerationStats(cloudSpawnArea, density, movementSpeed);
         }
 
         private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()

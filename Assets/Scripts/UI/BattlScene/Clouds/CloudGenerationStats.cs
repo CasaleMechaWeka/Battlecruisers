@@ -20,18 +20,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
         public float CloudDensityAsFraction { get; }
         public float CloudHorizontalMovementSpeedInS { get; }
-        public IRange<float> ZPositionRange { get; }
 
         public CloudGenerationStats(
             Rect cloudSpawnArea,
-            IRange<float> zPositionRange,
             CloudDensity density = CloudDensity.Medium,
             CloudMovementSpeed movementSpeed = CloudMovementSpeed.Slow)
         {
-            Assert.IsNotNull(zPositionRange);
-
             CloudSpawnArea = cloudSpawnArea;
-            ZPositionRange = zPositionRange;
             CloudDensityAsFraction = ConvertCloudDensity(density);
             CloudHorizontalMovementSpeedInS = ConvertMovementSpeed(movementSpeed);
         }

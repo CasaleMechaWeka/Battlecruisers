@@ -27,7 +27,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
 
             _generationStats = Substitute.For<ICloudGenerationStats>();
             _generationStats.CloudSpawnArea.Returns(cloudSpawnArea);
-            _generationStats.ZPositionRange.Returns(zPositionRange);
             _generationStats.CloudDensityAsFraction.Returns(0.5f);
 
             _cloud = Substitute.For<ICloud>();
@@ -61,8 +60,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
                     && spawnPosition.x <= _generationStats.CloudSpawnArea.xMax
                     && spawnPosition.y >= _generationStats.CloudSpawnArea.yMin
                     && spawnPosition.y <= _generationStats.CloudSpawnArea.yMax
-                    && spawnPosition.z >= _generationStats.ZPositionRange.Min
-                    && spawnPosition.z <= _generationStats.ZPositionRange.Max
+                    && spawnPosition.z == CloudGenerator.CLOUD_Z_POSITION
             ));
 
             _cloud.Received(expectedNumOfClouds).Initialise(_cloudStats);
