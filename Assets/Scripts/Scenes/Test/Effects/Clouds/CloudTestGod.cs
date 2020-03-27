@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class CloudTestGod : NavigationTestGod
     {
