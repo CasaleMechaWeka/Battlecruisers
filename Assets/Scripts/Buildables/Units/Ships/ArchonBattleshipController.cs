@@ -97,7 +97,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             laser.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
         }
 
-        protected override List<SpriteRenderer> GetMainRenderer()
+        protected override List<SpriteRenderer> GetNonTurretRenderers()
         {
             // Like turrets, the archon has no main renderer :)
             return new List<SpriteRenderer>();

@@ -42,5 +42,17 @@ namespace BattleCruisers.Buildables.Units.Ships
 			Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _antiSeaTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AttackBoat);
 		}
+
+        protected override List<SpriteRenderer> GetNonTurretRenderers()
+        {
+            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
+
+            Transform pistonsParent = transform.FindNamedComponent<Transform>("Pistons");
+            SpriteRenderer[] pistonRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+
+            renderers.AddRange(pistonRenderers);
+
+            return renderers;
+        }
     }
 }
