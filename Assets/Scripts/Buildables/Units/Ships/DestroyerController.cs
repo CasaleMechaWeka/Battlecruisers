@@ -73,5 +73,15 @@ namespace BattleCruisers.Buildables.Units.Ships
             _directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
             _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
 		}
-	}
+ 
+        protected override List<SpriteRenderer> GetNonTurretRenderers()
+        {
+            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
+
+            SpriteRenderer wheelRenderer = transform.FindNamedComponent<SpriteRenderer>("WheelAnimation/Wheel");
+            renderers.Add(wheelRenderer);
+
+            return renderers;
+        }
+    }
 }
