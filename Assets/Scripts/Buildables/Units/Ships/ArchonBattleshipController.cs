@@ -99,8 +99,21 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()
         {
-            // Like turrets, the archon has no main renderer :)
-            return new List<SpriteRenderer>();
+            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
+
+            Transform pistonsParent = transform.FindNamedComponent<Transform>("UnitBones");
+            SpriteRenderer[] boneRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+
+            foreach (SpriteRenderer renderer in boneRenderers)
+            {
+                // Only add enabled renderers, which excludes guide sprites
+                if (renderer.enabled)
+                {
+                    renderers.Add(renderer);
+                }
+            }
+
+            return renderers;
         }
 
         protected override void Deactivate()
