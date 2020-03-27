@@ -49,7 +49,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             Transform pistonsParent = transform.FindNamedComponent<Transform>("Pistons");
             SpriteRenderer[] pistonRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-
             renderers.AddRange(pistonRenderers);
 
             return renderers;
