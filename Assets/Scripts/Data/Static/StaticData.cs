@@ -192,6 +192,7 @@ namespace BattleCruisers.Data.Static
             return GetUnitsFirstAvailableIn(levelFirstAvailableIn: 1).ToList();
         }
 
+        // FELIX  Have cloud stats and sky be one class (as they will now be linked).
 		private IList<ILevel> CreateLevels()
 		{
 			return new List<ILevel>()
