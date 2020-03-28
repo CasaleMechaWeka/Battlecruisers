@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Data.Static.Strategies;
+﻿using BattleCruisers.Data.Static.Strategies;
 
 namespace BattleCruisers.Data.Static
 {

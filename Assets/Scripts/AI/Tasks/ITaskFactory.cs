@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Data.Models.PrefabKeys;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.AI.Tasks
 {

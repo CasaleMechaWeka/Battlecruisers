@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BattleCruisers.UI.BattleScene.GameSpeed
+﻿namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
     public interface IGameSpeedButton : IButton
     {

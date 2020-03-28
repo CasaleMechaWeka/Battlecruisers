@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace BattleCruisers.UI.Common.BuildableDetails.Stats
+﻿namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-	public interface IStatsComparer
+    public interface IStatsComparer
 	{
 		ComparisonResult CompareStats(float stat1, float stat2);
 	}

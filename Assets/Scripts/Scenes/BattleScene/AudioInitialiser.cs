@@ -2,7 +2,6 @@
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;

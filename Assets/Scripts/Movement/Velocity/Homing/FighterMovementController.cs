@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Units.Aircraft.Providers;
-using BattleCruisers.Movement.Velocity.Providers;
+﻿using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;

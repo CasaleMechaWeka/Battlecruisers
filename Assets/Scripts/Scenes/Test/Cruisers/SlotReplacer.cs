@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using System;
-using UnityEditor;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Cruisers

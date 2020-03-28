@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils.DataStrctures;
+﻿using BattleCruisers.Utils.DataStrctures;
 using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;

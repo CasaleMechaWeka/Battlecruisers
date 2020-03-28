@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.UI.BattleScene.ProgressBars;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables

@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene.Buttons;
-using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

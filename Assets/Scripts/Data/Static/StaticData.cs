@@ -4,7 +4,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.BattleScene.Clouds;
-using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

@@ -9,7 +9,6 @@ using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
