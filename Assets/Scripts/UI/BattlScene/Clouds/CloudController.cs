@@ -8,6 +8,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     {
         private ICloudTeleporter _cloudTeleporter;
 
+        public SpriteRenderer frontCloud;
+        public SpriteRenderer backCloud;
+
         public Vector2 Size { get; private set; }
 
         public Vector2 Position
@@ -19,11 +22,16 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public void Initialise(ICloudStats cloudStats)
         {
             Assert.IsNotNull(cloudStats);
+            Assert.IsNotNull(frontCloud);  // backCloud may be null for now
 
             // Find cloud size
-            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-            Assert.IsNotNull(renderer);
-            Size = renderer.size;
+            Size = frontCloud.size;
+            frontCloud.color = cloudStats.FrontCloudColour;
+
+            if (backCloud != null)
+            {
+                backCloud.color = cloudStats.BackCloudColour;
+            }
 
             // Start moving
             Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
