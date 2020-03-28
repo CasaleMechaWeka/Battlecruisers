@@ -4,7 +4,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 
-// FELIX  Add tutorial step :)
 namespace BattleCruisers.UI.Cameras.Helpers.Pinch
 {
     public class PinchTracker : IPinchTracker
