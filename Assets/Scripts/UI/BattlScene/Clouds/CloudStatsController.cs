@@ -9,5 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
         public CloudDensity legacyDensity = CloudDensity.VeryHigh;
         public CloudMovementSpeed movementSpeed = CloudMovementSpeed.Fast;
+        public Color frontCloudColor = Color.white;
+        public Color backCloudColor = Color.white;
     }
 }

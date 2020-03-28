@@ -21,7 +21,9 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
                 = new CloudGenerationStats(
                     cloudSpawnArea,
                     cloudStatsController.cloudDensityAsFraction,
-                    cloudStatsController.movementSpeed);
+                    cloudStatsController.movementSpeed,
+                    cloudStatsController.frontCloudColor,
+                    cloudStatsController.backCloudColor);
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);

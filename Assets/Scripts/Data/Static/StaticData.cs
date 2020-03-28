@@ -241,7 +241,7 @@ namespace BattleCruisers.Data.Static
             //  10 <= y <= 60
             Rect cloudSpawnArea = new Rect(x: -110, y: 10, width: 220, height: 50);
 
-            return new CloudGenerationStats(cloudSpawnArea, density, movementSpeed);
+            return new CloudGenerationStats(cloudSpawnArea, density, movementSpeed, frontCloudColour: Color.white, backCloudColour: Color.white);
         }
 
         private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()

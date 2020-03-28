@@ -18,25 +18,35 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
         public float CloudDensityAsFraction { get; }
         public float CloudHorizontalMovementSpeedInS { get; }
+        public Color FrontCloudColour { get; }
+        public Color BackCloudColour { get; }
 
         public CloudGenerationStats(
             Rect cloudSpawnArea,
             float cloudDensityAsFraction,
-            CloudMovementSpeed movementSpeed = CloudMovementSpeed.Slow)
+            CloudMovementSpeed movementSpeed,
+            Color frontCloudColour,
+            Color backCloudColour)
         {
             CloudSpawnArea = cloudSpawnArea;
             CloudDensityAsFraction = cloudDensityAsFraction;
             CloudHorizontalMovementSpeedInS = ConvertMovementSpeed(movementSpeed);
+            FrontCloudColour = frontCloudColour;
+            BackCloudColour = backCloudColour;
         }
 
         public CloudGenerationStats(
             Rect cloudSpawnArea,
-            CloudDensity density = CloudDensity.Medium,
-            CloudMovementSpeed movementSpeed = CloudMovementSpeed.Slow)
+            CloudDensity density,
+            CloudMovementSpeed movementSpeed,
+            Color frontCloudColour,
+            Color backCloudColour)
         {
             CloudSpawnArea = cloudSpawnArea;
             CloudDensityAsFraction = ConvertCloudDensity(density);
             CloudHorizontalMovementSpeedInS = ConvertMovementSpeed(movementSpeed);
+            FrontCloudColour = frontCloudColour;
+            BackCloudColour = backCloudColour;
         }
 
         private float ConvertCloudDensity(CloudDensity density)

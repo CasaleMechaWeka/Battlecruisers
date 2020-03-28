@@ -17,5 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         Rect CloudSpawnArea { get; }
 		float CloudDensityAsFraction { get; }
         float CloudHorizontalMovementSpeedInS { get; }
+        Color FrontCloudColour { get; }
+        Color BackCloudColour { get; }
     }
 }

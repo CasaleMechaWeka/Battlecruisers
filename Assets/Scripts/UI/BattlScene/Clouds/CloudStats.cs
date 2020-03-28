@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
@@ -7,12 +8,16 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public float HorizontalMovementSpeedInMPerS { get; }
         public float DisappearLineInM { get; }
         public float ReappaerLineInM { get; }
+        public Color FrontCloudColour { get; }
+        public Color BackCloudColour { get; }
 
         public CloudStats(ICloudGenerationStats generationStats)
         {
             Assert.IsNotNull(generationStats);
 
             HorizontalMovementSpeedInMPerS = generationStats.CloudHorizontalMovementSpeedInS;
+            FrontCloudColour = generationStats.FrontCloudColour;
+            BackCloudColour = generationStats.BackCloudColour;
 
             if (HorizontalMovementSpeedInMPerS > 0)
             {
