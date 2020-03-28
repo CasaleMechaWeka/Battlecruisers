@@ -18,6 +18,7 @@ namespace BattleCruisers.Scenes.Test
 		private IExactMatchTargetFilter _targetFilter;
 
 		public RocketController rocketPrefab;
+		public float fireIntervalInS = 0.5f;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -52,7 +53,7 @@ namespace BattleCruisers.Scenes.Test
 
             _rocketSpawner.Initialise(parent, rocketStats, burstSize, args.FactoryProvider);
 
-			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: 0.5f);
+			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: fireIntervalInS);
 		}
 
 		private void FireRocket()
