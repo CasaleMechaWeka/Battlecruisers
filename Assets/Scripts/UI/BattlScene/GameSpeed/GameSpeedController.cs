@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         public float maxSpeed = DEFAULT_MAX_GAME_SPEED;
         public float minSpeed = DEFAULT_MIN_GAME_SPEED;
-        public bool freezeGameAtStart = false;
+        public float initialGameSpeed = 1;
 
         // TEMP:  For end game, limit max speed to x4?
         private const float DEFAULT_MAX_GAME_SPEED = 4;
@@ -62,10 +62,9 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             _decreaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("DecreaseSpeedButton");
             _decreaseSpeedButton.Initialise(soundPlayer, _decreaseSpeedCommand);
 
-            if (freezeGameAtStart)
-            {
-                GameSpeed = 0;
-            }
+            Assert.IsTrue(initialGameSpeed <= maxSpeed);
+            Assert.IsTrue(initialGameSpeed >= minSpeed);
+            GameSpeed = initialGameSpeed;
         }
 
         void Update()
@@ -84,7 +83,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private bool CanIncreaseSpeedCommandExecute()
         {
-            return GameSpeed < DEFAULT_MAX_GAME_SPEED;
+            return GameSpeed < maxSpeed;
         }
 
         private void IncreaseSpeedCommandExecute()
@@ -101,7 +100,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private bool CanDecreaseSpeedCommandExecute()
         {
-            return GameSpeed > DEFAULT_MIN_GAME_SPEED;
+            return GameSpeed > minSpeed;
         }
 
         private void DecreaseSpeedCommandExecute()
