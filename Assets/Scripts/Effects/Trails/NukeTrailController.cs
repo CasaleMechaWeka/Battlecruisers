@@ -7,16 +7,17 @@ namespace BattleCruisers.Effects.Trails
 {
     public class NukeTrailController : MonoBehaviour, IProjectileTrail
     {
-        public BroadcastingParticleSystem glow, fireExhaust, smoke;
         private IList<BroadcastingParticleSystem> _effects;
+        public BroadcastingParticleSystem pulsingGlow, fireExhaust, smoke;
+        public SpriteRenderer constantGlow;
 
         public void Initialise()
         {
-            Helper.AssertIsNotNull(glow, fireExhaust, smoke);
+            Helper.AssertIsNotNull(pulsingGlow, fireExhaust, smoke, constantGlow);
             
             _effects = new List<BroadcastingParticleSystem>()
             {
-                glow,
+                pulsingGlow,
                 fireExhaust,
                 smoke
             };
@@ -32,6 +33,8 @@ namespace BattleCruisers.Effects.Trails
             {
                 effect.Play();
             }
+
+            constantGlow.enabled = true;
         }
 
         public void HideAliveEffects()
@@ -40,6 +43,8 @@ namespace BattleCruisers.Effects.Trails
             {
                 effect.Stop();
             }
+
+            constantGlow.enabled = false;
         }
 
         // FELIX  Remove?
