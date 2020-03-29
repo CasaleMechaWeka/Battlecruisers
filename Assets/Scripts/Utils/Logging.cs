@@ -150,9 +150,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
             tagsToActiveness.Add(Tags.LASER, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.SHELLS, true);
-            //tagsToActiveness.Add(Tags.SHELLS, false);
+            tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
             tagsToActiveness.Add(Tags.TARGET, false);
