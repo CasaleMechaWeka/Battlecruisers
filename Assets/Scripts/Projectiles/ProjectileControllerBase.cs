@@ -29,9 +29,6 @@ namespace BattleCruisers.Projectiles
         private ITarget _parent;
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
-
-        // FELIX  Should be able to remove this once ProjectileWithTrail handles everything :)
-        private TrailRenderer[] _trailRenderers;
         
         private bool _isActiveAndAlive;
         protected IFactoryProvider _factoryProvider;
@@ -83,9 +80,6 @@ namespace BattleCruisers.Projectiles
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
 
-            _trailRenderers = GetComponentsInChildren<TrailRenderer>();
-            Assert.IsNotNull(_trailRenderers);
-
             IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
             _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
@@ -100,11 +94,6 @@ namespace BattleCruisers.Projectiles
 
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
-
-            foreach (TrailRenderer trailRenderer in _trailRenderers)
-            {
-                trailRenderer.Clear();
-            }
 
 			_targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
