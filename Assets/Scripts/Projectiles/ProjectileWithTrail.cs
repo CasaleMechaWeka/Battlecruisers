@@ -70,8 +70,7 @@ namespace BattleCruisers.Projectiles
             _trail.HideEffects();
         }
 
-        // FELIX  Doesn't need to be virtual?
-        protected virtual void OnTrailsDoneCleanup()
+        private void OnTrailsDoneCleanup()
         {
             Logging.LogMethod(Tags.SHELLS);
 
