@@ -22,6 +22,7 @@ namespace BattleCruisers.Projectiles
 
         public SpriteRenderer missile;
 
+        protected override float TrailLifetimeInS => 3;
         public  ITarget Target { get; private set; }
 
         public override void Initialise(IFactoryProvider factoryProvider)
