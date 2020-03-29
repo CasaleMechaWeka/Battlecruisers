@@ -163,7 +163,7 @@ namespace BattleCruisers.Projectiles
 			RemoveFromScene();
 		}
 
-        private void ShowExplosion()
+        protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
             _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);

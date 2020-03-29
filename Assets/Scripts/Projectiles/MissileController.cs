@@ -8,8 +8,8 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Projectiles
 {
-    public class MissileController : 
-        ProjectileControllerBase<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>, 
+    public class MissileController :
+        ProjectileWithTrail<TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>, 
         ITargetProvider
 	{
         private IDeferrer _deferrer;

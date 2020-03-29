@@ -14,8 +14,8 @@ namespace BattleCruisers.Projectiles
     /// But it can only subclass one of these.  Hence subclass ProjectileController, and
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
-    public class RocketController : 
-        ProjectileControllerBase<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>, 
+    public class RocketController :
+        ProjectileWithTrail<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>, 
         ITargetProvider
 	{
 		public ITarget Target { get; private set; }

@@ -7,8 +7,8 @@ using BattleCruisers.Targets.TargetProviders;
 
 namespace BattleCruisers.Projectiles
 {
-    public class NukeController : 
-        ProjectileControllerBase<TargetProviderActivationArgs<INukeStats>, INukeStats>, 
+    public class NukeController :
+        ProjectileWithTrail<TargetProviderActivationArgs<INukeStats>, INukeStats>, 
         ITargetProvider
 	{
 		private INukeStats _nukeStats;
