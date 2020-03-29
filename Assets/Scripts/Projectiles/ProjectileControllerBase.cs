@@ -17,7 +17,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    // FELIX  Abstract and simplify to make testable?  And easier to change in the future :)
     public abstract class ProjectileControllerBase<TActivationArgs, TStats> : Projectile,
         IRemovable,
         IPoolable<TActivationArgs> 
