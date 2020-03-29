@@ -29,6 +29,7 @@ namespace BattleCruisers.Projectiles
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
         private TrailRenderer[] _trailRenderers;
+        private bool _isActiveAndAlive;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -85,6 +86,7 @@ namespace BattleCruisers.Projectiles
             Assert.IsNotNull(explosionPoolChooser);
             _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
 
+            _isActiveAndAlive = false;
             gameObject.SetActive(false);
         }
 
@@ -111,6 +113,7 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
+            _isActiveAndAlive = true;
         }
 
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
@@ -123,12 +126,18 @@ namespace BattleCruisers.Projectiles
 
 		void FixedUpdate()
 		{
+            if (!_isActiveAndAlive)
+            {
+                return;
+            }
+
             if (_targetToDamage != null)
             {
                 DestroyProjectile();
                 _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                _isActiveAndAlive = false;
             }
-			else if (MovementController != null)
+            else if (MovementController != null)
             {
                 MovementController.AdjustVelocity();
             }
