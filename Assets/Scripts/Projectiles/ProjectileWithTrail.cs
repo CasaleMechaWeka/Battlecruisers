@@ -16,7 +16,6 @@ namespace BattleCruisers.Projectiles
     /// Instead, the projectile should be inert, but set the trail hang around and dissipate
     /// before deactivating completely and being recycled.
     /// </summary>
-    /// FELIX  Create bomb controller?  So that trail also gets handled correctly :)
     public abstract class ProjectileWithTrail<TActivationArgs, TStats> : ProjectileControllerBase<TActivationArgs, TStats>,
         IRemovable,
         IPoolable<TActivationArgs>
