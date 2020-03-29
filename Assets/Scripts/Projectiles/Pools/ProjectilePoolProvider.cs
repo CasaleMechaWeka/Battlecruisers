@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
-        public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
+        public IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
@@ -42,7 +42,7 @@ namespace BattleCruisers.Projectiles.Pools
                     InitialCapacity.SHELL_LARGE);
 
             BombsPool
-                = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.Bomb,
                     InitialCapacity.BOMB);

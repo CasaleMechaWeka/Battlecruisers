@@ -3,21 +3,25 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class ShellSpawner : BaseShellSpawner
-	{
+    public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    {
+        private ITargetFilter _targetFilter;
         private IProjectileSpawnerSoundPlayer _soundPlayer;
 
         public async Task InitialiseAsync(IProjectileSpawnerArgs args, ITargetFilter targetFilter, ISoundKey firingSound)
         {
-            base.Initialise(args, targetFilter);
+            base.Initialise(args);
 
-            Assert.IsNotNull(firingSound);
+            Helper.AssertIsNotNull(targetFilter, firingSound);
+
+            _targetFilter = targetFilter;
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
