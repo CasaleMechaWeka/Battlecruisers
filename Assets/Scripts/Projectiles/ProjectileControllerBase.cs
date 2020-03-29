@@ -160,13 +160,13 @@ namespace BattleCruisers.Projectiles
         protected virtual void DestroyProjectile()
         {
             ShowExplosion();
-            _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
 			RemoveFromScene();
 		}
 
         private void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
+            _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
         private void AdjustGameObjectDirection()
