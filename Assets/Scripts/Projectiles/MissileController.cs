@@ -4,7 +4,10 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
@@ -17,7 +20,15 @@ namespace BattleCruisers.Projectiles
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 2;
 
+        public SpriteRenderer missile;
+
         public  ITarget Target { get; private set; }
+
+        public override void Initialise(IFactoryProvider factoryProvider)
+        {
+            base.Initialise(factoryProvider);
+            Assert.IsNotNull(missile);
+        }
 
         public override void Activate(TargetProviderActivationArgs<IProjectileStats> activationArgs)
         {
@@ -37,6 +48,7 @@ namespace BattleCruisers.Projectiles
                     _factoryProvider.TargetPositionPredictorFactory);
 
             _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+            missile.enabled = true;
 
             activationArgs.Target.Destroyed += Target_Destroyed;
 		}
@@ -60,7 +72,8 @@ namespace BattleCruisers.Projectiles
 
 		protected override void DestroyProjectile()
 		{
-			Target.Destroyed -= Target_Destroyed;
+            missile.enabled = false;
+            Target.Destroyed -= Target_Destroyed;
 			base.DestroyProjectile();
 		}
 	}

@@ -8,6 +8,7 @@
     /// </summary>
     public interface IProjectileTrail
     {
+        void Initialise();
         void ShowAllEffects();
         void HideAliveEffects();
         void HideAllEffects();

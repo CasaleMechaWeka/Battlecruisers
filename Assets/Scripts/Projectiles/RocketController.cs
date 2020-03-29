@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Trails;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
@@ -21,7 +20,6 @@ namespace BattleCruisers.Projectiles
         ITargetProvider
 	{
         private RocketTarget _rocketTarget;
-        private IProjectileTrail _trail;
 
 		public ITarget Target { get; private set; }
 
@@ -31,11 +29,6 @@ namespace BattleCruisers.Projectiles
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
-
-            NukeTrailController trail = GetComponentInChildren<NukeTrailController>();
-            Assert.IsNotNull(trail);
-            trail.Initialise();
-            _trail = trail;
         }
 
         public override void Activate(TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs)
@@ -57,21 +50,12 @@ namespace BattleCruisers.Projectiles
 
             _rocketTarget.GameObject.SetActive(true);
             _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
-
-            _trail.ShowAllEffects();
         }
 
         protected override void OnImpactCleanUp()
         {
             base.OnImpactCleanUp();
             _rocketTarget.GameObject.SetActive(false);
-            _trail.HideAliveEffects();
-        }
-
-        protected override void OnTrailsDoneCleanup()
-        {
-            base.OnTrailsDoneCleanup();
-            _trail.HideAllEffects();
         }
     }
 }

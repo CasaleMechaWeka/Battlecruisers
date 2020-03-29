@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.ActivationArgs;
+﻿using BattleCruisers.Effects.Trails;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -24,6 +25,7 @@ namespace BattleCruisers.Projectiles
     {
         private Collider2D _collider;
         private IDeferrer _deferrer;
+        private IProjectileTrail _trail;
 
         protected virtual float TrailLifetimeInS { get => 10; }
 
@@ -31,10 +33,14 @@ namespace BattleCruisers.Projectiles
         {
             base.Initialise(factoryProvider);
 
+            _deferrer = factoryProvider.DeferrerProvider.Deferrer;
+
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
 
-            _deferrer = factoryProvider.DeferrerProvider.Deferrer;
+            _trail = GetComponentInChildren<IProjectileTrail>();
+            Assert.IsNotNull(_trail);
+            _trail.Initialise();
         }
 
         public override void Activate(TActivationArgs activationArgs)
@@ -42,6 +48,7 @@ namespace BattleCruisers.Projectiles
             base.Activate(activationArgs);
 
             _collider.enabled = true;
+            _trail.ShowAllEffects();
         }
 
         protected override void DestroyProjectile()
@@ -60,12 +67,15 @@ namespace BattleCruisers.Projectiles
 
             MovementController.Velocity = Vector2.zero;
             _collider.enabled = false;
+            _trail.HideAliveEffects();
         }
 
+        // FELIX  Doesn't need to be virtual?
         protected virtual void OnTrailsDoneCleanup()
         {
             Logging.LogMethod(Tags.SHELLS);
 
+            _trail.HideAllEffects();
             gameObject.SetActive(false);
             InvokeDeactivated();
         }
