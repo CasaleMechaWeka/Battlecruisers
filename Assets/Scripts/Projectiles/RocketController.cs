@@ -3,6 +3,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils.Factories;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
@@ -18,7 +19,17 @@ namespace BattleCruisers.Projectiles
         ProjectileWithTrail<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>, 
         ITargetProvider
 	{
+        private RocketTarget _rocketTarget;
+
 		public ITarget Target { get; private set; }
+
+        public override void Initialise(IFactoryProvider factoryProvider)
+        {
+            base.Initialise(factoryProvider);
+
+            _rocketTarget = GetComponentInChildren<RocketTarget>();
+            Assert.IsNotNull(_rocketTarget);
+        }
 
         public override void Activate(TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs)
         {
@@ -37,10 +48,14 @@ namespace BattleCruisers.Projectiles
                     activationArgs.ProjectileStats.CruisingAltitudeInM,
                     _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
 
-            RocketTarget rocketTarget = gameObject.GetComponentInChildren<RocketTarget>();
-            Assert.IsNotNull(rocketTarget);
+            _rocketTarget.GameObject.SetActive(true);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
+        }
 
-            rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
+        protected override void OnImpactCleanUp()
+        {
+            base.OnImpactCleanUp();
+            _rocketTarget.GameObject.SetActive(false);
         }
     }
 }

@@ -29,7 +29,6 @@ namespace BattleCruisers.Projectiles
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
         private TrailRenderer[] _trailRenderers;
-        private Collider2D _collider;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -69,7 +68,7 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public void Initialise(IFactoryProvider factoryProvider)
+        public virtual void Initialise(IFactoryProvider factoryProvider)
 		{
             Logging.LogMethod(Tags.SHELLS);
 
@@ -78,9 +77,6 @@ namespace BattleCruisers.Projectiles
 
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
-
-            _collider = GetComponent<Collider2D>();
-            Assert.IsNotNull(_collider);
 
             _trailRenderers = GetComponentsInChildren<TrailRenderer>();
             Assert.IsNotNull(_trailRenderers);
@@ -129,8 +125,8 @@ namespace BattleCruisers.Projectiles
 		{
             if (_targetToDamage != null)
             {
-                _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
                 DestroyProjectile();
+                _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
             }
 			else if (MovementController != null)
             {
@@ -159,6 +155,8 @@ namespace BattleCruisers.Projectiles
 
         protected virtual void DestroyProjectile()
         {
+            Logging.LogMethod(Tags.SHELLS);
+
             ShowExplosion();
 			RemoveFromScene();
 		}
@@ -181,6 +179,8 @@ namespace BattleCruisers.Projectiles
 
         public void RemoveFromScene()
         {
+            Logging.LogMethod(Tags.SHELLS);
+
             if (!gameObject.activeSelf)
             {
                 return;
@@ -192,8 +192,17 @@ namespace BattleCruisers.Projectiles
             }
 
             gameObject.SetActive(false);
+            InvokeDestroyed();
+            InvokeDeactivated();
+        }
 
+        protected void InvokeDestroyed()
+        {
             Destroyed?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected void InvokeDeactivated()
+        {
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
     }
