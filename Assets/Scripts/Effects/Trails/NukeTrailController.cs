@@ -14,7 +14,7 @@ namespace BattleCruisers.Effects.Trails
         public void Initialise()
         {
             Helper.AssertIsNotNull(pulsingGlow, fireExhaust, smoke, constantGlow);
-            
+
             _effects = new List<BroadcastingParticleSystem>()
             {
                 pulsingGlow,
@@ -37,7 +37,7 @@ namespace BattleCruisers.Effects.Trails
             constantGlow.enabled = true;
         }
 
-        public void HideAliveEffects()
+        public void HideEffects()
         {
             foreach (IBroadcastingParticleSystem effect in _effects)
             {
@@ -45,12 +45,6 @@ namespace BattleCruisers.Effects.Trails
             }
 
             constantGlow.enabled = false;
-        }
-
-        // FELIX  Remove?
-        public void HideAllEffects()
-        {
-            // empty
         }
     }
 }

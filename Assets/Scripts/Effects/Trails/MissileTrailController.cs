@@ -20,16 +20,10 @@ namespace BattleCruisers.Effects.Trails
             trail.Clear();
         }
 
-        public void HideAliveEffects()
+        public void HideEffects()
         {
             glow.enabled = false;
             missileFlare.enabled = false;
-        }
-
-        // FELIX  Remove?
-        public void HideAllEffects()
-        {
-            // empty
         }
     }
 }

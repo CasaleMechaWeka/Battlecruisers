@@ -67,7 +67,7 @@ namespace BattleCruisers.Projectiles
 
             MovementController.Velocity = Vector2.zero;
             _collider.enabled = false;
-            _trail.HideAliveEffects();
+            _trail.HideEffects();
         }
 
         // FELIX  Doesn't need to be virtual?
@@ -75,7 +75,6 @@ namespace BattleCruisers.Projectiles
         {
             Logging.LogMethod(Tags.SHELLS);
 
-            _trail.HideAllEffects();
             gameObject.SetActive(false);
             InvokeDeactivated();
         }
