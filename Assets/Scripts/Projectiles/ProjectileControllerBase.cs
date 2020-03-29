@@ -29,7 +29,10 @@ namespace BattleCruisers.Projectiles
         private ITarget _parent;
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
+
+        // FELIX  Should be able to remove this once ProjectileWithTrail handles everything :)
         private TrailRenderer[] _trailRenderers;
+        
         private bool _isActiveAndAlive;
         protected IFactoryProvider _factoryProvider;
 
