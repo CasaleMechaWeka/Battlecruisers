@@ -29,6 +29,7 @@ namespace BattleCruisers.Projectiles
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
         private TrailRenderer[] _trailRenderers;
+        private Collider2D _collider;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -77,6 +78,9 @@ namespace BattleCruisers.Projectiles
 
 			_rigidBody = GetComponent<Rigidbody2D>();
 			Assert.IsNotNull(_rigidBody);
+
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
 
             _trailRenderers = GetComponentsInChildren<TrailRenderer>();
             Assert.IsNotNull(_trailRenderers);
