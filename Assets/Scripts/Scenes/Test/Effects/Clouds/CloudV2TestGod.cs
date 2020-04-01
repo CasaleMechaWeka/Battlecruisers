@@ -14,11 +14,10 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudStatsController cloudStatsController = GetComponentInChildren<CloudStatsController>();
             Assert.IsNotNull(cloudStatsController);
-            // -110 <= x <= 110
-            //  10 <= y <= 60
+            // -400 <= x <= 400
             float height = cloudStatsController.maxYPosition - cloudStatsController.minYPosition;
             Assert.IsTrue(height > 0);
-            Rect cloudSpawnArea = new Rect(x: -110, y: cloudStatsController.minYPosition, width: 220, height: height);
+            Rect cloudSpawnArea = new Rect(x: -400, y: cloudStatsController.minYPosition, width: 800, height: height);
             ICloudGenerationStats cloudStats
                 = new CloudGenerationStats(
                     cloudSpawnArea,
