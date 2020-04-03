@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
         private bool ShouldTeleportCloud(ICloudNEW rightCloud)
         {
             Assert.IsNotNull(rightCloud);
-            return rightCloud.Position.x + (rightCloud.Size.x / 2) > MAX_X_POSITION_VISIBLE_BY_USER;
+            return rightCloud.Position.x - (rightCloud.Size.x / 2) > MAX_X_POSITION_VISIBLE_BY_USER;
         }
 
         // FELIX  Abstract & test :)
@@ -62,7 +62,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
             float distanceBetweenCloudsInM = onScreenCloud.Size.x / 2 + CLOUD_GAP_IN_M + offScreenCloud.Size.x / 2;
             float targetPositionX = onScreenCloud.Position.x - distanceBetweenCloudsInM;
 
-            return new Vector2(targetPositionX, offScreenCloud.Position.y);
+            Vector2 targetPosition = new Vector2(targetPositionX, offScreenCloud.Position.y);
+            Logging.Log(Tags.CLOUDS, $"Teleport target position: {targetPosition}");
+            return targetPosition;
         }
     }
 }

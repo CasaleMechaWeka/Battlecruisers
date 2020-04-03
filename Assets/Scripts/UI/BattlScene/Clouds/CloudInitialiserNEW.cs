@@ -21,6 +21,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             leftCloud.Initialise(cloudStats);
             rightCloud.Initialise(cloudStats);
 
+            // FELIX  Randomise starting x position :/
+
             _cloudTeleporter = new CloudTeleporterNEW(updater, leftCloud, rightCloud);
         }
     }

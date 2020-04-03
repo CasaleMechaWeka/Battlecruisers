@@ -88,6 +88,7 @@ namespace BattleCruisers.Utils
         public const string UNIT_TARGETS = "UnitTargets";
 
         // Effects
+        public const string CLOUDS = "Clouds";
         public const string DEATHS = "Deaths";
         public const string EXPLOSIONS = "Explosions";
 
@@ -206,6 +207,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
             // Effects
+            // FELIX
+            tagsToActiveness.Add(Tags.CLOUDS, true);
+            //tagsToActiveness.Add(Tags.CLOUDS, false);
             tagsToActiveness.Add(Tags.DEATHS, false);
             tagsToActiveness.Add(Tags.EXPLOSIONS, false);
 

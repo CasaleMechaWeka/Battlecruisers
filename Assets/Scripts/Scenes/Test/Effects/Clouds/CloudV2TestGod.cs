@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Clouds;
-using UnityEngine;
 using UnityEngine.Assertions;
-using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
@@ -14,21 +12,30 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudStatsController cloudStatsController = GetComponentInChildren<CloudStatsController>();
             Assert.IsNotNull(cloudStatsController);
-            // -400 <= x <= 400
-            float height = cloudStatsController.maxYPosition - cloudStatsController.minYPosition;
-            Assert.IsTrue(height > 0);
-            Rect cloudSpawnArea = new Rect(x: -400, y: cloudStatsController.minYPosition, width: 800, height: height);
-            ICloudGenerationStats cloudStats
-                = new CloudGenerationStats(
-                    cloudSpawnArea,
-                    cloudStatsController.cloudDensityAsFraction,
-                    cloudStatsController.movementSpeed,
+
+            ICloudStats cloudStats 
+                = new CloudStats(
+                    ConvertMovementSpeed(cloudStatsController.movementSpeed),
                     cloudStatsController.frontCloudColor,
                     cloudStatsController.backCloudColor);
 
-            CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
+            CloudInitialiserNEW cloudInitialiser = GetComponentInChildren<CloudInitialiserNEW>();
             Assert.IsNotNull(cloudInitialiser);
-            cloudInitialiser.Initialise(cloudStats, BCUtils.RandomGenerator.Instance);
+            cloudInitialiser.Initialise(cloudStats, _updaterProvider.SlowerUpdater);
+            // FELIX  Pass random :)
+            //cloudInitialiser.Initialise(cloudStats, BCUtils.RandomGenerator.Instance);
+        }
+
+        private float ConvertMovementSpeed(CloudMovementSpeed movementSpeed)
+        {
+            switch (movementSpeed)
+            {
+                case CloudMovementSpeed.Fast:
+                    return 0.75f;
+                case CloudMovementSpeed.Slow:
+                default:
+                    return 0.5f;
+            }
         }
     }
 }
