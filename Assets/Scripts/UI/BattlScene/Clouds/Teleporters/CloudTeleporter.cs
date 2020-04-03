@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
         protected readonly ICloud _cloud;
         protected readonly float _disappearXPosition, _reappearXPosition;
 
-        protected CloudTeleporter(ICloud cloud, ICloudStats cloudStats)
+        protected CloudTeleporter(ICloud cloud, ICloudStatsExtended cloudStats)
         {
             Helper.AssertIsNotNull(cloud, cloudStats);
 

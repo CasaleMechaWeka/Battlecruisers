@@ -11,13 +11,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds.Teleporters
         private ICloudTeleporter _teleporter;
 
         private ICloud _cloud;
-        private ICloudStats _cloudStats;
+        private ICloudStatsExtended _cloudStats;
 
         [SetUp]
         public void SetuUp()
         {
             _cloud = Substitute.For<ICloud>();
-            _cloudStats = Substitute.For<ICloudStats>();
+            _cloudStats = Substitute.For<ICloudStatsExtended>();
 
             Vector2 cloudSize = new Vector2(4, 2);
             _cloud.Size.Returns(cloudSize);

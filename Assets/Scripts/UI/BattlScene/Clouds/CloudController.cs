@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             set { transform.position = value; }
         }
 
-        public void Initialise(ICloudStats cloudStats)
+        public void Initialise(ICloudStatsExtended cloudStats)
         {
             Assert.IsNotNull(cloudStats);
             Assert.IsNotNull(frontCloud);  // backCloud may be null for now

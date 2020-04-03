@@ -21,9 +21,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             return Instantiate(cloudToCreate, spawnPosition, new Quaternion());
         }
 
-        public ICloudStats CreateCloudStats(ICloudGenerationStats generationStats)
+        public ICloudStatsExtended CreateCloudStats(ICloudGenerationStats generationStats)
         {
-            return new CloudStats(generationStats);
+            return new CloudStatsExtended(generationStats);
         }
     }
 }

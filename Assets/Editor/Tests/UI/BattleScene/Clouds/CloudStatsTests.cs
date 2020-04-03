@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
         {
             _generationStats.CloudHorizontalMovementSpeedInS.Returns(3);
 
-            ICloudStats cloudStats = new CloudStats(_generationStats);
+            ICloudStatsExtended cloudStats = new CloudStatsExtended(_generationStats);
 
             Assert.AreEqual(80, cloudStats.DisappearLineInM);
             Assert.AreEqual(-80, cloudStats.ReappaerLineInM);
@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
         {
             _generationStats.CloudHorizontalMovementSpeedInS.Returns(-3);
 
-            ICloudStats cloudStats = new CloudStats(_generationStats);
+            ICloudStatsExtended cloudStats = new CloudStatsExtended(_generationStats);
 
             Assert.AreEqual(-80, cloudStats.DisappearLineInM);
             Assert.AreEqual(80, cloudStats.ReappaerLineInM);

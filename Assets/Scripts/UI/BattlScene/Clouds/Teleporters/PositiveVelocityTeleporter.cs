@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
     /// </summary>
     public class PositiveVelocityTeleporter : CloudTeleporter
     {
-        public PositiveVelocityTeleporter(ICloud cloud, ICloudStats cloudStats)
+        public PositiveVelocityTeleporter(ICloud cloud, ICloudStatsExtended cloudStats)
             : base(cloud, cloudStats)
         {
         }

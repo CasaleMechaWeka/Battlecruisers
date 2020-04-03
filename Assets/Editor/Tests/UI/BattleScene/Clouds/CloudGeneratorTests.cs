@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
 
         private ICloudFactory _factory;
         private ICloudGenerationStats _generationStats;
-        private ICloudStats _cloudStats;
+        private ICloudStatsExtended _cloudStats;
         private ICloud _cloud;
 
         [SetUp]
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
             Vector2 cloudSize = new Vector2(1, 1);  // Area = 1
             _cloud.Size.Returns(cloudSize);
 
-			_cloudStats = Substitute.For<ICloudStats>();
+			_cloudStats = Substitute.For<ICloudStatsExtended>();
 
             _factory = Substitute.For<ICloudFactory>();
             _factory.CreateCloudStats(_generationStats).Returns(_cloudStats);

@@ -7,6 +7,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         Vector2 Size { get; }
         Vector2 Position { get; set; }
 
-        void Initialise(ICloudStats cloudStats);
+        void Initialise(ICloudStatsExtended cloudStats);
     }
 }
