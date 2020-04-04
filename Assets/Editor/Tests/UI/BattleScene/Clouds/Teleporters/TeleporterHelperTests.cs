@@ -10,18 +10,18 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds.Teleporters
     public class TeleporterHelperTests
     {
         private ITeleporterHelper _helper;
-        private ICloudNEW _onScreenCloud, _offScreenCloud;
+        private ICloud _onScreenCloud, _offScreenCloud;
 
         [SetUp]
         public void TestSetup()
         {
             _helper = new TeleporterHelper();
 
-            _onScreenCloud = Substitute.For<ICloudNEW>();
+            _onScreenCloud = Substitute.For<ICloud>();
             Vector2 onScreenCloudSize = new Vector2(4, 1);
             _onScreenCloud.Size.Returns(onScreenCloudSize);
 
-            _offScreenCloud = Substitute.For<ICloudNEW>();
+            _offScreenCloud = Substitute.For<ICloud>();
             Vector2 offScreenCloudSize = new Vector2(2, 1);
             _offScreenCloud.Size.Returns(offScreenCloudSize);
         }

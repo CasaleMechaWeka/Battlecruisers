@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             _rightCloudValidXPositions = rightCloudValidXPositions;
         }
 
-        public void RandomiseStartingPosition(ICloudNEW leftCloud, ICloudNEW rightCloud)
+        public void RandomiseStartingPosition(ICloud leftCloud, ICloud rightCloud)
         {
             Helper.AssertIsNotNull(leftCloud, rightCloud);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);

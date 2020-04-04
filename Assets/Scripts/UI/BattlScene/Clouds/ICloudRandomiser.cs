@@ -2,6 +2,6 @@
 {
     public interface ICloudRandomiser
     {
-        void RandomiseStartingPosition(ICloudNEW leftCloud, ICloudNEW rightCloud);
+        void RandomiseStartingPosition(ICloud leftCloud, ICloud rightCloud);
     }
 }

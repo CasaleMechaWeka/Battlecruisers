@@ -9,22 +9,22 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds.Teleporters
 {
     public class CloudTeleporterTests
     {
-        private CloudTeleporterNEW _teleporter;
+        private CloudTeleporter _teleporter;
         private IUpdater _updater;
         private ITeleporterHelper _teleporterHelper;
-        private ICloudNEW _leftCloud, _rightCloud;
+        private ICloud _leftCloud, _rightCloud;
 
         [SetUp]
         public void TestSetup()
         {
             _updater = Substitute.For<IUpdater>();
             _teleporterHelper = Substitute.For<ITeleporterHelper>();
-            _leftCloud = Substitute.For<ICloudNEW>();
+            _leftCloud = Substitute.For<ICloud>();
             _leftCloud.Position.Returns(new Vector2(-1, 0));
-            _rightCloud = Substitute.For<ICloudNEW>();
+            _rightCloud = Substitute.For<ICloud>();
             _rightCloud.Position.Returns(new Vector2(1, 0));
 
-            _teleporter = new CloudTeleporterNEW(_updater, _teleporterHelper, _leftCloud, _rightCloud);
+            _teleporter = new CloudTeleporter(_updater, _teleporterHelper, _leftCloud, _rightCloud);
         }
 
         [Test]

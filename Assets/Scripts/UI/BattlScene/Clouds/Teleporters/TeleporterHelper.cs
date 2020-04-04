@@ -10,13 +10,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
         // cloud is off screen before teleporting.
         public const float MAX_X_POSITION_VISIBLE_BY_USER = 70;
 
-        public bool ShouldTeleportCloud(ICloudNEW rightCloud)
+        public bool ShouldTeleportCloud(ICloud rightCloud)
         {
             Assert.IsNotNull(rightCloud);
             return rightCloud.Position.x - (rightCloud.Size.x / 2) > MAX_X_POSITION_VISIBLE_BY_USER;
         }
 
-        public Vector2 FindTeleportTargetPosition(ICloudNEW onScreenCloud, ICloudNEW offScreenCloud)
+        public Vector2 FindTeleportTargetPosition(ICloud onScreenCloud, ICloud offScreenCloud)
         {
             Helper.AssertIsNotNull(onScreenCloud, offScreenCloud);
             Assert.IsTrue(offScreenCloud.Position.x > onScreenCloud.Position.x);

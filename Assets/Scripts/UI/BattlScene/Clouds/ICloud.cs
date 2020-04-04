@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
-    public interface ICloudNEW
+    public interface ICloud
     {
         Vector2 Size { get; }
         Vector2 Position { get; set; }

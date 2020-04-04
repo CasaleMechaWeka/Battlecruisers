@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
-    public class CloudControllerNEW : MonoBehaviour, ICloudNEW
+    public class CloudController : MonoBehaviour, ICloud
     {
         public SpriteRenderer frontCloud;
         public SpriteRenderer backCloud;

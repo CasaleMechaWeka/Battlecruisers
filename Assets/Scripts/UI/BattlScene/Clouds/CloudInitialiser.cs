@@ -7,11 +7,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
-    public class CloudInitialiserNEW : MonoBehaviour
+    public class CloudInitialiser : MonoBehaviour
     {
-        private CloudTeleporterNEW _cloudTeleporter;
+        private CloudTeleporter _cloudTeleporter;
 
-        public CloudControllerNEW leftCloud, rightCloud;
+        public CloudController leftCloud, rightCloud;
 
         public void Initialise(ICloudStats cloudStats, IUpdater updater)
         {
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
             _cloudTeleporter 
-                = new CloudTeleporterNEW(
+                = new CloudTeleporter(
                     updater, 
                     new TeleporterHelper(),
                     leftCloud, 

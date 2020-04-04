@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
         private ICloudRandomiser _cloudRandomiser;
         private IRandomGenerator _random;
         private IRange<float> _rightCloudValidXPositions;
-        private ICloudNEW _leftCloud, _rightCloud;
+        private ICloud _leftCloud, _rightCloud;
 
         [SetUp]
         public void TestSetup()
@@ -23,10 +23,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
 
             _cloudRandomiser = new CloudRandomiser(_random, _rightCloudValidXPositions);
 
-            _leftCloud = Substitute.For<ICloudNEW>();
+            _leftCloud = Substitute.For<ICloud>();
             _leftCloud.Position.Returns(new Vector2(-2, 1));
 
-            _rightCloud = Substitute.For<ICloudNEW>();
+            _rightCloud = Substitute.For<ICloud>();
             _rightCloud.Position.Returns(new Vector2(2, 2));
         }
 

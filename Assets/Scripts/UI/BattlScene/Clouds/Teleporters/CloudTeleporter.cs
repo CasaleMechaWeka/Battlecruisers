@@ -5,14 +5,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
 {
-    // FELIX  Rename all NEWs :)
-    public class CloudTeleporterNEW
+    public class CloudTeleporter
     {
         private readonly IUpdater _updater;
         private readonly ITeleporterHelper _teleporterHelper;
-        private ICloudNEW _leftCloud, _rightCloud;
+        private ICloud _leftCloud, _rightCloud;
 
-        public CloudTeleporterNEW(IUpdater updater, ITeleporterHelper teleporterHelper, ICloudNEW leftCloud, ICloudNEW rightCloud)
+        public CloudTeleporter(IUpdater updater, ITeleporterHelper teleporterHelper, ICloud leftCloud, ICloud rightCloud)
         {
             Helper.AssertIsNotNull(updater, teleporterHelper, leftCloud, rightCloud);
             Assert.IsTrue(leftCloud.Position.x < rightCloud.Position.x);
@@ -35,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
             _rightCloud.Position = _teleporterHelper.FindTeleportTargetPosition(_leftCloud, _rightCloud);
 
             // Switch clouds
-            ICloudNEW newLeftCloud = _rightCloud;
+            ICloud newLeftCloud = _rightCloud;
             _rightCloud = _leftCloud;
             _leftCloud = newLeftCloud;
         }

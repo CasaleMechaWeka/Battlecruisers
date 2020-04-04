@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
                     cloudStatsController.frontCloudColor,
                     cloudStatsController.backCloudColor);
 
-            CloudInitialiserNEW cloudInitialiser = GetComponentInChildren<CloudInitialiserNEW>();
+            CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
             cloudInitialiser.Initialise(cloudStats, _updaterProvider.SlowerUpdater);
         }
