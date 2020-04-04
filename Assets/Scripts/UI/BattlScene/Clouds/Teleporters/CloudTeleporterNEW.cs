@@ -17,7 +17,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
         // Very conservative.  User probably can't see past 45, but want to make sure 
         // cloud is off screen before teleporting.
         private const float MAX_X_POSITION_VISIBLE_BY_USER = 70;
-        private const float CLOUD_GAP_IN_M = -25;
 
         public CloudTeleporterNEW(IUpdater updater, ICloudNEW leftCloud, ICloudNEW rightCloud)
         {
@@ -59,8 +58,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
             Helper.AssertIsNotNull(onScreenCloud, offScreenCloud);
             Assert.IsTrue(offScreenCloud.Position.x > onScreenCloud.Position.x);
 
-            float distanceBetweenCloudsInM = onScreenCloud.Size.x / 2 + CLOUD_GAP_IN_M + offScreenCloud.Size.x / 2;
-            float targetPositionX = onScreenCloud.Position.x - distanceBetweenCloudsInM;
+            float distanceBetweenCloudsInM = offScreenCloud.Position.x - onScreenCloud.Position.x;
+            float distanceToTeleportInM = 2 * distanceBetweenCloudsInM;
+            float targetPositionX = offScreenCloud.Position.x - distanceToTeleportInM;
 
             Vector2 targetPosition = new Vector2(targetPositionX, offScreenCloud.Position.y);
             Logging.Log(Tags.CLOUDS, $"Teleport target position: {targetPosition}");
