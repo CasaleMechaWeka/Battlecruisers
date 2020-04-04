@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
-    // FELIX  Interface, test :)
     public class CloudRandomiser : ICloudRandomiser
     {
         private readonly IRandomGenerator _random;

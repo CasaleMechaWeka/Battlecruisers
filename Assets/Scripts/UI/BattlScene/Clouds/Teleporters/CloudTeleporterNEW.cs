@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
     // FELIX Test?
     public class CloudTeleporterNEW
     {
-        // FELIX  Use slower updater!  Don't need to check every frame :)
         private readonly IUpdater _updater;
         private ICloudNEW _leftCloud, _rightCloud;
 

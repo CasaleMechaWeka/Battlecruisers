@@ -22,8 +22,6 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             CloudInitialiserNEW cloudInitialiser = GetComponentInChildren<CloudInitialiserNEW>();
             Assert.IsNotNull(cloudInitialiser);
             cloudInitialiser.Initialise(cloudStats, _updaterProvider.SlowerUpdater);
-            // FELIX  Pass random :)
-            //cloudInitialiser.Initialise(cloudStats, BCUtils.RandomGenerator.Instance);
         }
 
         private float ConvertMovementSpeed(CloudMovementSpeed movementSpeed)
