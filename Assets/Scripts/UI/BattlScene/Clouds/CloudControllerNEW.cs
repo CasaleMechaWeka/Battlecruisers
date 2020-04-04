@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             frontCloud.color = cloudStats.FrontCloudColour;
             backCloud.color = cloudStats.BackCloudColour;
 
-            Size = frontCloud.size;
+            Size = frontCloud.bounds.size;
 
             // Start moving
             Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();

@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
         // Very conservative.  User probably can't see past 45, but want to make sure 
         // cloud is off screen before teleporting.
         private const float MAX_X_POSITION_VISIBLE_BY_USER = 70;
-        private const float CLOUD_GAP_IN_M = 1;
+        private const float CLOUD_GAP_IN_M = -25;
 
         public CloudTeleporterNEW(IUpdater updater, ICloudNEW leftCloud, ICloudNEW rightCloud)
         {
