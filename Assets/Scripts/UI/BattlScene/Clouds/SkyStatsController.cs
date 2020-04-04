@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public Color backCloudColour = Color.white;
         public Color BackCloudColour => backCloudColour;
 
-        public void Initialse()
+        public void Initialise()
         {
             HorizontalMovementSpeedInMPerS = ConvertMovementSpeed(movementSpeed);
         }
