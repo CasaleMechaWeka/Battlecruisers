@@ -8,6 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public Color FrontCloudColour { get; }
         public Color BackCloudColour { get; }
 
+        // FELIX Remove?
         public CloudStats(
             CloudMovementSpeed cloudMovementSpeed,
             Color frontCloudColour,
@@ -26,6 +27,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             BackCloudColour = backCloudColour;
         }
 
+        // FELIX Remove?
         private static float ConvertMovementSpeed(CloudMovementSpeed movementSpeed)
         {
             switch (movementSpeed)
