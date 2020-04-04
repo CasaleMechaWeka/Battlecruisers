@@ -4,12 +4,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
 {
-    // FELIX  Interface & test 
     public class TeleporterHelper : ITeleporterHelper
     {
         // Very conservative.  User probably can't see past 45, but want to make sure 
         // cloud is off screen before teleporting.
-        private const float MAX_X_POSITION_VISIBLE_BY_USER = 70;
+        public const float MAX_X_POSITION_VISIBLE_BY_USER = 70;
 
         public bool ShouldTeleportCloud(ICloudNEW rightCloud)
         {
