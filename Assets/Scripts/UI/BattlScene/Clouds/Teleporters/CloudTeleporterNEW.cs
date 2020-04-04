@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
 {
     // FELIX  Rename all NEWs :)
-    // FELIX Test?
     public class CloudTeleporterNEW
     {
         private readonly IUpdater _updater;
