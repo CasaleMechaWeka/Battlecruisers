@@ -11,6 +11,6 @@ namespace BattleCruisers.Data
         IPrefabKey Hull { get; }
         SoundKeyPair MusicKeys { get; }
         string SkyMaterialName { get; }
-        ICloudGenerationStats CloudStats { get; }
+        ICloudStats CloudStats { get; }
     }
 }

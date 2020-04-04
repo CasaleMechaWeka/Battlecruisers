@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         public IDeferrer Deferrer { get; private set; }
         public IAudioSource AudioSource { get; private set; }
-        public CloudInitialiser CloudInitialiser { get; private set; }
+        public CloudInitialiserNEW CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; private set; }
         public ICamera Camera { get; private set; }
@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Assert.IsNotNull(platformAudioSource);
             AudioSource = new AudioSourceBC(platformAudioSource);
 
-            CloudInitialiser = GetComponentInChildren<CloudInitialiser>();
+            CloudInitialiser = GetComponentInChildren<CloudInitialiserNEW>();
             Assert.IsNotNull(CloudInitialiser);
 
             SkyboxInitialiser = GetComponent<SkyboxInitialiser>();

@@ -12,7 +12,7 @@ namespace BattleCruisers.Data
         public IPrefabKey Hull { get; }
         public SoundKeyPair MusicKeys { get; }
         public string SkyMaterialName { get; }
-        public ICloudGenerationStats CloudStats { get; }
+        public ICloudStats CloudStats { get; }
 
         public Level(
             int num, 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Data
             IPrefabKey hull, 
             SoundKeyPair musicKeys,
             string skyMaterialName, 
-            ICloudGenerationStats cloudStats)
+            ICloudStats cloudStats)
 		{
             Helper.AssertIsNotNull(hull, musicKeys, cloudStats);
 
