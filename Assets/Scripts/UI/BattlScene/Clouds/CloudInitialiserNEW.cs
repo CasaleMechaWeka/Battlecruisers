@@ -28,7 +28,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
                     rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
-            _cloudTeleporter = new CloudTeleporterNEW(updater, leftCloud, rightCloud);
+            _cloudTeleporter 
+                = new CloudTeleporterNEW(
+                    updater, 
+                    new TeleporterHelper(),
+                    leftCloud, 
+                    rightCloud);
         }
     }
 }
