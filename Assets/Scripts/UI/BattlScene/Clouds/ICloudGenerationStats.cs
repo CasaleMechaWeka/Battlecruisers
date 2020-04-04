@@ -7,11 +7,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         Low, Medium, High, VeryHigh
     }
 
-    public enum CloudMovementSpeed
-    {
-        Slow, Fast
-    }
-
     public interface ICloudGenerationStats
     {
         Rect CloudSpawnArea { get; }

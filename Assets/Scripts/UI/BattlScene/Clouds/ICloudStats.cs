@@ -2,6 +2,11 @@
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
+    public enum CloudMovementSpeed
+    {
+        Slow, Fast
+    }
+
     public interface ICloudStats
     {
         float HorizontalMovementSpeedInMPerS { get; }

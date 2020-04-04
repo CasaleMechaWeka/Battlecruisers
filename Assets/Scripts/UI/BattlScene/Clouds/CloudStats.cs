@@ -9,6 +9,14 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public Color BackCloudColour { get; }
 
         public CloudStats(
+            CloudMovementSpeed cloudMovementSpeed,
+            Color frontCloudColour,
+            Color backCloudColour)
+            : this(ConvertMovementSpeed(cloudMovementSpeed), frontCloudColour, backCloudColour)
+        {
+        }
+
+        public CloudStats(
             float horizontalMovementSpeedInMPerS,
             Color frontCloudColour,
             Color backCloudColour)
@@ -16,6 +24,18 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             HorizontalMovementSpeedInMPerS = horizontalMovementSpeedInMPerS;
             FrontCloudColour = frontCloudColour;
             BackCloudColour = backCloudColour;
+        }
+
+        private static float ConvertMovementSpeed(CloudMovementSpeed movementSpeed)
+        {
+            switch (movementSpeed)
+            {
+                case CloudMovementSpeed.Fast:
+                    return 0.75f;
+                case CloudMovementSpeed.Slow:
+                default:
+                    return 0.5f;
+            }
         }
     }
 }
