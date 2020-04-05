@@ -1,7 +1,11 @@
-﻿namespace BattleCruisers.UI
+﻿using System;
+
+namespace BattleCruisers.UI
 {
     public interface ITogglable
     {
-        bool Enabled { set; }
+        event EventHandler EnabledChange;
+
+        bool Enabled { get; set; }
     }
 }

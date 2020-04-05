@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,9 @@ namespace BattleCruisers.UI
         public float highlightSizeMultiplier;
 
         private bool _enabled;
+
+        public event EventHandler EnabledChange;
+
         public bool Enabled
         {
             get => _enabled;
@@ -38,6 +42,8 @@ namespace BattleCruisers.UI
                 {
                     gameObject.SetActive(value);
                 }
+
+                EnabledChange?.Invoke(this, EventArgs.Empty);
             }
         }
 
