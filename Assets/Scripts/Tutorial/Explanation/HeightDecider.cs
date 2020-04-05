@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    // FELIX  Test
     public class HeightDecider : IHeightDecider
     {
         private const float SHRUNK_CHARACTER_COUNT = 50;
