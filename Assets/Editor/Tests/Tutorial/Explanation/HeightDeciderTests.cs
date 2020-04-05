@@ -18,8 +18,8 @@ namespace BattleCruisers.Tests.Tutorial.Explanation
 
             _doneButton = Substitute.For<ITogglable>();
             _okButton = Substitute.For<ITogglable>();
-            _shortText = "1234567890123456789012345678901234567890123456789"; // 49 chars
-            _longText = "12345678901234567890123456789012345678901234567890"; // 50 chars
+            _shortText = "1234567890123456789012345678901234567890123456789012345678901234"; // 64 chars
+            _longText = "12345678901234567890123456789012345678901234567890123456789012345"; // 65 chars
         }
 
         [Test]
