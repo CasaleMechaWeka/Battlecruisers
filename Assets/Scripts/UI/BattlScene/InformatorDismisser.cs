@@ -2,7 +2,6 @@
 using BattleCruisers.Utils;
 using System;
 
-// FELIX  Test?
 namespace BattleCruisers.UI.BattleScene
 {
     public class InformatorDismisser
