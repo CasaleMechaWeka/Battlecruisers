@@ -74,9 +74,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
 
             //// TEMP  Force  tutorial
-            ///FELIX
-            applicationModel.IsTutorial = true;
-            applicationModel.SelectedLevel = 1;
+            //applicationModel.IsTutorial = true;
+            //applicationModel.SelectedLevel = 1;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
