@@ -45,6 +45,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private BuildableButtonColourController _buildableButtonColourController;
         private CruiserDeathManager _cruiserDeathManager;
         private LifetimeManager _lifetimeManager;
+        private InformatorDismisser _informatorDismisser;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -179,6 +180,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     itemDetailsManager,
                     factoryProvider.Sound.PrioritisedSoundPlayer);
             helper.InitialiseUIManager(args);
+
+            _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);
 
             // Other
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.BattleScene.Clouds;
+﻿using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene.Lifetime;
@@ -24,8 +25,13 @@ namespace BattleCruisers.Scenes.BattleScene
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
+        public ClickableEmitter backgroundClickableEmitter;
+        public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
+
         public void Initialise()
         {
+            Assert.IsNotNull(backgroundClickableEmitter);
+
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
 
