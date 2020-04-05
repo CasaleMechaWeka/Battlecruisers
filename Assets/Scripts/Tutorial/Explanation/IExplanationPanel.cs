@@ -8,6 +8,7 @@ namespace BattleCruisers.Tutorial.Explanation
         IExplanationDismissButton OkButton { get; }
         IExplanationDismissButton DoneButton { get; }
 
+        // FELIX  rename.  Append Height?
         void Shrink();
         void Expand();
     }
