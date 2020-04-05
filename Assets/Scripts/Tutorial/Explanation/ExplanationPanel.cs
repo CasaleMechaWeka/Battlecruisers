@@ -36,13 +36,13 @@ namespace BattleCruisers.Tutorial.Explanation
             _transform = transform.Parse<RectTransform>();
         }
 
-        public void Expand()
+        public void ExpandHeight()
         {
             Logging.LogMethod(Tags.TUTORIAL_EXPLANATION_PANEL);
             _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, EXPANDED_HEIGHT);
         }
 
-        public void Shrink()
+        public void ShrinkHeight()
         {
             Logging.LogMethod(Tags.TUTORIAL_EXPLANATION_PANEL);
             _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, SHRUNK_HEIGHT);

@@ -28,11 +28,11 @@ namespace BattleCruisers.Tutorial.Explanation
 
             if (CanShrinkPanel())
             {
-                _explanationPanel.Shrink();
+                _explanationPanel.ShrinkHeight();
             }
             else
             {
-                _explanationPanel.Expand();
+                _explanationPanel.ExpandHeight();
             }
         }
 
