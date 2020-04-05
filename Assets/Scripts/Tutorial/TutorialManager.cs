@@ -15,6 +15,7 @@ namespace BattleCruisers.Tutorial
     {
         private ITutorialStepConsumer _consumer;
         private IExplanationPanel _explanationPanel;
+        private ExplanationPanelHeightManager _explanationPanelHeightManager;
         private IGameEndMonitor _gameEndMonitor;
 
         public void Initialise(ITutorialArgs tutorialArgs)
@@ -34,6 +35,7 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(explanationPanel);
             explanationPanel.Initialise(tutorialArgs.PlayerCruiser.FactoryProvider.Sound.SoundPlayer);
             _explanationPanel = explanationPanel;
+            _explanationPanelHeightManager = new ExplanationPanelHeightManager(_explanationPanel);
 
             ITutorialStepsFactory stepsFactory 
                 = new MasterTutorialStepsFactory(

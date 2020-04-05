@@ -26,22 +26,26 @@ namespace BattleCruisers.Tutorial.Explanation
             ExplanationDismissButton okButton = transform.FindNamedComponent<ExplanationDismissButton>("OkButton");
             okButton.Initialise(soundPlayer);
             OkButton = okButton;
+            OkButton.Enabled = false;
 
             ExplanationDismissButton doneButton = transform.FindNamedComponent<ExplanationDismissButton>("DoneButton");
             doneButton.Initialise(soundPlayer);
             DoneButton = doneButton;
+            DoneButton.Enabled = false;
 
             _transform = transform.Parse<RectTransform>();
         }
 
         public void Expand()
         {
-            _transform.sizeDelta = new Vector2(EXPANDED_HEIGHT, _transform.sizeDelta.y);
+            Logging.LogMethod(Tags.TUTORIAL_EXPLANATION_PANEL);
+            _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, EXPANDED_HEIGHT);
         }
 
         public void Shrink()
         {
-            _transform.sizeDelta = new Vector2(SHRUNK_HEIGHT, _transform.sizeDelta.y);
+            Logging.LogMethod(Tags.TUTORIAL_EXPLANATION_PANEL);
+            _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, SHRUNK_HEIGHT);
         }
     }
 }
