@@ -3,13 +3,10 @@ using System;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    // FELIX  Test
     public class ExplanationPanelHeightManager
     {
         private readonly IExplanationPanel _explanationPanel;
         private readonly IHeightDecider _heightDecider;
-
-        private const float SHRUNK_CHARACTER_COUNT = 50;
 
         public ExplanationPanelHeightManager(IExplanationPanel explanationPanel, IHeightDecider heightDecider)
         {
