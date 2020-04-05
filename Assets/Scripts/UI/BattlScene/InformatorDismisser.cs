@@ -2,7 +2,6 @@
 using BattleCruisers.Utils;
 using System;
 
-// FELIX  Togglable for tutorial?
 // FELIX  Test?
 namespace BattleCruisers.UI.BattleScene
 {
