@@ -7,12 +7,6 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
-    // FELIX  Move to where used?
-    public interface ISkyProvider
-    {
-        ISkyStats GetSkyStats(Material skyMaterial);
-    }
-
     public class SkyButtonController : MonoBehaviour
     {
         private Skybox _skybox;

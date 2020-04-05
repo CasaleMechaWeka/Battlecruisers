@@ -24,7 +24,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             }
         }
 
-        // FELIX  To be used with ILevel.SkyMaterialName
         public ISkyStats GetSkyStats(string skyMaterialName)
         {
             ISkyStats skyStats = SkyStats.FirstOrDefault(stats => stats.SkyMaterial.name == skyMaterialName);
