@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ namespace BattleCruisers.Tutorial
     public class TextDisplayer : MonoBehaviour, ITextDisplayer
     {
         private Text _text;
+        public string Text => _text.text;
+
+        public event EventHandler TextChanged;
 
         public void Initialise()
         {
@@ -24,6 +28,8 @@ namespace BattleCruisers.Tutorial
             }
 
             _text.text = textToDisplay;
+
+            TextChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
