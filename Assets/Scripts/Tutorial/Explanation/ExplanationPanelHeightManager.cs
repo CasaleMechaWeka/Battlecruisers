@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Utils;
 using System;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
@@ -8,14 +7,16 @@ namespace BattleCruisers.Tutorial.Explanation
     public class ExplanationPanelHeightManager
     {
         private readonly IExplanationPanel _explanationPanel;
+        private readonly IHeightDecider _heightDecider;
 
         private const float SHRUNK_CHARACTER_COUNT = 50;
 
-        public ExplanationPanelHeightManager(IExplanationPanel explanationPanel)
+        public ExplanationPanelHeightManager(IExplanationPanel explanationPanel, IHeightDecider heightDecider)
         {
-            Assert.IsNotNull(explanationPanel);
+            Helper.AssertIsNotNull(explanationPanel, heightDecider);
 
             _explanationPanel = explanationPanel;
+            _heightDecider = heightDecider;
 
             _explanationPanel.DoneButton.EnabledChange += UpdatePanelHeight;
             _explanationPanel.OkButton.EnabledChange += UpdatePanelHeight;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Tutorial.Explanation
         {
             Logging.Log(Tags.TUTORIAL_EXPLANATION_PANEL, $"sender: {sender}");
 
-            if (CanShrinkPanel())
+            if (_heightDecider.CanShrinkPanel(_explanationPanel.DoneButton, _explanationPanel.OkButton, _explanationPanel.TextDisplayer.Text))
             {
                 _explanationPanel.ShrinkHeight();
             }
@@ -34,19 +35,6 @@ namespace BattleCruisers.Tutorial.Explanation
             {
                 _explanationPanel.ExpandHeight();
             }
-        }
-
-        // FELIX  Abstract?
-        private bool CanShrinkPanel()
-        {
-            bool result =
-                !_explanationPanel.DoneButton.Enabled
-                && !_explanationPanel.OkButton.Enabled
-                && _explanationPanel.TextDisplayer.Text.Length < SHRUNK_CHARACTER_COUNT;
-
-            Logging.Log(Tags.TUTORIAL_EXPLANATION_PANEL, $"Result: {result}  Done button: {_explanationPanel.DoneButton.Enabled}  Ok button: {_explanationPanel.OkButton.Enabled}  Text length: {_explanationPanel.TextDisplayer.Text.Length}");
-
-            return result;
         }
     }
 }

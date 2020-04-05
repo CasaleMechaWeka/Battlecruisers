@@ -35,7 +35,10 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(explanationPanel);
             explanationPanel.Initialise(tutorialArgs.PlayerCruiser.FactoryProvider.Sound.SoundPlayer);
             _explanationPanel = explanationPanel;
-            _explanationPanelHeightManager = new ExplanationPanelHeightManager(_explanationPanel);
+            _explanationPanelHeightManager 
+                = new ExplanationPanelHeightManager(
+                    _explanationPanel,
+                    new HeightDecider());
 
             ITutorialStepsFactory stepsFactory 
                 = new MasterTutorialStepsFactory(
