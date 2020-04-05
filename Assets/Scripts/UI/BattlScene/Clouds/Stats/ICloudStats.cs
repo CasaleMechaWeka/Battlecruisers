@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI.BattleScene.Clouds
+namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public enum CloudMovementSpeed
     {

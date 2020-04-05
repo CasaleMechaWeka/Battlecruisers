@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI.BattleScene.Clouds
+namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    // FELIX  Create Stats namespace?
     public class SkyStatsController : MonoBehaviour, ISkyStats
     {
         public Material skyboxMaterial;

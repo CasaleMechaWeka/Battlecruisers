@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.BattleScene.Clouds
+namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class SkyStatsGroup : MonoBehaviour
     {
