@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
@@ -12,24 +11,21 @@ namespace BattleCruisers.Data
         public IPrefabKey Hull { get; }
         public SoundKeyPair MusicKeys { get; }
         public string SkyMaterialName { get; }
-        public ICloudStats CloudStats { get; }
 
         public Level(
             int num, 
             string name, 
             IPrefabKey hull, 
             SoundKeyPair musicKeys,
-            string skyMaterialName, 
-            ICloudStats cloudStats)
+            string skyMaterialName)
 		{
-            Helper.AssertIsNotNull(hull, musicKeys, cloudStats);
+            Helper.AssertIsNotNull(hull, musicKeys);
 
 			Num = num;
             Name = name;
             Hull = hull;
             MusicKeys = musicKeys;
             SkyMaterialName = skyMaterialName;
-            CloudStats = cloudStats;
 		}
 	}
 }

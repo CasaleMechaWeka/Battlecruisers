@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Data
@@ -11,6 +10,5 @@ namespace BattleCruisers.Data
         IPrefabKey Hull { get; }
         SoundKeyPair MusicKeys { get; }
         string SkyMaterialName { get; }
-        ICloudStats CloudStats { get; }
     }
 }

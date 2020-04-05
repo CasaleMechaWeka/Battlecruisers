@@ -20,11 +20,9 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             skyStatsGroup.Initialise();
             skyButtonGroup.Initialise(skyStatsGroup.SkyStats);
 
-            ISkyStats skyStats = skyStatsGroup.GetSkyStats(skybox.material.name);
-
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            cloudInitialiser.Initialise(skyStats, _updaterProvider.SlowerUpdater);
+            cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater);
         }
     }
 }

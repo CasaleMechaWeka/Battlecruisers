@@ -13,14 +13,19 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
         public CloudController leftCloud, rightCloud;
 
-        public void Initialise(ICloudStats cloudStats, IUpdater updater)
+        public void Initialise(string skyMaterialName, IUpdater updater)
         {
-            Helper.AssertIsNotNull(cloudStats, updater);
+            Helper.AssertIsNotNull(skyMaterialName, updater);
             Helper.AssertIsNotNull(leftCloud, rightCloud);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
-            leftCloud.Initialise(cloudStats);
-            rightCloud.Initialise(cloudStats);
+            SkyStatsGroup skyStatsGroup = GetComponentInChildren<SkyStatsGroup>();
+            Assert.IsNotNull(skyStatsGroup);
+            skyStatsGroup.Initialise();
+            ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
+
+            leftCloud.Initialise(skyStats);
+            rightCloud.Initialise(skyStats);
 
             ICloudRandomiser cloudRandomiser
                 = new CloudRandomiser(

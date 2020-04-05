@@ -198,47 +198,42 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Daisy", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(2, "Rain", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDPurple, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(3, "Jurassic Wolf", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.HDMidnight, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.HDSunset, CreateCloudStats(CloudMovementSpeed.Slow)),
+                new Level(1, "Daisy", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday),
+                new Level(2, "Rain", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDPurple),
+                new Level(3, "Jurassic Wolf", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk),
+                new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
+                new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds),
+                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.HDMidnight),
+                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.HDSunset),
 
                 // Set 2
-                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(9, "Magic", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.HDDusk, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDSunset, CreateCloudStats(CloudMovementSpeed.Fast)),
+                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
+                new Level(9, "Magic", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds),
+                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple),
+                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight),
+                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday),
+                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.HDDusk),
+                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDSunset),
 
                 // Set 3
-                new Level(15, "Drone Millionaire", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.HDMidday, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDDusk, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDPurple, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidnight, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDSunset, CreateCloudStats(CloudMovementSpeed.Fast)),
+                new Level(15, "Drone Millionaire", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds),
+                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.HDMidday),
+                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDDusk),
+                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDPurple),
+                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidnight),
+                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
+                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDSunset),
 
                 // Set 4
-                new Level(22, "Big Pond", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(23, "Indecision", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(24, "Premature", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds, CreateCloudStats(CloudMovementSpeed.Slow)),
-                new Level(26, "Goldrush", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidday, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(27, "Dawn", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk, CreateCloudStats(CloudMovementSpeed.Fast)),
-                new Level(28, "Mastery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDSunset, CreateCloudStats(CloudMovementSpeed.Slow))
+                new Level(22, "Big Pond", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple),
+                new Level(23, "Indecision", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight),
+                new Level(24, "Premature", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
+                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds),
+                new Level(26, "Goldrush", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidday),
+                new Level(27, "Dawn", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk),
+                new Level(28, "Mastery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDSunset)
             };
 		}
-
-        private ICloudStats CreateCloudStats(CloudMovementSpeed movementSpeed)
-        {
-            return new CloudStats(movementSpeed, frontCloudColour: Color.white, backCloudColour: Color.white);
-        }
 
         private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()
         {
