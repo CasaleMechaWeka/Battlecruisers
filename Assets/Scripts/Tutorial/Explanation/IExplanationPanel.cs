@@ -7,5 +7,8 @@ namespace BattleCruisers.Tutorial.Explanation
         ITextDisplayer TextDisplayer { get; }
         IExplanationDismissButton OkButton { get; }
         IExplanationDismissButton DoneButton { get; }
+
+        void Shrink();
+        void Expand();
     }
 }
