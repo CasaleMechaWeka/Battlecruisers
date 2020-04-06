@@ -48,6 +48,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             itemImage.sprite = item.Sprite;
 
 			gameObject.SetActive(true);
+
+            // There is only space for the image if there is no comparison item
+            itemImage.enabled = itemToCompareTo == null;
 		}
 
         public void Hide()
