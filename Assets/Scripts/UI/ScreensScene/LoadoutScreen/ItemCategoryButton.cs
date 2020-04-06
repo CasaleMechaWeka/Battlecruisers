@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IGameModel _gameModel;
         private bool _hasUnlockedItem;
-        private Image _selectedFeedback;
+        private GameObject _selectedFeedback;
         private NewItemMark _newItemMark;
 
         public ItemType itemType;
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             set
             {
-                _selectedFeedback.enabled = value;
+                _selectedFeedback.SetActive(value);
             }
         }
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
-            _selectedFeedback = transform.FindNamedComponent<Image>("SelectedFeedback");
+            _selectedFeedback = transform.FindNamedComponent<Transform>("SelectedFeedback").gameObject;
             UpdateSelectedFeedback();
 
             _newItemMark = GetComponentInChildren<NewItemMark>();
