@@ -25,7 +25,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             Helper.AssertIsNotNull(frontCloud, backCloud);
 
             frontCloud.color = cloudStats.FrontCloudColour;
+            frontCloud.transform.position = new Vector3(frontCloud.transform.position.x, cloudStats.Height, frontCloud.transform.position.z);
+
             backCloud.color = cloudStats.BackCloudColour;
+            backCloud.transform.position = new Vector3(backCloud.transform.position.x, cloudStats.Height, backCloud.transform.position.z);
 
             Size = frontCloud.bounds.size;
 

@@ -9,6 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 
     public interface ICloudStats
     {
+        float Height { get; }
         float HorizontalMovementSpeedInMPerS { get; }
         Color FrontCloudColour { get; }
         Color BackCloudColour { get; }

@@ -16,6 +16,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public Color backCloudColour = Color.white;
         public Color BackCloudColour => backCloudColour;
 
+        public float cloudHeight = 28;
+        public float Height => cloudHeight;
+
         public void Initialise()
         {
             HorizontalMovementSpeedInMPerS = ConvertMovementSpeed(movementSpeed);
