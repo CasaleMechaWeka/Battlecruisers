@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -17,7 +16,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private RepairButtonController _repairButton;
         private ChooseTargetButtonController _chooseTargetButton;
         private DeleteButtonController _deleteButton;
-        private IHealthDial<IBuildable> _healthDial;
 
         private ToggleDroneButtonController _toggleDronesButton;
         public IButton ToggleDronesButton => _toggleDronesButton;
@@ -29,7 +27,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 _toggleDronesButton.Buildable = value;
                 _repairButton.Repairable = value;
                 _chooseTargetButton.Target = value;
-                _healthDial.Damagable = value;
             }
         }
 
@@ -53,10 +50,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
             _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
-
-            BuildableHealthDialInitialiser healthDialInitialiser = GetComponentInChildren<BuildableHealthDialInitialiser>(includeInactive: true);
-            Assert.IsNotNull(healthDialInitialiser);
-            _healthDial = healthDialInitialiser.Initialise(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
         }
     }
 }

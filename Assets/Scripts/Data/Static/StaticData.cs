@@ -197,40 +197,40 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1
-                new Level(1, "Daisy", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday),
-                new Level(2, "Rain", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDPurple),
-                new Level(3, "Jurassic Wolf", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk),
-                new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
-                new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds),
-                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.HDMidnight),
-                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.HDSunset),
+                new Level(1, "Daisy", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
+                new Level(2, "Rain", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
+                new Level(3, "Jurassic Wolf", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
+                new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Morning),
+                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Midnight),
+                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Sunrise),
 
                 // Set 2
-                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
-                new Level(9, "Magic", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds),
-                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple),
-                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight),
-                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDMidday),
-                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.HDDusk),
-                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDSunset),
+                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(9, "Magic", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
+                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
+                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
+                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
 
                 // Set 3
-                new Level(15, "Drone Millionaire", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDPurpleClouds),
-                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.HDMidday),
-                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDDusk),
-                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDPurple),
-                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidnight),
-                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
-                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDSunset),
+                new Level(15, "Drone Millionaire", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
+                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
+                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
+                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
+                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Midnight),
+                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
 
                 // Set 4
-                new Level(22, "Big Pond", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.HDPurple),
-                new Level(23, "Indecision", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.HDMidnight),
-                new Level(24, "Premature", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.HDAfternoon),
-                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.HDPurpleClouds),
-                new Level(26, "Goldrush", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.HDMidday),
-                new Level(27, "Dawn", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.HDDusk),
-                new Level(28, "Mastery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.HDSunset)
+                new Level(22, "Big Pond", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(23, "Indecision", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+                new Level(24, "Premature", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Morning),
+                new Level(26, "Goldrush", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.Midday),
+                new Level(27, "Dawn", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
+                new Level(28, "Mastery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunrise)
             };
 		}
 

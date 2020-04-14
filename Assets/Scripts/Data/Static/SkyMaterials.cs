@@ -2,12 +2,12 @@
 {
     public static class SkyMaterials
     {
-        public const string HDAfternoon = "SkyboxHD-Afternoon";
-        public const string HDDusk = "SkyboxHD-Dusk";
-        public const string HDMidday = "SkyboxHD-Midday";
-        public const string HDMidnight = "SkyboxHD-Midnight";
-        public const string HDPurple = "SkyboxHD-Purple";
-        public const string HDPurpleClouds = "SkyboxHD-Purpleclouds";
-        public const string HDSunset = "SkyboxHD-Sunset";
+        public const string Cold = "Skybox4-Cold";
+        public const string Dusk = "Skybox6-Dusk";
+        public const string Midday = "Skybox5-Midday";
+        public const string Midnight = "Skybox7-Midnight";
+        public const string Purple = "Skybox3-Purple";
+        public const string Morning = "Skybox1-Morning";
+        public const string Sunrise = "Skybox2-Sunrise";
     }
 }
