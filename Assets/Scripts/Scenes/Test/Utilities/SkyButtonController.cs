@@ -13,17 +13,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private Skybox _skybox;
         private ISkyStats _skyStats;
         private IList<ICloud> _clouds;
+        private MistController _mist;
 
         public Text skyName;
 
-        public void Initialise(Skybox skybox, ISkyStats skyStats, IList<ICloud> clouds)
+        public void Initialise(Skybox skybox, ISkyStats skyStats, IList<ICloud> clouds, MistController mist)
         {
-            BCUtils.Helper.AssertIsNotNull(skybox, skyStats, clouds);
+            BCUtils.Helper.AssertIsNotNull(skybox, skyStats, clouds, mist);
             Assert.IsNotNull(skyName);
 
             _skybox = skybox;
             _skyStats = skyStats;
             _clouds = clouds;
+            _mist = mist;
 
             skyName.text = _skyStats.SkyMaterial.name;
         }
@@ -36,6 +38,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             {
                 cloud.Initialise(_skyStats);
             }
+
+            _mist.Initialse(_skyStats.MistColour);
         }
     }
 }
