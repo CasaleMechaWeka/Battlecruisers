@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -7,9 +6,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class CloudController : MonoBehaviour, ICloud
     {
-        public SpriteRenderer frontCloud;
-        public SpriteRenderer backCloud;
-
         public Vector2 Size { get; private set; }
 
         public Vector2 Position
@@ -22,15 +18,16 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         {
             Assert.IsNotNull(cloudStats);
             Assert.IsTrue(cloudStats.HorizontalMovementSpeedInMPerS > 0, "Only support clouds moving from left to right.");
-            Helper.AssertIsNotNull(frontCloud, backCloud);
 
-            frontCloud.color = cloudStats.CloudColour;
-            frontCloud.transform.position = new Vector3(frontCloud.transform.position.x, cloudStats.Height, frontCloud.transform.position.z);
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+            Assert.IsNotNull(renderer);
 
-            backCloud.color = cloudStats.MistColour;
-            backCloud.transform.position = new Vector3(backCloud.transform.position.x, cloudStats.Height, backCloud.transform.position.z);
+            renderer.color = cloudStats.CloudColour;
+            renderer.transform.position = new Vector3(renderer.transform.position.x, cloudStats.Height, renderer.transform.position.z);
+           
+            // FELIX  Rotate clouds if needed :D
 
-            Size = frontCloud.bounds.size;
+            Size = renderer.bounds.size;
 
             // Start moving
             Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
