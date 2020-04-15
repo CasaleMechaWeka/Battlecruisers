@@ -13,11 +13,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         private CloudTeleporter _cloudTeleporter;
 
         public CloudController leftCloud, rightCloud;
+        public MistController mist;
 
         public void Initialise(string skyMaterialName, IUpdater updater)
         {
             Helper.AssertIsNotNull(skyMaterialName, updater);
-            Helper.AssertIsNotNull(leftCloud, rightCloud);
+            Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
             SkyStatsGroup skyStatsGroup = GetComponentInChildren<SkyStatsGroup>();
@@ -40,6 +41,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds
                     new TeleporterHelper(),
                     leftCloud, 
                     rightCloud);
+
+            mist.Initialse(skyStats.MistColour);
         }
     }
 }
