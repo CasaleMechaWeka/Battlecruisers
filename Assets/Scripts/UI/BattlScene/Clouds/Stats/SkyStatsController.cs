@@ -19,6 +19,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public float cloudHeight = 28;
         public float Height => cloudHeight;
 
+        public bool flipClouds = false;
+        public bool FlipClouds => flipClouds;
+
         public void Initialise()
         {
             HorizontalMovementSpeedInMPerS = ConvertMovementSpeed(movementSpeed);

@@ -25,7 +25,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             renderer.color = cloudStats.CloudColour;
             renderer.transform.position = new Vector3(renderer.transform.position.x, cloudStats.Height, renderer.transform.position.z);
            
-            // FELIX  Rotate clouds if needed :D
+            if (cloudStats.FlipClouds)
+            {
+                renderer.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
 
             Size = renderer.bounds.size;
 
