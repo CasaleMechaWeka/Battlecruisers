@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
     {
         float Height { get; }
         float HorizontalMovementSpeedInMPerS { get; }
-        Color FrontCloudColour { get; }
-        Color BackCloudColour { get; }
+        Color CloudColour { get; }
+        Color MistColour { get; }
     }
 }

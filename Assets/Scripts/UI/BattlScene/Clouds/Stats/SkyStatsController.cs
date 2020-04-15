@@ -10,11 +10,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public CloudMovementSpeed movementSpeed = CloudMovementSpeed.Fast;
         public float HorizontalMovementSpeedInMPerS { get; private set; }
 
-        public Color frontCloudColour = Color.white;
-        public Color FrontCloudColour => frontCloudColour;
+        public Color cloudColour = Color.white;
+        public Color CloudColour => cloudColour;
 
-        public Color backCloudColour = Color.white;
-        public Color BackCloudColour => backCloudColour;
+        public Color mistColour = Color.white;
+        public Color MistColour => mistColour;
 
         public float cloudHeight = 28;
         public float Height => cloudHeight;

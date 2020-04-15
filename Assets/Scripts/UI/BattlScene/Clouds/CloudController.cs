@@ -24,10 +24,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             Assert.IsTrue(cloudStats.HorizontalMovementSpeedInMPerS > 0, "Only support clouds moving from left to right.");
             Helper.AssertIsNotNull(frontCloud, backCloud);
 
-            frontCloud.color = cloudStats.FrontCloudColour;
+            frontCloud.color = cloudStats.CloudColour;
             frontCloud.transform.position = new Vector3(frontCloud.transform.position.x, cloudStats.Height, frontCloud.transform.position.z);
 
-            backCloud.color = cloudStats.BackCloudColour;
+            backCloud.color = cloudStats.MistColour;
             backCloud.transform.position = new Vector3(backCloud.transform.position.x, cloudStats.Height, backCloud.transform.position.z);
 
             Size = frontCloud.bounds.size;
