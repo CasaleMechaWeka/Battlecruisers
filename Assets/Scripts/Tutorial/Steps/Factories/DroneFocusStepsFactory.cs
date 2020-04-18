@@ -116,13 +116,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "This is the \"builders\" button.  You can change how many builders a building uses via this button (or by double clicking the building).",
+                        "This is the \"BUILDERS\" button.  You can change how many builders a building uses via this button (or by double clicking the building).",
                         _rightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButton)));
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Now play around with the \"builders\" button for these three buildings, and see how the builders move between buildings.  (Click the \"Done\" when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("Now play around with the \"BUILDERS\" button for these three buildings, and see how the builders move between buildings.  (Click the \"DONE\" when you have had enough.)")));
 
             return steps;
         }

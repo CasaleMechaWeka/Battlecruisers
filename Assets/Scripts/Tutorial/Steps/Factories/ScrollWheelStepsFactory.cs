@@ -34,7 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Explain scroll wheel and encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("You can also use your mouse scroll wheel to look around.  (Click \"Done\" when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("You can also use your mouse scroll wheel to look around.  (Click \"DONE\" when you have had enough.)")));
 
             // Disable scroll wheel
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));
