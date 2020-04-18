@@ -274,6 +274,9 @@ namespace BattleCruisers.Scenes.BattleScene
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
         {
+            TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
+            Assert.IsNotNull(tutorialManager);
+
             if (applicationModel.IsTutorial)
             {
                 applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
@@ -293,10 +296,12 @@ namespace BattleCruisers.Scenes.BattleScene
                         uiManager,
                         _gameEndMonitor);
 
-                TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
-                Assert.IsNotNull(tutorialManager);
                 tutorialManager.Initialise(tutorialArgs);
                 tutorialManager.StartTutorial();
+            }
+            else
+            {
+                Destroy(tutorialManager.gameObject);
             }
         }
     }
