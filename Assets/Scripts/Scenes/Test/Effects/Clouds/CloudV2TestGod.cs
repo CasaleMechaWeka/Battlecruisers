@@ -7,7 +7,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
-    public class CloudV2TestGod : TestGodBase
+    public class CloudV2TestGod : NavigationTestGod
     {
         public Skybox skybox;
         public SkyStatsGroup skyStatsGroup;
