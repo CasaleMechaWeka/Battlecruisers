@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -23,6 +24,10 @@ namespace BattleCruisers.Scenes.Test.Cruisers
             BCUtils.Helper.AssertIsNotNull(helper, deckSlotBuilding);
 
             helper.SetupCruiser(cruiser);
+
+            ISlot freeSlot = cruiser.SlotAccessor.GetFreeSlot(deckSlotBuilding.Buildable.SlotSpecification);
+            Assert.IsNotNull(freeSlot);
+            cruiser.ConstructBuilding(deckSlotBuilding, freeSlot);
 
             // FELIX  Build deck slot building
             // FELIX  On all slots!

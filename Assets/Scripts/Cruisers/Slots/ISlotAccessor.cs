@@ -18,8 +18,13 @@ namespace BattleCruisers.Cruisers.Slots
         /// </returns>
         ReadOnlyCollection<ISlot> GetSlots(SlotSpecification slotSpecification);
 
-		ISlot GetFreeSlot(SlotSpecification slotSpecification);
+        ISlot GetFreeSlot(SlotSpecification slotSpecification);
+		
+        /// <returns>
+        /// The slot that currently contains the given building, or null if no such slot exists.
+        /// </returns>
         ISlot GetSlot(IBuilding building);
+        
         int GetSlotCount(SlotType slotType);
 	}
 }

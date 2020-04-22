@@ -225,25 +225,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
 		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)
-		{
-			IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
-            droneConsumer.NumOfDrones = _numOfDrones;
-			droneConsumer.State.Returns(DroneConsumerState.Active);
-
-			IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
-			droneConsumerProvider.RequestDroneConsumer(default).ReturnsForAnyArgs(callInfo =>
-			{
-				droneConsumer.NumOfDronesRequired.Returns(callInfo.Arg<int>());
-				return droneConsumer;
-			});
+        {
+            IDroneConsumerProvider droneConsumerProvider = CreateDroneConsumerProvider();
 
             IBuildProgressCalculator buildProgressCalculator = new LinearCalculator(_buildSpeedMultiplier);
 
-			ICruiser cruiser = Substitute.For<ICruiser>();
-			cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
-			cruiser.Direction.Returns(facingDirection);
+            ICruiser cruiser = Substitute.For<ICruiser>();
+            cruiser.DroneConsumerProvider.Returns(droneConsumerProvider);
+            cruiser.Direction.Returns(facingDirection);
             cruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
-			cruiser.Faction.Returns(faction);
+            cruiser.Faction.Returns(faction);
             cruiser.BuildProgressCalculator.Returns(buildProgressCalculator);
             cruiser.Size.Returns(new Vector2(5, 2));
             IUnitTargets unitTargets = new UnitTargets(cruiser.UnitMonitor);
@@ -252,10 +243,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             float xPosition = facingDirection == Direction.Right ? -35 : 35;
             cruiser.Position.Returns(new Vector2(xPosition, 0));
 
-			return cruiser;
-		}
+            return cruiser;
+        }
 
-		public ICruiser CreateCruiser(GameObject target)
+        public ICruiser CreateCruiser(GameObject target)
 		{
 			ICruiser enemyCruiser = Substitute.For<ICruiser>();
 			enemyCruiser.GameObject.Returns(target);
@@ -531,22 +522,24 @@ namespace BattleCruisers.Scenes.Test.Utilities
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
 
+            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: _deferrer);
+
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
                     Faction.Reds,
                     enemyCruiser: Substitute.For<ICruiser>(),
                     uiManager: Substitute.For<IUIManager>(),
-                    droneManager: Substitute.For<IDroneManager>(),
+                    droneManager: new DroneManager(),
                     droneFocuser: Substitute.For<IDroneFocuser>(),
-                    droneConsumerProvider: Substitute.For<IDroneConsumerProvider>(),
-                    factoryProvider: Substitute.For<IFactoryProvider>(),
+                    droneConsumerProvider: CreateDroneConsumerProvider(),
+                    factoryProvider: initialisationArgs.FactoryProvider,
                     cruiserSpecificFactories: cruiserSpecificFactories,
                     facingDirection: Direction.Right,
                     repairManager: Substitute.For<IRepairManager>(),
                     fogStrength: BattleCruisers.Cruisers.Fog.FogStrength.Weak,
                     helper: Substitute.For<ICruiserHelper>(),
                     highlightableFilter: Substitute.For<ISlotFilter>(),
-                    buildProgressCalculator: Substitute.For<IBuildProgressCalculator>(),
+                    buildProgressCalculator: new LinearCalculator(_buildSpeedMultiplier),
                     buildingDoubleClickHandler: Substitute.For<IDoubleClickHandler<IBuilding>>(),
                     cruiserDoubleClickHandler: Substitute.For<IDoubleClickHandler<ICruiser>>(),
                     fogOfWarManager: Substitute.For<IManagedDisposable>(),
@@ -554,6 +547,21 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);
+        }
+
+        private IDroneConsumerProvider CreateDroneConsumerProvider()
+        {
+            IDroneConsumer droneConsumer = Substitute.For<IDroneConsumer>();
+            droneConsumer.NumOfDrones = _numOfDrones;
+            droneConsumer.State.Returns(DroneConsumerState.Active);
+
+            IDroneConsumerProvider droneConsumerProvider = Substitute.For<IDroneConsumerProvider>();
+            droneConsumerProvider.RequestDroneConsumer(default).ReturnsForAnyArgs(callInfo =>
+            {
+                droneConsumer.NumOfDronesRequired.Returns(callInfo.Arg<int>());
+                return droneConsumer;
+            });
+            return droneConsumerProvider;
         }
     }
 }

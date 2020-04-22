@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
             : base(audioClip, audioSource)
         {
             Helper.AssertIsNotNull(deferrer);
-            Assert.IsTrue(burstSize >= MIN_BURST_SIZE);
+            Assert.IsTrue(burstSize >= MIN_BURST_SIZE, $"burstSize: {burstSize}  MIN_BURST_SIZE: {MIN_BURST_SIZE}");
 
             _deferrer = deferrer;
             _burstSize = burstSize;

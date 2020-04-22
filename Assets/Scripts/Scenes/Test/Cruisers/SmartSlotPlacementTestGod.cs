@@ -17,6 +17,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
         protected override List<GameObject> GetGameObjects()
         {
             Assert.IsNotNull(deckSlotBuilding);
+            deckSlotBuilding.StaticInitialise();
 
             _cruiserRegions = GetComponentsInChildren<CruiserRegionController>();
             Assert.IsTrue(_cruiserRegions.Count > 0);
