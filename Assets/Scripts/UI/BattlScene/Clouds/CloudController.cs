@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
            
             if (cloudStats.FlipClouds)
             {
-                renderer.transform.rotation = Quaternion.Euler(0, 180, 0);
+                renderer.transform.rotation = Quaternion.Euler(180, 0, 0);
             }
 
             Size = renderer.bounds.size;
