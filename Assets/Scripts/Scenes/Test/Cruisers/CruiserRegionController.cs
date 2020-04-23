@@ -1,6 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,16 +22,19 @@ namespace BattleCruisers.Scenes.Test.Cruisers
         }
 
         // FELIX  Add buildings for all slots :)
-        public void Initialise(Helper helper, BuildingWrapper deckSlotBuilding)
+        public void Initialise(Helper helper, BCUtils.PrefabKeyName buildingKeyName)
         {
-            BCUtils.Helper.AssertIsNotNull(helper, deckSlotBuilding);
+            Assert.IsNotNull(helper);
+
+            BuildingKey buildingKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
+            IBuildableWrapper<IBuilding> building = helper.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
             helper.SetupCruiser(cruiser);
 
-            IList<ISlot> deckSlots = cruiser.SlotAccessor.GetFreeSlots(deckSlotBuilding.Buildable.SlotSpecification.SlotType);
+            IList<ISlot> deckSlots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
             foreach (ISlot slot in deckSlots)
             {
-                cruiser.ConstructBuilding(deckSlotBuilding, slot);
+                cruiser.ConstructBuilding(building, slot);
             }
         }
     }

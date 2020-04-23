@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Cruisers
 {
@@ -11,14 +12,10 @@ namespace BattleCruisers.Scenes.Test.Cruisers
     {
         private IList<CruiserRegionController> _cruiserRegions;
 
-        // FELIX  Add other slot buildings :)
-        public BuildingWrapper deckSlotBuilding;
+        public BCUtils.PrefabKeyName deckSlotBuilding;
 
         protected override List<GameObject> GetGameObjects()
         {
-            Assert.IsNotNull(deckSlotBuilding);
-            deckSlotBuilding.StaticInitialise();
-
             _cruiserRegions = GetComponentsInChildren<CruiserRegionController>();
             Assert.IsTrue(_cruiserRegions.Count > 0);
 
