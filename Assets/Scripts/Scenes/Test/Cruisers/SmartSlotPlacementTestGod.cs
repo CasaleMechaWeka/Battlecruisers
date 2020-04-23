@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Scenes.Test.Utilities;
+﻿using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
     {
         private IList<CruiserRegionController> _cruiserRegions;
 
-        public BCUtils.PrefabKeyName deckSlotBuilding;
+        public BCUtils.PrefabKeyName deckSlotBuilding, platformSlotBuilding, mastSlotBuilding;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -32,9 +31,18 @@ namespace BattleCruisers.Scenes.Test.Cruisers
 
         protected override void Setup(Helper helper)
         {
+            IList<BCUtils.PrefabKeyName> buildingKeys = new List<BCUtils.PrefabKeyName>()
+            {
+                BCUtils.PrefabKeyName.Building_NavalFactory, // Only building for slot type
+                BCUtils.PrefabKeyName.Building_DroneStation, // Only building for slot type
+                deckSlotBuilding,
+                platformSlotBuilding,
+                mastSlotBuilding
+            };
+
             foreach (CruiserRegionController cruiserRegion in _cruiserRegions)
             {
-                cruiserRegion.Initialise(helper, deckSlotBuilding);
+                cruiserRegion.Initialise(helper, buildingKeys);
             }
         }
     }

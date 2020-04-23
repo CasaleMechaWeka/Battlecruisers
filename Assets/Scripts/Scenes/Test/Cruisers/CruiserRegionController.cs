@@ -21,20 +21,22 @@ namespace BattleCruisers.Scenes.Test.Cruisers
             Assert.IsNotNull(cruiser);
         }
 
-        // FELIX  Add buildings for all slots :)
-        public void Initialise(Helper helper, BCUtils.PrefabKeyName buildingKeyName)
+        public void Initialise(Helper helper, IList<BCUtils.PrefabKeyName> buildingKeyNames)
         {
-            Assert.IsNotNull(helper);
-
-            BuildingKey buildingKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
-            IBuildableWrapper<IBuilding> building = helper.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            BCUtils.Helper.AssertIsNotNull(helper, buildingKeyNames);
 
             helper.SetupCruiser(cruiser);
 
-            IList<ISlot> deckSlots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
-            foreach (ISlot slot in deckSlots)
+            foreach (BCUtils.PrefabKeyName buildingKeyName in buildingKeyNames)
             {
-                cruiser.ConstructBuilding(building, slot);
+                BuildingKey buildingKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
+                IBuildableWrapper<IBuilding> building = helper.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
+
+                IList<ISlot> freeSlots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
+                foreach (ISlot slot in freeSlots)
+                {
+                    cruiser.ConstructBuilding(building, slot);
+                }
             }
         }
     }
