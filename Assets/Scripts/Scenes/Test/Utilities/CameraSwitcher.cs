@@ -11,18 +11,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             {
                 if (_activeCamera != null)
                 {
-                    // FELIX
-                    _activeCamera.gameObject.SetActive(false);
-                    //_activeCamera.enabled = false;
+                    _activeCamera.enabled = false;
                 }
 
                 _activeCamera = value;
 
                 if (_activeCamera != null)
                 {
-                    // FELIX
-                    _activeCamera.gameObject.SetActive(true);
-                    //_activeCamera.enabled = true;
+                    _activeCamera.enabled = true;
                 }
             }
         }

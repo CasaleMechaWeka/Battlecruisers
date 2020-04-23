@@ -23,9 +23,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
         public void StaticInitialise()
         {
             Assert.IsNotNull(camera);
-            // FELIX
-            camera.gameObject.SetActive(false);
-            //camera.enabled = false;
+            camera.enabled = false;
 
             Cruiser cruiser = GetComponentInChildren<Cruiser>();
             Assert.IsNotNull(cruiser);
