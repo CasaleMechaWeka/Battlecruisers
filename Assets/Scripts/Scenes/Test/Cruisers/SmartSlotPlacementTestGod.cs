@@ -10,11 +10,15 @@ namespace BattleCruisers.Scenes.Test.Cruisers
     public class SmartSlotPlacementTestGod : TestGodBase
     {
         private IList<CruiserRegionController> _cruiserRegions;
+        private CameraSwitcher _cameraSwitcher;
 
+        public Camera overviewCamera;
         public BCUtils.PrefabKeyName deckSlotBuilding, platformSlotBuilding, mastSlotBuilding;
 
         protected override List<GameObject> GetGameObjects()
         {
+            Assert.IsNotNull(overviewCamera);
+
             _cruiserRegions = GetComponentsInChildren<CruiserRegionController>();
             Assert.IsTrue(_cruiserRegions.Count > 0);
 
@@ -40,10 +44,19 @@ namespace BattleCruisers.Scenes.Test.Cruisers
                 mastSlotBuilding
             };
 
+            _cameraSwitcher = new CameraSwitcher();
+            _cameraSwitcher.ActiveCamera = Camera.main;
+
             foreach (CruiserRegionController cruiserRegion in _cruiserRegions)
             {
-                cruiserRegion.Initialise(helper, buildingKeys);
+                cruiserRegion.Initialise(_cameraSwitcher, helper, buildingKeys);
             }
+        }
+
+        public void ShowOverview()
+        {
+            BCUtils.Logging.LogMethod(BCUtils.Tags.ALWAYS);
+            _cameraSwitcher.ActiveCamera = overviewCamera;
         }
     }
 }
