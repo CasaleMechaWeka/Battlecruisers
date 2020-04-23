@@ -9,6 +9,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Repairables;
@@ -521,6 +522,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
+            TurretStatsFactory turretStatsFactory 
+                = new TurretStatsFactory(
+                    new BoostFactory(), 
+                    globalBoostProviders);
+            cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
 
             BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: _deferrer);
 
