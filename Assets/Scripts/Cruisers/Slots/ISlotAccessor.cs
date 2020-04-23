@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Cruisers.Slots
@@ -18,6 +19,7 @@ namespace BattleCruisers.Cruisers.Slots
         /// </returns>
         ReadOnlyCollection<ISlot> GetSlots(SlotSpecification slotSpecification);
 
+        IList<ISlot> GetFreeSlots(SlotType slotType);
         ISlot GetFreeSlot(SlotSpecification slotSpecification);
 		
         /// <returns>

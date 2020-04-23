@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Scenes.Test.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
@@ -25,12 +26,11 @@ namespace BattleCruisers.Scenes.Test.Cruisers
 
             helper.SetupCruiser(cruiser);
 
-            ISlot freeSlot = cruiser.SlotAccessor.GetFreeSlot(deckSlotBuilding.Buildable.SlotSpecification);
-            Assert.IsNotNull(freeSlot);
-            cruiser.ConstructBuilding(deckSlotBuilding, freeSlot);
-
-            // FELIX  Build deck slot building
-            // FELIX  On all slots!
+            IList<ISlot> deckSlots = cruiser.SlotAccessor.GetFreeSlots(deckSlotBuilding.Buildable.SlotSpecification.SlotType);
+            foreach (ISlot slot in deckSlots)
+            {
+                cruiser.ConstructBuilding(deckSlotBuilding, slot);
+            }
         }
     }
 }

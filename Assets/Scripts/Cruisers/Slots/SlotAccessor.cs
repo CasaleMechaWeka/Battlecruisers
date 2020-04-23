@@ -46,6 +46,17 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
+        // FELIX  Test :)
+        public IList<ISlot> GetFreeSlots(SlotType slotType)
+        {
+            Assert.IsTrue(_slots.ContainsKey(slotType));
+
+            return
+                _slots[slotType]
+                    .Where(slot => slot.IsFree)
+                    .ToList();
+        }
+
         public ISlot GetFreeSlot(SlotSpecification slotSpecification)
 		{
             return slotSpecification.PreferFromFront ?
