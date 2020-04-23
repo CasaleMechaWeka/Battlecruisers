@@ -6,6 +6,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BCUtils = BattleCruisers.Utils;
 
@@ -17,13 +18,18 @@ namespace BattleCruisers.Scenes.Test.Cruisers
         
         public Camera camera;
 
-        public Cruiser cruiser;
-        public ICruiser Cruiser => cruiser;
+        public Cruiser Cruiser { get; private set; }
 
         public void StaticInitialise()
         {
-            BCUtils.Helper.AssertIsNotNull(camera, cruiser);
-            camera.enabled = false;
+            Assert.IsNotNull(camera);
+            // FELIX
+            camera.gameObject.SetActive(false);
+            //camera.enabled = false;
+
+            Cruiser cruiser = GetComponentInChildren<Cruiser>();
+            Assert.IsNotNull(cruiser);
+            Cruiser = cruiser;
         }
 
         public void Initialise(CameraSwitcher cameraSwitcher, Helper helper, IList<BCUtils.PrefabKeyName> buildingKeyNames)
@@ -31,24 +37,24 @@ namespace BattleCruisers.Scenes.Test.Cruisers
             BCUtils.Helper.AssertIsNotNull(cameraSwitcher, helper, buildingKeyNames);
 
             _cameraSwitcher = cameraSwitcher;
-            helper.SetupCruiser(cruiser);
+            helper.SetupCruiser(Cruiser);
 
             foreach (BCUtils.PrefabKeyName buildingKeyName in buildingKeyNames)
             {
                 BuildingKey buildingKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
                 IBuildableWrapper<IBuilding> building = helper.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
-                IList<ISlot> freeSlots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
+                IList<ISlot> freeSlots = Cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
                 foreach (ISlot slot in freeSlots)
                 {
-                    cruiser.ConstructBuilding(building, slot);
+                    Cruiser.ConstructBuilding(building, slot);
                 }
             }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            BCUtils.Logging.LogMethod(BCUtils.Tags.ALWAYS);
+            BCUtils.Logging.LogMethod(BCUtils.Tags.ALWAYS, $"{Cruiser}");
             _cameraSwitcher.ActiveCamera = camera;
         }
     }
