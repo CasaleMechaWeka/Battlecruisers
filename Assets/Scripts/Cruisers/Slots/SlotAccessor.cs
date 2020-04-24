@@ -46,7 +46,6 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        // FELIX  Test :)
         public IList<ISlot> GetFreeSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));

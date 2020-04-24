@@ -4,6 +4,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Cruisers.Slots
@@ -97,6 +98,21 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             Assert.IsTrue(_slotAccessor.IsSlotAvailable(desiredSpecification));
         }
         #endregion IsSlotAvailable
+
+        [Test]
+        public void GetFreeSlots()
+        {
+            _antiShipDeckSlot.IsFree.Returns(true);
+            _genericDeckSlot.IsFree.Returns(false);
+
+            IList<ISlot> freeSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
+
+            IList<ISlot> expectedFreeSlots = new List<ISlot>()
+            {
+                _antiShipDeckSlot
+            };
+            Assert.IsTrue(Enumerable.SequenceEqual(expectedFreeSlots, freeSlots));
+        }
 
         #region GetSlots
         [Test]
