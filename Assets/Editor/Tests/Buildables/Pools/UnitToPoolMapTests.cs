@@ -108,7 +108,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         [Test]
         public void GetPool_Archon()
         {
-            _ship.Name.Returns("Archon Battleship");
+            _ship.Name.Returns("Mann o' War");
             IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_ship);
             Assert.AreSame(_unitPoolProvider.ArchonPool, pool);
         }

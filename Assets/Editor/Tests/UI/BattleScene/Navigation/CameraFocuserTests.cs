@@ -58,7 +58,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnPlayerNavalFactory()
         {
             _cameraFocuser.FocusOnPlayerNavalFactory();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, snapToCorners: true);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerNavalFactoryPosition, snapToCorners: false);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnAINavalFactory()
         {
             _cameraFocuser.FocusOnAINavalFactory();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AINavalFactoryPosition, snapToCorners: true);
+            _navigationWheel.Received().SetCenterPosition(_positionProvider.AINavalFactoryPosition, snapToCorners: false);
         }
 
         [Test]
