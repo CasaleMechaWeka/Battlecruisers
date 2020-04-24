@@ -90,6 +90,12 @@ namespace BattleCruisers.Buildables.Units
                 _engineAudioClip = await _factoryProvider.Sound.SoundFetcher.GetSoundAsync(EngineSoundKey);
             }
 
+            if (_audioSource == null)
+            {
+                // Unit has been destroyed (during async call to get _engineAudioClip)
+                return;
+            }
+
             _audioSource.AudioClip = _engineAudioClip;
             _audioSource.Play(isSpatial: true, loop: true);
         }
