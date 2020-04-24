@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
@@ -48,7 +49,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
             }
 
             float attackPositionX = target.Position.x + (FindXChangeInM(target.Size.x) * FindDirectionMultiplier(sourcePosition, target.Position));
-            return new Vector2(attackPositionX, target.Position.y);
+            Vector2 closestAttackablePosition = new Vector2(attackPositionX, target.Position.y);
+
+            Logging.Verbose(Tags.CLOSEST_POSITION_FINDER, $"Target position: {target.Position}  Attackable position: {closestAttackablePosition}  Target size: {target.Size}");
+            return closestAttackablePosition;
         }
 
         private float FindXChangeInM(float targetWidthInM)

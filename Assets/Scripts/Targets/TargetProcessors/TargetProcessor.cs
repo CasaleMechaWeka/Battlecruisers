@@ -21,7 +21,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             get
             {
                 ITarget highestPriorityTarget = _rankedTargetTracker.HighestPriorityTarget?.Target;
-                Logging.Verbose(Tags.TARGET_PROCESSORS, string.Empty + highestPriorityTarget);
+                Logging.Verbose(Tags.TARGET_PROCESSORS, $"{highestPriorityTarget}  position: {highestPriorityTarget?.Position}");
                 return highestPriorityTarget;
             }
         }

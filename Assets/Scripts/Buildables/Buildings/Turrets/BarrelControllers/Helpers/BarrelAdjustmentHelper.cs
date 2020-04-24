@@ -47,6 +47,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"Target: {_barrelController.CurrentTarget}  Position: {_barrelController.CurrentTarget.Position}");
+
             Vector2 targetPositionToAttack = _attackablePositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
 
