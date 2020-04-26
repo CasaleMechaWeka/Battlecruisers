@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 
         public void Initialise()
         {
-            SkyStatsController[] skyStats = GetComponents<SkyStatsController>();
+            SkyStatsController[] skyStats = GetComponentsInChildren<SkyStatsController>();
             Assert.AreEqual(EXPECTED_NUMBER_OF_SKIES, skyStats.Length);
 
             SkyStats = new List<ISkyStats>();

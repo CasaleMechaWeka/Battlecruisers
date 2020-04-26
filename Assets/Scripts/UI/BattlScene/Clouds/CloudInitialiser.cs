@@ -14,10 +14,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
         public CloudController leftCloud, rightCloud;
         public MistController mist;
+        public MoonController moon;
 
         public void Initialise(string skyMaterialName, IUpdater updater)
         {
-            Helper.AssertIsNotNull(skyMaterialName, updater);
+            Helper.AssertIsNotNull(skyMaterialName, updater, moon);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
@@ -35,14 +36,15 @@ namespace BattleCruisers.UI.BattleScene.Clouds
                     rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
-            _cloudTeleporter 
+            _cloudTeleporter
                 = new CloudTeleporter(
-                    updater, 
+                    updater,
                     new TeleporterHelper(),
-                    leftCloud, 
+                    leftCloud,
                     rightCloud);
 
             mist.Initialse(skyStats.MistColour);
+            moon.Initialise(skyStats.MoonStats);
         }
     }
 }

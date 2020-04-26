@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
@@ -22,8 +23,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public bool flipClouds = false;
         public bool FlipClouds => flipClouds;
 
+        public IMoonStats MoonStats { get; private set; }
+
         public void Initialise()
         {
+            MoonStats = GetComponentInChildren<MoonStatsController>();
+            Assert.IsNotNull(MoonStats);
+
             HorizontalMovementSpeedInMPerS = ConvertMovementSpeed(movementSpeed);
         }
 
