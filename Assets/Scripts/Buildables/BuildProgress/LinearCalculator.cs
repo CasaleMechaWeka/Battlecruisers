@@ -19,6 +19,7 @@ namespace BattleCruisers.Buildables.BuildProgress
         public float CalculateBuildProgressInDroneS(IBuildable buildableUnderConstruction, float deltaTime)
         {
             Assert.IsTrue(buildableUnderConstruction.BuildableState == BuildableState.InProgress);
+            Logging.Log(Tags.BOOST, $"Boost multiplier: {buildableUnderConstruction.BuildProgressBoostable.BoostMultiplier}");
 
             return 
                 buildableUnderConstruction.DroneConsumer.NumOfDrones 
