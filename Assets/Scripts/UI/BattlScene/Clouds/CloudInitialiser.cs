@@ -43,7 +43,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds
                     leftCloud,
                     rightCloud);
 
-            mist.Initialse(skyStats.MistColour);
+            // FELIX  TEMP
+            //mist.Initialse(skyStats.MistColour);
             moon.Initialise(skyStats.MoonStats);
         }
     }
