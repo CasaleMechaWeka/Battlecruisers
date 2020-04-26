@@ -229,6 +229,8 @@ namespace BattleCruisers.UI.Cameras
         private void SwitchableUpdater_Updated(object sender, EventArgs e)
         {
             _cameraAdjuster.AdjustCamera();
+
+            // FELIX  Adjust parallax here?  Or create composito camera adjuster?
         }
     }
 }

@@ -28,8 +28,7 @@ namespace BattleCruisers.Scenes.Test
             IBroadcastingFilter navigationWheelEnabledFilter = new StaticBroadcastingFilter(isMatch: true);
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
-            Camera platformCamera = FindObjectOfType<Camera>();
-            _camera = new CameraBC(platformCamera);
+            _camera = new CameraBC(Camera.main);
             ICameraCalculatorSettings settings
                 = new CameraCalculatorSettings(
                     Substitute.For<ISettingsManager>(),
