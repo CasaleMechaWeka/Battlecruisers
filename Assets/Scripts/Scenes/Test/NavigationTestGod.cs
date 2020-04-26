@@ -16,11 +16,12 @@ namespace BattleCruisers.Scenes.Test
 {
     public class NavigationTestGod : TestGodBase
     {
-        private ICameraAdjuster _cameraAdjuster;
+        private ICameraAdjuster _cameraAdjuster, _parallaxAdjuster;
         private ICamera _camera;
 
         public float smoothTime = 0.15f;
         public bool useCorners = true;
+        public Camera backgroundCamera;
 
         protected override void Setup(Helper helper)
         {
@@ -69,6 +70,16 @@ namespace BattleCruisers.Scenes.Test
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(_camera, time, smoothTime),
                     new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
+
+            // Parallax adjuster
+            // FELIX  Handle for battle scene :)
+            if (backgroundCamera != null)
+            {
+                _parallaxAdjuster
+                    = new ParallaxCameraAdjuster(
+                        _camera,
+                        new CameraBC(backgroundCamera));
+            }
         }
 
         private ICruiser CreateCruiser(bool isPlayerCruiser)
@@ -86,6 +97,7 @@ namespace BattleCruisers.Scenes.Test
         protected virtual void Update()
         {
             _cameraAdjuster?.AdjustCamera();
+            _parallaxAdjuster?.AdjustCamera();
             //Debug.Log("Camera position: " + _camera.Transform.Position + "  Orthographic size: " + _camera.OrthographicSize);
         }
     }
