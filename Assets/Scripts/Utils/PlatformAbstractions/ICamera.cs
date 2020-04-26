@@ -12,6 +12,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         float Aspect { get; }
         float PixelWidth { get; }
         float PixelHeight { get; }
+        float FieldOfView { get; set; }
         ITransform Transform { get; }
 
         Vector2 GetSize();
