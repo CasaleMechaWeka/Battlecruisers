@@ -75,6 +75,8 @@ namespace BattleCruisers.Scenes.Test
             // FELIX  Handle for battle scene :)
             if (backgroundCamera != null)
             {
+                backgroundCamera.transparencySortMode = TransparencySortMode.Orthographic;
+
                 _parallaxAdjuster
                     = new ParallaxCameraAdjuster(
                         _camera,
