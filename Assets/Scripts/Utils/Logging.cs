@@ -137,9 +137,7 @@ namespace BattleCruisers.Utils
 
             // Units
             tagsToActiveness.Add(Tags.AIRCRAFT, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.FIGHTER, true);
-            //tagsToActiveness.Add(Tags.FIGHTER, false);
+            tagsToActiveness.Add(Tags.FIGHTER, false);
             tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
@@ -191,9 +189,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
 
             // Movement
-            // FELIX
-            tagsToActiveness.Add(Tags.MOVEMENT, true);
-            //tagsToActiveness.Add(Tags.MOVEMENT, false);
+            tagsToActiveness.Add(Tags.MOVEMENT, false);
             tagsToActiveness.Add(Tags.ROTATION_HELPER, false);
             tagsToActiveness.Add(Tags.ROTATION_MOVEMENT_CONTROLLER, false);
             tagsToActiveness.Add(Tags.SHIP_MOVEMENT_DECIDER, false);
@@ -226,9 +222,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.POOLS, true);
-            //tagsToActiveness.Add(Tags.POOLS, false);
+            tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
