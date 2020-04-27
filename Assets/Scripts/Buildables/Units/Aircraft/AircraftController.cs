@@ -24,6 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public abstract class AircraftController : Unit, IVelocityProvider, IPatrollingVelocityProvider, ISeabedImpactable
     {
         private KamikazeController _kamikazeController;
+        private Collider2D _collider;
 		private SpriteRenderer _spriteRenderer;
         private IBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
@@ -88,6 +89,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);
             Assert.IsFalse(IsInKamikazeMode);
+
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
 
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>(includeInactive: true);
             Assert.IsNotNull(_spriteRenderer);
@@ -186,15 +190,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
 			Faction = Helper.GetOppositeFaction(kamikazeTarget.Faction);
 
-			// Make our collider be lost and refound by all target detectors.
-			// Means target detectors that we are already in range of can 
-			// re-evaluate whether we are a target, as our faction has just changed.
-			gameObject.SetActive(false);
-			gameObject.SetActive(true);
-
-            // Restart engine sound, which gets paused when we set the game
-            // object to inactive.
-            PlayEngineSoundAsync();
+            // Make our collider be lost and refound by all target detectors.
+            // Means target detectors that we are already in range of can 
+            // re-evaluate whether we are a target, as our faction has just changed.
+            _collider.enabled = false;
+            _collider.enabled = true;
 
             _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
 			_kamikazeController.gameObject.SetActive(true);
