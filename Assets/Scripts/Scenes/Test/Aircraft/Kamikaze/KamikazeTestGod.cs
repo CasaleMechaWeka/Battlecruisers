@@ -50,6 +50,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
             ICruiser enemyCruiser = Substitute.For<ICruiser>();
             enemyCruiser.GameObject.Returns(_target.GameObject);
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
+            // Mimic cruiser being destroyed
+            _target.Destroyed += (sender, e) => enemyCruiser.GameObject.Returns((GameObject)null);
 
             // Setup AA
             foreach (TurretController aaTurret in _aaTurrets)
@@ -71,6 +73,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
             await Task.Delay(kamikaziDelayInS * 1000);
 
             _kamikazeSignal.StartConstruction();
+        }
+
+        private void _target_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
