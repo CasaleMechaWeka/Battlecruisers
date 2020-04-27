@@ -425,16 +425,15 @@ namespace BattleCruisers.Buildables
             EnableRenderers(true);
             BuildableState = BuildableState.Completed;
 
-            CompletedBuildable?.Invoke(this, EventArgs.Empty);
-
-            RepairCommand.EmitCanExecuteChanged();
-
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
 
             if (ConstructionCompletedSoundKey != null)
             {
                 _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
             }
+
+            CompletedBuildable?.Invoke(this, EventArgs.Empty);
+            RepairCommand.EmitCanExecuteChanged();
         }
 
         private void EnableRenderers(bool enabled)

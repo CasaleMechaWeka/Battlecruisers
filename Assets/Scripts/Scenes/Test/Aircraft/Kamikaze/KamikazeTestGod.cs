@@ -79,10 +79,5 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
 
             _kamikazeSignal.StartConstruction();
         }
-
-        private void _target_Destroyed(object sender, DestroyedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
