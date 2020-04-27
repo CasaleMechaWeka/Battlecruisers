@@ -50,8 +50,13 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Kamikaze
             ICruiser enemyCruiser = Substitute.For<ICruiser>();
             enemyCruiser.GameObject.Returns(_target.GameObject);
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
+            
             // Mimic cruiser being destroyed
-            _target.Destroyed += (sender, e) => enemyCruiser.GameObject.Returns((GameObject)null);
+            _target.Destroyed += (sender, e) =>
+            {
+                enemyCruiser.Destroyed += Raise.EventWith(e);
+                enemyCruiser.GameObject.Returns((GameObject)null);
+            };
 
             // Setup AA
             foreach (TurretController aaTurret in _aaTurrets)

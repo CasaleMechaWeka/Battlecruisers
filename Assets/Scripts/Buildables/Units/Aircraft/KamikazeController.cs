@@ -44,9 +44,20 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _damageApplier = factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, target.Faction);
 
             _explosionPoolProvider = factoryProvider.PoolProviders.ExplosionPoolProvider;
+
+            target.Destroyed += Target_Destroyed;
         }
 
-		private void OnTriggerEnter2D(Collider2D collider)
+        private void Target_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            if (!_parentAircraft.IsDestroyed)
+            {
+                RemoveFromScene();
+                _explosionPoolProvider.SmallExplosionsPool.GetItem(transform.position);
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
 		{
 			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
