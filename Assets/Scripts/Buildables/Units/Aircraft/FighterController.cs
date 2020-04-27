@@ -88,9 +88,16 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     maxVelocityProvider: this,
                     targetProvider: this, 
                     safeZone: _aircraftProvider.FighterSafeZone);
-		}
 
-		protected async override void OnBuildableCompleted()
+            // Reset rotation
+            Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
+            rigidBody.transform.rotation = baseRotation;
+            transform.rotation = baseRotation;
+            Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  After reset rotation: {transform.rotation}");
+
+        }
+
+        protected async override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
 
@@ -181,6 +188,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void FaceVelocityDirection()
         {
+            Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  Velocity: {Velocity}");
+
             if (Velocity != Vector2.zero)
             {
                 float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());

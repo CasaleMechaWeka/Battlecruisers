@@ -70,6 +70,7 @@ namespace BattleCruisers.Movement.Velocity
                 // Have this inline so it will be stripped out when logs are excluded.
                 Logging.Verbose(
                     Tags.MOVEMENT,
+					$"GameObject id: {_rigidBody.gameObject.GetInstanceID()}  " +
                     $"currentPosition:D {_rigidBody.transform.position}  moveToPosition: {moveToPosition}  targetPosition: {_targetPatrolPoint.Position}  " +
                     $"_patrollingVelocity: {_patrollingVelocity}  _patrollingVelocity.magnitude: {_patrollingVelocity.magnitude}  " +
                     $"PatrollingVelocity: {_maxVelocityProvider.VelocityInMPerS}  _patrollingSmoothTime: {DEFAULT_SMOOTH_TIME_IN_S}  " +

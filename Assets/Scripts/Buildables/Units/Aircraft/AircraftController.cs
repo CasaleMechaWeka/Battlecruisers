@@ -129,6 +129,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     positionEqualityMarginInM: PositionEqualityMarginInM);
 
             ActiveMovementController = DummyMovementController;
+            ActiveMovementController.Velocity = Vector2.zero;
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
             _onSeabed = false;
