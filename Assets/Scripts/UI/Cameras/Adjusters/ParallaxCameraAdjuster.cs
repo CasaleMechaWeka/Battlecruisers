@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
-    // FELIX  Test
     public class ParallaxCameraAdjuster : ICameraAdjuster
     {
         private readonly ICamera _mainCamera, _backgroundCamera;
@@ -22,7 +21,6 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
         public void AdjustCamera()
         {
-            // FELIX  Abstract to ICameraCalculator?
             float orthoSize = _mainCamera.OrthographicSize;
             float mainCameraZPosition = Mathf.Abs(_mainCamera.Transform.Position.z);
             float fieldOfView = Mathf.Atan(orthoSize / mainCameraZPosition) * Mathf.Rad2Deg * 2f;
