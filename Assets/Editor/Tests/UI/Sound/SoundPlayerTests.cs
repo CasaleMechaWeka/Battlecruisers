@@ -28,7 +28,9 @@ namespace BattleCruisers.Tests.UI.Sound
             _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
             _camera = Substitute.For<ICamera>();
 
-            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _camera);
+            // FELIX  fix tests
+            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, null);
+            //_soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _camera);
 
             _audioClip = Substitute.For<IAudioClipWrapper>();
             _soundKey = Substitute.For<ISoundKey>();

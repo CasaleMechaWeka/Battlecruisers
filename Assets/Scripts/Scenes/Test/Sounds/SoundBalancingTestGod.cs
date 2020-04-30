@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
                 = new SoundPlayer(
                     new SoundFetcher(),
                     new AudioClipPlayer(),
-                    new CameraBC(Camera.main));
+                    new GameObjectBC(Camera.main.gameObject));
 
             SoundPlayerController[] soundPlayerObjects = FindObjectsOfType<SoundPlayerController>();
 

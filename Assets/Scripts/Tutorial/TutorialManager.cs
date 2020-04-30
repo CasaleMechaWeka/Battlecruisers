@@ -29,7 +29,7 @@ namespace BattleCruisers.Tutorial
             IHighlighter highlighter
                 = new Highlighter(
                     maskHighlighter,
-                    new HighlightArgsFactory(tutorialArgs.Components.Camera));
+                    new HighlightArgsFactory(tutorialArgs.CameraComponents.MainCamera));
 
             ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
             Assert.IsNotNull(explanationPanel);

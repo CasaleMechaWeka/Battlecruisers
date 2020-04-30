@@ -56,7 +56,7 @@ namespace BattleCruisers.Utils.Factories
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
 
-            Sound = new SoundFactoryProvider(components.Deferrer, components.Camera, components.AudioSource);
+            Sound = new SoundFactoryProvider(components.Deferrer, components.AudioListener, components.AudioSource);
             Turrets = new TurretFactoryProvider();
         }
 

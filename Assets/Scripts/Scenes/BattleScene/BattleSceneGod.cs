@@ -108,7 +108,6 @@ namespace BattleCruisers.Scenes.BattleScene
             // Camera
             ICameraComponents cameraComponents
                 = cameraInitialiser.Initialise(
-                    components.Camera,
                     dataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
@@ -145,7 +144,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     prefabFactory,
                     spriteProvider,
                     buttonVisibilityFilters,
-                    new PlayerCruiserFocusHelper(components.Camera, cameraComponents.CameraFocuser, playerCruiser),
+                    new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.SoundPlayer,
                     playerCruiser.PopulationLimitMonitor);

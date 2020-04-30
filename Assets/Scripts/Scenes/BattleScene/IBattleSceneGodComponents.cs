@@ -12,10 +12,10 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         IDeferrer Deferrer { get; }
         IAudioSource AudioSource { get; }
-        ICamera Camera { get; }
         IUpdaterProvider UpdaterProvider { get; }
         LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
         ILifetimeEventBroadcaster LifetimeEvents { get; }
         IClickableEmitter BackgroundClickableEmitter { get; }
+        IGameObject AudioListener { get; }
     }
 }

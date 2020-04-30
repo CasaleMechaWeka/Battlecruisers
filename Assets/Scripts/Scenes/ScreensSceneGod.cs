@@ -18,9 +18,9 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
-using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Common = UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Scenes
 {
@@ -62,7 +62,7 @@ namespace BattleCruisers.Scenes
                 = new SoundPlayer(
                     new SoundFetcher(),
                     new AudioClipPlayer(),
-                    new CameraBC(Camera.main));
+                    new GameObjectBC(Camera.main.gameObject));
 
             // TEMP  For showing PostBattleScreen :)
             //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
@@ -104,7 +104,7 @@ namespace BattleCruisers.Scenes
             //GoToLoadoutScreen();
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-            TimeBC.Instance.TimeScale = 1;
+            Common.TimeBC.Instance.TimeScale = 1;
         }
         
         private void GoToPostBattleScreen()

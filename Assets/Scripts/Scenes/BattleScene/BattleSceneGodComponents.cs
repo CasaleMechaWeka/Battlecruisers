@@ -2,6 +2,7 @@
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Music;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -19,7 +20,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; private set; }
-        public ICamera Camera { get; private set; }
         public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private UpdaterProvider _updaterProvider;
@@ -28,9 +28,14 @@ namespace BattleCruisers.Scenes.BattleScene
         public ClickableEmitter backgroundClickableEmitter;
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
+        public GameObject audioListener;
+        public IGameObject AudioListener { get; private set; }
+
         public void Initialise()
         {
-            Assert.IsNotNull(backgroundClickableEmitter);
+            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener);
+
+            AudioListener = new GameObjectBC(audioListener);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
@@ -47,10 +52,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             MusicPlayerInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(MusicPlayerInitialiser);
-
-            Camera platformCamera = FindObjectOfType<Camera>();
-            Assert.IsNotNull(platformCamera);
-            Camera = new CameraBC(platformCamera);
 
             _updaterProvider = GetComponentInChildren<UpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);

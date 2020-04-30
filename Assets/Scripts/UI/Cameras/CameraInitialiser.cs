@@ -31,19 +31,21 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
         public TogglableDragTracker dragTracker;
+        public Camera mainCamera;
 
         public ICameraComponents Initialise(
-            ICamera camera, 
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater)
         {
-            Helper.AssertIsNotNull(dragTracker, camera, settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
+            Helper.AssertIsNotNull(dragTracker, mainCamera);
+            Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
 
+            ICamera camera = new CameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
             NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
@@ -101,6 +103,7 @@ namespace BattleCruisers.UI.Cameras
             
             return
                 new CameraComponents(
+                    camera,
                     _cameraAdjuster,
                     navigationWheelPanel.NavigationWheel,
                     cameraFocuser,

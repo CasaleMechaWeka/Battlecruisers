@@ -7,25 +7,25 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
+    // FELIX  Update tests
     public class SoundPlayer : ISoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
         private readonly IAudioClipPlayer _audioClipPlayer;
-        private readonly ICamera _soleCamera;
+        private readonly IGameObject _audioListener;
 
-        public SoundPlayer(ISoundFetcher soundFetcher, IAudioClipPlayer audioClipPlayer, ICamera soleCamera)
+        public SoundPlayer(ISoundFetcher soundFetcher, IAudioClipPlayer audioClipPlayer, IGameObject audioListener)
         {
-            Helper.AssertIsNotNull(soundFetcher, audioClipPlayer, soleCamera);
+            Helper.AssertIsNotNull(soundFetcher, audioClipPlayer, audioListener);
 
             _soundFetcher = soundFetcher;
             _audioClipPlayer = audioClipPlayer;
-            _soleCamera = soleCamera;
+            _audioListener = audioListener;
         }
 
         public async Task PlaySoundAsync(ISoundKey soundKey)
         {
-            // Play sound at camera location.  Assumes there is only one camera in the game.
-            await PlaySoundAsync(soundKey, _soleCamera.Transform.Position);
+            await PlaySoundAsync(soundKey, _audioListener.Position);
         }
 
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
