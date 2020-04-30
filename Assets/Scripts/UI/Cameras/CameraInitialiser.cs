@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraInitialiser : MonoBehaviour
     {
-        private ICameraAdjuster _cameraAdjuster;
+        private ICameraAdjuster _cameraAdjuster, _parallaxAdjuster;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel
@@ -31,7 +31,9 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
         public TogglableDragTracker dragTracker;
-        public Camera mainCamera;
+        // FELIX  Skybox camera?
+        public Camera mainCamera, backgroundCamera;
+        public Skybox skybox;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
@@ -40,7 +42,7 @@ namespace BattleCruisers.UI.Cameras
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater)
         {
-            Helper.AssertIsNotNull(dragTracker, mainCamera);
+            Helper.AssertIsNotNull(dragTracker, mainCamera, backgroundCamera, skybox);
             Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
@@ -77,6 +79,13 @@ namespace BattleCruisers.UI.Cameras
 
             ITime time = TimeBC.Instance;
 
+            backgroundCamera.transparencySortMode = TransparencySortMode.Orthographic;
+
+            _parallaxAdjuster
+                = new ParallaxCameraAdjuster(
+                    camera,
+                    new CameraBC(backgroundCamera));
+
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
@@ -91,9 +100,6 @@ namespace BattleCruisers.UI.Cameras
                     playerCruiser,
                     aiCruiser,
                     camera);
-
-            Skybox skybox = GetComponent<Skybox>();
-            Assert.IsNotNull(skybox);
 
             CameraFocuser cameraFocuser 
                 = new CameraFocuser(
@@ -232,8 +238,7 @@ namespace BattleCruisers.UI.Cameras
         private void SwitchableUpdater_Updated(object sender, EventArgs e)
         {
             _cameraAdjuster.AdjustCamera();
-
-            // FELIX  Adjust parallax here?  Or create composito camera adjuster?
+            _parallaxAdjuster.AdjustCamera();
         }
     }
 }
