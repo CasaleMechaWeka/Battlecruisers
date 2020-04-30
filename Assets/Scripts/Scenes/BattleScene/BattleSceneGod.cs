@@ -47,8 +47,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
 
-        private const int CRUISER_OFFSET_IN_M = 35;
-
         public int DEFAULT_LEVEL = 1;
         public CameraInitialiser cameraInitialiser;
         public TopPanelInitialiser topPanelInitialiser;
