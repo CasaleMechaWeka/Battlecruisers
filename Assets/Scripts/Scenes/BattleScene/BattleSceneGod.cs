@@ -50,10 +50,15 @@ namespace BattleCruisers.Scenes.BattleScene
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public int DEFAULT_LEVEL = 1;
-
+        public CameraInitialiser cameraInitialiser;
+        public TopPanelInitialiser topPanelInitialiser;
+        public LeftPanelInitialiser leftPanelInitialiser;
+        public RightPanelInitialiser rightPanelInitialiser;
+        public TutorialManager tutorialManager;
         private async void Start()
         {
             Assert.raiseExceptions = true;
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialManager);
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
@@ -103,9 +108,6 @@ namespace BattleCruisers.Scenes.BattleScene
             Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
 
             // Camera
-            CameraInitialiser cameraInitialiser = FindObjectOfType<CameraInitialiser>();
-            Assert.IsNotNull(cameraInitialiser);
-
             ICameraComponents cameraComponents
                 = cameraInitialiser.Initialise(
                     components.Camera,
@@ -135,12 +137,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // UI
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
 
-            TopPanelInitialiser topPanelInitialiser = FindObjectOfType<TopPanelInitialiser>();
-            Assert.IsNotNull(topPanelInitialiser);
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
-
-            LeftPanelInitialiser leftPanelInitialiser = FindObjectOfType<LeftPanelInitialiser>();
-            Assert.IsNotNull(leftPanelInitialiser);
             LeftPanelComponents leftPanelComponents 
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
@@ -155,8 +152,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.SoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
 
-            RightPanelInitialiser rightPanelInitialiser = FindObjectOfType<RightPanelInitialiser>();
-            Assert.IsNotNull(rightPanelInitialiser);
             RightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
                     applicationModel,
@@ -274,9 +269,6 @@ namespace BattleCruisers.Scenes.BattleScene
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
         {
-            TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
-            Assert.IsNotNull(tutorialManager);
-
             if (applicationModel.IsTutorial)
             {
                 applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
