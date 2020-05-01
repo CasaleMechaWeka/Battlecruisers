@@ -31,7 +31,6 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
         public TogglableDragTracker dragTracker;
-        // FELIX  Skybox camera?
         public Camera mainCamera, backgroundCamera;
         public Skybox skybox;
 

@@ -72,7 +72,6 @@ namespace BattleCruisers.Scenes.Test
                     new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
 
             // Parallax adjuster
-            // FELIX  Handle for battle scene :)
             if (backgroundCamera != null)
             {
                 backgroundCamera.transparencySortMode = TransparencySortMode.Orthographic;
