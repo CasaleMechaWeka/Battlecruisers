@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.UI.Sound
         private ISoundPlayer _soundPlayer;
         private ISoundFetcher _soundFetcher;
         private IAudioClipPlayer _audioClipPlayer;
-        private ICamera _camera;
+        private IGameObject _audioListener;
         private IAudioClipWrapper _audioClip;
         private ISoundKey _soundKey;
 
@@ -26,11 +26,9 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _soundFetcher = Substitute.For<ISoundFetcher>();
             _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
-            _camera = Substitute.For<ICamera>();
+            _audioListener = Substitute.For<IGameObject>();
 
-            // FELIX  fix tests
-            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, null);
-            //_soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _camera);
+            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _audioListener);
 
             _audioClip = Substitute.For<IAudioClipWrapper>();
             _soundKey = Substitute.For<ISoundKey>();
@@ -40,9 +38,9 @@ namespace BattleCruisers.Tests.UI.Sound
         [Test]
         public void PlaySound_ProvideNoPosition_UsesMainCameraPosition()
         {
-            _camera.Transform.Position.Returns(new Vector3(99, 88, 77));
+            _audioListener.Position.Returns(new Vector3(99, 88, 77));
             _soundPlayer.PlaySoundAsync(_soundKey);
-            _audioClipPlayer.Received().PlaySound(_audioClip, _camera.Transform.Position);
+            _audioClipPlayer.Received().PlaySound(_audioClip, _audioListener.Position);
         }
 
         [Test]

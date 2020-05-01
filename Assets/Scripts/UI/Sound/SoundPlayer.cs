@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
-    // FELIX  Update tests
     public class SoundPlayer : ISoundPlayer
     {
         private readonly ISoundFetcher _soundFetcher;
