@@ -50,6 +50,8 @@ namespace BattleCruisers.Effects.Smoke
             _particleSystem = GetComponent<ParticleSystem>();
             Assert.IsNotNull(_particleSystem);
             _particleSystem.Pause();
+
+            transform.rotation = Quaternion.Euler(-90, 0, 0);
         }
 
         private void ApplySmokeStats(SmokeStatistics smokeStats)

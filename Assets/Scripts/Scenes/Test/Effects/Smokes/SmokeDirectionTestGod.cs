@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,24 +9,27 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
 {
     public class SmokeDirectionTestGod : TestGodBase
     {
-        private DroneStation _droneStation;
+        private DroneStation[] _droneStations;
 
         protected override List<GameObject> GetGameObjects()
         {
-            _droneStation = FindObjectOfType<DroneStation>();
-            Assert.IsNotNull(_droneStation);
+            _droneStations = FindObjectsOfType<DroneStation>();
+            Assert.IsTrue(_droneStations.Length != 0);
 
-            return new List<GameObject>()
-            {
-                _droneStation.GameObject
-            };
+            return 
+                _droneStations
+                    .Select(station => station.GameObject)
+                    .ToList();
         }
 
         protected override void Setup(Helper helper)
         {
-            helper.InitialiseBuilding(_droneStation);
-            _droneStation.StartConstruction();
-            _droneStation.CompletedBuildable += (sender, e) => _droneStation.TakeDamage(_droneStation.MaxHealth - 1, damageSource: null);
+            foreach (DroneStation station in _droneStations)
+            {
+                helper.InitialiseBuilding(station);
+                station.StartConstruction();
+                station.CompletedBuildable += (sender, e) => station.TakeDamage(station.MaxHealth - 1, damageSource: null);
+            }
         }
     }
 }
