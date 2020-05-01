@@ -5,13 +5,30 @@ namespace BattleCruisers.Scenes.Test.Tactical
 {
     public class FogOfWarTestGod : MonoBehaviour
     {
-        public FogStrength fogStrength;
+        private FogOfWar _fog;
+
+        public FogStrength initialFogStrength;
 
         void Start()
         {
-            FogOfWar fog = FindObjectOfType<FogOfWar>();
-            fog.Initialise(fogStrength);
-            fog.IsVisible = true;
+            _fog = FindObjectOfType<FogOfWar>();
+            InitialiseFog(initialFogStrength);
+        }
+
+        public void Strong()
+        {
+            InitialiseFog(FogStrength.Strong);
+        }
+
+        public void Weak()
+        {
+            InitialiseFog(FogStrength.Weak);
+        }
+
+        private void InitialiseFog(FogStrength fogStrength)
+        {
+            _fog.Initialise(fogStrength);
+            _fog.IsVisible = true;
         }
     }
 }

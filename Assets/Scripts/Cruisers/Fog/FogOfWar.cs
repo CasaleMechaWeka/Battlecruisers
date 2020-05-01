@@ -12,6 +12,9 @@ namespace BattleCruisers.Cruisers.Fog
         private const float STRONG_FOG_ALPHA = 1;
         private const float WEAK_FOG_ALPHA = 0.2f;
 
+        public SpriteRenderer fogCore;
+        public ParticleSystem fogParticleSystem;
+
         public void Initialise(FogStrength fogStrength)
         {
             IsVisible = false;
@@ -20,11 +23,9 @@ namespace BattleCruisers.Cruisers.Fog
             // Black
             Color fogColor = new Color(r: 0, g: 0, b: 0, a: fogAlpha);
 
-            SpriteRenderer[] clouds = GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer cloud in clouds)
-            {
-                cloud.color = fogColor;
-            }
+            fogCore.color = fogColor;
+            ParticleSystem.MainModule mainModule = fogParticleSystem.main; 
+            mainModule.startColor = fogColor;
         }
     }
 }
