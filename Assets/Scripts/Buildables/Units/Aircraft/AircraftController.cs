@@ -34,10 +34,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         protected ISpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
+        public float seabedParkTimeInS = 10;
 
         private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
         private const float ON_DEATH_GRAVITY_SCALE = 0.4f;
-        private const float SEABED_PARK_TIME_IN_S = 10;
         private const float SEABED_SAFE_POSITION_Y = -40;
 
         protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
@@ -284,7 +284,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Vector3 currentPosition = rigidBody.transform.position;
             rigidBody.transform.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
-            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, SEABED_PARK_TIME_IN_S);
+            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
         }
     }
 }

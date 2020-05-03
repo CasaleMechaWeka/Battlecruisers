@@ -223,7 +223,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
-            tagsToActiveness.Add(Tags.POOLS, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.POOLS, true);
+            //tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PREFAB_FACTORY, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
