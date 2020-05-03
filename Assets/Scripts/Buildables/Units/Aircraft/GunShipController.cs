@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
@@ -59,8 +60,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsNotNull(_barrelWrapper);
 			_barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
-
-            _isAtCruisingHeight = false;
 		}
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -76,7 +75,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 		}
 
-		protected override async void OnBuildableCompleted()
+        public override void Activate(BuildableActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
+            _isAtCruisingHeight = false;
+        }
+
+        protected override async void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
