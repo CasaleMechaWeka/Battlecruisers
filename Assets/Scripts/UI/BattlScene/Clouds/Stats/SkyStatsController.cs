@@ -8,8 +8,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public Material skyboxMaterial;
         public Material SkyMaterial => skyboxMaterial;
 
-        public CloudMovementSpeed movementSpeed = CloudMovementSpeed.Fast;
-        public float HorizontalMovementSpeedInMPerS { get; private set; }
+        public float movementSpeedInMPerS = 5;
+        public float HorizontalMovementSpeedInMPerS => movementSpeedInMPerS;
 
         public Color cloudColour = Color.white;
         public Color CloudColour => cloudColour;
@@ -29,20 +29,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         {
             MoonStats = GetComponentInChildren<MoonStatsController>();
             Assert.IsNotNull(MoonStats);
-
-            HorizontalMovementSpeedInMPerS = ConvertMovementSpeed(movementSpeed);
-        }
-
-        private static float ConvertMovementSpeed(CloudMovementSpeed movementSpeed)
-        {
-            switch (movementSpeed)
-            {
-                case CloudMovementSpeed.Fast:
-                    return 0.75f;
-                case CloudMovementSpeed.Slow:
-                default:
-                    return 0.5f;
-            }
         }
     }
 }
