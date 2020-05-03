@@ -47,7 +47,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             get { return _target; }
             set
             {
-                Logging.Log(Tags.BARREL_WRAPPER, $"_target: {_target} > {value}");
+                // When Unity game object is destroyed need to null check it, even though it is not truly null.
+                Logging.Log(Tags.BARREL_WRAPPER, $"_target: {_target} > {value?.ToString()}");
                 _target = value;
 
                 foreach (IBarrelController barrel in _barrels)
