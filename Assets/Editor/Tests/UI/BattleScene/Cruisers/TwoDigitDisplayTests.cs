@@ -27,9 +27,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Cruisers
         }
 
         [Test]
-        public void SetNum_TooBigValue_Throws()
+        public void SetNum_TooBigValue()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _twoDigitDisplay.Num = 100);
+            _twoDigitDisplay.Num = 100;
+            _firstDigitDisplay.Received().Num = 9;
+            _secondDigitDisplay.Received().Num = 9;
         }
 
         [Test]

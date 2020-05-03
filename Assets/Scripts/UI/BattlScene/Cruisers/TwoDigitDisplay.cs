@@ -15,10 +15,17 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
             set
             {
                 Assert.IsTrue(value >= MIN_VALUE);
-                Assert.IsTrue(value <= MAX_VALUE);
 
-                _firstDigit.Num = value / 10;
-                _secondDigit.Num = value % 10;
+                if (value > MAX_VALUE)
+                {
+                    _firstDigit.Num = 9;
+                    _secondDigit.Num = 9;
+                }
+                else
+                {
+                    _firstDigit.Num = value / 10;
+                    _secondDigit.Num = value % 10;
+                }
             }
         }
 
