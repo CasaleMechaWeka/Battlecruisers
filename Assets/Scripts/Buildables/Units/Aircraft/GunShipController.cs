@@ -42,7 +42,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			get { return _target; }
 			set
 			{
-				_target = value;
+                Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {_target?.ToString()} > {value?.ToString()}");
+
+                _target = value;
                 _outsideRangeMovementController.Target = _target;
                 _inRangeMovementController.Target = _target;
 
@@ -126,7 +128,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)
         {
-            Logging.LogMethod(Tags.AIRCRAFT);
+            Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
             UpdateMovementController();
         }
 
@@ -153,12 +155,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			{
                 if (_inRangeTargetTracker.ContainsTarget(Target))
                 {
-                    Logging.Log(Tags.AIRCRAFT, "In range movement controller");
+                    Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  In range movement controller");
                     return _inRangeMovementController;
                 }
                 else
                 {
-                    Logging.Log(Tags.AIRCRAFT, "Outside of range movement controller");
+                    Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  Outside of range movement controller");
                     return _outsideRangeMovementController;
                 }
 			}

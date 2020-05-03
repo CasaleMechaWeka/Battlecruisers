@@ -116,8 +116,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -223,9 +223,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.POOLS, true);
-            //tagsToActiveness.Add(Tags.POOLS, false);
+            tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PREFAB_FACTORY, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);

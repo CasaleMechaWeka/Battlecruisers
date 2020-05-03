@@ -60,7 +60,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             get { return _activeMovementController; }
             set
             {
-                Logging.Log(Tags.AIRCRAFT, $"{ActiveMovementController}  => {value}");
+                Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {ActiveMovementController}  => {value}");
                 Assert.IsNotNull(value);
 
                 if (ReferenceEquals(ActiveMovementController, value))
@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
-            Logging.LogMethod(Tags.AIRCRAFT);
+            Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
 
             // Needs to happen before we are moved to a new position and have our game object enabled, otherwise get trail from last death position.
             _aircraftTrail.Clear();
@@ -160,9 +160,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.OnFixedUpdate();
 
-            Logging.Verbose(Tags.AIRCRAFT, "Adjusting velocity");
+            Logging.Verbose(Tags.AIRCRAFT, $"{GetInstanceID()}  Adjusting velocity");
 
-			Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
+
+            Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 
             _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
@@ -224,7 +225,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void OnDestroyed()
         {
-            Logging.LogMethod(Tags.AIRCRAFT);
+            Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
 
             base.OnDestroyed();
 
@@ -239,7 +240,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override void OnDeathWhileCompleted()
         {
-            Logging.LogMethod(Tags.AIRCRAFT);
+            Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
             HealthBar.IsVisible = false;
 
             // Make gravity take effect
@@ -272,7 +273,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             if (_onSeabed)
             {
-                Logging.Warn(Tags.AIRCRAFT, $"Should not be called when already on seabed :/");
+                Logging.Warn(Tags.AIRCRAFT, $"{GetInstanceID()}  Should not be called when already on seabed :/");
                 return;
             }
 
