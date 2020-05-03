@@ -30,9 +30,9 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         public TPoolable GetItem(TArgs activationArgs)
         {
-            Logging.Verbose(Tags.POOLS, $"{typeof(TPoolable)}");
-
             TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
+            Logging.Verbose(Tags.POOLS, $"{item}");
+
             item.Activate(activationArgs);
             return item;
         }
