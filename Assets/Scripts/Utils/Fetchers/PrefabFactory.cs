@@ -68,7 +68,9 @@ namespace BattleCruisers.Utils.Fetchers
 			buildableWrapper.gameObject.SetActive(true);
 			buildableWrapper.StaticInitialise();
             buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
-			return buildableWrapper.Buildable;
+
+            Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
+            return buildableWrapper.Buildable;
 		}
 
         public Cruiser GetCruiserPrefab(IPrefabKey hullKey)

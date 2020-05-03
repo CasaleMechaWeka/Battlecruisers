@@ -103,6 +103,7 @@ namespace BattleCruisers.Utils
         public const string MODELS = "Model";
         public const string POOLS = "Pools";
         public const string PREDICTORS = "TargetPositionPredictors";
+        public const string PREFAB_FACTORY = "PrefabFactory";
         public const string PYRAMID = "Pyramid";
         public const string REPAIR_MANAGER = "RepairManager";
         public const string SCENE_NAVIGATION = "SceneNavigation";
@@ -224,6 +225,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.MODELS, false);
             tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
+            tagsToActiveness.Add(Tags.PREFAB_FACTORY, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);

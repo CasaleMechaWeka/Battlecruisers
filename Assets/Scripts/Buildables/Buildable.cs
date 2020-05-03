@@ -438,6 +438,8 @@ namespace BattleCruisers.Buildables
 
         private void EnableRenderers(bool enabled)
         {
+            Logging.Log(Tags.BUILDING, $"Renderer count: {InGameRenderers.Count}  enabled: {enabled}");
+
             foreach (Renderer renderer in InGameRenderers)
             {
                 renderer.enabled = enabled;
