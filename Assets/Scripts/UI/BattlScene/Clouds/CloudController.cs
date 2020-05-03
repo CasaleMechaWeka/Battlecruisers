@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     {
         public Vector2 Size { get; private set; }
 
-        public Vector2 Position
+        public Vector3 Position
         {
             get { return transform.position; }
             set { transform.position = value; }

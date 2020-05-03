@@ -26,10 +26,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             float distanceBetweenCloudsInM = rightCloud.Position.x - leftCloud.Position.x;
 
             float rightCloudXPosition = _random.Range(_rightCloudValidXPositions);
-            rightCloud.Position = new Vector2(rightCloudXPosition, rightCloud.Position.y);
+            rightCloud.Position = new Vector3(rightCloudXPosition, rightCloud.Position.y, rightCloud.Position.z);
 
             float leftCloudXPosition = rightCloudXPosition - distanceBetweenCloudsInM;
-            leftCloud.Position = new Vector2(leftCloudXPosition, leftCloud.Position.y);
+            leftCloud.Position = new Vector3(leftCloudXPosition, leftCloud.Position.y, leftCloud.Position.z);
 
             Logging.Log(Tags.CLOUDS, $"leftCloudPosition: {leftCloud.Position}  rightCloudPosition: {rightCloud.Position}");
         }

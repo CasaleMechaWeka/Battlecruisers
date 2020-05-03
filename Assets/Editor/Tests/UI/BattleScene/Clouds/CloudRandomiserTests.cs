@@ -24,10 +24,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
             _cloudRandomiser = new CloudRandomiser(_random, _rightCloudValidXPositions);
 
             _leftCloud = Substitute.For<ICloud>();
-            _leftCloud.Position.Returns(new Vector2(-2, 1));
+            _leftCloud.Position.Returns(new Vector3(-2, 1, 0));
 
             _rightCloud = Substitute.For<ICloud>();
-            _rightCloud.Position.Returns(new Vector2(2, 2));
+            _rightCloud.Position.Returns(new Vector3(2, 2, 0));
         }
 
         [Test]

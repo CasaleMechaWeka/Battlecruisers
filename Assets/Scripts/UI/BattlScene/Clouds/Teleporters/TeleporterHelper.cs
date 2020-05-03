@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
             return rightCloud.Position.x - (rightCloud.Size.x / 2) > MAX_X_POSITION_VISIBLE_BY_USER;
         }
 
-        public Vector2 FindTeleportTargetPosition(ICloud onScreenCloud, ICloud offScreenCloud)
+        public Vector3 FindTeleportTargetPosition(ICloud onScreenCloud, ICloud offScreenCloud)
         {
             Helper.AssertIsNotNull(onScreenCloud, offScreenCloud);
             Assert.IsTrue(offScreenCloud.Position.x > onScreenCloud.Position.x);
@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
             float distanceToTeleportInM = 2 * distanceBetweenCloudsInM;
             float targetPositionX = offScreenCloud.Position.x - distanceToTeleportInM;
 
-            Vector2 targetPosition = new Vector2(targetPositionX, offScreenCloud.Position.y);
+            Vector3 targetPosition = new Vector3(targetPositionX, offScreenCloud.Position.y, offScreenCloud.Position.z);
             Logging.Log(Tags.CLOUDS, $"Teleport target position: {targetPosition}");
             return targetPosition;
         }
