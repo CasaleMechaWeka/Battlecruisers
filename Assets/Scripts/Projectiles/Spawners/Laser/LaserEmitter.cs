@@ -47,6 +47,9 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             IParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = GetComponentInChildren<IParticleSystemGroupInitialiser>();
             Assert.IsNotNull(laserMuzzleEffectInitialiser);
             _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
+
+            _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
+            IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
         }
 
         public async Task InitialiseAsync(
@@ -74,9 +77,6 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
             _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
-
-            _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
-            IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
         }
 
         public void FireLaser(float angleInDegrees, bool isSourceMirrored)
@@ -113,7 +113,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         public void DisposeManagedState()
         {
             Logging.LogMethod(Tags.LASER);
-            _laserSoundPlayer.DisposeManagedState();
+            _laserSoundPlayer?.DisposeManagedState();
         }
     }
 }
