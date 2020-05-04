@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
 {
@@ -47,9 +46,8 @@ namespace BattleCruisers.Buildables
 
         public bool RemoveHealth(float amountToRemove)
         {
-            Assert.IsTrue(amountToRemove > 0);
-
-            if (Health > 0
+            if (amountToRemove > 0
+                && Health > 0
                 && State == HealthTrackerState.Mutable)
             {
                 Health -= amountToRemove;

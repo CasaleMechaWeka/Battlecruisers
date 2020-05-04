@@ -20,8 +20,6 @@ namespace BattleCruisers.Tests.Buildables
 
             _healthGoneCounter = 0;
             _healthTracker.HealthGone += (sender, e) => _healthGoneCounter++;
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]
@@ -33,9 +31,10 @@ namespace BattleCruisers.Tests.Buildables
 
         #region RemoveHealth()
         [Test]
-        public void RemoveHealth_NonPositive_Throws()
+        public void RemoveHealth_NonPositive()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _healthTracker.RemoveHealth(0));
+            Assert.IsFalse(_healthTracker.RemoveHealth(0));
+            Assert.AreEqual(MAX_HEALTH, _healthTracker.Health);
         }
 
         [Test]
