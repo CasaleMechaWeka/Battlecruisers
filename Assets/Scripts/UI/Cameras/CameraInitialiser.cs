@@ -33,6 +33,7 @@ namespace BattleCruisers.UI.Cameras
         public TogglableDragTracker dragTracker;
         public Camera mainCamera, backgroundCamera;
         public Skybox skybox;
+        public NavigationWheelInitialiser navigationWheelInitialiser;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
@@ -41,7 +42,7 @@ namespace BattleCruisers.UI.Cameras
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater)
         {
-            Helper.AssertIsNotNull(dragTracker, mainCamera, backgroundCamera, skybox);
+            Helper.AssertIsNotNull(dragTracker, mainCamera, backgroundCamera, skybox, navigationWheelInitialiser);
             Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
@@ -49,7 +50,6 @@ namespace BattleCruisers.UI.Cameras
             ICamera camera = new CameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
-            NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationPermitters.NavigationWheelFilter);
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);

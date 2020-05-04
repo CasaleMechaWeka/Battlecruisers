@@ -35,6 +35,9 @@ namespace BattleCruisers.UI.BattleScene
         private FilterToggler _helpLabelsVisibilityToggler;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
+        public DronesPanelInitialiser dronesPanelInitialiser;
+        public BuildMenuInitialiser buildMenuInitialiser;
+
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,
@@ -60,6 +63,7 @@ namespace BattleCruisers.UI.BattleScene
                 prioritisedSoundPlayer,
                 soundPlayer,
                 populationLimitMonitor);
+            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser);
 
             IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IBuildMenu buildMenu 
@@ -80,8 +84,6 @@ namespace BattleCruisers.UI.BattleScene
 
         private IMaskHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
-            DronesPanelInitialiser dronesPanelInitialiser = FindObjectOfType<DronesPanelInitialiser>();
-            Assert.IsNotNull(dronesPanelInitialiser);
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }
 
@@ -101,9 +103,6 @@ namespace BattleCruisers.UI.BattleScene
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory = new BuildableSorterFactory();
-
-            BuildMenuInitialiser buildMenuInitialiser = FindObjectOfType<BuildMenuInitialiser>();
-            Assert.IsNotNull(buildMenuInitialiser);
 
             return
                 buildMenuInitialiser.Initialise(
