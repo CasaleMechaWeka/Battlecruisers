@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables
 {
