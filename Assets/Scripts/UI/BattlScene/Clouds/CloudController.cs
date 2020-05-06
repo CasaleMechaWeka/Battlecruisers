@@ -24,11 +24,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             renderer.color = cloudStats.CloudColour;
             renderer.transform.position = new Vector3(renderer.transform.position.x, cloudStats.Height, renderer.transform.position.z);
-           
-            if (cloudStats.FlipClouds)
-            {
-                renderer.transform.rotation = Quaternion.Euler(180, 0, 0);
-            }
+
+            float xRotationInDegrees = cloudStats.FlipClouds ? 180 : 0;
+            renderer.transform.rotation = Quaternion.Euler(xRotationInDegrees, 0, 0);
 
             Size = renderer.bounds.size;
 
