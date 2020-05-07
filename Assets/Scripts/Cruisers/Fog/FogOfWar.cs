@@ -22,10 +22,9 @@ namespace BattleCruisers.Cruisers.Fog
             float fogAlpha = fogStrength == FogStrength.Weak ? WEAK_FOG_ALPHA : STRONG_FOG_ALPHA;
             // Black
             Color fogColor = new Color(r: 0, g: 0, b: 0, a: fogAlpha);
-
             fogCore.color = fogColor;
-            ParticleSystem.MainModule mainModule = fogParticleSystem.main; 
-            mainModule.startColor = fogColor;
+
+            fogParticleSystem.gameObject.SetActive(fogStrength == FogStrength.Strong);
         }
     }
 }
