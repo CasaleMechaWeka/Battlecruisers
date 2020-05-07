@@ -68,7 +68,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         }
 
         [Test]
-        public void Start_CannotAffordBuilding_Throws()
+        public void Start_CannotAffordBuilding_ReturnsFalse()
         {
             _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
 			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
@@ -77,8 +77,12 @@ namespace BattleCruisers.Tests.AI.Tasks
             droneManager.NumOfDrones = 2;
             _cruiser.DroneManager.Returns(droneManager);
 
-            Assert.Throws<UnityAsserts.AssertionException>(() => _task.Start());
-		}
+            bool haveStarted = _task.Start();
+
+            Assert.IsFalse(haveStarted);
+            _cruiser.DidNotReceiveWithAnyArgs().ConstructBuilding(null, null);
+            Assert.AreEqual(0, _numOfCompletedEvents);
+        }
 
         [Test]
         public void Start_CruiserIsNotAlive_ReturnsFalse()
