@@ -17,7 +17,6 @@ namespace BattleCruisers.Scenes.Test.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("yo :D");
             _targetIndicator.Show(transform.position);
         }
     }
