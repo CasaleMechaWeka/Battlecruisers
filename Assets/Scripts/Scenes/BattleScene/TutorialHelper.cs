@@ -9,6 +9,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -151,16 +152,17 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            ITargetIndicator targetIndicator)
         {
-            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer);
+            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
 
             UserChosenTargetHelperPermissions permissions = new UserChosenTargetHelperPermissions(isEnabled: false);
             UserChosenTargetPermissions = permissions;
 
             return
                 new TogglableUserChosenTargetHelper(
-                    new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer),
+                    new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator),
                     permissions);
         }
     }

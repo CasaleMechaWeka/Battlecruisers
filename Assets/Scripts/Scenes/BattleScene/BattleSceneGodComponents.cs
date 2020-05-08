@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Music;
@@ -31,9 +32,12 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject audioListener;
         public IGameObject AudioListener { get; private set; }
 
+        public TargetIndicatorController targetIndicator;
+        public ITargetIndicator TargetIndicator => targetIndicator;
+
         public void Initialise()
         {
-            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener);
+            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator);
 
             AudioListener = new GameObjectBC(audioListener);
 
@@ -60,6 +64,8 @@ namespace BattleCruisers.Scenes.BattleScene
             LifetimeEventBroadcaster lifetimeEvents = GetComponent<LifetimeEventBroadcaster>();
             Assert.IsNotNull(lifetimeEvents);
             LifetimeEvents = lifetimeEvents;
+
+            targetIndicator.Initialise();
         }
     }
 }

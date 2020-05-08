@@ -8,6 +8,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
@@ -127,11 +128,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            ITargetIndicator targetIndicator)
         {
-            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer);
+            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
 
-            return new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer);
+            return new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
         }
     }
 }

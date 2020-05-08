@@ -122,7 +122,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetHelper userChosenTargetHelper 
                 = helper.CreateUserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    components.TargetIndicator);
             cruiserFactory
                 .InitialiseAICruiser(
                     playerCruiser,

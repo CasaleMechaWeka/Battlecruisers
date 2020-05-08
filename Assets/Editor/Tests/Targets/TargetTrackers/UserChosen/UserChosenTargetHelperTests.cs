@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Sound;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
         private IUserChosenTargetHelper _targetHelper;
         private IUserChosenTargetManager _targetManager;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private ITargetIndicator _targetIndicator;
         private RankedTarget _target1, _target2;
 
         [SetUp]
@@ -20,7 +22,8 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
         {
             _targetManager = Substitute.For<IUserChosenTargetManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            _targetHelper = new UserChosenTargetHelper(_targetManager, _soundPlayer);
+            _targetIndicator = Substitute.For<ITargetIndicator>();
+            _targetHelper = new UserChosenTargetHelper(_targetManager, _soundPlayer, _targetIndicator);
 
             _target1 = new RankedTarget(Substitute.For<ITarget>(), rank: 17);
             _target2 = new RankedTarget(Substitute.For<ITarget>(), rank: 71);

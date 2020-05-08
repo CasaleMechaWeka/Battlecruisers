@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -17,5 +18,6 @@ namespace BattleCruisers.Scenes.BattleScene
         ILifetimeEventBroadcaster LifetimeEvents { get; }
         IClickableEmitter BackgroundClickableEmitter { get; }
         IGameObject AudioListener { get; }
+        ITargetIndicator TargetIndicator { get; }
     }
 }

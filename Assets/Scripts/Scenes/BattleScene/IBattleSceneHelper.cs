@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
@@ -28,6 +29,9 @@ namespace BattleCruisers.Scenes.BattleScene
         IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
         IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
-        IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer);
+        IUserChosenTargetHelper CreateUserChosenTargetHelper(
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
+            IPrioritisedSoundPlayer soundPlayer,
+            ITargetIndicator targetIndicator);
     }
 }
