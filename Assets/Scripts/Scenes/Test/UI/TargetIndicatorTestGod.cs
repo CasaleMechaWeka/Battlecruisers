@@ -4,12 +4,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.UI
 {
-    public class TargetIndicatorTestGod : TestGodBase
+    public class TargetIndicatorTestGod : NavigationTestGod
     {
         public TargetIndicatorController targetIndicator;
 
         protected override void Setup(Helper helper)
         {
+            base.Setup(helper);
+
             Assert.IsNotNull(targetIndicator);
             targetIndicator.Initialise();
 
