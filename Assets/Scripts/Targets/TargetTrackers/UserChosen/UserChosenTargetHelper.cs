@@ -36,7 +36,6 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
             UserChosenTargetChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        // FELIX  Update tests
         public void ToggleChosenTarget(ITarget target)
         {
             if (ReferenceEquals(UserChosenTarget, target))

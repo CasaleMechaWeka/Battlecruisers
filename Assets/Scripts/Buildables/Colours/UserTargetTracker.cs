@@ -4,8 +4,6 @@ using UnityCommon.Properties;
 
 namespace BattleCruisers.Buildables.Colours
 {
-    // FELIX  Update tests
-    // FELIX  Can merge with UserTargets
     public class UserTargetTracker
     {
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;

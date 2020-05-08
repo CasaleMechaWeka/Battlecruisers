@@ -37,6 +37,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
             _targetHelper.ToggleChosenTarget(_target1.Target);
             _targetManager.Received().Target = _target1.Target;
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.NewTarget);
+            _targetIndicator.Received().Show(_target1.Target.Position);
         }
 
         [Test]
@@ -46,6 +47,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
             _targetHelper.ToggleChosenTarget(_target2.Target);
             _targetManager.Received().Target = _target2.Target;
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.NewTarget);
+            _targetIndicator.Received().Show(_target2.Target.Position);
         }
 
         [Test]
@@ -55,6 +57,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
             _targetHelper.ToggleChosenTarget(_target1.Target);
             _targetManager.Received().Target = null;
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Targetting.TargetCleared);
+            _targetIndicator.Received().Hide();
         }
         #endregion ToggleChosenTarget
 

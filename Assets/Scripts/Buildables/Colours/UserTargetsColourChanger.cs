@@ -3,7 +3,6 @@
     /// <summary>
     /// Changes a targets colour depending on whether is is selected or not.
     /// </summary>
-    /// FELIX  Update tests
     public class UserTargetsColourChanger : IUserTargets
     {
         private ITarget _selectedTarget;
