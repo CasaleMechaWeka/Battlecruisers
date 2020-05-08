@@ -1,29 +1,26 @@
-﻿using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.Utils;
-using UnityCommon.Properties;
+﻿using BattleCruisers.Utils;
 using System;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.Buildables.Colours
 {
+    // FELIX  Update tests
+    // FELIX  Can merge with UserTargets
     public class UserTargetTracker
     {
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
-        private readonly IRankedTargetTracker _userChosenTargetTracker;
         private readonly IUserTargets _userTargets;
 
         public UserTargetTracker(
             IBroadcastingProperty<ITarget> itemShownInInformator, 
-            IRankedTargetTracker userChosenTargetTracker,
             IUserTargets userTargets)
         {
-            Helper.AssertIsNotNull(itemShownInInformator, userChosenTargetTracker, userTargets);
+            Helper.AssertIsNotNull(itemShownInInformator, userTargets);
 
             _itemShownInInformator = itemShownInInformator;
-            _userChosenTargetTracker = userChosenTargetTracker;
             _userTargets = userTargets;
 
             _itemShownInInformator.ValueChanged += _itemShownInInformator_ValueChanged;
-            _userChosenTargetTracker.HighestPriorityTargetChanged += _userChosenTargetTracker_HighestPriorityTargetChanged;
         }
 
         private void _itemShownInInformator_ValueChanged(object sender, EventArgs e)
@@ -34,16 +31,6 @@ namespace BattleCruisers.Buildables.Colours
                 && _itemShownInInformator.Value.IsInScene)
             {
                 _userTargets.SelectedTarget = _itemShownInInformator.Value;
-            }
-        }
-
-        private void _userChosenTargetTracker_HighestPriorityTargetChanged(object sender, EventArgs e)
-        {
-            _userTargets.TargetToAttack = null;
-
-            if (_userChosenTargetTracker.HighestPriorityTarget != null)
-            {
-                _userTargets.TargetToAttack = _userChosenTargetTracker.HighestPriorityTarget.Target;
             }
         }
     }

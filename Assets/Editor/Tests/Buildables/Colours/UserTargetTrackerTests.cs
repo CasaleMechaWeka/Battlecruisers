@@ -1,10 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Colours;
-using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.Targets.TargetTrackers.Ranking;
-using UnityCommon.Properties;
 using NSubstitute;
 using NUnit.Framework;
+using UnityCommon.Properties;
 
 namespace BattleCruisers.Tests.Buildables.Colours
 {
@@ -12,7 +10,6 @@ namespace BattleCruisers.Tests.Buildables.Colours
     {
         private UserTargetTracker _targetTracker;
         private IBroadcastingProperty<ITarget> _itemShownInInformator;
-        private IRankedTargetTracker _userChosenTargetTracker;
         private IUserTargets _userTargets;
         private ITarget _target;
 
@@ -20,10 +17,9 @@ namespace BattleCruisers.Tests.Buildables.Colours
         public void TestSetup()
         {
             _itemShownInInformator = Substitute.For<IBroadcastingProperty<ITarget>>();
-            _userChosenTargetTracker = Substitute.For<IRankedTargetTracker>();
             _userTargets = Substitute.For<IUserTargets>();
 
-            _targetTracker = new UserTargetTracker(_itemShownInInformator, _userChosenTargetTracker, _userTargets);
+            _targetTracker = new UserTargetTracker(_itemShownInInformator, _userTargets);
 
             _target = Substitute.For<ITarget>();
         }
@@ -68,35 +64,5 @@ namespace BattleCruisers.Tests.Buildables.Colours
             _userTargets.Received().SelectedTarget = _target;
         }
         #endregion InformatorItemChanged
-
-        #region UserChosenTargetChanged
-        [Test]
-        public void UserChosenTargetChanged_ClearsTargetToAttack()
-        {
-            _userChosenTargetTracker.HighestPriorityTargetChanged += Raise.Event();
-            _userTargets.Received().TargetToAttack = null;
-        }
-
-        [Test]
-        public void UserChosenTargetChanged_NewValue_IsNull()
-        {
-            _userChosenTargetTracker.HighestPriorityTarget.Returns((RankedTarget)null);
-
-            _userChosenTargetTracker.HighestPriorityTargetChanged += Raise.Event();
-
-            _userTargets.DidNotReceive().TargetToAttack = _target;
-        }
-
-        [Test]
-        public void UserChosenTargetChanged_NewValue_IsNotNull()
-        {
-            RankedTarget rankedTarget = new RankedTarget(_target, 1);
-            _userChosenTargetTracker.HighestPriorityTarget.Returns(rankedTarget);
-
-            _userChosenTargetTracker.HighestPriorityTargetChanged += Raise.Event();
-
-            _userTargets.Received().TargetToAttack = _target;
-        }
-        #endregion UserChosenTargetChanged
     }
 }
