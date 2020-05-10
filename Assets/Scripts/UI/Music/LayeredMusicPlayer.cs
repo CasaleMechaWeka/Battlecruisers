@@ -9,7 +9,8 @@ namespace BattleCruisers.UI.Music
     {
         private readonly IAudioVolumeFade _audioVolumeFade;
         private readonly IAudioSource _primarySource, _secondarySource;
-        private const float FADE_TIME_IN_S = 2;
+        
+        public const float FADE_TIME_IN_S = 2;
 
         public LayeredMusicPlayer(IAudioVolumeFade audioVolumeFade, IAudioSource primarySource, IAudioSource secondarySource)
         {
@@ -31,7 +32,6 @@ namespace BattleCruisers.UI.Music
             _secondarySource.Play(isSpatial: false, loop: true);
         }
 
-        // FELIX  Update tests
         public void PlaySecondary()
         {
             _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 1, FADE_TIME_IN_S);

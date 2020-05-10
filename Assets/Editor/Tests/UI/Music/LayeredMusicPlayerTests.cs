@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,16 +10,17 @@ namespace BattleCruisers.Tests.UI.Music
     public class LayeredMusicPlayerTest
     {
         private ILayeredMusicPlayer _musicPlayer;
+        private IAudioVolumeFade _audioVolumeFade;
         private IAudioSource _primarySource, _secondarySource;
 
         [SetUp]
         public void TestSetup()
         {
+            _audioVolumeFade = Substitute.For<IAudioVolumeFade>();
             _primarySource = Substitute.For<IAudioSource>();
             _secondarySource = Substitute.For<IAudioSource>();
 
-            // FELIX  Fix :D
-            _musicPlayer = new LayeredMusicPlayer(null, _primarySource, _secondarySource);
+            _musicPlayer = new LayeredMusicPlayer(_audioVolumeFade, _primarySource, _secondarySource);
 
             UnityAsserts.Assert.raiseExceptions = true;
         }
@@ -47,14 +49,14 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlaySecondary()
         {
             _musicPlayer.PlaySecondary();
-            _secondarySource.Received().Volume = 1;
+            _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 1, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
         public void StopSecondary()
         {
             _musicPlayer.StopSecondary();
-            _secondarySource.Received().Volume = 0;
+            _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 0, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
