@@ -1,9 +1,13 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
+using UnityCommon.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
@@ -23,8 +27,12 @@ namespace BattleCruisers.UI.Music
             IAudioClipWrapper secondaryClip = await soundFetcher.GetSoundAsync(soundKeys.SecondaryKey);
             secondarySource.clip = secondaryClip.AudioClip;
 
+            CoroutineStarter coroutineStarter = GetComponent<CoroutineStarter>();
+            Assert.IsNotNull(coroutineStarter);
+
             return 
                 new LayeredMusicPlayer(
+                    new AudioVolumeFade(coroutineStarter, TimeBC.Instance),
                     new AudioSourceBC(primarySource), 
                     new AudioSourceBC(secondarySource));
         }

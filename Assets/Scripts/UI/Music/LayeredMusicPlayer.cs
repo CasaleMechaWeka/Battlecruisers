@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine.Assertions;
 
@@ -6,12 +7,15 @@ namespace BattleCruisers.UI.Music
 {
     public class LayeredMusicPlayer : ILayeredMusicPlayer
     {
+        private readonly IAudioVolumeFade _audioVolumeFade;
         private readonly IAudioSource _primarySource, _secondarySource;
+        private const float FADE_TIME_IN_S = 2;
 
-        public LayeredMusicPlayer(IAudioSource primarySource, IAudioSource secondarySource)
+        public LayeredMusicPlayer(IAudioVolumeFade audioVolumeFade, IAudioSource primarySource, IAudioSource secondarySource)
         {
-            Helper.AssertIsNotNull(primarySource, secondarySource);
+            Helper.AssertIsNotNull(audioVolumeFade, primarySource, secondarySource);
 
+            _audioVolumeFade = audioVolumeFade;
             _primarySource = primarySource;
             _secondarySource = secondarySource;
         }
@@ -27,14 +31,15 @@ namespace BattleCruisers.UI.Music
             _secondarySource.Play(isSpatial: false, loop: true);
         }
 
+        // FELIX  Update tests
         public void PlaySecondary()
         {
-            _secondarySource.Volume = 1;
+            _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 1, FADE_TIME_IN_S);
         }
 
         public void StopSecondary()
         {
-            _secondarySource.Volume = 0;
+            _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 0, FADE_TIME_IN_S);
         }
 
         public void Stop()

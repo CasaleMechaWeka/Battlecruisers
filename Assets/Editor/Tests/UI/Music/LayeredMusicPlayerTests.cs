@@ -17,7 +17,8 @@ namespace BattleCruisers.Tests.UI.Music
             _primarySource = Substitute.For<IAudioSource>();
             _secondarySource = Substitute.For<IAudioSource>();
 
-            _musicPlayer = new LayeredMusicPlayer(_primarySource, _secondarySource);
+            // FELIX  Fix :D
+            _musicPlayer = new LayeredMusicPlayer(null, _primarySource, _secondarySource);
 
             UnityAsserts.Assert.raiseExceptions = true;
         }
