@@ -66,7 +66,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     new CruiserDamageMonitor(playerCruiser),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    new Debouncer(time, debounceTimeInS: 20));
+                    new Debouncer(time, debounceTimeInS: 30));
         }
 
         private UltrasConstructionMonitor CreateUltrasConstructionMonitor(ICruiser aiCruiser)
