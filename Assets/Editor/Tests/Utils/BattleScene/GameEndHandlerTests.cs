@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
@@ -30,6 +31,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private BroadcastingFilter _navigationPermitter;
         private ITime _time;
         private IUIManager _uiManager;
+        private ITargetIndicator _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
 
         private IBuilding _playerBuilding, _aiBuilding;
@@ -51,6 +53,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _time = Substitute.For<ITime>();
             _uiManager = Substitute.For<IUIManager>();
+            _targetIndicator = Substitute.For<ITargetIndicator>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
@@ -65,7 +68,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _cameraFocuser,
                     _navigationPermitter,
                     _time,
-                    _uiManager);
+                    _uiManager,
+                    _targetIndicator);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
@@ -139,6 +143,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: true);
             _uiManager.Received().HideItemDetails();
             _uiManager.Received().HideCurrentlyShownMenu();
+            _targetIndicator.Received().Hide();
         }
 
         [Test]
@@ -170,6 +175,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
             _uiManager.Received().HideItemDetails();
             _uiManager.Received().HideCurrentlyShownMenu();
+            _targetIndicator.Received().Hide();
         }
 
         [Test]

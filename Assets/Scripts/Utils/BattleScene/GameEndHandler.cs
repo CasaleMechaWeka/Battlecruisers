@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
@@ -23,6 +24,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IPermitter _navigationPermitter;
         private readonly ITime _time;
         private readonly IUIManager _uiManager;
+        private readonly ITargetIndicator _targetIndicator;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -37,9 +39,20 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiserDeathCameraFocuser cameraFocuser, 
             IPermitter navigationPermitter,
             ITime time,
-            IUIManager uiManager)
+            IUIManager uiManager,
+            ITargetIndicator targetIndicator)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, ai, battleCompletionHandler, deferrer, cameraFocuser, navigationPermitter, time, uiManager);
+            Helper.AssertIsNotNull(
+                playerCruiser, 
+                aiCruiser, 
+                ai, 
+                battleCompletionHandler, 
+                deferrer, 
+                cameraFocuser, 
+                navigationPermitter, 
+                time, 
+                uiManager, 
+                targetIndicator);
 
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
@@ -50,6 +63,7 @@ namespace BattleCruisers.Utils.BattleScene
             _navigationPermitter = navigationPermitter;
             _time = time;
             _uiManager = uiManager;
+            _targetIndicator = targetIndicator;
 
             _handledCruiserDeath = false;
             _handledGameEnd = false;
@@ -73,6 +87,7 @@ namespace BattleCruisers.Utils.BattleScene
             StopAllShips(victoryCruiser);
             _uiManager.HideCurrentlyShownMenu();
             _uiManager.HideItemDetails();
+            _targetIndicator.Hide();
 
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _time.TimeScale = 1;
