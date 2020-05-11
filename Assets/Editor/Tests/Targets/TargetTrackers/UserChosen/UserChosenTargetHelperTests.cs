@@ -85,5 +85,23 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
 
             Assert.AreEqual(1, eventCount);
         }
+
+        [Test]
+        public void ManagerTargetChanged_UserChosenTargetDestroyed()
+        {
+            _targetManager.HighestPriorityTarget.Returns((RankedTarget)null);
+            _targetManager.HighestPriorityTargetChanged += Raise.Event();
+
+            _targetIndicator.Received().Hide();
+        }
+
+        [Test]
+        public void ManagerTargetChanged_UserChosenNotDestroyed()
+        {
+            _targetManager.HighestPriorityTarget.Returns(_target1);
+            _targetManager.HighestPriorityTargetChanged += Raise.Event();
+
+            _targetIndicator.DidNotReceive().Hide();
+        }
     }
 }

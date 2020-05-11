@@ -34,6 +34,11 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         private void _userChosenTargetManager_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
             UserChosenTargetChanged?.Invoke(this, EventArgs.Empty);
+
+            if (_userChosenTargetManager.HighestPriorityTarget == null)
+            {
+                _targetIndicator.Hide();
+            }
         }
 
         public void ToggleChosenTarget(ITarget target)
