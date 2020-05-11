@@ -6,11 +6,11 @@ namespace BattleCruisers.Utils.Timers
 {
     public class Debouncer : IDebouncer
     {
-        private readonly ITime _time;
+        private readonly ITimeSinceGameStartProvider _time;
         private readonly float _debounceTimeInS;
         private float _lastChangeTimestamp;
 
-        public Debouncer(ITime time, float debounceTimeInS)
+        public Debouncer(ITimeSinceGameStartProvider time, float debounceTimeInS)
         {
             Assert.IsNotNull(time);
             Assert.IsTrue(debounceTimeInS > 0);

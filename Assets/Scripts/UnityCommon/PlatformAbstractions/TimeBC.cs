@@ -23,6 +23,8 @@ namespace UnityCommon.PlatformAbstractions
         private TimeBC()
         {
             _defaultFixedDeltaTime = Time.fixedDeltaTime;
+            TimeSinceGameStartProvider = new TimeSinceGameStartProvider();
+            RealTimeSinceGameStartProvider = new RealTimeSinceGameStartProvider();
         }
 
         public float TimeScale
@@ -40,7 +42,11 @@ namespace UnityCommon.PlatformAbstractions
         }
 
         public float TimeSinceGameStartInS => Time.time;
+        public float UnscaledTimeSinceGameStartInS => Time.realtimeSinceStartup;
         public float UnscaledDeltaTime => Time.unscaledDeltaTime;
         public float DeltaTime => Time.deltaTime;
+
+        public ITimeSinceGameStartProvider TimeSinceGameStartProvider { get; }
+        public ITimeSinceGameStartProvider RealTimeSinceGameStartProvider { get; }
     }
 }

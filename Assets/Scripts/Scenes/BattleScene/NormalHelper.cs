@@ -105,7 +105,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    new Debouncer(TimeBC.Instance, debounceTimeInS: 20));
+                    new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
 
         public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)

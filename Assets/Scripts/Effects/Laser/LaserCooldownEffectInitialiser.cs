@@ -28,7 +28,7 @@ namespace BattleCruisers.Effects.Laser
                     laserEmitter.IsLaserFiring, 
                     laserFlap, 
                     smokeDischarge,
-                    new Debouncer(TimeBC.Instance, laserStoppedDebounceTimeInS));
+                    new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, laserStoppedDebounceTimeInS));
         }
     }
 }

@@ -8,14 +8,14 @@ namespace BattleCruisers.Tests.Utils.Timers
     public class DebouncerTests
     {
         private IDebouncer _debouncer;
-        private ITime _time;
+        private ITimeSinceGameStartProvider _time;
         private float _debounceTimeInS = 12.3f;
         private bool _wasActionCalled = false;
 
         [SetUp]
         public void TestSetup()
         {
-            _time = Substitute.For<ITime>();
+            _time = Substitute.For<ITimeSinceGameStartProvider>();
             _debouncer = new Debouncer(_time, _debounceTimeInS);
         }
 
