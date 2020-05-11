@@ -132,6 +132,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         public void DisposeManagedState()
         {
+            _targets.Clear();
             _targetFinder.TargetFound -= TargetFinder_TargetFound;
             _targetFinder.TargetLost -= TargetFinder_TargetLost;
         }

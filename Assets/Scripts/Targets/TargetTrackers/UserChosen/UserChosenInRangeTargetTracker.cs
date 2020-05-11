@@ -65,7 +65,10 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         public void DisposeManagedState()
         {
             _inRangeTargetTracker.TargetsChanged -= _inRangeTargetTracker_TargetsChanged;
+            _inRangeTargetTracker.DisposeManagedState();
+
             _userChosenTargetTracker.HighestPriorityTargetChanged -= _userChosenTargetTracker_HighestPriorityTargetChanged;
+            // Do not dispose because shared by everyone, not just this buildable
         }
     }
 }

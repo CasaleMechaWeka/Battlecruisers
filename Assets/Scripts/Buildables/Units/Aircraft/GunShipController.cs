@@ -189,6 +189,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _hoverTargetDetectorProvider.DisposeManagedState();
             _hoverTargetDetectorProvider = null;
+
+            _barrelWrapper.DisposeManagedState();
 		}
 
         protected override List<SpriteRenderer> GetInGameRenderers()

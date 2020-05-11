@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
 
-        private ITurretStats _baseTurretStats;
+        private TurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats TurretStats => _turretStatsWrapper;
 
@@ -166,6 +166,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public virtual void CleanUp()
         {
+            Target = null;
+            // Clear burst fire state
+            _baseTurretStats.Initialise();
+
             if (_updater != null)
             {
                 _updater.Updated -= _updater_Updated;

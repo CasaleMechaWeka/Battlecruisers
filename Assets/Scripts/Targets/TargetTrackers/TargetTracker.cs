@@ -72,6 +72,8 @@ namespace BattleCruisers.Targets.TargetTrackers
         {
             _targetFinder.TargetFound -= _targetFinder_TargetFound;
             _targetFinder.TargetLost -= _targetFinder_TargetLost;
+            _targets.Clear();
+            EmitTargetsChangedEvent();
         }
     }
 }
