@@ -253,7 +253,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         private IAnimation GetBarrelAnimation()
         {
             IAnimationInitialiser animationInitialiser = GetComponent<IAnimationInitialiser>();
-            return animationInitialiser != null ? animationInitialiser.CreateAnimation() : null;
+            return animationInitialiser?.CreateAnimation();
         }
 
         public void DisposeManagedState()
