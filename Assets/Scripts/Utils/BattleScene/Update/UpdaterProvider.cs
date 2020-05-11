@@ -1,4 +1,4 @@
-﻿using UnityCommon.PlatformAbstractions;
+﻿using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Movement.Rotation;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers

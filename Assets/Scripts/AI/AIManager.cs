@@ -12,7 +12,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.AI
 {

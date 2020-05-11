@@ -19,7 +19,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using System;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene

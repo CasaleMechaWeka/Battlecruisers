@@ -9,7 +9,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene

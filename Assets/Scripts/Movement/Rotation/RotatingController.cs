@@ -1,10 +1,10 @@
 ﻿using System;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Rotation
 {
-    public class RotatingController : MonoBehaviour 
+	public class RotatingController : MonoBehaviour 
 	{
 		private IRotationMovementController _activeRotationController, _realRotationController, _dummyRotationController;
 		private float _targetAngleInDegrees;

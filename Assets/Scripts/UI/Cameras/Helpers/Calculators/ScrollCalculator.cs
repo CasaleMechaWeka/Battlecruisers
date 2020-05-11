@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {

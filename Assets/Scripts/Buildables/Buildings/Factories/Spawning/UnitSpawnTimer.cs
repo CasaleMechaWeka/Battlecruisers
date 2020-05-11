@@ -2,7 +2,7 @@
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using System;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {

@@ -1,9 +1,9 @@
-﻿using UnityCommon.PlatformAbstractions;
+﻿using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Rotation
 {
-    public class ConstantRotationController : IConstantRotationController
+	public class ConstantRotationController : IConstantRotationController
 	{
 		private float _rotateSpeedInDegreesPerS;
 		private Transform _transform;

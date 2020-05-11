@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 

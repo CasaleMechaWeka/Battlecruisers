@@ -1,4 +1,4 @@
-﻿namespace UnityCommon.PlatformAbstractions
+﻿namespace UnityCommon.PlatformAbstractions.Time
 {
     public class RealTimeSinceGameStartProvider : ITimeSinceGameStartProvider
     {

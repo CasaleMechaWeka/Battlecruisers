@@ -10,7 +10,7 @@ using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Movement

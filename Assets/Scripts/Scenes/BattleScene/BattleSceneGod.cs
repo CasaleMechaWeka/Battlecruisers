@@ -24,7 +24,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 

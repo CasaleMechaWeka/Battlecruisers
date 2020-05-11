@@ -1,13 +1,13 @@
-﻿using System;
-using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity.Providers;
-using UnityCommon.PlatformAbstractions;
+using System;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Velocity
 {
-    public abstract class MovementController : IMovementController
+	public abstract class MovementController : IMovementController
 	{
         protected readonly IVelocityProvider _maxVelocityProvider;
         protected readonly ITime _time;

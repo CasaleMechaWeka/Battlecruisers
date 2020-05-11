@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Utils;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 {

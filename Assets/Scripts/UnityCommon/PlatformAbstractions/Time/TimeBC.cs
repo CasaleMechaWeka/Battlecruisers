@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
-using UnityEngine;
+using PlatformTime = UnityEngine.Time;
 
-namespace UnityCommon.PlatformAbstractions
+namespace UnityCommon.PlatformAbstractions.Time
 {
     public class TimeBC : ITime
     {
@@ -22,29 +22,29 @@ namespace UnityCommon.PlatformAbstractions
 
         private TimeBC()
         {
-            _defaultFixedDeltaTime = Time.fixedDeltaTime;
+            _defaultFixedDeltaTime = PlatformTime.fixedDeltaTime;
             TimeSinceGameStartProvider = new TimeSinceGameStartProvider();
             RealTimeSinceGameStartProvider = new RealTimeSinceGameStartProvider();
         }
 
         public float TimeScale
         {
-            get { return Time.timeScale; }
+            get { return PlatformTime.timeScale; }
             set
             {
-                Time.timeScale = value;
+                PlatformTime.timeScale = value;
 
                 // Also adjust physics time scale
-                Time.fixedDeltaTime = _defaultFixedDeltaTime * Time.timeScale;
+                PlatformTime.fixedDeltaTime = _defaultFixedDeltaTime * PlatformTime.timeScale;
 
-                Logging.Log(Tags.TIME, $"time scale: {Time.timeScale}  fixed delta time: {Time.fixedDeltaTime}");
+                Logging.Log(Tags.TIME, $"time scale: {PlatformTime.timeScale}  fixed delta time: {PlatformTime.fixedDeltaTime}");
             }
         }
 
-        public float TimeSinceGameStartInS => Time.time;
-        public float UnscaledTimeSinceGameStartInS => Time.realtimeSinceStartup;
-        public float UnscaledDeltaTime => Time.unscaledDeltaTime;
-        public float DeltaTime => Time.deltaTime;
+        public float TimeSinceGameStartInS => PlatformTime.time;
+        public float UnscaledTimeSinceGameStartInS => PlatformTime.realtimeSinceStartup;
+        public float UnscaledDeltaTime => PlatformTime.unscaledDeltaTime;
+        public float DeltaTime => PlatformTime.deltaTime;
 
         public ITimeSinceGameStartProvider TimeSinceGameStartProvider { get; }
         public ITimeSinceGameStartProvider RealTimeSinceGameStartProvider { get; }

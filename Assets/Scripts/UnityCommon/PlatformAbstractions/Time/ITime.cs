@@ -1,6 +1,5 @@
-﻿namespace UnityCommon.PlatformAbstractions
+﻿namespace UnityCommon.PlatformAbstractions.Time
 {
-    // FELIX  Create time namespace
     public interface ITime : IDeltaTimeProvider
     {
         float TimeScale { get; set; }

@@ -14,7 +14,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Utils.BattleScene

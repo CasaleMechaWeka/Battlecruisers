@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Common = UnityCommon.PlatformAbstractions;
+using Common = UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Scenes
 {

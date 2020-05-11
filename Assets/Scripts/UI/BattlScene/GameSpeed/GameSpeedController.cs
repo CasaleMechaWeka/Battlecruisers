@@ -3,7 +3,7 @@ using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using NSubstitute;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;

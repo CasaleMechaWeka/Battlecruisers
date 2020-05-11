@@ -9,7 +9,7 @@ using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test

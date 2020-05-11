@@ -2,7 +2,7 @@
 using BattleCruisers.Projectiles.Spawners.Laser;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 

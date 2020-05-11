@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.Movement.Rotation

@@ -1,5 +1,5 @@
 ﻿using System;
-using UnityCommon.PlatformAbstractions;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene.Update
