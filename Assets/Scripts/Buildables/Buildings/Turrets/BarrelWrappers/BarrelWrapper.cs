@@ -258,7 +258,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void DisposeManagedState()
         {
-            // FELIX  Remove?
             Target = null;
 
             _targetProcessor?.DisposeManagedState();
