@@ -19,8 +19,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public Color cloudColour = Color.white;
         public Color CloudColour => cloudColour;
 
-        public float cloudHeight = 28;
-        public float Height => cloudHeight;
+        public float cloudYPosition;
+        public float CloudYPosition => cloudYPosition;
 
         public float cloudZPosition = 290;
         public float CloudZPosition => cloudZPosition;

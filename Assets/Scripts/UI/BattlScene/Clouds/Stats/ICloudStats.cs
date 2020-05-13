@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         bool FlipClouds { get; }
         
         Color CloudColour { get; }
-        float Height { get; }
+        float CloudYPosition { get; }
         float CloudZPosition { get; }
         
         Color MistColour { get; }
