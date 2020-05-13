@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public float MistYPosition => mistYPosition;
 
         public float mistZPosition = 0;
-        public float MistZPosiiton => mistZPosition;
+        public float MistZPosition => mistZPosition;
 
         public void Initialise()
         {

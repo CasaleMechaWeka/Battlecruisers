@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
                     leftCloud,
                     rightCloud);
 
-            mist.Initialse(skyStats.MistColour);
+            mist.Initialse(skyStats);
             moon.Initialise(skyStats.MoonStats);
         }
     }

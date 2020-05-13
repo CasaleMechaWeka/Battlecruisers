@@ -1,14 +1,19 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class MistController : MonoBehaviour
     {
-        public void Initialse(Color mistColour)
+        public void Initialse(ICloudStats cloudStats)
         {
-            SetColour(mistColour);
+            Assert.IsNotNull(cloudStats);
+
+            SetColour(cloudStats.MistColour);
             RandomiseAnimationStartingPosition();
+            transform.position = new Vector3(transform.position.x, cloudStats.MistYPosition, cloudStats.MistZPosition);
         }
 
         private void SetColour(Color mistColour)

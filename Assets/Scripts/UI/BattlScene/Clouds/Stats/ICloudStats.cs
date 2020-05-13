@@ -13,6 +13,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         
         Color MistColour { get; }
         float MistYPosition { get; }
-        float MistZPosiiton { get; }
+        float MistZPosition { get; }
     }
 }
