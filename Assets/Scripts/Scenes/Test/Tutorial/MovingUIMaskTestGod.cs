@@ -1,15 +1,15 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.DataStrctures;
+﻿using UnityEngine;
+using System.Collections;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils.PlatformAbstractions;
-using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
+using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
-    // FELIX  remove?
-    public class MaskHighlightingTestGod : MonoBehaviour
+    public class MovingUIMaskTestGod : MonoBehaviour
     {
         private IHighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
@@ -19,13 +19,11 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public MaskHighlighter maskHighlighter;
+        public InverseMaskHighlighter maskHighlighter;
 
         void Start()
         {
             _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
-
-            maskHighlighter.Initialise();
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
