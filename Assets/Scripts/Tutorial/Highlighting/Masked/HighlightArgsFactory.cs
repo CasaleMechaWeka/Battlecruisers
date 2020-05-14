@@ -20,7 +20,24 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         {
             Vector2 bottomLeftPosition = FindBottomLeftPosition(rectTransform, sizeMultiplier);
             Vector2 size = sizeMultiplier * rectTransform.sizeDelta * rectTransform.lossyScale;
-            HighlightArgs noBorderArgs = new HighlightArgs(rectTransform.position, bottomLeftPosition, size);
+
+            // FELIX  Extract method
+            Vector3[] corners = new Vector3[4];
+            rectTransform.GetWorldCorners(corners);
+            
+            Vector2 bottomLeftCorner = corners[0];
+            Vector2 topRightCorner = corners[2];
+
+            Vector2 center
+                = new Vector2(
+                    (bottomLeftCorner.x + topRightCorner.x) / 2,
+                    (bottomLeftCorner.y + topRightCorner.y) / 2);
+
+            // FELIX
+            HighlightArgs noBorderArgs = new HighlightArgs(center, bottomLeftPosition, size);
+            //HighlightArgs noBorderArgs = new HighlightArgs(rectTransform.position, bottomLeftPosition, size);
+            //HighlightArgs noBorderArgs = new HighlightArgs(rectTransform.localPosition, bottomLeftPosition, size);
+            //HighlightArgs noBorderArgs = new HighlightArgs(rectTransform.anchoredPosition, bottomLeftPosition, size);
             return AddBorder(noBorderArgs);
         }
 
