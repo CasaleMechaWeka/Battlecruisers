@@ -20,7 +20,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         {
             Vector2 bottomLeftPosition = FindBottomLeftPosition(rectTransform, sizeMultiplier);
             Vector2 size = sizeMultiplier * rectTransform.sizeDelta * rectTransform.lossyScale;
-            HighlightArgs noBorderArgs = new HighlightArgs(bottomLeftPosition, size);
+            HighlightArgs noBorderArgs = new HighlightArgs(rectTransform.position, bottomLeftPosition, size);
             return AddBorder(noBorderArgs);
         }
 
@@ -40,6 +40,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         {
             HighlightArgs noBorderArgs 
                 = new HighlightArgs(
+                    _camera.WorldToScreenPoint(objectWorldPosition),
                     FindBottomLeftScreenPosition(objectWorldPosition, objectWorldSize),
                     FindObjectScreenSize(objectWorldSize));
             return AddBorder(noBorderArgs);
@@ -66,7 +67,9 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         {
             return
                 new HighlightArgs(
+                    noBorderArgs.CenterPosition,
                     new Vector2(noBorderArgs.BottomLeftPosition.x - HIGHLIGHT_BORDER_IN_PIXELS, noBorderArgs.BottomLeftPosition.y - HIGHLIGHT_BORDER_IN_PIXELS),
+                    // FELIX  Increase size once using center position?
                     new Vector2(noBorderArgs.Size.x + 2 * HIGHLIGHT_BORDER_IN_PIXELS, noBorderArgs.Size.y + 2 * HIGHLIGHT_BORDER_IN_PIXELS));
         }
     }

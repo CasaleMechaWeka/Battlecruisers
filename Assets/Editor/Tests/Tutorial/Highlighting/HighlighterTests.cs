@@ -25,7 +25,8 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
 
             _highlighter = new Highlighter(_maskHighlighter, _highlightArgsFactory);
 
-            _highlightArgs = new HighlightArgs(new Vector2(1, 2), new Vector2(-1, 2));
+            // FELIX  Fix :P
+            _highlightArgs = new HighlightArgs(new Vector2(9, 9), new Vector2(1, 2), new Vector2(-1, 2));
             _highlightable = Substitute.For<IMaskHighlightable>();
             _highlightable.CreateHighlightArgs(_highlightArgsFactory).Returns(_highlightArgs);
         }

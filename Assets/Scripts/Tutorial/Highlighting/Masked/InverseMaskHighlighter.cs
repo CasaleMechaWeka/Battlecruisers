@@ -1,15 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
     public class InverseMaskHighlighter : MonoBehaviour, IMaskHighlighter
     {
+        private RectTransform _rectTransform;
+
+        public void Initialise()
+        {
+            _rectTransform = transform.Parse<RectTransform>();
+        }
+
         public void Highlight(HighlightArgs args)
         {
-            // FELIX  Position :P
+            _rectTransform.position = args.CenterPosition;
+            _rectTransform.sizeDelta = args.Size;
 
             gameObject.SetActive(true);
         }

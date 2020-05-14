@@ -23,6 +23,10 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 
         void Start()
         {
+            Helper.AssertIsNotNull(camera, maskHighlighter);
+
+            maskHighlighter.Initialise();
+
             _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();
