@@ -34,8 +34,8 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             Assert.AreEqual(EXPECTED_NUM_OF_IN_GAME_OBJECTS, inGameObjects.Length);
             _inGameObjects = new CircularList<SpriteRenderer>(inGameObjects);
 
-            //HighlightNextButton();
-            HighlightNextInGameObject();
+            HighlightNextButton();
+            //HighlightNextInGameObject();
         }
 
         private void HighlightNextButton()
