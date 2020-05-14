@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial
         {
             Assert.IsNotNull(tutorialArgs);
 
-            MaskHighlighter maskHighlighter = GetComponentInChildren<MaskHighlighter>(includeInactive: true);
+            InverseMaskHighlighter maskHighlighter = GetComponentInChildren<InverseMaskHighlighter>(includeInactive: true);
             Assert.IsNotNull(maskHighlighter);
             maskHighlighter.Initialise();
 
