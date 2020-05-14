@@ -20,6 +20,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 
         public Camera camera;
         public InverseMaskHighlighter maskHighlighter;
+        public bool highlightGameObjects = true;
 
         void Start()
         {
@@ -36,9 +37,15 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             SpriteRenderer[] inGameObjects = FindObjectsOfType<SpriteRenderer>();
             Assert.AreEqual(EXPECTED_NUM_OF_IN_GAME_OBJECTS, inGameObjects.Length);
             _inGameObjects = new CircularList<SpriteRenderer>(inGameObjects);
-
-            HighlightNextButton();
-            //HighlightNextInGameObject();
+            
+            if (highlightGameObjects)
+            {
+                HighlightNextInGameObject();
+            }
+            else
+            {
+                HighlightNextButton();
+            }
         }
 
         private void HighlightNextButton()
