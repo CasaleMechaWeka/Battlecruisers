@@ -25,7 +25,7 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(highlighterInitialiser);
             Assert.IsNotNull(tutorialArgs);
 
-            IMaskHighlighter maskHighlighter = highlighterInitialiser.CreateHighlighter();
+            IMaskHighlighter maskHighlighter = highlighterInitialiser.CreateHighlighter(tutorialArgs.CameraComponents.MainCamera);
             IHighlighter highlighter
                 = new Highlighter(
                     maskHighlighter,

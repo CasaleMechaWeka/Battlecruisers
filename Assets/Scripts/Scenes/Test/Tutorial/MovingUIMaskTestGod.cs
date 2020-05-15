@@ -25,8 +25,9 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         {
             Assert.IsNotNull(camera);
 
-            _highlighter = CreateHighlighter();
-            _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
+            ICamera abstractCamera = new CameraBC(camera);
+            _highlighter = CreateHighlighter(abstractCamera);
+            _highlightArgsFactory = new HighlightArgsFactory(abstractCamera);
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
@@ -46,7 +47,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             }
         }
 
-        protected virtual IMaskHighlighter CreateHighlighter()
+        protected virtual IMaskHighlighter CreateHighlighter(ICamera camera)
         {
             InverseMaskHighlighter maskHighlighter = GetComponentInChildren<InverseMaskHighlighter>();
             Assert.IsNotNull(maskHighlighter);
