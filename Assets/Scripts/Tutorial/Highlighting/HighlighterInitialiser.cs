@@ -9,13 +9,11 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Tutorial.Highlighting
 {
     /// <summary>
-    /// FELIX  Update comments :P
-    /// Uses two types of masking:
-    /// 1. UI inverse masking to show highlight to user
-    /// 2. Original manual masking (placing 4 rectangles around highlight point), 
-    ///     to block raycasts (user input) to anything outside of the highlight zone.
+    /// Uses 3 highlighters:
+    /// 1. InverseMaskHighlighter:  Covers everything except what's being highlighted
+    /// 2. FourSquareHighlighter:  Blocks raycasts so non highlighted objects are not clickabl.
+    /// 3. ArrowHighlighter:  Points an arrow at the object being highlighted
     /// </summary>
-    /// FELIX  Improve highlight naming and namespaces :)
     public class HighlighterInitialiser : MonoBehaviour
     {
         public InverseMaskHighlighter inverseHighlighter;
