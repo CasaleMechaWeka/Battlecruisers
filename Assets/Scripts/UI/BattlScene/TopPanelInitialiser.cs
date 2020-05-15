@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
@@ -16,11 +16,11 @@ namespace BattleCruisers.UI.BattleScene
 
             CruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
             Assert.IsNotNull(playerHealthInitialiser);
-            IMaskHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser, helpLabelVisibilityFilter);
+            IHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser, helpLabelVisibilityFilter);
 
             CruiserHealthBarInitialiser aiHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("AICruiserHealth/Foreground");
             Assert.IsNotNull(aiHealthInitialiser);
-            IMaskHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser, helpLabelVisibilityFilter);
+            IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser, helpLabelVisibilityFilter);
 
             return new TopPanelComponents(playerCruiserHealthBar, aiCruiserHealthBar);
         }

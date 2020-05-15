@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene
                 populationLimitMonitor);
             Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser);
 
-            IMaskHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
+            IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IBuildMenu buildMenu 
                 = SetupBuildMenuController(
                     uiManager, 
@@ -82,7 +82,7 @@ namespace BattleCruisers.UI.BattleScene
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu);
         }
 
-        private IMaskHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        private IHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.UI;
 using System.Collections.Generic;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             return LastIncompleteBuildingStarted;
         }
 
-        IMaskHighlightable IItemProvider<IMaskHighlightable>.FindItem()
+        IHighlightable IItemProvider<IHighlightable>.FindItem()
         {
             return LastIncompleteBuildingStarted;
         }

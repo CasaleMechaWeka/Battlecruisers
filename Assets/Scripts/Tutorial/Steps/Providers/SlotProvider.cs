@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.UI;
 using BattleCruisers.Utils;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             return Slot;
         }
 
-        IMaskHighlightable IItemProvider<IMaskHighlightable>.FindItem()
+        IHighlightable IItemProvider<IHighlightable>.FindItem()
         {
             return Slot;
         }

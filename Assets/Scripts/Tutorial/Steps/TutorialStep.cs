@@ -11,7 +11,7 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly IHighlighter _highlighter;
         private readonly string _textToDisplay;
         private readonly ITextDisplayer _displayer;
-        private readonly IItemProvider<IMaskHighlightable> _highlightableProvider;
+        private readonly IItemProvider<IHighlightable> _highlightableProvider;
         private Action _completionCallback;
 
         protected TutorialStep(ITutorialStepArgs args)
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tutorial.Steps
             Assert.IsNotNull(completionCallback);
             _completionCallback = completionCallback;
 
-            IMaskHighlightable maskHighlightable = _highlightableProvider.FindItem();
+            IHighlightable maskHighlightable = _highlightableProvider.FindItem();
             if (maskHighlightable != null)
             {
                 _highlighter.Highlight(maskHighlightable);

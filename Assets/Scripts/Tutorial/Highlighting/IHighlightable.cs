@@ -1,6 +1,6 @@
-﻿namespace BattleCruisers.Tutorial.Highlighting.Masked
+﻿namespace BattleCruisers.Tutorial.Highlighting
 {
-    public interface IMaskHighlightable
+    public interface IHighlightable
     {
         HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory);
     }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Highlighting.Masked
+namespace BattleCruisers.Tutorial.Highlighting
 {
     public class HighlightArgsFactory : IHighlightArgsFactory
     {

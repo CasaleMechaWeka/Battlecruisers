@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables
 {
-    public enum Faction
+	public enum Faction
 	{
 		Blues, Reds
 	}
@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables
 		Low, Medium, High
 	}
 
-    public interface ITarget : IDamagable, IRepairable, IMaskHighlightable
+    public interface ITarget : IDamagable, IRepairable, IHighlightable
     {
 		Faction Faction { get; }
 		TargetType TargetType { get; }

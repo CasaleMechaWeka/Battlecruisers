@@ -9,6 +9,6 @@ namespace BattleCruisers.Tutorial.Steps
         IHighlighter Highlighter { get; }
         string TextToDisplay { get; }
         ITextDisplayer Displayer { get; }
-		IItemProvider<IMaskHighlightable> HighlightableProvider { get; }
+		IItemProvider<IHighlightable> HighlightableProvider { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace BattleCruisers.Tutorial.Highlighting
             _highlightArgsFactory = highlightArgsFactory;
         }
 
-        public void Highlight(IMaskHighlightable toHighlight)
+        public void Highlight(IHighlightable toHighlight)
         {
             Assert.IsNotNull(toHighlight);
 

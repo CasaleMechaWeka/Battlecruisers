@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 
 namespace BattleCruisers.UI
 {
-    public interface IButton : IClickableEmitter, IMaskHighlightable
+    public interface IButton : IClickableEmitter, IHighlightable
     {
     }
 }

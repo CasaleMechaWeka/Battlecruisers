@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI
 {
-    public class Togglable : MonoBehaviourWrapper, ITogglable, IMaskHighlightable
+    public class Togglable : MonoBehaviourWrapper, ITogglable, IHighlightable
     {
         protected RectTransform _rectTransform;
 

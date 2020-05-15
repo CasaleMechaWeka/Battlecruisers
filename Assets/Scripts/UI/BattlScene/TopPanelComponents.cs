@@ -1,14 +1,14 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene
 {
     public class TopPanelComponents
     {
-        public IMaskHighlightable PlayerCruiserHealthBar { get; }
-        public IMaskHighlightable AICruiserHealthBar { get; }
+        public IHighlightable PlayerCruiserHealthBar { get; }
+        public IHighlightable AICruiserHealthBar { get; }
 
-        public TopPanelComponents(IMaskHighlightable playerCruiserHealthBar, IMaskHighlightable aiCruiserHealthBar)
+        public TopPanelComponents(IHighlightable playerCruiserHealthBar, IHighlightable aiCruiserHealthBar)
         {
             Helper.AssertIsNotNull(playerCruiserHealthBar, aiCruiserHealthBar);
 

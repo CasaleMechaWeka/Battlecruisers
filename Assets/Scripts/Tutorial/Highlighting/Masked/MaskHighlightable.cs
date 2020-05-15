@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
-    public class MaskHighlightable : MonoBehaviour, IMaskHighlightable
+    public class MaskHighlightable : MonoBehaviour, IHighlightable
     {
         private RectTransform _rectTransform;
 

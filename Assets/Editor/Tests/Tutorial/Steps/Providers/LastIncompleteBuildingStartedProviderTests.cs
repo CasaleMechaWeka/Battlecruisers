@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Tests.Utils.Extensions;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
     public class LastIncompleteBuildingStartedProviderTests
     {
         private IItemProvider<IBuildable> _buildableProvider;
-        private IItemProvider<IMaskHighlightable> _highlightableProvider;
+        private IItemProvider<IHighlightable> _highlightableProvider;
         private IItemProvider<IClickableEmitter> _clickableProvider;
         private ICruiserBuildingMonitor _playerBuildingMonitor;
         private IBuilding _building1, _building2;

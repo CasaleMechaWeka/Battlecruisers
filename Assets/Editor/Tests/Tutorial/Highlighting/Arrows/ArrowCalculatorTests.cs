@@ -1,5 +1,5 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Arrows;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Arrows;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;

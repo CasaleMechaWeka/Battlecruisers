@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using System;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         }
     }
 
-    public interface INavigationWheel : IMaskHighlightable
+    public interface INavigationWheel : IHighlightable
     {
         Vector2 CenterPosition { get; }
 

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
 using NSubstitute;
 using NUnit.Framework;
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start_NullHighlightable_DoesNotHighlight()
         {
-            _highlightableProvider.FindItem().Returns((IMaskHighlightable)null);
+            _highlightableProvider.FindItem().Returns((IHighlightable)null);
 
             _tutorialStep.Start(_completionCallback);
 

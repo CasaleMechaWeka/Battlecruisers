@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;

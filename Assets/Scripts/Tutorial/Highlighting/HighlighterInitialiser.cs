@@ -1,12 +1,14 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Arrows;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Highlighting.Masked
+namespace BattleCruisers.Tutorial.Highlighting
 {
     /// <summary>
+    /// FELIX  Update comments :P
     /// Uses two types of masking:
     /// 1. UI inverse masking to show highlight to user
     /// 2. Original manual masking (placing 4 rectangles around highlight point), 

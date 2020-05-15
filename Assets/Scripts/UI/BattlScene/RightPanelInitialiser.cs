@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.GameSpeed;
@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.BattleScene
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
-            IMaskHighlightable speedButtonPanel = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
+            IHighlightable speedButtonPanel = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = CreateMainMenuManager(pauseGameManager, battleCompletionHandler);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.BattleScene
             return informator;
         }
 
-        private IMaskHighlightable SetupSpeedPanel(ISoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
+        private IHighlightable SetupSpeedPanel(ISoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);

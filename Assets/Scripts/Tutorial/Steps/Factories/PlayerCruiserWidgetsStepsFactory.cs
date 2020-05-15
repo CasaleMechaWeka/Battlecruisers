@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -6,14 +6,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class PlayerCruiserWidgetsStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IMaskHighlightable _playerCruiserHealthBar, _numOfDrones;
+        private readonly IHighlightable _playerCruiserHealthBar, _numOfDrones;
         private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public PlayerCruiserWidgetsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            IMaskHighlightable playerCruiserHealthBar,
-            IMaskHighlightable numOfDrones,
+            IHighlightable playerCruiserHealthBar,
+            IHighlightable numOfDrones,
             IAutoNavigationStepFactory autoNavigationStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory)

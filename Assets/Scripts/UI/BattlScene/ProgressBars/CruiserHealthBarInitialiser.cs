@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Filters;
@@ -24,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
         public HelpLabel helpLabel;
 
-        public IMaskHighlightable Initialise(ICruiser cruiser, IBroadcastingFilter helpLabelVisibilityFilter)
+        public IHighlightable Initialise(ICruiser cruiser, IBroadcastingFilter helpLabelVisibilityFilter)
         {
             Helper.AssertIsNotNull(cruiser, helpLabelVisibilityFilter);
 

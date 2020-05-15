@@ -10,13 +10,13 @@ namespace BattleCruisers.Tutorial.Steps
         public IHighlighter Highlighter { get; }
         public string TextToDisplay { get; }
         public ITextDisplayer Displayer { get; }
-		public IItemProvider<IMaskHighlightable> HighlightableProvider { get; }
+		public IItemProvider<IHighlightable> HighlightableProvider { get; }
 
         public TutorialStepArgs(
             IHighlighter highlighter,
             string textToDisplay,
             ITextDisplayer displayer,
-            IItemProvider<IMaskHighlightable> highlightableProvider)
+            IItemProvider<IHighlightable> highlightableProvider)
         {
             // textToDisplay may be null
             Helper.AssertIsNotNull(highlighter, displayer, highlightableProvider);

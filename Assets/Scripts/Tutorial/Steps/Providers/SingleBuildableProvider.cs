@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.UI;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             return buildable;
         }
 
-        IMaskHighlightable IItemProvider<IMaskHighlightable>.FindItem()
+        IHighlightable IItemProvider<IHighlightable>.FindItem()
         {
             return FindItem();
         }

@@ -21,14 +21,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay = null,
-            IMaskHighlightable highlightable = null)
+            IHighlightable highlightable = null)
         {
-            return CreateTutorialStepArgs(textToDisplay, new StaticProvider<IMaskHighlightable>(highlightable));
+            return CreateTutorialStepArgs(textToDisplay, new StaticProvider<IHighlightable>(highlightable));
         }
 
         public ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay,
-            IItemProvider<IMaskHighlightable> highlightableProvider)
+            IItemProvider<IHighlightable> highlightableProvider)
         {
             Assert.IsNotNull(highlightableProvider);
 

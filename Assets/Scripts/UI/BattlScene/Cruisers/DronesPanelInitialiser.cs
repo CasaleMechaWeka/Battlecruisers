@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -17,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 
         public Image highlight;
 
-        public IMaskHighlightable Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        public IHighlightable Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
         {
             Helper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 

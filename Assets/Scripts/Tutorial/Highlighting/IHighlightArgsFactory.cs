@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Tutorial.Highlighting.Masked
+namespace BattleCruisers.Tutorial.Highlighting
 {
     public interface IHighlightArgsFactory
     {

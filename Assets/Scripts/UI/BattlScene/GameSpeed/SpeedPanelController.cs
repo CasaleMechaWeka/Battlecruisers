@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private const int EXPECTED_NUM_OF_BUTTONS = 2;  // Slow motion, fast forward
 
-        public IMaskHighlightable Initialise(ISoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
+        public IHighlightable Initialise(ISoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
 

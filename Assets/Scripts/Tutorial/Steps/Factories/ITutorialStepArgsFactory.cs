@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Providers;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -7,10 +7,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay = null,
-            IMaskHighlightable highlightable = null);
+            IHighlightable highlightable = null);
 
         ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay,
-            IItemProvider<IMaskHighlightable> highlightableProvider);
+            IItemProvider<IHighlightable> highlightableProvider);
     }
 }
