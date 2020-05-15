@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
     public class HighlighterTests
     {
         private IHighlighter _highlighter;
-        private IMaskHighlighter _maskHighlighter;
+        private ICoreHighlighter _maskHighlighter;
         private IHighlightArgsFactory _highlightArgsFactory;
         private IHighlightable _highlightable;
         private HighlightArgs _highlightArgs;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _maskHighlighter = Substitute.For<IMaskHighlighter>();
+            _maskHighlighter = Substitute.For<ICoreHighlighter>();
             _highlightArgsFactory = Substitute.For<IHighlightArgsFactory>();
 
             _highlighter = new Highlighter(_maskHighlighter, _highlightArgsFactory);

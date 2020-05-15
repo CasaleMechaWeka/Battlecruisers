@@ -7,7 +7,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 {
     public class DualMaskingTestGod : MovingUIMaskTestGod
     {
-        protected override IMaskHighlighter CreateHighlighter(ICamera camera)
+        protected override ICoreHighlighter CreateHighlighter(ICamera camera)
         {
             HighlighterInitialiser highlighterInitialiser = GetComponentInChildren<HighlighterInitialiser>();
             Assert.IsNotNull(highlighterInitialiser);

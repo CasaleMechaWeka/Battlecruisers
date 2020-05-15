@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.FourSquare
 {
-    public class FourSquareHighlighter : MonoBehaviour, IMaskHighlighter
+    public class FourSquareHighlighter : MonoBehaviour, ICoreHighlighter
     {
         private IList<RectangleImage> _rectangles;
         private const int NUM_OF_RECTANGLES = 4;

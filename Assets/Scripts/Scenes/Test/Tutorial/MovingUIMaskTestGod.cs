@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
 {
     public class MovingUIMaskTestGod : MonoBehaviour
     {
-        private IMaskHighlighter _highlighter;
+        private ICoreHighlighter _highlighter;
         private IHighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
         private ICircularList<SpriteRenderer> _inGameObjects;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             }
         }
 
-        protected virtual IMaskHighlighter CreateHighlighter(ICamera camera)
+        protected virtual ICoreHighlighter CreateHighlighter(ICamera camera)
         {
             InverseMaskHighlighter maskHighlighter = GetComponentInChildren<InverseMaskHighlighter>();
             Assert.IsNotNull(maskHighlighter);

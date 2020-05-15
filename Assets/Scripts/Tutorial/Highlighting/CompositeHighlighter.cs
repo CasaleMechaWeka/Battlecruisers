@@ -2,11 +2,11 @@
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    public class CompositeHighlighter : IMaskHighlighter
+    public class CompositeHighlighter : ICoreHighlighter
     {
-        private readonly IMaskHighlighter[] _highlighters;
+        private readonly ICoreHighlighter[] _highlighters;
 
-        public CompositeHighlighter(params IMaskHighlighter[] highlighters)
+        public CompositeHighlighter(params ICoreHighlighter[] highlighters)
         {
             Assert.IsTrue(highlighters.Length > 0);
             _highlighters = highlighters;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Highlighting
 
         public void Highlight(HighlightArgs args)
         {
-            foreach (IMaskHighlighter highlighter in _highlighters)
+            foreach (ICoreHighlighter highlighter in _highlighters)
             {
                 highlighter.Highlight(args);
             }
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Highlighting
 
         public void Unhighlight()
         {
-            foreach (IMaskHighlighter highlighter in _highlighters)
+            foreach (ICoreHighlighter highlighter in _highlighters)
             {
                 highlighter.Unhighlight();
             }

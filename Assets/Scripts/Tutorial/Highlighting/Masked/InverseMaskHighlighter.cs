@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
-    public class InverseMaskHighlighter : MonoBehaviour, IMaskHighlighter
+    public class InverseMaskHighlighter : MonoBehaviour, ICoreHighlighter
     {
         private RectTransform _rectTransform;
 

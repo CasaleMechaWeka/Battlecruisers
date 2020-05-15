@@ -1,7 +1,6 @@
 ﻿namespace BattleCruisers.Tutorial.Highlighting
 {
-    // FELIX  Rename
-    public interface IMaskHighlighter
+    public interface ICoreHighlighter
     {
         void Highlight(HighlightArgs args);
         void Unhighlight();

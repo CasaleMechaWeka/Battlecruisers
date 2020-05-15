@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Highlighting
         public FourSquareHighlighter fourSquareHighlighter;
         public ArrowHighlighter arrowHighlighter;
 
-        public IMaskHighlighter CreateHighlighter(ICamera camera)
+        public ICoreHighlighter CreateHighlighter(ICamera camera)
         {
             Assert.IsNotNull(camera);
             Helper.AssertIsNotNull(inverseHighlighter, fourSquareHighlighter, arrowHighlighter);

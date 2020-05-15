@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
-
-namespace BattleCruisers.Tutorial.Highlighting
+﻿namespace BattleCruisers.Tutorial.Highlighting
 {
     public interface IHighlighter
     {

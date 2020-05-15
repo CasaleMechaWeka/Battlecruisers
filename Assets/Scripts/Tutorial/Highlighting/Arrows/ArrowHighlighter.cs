@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Arrows
 {
-    public class ArrowHighlighter : MonoBehaviour, IMaskHighlighter
+    public class ArrowHighlighter : MonoBehaviour, ICoreHighlighter
     {
         private IArrowCalculator _calculator;
 

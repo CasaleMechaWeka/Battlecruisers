@@ -1,15 +1,14 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
     public class Highlighter : IHighlighter
     {
-        private readonly IMaskHighlighter _maskHighlighter;
+        private readonly ICoreHighlighter _maskHighlighter;
         private readonly IHighlightArgsFactory _highlightArgsFactory;
 
-        public Highlighter(IMaskHighlighter maskHighlighter, IHighlightArgsFactory highlightArgsFactory)
+        public Highlighter(ICoreHighlighter maskHighlighter, IHighlightArgsFactory highlightArgsFactory)
         {
             Helper.AssertIsNotNull(maskHighlighter, highlightArgsFactory);
 
