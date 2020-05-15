@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
-    public class CompositeHighlightTestGod : MovingUIMaskTestGod
+    public class CompositeHighlighterTestGod : MovingHighlightableTestGod
     {
         protected override ICoreHighlighter CreateHighlighter(ICamera camera)
         {

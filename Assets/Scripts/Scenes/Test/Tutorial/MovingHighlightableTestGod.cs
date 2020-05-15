@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.FourSquare;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -9,9 +8,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
-    // FELIX  Avoid duplicate cod
-    public class FourSquareHighlightingTestGod : MonoBehaviour
+    public abstract class MovingHighlightableTestGod : MonoBehaviour
     {
+        private ICoreHighlighter _highlighter;
         private IHighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
         private ICircularList<SpriteRenderer> _inGameObjects;
@@ -20,13 +19,15 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public FourSquareHighlighter fourSquareHighlighter;
+        public bool highlightGameObjects = true;
 
         void Start()
         {
-            _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
+            Assert.IsNotNull(camera);
 
-            fourSquareHighlighter.Initialise();
+            ICamera abstractCamera = new CameraBC(camera);
+            _highlighter = CreateHighlighter(abstractCamera);
+            _highlightArgsFactory = new HighlightArgsFactory(abstractCamera);
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
@@ -35,10 +36,18 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             SpriteRenderer[] inGameObjects = FindObjectsOfType<SpriteRenderer>();
             Assert.AreEqual(EXPECTED_NUM_OF_IN_GAME_OBJECTS, inGameObjects.Length);
             _inGameObjects = new CircularList<SpriteRenderer>(inGameObjects);
-
-            HighlightNextButton();
-            //HighlightNextInGameObject();
+            
+            if (highlightGameObjects)
+            {
+                HighlightNextInGameObject();
+            }
+            else
+            {
+                HighlightNextButton();
+            }
         }
+
+        protected abstract ICoreHighlighter CreateHighlighter(ICamera camera);
 
         private void HighlightNextButton()
         {
@@ -52,7 +61,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         {
             RectTransform onCanvasObjRectTransform = onCanvasObject.transform.Parse<RectTransform>();
             HighlightArgs highlightArgs = _highlightArgsFactory.CreateForOnCanvasObject(onCanvasObjRectTransform, sizeMultiplier: 1);
-            fourSquareHighlighter.Highlight(highlightArgs);
+            _highlighter.Highlight(highlightArgs);
         }
 
         private void HighlightNextInGameObject()
@@ -66,7 +75,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private void CreateInGameHighlight(SpriteRenderer renderer)
         {
             HighlightArgs highlightArgs = _highlightArgsFactory.CreateForInGameObject(renderer.transform.position, renderer.size);
-            fourSquareHighlighter.Highlight(highlightArgs);
+            _highlighter.Highlight(highlightArgs);
         }
     }
 }
