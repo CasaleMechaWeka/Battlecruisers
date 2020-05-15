@@ -86,7 +86,6 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
                 new HighlightArgs(
                     noBorderArgs.CenterPosition,
                     new Vector2(noBorderArgs.BottomLeftPosition.x - HIGHLIGHT_BORDER_IN_PIXELS, noBorderArgs.BottomLeftPosition.y - HIGHLIGHT_BORDER_IN_PIXELS),
-                    // FELIX  Increase size once using center position?
                     new Vector2(noBorderArgs.Size.x + 2 * HIGHLIGHT_BORDER_IN_PIXELS, noBorderArgs.Size.y + 2 * HIGHLIGHT_BORDER_IN_PIXELS));
         }
     }

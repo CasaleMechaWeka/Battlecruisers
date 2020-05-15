@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
-    // FELIX  remove?
     public class MaskHighlightingTestGod : MonoBehaviour
     {
         private IHighlightArgsFactory _highlightArgsFactory;

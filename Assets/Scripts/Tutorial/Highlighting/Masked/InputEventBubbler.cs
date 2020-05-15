@@ -17,9 +17,6 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             _newTarget = raycastResults[1].gameObject; //Array item 1 should be the one next underneath, handy to implement for-loop with check here if necessary.
             Logging.Log(Tags.MASKS, $"Bubbling to {_newTarget}"); // Just make sure you caught the right object
 
-            // FELIX  Only propagate if is in allowed rectangle
-            // FELIX  Null check other methods
-
             ExecuteEvents.Execute(_newTarget, eventData, ExecuteEvents.pointerDownHandler);
         }
 

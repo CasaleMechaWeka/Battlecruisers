@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
-    // FELIX  Remove
     public class MaskHighlighter : MonoBehaviour, IMaskHighlighter
     {
         private IList<MaskImage> _masks;

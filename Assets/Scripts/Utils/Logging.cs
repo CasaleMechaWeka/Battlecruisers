@@ -172,9 +172,7 @@ namespace BattleCruisers.Utils
 
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.MASKS, true);
-            //tagsToActiveness.Add(Tags.MASKS, false);
+            tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
