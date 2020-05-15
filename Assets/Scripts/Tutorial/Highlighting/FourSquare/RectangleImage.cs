@@ -6,20 +6,20 @@ namespace BattleCruisers.Tutorial.Highlighting.FourSquare
 {
     public abstract class RectangleImage : MonoBehaviour
     {
-        private Image _maskImage;
+        private Image _rectangleImage;
 
         public void Initialise()
         {
-            _maskImage = GetComponent<Image>();
-            Assert.IsNotNull(_maskImage);
+            _rectangleImage = GetComponent<Image>();
+            Assert.IsNotNull(_rectangleImage);
         }
 
         public void UpdatePosition(HighlightArgs args)
         {
-            Vector2 maskSize = _maskImage.rectTransform.sizeDelta * _maskImage.rectTransform.lossyScale;
-            _maskImage.transform.position = FindPosition(args, maskSize);
+            Vector2 highlightSize = _rectangleImage.rectTransform.sizeDelta * _rectangleImage.rectTransform.lossyScale;
+            _rectangleImage.transform.position = FindPosition(args, highlightSize);
         }
 
-        protected abstract Vector2 FindPosition(HighlightArgs args, Vector2 maskSize);
+        protected abstract Vector2 FindPosition(HighlightArgs args, Vector2 highlightSize);
     }
 }

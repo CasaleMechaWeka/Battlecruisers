@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Masked;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
     public class HighlighterTests
     {
         private IHighlighter _highlighter;
-        private ICoreHighlighter _maskHighlighter;
+        private ICoreHighlighter _coreHighlighter;
         private IHighlightArgsFactory _highlightArgsFactory;
         private IHighlightable _highlightable;
         private HighlightArgs _highlightArgs;
@@ -20,10 +19,10 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _maskHighlighter = Substitute.For<ICoreHighlighter>();
+            _coreHighlighter = Substitute.For<ICoreHighlighter>();
             _highlightArgsFactory = Substitute.For<IHighlightArgsFactory>();
 
-            _highlighter = new Highlighter(_maskHighlighter, _highlightArgsFactory);
+            _highlighter = new Highlighter(_coreHighlighter, _highlightArgsFactory);
 
             _highlightArgs = new HighlightArgs(new Vector2(9, 9), new Vector2(1, 2), new Vector2(-1, 2));
             _highlightable = Substitute.For<IHighlightable>();
@@ -34,7 +33,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         public void Highlight()
         {
             _highlighter.Highlight(_highlightable);
-            _maskHighlighter.Received().Highlight(_highlightArgs);
+            _coreHighlighter.Received().Highlight(_highlightArgs);
         }
 
         [Test]
@@ -43,7 +42,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
             _highlighter.Highlight(_highlightable);
             _highlighter.Unhighlight();
 
-            _maskHighlighter.Received().Unhighlight();
+            _coreHighlighter.Received().Unhighlight();
         }
 
         [Test]

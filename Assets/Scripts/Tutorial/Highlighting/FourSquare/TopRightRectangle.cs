@@ -4,7 +4,7 @@ namespace BattleCruisers.Tutorial.Highlighting.FourSquare
 {
     public class TopRightRectangle : RectangleImage
     {
-        protected override Vector2 FindPosition(HighlightArgs args, Vector2 maskSize)
+        protected override Vector2 FindPosition(HighlightArgs args, Vector2 highlightSize)
         {
             return
                 new Vector2(

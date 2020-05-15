@@ -30,10 +30,10 @@ namespace BattleCruisers.Tutorial.Steps
             Assert.IsNotNull(completionCallback);
             _completionCallback = completionCallback;
 
-            IHighlightable maskHighlightable = _highlightableProvider.FindItem();
-            if (maskHighlightable != null)
+            IHighlightable highlightable = _highlightableProvider.FindItem();
+            if (highlightable != null)
             {
-                _highlighter.Highlight(maskHighlightable);
+                _highlighter.Highlight(highlightable);
             }
 
             if (_textToDisplay != null)

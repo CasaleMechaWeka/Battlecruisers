@@ -5,14 +5,14 @@ namespace BattleCruisers.Tutorial.Highlighting
 {
     public class Highlighter : IHighlighter
     {
-        private readonly ICoreHighlighter _maskHighlighter;
+        private readonly ICoreHighlighter _coreHighlighter;
         private readonly IHighlightArgsFactory _highlightArgsFactory;
 
-        public Highlighter(ICoreHighlighter maskHighlighter, IHighlightArgsFactory highlightArgsFactory)
+        public Highlighter(ICoreHighlighter coreHighlighter, IHighlightArgsFactory highlightArgsFactory)
         {
-            Helper.AssertIsNotNull(maskHighlighter, highlightArgsFactory);
+            Helper.AssertIsNotNull(coreHighlighter, highlightArgsFactory);
 
-            _maskHighlighter = maskHighlighter;
+            _coreHighlighter = coreHighlighter;
             _highlightArgsFactory = highlightArgsFactory;
         }
 
@@ -21,12 +21,12 @@ namespace BattleCruisers.Tutorial.Highlighting
             Assert.IsNotNull(toHighlight);
 
             HighlightArgs highlightArgs = toHighlight.CreateHighlightArgs(_highlightArgsFactory);
-            _maskHighlighter.Highlight(highlightArgs);
+            _coreHighlighter.Highlight(highlightArgs);
         }
 
         public void Unhighlight()
         {
-            _maskHighlighter.Unhighlight();
+            _coreHighlighter.Unhighlight();
         }
     }
 }

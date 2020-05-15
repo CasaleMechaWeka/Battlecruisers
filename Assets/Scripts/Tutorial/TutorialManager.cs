@@ -25,10 +25,10 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(highlighterInitialiser);
             Assert.IsNotNull(tutorialArgs);
 
-            ICoreHighlighter maskHighlighter = highlighterInitialiser.CreateHighlighter(tutorialArgs.CameraComponents.MainCamera);
+            ICoreHighlighter coreHighlighter = highlighterInitialiser.CreateHighlighter(tutorialArgs.CameraComponents.MainCamera);
             IHighlighter highlighter
                 = new Highlighter(
-                    maskHighlighter,
+                    coreHighlighter,
                     new HighlightArgsFactory(tutorialArgs.CameraComponents.MainCamera));
 
             ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);

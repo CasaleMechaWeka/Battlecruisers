@@ -9,7 +9,9 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
-    public class MaskHighlightingTestGod : MonoBehaviour
+    // FELIX  Avoid duplicate cod
+    // FELIX  rename
+    public class FourSquareHighlightingTestGod : MonoBehaviour
     {
         private IHighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
@@ -19,13 +21,13 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public FourSquareHighlighter maskHighlighter;
+        public FourSquareHighlighter fourSquareHighlighter;
 
         void Start()
         {
             _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
 
-            maskHighlighter.Initialise();
+            fourSquareHighlighter.Initialise();
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();
             Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, onCanvasButtons.Length);
@@ -51,7 +53,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         {
             RectTransform onCanvasObjRectTransform = onCanvasObject.transform.Parse<RectTransform>();
             HighlightArgs highlightArgs = _highlightArgsFactory.CreateForOnCanvasObject(onCanvasObjRectTransform, sizeMultiplier: 1);
-            maskHighlighter.Highlight(highlightArgs);
+            fourSquareHighlighter.Highlight(highlightArgs);
         }
 
         private void HighlightNextInGameObject()
@@ -65,7 +67,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private void CreateInGameHighlight(SpriteRenderer renderer)
         {
             HighlightArgs highlightArgs = _highlightArgsFactory.CreateForInGameObject(renderer.transform.position, renderer.size);
-            maskHighlighter.Highlight(highlightArgs);
+            fourSquareHighlighter.Highlight(highlightArgs);
         }
     }
 }
