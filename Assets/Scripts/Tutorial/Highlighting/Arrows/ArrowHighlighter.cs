@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,6 +23,8 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
             ArrowDirection arrowDirection = _calculator.FindArrowDirection(args.CenterPosition);
             Vector2 arrowHeadPosition = _calculator.FindArrowHeadPosition(args, arrowDirection);
             Vector2 upDirection = _calculator.FindArrowDirectionVector(arrowHeadPosition, args.CenterPosition);
+
+            Logging.Log(Tags.MASKS, $"arrowDirection: {arrowDirection}  vector: {upDirection}  Head position: {arrowHeadPosition}");
 
             gameObject.transform.position = arrowHeadPosition;
             gameObject.transform.up = upDirection;

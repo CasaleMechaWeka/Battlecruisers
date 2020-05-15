@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
 
         public ArrowDirection FindArrowDirection(Vector2 highlightableCenterPosition)
         {
+            Logging.Log(Tags.MASKS, $"highlightableCenterPosition: {highlightableCenterPosition}  Camera size: {_camera.PixelWidth}x{_camera.PixelHeight}");
+
             if (highlightableCenterPosition.x == _camera.PixelWidth / 2)
             {
                 return ArrowDirection.North;
@@ -69,13 +72,13 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
                 case ArrowDirection.NorthEast:
                     return
                         new Vector2(
-                            args.CenterPosition.x + args.Size.x / 2,
+                            args.CenterPosition.x - args.Size.x / 2,
                             args.CenterPosition.y - args.Size.y / 2);
 
                 case ArrowDirection.NorthWest:
                     return
                         new Vector2(
-                            args.CenterPosition.x - args.Size.x / 2,
+                            args.CenterPosition.x + args.Size.x / 2,
                             args.CenterPosition.y - args.Size.y / 2);
 
                 case ArrowDirection.SouthEast:
