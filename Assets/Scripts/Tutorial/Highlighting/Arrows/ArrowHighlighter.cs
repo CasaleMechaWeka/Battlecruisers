@@ -13,7 +13,13 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
         {
             gameObject.SetActive(true);
 
-            gameObject.transform.position = args.CenterPosition;
+            gameObject.transform.position = args.BottomLeftPosition;
+            gameObject.transform.up = FindArrowDirection(args.BottomLeftPosition, args.CenterPosition);
+        }
+
+        private Vector2 FindArrowDirection(Vector2 corner, Vector2 center)
+        {
+            return center - corner;
         }
 
         public void Unhighlight()
