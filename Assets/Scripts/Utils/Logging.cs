@@ -49,6 +49,7 @@ namespace BattleCruisers.Utils
 
         // UI
 		public const string LOADOUT_SCREEN = "LoadoutScreen";
+        public const string MASKS = "Masks";
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
         public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
@@ -171,6 +172,9 @@ namespace BattleCruisers.Utils
 
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.MASKS, true);
+            //tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
