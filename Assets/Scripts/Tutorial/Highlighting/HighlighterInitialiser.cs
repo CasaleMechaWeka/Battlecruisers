@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Highlighting.Arrows;
+using BattleCruisers.Tutorial.Highlighting.FourSquare;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;

@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
+    // FELIX  Delete (own commit, so can resurrect)
     // https://answers.unity.com/questions/884262/catch-pointer-events-by-multiple-gameobjects.html?childToView=1727303#answer-1727303
     public class InputEventBubbler : MonoBehaviour, IPointerDownHandler, IDragHandler, IBeginDragHandler, IPointerUpHandler, IEndDragHandler
     {

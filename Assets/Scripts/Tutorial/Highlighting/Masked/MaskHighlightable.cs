@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
+    // FELIX  Rename, up a namespace
     public class MaskHighlightable : MonoBehaviour, IHighlightable
     {
         private RectTransform _rectTransform;
