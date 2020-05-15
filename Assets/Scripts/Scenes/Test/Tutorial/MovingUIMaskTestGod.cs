@@ -1,16 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
-using BattleCruisers.Tutorial.Highlighting.Masked;
-using BattleCruisers.Utils.PlatformAbstractions;
-using UnityEngine.UI;
-using UnityEngine.Assertions;
-using BattleCruisers.Utils.DataStrctures;
+﻿using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
     public class MovingUIMaskTestGod : MonoBehaviour
     {
+        private IMaskHighlighter _highlighter;
         private IHighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
         private ICircularList<SpriteRenderer> _inGameObjects;
@@ -19,15 +19,13 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public InverseMaskHighlighter maskHighlighter;
         public bool highlightGameObjects = true;
 
         void Start()
         {
-            Helper.AssertIsNotNull(camera, maskHighlighter);
+            Assert.IsNotNull(camera);
 
-            maskHighlighter.Initialise();
-
+            _highlighter = CreateHighlighter();
             _highlightArgsFactory = new HighlightArgsFactory(new CameraBC(camera));
 
             Button[] onCanvasButtons = FindObjectsOfType<Button>();
@@ -48,6 +46,14 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             }
         }
 
+        protected virtual IMaskHighlighter CreateHighlighter()
+        {
+            InverseMaskHighlighter maskHighlighter = GetComponentInChildren<InverseMaskHighlighter>();
+            Assert.IsNotNull(maskHighlighter);
+            maskHighlighter.Initialise();
+            return maskHighlighter;
+        }
+
         private void HighlightNextButton()
         {
             Button buttonToHighlight = _onCanvasButtons.Next();
@@ -60,7 +66,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         {
             RectTransform onCanvasObjRectTransform = onCanvasObject.transform.Parse<RectTransform>();
             HighlightArgs highlightArgs = _highlightArgsFactory.CreateForOnCanvasObject(onCanvasObjRectTransform, sizeMultiplier: 1);
-            maskHighlighter.Highlight(highlightArgs);
+            _highlighter.Highlight(highlightArgs);
         }
 
         private void HighlightNextInGameObject()
@@ -74,7 +80,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private void CreateInGameHighlight(SpriteRenderer renderer)
         {
             HighlightArgs highlightArgs = _highlightArgsFactory.CreateForInGameObject(renderer.transform.position, renderer.size);
-            maskHighlighter.Highlight(highlightArgs);
+            _highlighter.Highlight(highlightArgs);
         }
     }
 }
