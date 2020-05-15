@@ -7,7 +7,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
     {
         protected override IMaskHighlighter CreateHighlighter()
         {
-            HighlighterInitialiser highlighterInitialiser = GetComponent<HighlighterInitialiser>();
+            HighlighterInitialiser highlighterInitialiser = GetComponentInChildren<HighlighterInitialiser>();
             Assert.IsNotNull(highlighterInitialiser);
             return highlighterInitialiser.CreateHighlighter();
         }
