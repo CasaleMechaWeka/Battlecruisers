@@ -1,11 +1,10 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
-    public class DualMaskingTestGod : MovingUIMaskTestGod
+    public class CompositeHighlightTestGod : MovingUIMaskTestGod
     {
         protected override ICoreHighlighter CreateHighlighter(ICamera camera)
         {

@@ -10,7 +10,6 @@ using UnityEngine.UI;
 namespace BattleCruisers.Scenes.Test.Tutorial
 {
     // FELIX  Avoid duplicate cod
-    // FELIX  rename
     public class FourSquareHighlightingTestGod : MonoBehaviour
     {
         private IHighlightArgsFactory _highlightArgsFactory;
