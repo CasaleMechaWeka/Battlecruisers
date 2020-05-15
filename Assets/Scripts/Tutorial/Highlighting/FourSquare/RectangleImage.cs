@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Tutorial.Highlighting.FourSquare
 {
-    public abstract class MaskImage : MonoBehaviour
+    public abstract class RectangleImage : MonoBehaviour
     {
         private Image _maskImage;
 

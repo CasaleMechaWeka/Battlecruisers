@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
         public Camera camera;
-        public MaskHighlighter maskHighlighter;
+        public FourSquareHighlighter maskHighlighter;
 
         void Start()
         {

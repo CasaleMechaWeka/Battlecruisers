@@ -19,22 +19,22 @@ namespace BattleCruisers.Tutorial.Highlighting
     public class HighlighterInitialiser : MonoBehaviour
     {
         public InverseMaskHighlighter inverseHighlighter;
-        public MaskHighlighter maskHighlighter;
+        public FourSquareHighlighter fourSquareHighlighter;
         public ArrowHighlighter arrowHighlighter;
 
         public IMaskHighlighter CreateHighlighter(ICamera camera)
         {
             Assert.IsNotNull(camera);
-            Helper.AssertIsNotNull(inverseHighlighter, maskHighlighter, arrowHighlighter);
+            Helper.AssertIsNotNull(inverseHighlighter, fourSquareHighlighter, arrowHighlighter);
 
             inverseHighlighter.Initialise();
-            maskHighlighter.Initialise();
+            fourSquareHighlighter.Initialise();
 
             arrowHighlighter
                 .Initialise(
                      new ArrowCalculator(camera));
 
-            return new CompositeHighlighter(inverseHighlighter, maskHighlighter, arrowHighlighter);
+            return new CompositeHighlighter(inverseHighlighter, fourSquareHighlighter, arrowHighlighter);
         }
     }
 }

@@ -2,14 +2,14 @@
 
 namespace BattleCruisers.Tutorial.Highlighting.FourSquare
 {
-    public class TopLeftMask : MaskImage
+    public class TopRightRectangle : RectangleImage
     {
         protected override Vector2 FindPosition(HighlightArgs args, Vector2 maskSize)
         {
             return
                 new Vector2(
-                    args.BottomLeftPosition.x - maskSize.x,
-                    args.BottomLeftPosition.y);
+                    args.BottomLeftPosition.x,
+                    args.BottomLeftPosition.y + args.Size.y);
         }
     }
 }
