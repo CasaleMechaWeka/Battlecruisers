@@ -15,7 +15,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         public void Highlight(HighlightArgs args)
         {
             _rectTransform.position = args.CenterPosition;
-            _rectTransform.sizeDelta = args.Size;
+            _rectTransform.sizeDelta = args.Size / _rectTransform.lossyScale;
 
             gameObject.SetActive(true);
         }
