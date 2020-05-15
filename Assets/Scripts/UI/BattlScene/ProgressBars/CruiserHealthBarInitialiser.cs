@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             _helpLabelsVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
         }
 
-        private MaskHighlightable SetupHealthBar(ICruiser cruiser)
+        private Highlightable SetupHealthBar(ICruiser cruiser)
         {
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             _cruiserHealthMonitor = new HealthStateMonitor(cruiser);
             _cruiserHealthMonitor.HealthStateChanged += CruiserHealthMonitor_HealthStateChanged;
 
-            MaskHighlightable highlightable = GetComponent<MaskHighlightable>();
+            Highlightable highlightable = GetComponent<Highlightable>();
             Assert.IsNotNull(highlightable);
             highlightable.Initialise();
             return highlightable;

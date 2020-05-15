@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 
             _dronesDisplayer = new DronesDisplayer(droneManager, droneManagerMonitor, twoDigitDisplayer, highlightGameObject);
 
-            MaskHighlightable highlightable = GetComponent<MaskHighlightable>();
+            Highlightable highlightable = GetComponent<Highlightable>();
             Assert.IsNotNull(highlightable);
             highlightable.Initialise();
             return highlightable;

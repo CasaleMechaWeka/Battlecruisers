@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
             _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>());
 
-            MaskHighlightable speedButtonPanel = GetComponent<MaskHighlightable>();
+            Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);
             speedButtonPanel.Initialise();
             return speedButtonPanel;
