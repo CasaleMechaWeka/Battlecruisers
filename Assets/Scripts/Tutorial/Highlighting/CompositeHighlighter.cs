@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Assertions;
 
-namespace BattleCruisers.Tutorial.Highlighting.Masked
+namespace BattleCruisers.Tutorial.Highlighting
 {
     public class CompositeHighlighter : IMaskHighlighter
     {
