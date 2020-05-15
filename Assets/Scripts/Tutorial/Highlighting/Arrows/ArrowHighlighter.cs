@@ -13,8 +13,17 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
         {
             gameObject.SetActive(true);
 
-            gameObject.transform.position = args.BottomLeftPosition;
-            gameObject.transform.up = FindArrowDirection(args.BottomLeftPosition, args.CenterPosition);
+            //// Bottom left
+            //gameObject.transform.position = args.BottomLeftPosition;
+            //gameObject.transform.up = FindArrowDirection(args.BottomLeftPosition, args.CenterPosition);
+
+            // Bottom right
+            Vector2 bottomRight
+                = new Vector2(
+                    args.CenterPosition.x + args.Size.x / 2,
+                    args.CenterPosition.y - args.Size.y / 2);
+            gameObject.transform.position = bottomRight;
+            gameObject.transform.up = FindArrowDirection(bottomRight, args.CenterPosition);
         }
 
         private Vector2 FindArrowDirection(Vector2 corner, Vector2 center)
