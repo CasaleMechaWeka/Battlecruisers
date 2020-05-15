@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Arrows
 {
-    // FELIX  Test
     public class ArrowCalculator : IArrowCalculator
     {
         private readonly ICamera _camera;
@@ -18,6 +17,11 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
         {
             Assert.IsNotNull(camera);
             _camera = camera;
+        }
+
+        public bool ShouldShowArrow(Vector2 highlightableSize)
+        {
+            return highlightableSize.magnitude < HIGHLIGHTABLE_CUTOFF_SIZE_IN_PIXELS;
         }
 
         public ArrowDirection FindArrowDirection(Vector2 highlightableCenterPosition)
@@ -103,11 +107,6 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
         public Vector2 FindArrowDirectionVector(Vector2 arrowHead, Vector2 highlightableCenterPosition)
         {
             return highlightableCenterPosition - arrowHead;
-        }
-
-        public bool ShouldShowArrow(Vector2 highlightableSize)
-        {
-            return highlightableSize.magnitude < HIGHLIGHTABLE_CUTOFF_SIZE_IN_PIXELS;
         }
     }
 }
