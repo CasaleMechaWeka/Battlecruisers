@@ -5,8 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Arrows
 {
-    // FELIX  Don't make MonoBehaviour?
-    // FELIX  Test
     public class ArrowHighlighter : MonoBehaviour, IMaskHighlighter
     {
         private IArrowCalculator _calculator;
