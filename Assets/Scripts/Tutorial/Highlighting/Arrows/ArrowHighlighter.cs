@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Arrows
 {
-    // FELIX  Only highlight small objects (eg:  Don't need to point arrow at cruiser :P)
     // FELIX  Don't make MonoBehaviour?
     // FELIX  Test
     public class ArrowHighlighter : MonoBehaviour, IMaskHighlighter
@@ -20,6 +19,11 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
 
         public void Highlight(HighlightArgs args)
         {
+            if (!_calculator.ShouldShowArrow(args.Size))
+            {
+                return;
+            }
+
             ArrowDirection arrowDirection = _calculator.FindArrowDirection(args.CenterPosition);
             Vector2 arrowHeadPosition = _calculator.FindArrowHeadPosition(args, arrowDirection);
             Vector2 upDirection = _calculator.FindArrowDirectionVector(arrowHeadPosition, args.CenterPosition);

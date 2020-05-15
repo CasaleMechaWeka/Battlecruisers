@@ -14,6 +14,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
 
     public interface IArrowCalculator
     {
+        bool ShouldShowArrow(Vector2 highlightableSize);
         ArrowDirection FindArrowDirection(Vector2 highlightableCenterPosition);
         Vector2 FindArrowDirectionVector(Vector2 arrowHead, Vector2 highlightableCenterPosition);
         Vector2 FindArrowHeadPosition(HighlightArgs args, ArrowDirection direction);

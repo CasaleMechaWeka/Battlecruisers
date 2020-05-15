@@ -12,6 +12,8 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
     {
         private readonly ICamera _camera;
 
+        public const float HIGHLIGHTABLE_CUTOFF_SIZE_IN_PIXELS = 800;
+
         public ArrowCalculator(ICamera camera)
         {
             Assert.IsNotNull(camera);
@@ -101,6 +103,11 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
         public Vector2 FindArrowDirectionVector(Vector2 arrowHead, Vector2 highlightableCenterPosition)
         {
             return highlightableCenterPosition - arrowHead;
+        }
+
+        public bool ShouldShowArrow(Vector2 highlightableSize)
+        {
+            return highlightableSize.magnitude < HIGHLIGHTABLE_CUTOFF_SIZE_IN_PIXELS;
         }
     }
 }
