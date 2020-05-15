@@ -11,6 +11,10 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
         public IMaskHighlighter CreateHighlighter()
         {
             Helper.AssertIsNotNull(inverseHighlighter, maskHighlighter);
+
+            inverseHighlighter.Initialise();
+            maskHighlighter.Initialise();
+
             return new DualMaskHighlighter(inverseHighlighter, maskHighlighter);
         }
     }
