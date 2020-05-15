@@ -7,7 +7,7 @@ namespace BattleCruisers.Tutorial.Highlighting
     {
         private RectTransform _rectTransform;
 
-        public float sizeMultiplier;
+        public float sizeMultiplier = 1;
 
         public void Initialise()
         {
