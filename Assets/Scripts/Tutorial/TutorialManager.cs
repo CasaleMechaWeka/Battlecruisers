@@ -18,14 +18,14 @@ namespace BattleCruisers.Tutorial
         private ExplanationPanelHeightManager _explanationPanelHeightManager;
         private IGameEndMonitor _gameEndMonitor;
 
+        public HighlighterInitialiser highlighterInitialiser;
+
         public void Initialise(ITutorialArgs tutorialArgs)
         {
+            Assert.IsNotNull(highlighterInitialiser);
             Assert.IsNotNull(tutorialArgs);
 
-            InverseMaskHighlighter maskHighlighter = GetComponentInChildren<InverseMaskHighlighter>(includeInactive: true);
-            Assert.IsNotNull(maskHighlighter);
-            maskHighlighter.Initialise();
-
+            IMaskHighlighter maskHighlighter = highlighterInitialiser.CreateHighlighter();
             IHighlighter highlighter
                 = new Highlighter(
                     maskHighlighter,
