@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting.Masked
 {
@@ -7,8 +8,11 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
     {
         private RectTransform _rectTransform;
 
+        public GameObject modalMainMenuButton;
+
         public void Initialise()
         {
+            Assert.IsNotNull(modalMainMenuButton);
             _rectTransform = transform.Parse<RectTransform>();
         }
 
@@ -18,11 +22,13 @@ namespace BattleCruisers.Tutorial.Highlighting.Masked
             _rectTransform.sizeDelta = args.Size / _rectTransform.lossyScale;
 
             gameObject.SetActive(true);
+            modalMainMenuButton.SetActive(true);
         }
 
         public void Unhighlight()
         {
             gameObject.SetActive(false);
+            modalMainMenuButton.SetActive(false);
         }
     }
 }
