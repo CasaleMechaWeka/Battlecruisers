@@ -6,9 +6,8 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Teleporters
 {
     public class TeleporterHelper : ITeleporterHelper
     {
-        // Very conservative.  User probably can't see past 45, but want to make sure 
-        // cloud is off screen before teleporting.
-        public const float MAX_X_POSITION_VISIBLE_BY_USER = 70;
+        // With the perspective camera now this is a little tricky.  Determined by trial and error :D
+        public const float MAX_X_POSITION_VISIBLE_BY_USER = 1500;
 
         public bool ShouldTeleportCloud(ICloud rightCloud)
         {
