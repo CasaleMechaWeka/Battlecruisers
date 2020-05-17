@@ -14,8 +14,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         private ISoundPlayer _soundPlayer;
         private ICircularList<AudioClip> _sounds;
-        private Text _nameText, _locationText, _foreverButtonText;
-        private bool _playingForever;
+        private Text _nameText, _locationText, _foreverButtonText, _playAllButtonText;
+        private bool _playingForever, _playingAll;
 
         public List<AudioClip> sounds;
         public int startingSoundIndex;
@@ -44,6 +44,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _nameText = transform.FindNamedComponent<Text>("TextPanel/SoundName");
             _locationText = transform.FindNamedComponent<Text>("TextPanel/PlayLocation");
             _foreverButtonText = transform.FindNamedComponent<Text>("ButtonsPanel/InfinitePlayButton/Text");
+            _playAllButtonText = transform.FindNamedComponent<Text>("ButtonsPanel/PlayAllButton/Text");
 
             _sounds = new CircularList<AudioClip>(sounds)
             {
@@ -53,6 +54,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             _soundPlayer = soundPlayer;
             _playingForever = false;
+            _playingAll = false;
             _locationText.text = playLocation?.name ?? "(not spatial)";
         }
 
@@ -73,18 +75,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InfinitoPlayToggle()
         {
             Logging.LogMethod(Tags.ALWAYS);
-            
+
+            StopPlayAll();
+
             if (_playingForever)
             {
-                Stop();
+                StopRepeating();
             }
             else
             {
-                PlayForever();
+                PlayRepeating();
             }
         }
 
-        private async void PlayForever()
+        private async void PlayRepeating()
         {
             Logging.LogMethod(Tags.ALWAYS);
             
@@ -100,12 +104,53 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
         }
 
-        private void Stop()
+        private void StopRepeating()
         {
             Logging.LogMethod(Tags.ALWAYS);
 
             _playingForever = false;
             _foreverButtonText.text = "Play loop";
+        }
+
+        public void PlayAllToggle()
+        {
+            Logging.LogMethod(Tags.ALWAYS);
+
+            StopRepeating();
+
+            if (_playingAll)
+            {
+                StopPlayAll();
+            }
+            else
+            {
+                PlayAll();
+            }
+        }
+
+        private async void PlayAll()
+        {
+            Logging.LogMethod(Tags.ALWAYS);
+
+            _playingAll = true;
+            _playAllButtonText.text = "Stop";
+
+            while (
+                this != null // ensure not destroyed
+                && _playingAll)
+            {
+                PlayOnce();
+                await Task.Delay((int)(CurrentSound.length + 0.25f) * 1000);
+                NextSound();
+            }
+        }
+
+        private void StopPlayAll()
+        {
+            Logging.LogMethod(Tags.ALWAYS);
+
+            _playingAll = false;
+            _playAllButtonText.text = "Play all";
         }
 
         public void NextSound()

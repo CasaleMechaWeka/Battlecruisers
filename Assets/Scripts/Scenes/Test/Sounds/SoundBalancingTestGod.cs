@@ -89,7 +89,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             if (_audioListener != null)
             {
-                Debug.Log($"Audio listener position: {_audioListener.transform.position}");
+                //Debug.Log($"Audio listener position: {_audioListener.transform.position}");
             }
         }
     }
