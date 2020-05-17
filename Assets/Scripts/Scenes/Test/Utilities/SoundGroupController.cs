@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             {
                 Assert.IsNotNull(value);
                 _currentSound = value;
-                _nameText.text = value.name;
+                _nameText.text = $"{value.name} ({_sounds.Index + 1}/{_sounds.Items.Count})";
             }
         }
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _soundPlayer = soundPlayer;
             _playingForever = false;
             _playingAll = false;
-            _locationText.text = playLocation?.name ?? "(not spatial)";
+            _locationText.text = playAtLocation ? playLocation.name : "(not spatial)";
         }
 
         public void PlayOnce()
