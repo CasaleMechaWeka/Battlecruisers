@@ -46,6 +46,13 @@ namespace BattleCruisers.Scenes.Test.Sounds
             {
                 soundPlayerObject.Initialise(soundPlayer);
             }
+
+            SoundGroupController[] soundGroups = FindObjectsOfType<SoundGroupController>();
+
+            foreach (SoundGroupController group in soundGroups)
+            {
+                group.Initialise(soundPlayer, playAtObjectLocation: false);
+            }
         }
 
         private IMusicPlayer CreateMusicPlayer()

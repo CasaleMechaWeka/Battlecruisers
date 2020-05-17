@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine.Assertions;
 
@@ -9,9 +10,24 @@ namespace BattleCruisers.Utils.DataStrctures
 		private IList<T> _items;
 		private int _index;
 
+		public int Index
+		{
+			get => _index;
+			set
+			{
+				if (value < 0
+					|| value >= _items.Count)
+				{
+					throw new ArgumentException($"Invalid index {value}.  Must be >= 0 and < {_items.Count}");
+				}
+
+				_index = value;
+			}
+		}
+
 		public ReadOnlyCollection<T> Items { get; }
 
-        public CircularList(T[] items) : this(new List<T>(items)) { }
+		public CircularList(T[] items) : this(new List<T>(items)) { }
         
         public CircularList(IList<T> items)
         {
@@ -25,6 +41,11 @@ namespace BattleCruisers.Utils.DataStrctures
 		public T Next()
 		{
             _index = (_index + 1) % _items.Count;
+			return _items[_index];
+		}
+
+		public T Current()
+		{
 			return _items[_index];
 		}
 	}

@@ -33,6 +33,11 @@ namespace BattleCruisers.UI.Sound
             PlaySound(sound, position);
         }
 
+        public void PlaySound(IAudioClipWrapper sound)
+        {
+            PlaySound(sound, _audioListener.Position);
+        }
+
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
         {
             _audioClipPlayer.PlaySound(sound, position);

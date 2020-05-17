@@ -8,6 +8,7 @@ namespace BattleCruisers.UI.Sound
     {
         Task PlaySoundAsync(ISoundKey soundKey);
         Task PlaySoundAsync(ISoundKey soundKey, Vector2 position);
+        void PlaySound(IAudioClipWrapper sound);
         void PlaySound(IAudioClipWrapper sound, Vector2 position);
     }
 }
