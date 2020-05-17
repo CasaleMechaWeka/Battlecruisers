@@ -135,12 +135,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _playingAll = true;
             _playAllButtonText.text = "Stop";
 
-            while (
-                this != null // ensure not destroyed
-                && _playingAll)
+            while (true)
             {
                 PlayOnce();
                 await Task.Delay((int)(CurrentSound.length + 0.25f) * 1000);
+
+                if (this == null // destroyed
+                    || !_playingAll)
+                {
+                    break;
+                }
+
                 NextSound();
             }
         }
