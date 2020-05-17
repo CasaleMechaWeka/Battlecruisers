@@ -1,12 +1,14 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
     public class AudioClipPlayer : IAudioClipPlayer
     {
-        public void PlaySound(IAudioClipWrapper soundClip, Vector2 position)
+        public void PlaySound(IAudioClipWrapper soundClip, Vector3 position)
         {
+            Logging.Log(Tags.SOUND, $"Sound: {soundClip.AudioClip}  Position: {position}  Camera position: {Camera.main.transform.position}");
             AudioSource.PlayClipAtPoint(soundClip.AudioClip, position);
         }
     }

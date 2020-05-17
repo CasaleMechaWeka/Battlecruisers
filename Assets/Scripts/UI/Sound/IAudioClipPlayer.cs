@@ -5,6 +5,6 @@ namespace BattleCruisers.UI.Sound
 {
     public interface IAudioClipPlayer
     {
-        void PlaySound(IAudioClipWrapper soundClip, Vector2 position);
+        void PlaySound(IAudioClipWrapper soundClip, Vector3 position);
     }
 }
