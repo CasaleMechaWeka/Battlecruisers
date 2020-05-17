@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             foreach (SoundGroupController group in soundGroups)
             {
-                group.Initialise(soundPlayer, playAtObjectLocation: false);
+                group.Initialise(soundPlayer);
             }
         }
 

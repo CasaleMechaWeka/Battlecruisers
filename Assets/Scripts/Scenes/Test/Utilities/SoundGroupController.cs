@@ -13,16 +13,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
     public class SoundGroupController : MonoBehaviour
     {
         private ISoundPlayer _soundPlayer;
-
-        // FELIX  Expose in inspector.  If true, allow position to be set via dragging a  game object.
-        private bool _playAtObjectLocation;
-        
         private ICircularList<AudioClip> _sounds;
         private Text _nameText, _foreverButtonText;
         private bool _playingForever;
 
         public List<AudioClip> sounds;
         public int startingSoundIndex;
+        public bool playAtLocation = false;
+
+        [DrawIf("playAtLocation", true)] 
+        public GameObject playLocation;
 
         private AudioClip _currentSound;
         private AudioClip CurrentSound
@@ -36,8 +36,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
         }
 
-        public void Initialise(ISoundPlayer soundPlayer, bool playAtObjectLocation)
+        public void Initialise(ISoundPlayer soundPlayer)
         {
+            Assert.IsTrue(!playAtLocation || playLocation != null);
             Assert.IsNotNull(soundPlayer);
 
             _nameText = transform.FindNamedComponent<Text>("SoundName");
@@ -50,7 +51,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             CurrentSound = _sounds.Current();
 
             _soundPlayer = soundPlayer;
-            _playAtObjectLocation = playAtObjectLocation;
             _playingForever = false;
         }
 
@@ -58,10 +58,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             Logging.LogMethod(Tags.ALWAYS);
 
-            if (_playAtObjectLocation)
+            if (playAtLocation)
             {
-                // FELIX don't use our position, use player chosen position :)
-                _soundPlayer.PlaySound(new AudioClipWrapper(CurrentSound), transform.position);
+                _soundPlayer.PlaySound(new AudioClipWrapper(CurrentSound), playLocation.transform.position);
             }
             else
             {
