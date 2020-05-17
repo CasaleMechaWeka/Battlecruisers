@@ -19,6 +19,9 @@ namespace BattleCruisers.Scenes.Test.Sounds
         {
             base.Setup(helper);
 
+            _audioListener = Camera.main.GetComponent<AudioListener>();
+            Assert.IsNotNull(_audioListener);
+
             LayeredMusicPlayerInitialiser musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(musicInitialiser);
             _musicPlayer
@@ -27,9 +30,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
                     SoundKeys.Music.Background.Juggernaut);
 
             SetupSoundPlayerObjects();
-
-            _audioListener = Camera.main.GetComponent<AudioListener>();
-            Assert.IsNotNull(_audioListener);
         }
 
         private void SetupSoundPlayerObjects()
@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
                 = new SoundPlayer(
                     new SoundFetcher(),
                     new AudioClipPlayer(),
-                    new GameObjectBC(Camera.main.gameObject));
+                    new GameObjectBC(_audioListener.gameObject));
 
             SoundPlayerController[] soundPlayerObjects = FindObjectsOfType<SoundPlayerController>();
 
