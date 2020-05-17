@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         private ISoundPlayer _soundPlayer;
         private ICircularList<AudioClip> _sounds;
-        private Text _nameText, _foreverButtonText;
+        private Text _nameText, _locationText, _foreverButtonText;
         private bool _playingForever;
 
         public List<AudioClip> sounds;
@@ -41,7 +41,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             Assert.IsTrue(!playAtLocation || playLocation != null);
             Assert.IsNotNull(soundPlayer);
 
-            _nameText = transform.FindNamedComponent<Text>("SoundName");
+            _nameText = transform.FindNamedComponent<Text>("TextPanel/SoundName");
+            _locationText = transform.FindNamedComponent<Text>("TextPanel/PlayLocation");
             _foreverButtonText = transform.FindNamedComponent<Text>("ButtonsPanel/InfinitePlayButton/Text");
 
             _sounds = new CircularList<AudioClip>(sounds)
@@ -52,6 +53,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             _soundPlayer = soundPlayer;
             _playingForever = false;
+            _locationText.text = playLocation?.name ?? "(not spatial)";
         }
 
         public void PlayOnce()
