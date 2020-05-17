@@ -100,7 +100,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 && _playingForever)
             {
                 PlayOnce();
-                await Task.Delay((int)(CurrentSound.length + 0.25f) * 1000);
+                await Task.Delay((int)(CurrentSound.length + 0.5f) * 1000);
             }
         }
 
@@ -138,7 +138,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             while (true)
             {
                 PlayOnce();
-                await Task.Delay((int)(CurrentSound.length + 0.25f) * 1000);
+                await Task.Delay((int)(CurrentSound.length + 0.5f) * 1000);
 
                 if (this == null // destroyed
                     || !_playingAll)
