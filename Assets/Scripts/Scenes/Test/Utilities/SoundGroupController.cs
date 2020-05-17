@@ -91,7 +91,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _playingForever = true;
             _foreverButtonText.text = "Stop";
 
-            while (_playingForever)
+            while (
+                this != null // ensure not destroyed
+                && _playingForever)
             {
                 PlayOnce();
                 await Task.Delay((int)(CurrentSound.length + 0.25f) * 1000);
