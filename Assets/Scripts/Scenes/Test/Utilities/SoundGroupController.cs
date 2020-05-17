@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -16,7 +18,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private bool _playAtObjectLocation;
         
         private ICircularList<AudioClip> _sounds;
-        private Text _nameText;
+        private Text _nameText, _foreverButtonText;
+        private bool _playingForever;
 
         public List<AudioClip> sounds;
         public int startingSoundIndex;
@@ -37,8 +40,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             Assert.IsNotNull(soundPlayer);
 
-            _nameText = GetComponentInChildren<Text>();
-            Assert.IsNotNull(_nameText);
+            _nameText = transform.FindNamedComponent<Text>("SoundName");
+            _foreverButtonText = transform.FindNamedComponent<Text>("ButtonsPanel/InfinitePlayButton/Text");
 
             _sounds = new CircularList<AudioClip>(sounds)
             {
@@ -48,34 +51,57 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             _soundPlayer = soundPlayer;
             _playAtObjectLocation = playAtObjectLocation;
+            _playingForever = false;
         }
 
         public void PlayOnce()
         {
+            Logging.LogMethod(Tags.ALWAYS);
+
             if (_playAtObjectLocation)
             {
                 // FELIX don't use our position, use player chosen position :)
-                _soundPlayer.PlaySound(new AudioClipWrapper(_currentSound), transform.position);
+                _soundPlayer.PlaySound(new AudioClipWrapper(CurrentSound), transform.position);
             }
             else
             {
-                _soundPlayer.PlaySound(new AudioClipWrapper(_currentSound));
+                _soundPlayer.PlaySound(new AudioClipWrapper(CurrentSound));
             }
         }
 
-        // FELIX  Merge 2 methods :)
-        public void PlayContinuously()
+        public void InfinitoPlayToggle()
         {
-            // FELIX  :D
+            if (_playingForever)
+            {
+                Stop();
+            }
+            else
+            {
+                PlayForever();
+            }
         }
 
-        public void Stop()
+        private async void PlayForever()
         {
-            // FELIX  Only does something for continuously playing sound
+            _playingForever = true;
+            _foreverButtonText.text = "Stop";
+
+            while (_playingForever)
+            {
+                PlayOnce();
+                await Task.Delay((int)(CurrentSound.length + 0.25f) * 1000);
+            }
+        }
+
+        private void Stop()
+        {
+            _playingForever = false;
+            _foreverButtonText.text = "Play loop";
         }
 
         public void NextSound()
         {
+            Logging.LogMethod(Tags.ALWAYS);
             CurrentSound = _sounds.Next();
         }
     }
