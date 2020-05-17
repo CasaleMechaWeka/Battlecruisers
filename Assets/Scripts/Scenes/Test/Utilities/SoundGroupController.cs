@@ -70,6 +70,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public void InfinitoPlayToggle()
         {
+            Logging.LogMethod(Tags.ALWAYS);
+            
             if (_playingForever)
             {
                 Stop();
@@ -82,6 +84,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private async void PlayForever()
         {
+            Logging.LogMethod(Tags.ALWAYS);
+            
             _playingForever = true;
             _foreverButtonText.text = "Stop";
 
@@ -94,6 +98,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private void Stop()
         {
+            Logging.LogMethod(Tags.ALWAYS);
+
             _playingForever = false;
             _foreverButtonText.text = "Play loop";
         }
