@@ -103,8 +103,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 && _playingForever)
             {
                 PlayOnce();
-                await Task.Delay((int)(CurrentSound.length + 0.5f) * 1000);
+                await WayForSoundToFinish(CurrentSound.length);
             }
+        }
+
+        private async Task WayForSoundToFinish(float soundLengthInS)
+        {
+            float lengthInMs = (soundLengthInS + 0.5f) * 1000;
+            await Task.Delay((int)lengthInMs);
         }
 
         private void StopRepeating()
@@ -141,7 +147,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             while (true)
             {
                 PlayOnce();
-                await Task.Delay((int)(CurrentSound.length + 0.5f) * 1000);
+                await WayForSoundToFinish(CurrentSound.length);
 
                 if (this == null // destroyed
                     || !_playingAll)
