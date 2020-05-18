@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Utilities.Sound
 {
     public class SoundPlayerController : MonoBehaviour, IPointerClickHandler
     {

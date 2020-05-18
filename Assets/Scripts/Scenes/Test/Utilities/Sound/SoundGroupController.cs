@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Utilities.Sound
 {
     public class SoundGroupController : MonoBehaviour
     {
