@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
@@ -21,9 +20,14 @@ namespace BattleCruisers.UI.Music
             _secondarySource = secondarySource;
         }
 
+        // FELIX  Update tests
         public void Play()
         {
-            Assert.IsFalse(_primarySource.IsPlaying, $"{nameof(Play)} should only be called while not playing.");
+            if (_primarySource.IsPlaying)
+            {
+                Logging.Log(Tags.SOUND, $"Prmary source already playing, returning.");
+                return;
+            }
 
             _primarySource.Volume = 1;
             _primarySource.Play(isSpatial: false, loop: true);
@@ -34,17 +38,33 @@ namespace BattleCruisers.UI.Music
 
         public void PlaySecondary()
         {
+            if (!_primarySource.IsPlaying)
+            {
+                Logging.Log(Tags.SOUND, $"No point playing secondary if primary is not playing, returning.");
+                return;
+            }
+
             _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 1, FADE_TIME_IN_S);
         }
 
         public void StopSecondary()
         {
+            if (!_secondarySource.IsPlaying)
+            {
+                Logging.Log(Tags.SOUND, $"Secondary is not playing, returning.");
+                return;
+            }
+
             _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 0, FADE_TIME_IN_S);
         }
 
         public void Stop()
         {
-            Assert.IsTrue(_primarySource.IsPlaying, $"{nameof(Stop)} should only be called while playing.");
+            if (!_primarySource.IsPlaying)
+            {
+                Logging.Log(Tags.SOUND, $"No sound is playing, returning.");
+                return;
+            }
 
             _primarySource.Stop();
             _secondarySource.Stop();
