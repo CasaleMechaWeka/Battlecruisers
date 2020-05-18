@@ -80,6 +80,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
         public void Dispose_Unsubsribes()
         {
             _targetTracker.DisposeManagedState();
+            _targetsChangedCount = 0;
 
             _targetFinder.TargetFound += Raise.EventWith(new TargetEventArgs(_target));
             Assert.AreEqual(0, _targetsChangedCount);
