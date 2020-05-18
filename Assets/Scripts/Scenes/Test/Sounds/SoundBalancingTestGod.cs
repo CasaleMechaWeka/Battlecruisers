@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
             _audioListener = Camera.main.GetComponent<AudioListener>();
             Assert.IsNotNull(_audioListener);
 
-            _music = GetComponentInChildren<MusicController>();
+            _music = FindObjectOfType<MusicController>();
             Assert.IsNotNull(_music);
             _music.Initialise();
 
