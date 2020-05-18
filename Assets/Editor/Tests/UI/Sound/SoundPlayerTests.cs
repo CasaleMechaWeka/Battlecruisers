@@ -6,7 +6,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Sound
 {
@@ -22,11 +21,10 @@ namespace BattleCruisers.Tests.UI.Sound
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _soundFetcher = Substitute.For<ISoundFetcher>();
             _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
             _audioListener = Substitute.For<IGameObject>();
+            _audioListener.Position.Returns(new Vector3(99, 88, 77));
 
             _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _audioListener);
 
@@ -36,10 +34,26 @@ namespace BattleCruisers.Tests.UI.Sound
         }
 
         [Test]
-        public void PlaySound_ProvideNoPosition_UsesMainCameraPosition()
+        public void PlaySoundAsync_ProvideNoPosition_UsesAudioListenerPosition()
         {
-            _audioListener.Position.Returns(new Vector3(99, 88, 77));
             _soundPlayer.PlaySoundAsync(_soundKey);
+            _audioClipPlayer.Received().PlaySound(_audioClip, _audioListener.Position);
+        }
+
+        [Test]
+        public void PlaySoundAsync_ProvidePosition()
+        {
+            Vector2 soundPosition = new Vector2(2, 3);
+            _soundPlayer.PlaySoundAsync(_soundKey, soundPosition);
+
+            Vector3 zAdjustedPosition = new Vector3(soundPosition.x, soundPosition.y, _audioListener.Position.z);
+            _audioClipPlayer.Received().PlaySound(_audioClip, zAdjustedPosition);
+        }
+
+        [Test]
+        public void PlaySound_ProvideNoPosition_UsesAudioListenerPosition()
+        {
+            _soundPlayer.PlaySound(_audioClip);
             _audioClipPlayer.Received().PlaySound(_audioClip, _audioListener.Position);
         }
 
@@ -47,8 +61,11 @@ namespace BattleCruisers.Tests.UI.Sound
         public void PlaySound_ProvidePosition()
         {
             Vector2 soundPosition = new Vector2(2, 3);
-            _soundPlayer.PlaySoundAsync(_soundKey, soundPosition);
-            _audioClipPlayer.Received().PlaySound(_audioClip, soundPosition);
+            _soundPlayer.PlaySound(_audioClip, soundPosition);
+
+            Vector3 zAdjustedPosition = new Vector3(soundPosition.x, soundPosition.y, _audioListener.Position.z);
+            _audioClipPlayer.Received().PlaySound(_audioClip, zAdjustedPosition);
         }
+
     }
 }

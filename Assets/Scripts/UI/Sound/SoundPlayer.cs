@@ -38,7 +38,6 @@ namespace BattleCruisers.UI.Sound
             PlaySound(sound, _audioListener.Position);
         }
 
-        // FELIX  Update tests :)
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
         {
             Vector3 zAdjustedPosition = new Vector3(position.x, position.y, _audioListener.Position.z);
