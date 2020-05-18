@@ -1,6 +1,5 @@
-﻿using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Scenes.Test.Utilities.Sound;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 {
     public class SoundBalancingTestGod : NavigationTestGod
     {
-        private ILayeredMusicPlayer _musicPlayer;
+        private MusicController _music;
         private AudioListener _audioListener;
 
         protected async override void Setup(Utilities.Helper helper)
@@ -23,15 +22,11 @@ namespace BattleCruisers.Scenes.Test.Sounds
             _audioListener = Camera.main.GetComponent<AudioListener>();
             Assert.IsNotNull(_audioListener);
 
-            LayeredMusicPlayerInitialiser musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
-            Assert.IsNotNull(musicInitialiser);
-            _musicPlayer
-                = await musicInitialiser.CreatePlayerAsync(
-                    new SoundFetcher(),
-                    SoundKeys.Music.Background.Juggernaut);
+            _music = GetComponentInChildren<MusicController>();
+            Assert.IsNotNull(_music);
+            _music.Initialise();
 
             AudioSource singleSoundPlayerSource = transform.FindNamedComponent<AudioSource>("SingleSoundPlayer");
-
             SetupSoundPlayerObjects(singleSoundPlayerSource);
         }
 
@@ -62,31 +57,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
             foreach (SoundGroupController group in soundGroups)
             {
                 group.Initialise(soundPlayer, singleSoundPlayer);
-            }
-        }
-
-        public void PlayBackgroundMusic()
-        {
-            _musicPlayer.Play();
-        }
-
-        public void PlayDangerMusic()
-        {
-            _musicPlayer.PlaySecondary();
-        }
-
-        public void StopMusic()
-        {
-            _musicPlayer.Stop();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-
-            if (_audioListener != null)
-            {
-                //Debug.Log($"Audio listener position: {_audioListener.transform.position}");
             }
         }
     }
