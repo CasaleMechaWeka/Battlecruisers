@@ -232,9 +232,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.SOUND, true);
-            //tagsToActiveness.Add(Tags.SOUND, false);
+            tagsToActiveness.Add(Tags.SOUND, false);
             tagsToActiveness.Add(Tags.TIME, false);
 
             return tagsToActiveness;
