@@ -2,6 +2,7 @@
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -15,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private ILayeredMusicPlayer _musicPlayer;
         private AudioListener _audioListener;
 
-        protected async override void Setup(Helper helper)
+        protected async override void Setup(Utilities.Helper helper)
         {
             base.Setup(helper);
 
@@ -29,16 +30,25 @@ namespace BattleCruisers.Scenes.Test.Sounds
                     new SoundFetcher(),
                     SoundKeys.Music.Background.Juggernaut);
 
-            SetupSoundPlayerObjects();
+            AudioSource singleSoundPlayerSource = transform.FindNamedComponent<AudioSource>("SingleSoundPlayer");
+
+            SetupSoundPlayerObjects(singleSoundPlayerSource);
         }
 
-        private void SetupSoundPlayerObjects()
+        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource)
         {
+            SoundFetcher soundFetcher = new SoundFetcher();
+
             ISoundPlayer soundPlayer
                 = new SoundPlayer(
-                    new SoundFetcher(),
+                    soundFetcher,
                     new AudioClipPlayer(),
                     new GameObjectBC(_audioListener.gameObject));
+
+            ISingleSoundPlayer singleSoundPlayer
+                = new SingleSoundPlayer(
+                    soundFetcher,
+                    new AudioSourceBC(singleSoundPlayerSource));
 
             SoundPlayerController[] soundPlayerObjects = FindObjectsOfType<SoundPlayerController>();
 
@@ -51,22 +61,8 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             foreach (SoundGroupController group in soundGroups)
             {
-                group.Initialise(soundPlayer);
+                group.Initialise(soundPlayer, singleSoundPlayer);
             }
-        }
-
-        // FELIX  Remove
-        private IMusicPlayer CreateMusicPlayer()
-        {
-            AudioSource platformAudioSource = GetComponent<AudioSource>();
-            Assert.IsNotNull(platformAudioSource);
-            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
-
-            return
-                new MusicPlayer(
-                    new SingleSoundPlayer(
-                        new SoundFetcher(),
-                        audioSource));
         }
 
         public void PlayBackgroundMusic()

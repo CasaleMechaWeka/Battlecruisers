@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class SoundGroupController : MonoBehaviour
     {
         private ISoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _singleSoundPlayer;
         private ICircularList<AudioClip> _sounds;
         private Text _titleText, _nameText, _locationText, _foreverButtonText, _playAllButtonText;
         private bool _playingForever, _playingAll;
@@ -36,10 +38,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
         }
 
-        public void Initialise(ISoundPlayer soundPlayer)
+        public void Initialise(ISoundPlayer soundPlayer, ISingleSoundPlayer singleSoundPlayer)
         {
             Assert.IsTrue(!playAtLocation || playLocation != null);
-            Assert.IsNotNull(soundPlayer);
+            BCUtils.Helper.AssertIsNotNull(soundPlayer, singleSoundPlayer);
 
             _titleText = transform.FindNamedComponent<Text>("Title");
             _titleText.text = name;
@@ -56,6 +58,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             CurrentSound = _sounds.Current();
 
             _soundPlayer = soundPlayer;
+            _singleSoundPlayer = singleSoundPlayer;
             _playingForever = false;
             _playingAll = false;
             _locationText.text = playAtLocation ? $"Location: {playLocation.name}" : "(not spatial)";
@@ -71,7 +74,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             }
             else
             {
-                _soundPlayer.PlaySound(new AudioClipWrapper(CurrentSound));
+                _singleSoundPlayer.PlaySound(new AudioClipWrapper(CurrentSound));
             }
         }
 
