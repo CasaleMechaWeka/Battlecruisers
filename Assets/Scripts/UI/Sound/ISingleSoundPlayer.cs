@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Sound
 {
@@ -7,6 +8,8 @@ namespace BattleCruisers.UI.Sound
         bool IsPlayingSound { get; }
 
         Task PlaySoundAsync(ISoundKey soundKey, bool loop = false);
+        void PlaySound(IAudioClipWrapper sound, bool loop = false);
+
         void Stop();
     }
 }
