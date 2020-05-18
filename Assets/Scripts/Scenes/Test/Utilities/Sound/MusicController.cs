@@ -1,23 +1,24 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class MusicController : MonoBehaviour
     {
+        private Text _title;
         private LayeredMusicPlayerInitialiser _musicInitialiser;
         private ILayeredMusicPlayer _musicPlayer;
         private ISoundFetcher _soundFetcher;
         private ICircularList<SoundKeyPair> _songs;
-
-        // FELIX  Display music name
 
         [Tooltip("0-5")]
         public int startingIndex = 3;
@@ -38,6 +39,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 Index = startingIndex
             };
 
+            _title = transform.FindNamedComponent<Text>("Title");
+
             _soundFetcher = new SoundFetcher();
             _musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(_musicInitialiser);
@@ -46,6 +49,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private async Task<ILayeredMusicPlayer> CreateMusicPlayer()
         {
+            _title.text = $"Song: {_songs.Current()}  ({_songs.Index}/{_songs.Items.Count})";
+
             return
                 await _musicInitialiser.CreatePlayerAsync(
                     _soundFetcher,

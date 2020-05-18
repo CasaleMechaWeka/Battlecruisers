@@ -27,5 +27,10 @@ namespace BattleCruisers.UI.Sound
         {
             return this.GetHashCode(Type, Name);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
