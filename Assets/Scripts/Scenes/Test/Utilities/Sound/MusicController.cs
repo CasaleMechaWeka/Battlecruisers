@@ -75,6 +75,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public async void Next()
         {
             Stop();
+            _songs.Next();
             _musicPlayer = await CreateMusicPlayer();
         }
     }
