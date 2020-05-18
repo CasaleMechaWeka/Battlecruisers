@@ -33,8 +33,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 SoundKeys.Music.Background.Nothing,
                 SoundKeys.Music.Background.Sleeper
             };
-            _songs = new CircularList<SoundKeyPair>(songs);
-            _songs.Index = startingIndex;
+            _songs = new CircularList<SoundKeyPair>(songs)
+            {
+                Index = startingIndex
+            };
 
             _soundFetcher = new SoundFetcher();
             _musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
