@@ -3,7 +3,6 @@ using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Music
 {
@@ -21,8 +20,6 @@ namespace BattleCruisers.Tests.UI.Music
             _secondarySource = Substitute.For<IAudioSource>();
 
             _musicPlayer = new LayeredMusicPlayer(_audioVolumeFade, _primarySource, _secondarySource);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]
@@ -39,31 +36,64 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
-        public void Play_AlreadyPlaying_Throws()
+        public void Play_AlreadyPlaying()
         {
             _primarySource.IsPlaying.Returns(true);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.Play());
+            _musicPlayer.Play();
+            _primarySource.DidNotReceiveWithAnyArgs().Volume = default;
         }
 
+        #region PlaySecondary()
         [Test]
         public void PlaySecondary()
         {
+            _primarySource.IsPlaying.Returns(true);
             _musicPlayer.PlaySecondary();
             _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 1, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
+        public void PlaySecondary_PrimaryNotPlaying()
+        {
+            _primarySource.IsPlaying.Returns(false);
+            _musicPlayer.PlaySecondary();
+            _audioVolumeFade.DidNotReceiveWithAnyArgs().FadeToVolume(default, default, default);
+        }
+
+        [Test]
+        public void PlaySecondary_PrimaryPlaying_SecondaryAlreayPlaying()
+        {
+            _primarySource.IsPlaying.Returns(true);
+            _secondarySource.IsPlaying.Returns(true);
+
+            _musicPlayer.PlaySecondary();
+
+            _audioVolumeFade.DidNotReceiveWithAnyArgs().FadeToVolume(default, default, default);
+        }
+        #endregion PlaySecondary()
+
+        [Test]
         public void StopSecondary()
         {
+            _secondarySource.IsPlaying.Returns(true);
             _musicPlayer.StopSecondary();
             _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 0, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
-        public void Stop_NotPlaying_Throws()
+        public void StopSecondary_SecondaryNotPlaying()
+        {
+            _secondarySource.IsPlaying.Returns(false);
+            _musicPlayer.StopSecondary();
+            _audioVolumeFade.DidNotReceiveWithAnyArgs().FadeToVolume(default, default, default);
+        }
+
+        [Test]
+        public void Stop_NotPlaying()
         {
             _primarySource.IsPlaying.Returns(false);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.Stop());
+            _musicPlayer.Stop();
+            _primarySource.DidNotReceive().Stop();
         }
 
         [Test]

@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.Music
             _secondarySource = secondarySource;
         }
 
-        // FELIX  Update tests
         public void Play()
         {
             if (_primarySource.IsPlaying)
@@ -38,9 +37,10 @@ namespace BattleCruisers.UI.Music
 
         public void PlaySecondary()
         {
-            if (!_primarySource.IsPlaying)
+            if (!_primarySource.IsPlaying
+                || _secondarySource.IsPlaying)
             {
-                Logging.Log(Tags.SOUND, $"No point playing secondary if primary is not playing, returning.");
+                Logging.Log(Tags.SOUND, $"No point playing secondary if primary is not playing or secondary is already playing, returning.");
                 return;
             }
 
