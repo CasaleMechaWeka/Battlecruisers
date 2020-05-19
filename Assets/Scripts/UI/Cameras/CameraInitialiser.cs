@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraInitialiser : MonoBehaviour
     {
-        private ICameraAdjuster _cameraAdjuster, _parallaxAdjuster;
+        private ICameraAdjuster _cameraAdjuster;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Cameras
 
         public float cameraSmoothTime;
         public TogglableDragTracker dragTracker;
-        public Camera mainCamera, backgroundCamera;
+        public Camera mainCamera;
         public Skybox skybox;
         public NavigationWheelInitialiser navigationWheelInitialiser;
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.Cameras
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater)
         {
-            Helper.AssertIsNotNull(dragTracker, mainCamera, backgroundCamera, skybox, navigationWheelInitialiser);
+            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationWheelInitialiser);
             Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
@@ -77,13 +77,6 @@ namespace BattleCruisers.UI.Cameras
                     trumpCameraTargetProvider);
 
             ITime time = TimeBC.Instance;
-
-            backgroundCamera.transparencySortMode = TransparencySortMode.Orthographic;
-
-            _parallaxAdjuster
-                = new ParallaxCameraAdjuster(
-                    camera,
-                    new CameraBC(backgroundCamera));
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
@@ -237,7 +230,6 @@ namespace BattleCruisers.UI.Cameras
         private void SwitchableUpdater_Updated(object sender, EventArgs e)
         {
             _cameraAdjuster.AdjustCamera();
-            _parallaxAdjuster.AdjustCamera();
         }
     }
 }
