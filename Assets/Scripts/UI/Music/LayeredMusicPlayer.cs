@@ -37,24 +37,11 @@ namespace BattleCruisers.UI.Music
 
         public void PlaySecondary()
         {
-            if (!_primarySource.IsPlaying
-                || _secondarySource.IsPlaying)
-            {
-                Logging.Log(Tags.SOUND, $"No point playing secondary if primary is not playing or secondary is already playing, returning.");
-                return;
-            }
-
             _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 1, FADE_TIME_IN_S);
         }
 
         public void StopSecondary()
         {
-            if (!_secondarySource.IsPlaying)
-            {
-                Logging.Log(Tags.SOUND, $"Secondary is not playing, returning.");
-                return;
-            }
-
             _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 0, FADE_TIME_IN_S);
         }
 

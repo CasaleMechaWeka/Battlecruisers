@@ -43,49 +43,18 @@ namespace BattleCruisers.Tests.UI.Music
             _primarySource.DidNotReceiveWithAnyArgs().Volume = default;
         }
 
-        #region PlaySecondary()
         [Test]
         public void PlaySecondary()
         {
-            _primarySource.IsPlaying.Returns(true);
             _musicPlayer.PlaySecondary();
             _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 1, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
-        public void PlaySecondary_PrimaryNotPlaying()
-        {
-            _primarySource.IsPlaying.Returns(false);
-            _musicPlayer.PlaySecondary();
-            _audioVolumeFade.DidNotReceiveWithAnyArgs().FadeToVolume(default, default, default);
-        }
-
-        [Test]
-        public void PlaySecondary_PrimaryPlaying_SecondaryAlreayPlaying()
-        {
-            _primarySource.IsPlaying.Returns(true);
-            _secondarySource.IsPlaying.Returns(true);
-
-            _musicPlayer.PlaySecondary();
-
-            _audioVolumeFade.DidNotReceiveWithAnyArgs().FadeToVolume(default, default, default);
-        }
-        #endregion PlaySecondary()
-
-        [Test]
         public void StopSecondary()
         {
-            _secondarySource.IsPlaying.Returns(true);
             _musicPlayer.StopSecondary();
             _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 0, LayeredMusicPlayer.FADE_TIME_IN_S);
-        }
-
-        [Test]
-        public void StopSecondary_SecondaryNotPlaying()
-        {
-            _secondarySource.IsPlaying.Returns(false);
-            _musicPlayer.StopSecondary();
-            _audioVolumeFade.DidNotReceiveWithAnyArgs().FadeToVolume(default, default, default);
         }
 
         [Test]
