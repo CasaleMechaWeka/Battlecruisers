@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Fog
 {
@@ -17,6 +18,8 @@ namespace BattleCruisers.Cruisers.Fog
 
         public void Initialise(FogStrength fogStrength)
         {
+            Helper.AssertIsNotNull(fogCore, fogParticleSystem);
+
             IsVisible = false;
 
             float fogAlpha = fogStrength == FogStrength.Weak ? WEAK_FOG_ALPHA : STRONG_FOG_ALPHA;
