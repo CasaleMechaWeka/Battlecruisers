@@ -17,15 +17,16 @@ namespace BattleCruisers.Utils.Debugging
 
         public void Initialise(IFactoryProvider factoryProvider)
         {
+            if (!Debug.isDebugBuild)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             Helper.AssertIsNotNull(hudCanvas, factoryProvider);
 
             _factoryProvider = factoryProvider;
             _lastGameSpeed = 0;
-
-            if (!Debug.isDebugBuild)
-            {
-                Destroy(gameObject);
-            }
         }
 
         void Update()
