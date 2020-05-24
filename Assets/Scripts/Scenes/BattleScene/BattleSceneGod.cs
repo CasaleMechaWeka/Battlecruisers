@@ -53,6 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public LeftPanelInitialiser leftPanelInitialiser;
         public RightPanelInitialiser rightPanelInitialiser;
         public TutorialManager tutorialManager;
+
         private async void Start()
         {
             Assert.raiseExceptions = true;
