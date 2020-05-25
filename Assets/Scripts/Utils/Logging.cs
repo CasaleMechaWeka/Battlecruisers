@@ -36,6 +36,7 @@ namespace BattleCruisers.Utils
         public const string SHELLS = "Shells";
 
 		// Targets
+		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
 		public const string TARGET = "Target";
 		public const string TARGET_DETECTOR = "TargetDetector";
 		public const string MANUAL_TARGET_DETECTOR = "ManualProximityTargetDetector";
@@ -45,7 +46,7 @@ namespace BattleCruisers.Utils
         public const string TARGET_PROVIDERS = "TargetProviders";
 		public const string TARGET_RANGE_HELPER = "TargetRangeHelpers";
 		public const string TARGET_TRACKER = "TargetTracker";
-		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
+		public const string USER_CHOSEN_TARGET = "UserChosenTarget";
 
         // UI
 		public const string LOADOUT_SCREEN = "LoadoutScreen";
@@ -159,6 +160,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
+            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
             tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
@@ -168,7 +170,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.TARGET_PROVIDERS, false);
             tagsToActiveness.Add(Tags.TARGET_RANGE_HELPER, false);
             tagsToActiveness.Add(Tags.TARGET_TRACKER, false);
-            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
+            tagsToActiveness.Add(Tags.USER_CHOSEN_TARGET, false);
 
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);

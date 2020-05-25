@@ -33,6 +33,8 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 
         private void _userChosenTargetManager_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
+            Logging.Log(Tags.USER_CHOSEN_TARGET, $"Highest priority target: {_userChosenTargetManager.HighestPriorityTarget}");
+
             UserChosenTargetChanged?.Invoke(this, EventArgs.Empty);
 
             if (_userChosenTargetManager.HighestPriorityTarget == null)
@@ -43,6 +45,8 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 
         public void ToggleChosenTarget(ITarget target)
         {
+            Logging.Log(Tags.USER_CHOSEN_TARGET, target);
+
             if (ReferenceEquals(UserChosenTarget, target))
             {
                 // Clear user chosen target
