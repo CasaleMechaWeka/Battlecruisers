@@ -11,14 +11,16 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     public class NavigationWheelPositionProvider : INavigationWheelPositionProvider
     {
         public Vector2 PlayerCruiserPosition { get; }
-        public Vector2 PlayerCruiserDeathPosition { get; }
-        public Vector2 AICruiserPosition { get; }
-        public Vector2 AICruiserDeathPosition { get; }
+        public ICameraTarget PlayerCruiserDeathTarget { get; }
         public ICameraTarget PlayerCruiserNukedTarget { get; }
-        public ICameraTarget AICruiserNukedTarget { get; }
-        public Vector2 MidLeftPosition { get; }
-        public Vector2 AINavalFactoryPosition { get; }
         public Vector2 PlayerNavalFactoryPosition { get; }
+
+        public Vector2 AICruiserPosition { get; }
+        public ICameraTarget AICruiserDeathTarget { get; }
+        public ICameraTarget AICruiserNukedTarget { get; }
+        public Vector2 AINavalFactoryPosition { get; }
+
+        public Vector2 MidLeftPosition { get; }
         public Vector2 OverviewPosition { get; }
 
         private const float CRUISER_DEATH_ORTHOGRAPHIC_SIZE = 10;
@@ -65,12 +67,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             AINavalFactoryPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
 
             // Player cruiser death position
-            ICameraTarget playerCruiserDeathTarget = new CameraTarget(playerCruiser.Position, CRUISER_DEATH_ORTHOGRAPHIC_SIZE);
-            PlayerCruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(playerCruiserDeathTarget);
+            PlayerCruiserDeathTarget = new CameraTarget(playerCruiser.Position, CRUISER_DEATH_ORTHOGRAPHIC_SIZE);
 
             // AI cruiser death position
-            ICameraTarget aiCruiserDeathTarget = new CameraTarget(aiCruiser.Position, CRUISER_DEATH_ORTHOGRAPHIC_SIZE);
-            AICruiserDeathPosition = cameraCalculator.FindNavigationWheelPosition(aiCruiserDeathTarget);
+            AICruiserDeathTarget = new CameraTarget(aiCruiser.Position, CRUISER_DEATH_ORTHOGRAPHIC_SIZE);
         }
     }
 }

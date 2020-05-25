@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.PlayerCruiserDeathPosition, snapToCorners: false);
+            _trumpCameraTargetProvider.SetTarget(_positionProvider.PlayerCruiserDeathTarget);
         }
 
         public void FocusOnPlayerNavalFactory()
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public void FocusOnAICruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.AICruiserDeathPosition, snapToCorners: false);
+            _trumpCameraTargetProvider.SetTarget(_positionProvider.AICruiserDeathTarget);
         }
 
         public void FocusOnAINavalFactory()

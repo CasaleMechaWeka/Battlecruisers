@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         private INavigationWheelPositionProvider _positionProvider;
         private INavigationWheel _navigationWheel;
         private IStaticCameraTargetProvider _trumpCameraTargetProvider;
-        private ICameraTarget _playerCruiserCameraTarget, _aiCruiserCameraTarget;
+        private ICameraTarget _playerCruiserCameraTarget, _playerCruiserDeathCameraTarget, _aiCruiserCameraTarget, _aiCruiserDeathCameraTarget;
 
         [SetUp]
         public void TestSetup()
@@ -25,19 +25,23 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             _cameraFocuser = new CameraFocuser(_positionProvider, _navigationWheel, _trumpCameraTargetProvider);
 
             _positionProvider.PlayerCruiserPosition.Returns(new Vector2(7, 7));
-            _positionProvider.PlayerCruiserDeathPosition.Returns(new Vector2(77, 88));
             _positionProvider.PlayerNavalFactoryPosition.Returns(new Vector2(4, 4));
             _positionProvider.AICruiserPosition.Returns(new Vector2(-3, -3));
-            _positionProvider.AICruiserDeathPosition.Returns(new Vector2(-33, -11));
             _positionProvider.AINavalFactoryPosition.Returns(new Vector2(-9, 9));
             _positionProvider.MidLeftPosition.Returns(new Vector2(-1, 1));
             _positionProvider.OverviewPosition.Returns(new Vector2(762, 681));
 
             _playerCruiserCameraTarget = Substitute.For<ICameraTarget>();
             _positionProvider.PlayerCruiserNukedTarget.Returns(_playerCruiserCameraTarget);
-            
+
+            _playerCruiserDeathCameraTarget = Substitute.For<ICameraTarget>();
+            _positionProvider.PlayerCruiserDeathTarget.Returns(_playerCruiserDeathCameraTarget);
+
             _aiCruiserCameraTarget = Substitute.For<ICameraTarget>();
             _positionProvider.AICruiserNukedTarget.Returns(_aiCruiserCameraTarget);
+
+            _aiCruiserDeathCameraTarget = Substitute.For<ICameraTarget>();
+            _positionProvider.AICruiserDeathTarget.Returns(_aiCruiserDeathCameraTarget);
         }
 
         [Test]
@@ -51,7 +55,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiserZoomedOut()
         {
             _cameraFocuser.FocusOnPlayerCruiserDeath();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.PlayerCruiserDeathPosition, snapToCorners: false);
+            _trumpCameraTargetProvider.Received().SetTarget(_positionProvider.PlayerCruiserDeathTarget);
         }
 
         [Test]
@@ -72,7 +76,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnAICruiserZoomedOut()
         {
             _cameraFocuser.FocusOnAICruiserDeath();
-            _navigationWheel.Received().SetCenterPosition(_positionProvider.AICruiserDeathPosition, snapToCorners: false);
+            _trumpCameraTargetProvider.Received().SetTarget(_positionProvider.AICruiserDeathTarget);
         }
 
         [Test]
