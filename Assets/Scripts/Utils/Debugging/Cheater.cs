@@ -5,8 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
 {
-    // TEMP  Turn this class off for final game :P
-    public class Cheater : MonoBehaviour
+    public class Cheater : MonoBehaviour, ICheater
     {
         private IFactoryProvider _factoryProvider;
         private ICruiser _playerCruiser, _aiCruiser;
@@ -31,58 +30,54 @@ namespace BattleCruisers.Utils.Debugging
             }
         }
 
-        void Update()
+        public void Win()
         {
-            // W = Win
-            if (Input.GetKeyUp(KeyCode.W))
+            if (_aiCruiser != null)
             {
-                if (_aiCruiser != null)
-                {
-                    _aiCruiser.TakeDamage(_aiCruiser.MaxHealth, null);
-                }
+                _aiCruiser.TakeDamage(_aiCruiser.MaxHealth, null);
             }
-            // L = Loss
-            else if (Input.GetKeyUp(KeyCode.L))
+        }
+
+        public void Lose()
+        {
+            if (_playerCruiser != null)
             {
-                if (_playerCruiser != null)
-                {
-                    _playerCruiser.TakeDamage(_playerCruiser.MaxHealth, null);
-                }
+                _playerCruiser.TakeDamage(_playerCruiser.MaxHealth, null);
             }
-            // B = Builders
-            else if (Input.GetKeyUp(KeyCode.B))
+        }
+
+        public void AddBuilders()
+        {
+            if (_playerCruiser != null)
             {
-                if (_playerCruiser != null)
-                {
-                    _playerCruiser.DroneManager.NumOfDrones += droneBoostNumber;
-                }
+                _playerCruiser.DroneManager.NumOfDrones += droneBoostNumber;
             }
-            // T = Toggle UI
-            else if (Input.GetKeyUp(KeyCode.T))
+        }
+
+        public void ToggleUI()
+        {
+            hudCanvas.gameObject.SetActive(!hudCanvas.gameObject.activeSelf);
+        }
+
+        public void ShowNuke()
+        {
+            Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
+        }
+
+        public void TogglePause()
+        {
+            if (_lastGameSpeed == 0
+                && Time.timeScale != 0)
             {
-                hudCanvas.gameObject.SetActive(!hudCanvas.gameObject.activeSelf);
+                _lastGameSpeed = Time.timeScale;
+                Time.timeScale = 0;
             }
-            // N = Nuke
-            else if (Input.GetKeyUp(KeyCode.N))
+            else if (_lastGameSpeed != 0
+                && Time.timeScale == 0)
             {
-                Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
-            }
-            // P = Pause
-            else if (Input.GetKeyUp(KeyCode.P))
-            {
-                if (_lastGameSpeed == 0
-                    && Time.timeScale != 0)
-                {
-                    _lastGameSpeed = Time.timeScale;
-                    Time.timeScale = 0;
-                }
-                else if (_lastGameSpeed != 0
-                    && Time.timeScale == 0)
-                {
-                    Time.timeScale = _lastGameSpeed;
-                    _lastGameSpeed = 0;
-                }
+                Time.timeScale = _lastGameSpeed;
+                _lastGameSpeed = 0;
             }
         }
     }
