@@ -1,8 +1,7 @@
-﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Utils.Factories;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
 {
@@ -10,16 +9,20 @@ namespace BattleCruisers.Utils.Debugging
     public class Cheater : MonoBehaviour
     {
         private IFactoryProvider _factoryProvider;
+        private ICruiser _playerCruiser, _aiCruiser;
         private float _lastGameSpeed;
 
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
-        public void Initialise(IFactoryProvider factoryProvider)
+        public void Initialise(IFactoryProvider factoryProvider, ICruiser playerCruiser, ICruiser aiCruiser)
         {
-            Helper.AssertIsNotNull(hudCanvas, factoryProvider);
+            Assert.IsNotNull(hudCanvas);
+            Helper.AssertIsNotNull(hudCanvas, playerCruiser, aiCruiser);
 
             _factoryProvider = factoryProvider;
+            _playerCruiser = playerCruiser;
+            _aiCruiser = aiCruiser;
             _lastGameSpeed = 0;
 
             if (!Debug.isDebugBuild)
@@ -33,31 +36,25 @@ namespace BattleCruisers.Utils.Debugging
             // W = Win
             if (Input.GetKeyUp(KeyCode.W))
             {
-                ICruiser aiCruiser = FindCruiser(Faction.Reds);
-
-                if (aiCruiser != null)
+                if (_aiCruiser != null)
                 {
-                    aiCruiser.TakeDamage(aiCruiser.MaxHealth, null);
+                    _aiCruiser.TakeDamage(_aiCruiser.MaxHealth, null);
                 }
             }
             // L = Loss
             else if (Input.GetKeyUp(KeyCode.L))
             {
-                ICruiser playerCruiser = FindCruiser(Faction.Blues);
-
-                if (playerCruiser != null)
+                if (_playerCruiser != null)
                 {
-                    playerCruiser.TakeDamage(playerCruiser.MaxHealth, null);
+                    _playerCruiser.TakeDamage(_playerCruiser.MaxHealth, null);
                 }
             }
             // B = Builders
             else if (Input.GetKeyUp(KeyCode.B))
             {
-                ICruiser playerCruiser = FindCruiser(Faction.Blues);
-
-                if (playerCruiser != null)
+                if (_playerCruiser != null)
                 {
-                    playerCruiser.DroneManager.NumOfDrones += droneBoostNumber;
+                    _playerCruiser.DroneManager.NumOfDrones += droneBoostNumber;
                 }
             }
             // T = Toggle UI
@@ -87,12 +84,6 @@ namespace BattleCruisers.Utils.Debugging
                     _lastGameSpeed = 0;
                 }
             }
-        }
-
-        private ICruiser FindCruiser(Faction faction)
-        {
-            ICruiser[] cruisers = FindObjectsOfType<Cruiser>();
-            return cruisers.FirstOrDefault(cruiser => cruiser.Faction == faction);
         }
     }
 }

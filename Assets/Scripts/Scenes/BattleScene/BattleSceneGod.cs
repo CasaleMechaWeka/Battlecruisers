@@ -203,7 +203,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         components.TargetIndicator));
             Cheater cheater = GetComponentInChildren<Cheater>();
             Assert.IsNotNull(cheater);
-            cheater.Initialise(factoryProvider);
+            cheater.Initialise(factoryProvider, playerCruiser, aiCruiser);
 
             // Audio
             ILayeredMusicPlayer layeredMusicPlayer
