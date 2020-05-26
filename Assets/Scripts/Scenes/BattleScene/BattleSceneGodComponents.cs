@@ -29,7 +29,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public ClickableEmitter backgroundClickableEmitter;
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
-        public GameObject audioListener;
+        public AudioListener audioListener;
         public IGameObject AudioListener { get; private set; }
 
         public TargetIndicatorController targetIndicator;
@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator);
 
-            AudioListener = new GameObjectBC(audioListener);
+            AudioListener = new GameObjectBC(audioListener.gameObject);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
