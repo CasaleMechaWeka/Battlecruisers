@@ -87,6 +87,7 @@ namespace BattleCruisers.UI.Cameras
             INavigationWheelPositionProvider navigationWheelPositionProvider 
                 = new NavigationWheelPositionProvider(
                     navigationWheelPanel.PanelArea,
+                    cameraCalculator,
                     cameraNavigationWheelCalculator,
                     settings.ValidOrthographicSizes,
                     playerCruiser,
