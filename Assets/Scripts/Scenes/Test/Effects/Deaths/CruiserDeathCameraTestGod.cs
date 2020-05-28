@@ -47,11 +47,6 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             _cameraFocuser = cameraComponents.CameraFocuser;
         }
 
-        public void Overview()
-        {
-            _cameraFocuser.FocusOnOverview();
-        }
-
         public void PlayerCruiser()
         {
             _cameraFocuser.FocusOnPlayerCruiserDeath();
