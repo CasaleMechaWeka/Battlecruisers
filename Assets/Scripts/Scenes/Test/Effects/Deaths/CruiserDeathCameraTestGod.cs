@@ -13,6 +13,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 {
     public class CruiserDeathCameraTestGod : TestGodBase
     {
+        private ICameraFocuser _cameraFocuser;
+
         public Cruiser playerCruiser, aiCruiser;
 
         protected override List<GameObject> GetGameObjects()
@@ -35,13 +37,39 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
             CameraInitialiser cameraInitialiser = FindObjectOfType<CameraInitialiser>();
             Assert.IsNotNull(cameraInitialiser);
-            cameraInitialiser
+            ICameraComponents cameraComponents = cameraInitialiser
                 .Initialise(
                     ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,
                     _updaterProvider.SwitchableUpdater);
+            _cameraFocuser = cameraComponents.CameraFocuser;
+        }
+
+        public void Overview()
+        {
+            _cameraFocuser.FocusOnOverview();
+        }
+
+        public void PlayerCruiser()
+        {
+            _cameraFocuser.FocusOnPlayerCruiserDeath();
+        }
+
+        public void PlayerCruiserNuke()
+        {
+            _cameraFocuser.FocusOnPlayerCruiserNuke();
+        }
+
+        public void AICruiser()
+        {
+            _cameraFocuser.FocusOnAICruiserDeath();
+        }
+
+        public void AICruiserNuke()
+        {
+            _cameraFocuser.FocusOnAICruiserNuke();
         }
     }
 }
