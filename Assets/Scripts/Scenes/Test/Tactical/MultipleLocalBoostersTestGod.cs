@@ -8,6 +8,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.Test.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Tactical
 {
@@ -16,11 +17,15 @@ namespace BattleCruisers.Scenes.Test.Tactical
         public Cruiser cruiser;
         public List<Slot> boosterSlots;
         public List<Slot> aaSlots;
-        //public Slot
+        public Slot droneStationSlot;
+        public Slot controlTowerSlot;
 
         protected override List<GameObject> GetGameObjects()
         {
-            Assert.IsNotNull(cruiser);
+            BCUtils.Helper.AssertIsNotNull(cruiser, droneStationSlot, controlTowerSlot);
+            Assert.IsTrue(boosterSlots.Count != 0);
+            Assert.IsTrue(aaSlots.Count != 0);
+
             return new List<GameObject>()
             {
                 cruiser.GameObject
@@ -46,6 +51,12 @@ namespace BattleCruisers.Scenes.Test.Tactical
             IBuildableWrapper<IBuilding> navalFactory = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.NavalFactory);
             ISlot bowSlot = cruiser.SlotAccessor.GetFreeSlot(navalFactory.Buildable.SlotSpecification);
             cruiser.ConstructBuilding(navalFactory, bowSlot);
+
+            IBuildableWrapper<IBuilding> droneStation = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation);
+            cruiser.ConstructBuilding(droneStation, droneStationSlot);
+
+            IBuildableWrapper<IBuilding> controlTower = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.ControlTower);
+            cruiser.ConstructBuilding(controlTower, controlTowerSlot);
         }
     }
 }
