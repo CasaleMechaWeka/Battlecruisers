@@ -15,6 +15,8 @@ namespace BattleCruisers.Scenes.Test.Tactical
     {
         public Cruiser cruiser;
         public List<Slot> boosterSlots;
+        public List<Slot> aaSlots;
+        //public Slot
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -36,6 +38,12 @@ namespace BattleCruisers.Scenes.Test.Tactical
             foreach (Slot slot in boosterSlots)
             {
                 cruiser.ConstructBuilding(booster, slot);
+            }
+
+            IBuildableWrapper<IBuilding> airTurret = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiAirTurret);
+            foreach (Slot slot in aaSlots)
+            {
+                cruiser.ConstructBuilding(airTurret, slot);
             }
         }
     }
