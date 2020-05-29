@@ -14,6 +14,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
     public class MultipleLocalBoostersTestGod : TestGodBase
     {
         public Cruiser cruiser;
+        public List<Slot> boosterSlots;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -28,9 +29,14 @@ namespace BattleCruisers.Scenes.Test.Tactical
         {
             helper.SetupCruiser(cruiser);
 
+            // FELIX
+            //ISlot slot = cruiser.SlotAccessor.GetFreeSlot(booster.Buildable.SlotSpecification);
+
             IBuildableWrapper<IBuilding> booster = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.LocalBooster);
-            ISlot slot = cruiser.SlotAccessor.GetFreeSlot(booster.Buildable.SlotSpecification);
-            cruiser.ConstructBuilding(booster, slot);
+            foreach (Slot slot in boosterSlots)
+            {
+                cruiser.ConstructBuilding(booster, slot);
+            }
         }
     }
 }
