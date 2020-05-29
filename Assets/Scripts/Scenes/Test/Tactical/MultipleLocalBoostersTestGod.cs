@@ -31,9 +31,6 @@ namespace BattleCruisers.Scenes.Test.Tactical
         {
             helper.SetupCruiser(cruiser);
 
-            // FELIX
-            //ISlot slot = cruiser.SlotAccessor.GetFreeSlot(booster.Buildable.SlotSpecification);
-
             IBuildableWrapper<IBuilding> booster = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.LocalBooster);
             foreach (Slot slot in boosterSlots)
             {
@@ -45,6 +42,10 @@ namespace BattleCruisers.Scenes.Test.Tactical
             {
                 cruiser.ConstructBuilding(airTurret, slot);
             }
+
+            IBuildableWrapper<IBuilding> navalFactory = helper.PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.NavalFactory);
+            ISlot bowSlot = cruiser.SlotAccessor.GetFreeSlot(navalFactory.Buildable.SlotSpecification);
+            cruiser.ConstructBuilding(navalFactory, bowSlot);
         }
     }
 }
