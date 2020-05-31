@@ -76,10 +76,9 @@ namespace BattleCruisers.Scenes.BattleScene
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-
-            // TEMP  Force  tutorial
-            applicationModel.IsTutorial = true;
-            applicationModel.SelectedLevel = 1;
+            //// TEMP  Force  tutorial
+            //applicationModel.IsTutorial = true;
+            //applicationModel.SelectedLevel = 1;
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
