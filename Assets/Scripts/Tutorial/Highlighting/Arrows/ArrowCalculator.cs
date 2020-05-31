@@ -1,7 +1,6 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
+﻿using System;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,13 +9,16 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
     public class ArrowCalculator : IArrowCalculator
     {
         private readonly ICamera _camera;
+        private readonly IScreen _screen;
 
         public const float HIGHLIGHTABLE_CUTOFF_SIZE_IN_PIXELS = 800;
 
-        public ArrowCalculator(ICamera camera)
+        public ArrowCalculator(ICamera camera, IScreen screen)
         {
-            Assert.IsNotNull(camera);
+            Helper.AssertIsNotNull(camera, screen);
+
             _camera = camera;
+            _screen = screen;
         }
 
         public bool ShouldShowArrow(Vector2 highlightableSize)
@@ -28,7 +30,14 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
         {
             Logging.Log(Tags.MASKS, $"highlightableCenterPosition: {highlightableCenterPosition}  Camera size: {_camera.PixelWidth}x{_camera.PixelHeight}");
 
+            // Highlightable is in middle of screen
             if (highlightableCenterPosition.x == _camera.PixelWidth / 2)
+            {
+                return ArrowDirection.North;
+            }
+
+            // Highlightable is in top third of screen, avoid hiding behind explanation text
+            if (highlightableCenterPosition.y > (_screen.Height / 3))
             {
                 return ArrowDirection.North;
             }
