@@ -30,9 +30,7 @@ namespace BattleCruisers.Tutorial.Highlighting
 
             arrowHighlighter
                 .Initialise(
-                     new ArrowCalculator(
-                         camera,
-                         new ScreenBC()));
+                     new ArrowCalculator(camera));
 
             return new CompositeHighlighter(inverseHighlighter, fourSquareHighlighter, arrowHighlighter);
         }

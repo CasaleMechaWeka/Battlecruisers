@@ -9,16 +9,13 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
     public class ArrowCalculator : IArrowCalculator
     {
         private readonly ICamera _camera;
-        private readonly IScreen _screen;
 
         public const float HIGHLIGHTABLE_CUTOFF_SIZE_IN_PIXELS = 800;
 
-        public ArrowCalculator(ICamera camera, IScreen screen)
+        public ArrowCalculator(ICamera camera)
         {
-            Helper.AssertIsNotNull(camera, screen);
-
+            Assert.IsNotNull(camera);
             _camera = camera;
-            _screen = screen;
         }
 
         public bool ShouldShowArrow(Vector2 highlightableSize)
@@ -37,7 +34,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
             }
 
             // Highlightable is in top third of screen, avoid hiding behind explanation text
-            if (highlightableCenterPosition.y > (_screen.Height / 3))
+            if (highlightableCenterPosition.y > (_camera.PixelHeight / 3))
             {
                 return ArrowDirection.North;
             }

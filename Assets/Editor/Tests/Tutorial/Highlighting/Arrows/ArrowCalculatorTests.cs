@@ -17,8 +17,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting.Arrows
         public void TestSetup()
         {
             _camera = Substitute.For<ICamera>();
-            // FELIX  Fix :)
-            _calculator = new ArrowCalculator(_camera, null);
+            _calculator = new ArrowCalculator(_camera);
 
             _camera.PixelWidth.Returns(1920);
             _camera.PixelHeight.Returns(1080);
