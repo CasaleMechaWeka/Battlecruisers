@@ -34,7 +34,7 @@ namespace BattleCruisers.Tutorial.Highlighting.Arrows
             }
 
             // Highlightable is in top third of screen, avoid hiding behind explanation text
-            if (highlightableCenterPosition.y > (_camera.PixelHeight / 3))
+            if (highlightableCenterPosition.y > (_camera.PixelHeight * 0.667f))
             {
                 return ArrowDirection.North;
             }

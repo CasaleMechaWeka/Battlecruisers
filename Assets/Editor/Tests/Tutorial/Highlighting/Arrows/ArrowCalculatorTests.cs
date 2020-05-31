@@ -45,10 +45,26 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting.Arrows
 
         #region FindArrowDirection
         [Test]
-        public void FindArrowDirection_North()
+        public void FindArrowDirection_HighlightableInScreenMiddel_North()
         {
             Vector2 centerPosition = new Vector2(_camera.PixelWidth / 2, 17);
             Assert.AreEqual(ArrowDirection.North, _calculator.FindArrowDirection(centerPosition));
+        }
+
+        [Test]
+        public void FindArrowDirection_HighlightableInTopThird_North()
+        {
+            float yPosition = _camera.PixelHeight * 0.667f + 1;
+            Vector2 centerPosition = new Vector2(1, yPosition);
+            Assert.AreEqual(ArrowDirection.North, _calculator.FindArrowDirection(centerPosition));
+        }
+
+        [Test]
+        public void FindArrowDirection_HighlightableNotInTopThird_NotNorth()
+        {
+            float yPosition = _camera.PixelHeight * 0.667f - 1;
+            Vector2 centerPosition = new Vector2(1, yPosition);
+            Assert.AreNotEqual(ArrowDirection.North, _calculator.FindArrowDirection(centerPosition));
         }
 
         [Test]
