@@ -10,6 +10,7 @@
         Difficulty AIDifficulty { get; set; }
 		int ZoomSpeedLevel { get; set; }
         int ScrollSpeedLevel { get; set; }
+        bool MuteMusic { get; set; }
 
         void Save();
     }

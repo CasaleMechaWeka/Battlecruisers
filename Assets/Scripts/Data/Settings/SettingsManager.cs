@@ -11,6 +11,7 @@ namespace BattleCruisers.Data.Settings
             public const string Difficulty = "Difficulty";
 			public const string ZoomSpeedLevel = "ZoomSpeed";
             public const string ScrollSpeed = "ScrollSpeed";
+            public const string MuteMusic = "MuteMusic";
         }
 
         private const int DEFAULT_ZOOM_SPEED_LEVEL = 5;
@@ -20,6 +21,9 @@ namespace BattleCruisers.Data.Settings
 		public const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
 		public const int MIN_SCROLL_SPEED_LEVEL = 1;
 		public const int MAX_SCROLL_SPEED_LEVEL = 9;
+
+        private const int FALSE = 0;
+        private const int TRUE = 1;
 
         public Difficulty AIDifficulty
         {
@@ -61,11 +65,24 @@ namespace BattleCruisers.Data.Settings
 			}
 		}
 
+        public bool MuteMusic
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(Keys.MuteMusic) == TRUE;
+            }
+            set
+            {
+                PlayerPrefs.SetInt(Keys.MuteMusic, value ? TRUE : FALSE);
+            }
+        }
+
         public SettingsManager()
         {
             if (!PlayerPrefs.HasKey(Keys.Difficulty)
                 || !PlayerPrefs.HasKey(Keys.ZoomSpeedLevel)
-                || !PlayerPrefs.HasKey(Keys.ScrollSpeed))
+                || !PlayerPrefs.HasKey(Keys.ScrollSpeed)
+                || !PlayerPrefs.HasKey(Keys.MuteMusic))
             {
                 CreateSettings();
             }
@@ -76,6 +93,7 @@ namespace BattleCruisers.Data.Settings
             AIDifficulty = Difficulty.Normal;
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
 			ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
+            MuteMusic = false;
 
             Save();
         }
