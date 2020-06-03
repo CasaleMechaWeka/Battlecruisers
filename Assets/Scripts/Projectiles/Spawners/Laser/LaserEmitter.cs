@@ -27,12 +27,16 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         private IDeltaTimeProvider _deltaTimeProvider;
 
         public LayerMask unitsLayerMask, shieldsLayerMask;
+        public BroadcastingParticleSystem constantSparks;
 
         private ISettableBroadcastingProperty<bool> _isLaserFiring;
         public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
 
         void Awake()
         {
+            Assert.IsNotNull(constantSparks);
+            constantSparks.Initialise();
+
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
 
@@ -77,6 +81,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
             _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
+            constantSparks.Play();
         }
 
         public void FireLaser(float angleInDegrees, bool isSourceMirrored)
@@ -114,6 +119,7 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
         {
             Logging.LogMethod(Tags.LASER);
             _laserSoundPlayer?.DisposeManagedState();
+            constantSparks.Stop();
         }
     }
 }
