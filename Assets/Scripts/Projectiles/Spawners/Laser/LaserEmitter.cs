@@ -28,17 +28,14 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
 
         public LayerMask unitsLayerMask, shieldsLayerMask;
         public BroadcastingParticleSystem constantSparks;
-        public ParticleSystemGroupInitialiser muzzleEffectsInitialiser;
 
         private ISettableBroadcastingProperty<bool> _isLaserFiring;
         public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
 
         void Awake()
         {
-            Helper.AssertIsNotNull(constantSparks, muzzleEffectsInitialiser);
-
+            Assert.IsNotNull(constantSparks);
             constantSparks.Initialise();
-            _laserMuzzleEffect = muzzleEffectsInitialiser.CreateParticleSystemGroup();
 
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
@@ -50,6 +47,9 @@ namespace BattleCruisers.Projectiles.Spawners.Laser
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
             _laserImpact.Initialise();
+
+            IParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("LaserMuzzleEffect");
+            _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
 
             _isLaserFiring = new SettableBroadcastingProperty<bool>(false);
             IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
