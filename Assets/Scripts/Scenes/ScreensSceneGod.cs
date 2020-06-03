@@ -80,7 +80,7 @@ namespace BattleCruisers.Scenes
 
 
             homeScreen.Initialise(_soundPlayer, this, _gameModel, _dataProvider.Levels.Count);
-            settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager);
+            settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
 
 
             if (_applicationModel.ShowPostBattleScreen)

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -9,11 +10,15 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
-        public void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, ISettingsManager settingsManager)
+        public void Initialise(
+            ISoundPlayer soundPlayer, 
+            IScreensSceneGod screensSceneGod, 
+            ISettingsManager settingsManager,
+            IMusicPlayer musicPlayer)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Assert.IsNotNull(settingsManager);
+            Helper.AssertIsNotNull(settingsManager, musicPlayer);
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
             if (settingsManager.ScrollSpeedLevel < SettingsManager.MIN_SCROLL_SPEED_LEVEL
@@ -40,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
-            saveButton.Initialise(soundPlayer, screensSceneGod, settingsManager, difficultyDropdown, zoomSlider.SliderValue, scrollSlider.SliderValue, muteMusicToggle.IsChecked);
+            saveButton.Initialise(soundPlayer, screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSlider.SliderValue, scrollSlider.SliderValue, muteMusicToggle.IsChecked);
 
             CancelButton cancelButton = GetComponentInChildren<CancelButton>();
             Assert.IsNotNull(cancelButton);

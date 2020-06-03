@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityCommon.Properties;
@@ -12,6 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IScreensSceneGod _screensSceneGod;
         private ISettingsManager _settingsManager;
+        private IMusicPlayer _musicPlayer;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<bool> _muteMusic;
@@ -23,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             ISettingsManager settingsManager, 
+            IMusicPlayer musicPlayer,
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
@@ -30,10 +33,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
+            _musicPlayer = musicPlayer;
             _difficultyDropdown = difficultyDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
@@ -63,6 +67,15 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.Save();
 
             UpdateEnabledStatus();
+
+            if (_settingsManager.MuteMusic)
+            {
+                _musicPlayer.Stop();
+            }
+            else
+            {
+                _musicPlayer.PlayScreensSceneMusic();
+            }
 
             _screensSceneGod.GoToHomeScreen();
         }
