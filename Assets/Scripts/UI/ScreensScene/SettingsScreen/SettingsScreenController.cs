@@ -4,7 +4,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -41,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
-            saveButton.Initialise(soundPlayer, screensSceneGod, settingsManager, difficultyDropdown, zoomSlider.SliderValue, scrollSlider.SliderValue);
+            saveButton.Initialise(soundPlayer, screensSceneGod, settingsManager, difficultyDropdown, zoomSlider.SliderValue, scrollSlider.SliderValue, muteMusicToggle.IsChecked);
 
             CancelButton cancelButton = GetComponentInChildren<CancelButton>();
             Assert.IsNotNull(cancelButton);

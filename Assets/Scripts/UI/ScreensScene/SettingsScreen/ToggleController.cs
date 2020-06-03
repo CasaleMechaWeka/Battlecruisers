@@ -12,12 +12,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public void Initialise(bool isChecked)
         {
+            _isChecked = new SettableBroadcastingProperty<bool>(isChecked);
+            IsChecked = new BroadcastingProperty<bool>(_isChecked);
+
             Toggle toggle = GetComponentInChildren<Toggle>();
             Assert.IsNotNull(toggle);
             toggle.onValueChanged.AddListener(OnValueChanged);
-
-            _isChecked = new SettableBroadcastingProperty<bool>(isChecked);
-            IsChecked = new BroadcastingProperty<bool>(_isChecked);
+            toggle.isOn = isChecked;
         }
 
         private void OnValueChanged(bool value)

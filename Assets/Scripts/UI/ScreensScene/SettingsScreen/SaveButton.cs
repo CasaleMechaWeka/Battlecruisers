@@ -2,7 +2,6 @@
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using System;
 using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -15,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
+        private IBroadcastingProperty<bool> _muteMusic;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
@@ -25,40 +25,28 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISettingsManager settingsManager, 
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
-            IBroadcastingProperty<int> scrollSpeedLevel)
+            IBroadcastingProperty<int> scrollSpeedLevel,
+            IBroadcastingProperty<bool> muteMusic)
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
             _difficultyDropdown = difficultyDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
+            _muteMusic = muteMusic;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
 
-            _difficultyDropdown.DifficultyChanged += _difficultyDropdown_DifficultyChanged;
-            _zoomSpeedLevel.ValueChanged += _zoomSpeed_ValueChanged;
-            _scrollSpeedLevel.ValueChanged += _scrollSpeedLevel_ValueChanged;
+            _difficultyDropdown.DifficultyChanged += (sender, e) => UpdateEnabledStatus();
+            _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _muteMusic.ValueChanged += (sender, e) => UpdateEnabledStatus();
 
-            UpdateEnabledStatus();
-        }
-
-        private void _difficultyDropdown_DifficultyChanged(object sender, EventArgs e)
-        {
-            UpdateEnabledStatus();
-        }
-
-        private void _zoomSpeed_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateEnabledStatus();
-        }
-
-        private void _scrollSpeedLevel_ValueChanged(object sender, EventArgs e)
-        {
             UpdateEnabledStatus();
         }
 
@@ -71,6 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
+            _settingsManager.MuteMusic = _muteMusic.Value;
             _settingsManager.Save();
 
             UpdateEnabledStatus();
@@ -88,7 +77,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             return
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
                 || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
-                || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel;
+                || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
+                || _muteMusic.Value != _settingsManager.MuteMusic;
         }
     }
 }
