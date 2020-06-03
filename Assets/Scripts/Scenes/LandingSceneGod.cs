@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Loading;
+﻿using BattleCruisers.Data;
+using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -39,7 +40,6 @@ namespace BattleCruisers.Scenes
 
                 SceneNavigator = this;
 
-
                 // Game starts with the screens scene
                 GoToScene(SceneNames.SCREENS_SCENE);
             }
@@ -51,11 +51,15 @@ namespace BattleCruisers.Scenes
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
 
-            return
-                new MusicPlayer(
+            IMusicPlayer corePlayer
+                = new MusicPlayer(
                     new SingleSoundPlayer(
                         new SoundFetcher(),
                         audioSource));
+            return
+                new TogglableMusicPlayer(
+                    corePlayer,
+                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
         }
 
         public void GoToScene(string sceneName, string loadingScreenHint = null)
