@@ -15,9 +15,15 @@ namespace BattleCruisers.UI.Music
     {
         public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
             ISoundFetcher soundFetcher,
-            SoundKeyPair soundKeys)
+            SoundKeyPair soundKeys,
+            bool muteMusic)
         {
             Helper.AssertIsNotNull(soundFetcher, soundKeys);
+
+            if (muteMusic)
+            {
+                return new DummyLayeredMusicPlayer();
+            }
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
             IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);

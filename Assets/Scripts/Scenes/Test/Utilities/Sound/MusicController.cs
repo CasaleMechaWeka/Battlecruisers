@@ -54,7 +54,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return
                 await _musicInitialiser.CreatePlayerAsync(
                     _soundFetcher,
-                    _songs.Current());
+                    _songs.Current(),
+                    muteMusic: false);
         }
 
         public void PlayBackground()

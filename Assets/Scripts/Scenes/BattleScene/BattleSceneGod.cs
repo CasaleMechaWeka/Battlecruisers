@@ -208,7 +208,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
-                    currentLevel.MusicKeys);
+                    currentLevel.MusicKeys,
+                    dataProvider.SettingsManager.MuteMusic);
             LandingSceneGod.MusicPlayer?.Stop();
             _audioInitialiser
                 = new AudioInitialiser(
