@@ -4,6 +4,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -34,6 +35,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IRange<int> scrollLevelRange = new Range<int>(SettingsManager.MIN_SCROLL_SPEED_LEVEL, SettingsManager.MAX_SCROLL_SPEED_LEVEL);
             SliderController scrollSlider = transform.FindNamedComponent<SliderController>("SettingsContainer/ScrollSpeedRow/Slider");
             scrollSlider.Initialise(settingsManager.ScrollSpeedLevel, scrollLevelRange);
+
+            ToggleController muteMusicToggle = GetComponentInChildren<ToggleController>();
+            muteMusicToggle.Initialise(settingsManager.MuteMusic);
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
