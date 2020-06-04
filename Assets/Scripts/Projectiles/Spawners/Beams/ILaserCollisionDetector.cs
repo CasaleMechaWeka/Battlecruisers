@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
+namespace BattleCruisers.Projectiles.Spawners.Beams
 {
     public interface ILaserCollisionDetector
     {

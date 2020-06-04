@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
+namespace BattleCruisers.Projectiles.Spawners.Beams
 {
     public class LaserCollisionDetector : ILaserCollisionDetector
     {
