@@ -60,8 +60,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private readonly float _buildSpeedMultiplier;
         private readonly IDeferrer _deferrer;
 
-        private const int DEFAULT_NUM_OF_DRONES = 10;
-
         public IUpdaterProvider UpdaterProvider { get; }
 
         private IPrefabFactory _prefabFactory;
