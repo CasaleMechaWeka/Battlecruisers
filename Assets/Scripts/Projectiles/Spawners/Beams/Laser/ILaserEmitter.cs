@@ -7,7 +7,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
     {
         IBroadcastingProperty<bool> IsLaserFiring { get; }
 
-        void FireLaser(float angleInDegrees, bool isSourceMirrored);
+        void FireBeam(float angleInDegrees, bool isSourceMirrored);
         void StopLaser();
     }
 }

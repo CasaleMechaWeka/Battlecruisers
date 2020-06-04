@@ -83,7 +83,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             constantSparks.Play();
         }
 
-        public void FireLaser(float angleInDegrees, bool isSourceMirrored)
+        public void FireBeam(float angleInDegrees, bool isSourceMirrored)
         {
             Logging.LogMethod(Tags.LASER);
 

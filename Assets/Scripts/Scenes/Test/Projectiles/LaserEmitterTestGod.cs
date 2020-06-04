@@ -182,7 +182,7 @@ namespace BattleCruisers.Scenes.Test
         {
             if (target.BuildableState == BuildableState.Completed && !target.IsDestroyed)
             {
-                stats.Laser.FireLaser(stats.AngleInDegrees, stats.IsSourceMirrored);
+                stats.Laser.FireBeam(stats.AngleInDegrees, stats.IsSourceMirrored);
             }
             else
             {

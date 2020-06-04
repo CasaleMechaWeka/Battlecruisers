@@ -71,7 +71,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override void Fire(float angleInDegrees)
 		{
-			_laserEmitter.FireLaser(angleInDegrees, transform.IsMirrored());
+			_laserEmitter.FireBeam(angleInDegrees, transform.IsMirrored());
 		}
 
 		protected override void CeaseFire()
