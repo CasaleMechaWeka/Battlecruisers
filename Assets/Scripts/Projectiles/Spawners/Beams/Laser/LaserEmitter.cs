@@ -14,6 +14,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {
+    // FELIX  Avoid duplicate code with TeslaEmitter
     public class LaserEmitter : MonoBehaviour, ILaserEmitter
     {
         private ILaserRenderer _laserRenderer;

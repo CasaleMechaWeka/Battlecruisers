@@ -1,13 +1,11 @@
-﻿using BattleCruisers.Utils;
-using UnityCommon.Properties;
+﻿using UnityCommon.Properties;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {
-    public interface ILaserEmitter : IManagedDisposable
+    public interface ILaserEmitter : IBeamEmitter
     {
         IBroadcastingProperty<bool> IsLaserFiring { get; }
 
-        void FireBeam(float angleInDegrees, bool isSourceMirrored);
         void StopLaser();
     }
 }
