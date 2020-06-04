@@ -6,14 +6,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams
 {
-    public class LaserCollisionDetector : ILaserCollisionDetector
+    public class BeamCollisionDetector : IBeamCollisionDetector
     {
         private readonly ContactFilter2D _contactFilter;
         private readonly ITargetFilter _targetFilter;
 
         private const int NUM_OF_COLLIDERS_TO_RAYCAST = 25;
 
-        public LaserCollisionDetector(ContactFilter2D contactFilter, ITargetFilter targetFilter)
+        public BeamCollisionDetector(ContactFilter2D contactFilter, ITargetFilter targetFilter)
         {
             Assert.IsNotNull(targetFilter);
 
@@ -21,20 +21,20 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
             _targetFilter = targetFilter;
         }
 
-        public ILaserCollision FindCollision(Vector2 source, float angleInDegrees, bool isSourceMirrored)
+        public IBeamCollision FindCollision(Vector2 source, float angleInDegrees, bool isSourceMirrored)
         {
             Logging.VerboseMethod(Tags.LASER);
 
-            Vector2 laserDirection = FindLaserDirection(angleInDegrees, isSourceMirrored);
+            Vector2 beamDirection = FindBeamDirection(angleInDegrees, isSourceMirrored);
 
             RaycastHit2D[] results = new RaycastHit2D[NUM_OF_COLLIDERS_TO_RAYCAST];
-            int numOfResults = Physics2D.Raycast(source, laserDirection, _contactFilter, results);
-            Logging.Verbose(Tags.LASER, $"Physics2D.Raycast():  source: {source}  isSourceMirrored: {isSourceMirrored}  laserDirection: {laserDirection}  Results: {numOfResults}");
+            int numOfResults = Physics2D.Raycast(source, beamDirection, _contactFilter, results);
+            Logging.Verbose(Tags.LASER, $"Physics2D.Raycast():  source: {source}  isSourceMirrored: {isSourceMirrored}  beamDirection: {beamDirection}  Results: {numOfResults}");
 
             return GetMatchingTarget(results, numOfResults);
         }
 
-        private Vector2 FindLaserDirection(float angleInDegrees, bool isSourceMirrored)
+        private Vector2 FindBeamDirection(float angleInDegrees, bool isSourceMirrored)
         {
             float directionMultiplier = isSourceMirrored ? -1 : 1;
             float xComponent = Mathf.Cos(Mathf.Deg2Rad * angleInDegrees) * directionMultiplier;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
             return new Vector2(xComponent, yComponent);
         }
 
-        private ILaserCollision GetMatchingTarget(RaycastHit2D[] results, int numOfResults)
+        private IBeamCollision GetMatchingTarget(RaycastHit2D[] results, int numOfResults)
         {
             Logging.Verbose(Tags.LASER, $"Number of collisions: {numOfResults}");
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
                     && !target.IsDestroyed
                     && _targetFilter.IsMatch(target))
                 {
-                    return new LaserCollision(target, result.point);
+                    return new BeamCollision(target, result.point);
                 }
             }
 

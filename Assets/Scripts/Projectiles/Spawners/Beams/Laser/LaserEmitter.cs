@@ -17,7 +17,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
     public class LaserEmitter : MonoBehaviour, ILaserEmitter
     {
         private ILaserRenderer _laserRenderer;
-        private ILaserCollisionDetector _collisionDetector;
+        private IBeamCollisionDetector _collisionDetector;
         private IAudioSource _audioSource;
         private ILaserSoundPlayer _laserSoundPlayer;
         private float _damagePerS;
@@ -76,7 +76,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
                 layerMask = unitsLayerMask.value | shieldsLayerMask.value,
                 useTriggers = true
             };
-            _collisionDetector = new LaserCollisionDetector(contactFilter, targetFilter);
+            _collisionDetector = new BeamCollisionDetector(contactFilter, targetFilter);
 
             _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
@@ -87,7 +87,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
         {
             Logging.LogMethod(Tags.LASER);
 
-            ILaserCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
+            IBeamCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
 
             if (collision != null)
             {

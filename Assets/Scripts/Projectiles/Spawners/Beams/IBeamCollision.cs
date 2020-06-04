@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams
 {
-    public interface ILaserCollision
+    public interface IBeamCollision
     {
         ITarget Target { get; }
         Vector2 CollisionPoint { get; }
