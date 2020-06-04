@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Projectiles.Spawners.Laser;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.BattleScene.Update;

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects.Laser;
-using BattleCruisers.Projectiles.Spawners.Laser;
+using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;

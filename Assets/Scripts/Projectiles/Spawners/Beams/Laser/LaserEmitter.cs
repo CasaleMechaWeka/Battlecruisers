@@ -12,7 +12,7 @@ using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Projectiles.Spawners.Laser
+namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {
     public class LaserEmitter : MonoBehaviour, ILaserEmitter
     {

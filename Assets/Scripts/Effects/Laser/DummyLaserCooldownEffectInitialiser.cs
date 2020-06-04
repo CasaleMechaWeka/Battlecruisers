@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Projectiles.Spawners.Laser;
+﻿using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
 using UnityEngine;
 

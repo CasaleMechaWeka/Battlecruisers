@@ -1,7 +1,8 @@
-﻿using BattleCruisers.Utils;
+﻿
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 
-namespace BattleCruisers.Projectiles.Spawners.Laser
+namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {
     public class LaserSoundPlayer : ILaserSoundPlayer
     {
