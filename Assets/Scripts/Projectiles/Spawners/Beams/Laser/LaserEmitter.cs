@@ -14,29 +14,22 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {
-    // FELIX  Avoid duplicate code with TeslaEmitter
-    public class LaserEmitter : MonoBehaviour, ILaserEmitter
+    public class LaserEmitter : BeamEmitter, ILaserEmitter
     {
         private ILaserRenderer _laserRenderer;
-        private IBeamCollisionDetector _collisionDetector;
         private IAudioSource _audioSource;
         private ILaserSoundPlayer _laserSoundPlayer;
         private float _damagePerS;
-        private ITarget _parent;
         private LaserImpact _laserImpact;
         private IParticleSystemGroup _laserMuzzleEffect;
         private IDeltaTimeProvider _deltaTimeProvider;
 
-        public LayerMask unitsLayerMask, shieldsLayerMask;
-        public BroadcastingParticleSystem constantSparks;
-
         private ISettableBroadcastingProperty<bool> _isLaserFiring;
         public IBroadcastingProperty<bool> IsLaserFiring { get; private set; }
 
-        void Awake()
+        protected override void Awake()
         {
-            Assert.IsNotNull(constantSparks);
-            constantSparks.Initialise();
+            base.Awake();
 
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
@@ -63,46 +56,26 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             ISoundFetcher soundFetcher,
             IDeltaTimeProvider deltaTimeProvider)
         {
-            Logging.Verbose(Tags.LASER, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
-            Helper.AssertIsNotNull(targetFilter, parent, soundFetcher, deltaTimeProvider);
+            base.Initialise(targetFilter, parent);
+            Helper.AssertIsNotNull(soundFetcher, deltaTimeProvider);
             Assert.IsTrue(damagePerS > 0);
 
             _damagePerS = damagePerS;
-            _parent = parent;
             _deltaTimeProvider = deltaTimeProvider;
-
-            ContactFilter2D contactFilter = new ContactFilter2D()
-            {
-                useLayerMask = true,
-                layerMask = unitsLayerMask.value | shieldsLayerMask.value,
-                useTriggers = true
-            };
-            _collisionDetector = new BeamCollisionDetector(contactFilter, targetFilter);
-
             _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
-            constantSparks.Play();
         }
 
-        public void FireBeam(float angleInDegrees, bool isSourceMirrored)
+        protected override void HandleCollision(IBeamCollision collision)
         {
-            Logging.LogMethod(Tags.LASER);
+            _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
+            _laserImpact.Show(collision.CollisionPoint);
+            _laserMuzzleEffect.Play();
 
-            IBeamCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
+            float damage = _deltaTimeProvider.DeltaTime * _damagePerS;
+            collision.Target.TakeDamage(damage, _parent);
 
-            if (collision != null)
-            {
-                Logging.Log(Tags.LASER, $"Have a collision with: {collision.Target} at {collision.CollisionPoint}");
-
-                _laserRenderer.ShowLaser(transform.position, collision.CollisionPoint);
-                _laserImpact.Show(collision.CollisionPoint);
-                _laserMuzzleEffect.Play();
-
-                float damage = _deltaTimeProvider.DeltaTime * _damagePerS;
-                collision.Target.TakeDamage(damage, _parent);
-
-                _isLaserFiring.Value = true;
-            }
+            _isLaserFiring.Value = true;
         }
 
         public void StopLaser()
@@ -115,11 +88,10 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             _isLaserFiring.Value = false;
         }
 
-        public void DisposeManagedState()
+        public override void DisposeManagedState()
         {
-            Logging.LogMethod(Tags.LASER);
+            base.DisposeManagedState();
             _laserSoundPlayer?.DisposeManagedState();
-            constantSparks.Stop();
         }
     }
 }
