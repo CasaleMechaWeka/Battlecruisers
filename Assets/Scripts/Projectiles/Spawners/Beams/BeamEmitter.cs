@@ -23,7 +23,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
 
         protected void Initialise(ITargetFilter targetFilter, ITarget parent)
         {
-            Logging.Verbose(Tags.LASER, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
+            Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             Helper.AssertIsNotNull(targetFilter, parent);
 
             _parent = parent;
@@ -41,17 +41,16 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
 
         public void FireBeam(float angleInDegrees, bool isSourceMirrored)
         {
-            // FELIX  Fix logging tag :)  Beam?  Lightning?
-            Logging.LogMethod(Tags.LASER);
+            Logging.LogMethod(Tags.BEAM);
 
             IBeamCollision collision = _collisionDetector.FindCollision(transform.position, angleInDegrees, isSourceMirrored);
             if (collision == null)
             {
-                Logging.Warn(Tags.LASER, "Beam should only be fired if there is a target in our sights, so should always get a collision :/");
+                Logging.Warn(Tags.BEAM, "Beam should only be fired if there is a target in our sights, so should always get a collision :/");
                 return;
             }
 
-            Logging.Log(Tags.LASER, $"Have a collision with: {collision.Target} at {collision.CollisionPoint}");
+            Logging.Log(Tags.BEAM, $"Have a collision with: {collision.Target} at {collision.CollisionPoint}");
             HandleCollision(collision);
         }
 

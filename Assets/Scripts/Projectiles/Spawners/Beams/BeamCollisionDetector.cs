@@ -23,13 +23,13 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
 
         public IBeamCollision FindCollision(Vector2 source, float angleInDegrees, bool isSourceMirrored)
         {
-            Logging.VerboseMethod(Tags.LASER);
+            Logging.VerboseMethod(Tags.BEAM);
 
             Vector2 beamDirection = FindBeamDirection(angleInDegrees, isSourceMirrored);
 
             RaycastHit2D[] results = new RaycastHit2D[NUM_OF_COLLIDERS_TO_RAYCAST];
             int numOfResults = Physics2D.Raycast(source, beamDirection, _contactFilter, results);
-            Logging.Verbose(Tags.LASER, $"Physics2D.Raycast():  source: {source}  isSourceMirrored: {isSourceMirrored}  beamDirection: {beamDirection}  Results: {numOfResults}");
+            Logging.Verbose(Tags.BEAM, $"Physics2D.Raycast():  source: {source}  isSourceMirrored: {isSourceMirrored}  beamDirection: {beamDirection}  Results: {numOfResults}");
 
             return GetMatchingTarget(results, numOfResults);
         }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
 
         private IBeamCollision GetMatchingTarget(RaycastHit2D[] results, int numOfResults)
         {
-            Logging.Verbose(Tags.LASER, $"Number of collisions: {numOfResults}");
+            Logging.Verbose(Tags.BEAM, $"Number of collisions: {numOfResults}");
 
             for (int i = 0; i < numOfResults; i++)
             {

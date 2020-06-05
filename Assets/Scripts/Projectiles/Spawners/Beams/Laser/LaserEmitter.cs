@@ -80,7 +80,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 
         public void StopLaser()
         {
-            Logging.LogMethod(Tags.LASER);
+            Logging.LogMethod(Tags.BEAM);
 
             _laserRenderer.HideLaser();
             _laserImpact.Hide();
