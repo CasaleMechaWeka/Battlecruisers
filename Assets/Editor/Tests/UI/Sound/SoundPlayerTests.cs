@@ -34,13 +34,6 @@ namespace BattleCruisers.Tests.UI.Sound
         }
 
         [Test]
-        public void PlaySoundAsync_ProvideNoPosition_UsesAudioListenerPosition()
-        {
-            _soundPlayer.PlaySoundAsync(_soundKey);
-            _audioClipPlayer.Received().PlaySound(_audioClip, _audioListener.Position);
-        }
-
-        [Test]
         public void PlaySoundAsync_ProvidePosition()
         {
             Vector2 soundPosition = new Vector2(2, 3);
@@ -48,13 +41,6 @@ namespace BattleCruisers.Tests.UI.Sound
 
             Vector3 zAdjustedPosition = new Vector3(soundPosition.x, soundPosition.y, _audioListener.Position.z);
             _audioClipPlayer.Received().PlaySound(_audioClip, zAdjustedPosition);
-        }
-
-        [Test]
-        public void PlaySound_ProvideNoPosition_UsesAudioListenerPosition()
-        {
-            _soundPlayer.PlaySound(_audioClip);
-            _audioClipPlayer.Received().PlaySound(_audioClip, _audioListener.Position);
         }
 
         [Test]

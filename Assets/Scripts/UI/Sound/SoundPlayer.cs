@@ -22,20 +22,10 @@ namespace BattleCruisers.UI.Sound
             _audioListener = audioListener;
         }
 
-        public async Task PlaySoundAsync(ISoundKey soundKey)
-        {
-            await PlaySoundAsync(soundKey, _audioListener.Position);
-        }
-
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
             IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
             PlaySound(sound, position);
-        }
-
-        public void PlaySound(IAudioClipWrapper sound)
-        {
-            PlaySound(sound, _audioListener.Position);
         }
 
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
