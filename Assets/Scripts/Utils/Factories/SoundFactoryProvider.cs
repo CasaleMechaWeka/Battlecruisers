@@ -1,9 +1,8 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
-using BattleCruisers.Utils.Threading;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -12,18 +11,20 @@ namespace BattleCruisers.Utils.Factories
         public ISoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
+        public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
 
-        public SoundFactoryProvider(IDeferrer deferrer, IGameObject audioListener, IAudioSource audioSource)
+        public SoundFactoryProvider(IBattleSceneGodComponents components)
 		{
-            Helper.AssertIsNotNull(deferrer, audioListener, audioSource);
+            Assert.IsNotNull(components);
 
             SoundFetcher = new SoundFetcher();
-            SoundPlayer = new SoundPlayer(SoundFetcher, new AudioClipPlayer(), audioListener);
-            ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, audioSource);
+            SoundPlayer = new SoundPlayer(SoundFetcher, new AudioClipPlayer(), components.AudioListener);
+            ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
             PrioritisedSoundPlayer = new PrioritisedSoundPlayer(singleSoundPlayer);
-            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, deferrer);
+            UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
+            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();
         }
 	}

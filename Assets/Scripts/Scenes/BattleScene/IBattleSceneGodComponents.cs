@@ -12,7 +12,8 @@ namespace BattleCruisers.Scenes.BattleScene
     public interface IBattleSceneGodComponents
     {
         IDeferrer Deferrer { get; }
-        IAudioSource AudioSource { get; }
+        IAudioSource PrioritisedSoundPlayerAudioSource { get; }
+        IAudioSource UISoundsAudioSource { get; }
         IUpdaterProvider UpdaterProvider { get; }
         LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
         ILifetimeEventBroadcaster LifetimeEvents { get; }

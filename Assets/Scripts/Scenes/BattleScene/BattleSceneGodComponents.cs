@@ -17,7 +17,15 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGodComponents : MonoBehaviour, IBattleSceneGodComponents
     {
         public IDeferrer Deferrer { get; private set; }
-        public IAudioSource AudioSource { get; private set; }
+
+        [SerializeField]
+        private AudioSource prioritisedSoundPlayerAudioSource;
+        public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
+
+        [SerializeField]
+        private AudioSource uiSoundsAudioSource;
+        public IAudioSource UISoundsAudioSource { get; private set; }
+
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; private set; }
@@ -37,16 +45,15 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void Initialise()
         {
-            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator);
+            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator, prioritisedSoundPlayerAudioSource, uiSoundsAudioSource);
 
             AudioListener = new GameObjectBC(audioListener.gameObject);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
 
-            AudioSource platformAudioSource = GetComponent<AudioSource>();
-            Assert.IsNotNull(platformAudioSource);
-            AudioSource = new AudioSourceBC(platformAudioSource);
+            PrioritisedSoundPlayerAudioSource = new AudioSourceBC(prioritisedSoundPlayerAudioSource);
+            UISoundsAudioSource = new AudioSourceBC(uiSoundsAudioSource);
 
             CloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(CloudInitialiser);
