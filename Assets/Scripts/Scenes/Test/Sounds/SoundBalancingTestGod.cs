@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private MusicController _music;
         private AudioListener _audioListener;
 
-        protected async override void Setup(Utilities.Helper helper)
+        protected override void Setup(Utilities.Helper helper)
         {
             base.Setup(helper);
 
@@ -44,13 +44,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
                 = new SingleSoundPlayer(
                     soundFetcher,
                     new AudioSourceBC(singleSoundPlayerSource));
-
-            SoundPlayerController[] soundPlayerObjects = FindObjectsOfType<SoundPlayerController>();
-
-            foreach (SoundPlayerController soundPlayerObject in soundPlayerObjects)
-            {
-                soundPlayerObject.Initialise(soundPlayer);
-            }
 
             SoundGroupController[] soundGroups = FindObjectsOfType<SoundGroupController>();
 
