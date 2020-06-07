@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleButtonsPanel : ButtonsPanel
     {
-        public void Initialise(IPostBattleScreen postBattleScreen, ICommand nextCommand, ISoundPlayer soundPlayer)
+        public void Initialise(IPostBattleScreen postBattleScreen, ICommand nextCommand, ISingleSoundPlayer soundPlayer)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 

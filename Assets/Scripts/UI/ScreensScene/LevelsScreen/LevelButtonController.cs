@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 		private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(ISoundPlayer soundPlayer, LevelInfo level, IScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
+        public void Initialise(ISingleSoundPlayer soundPlayer, LevelInfo level, IScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
 		{
             base.Initialise(soundPlayer);
 

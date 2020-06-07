@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostTutorialButtonsPanel : ButtonsPanel
     {
-        public override void Initialise(IPostBattleScreen postBattleScreen, ISoundPlayer soundPlayer)
+        public override void Initialise(IPostBattleScreen postBattleScreen, ISingleSoundPlayer soundPlayer)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 

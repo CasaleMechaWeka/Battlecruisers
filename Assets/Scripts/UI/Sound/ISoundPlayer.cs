@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
+    // FELIX  Remove 2 non-spatial methods :)
     public interface ISoundPlayer
     {
         /// <summary>

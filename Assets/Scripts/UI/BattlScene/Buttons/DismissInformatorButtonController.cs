@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private FilterToggler _helpLabelVisibilityToggler;
 
         public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IUIManager uiManager, 
             IBroadcastingFilter shouldBeEnabledFilter, 
             IBroadcastingFilter helpLabelVisibilityFilter)

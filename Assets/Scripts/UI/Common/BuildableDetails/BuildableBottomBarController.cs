@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public float Height { get; private set; }
 
         public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,

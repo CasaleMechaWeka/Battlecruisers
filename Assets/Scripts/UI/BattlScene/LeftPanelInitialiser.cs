@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer prioritisedSoundPlayer,
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
             Helper.AssertIsNotNull(
@@ -95,7 +95,7 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer prioritisedSoundPlayer,
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();

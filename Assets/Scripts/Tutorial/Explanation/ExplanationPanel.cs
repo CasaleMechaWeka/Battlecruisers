@@ -16,7 +16,7 @@ namespace BattleCruisers.Tutorial.Explanation
         public IExplanationDismissButton OkButton { get; private set; }
         public IExplanationDismissButton DoneButton { get; private set; }
 
-        public void Initialise(ISoundPlayer soundPlayer)
+        public void Initialise(ISingleSoundPlayer soundPlayer)
         {
             TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
             Assert.IsNotNull(textDisplayer);

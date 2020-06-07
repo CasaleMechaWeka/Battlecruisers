@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
         protected IHomeScreen _homeScreen;
         protected IGameModel _gameModel;
 
-        public void Initialise(ISoundPlayer soundPlayer, IHomeScreen homeScreen, IGameModel gameModel)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IHomeScreen homeScreen, IGameModel gameModel)
         {
             base.Initialise(soundPlayer);
 

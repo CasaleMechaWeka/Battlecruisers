@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
 

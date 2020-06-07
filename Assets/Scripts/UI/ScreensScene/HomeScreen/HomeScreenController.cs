@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 		private BattleResult _lastBattleResult;
 		private int _totalNumOfLevels;
 
-        public void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 

@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene
 		private Canvas _canvas;
 		private MenuDismissed _onMenuDismissed;
 
-		public void Initialise(ISoundPlayer soundPlayer, bool isTutorial)
+		public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial)
 		{
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);

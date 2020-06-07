@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, prefabFactory);

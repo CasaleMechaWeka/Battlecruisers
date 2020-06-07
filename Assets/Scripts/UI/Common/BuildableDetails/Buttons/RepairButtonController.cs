@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             } 
         }
 
-        public void Initialise(ISoundPlayer soundPlayer, IDroneFocuser droneFocuser, IRepairManager repairManager)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IDroneFocuser droneFocuser, IRepairManager repairManager)
         {
             base.Initialise(soundPlayer);
 

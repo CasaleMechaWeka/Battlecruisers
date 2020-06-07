@@ -6,10 +6,10 @@ namespace BattleCruisers.UI
 {
     public class ElementWithClickSound : ClickableTogglable
     {
-        protected ISoundPlayer _soundPlayer;
+        protected ISingleSoundPlayer _soundPlayer;
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
-        public virtual void Initialise(ISoundPlayer soundPlayer)
+        public virtual void Initialise(ISingleSoundPlayer soundPlayer)
         {
             base.Initialise();
 

@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private CategoryButtonsPanel _categoryButtonsPanel;
 
         public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)

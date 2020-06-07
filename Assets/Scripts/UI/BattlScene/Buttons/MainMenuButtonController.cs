@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     {
         private IMainMenuManager _mainMenuManager;
 
-        public void Initialise(ISoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
         {
             base.Initialise(soundPlayer);
 

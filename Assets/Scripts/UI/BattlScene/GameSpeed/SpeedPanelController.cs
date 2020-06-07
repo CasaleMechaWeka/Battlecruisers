@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         private const int EXPECTED_NUM_OF_BUTTONS = 2;  // Slow motion, fast forward
 
-        public IHighlightable Initialise(ISoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
+        public IHighlightable Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
 

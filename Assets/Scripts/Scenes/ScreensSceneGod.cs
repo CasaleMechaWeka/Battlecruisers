@@ -15,6 +15,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,18 +35,19 @@ namespace BattleCruisers.Scenes
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private IHintProvider _hintProvider;
-        private ISoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _soundPlayer;
 
         public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
+        [SerializeField]
+        private AudioSource _uiAudioSource;
 
 		async void Start()
 		{
-            Assert.raiseExceptions = true;
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, _uiAudioSource);
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
@@ -59,10 +61,9 @@ namespace BattleCruisers.Scenes
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, _gameModel, RandomGenerator.Instance);
             _soundPlayer
-                = new SoundPlayer(
+                = new SingleSoundPlayer(
                     new SoundFetcher(),
-                    new AudioClipPlayer(),
-                    new GameObjectBC(Camera.main.gameObject));
+                    new AudioSourceBC(_uiAudioSource));
 
             // TEMP  For showing PostBattleScreen :)
             //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);

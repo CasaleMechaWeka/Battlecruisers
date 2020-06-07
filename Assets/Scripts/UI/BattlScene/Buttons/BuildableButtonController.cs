@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public void Initialise(ISoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise(soundPlayer);
 

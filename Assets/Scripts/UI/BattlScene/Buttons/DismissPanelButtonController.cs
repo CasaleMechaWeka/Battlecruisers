@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private Image _closeImage;
         protected override MaskableGraphic Graphic => _closeImage;
 
-        public void Initialise(ISoundPlayer soundPlayer, IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             }
         }
 
-        public void Initialise(ISoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)
         {
             base.Initialise(soundPlayer);
 

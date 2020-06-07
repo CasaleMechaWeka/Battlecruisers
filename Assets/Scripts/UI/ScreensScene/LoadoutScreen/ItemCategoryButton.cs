@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
-            ISoundPlayer soundPlayer, 
+            ISingleSoundPlayer soundPlayer, 
             IItemPanelsController itemPanels, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IGameModel gameModel,

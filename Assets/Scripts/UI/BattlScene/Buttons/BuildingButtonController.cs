@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private IBuildingClickHandler _clickHandler;
 
         public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IBuildableWrapper<IBuilding> buildingWrapper, 
             IBuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)

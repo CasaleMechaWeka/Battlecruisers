@@ -15,6 +15,7 @@ namespace BattleCruisers.Utils.Factories
         /// </summary>
         IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         IPrioritisedSoundPlayer DummySoundPlayer { get; }
+        ISingleSoundPlayer UISoundPlayer { get; }
         ISoundPlayerFactory SoundPlayerFactory { get; }
     }
 }

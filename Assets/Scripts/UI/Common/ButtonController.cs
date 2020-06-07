@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.Common
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(ISoundPlayer soundPlayer, ICommand command)
+        public void Initialise(ISingleSoundPlayer soundPlayer, ICommand command)
         {
             base.Initialise(soundPlayer);
 

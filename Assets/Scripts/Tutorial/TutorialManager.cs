@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial
 
             ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
             Assert.IsNotNull(explanationPanel);
-            explanationPanel.Initialise(tutorialArgs.PlayerCruiser.FactoryProvider.Sound.SoundPlayer);
+            explanationPanel.Initialise(tutorialArgs.PlayerCruiser.FactoryProvider.Sound.UISoundPlayer);
             _explanationPanel = explanationPanel;
             _explanationPanelHeightManager 
                 = new ExplanationPanelHeightManager(

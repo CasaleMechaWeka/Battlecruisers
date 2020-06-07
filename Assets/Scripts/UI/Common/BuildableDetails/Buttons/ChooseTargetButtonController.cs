@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         public event EventHandler Clicked;
 
-        public void Initialise(ISoundPlayer soundPlayer, IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
         {
             base.Initialise(soundPlayer);
 

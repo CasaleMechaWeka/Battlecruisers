@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             ISpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer prioritisedSoundPlayer,
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
 		{
             Helper.AssertIsNotNull(

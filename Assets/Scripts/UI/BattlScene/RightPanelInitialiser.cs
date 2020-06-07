@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPauseGameManager pauseGameManager,
             IBattleCompletionHandler battleCompletionHandler,
-            ISoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(
                 modalMenu, 
@@ -76,7 +76,7 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer)
         {
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.BattleScene
             return informator;
         }
 
-        private IHighlightable SetupSpeedPanel(ISoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
+        private IHighlightable SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
@@ -104,7 +104,7 @@ namespace BattleCruisers.UI.BattleScene
             return new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
         }
 
-        private void SetupMainMenuButtons(ISoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
+        private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
         {
             MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);
@@ -113,7 +113,7 @@ namespace BattleCruisers.UI.BattleScene
             modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
         }
 
-        private void SetupHelpButton(ISoundPlayer soundPlayer, BroadcastingFilter helpLabelsVisibilityFilter)
+        private void SetupHelpButton(ISingleSoundPlayer soundPlayer, BroadcastingFilter helpLabelsVisibilityFilter)
         {
             HelpButton helpButton = GetComponentInChildren<HelpButton>();
             Assert.IsNotNull(helpButton);

@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsSetController : MonoBehaviourWrapper
     {
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, ISoundPlayer soundPlayer)
+		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(screensSceneGod, levels, soundPlayer);
 

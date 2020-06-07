@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private ICancellable _cancellable;
 
-        public void Initialise(ISoundPlayer soundPlayer, ICancellable cancellable)
+        public void Initialise(ISingleSoundPlayer soundPlayer, ICancellable cancellable)
         {
             base.Initialise(soundPlayer);
 

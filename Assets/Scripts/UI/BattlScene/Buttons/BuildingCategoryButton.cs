@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }
 
         public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             BuildingCategory expectedBuildingCategory,
             IUIManager uiManager, 
             IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter,

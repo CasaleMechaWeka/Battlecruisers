@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public event EventHandler VisibleSetChanged;
 
 		public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 

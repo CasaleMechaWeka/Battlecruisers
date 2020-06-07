@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<TBuildable> buildableSorter,
-            ISoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(buildables, uiManager, buttonVisibilityFilters, buildableSorter, soundPlayer);
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         protected abstract void InitialiseMenu(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             TMenu menu,
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,

@@ -11,9 +11,9 @@ namespace BattleCruisers.Utils.Factories
         public ISoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
+        public IPrioritisedSoundPlayer DummySoundPlayer { get; }
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
-        public IPrioritisedSoundPlayer DummySoundPlayer { get; }
 
         public SoundFactoryProvider(IBattleSceneGodComponents components)
 		{

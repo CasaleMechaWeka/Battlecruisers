@@ -8,7 +8,7 @@ namespace BattleCruisers.UI
     {
         private Action _onClick;
 
-        public void Initialise(ISoundPlayer soundPlayer, Action onClick)
+        public void Initialise(ISingleSoundPlayer soundPlayer, Action onClick)
         {
             base.Initialise(soundPlayer);
 

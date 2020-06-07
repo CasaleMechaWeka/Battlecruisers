@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private FilterToggler _helpLabelsVisibilityToggler;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        public void Initialise(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters, ISoundPlayer soundPlayer)
+        public void Initialise(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilters);
 

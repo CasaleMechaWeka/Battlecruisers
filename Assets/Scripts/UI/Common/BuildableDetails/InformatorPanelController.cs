@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters visibilityFilters,
-            ISoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(
                 uiManager,

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
 		public void Initialise(
-            ISoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer,
             ScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,

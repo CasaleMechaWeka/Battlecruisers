@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     public class SettingsScreenController : ScreenController
     {
         public void Initialise(
-            ISoundPlayer soundPlayer, 
+            ISingleSoundPlayer soundPlayer, 
             IScreensSceneGod screensSceneGod, 
             ISettingsManager settingsManager,
             IMusicPlayer musicPlayer)

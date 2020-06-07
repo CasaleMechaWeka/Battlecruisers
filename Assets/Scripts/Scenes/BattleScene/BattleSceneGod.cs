@@ -147,7 +147,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
-                    factoryProvider.Sound.SoundPlayer,
+                    factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
 
             RightPanelComponents rightPanelComponents
@@ -159,7 +159,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     pauseGameManager,
                     battleCompletionHandler,
-                    factoryProvider.Sound.SoundPlayer);
+                    factoryProvider.Sound.UISoundPlayer);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);

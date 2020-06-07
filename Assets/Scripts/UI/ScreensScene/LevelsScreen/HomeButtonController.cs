@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     {
         private IScreensSceneGod _screensSceneGod;
 
-		public void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
+		public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
 		{
             base.Initialise(soundPlayer);
 

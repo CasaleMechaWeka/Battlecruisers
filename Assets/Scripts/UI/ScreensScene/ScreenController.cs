@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public bool IsInitialised => _screensSceneGod != null;
 
-        protected void Initialise(ISoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
+        protected void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
 		{
             base.Initialise(soundPlayer);
 

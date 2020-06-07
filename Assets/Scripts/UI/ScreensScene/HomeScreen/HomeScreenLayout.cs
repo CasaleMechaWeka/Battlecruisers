@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
     public class HomeScreenLayout : MonoBehaviourWrapper
     {
-        public void Initialise(IHomeScreen homeScreen, IGameModel gameModel, ISoundPlayer soundPlayer)
+        public void Initialise(IHomeScreen homeScreen, IGameModel gameModel, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(homeScreen, gameModel, soundPlayer);
 
