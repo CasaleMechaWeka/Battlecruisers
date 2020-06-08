@@ -34,6 +34,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public float mistZPosition = 0;
         public float MistZPosition => mistZPosition;
 
+        [SerializeField]
+        private Color _fogColour;
+        public Color FogColour => _fogColour;
+
         public void Initialise()
         {
             MoonStats = GetComponentInChildren<MoonStatsController>();

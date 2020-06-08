@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class MistController : MonoBehaviour
     {
-        public void Initialse(ICloudStats cloudStats)
+        public void Initialise(ICloudStats cloudStats)
         {
             Assert.IsNotNull(cloudStats);
 

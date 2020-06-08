@@ -14,11 +14,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public List<CloudController> clouds;
         public MistController mist;
         public MoonController moon;
+        public FogController fog;
 
         public void Initialise(IList<ISkyStats> skyStats)
         {
             Assert.IsNotNull(skyStats);
-            BCUtils.Helper.AssertIsNotNull(skybox, clouds, mist, moon);
+            BCUtils.Helper.AssertIsNotNull(skybox, clouds, mist, moon, fog);
 
             IList<ICloud> cloudList
                 = clouds
@@ -30,7 +31,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             for (int i = 0; i < buttons.Length; ++i)
             {
-                buttons[i].Initialise(skybox, skyStats[i], cloudList, mist, moon);
+                buttons[i].Initialise(skybox, skyStats[i], cloudList, mist, moon, fog);
             }
         }
     }

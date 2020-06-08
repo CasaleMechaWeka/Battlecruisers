@@ -15,6 +15,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private IList<ICloud> _clouds;
         private MistController _mist;
         private MoonController _moon;
+        private FogController _fog;
 
         public Text skyName;
 
@@ -23,9 +24,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISkyStats skyStats, 
             IList<ICloud> clouds, 
             MistController mist,
-            MoonController moon)
+            MoonController moon,
+            FogController fog)
         {
-            BCUtils.Helper.AssertIsNotNull(skybox, skyStats, clouds, mist, moon);
+            BCUtils.Helper.AssertIsNotNull(skybox, skyStats, clouds, mist, moon, fog);
             Assert.IsNotNull(skyName);
 
             _skybox = skybox;
@@ -33,6 +35,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _clouds = clouds;
             _mist = mist;
             _moon = moon;
+            _fog = fog;
 
             skyName.text = _skyStats.SkyMaterial.name;
         }
@@ -46,8 +49,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 cloud.Initialise(_skyStats);
             }
 
-            _mist.Initialse(_skyStats);
+            _mist.Initialise(_skyStats);
             _moon.Initialise(_skyStats.MoonStats);
+            _fog.Initialise(_skyStats.FogColour);
         }
     }
 }
