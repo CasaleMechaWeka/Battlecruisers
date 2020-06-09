@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
@@ -6,11 +7,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds
     {
         public void Initialise(Color fogColor)
         {
-            SpriteRenderer[] fogSprites = GetComponentsInChildren<SpriteRenderer>();
+            Image[] fogImages = GetComponentsInChildren<Image>();
 
-            foreach (SpriteRenderer fogSprite in fogSprites)
+            foreach (Image fogImage in fogImages)
             {
-                fogSprite.color = fogColor;
+                fogImage.color = fogColor;
             }
         }
     }
