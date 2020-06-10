@@ -40,12 +40,12 @@ namespace BattleCruisers.UI.Cameras.Helpers.Pinch
                 if (_isPinching)
                 {
                     Logging.Log(Tags.PINCH, $"About to invoke {nameof(PinchStart)} event :D");
-                    PinchStart.Invoke(this, EventArgs.Empty);
+                    PinchStart?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
                     Logging.Log(Tags.PINCH, $"About to invoke {nameof(PinchEnd)} event :P");
-                    PinchEnd.Invoke(this, EventArgs.Empty);
+                    PinchEnd?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Pinch
             _lastDistanceInM = currentDistance;
 
             Logging.Log(Tags.PINCH, $"About to invoke {nameof(Pinch)} event with position: {touchPosition1}  and delta: {delta}");
-            Pinch.Invoke(this, new PinchEventArgs(touchPosition1, delta));
+            Pinch?.Invoke(this, new PinchEventArgs(touchPosition1, delta));
         }
     }
 }
