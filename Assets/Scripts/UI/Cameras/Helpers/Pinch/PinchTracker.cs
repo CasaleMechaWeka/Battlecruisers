@@ -19,6 +19,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Pinch
 
             _input = input;
             _updater = updater;
+            _isPinching = false;
 
             _updater.Updated += _updater_Updated;
         }
