@@ -46,6 +46,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 }
 
                 _activeTargetProvider = value;
+                // FELIX  Emit target changed :)
+
                 _activeTargetProvider.TargetChanged += _activeTargetProvider_TargetChanged;
             }
         }
