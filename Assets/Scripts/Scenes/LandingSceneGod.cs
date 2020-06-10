@@ -1,11 +1,11 @@
-﻿using BattleCruisers.Data;
+﻿using System.Collections;
+using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
