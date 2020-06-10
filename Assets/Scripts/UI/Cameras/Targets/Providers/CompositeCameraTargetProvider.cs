@@ -37,6 +37,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             {
                 Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"{_activeTargetProvider} > {value}");
                 Assert.IsNotNull(value);
+                Assert.IsNotNull(value.Target, $"Camera target must never be null!  Consuming code assumes the target is valid at all times.");
                 Assert.IsFalse(ReferenceEquals(_activeTargetProvider, value));
 
                 if (_activeTargetProvider != null)
