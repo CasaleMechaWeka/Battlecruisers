@@ -2,7 +2,6 @@
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -26,7 +25,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         private IScrollRecogniser _scrollRecogniser;
         private IClamper _cameraXPositionClamper;
 
-        private int _inputStartedCount, _inputEndedCount;
+        private int _inputEndedCount;
         private IPointerEventData _pointerEventData;
         private DragEventArgs _dragEventArgs;
 
@@ -53,9 +52,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
                     _scrollRecogniser,
                     _cameraXPositionClamper);
 
-            _inputStartedCount = 0;
-            _targetProvider.UserInputStarted += (sender, e) => _inputStartedCount++;
-
             _inputEndedCount = 0;
             _targetProvider.UserInputEnded += (sender, e) => _inputEndedCount++;
 
@@ -70,15 +66,17 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         }
 
         [Test]
-        public void DragStart_RaisesEvent()
+        public void DragEnd_NotDuringInput_DoesNotRaiseEvent()
         {
-            _dragTracker.DragStart += Raise.EventWith(_dragEventArgs);
-            Assert.AreEqual(1, _inputStartedCount);
+            _dragTracker.DragEnd += Raise.EventWith(_dragEventArgs);
+            Assert.AreEqual(0, _inputEndedCount);
         }
 
         [Test]
-        public void DragEnd_RaisesEvent()
+        public void DragEnd_DuringInput_RaisesEvent()
         {
+            StartUserInput();
+
             _dragTracker.DragEnd += Raise.EventWith(_dragEventArgs);
             Assert.AreEqual(1, _inputEndedCount);
         }
@@ -141,6 +139,11 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _dragTracker.Drag += Raise.EventWith(_dragEventArgs);
 
             Assert.AreSame(zoomOutTarget, _targetProvider.Target);
+        }
+
+        private void StartUserInput()
+        {
+            Drag_IsScroll();
         }
     }
 }
