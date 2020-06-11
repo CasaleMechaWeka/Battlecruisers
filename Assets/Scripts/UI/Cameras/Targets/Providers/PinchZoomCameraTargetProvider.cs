@@ -7,13 +7,11 @@ using System;
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     // FELIX  Update tests
-    // FELIX  Avoid duplicate code with SwipeCTP?
     public class PinchZoomCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IZoomCalculator _zoomCalculator;
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IPinchTracker _pinchTracker;
-        private bool _inUserInputSession;
 
         public override int Priority => 3;
 
@@ -28,19 +26,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _directionalZoom = directionalZoom;
             _pinchTracker = pinchTracker;
 
-            _pinchTracker.PinchEnd += _pinchTracker_PinchEnd;
             _pinchTracker.Pinch += _pinchTracker_Pinch;
-
-            _inUserInputSession = false;
-        }
-
-        private void _pinchTracker_PinchEnd(object sender, EventArgs e)
-        {
-            if (_inUserInputSession)
-            {
-                _inUserInputSession = false;
-                RaiseUserInputEnded();
-            }
+            _pinchTracker.PinchEnd += _pinchTracker_PinchEnd;
         }
 
         private void _pinchTracker_Pinch(object sender, PinchEventArgs e)
@@ -56,12 +43,12 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 Target = _directionalZoom.ZoomIn(orthographicSizeDelta, e.Position);
             }
 
-            // Don't use PinchStart event, because we want to wait until we have a valid camera target.
-            if (!_inUserInputSession)
-            {
-                _inUserInputSession = true;
-                RaiseUserInputStarted();
-            }
+            ReceivedUserInput();
+        }
+
+        private void _pinchTracker_PinchEnd(object sender, EventArgs e)
+        {
+            UserInputEnd();
         }
     }
 }

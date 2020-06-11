@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _duringUserInput = false;
         }
 
+        // Must have valid camera target when called!
         protected void ReceivedUserInput()
         {
             if (!_duringUserInput)
