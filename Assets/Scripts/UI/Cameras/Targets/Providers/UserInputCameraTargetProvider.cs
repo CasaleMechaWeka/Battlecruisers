@@ -1,13 +1,32 @@
 ﻿using System;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     // FELIX  Test :)
-    public abstract class UserInputCameraTargetProvider : CameraTargetProvider, IUserInputCameraTargetProvider
+    public abstract class UserInputCameraTargetProvider : IUserInputCameraTargetProvider
     {
         private bool _duringUserInput;
 
         public abstract int Priority { get; }
+
+        private ICameraTarget _target;
+        public ICameraTarget Target
+        {
+            get { return _target; }
+            protected set
+            {
+                if (!_target.SmartEquals(value))
+                {
+                    Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"{_target} > {value}");
+
+                    _target = value;
+                    TargetChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        public event EventHandler TargetChanged;
 
         public event EventHandler UserInputStarted;
         public event EventHandler UserInputEnded;
