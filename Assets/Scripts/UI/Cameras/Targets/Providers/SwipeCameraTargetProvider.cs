@@ -43,7 +43,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _cameraXPositionClamper = cameraXPositionClamper;
 
             _dragTracker.Drag += _dragTracker_Drag;
-            _dragTracker.DragStart += _dragTracker_DragStart;
             _dragTracker.DragEnd += _dragTracker_DragEnd;
         }
 
@@ -87,14 +86,9 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);
         }
 
-        private void _dragTracker_DragStart(object sender, DragEventArgs e)
-        {
-            RaiseUserInputStarted();
-        }
-
         private void _dragTracker_DragEnd(object sender, DragEventArgs e)
         {
-            RaiseUserInputEnded();
+            UserInputEnd();
         }
     }
 }
