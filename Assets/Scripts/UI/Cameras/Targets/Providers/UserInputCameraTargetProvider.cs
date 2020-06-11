@@ -56,17 +56,5 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 UserInputEnded?.Invoke(this, EventArgs.Empty);
             }
         }
-
-        // FELIX  Remove :)
-        protected void RaiseUserInputStarted()
-        {
-            UserInputStarted?.Invoke(this, EventArgs.Empty);
-        }
-
-        // FELIX  Remove :)
-        protected void RaiseUserInputEnded()
-        {
-            UserInputEnded?.Invoke(this, EventArgs.Empty);
-        }
     }
 }

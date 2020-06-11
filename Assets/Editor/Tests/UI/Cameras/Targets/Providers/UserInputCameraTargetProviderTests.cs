@@ -14,14 +14,13 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             Target = target;
         }
 
+        // FELIX  Update :)
         public void RaiseInputStarted()
         {
-            RaiseUserInputStarted();
         }
 
         public void RaiseInputEnded()
         {
-            RaiseUserInputEnded();
         }
     }
 
