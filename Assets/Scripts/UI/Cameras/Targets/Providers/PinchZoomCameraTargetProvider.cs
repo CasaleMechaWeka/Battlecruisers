@@ -38,6 +38,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             if (_inUserInputSession)
             {
+                _inUserInputSession = false;
                 RaiseUserInputEnded();
             }
         }
