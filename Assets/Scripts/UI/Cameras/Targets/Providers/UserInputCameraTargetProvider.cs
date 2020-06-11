@@ -16,13 +16,16 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             get { return _target; }
             protected set
             {
-                if (!_target.SmartEquals(value))
+                if (_target.SmartEquals(value))
                 {
-                    Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"{_target} > {value}");
-
-                    _target = value;
-                    TargetChanged?.Invoke(this, EventArgs.Empty);
+                    return;
                 }
+
+                Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"{_target} > {value}");
+
+                _target = value;
+                ReceivedUserInput();
+                TargetChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -36,8 +39,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             _duringUserInput = false;
         }
 
-        // Must have valid camera target when called!
-        protected void ReceivedUserInput()
+        private void ReceivedUserInput()
         {
             if (!_duringUserInput)
             {

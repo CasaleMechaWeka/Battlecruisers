@@ -42,8 +42,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             {
                 Target = _directionalZoom.ZoomIn(orthographicSizeDelta, e.Position);
             }
-
-            ReceivedUserInput();
         }
 
         private void _pinchTracker_PinchEnd(object sender, EventArgs e)
