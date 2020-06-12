@@ -56,6 +56,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private async void Start()
         {
+            Logging.Log(Tags.BATTLE_SCENE, "Start");
+
             Assert.raiseExceptions = true;
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialManager);
 

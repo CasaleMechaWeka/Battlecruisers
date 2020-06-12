@@ -98,6 +98,7 @@ namespace BattleCruisers.Utils
 
         // Other
         public const string ALWAYS = "Always";
+        public const string BATTLE_SCENE = "BattleScene";
         public const string BOOST = "Boost";
         public const string GENERIC = "Generic";
         public const string LIFETIME_EVENTS = "LifetimeEvents";
@@ -223,6 +224,9 @@ namespace BattleCruisers.Utils
             // Other
             tagsToActiveness.Add(Tags.ALWAYS, true);
             tagsToActiveness.Add(Tags.BOOST, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.BATTLE_SCENE, true);
+            //tagsToActiveness.Add(Tags.BATTLE_SCENE, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
