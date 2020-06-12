@@ -100,6 +100,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IUIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
+            Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
             FactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
@@ -135,6 +136,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     userChosenTargetHelper);
 
             // UI
+            Logging.Log(Tags.BATTLE_SCENE, "UI setup");
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
@@ -180,6 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);
 
             // Other
+            Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
@@ -202,11 +205,13 @@ namespace BattleCruisers.Scenes.BattleScene
                         time,
                         uiManager,
                         components.TargetIndicator));
+
+            // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>();
-            Assert.IsNotNull(cheater);
-            cheater.Initialise(factoryProvider, playerCruiser, aiCruiser);
+            cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
 
             // Audio
+            Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
@@ -271,6 +276,8 @@ namespace BattleCruisers.Scenes.BattleScene
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
         {
+            Logging.LogMethod(Tags.BATTLE_SCENE);
+
             if (applicationModel.IsTutorial)
             {
                 applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
