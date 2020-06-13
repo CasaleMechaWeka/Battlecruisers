@@ -19,7 +19,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _modalMenu = Substitute.For<IModalMenu>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
 
-            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler);
+            // FELIX  Update tests :)
+            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, null);
         }
 
         [Test]

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
@@ -41,7 +42,8 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPauseGameManager pauseGameManager,
             IBattleCompletionHandler battleCompletionHandler,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            ISceneNavigator sceneNavigator)
         {
             Helper.AssertIsNotNull(
                 modalMenu, 
@@ -53,13 +55,14 @@ namespace BattleCruisers.UI.BattleScene
                 buttonVisibilityFilters, 
                 pauseGameManager,
                 battleCompletionHandler,
-                soundPlayer);
+                soundPlayer,
+                sceneNavigator);
 
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             IHighlightable speedButtonPanel = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
-            IMainMenuManager mainMenuManager = CreateMainMenuManager(pauseGameManager, battleCompletionHandler);
+            IMainMenuManager mainMenuManager = CreateMainMenuManager(pauseGameManager, battleCompletionHandler, sceneNavigator);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
@@ -99,9 +102,9 @@ namespace BattleCruisers.UI.BattleScene
             return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private IMainMenuManager CreateMainMenuManager(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler)
+        private IMainMenuManager CreateMainMenuManager(IPauseGameManager pauseGameManager, IBattleCompletionHandler battleCompletionHandler, ISceneNavigator sceneNavigator)
         {
-            return new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler);
+            return new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator);
         }
 
         private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
