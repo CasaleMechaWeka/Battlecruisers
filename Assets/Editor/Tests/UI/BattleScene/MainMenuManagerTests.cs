@@ -11,7 +11,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IPauseGameManager _pauseGameManager;
         private IModalMenu _modalMenu;
         private IBattleCompletionHandler _battleCompletionHandler;
-        private MenuDismissed _menuDismissedCallback;
 
         [SetUp]
         public void TestSetup()
@@ -21,8 +20,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
 
             _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler);
-
-            _modalMenu.ShowMenu(Arg.Do<MenuDismissed>(callback => _menuDismissedCallback = callback));
         }
 
         [Test]
@@ -31,28 +28,25 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.ShowMenu();
 
             _pauseGameManager.Received().PauseGame();
-            _modalMenu.Received().ShowMenu(Arg.Any<MenuDismissed>());
-            Assert.IsNotNull(_menuDismissedCallback);
+            _modalMenu.Received().ShowMenu(_mainMenuManager);
         }
 
         [Test]
-        public void OnModalMenuDismissed_UserAction_Dismissed()
+        public void DismissMenu()
         {
-            ShowMenu();
-
-            _menuDismissedCallback.Invoke(UserAction.Dismissed);
+            _mainMenuManager.DismissMenu();
 
             _pauseGameManager.Received().ResumeGame();
+            _modalMenu.Received().HideMenu();
         }
 
         [Test]
-        public void OnModalMenuDismissed_UserAction_Quit()
+        public void QuitGame()
         {
-            ShowMenu();
-
-            _menuDismissedCallback.Invoke(UserAction.Quit);
+            _mainMenuManager.QuitGame();
 
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
+            _modalMenu.Received().HideMenu();
         }
     }
 }

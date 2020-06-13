@@ -25,24 +25,19 @@ namespace BattleCruisers.UI.BattleScene
         public void ShowMenu()
         {
             _pauseGameManager.PauseGame();
-            _modalMenu.ShowMenu(OnModalMenuDismissed);
+            _modalMenu.ShowMenu(this);
         }
 
-        private void OnModalMenuDismissed(UserAction userAction)
+        public void DismissMenu()
         {
-            switch (userAction)
-            {
-                case UserAction.Dismissed:
-                    _pauseGameManager.ResumeGame();
-                    break;
+            _pauseGameManager.ResumeGame();
+            _modalMenu.HideMenu();
+        }
 
-                case UserAction.Quit:
-                    _battleCompletionHandler.CompleteBattle(wasVictory: false);
-                    break;
-
-                default:
-                    throw new ArgumentException();
-            }
+        public void QuitGame()
+        {
+            _battleCompletionHandler.CompleteBattle(wasVictory: false);
+            _modalMenu.HideMenu();
         }
     }
 }

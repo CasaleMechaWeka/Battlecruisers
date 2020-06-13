@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene
     public class ModalMenuController : MonoBehaviour, IModalMenu
     {
 		private Canvas _canvas;
-		private MenuDismissed _onMenuDismissed;
+		private IMainMenuManager _menuManager;
 
 		public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial)
 		{
@@ -36,9 +36,9 @@ namespace BattleCruisers.UI.BattleScene
 			HideMenu();
 		}
 
-		public void ShowMenu(MenuDismissed onMenuDismissed)
+		public void ShowMenu(IMainMenuManager menuManager)
 		{
-			_onMenuDismissed = onMenuDismissed;
+			_menuManager = menuManager;
 			_canvas.gameObject.SetActive(true);
 		}
 
@@ -53,23 +53,15 @@ namespace BattleCruisers.UI.BattleScene
 
 		public void Cancel()
 		{
-			DismissMenu(UserAction.Dismissed);
+			_menuManager.DismissMenu();
 		}
 
 		public void Quit()
 		{
-			DismissMenu(UserAction.Quit);
+			_menuManager.QuitGame();
 		}
 
-		private void DismissMenu(UserAction userAction)
-		{
-			Assert.IsNotNull(_onMenuDismissed);
-
-			HideMenu();
-			_onMenuDismissed.Invoke(userAction);
-		}
-
-		private void HideMenu()
+		public void HideMenu()
 		{
 			_canvas.gameObject.SetActive(false);
 		}

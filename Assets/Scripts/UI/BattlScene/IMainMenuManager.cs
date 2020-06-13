@@ -3,5 +3,7 @@
     public interface IMainMenuManager
     {
         void ShowMenu();
+        void DismissMenu();
+        void QuitGame();
     }
 }
