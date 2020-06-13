@@ -8,6 +8,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -33,6 +34,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IUIManager _uiManager;
         private ITargetIndicator _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private IWindManager _windManager;
 
         private IBuilding _playerBuilding, _aiBuilding;
         private IShip _playerShip, _aiShip;
@@ -54,11 +56,11 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _time = Substitute.For<ITime>();
             _uiManager = Substitute.For<IUIManager>();
             _targetIndicator = Substitute.For<ITargetIndicator>();
+            _windManager = Substitute.For<IWindManager>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
 
-            // FELIX  Fix :)
             _gameEndHandler
                 = new GameEndHandler(
                     _playerCruiser,
@@ -71,7 +73,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _time,
                     _uiManager,
                     _targetIndicator,
-                    null);
+                    _windManager);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
@@ -146,6 +148,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _uiManager.Received().HideItemDetails();
             _uiManager.Received().HideCurrentlyShownMenu();
             _targetIndicator.Received().Hide();
+            _windManager.Received().Stop();
         }
 
         [Test]
@@ -178,6 +181,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _uiManager.Received().HideItemDetails();
             _uiManager.Received().HideCurrentlyShownMenu();
             _targetIndicator.Received().Hide();
+            _windManager.Received().Stop();
         }
 
         [Test]

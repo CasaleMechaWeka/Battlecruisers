@@ -93,7 +93,6 @@ namespace BattleCruisers.Utils.BattleScene
             _uiManager.HideCurrentlyShownMenu();
             _uiManager.HideItemDetails();
             _targetIndicator.Hide();
-            // FELIX  Update tests :)
             _windManager.Stop();
 
             // Want to play cruiser sinking animation in real time, regardless of time player has set
