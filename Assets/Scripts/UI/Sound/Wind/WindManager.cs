@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.UI.Sound.Wind
 {
-    // FELIX  Create tests :)
     public class WindManager : IWindManager
     {
         private readonly IAudioSource _audioSource;
