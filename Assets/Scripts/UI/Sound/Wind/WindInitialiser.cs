@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Sound.Wind
                 new WindManager(
                     new AudioSourceBC(audioSource),
                     camera,
-                    cameraCalculatorSettings.ValidOrthographicSizes);
+                    new VolumeCalculator(cameraCalculatorSettings.ValidOrthographicSizes));
         }
     }
 }
