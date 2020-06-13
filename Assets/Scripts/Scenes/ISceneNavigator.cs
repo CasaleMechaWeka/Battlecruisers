@@ -8,7 +8,7 @@
     /// </summary>
     public interface ISceneNavigator
     {
-        void GoToScene(string sceneName, string loadingScreenHint = null);
+        void GoToScene(string sceneName);
         void SceneLoaded(string sceneName);
     }
 }

@@ -2,7 +2,6 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.HomeScreen;
@@ -14,7 +13,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using System.Collections.Generic;
@@ -34,7 +32,6 @@ namespace BattleCruisers.Scenes
 		private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
-        private IHintProvider _hintProvider;
         private ISingleSoundPlayer _soundPlayer;
 
         public HomeScreenController homeScreen;
@@ -58,8 +55,6 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
-            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
-            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, _gameModel, RandomGenerator.Instance);
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
@@ -197,9 +192,7 @@ namespace BattleCruisers.Scenes
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			_applicationModel.SelectedLevel = levelNum;
-
-            string hint = !_applicationModel.IsTutorial ? _hintProvider.GetHint() : null;
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, hint);
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
             CleanUp();
 		}
 

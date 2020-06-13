@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.BattleScene
 
         public void RetryLevel()
         {
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, "FELIX");
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
         }
     }
 }

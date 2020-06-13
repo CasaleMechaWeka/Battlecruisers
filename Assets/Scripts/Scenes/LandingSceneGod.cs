@@ -16,6 +16,7 @@ namespace BattleCruisers.Scenes
     {
         private bool _isInitialised = false;
         private string _lastSceneLoaded;
+        private IHintProvider _hintProvider;
 
 		public static ILoadingScreen LoadingScreen { get; private set; }
         public static ISceneNavigator SceneNavigator { get; private set; }
@@ -27,7 +28,8 @@ namespace BattleCruisers.Scenes
             {
                 Assert.raiseExceptions = true;
 
-                MusicPlayer = CreateMusicPlayer();
+                IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                MusicPlayer = CreateMusicPlayer(dataProvider);
 
                 LoadingScreenController loadingScreen = GetComponent<LoadingScreenController>();
                 Assert.IsNotNull(loadingScreen);
@@ -40,12 +42,15 @@ namespace BattleCruisers.Scenes
 
                 SceneNavigator = this;
 
+                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
+                _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+
                 // Game starts with the screens scene
                 GoToScene(SceneNames.SCREENS_SCENE);
             }
         }
 
-        private IMusicPlayer CreateMusicPlayer()
+        private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
@@ -59,13 +64,19 @@ namespace BattleCruisers.Scenes
             return
                 new TogglableMusicPlayer(
                     corePlayer,
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                    dataProvider.SettingsManager);
         }
 
-        public void GoToScene(string sceneName, string loadingScreenHint = null)
+        public void GoToScene(string sceneName)
         {
+            string hint = null;
+            if (sceneName == SceneNames.BATTLE_SCENE
+                && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+            {
+                hint = _hintProvider.GetHint();
+            }
             IEnumerator loadScene = LoadScene(sceneName);
-            StartCoroutine(LoadingScreen.PerformLongOperation(loadScene, loadingScreenHint));
+            StartCoroutine(LoadingScreen.PerformLongOperation(loadScene, hint));
         }
 
         private IEnumerator LoadScene(string sceneName)
