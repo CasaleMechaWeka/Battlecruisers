@@ -30,7 +30,8 @@ namespace BattleCruisers.UI.BattleScene
             if (isTutorial)
             {
                 Destroy(endGameButton.gameObject);
-            }
+                Destroy(retryButton.gameObject);
+			}
             else
             {
                 Destroy(skipTutorialButton.gameObject);
