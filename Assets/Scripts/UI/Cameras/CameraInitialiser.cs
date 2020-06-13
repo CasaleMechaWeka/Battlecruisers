@@ -107,7 +107,8 @@ namespace BattleCruisers.UI.Cameras
                     navigationWheelPanel.NavigationWheel,
                     cameraFocuser,
                     new CruiserDeathCameraFocuser(cameraFocuser),
-                    skybox);
+                    skybox,
+                    settings);
         }
 
         private ICameraTargetProvider CreateCameraTargetProvider(

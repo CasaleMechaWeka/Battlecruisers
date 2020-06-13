@@ -15,6 +15,7 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Lifetime;
@@ -228,6 +229,14 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.Deferrer,
                     time,
                     battleCompletionHandler);
+
+            // FELIX  Stop when battle is done
+            // FELIX  Add to AudioInitialiser so it's stored there?
+            IWindManager windManager
+                = components.WindInitialiser.Initialise(
+                    cameraComponents.MainCamera,
+                    cameraComponents.Settings);
+            windManager.Play();
 
             StartTutorialIfNecessary(
                 prefabFactory, 

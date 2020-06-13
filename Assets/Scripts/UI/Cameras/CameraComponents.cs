@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace BattleCruisers.UI.Cameras
         public ICameraFocuser CameraFocuser { get; }
         public ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
+        public ICameraCalculatorSettings Settings { get; }
 
         public CameraComponents(
             ICamera mainCamera,
@@ -21,9 +23,10 @@ namespace BattleCruisers.UI.Cameras
             INavigationWheel navigationWheel,
             ICameraFocuser cameraFocuser,
             ICruiserDeathCameraFocuser cruiserDeathCameraFocuser,
-            Skybox skybox)
+            Skybox skybox,
+            ICameraCalculatorSettings settings)
         {
-            Helper.AssertIsNotNull(mainCamera, cameraAdjuster, navigationWheel, cameraFocuser, cruiserDeathCameraFocuser, skybox);
+            Helper.AssertIsNotNull(mainCamera, cameraAdjuster, navigationWheel, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings);
 
             MainCamera = mainCamera;
             CameraAdjuster = cameraAdjuster;
@@ -31,6 +34,7 @@ namespace BattleCruisers.UI.Cameras
             CameraFocuser = cameraFocuser;
             CruiserDeathCameraFocuser = cruiserDeathCameraFocuser;
             Skybox = skybox;
+            Settings = settings;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
@@ -13,5 +14,6 @@ namespace BattleCruisers.UI.Cameras
         ICameraFocuser CameraFocuser { get; }
         ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         Skybox Skybox { get; }
+        ICameraCalculatorSettings Settings { get; }
     }
 }
