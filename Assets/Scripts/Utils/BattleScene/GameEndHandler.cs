@@ -7,6 +7,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityCommon.PlatformAbstractions.Time;
@@ -25,6 +26,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly ITime _time;
         private readonly IUIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
+        private readonly IWindManager _windManager;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -40,7 +42,8 @@ namespace BattleCruisers.Utils.BattleScene
             IPermitter navigationPermitter,
             ITime time,
             IUIManager uiManager,
-            ITargetIndicator targetIndicator)
+            ITargetIndicator targetIndicator,
+            IWindManager windManager)
         {
             Helper.AssertIsNotNull(
                 playerCruiser, 
@@ -52,7 +55,8 @@ namespace BattleCruisers.Utils.BattleScene
                 navigationPermitter, 
                 time, 
                 uiManager, 
-                targetIndicator);
+                targetIndicator,
+                windManager);
 
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
@@ -64,6 +68,7 @@ namespace BattleCruisers.Utils.BattleScene
             _time = time;
             _uiManager = uiManager;
             _targetIndicator = targetIndicator;
+            _windManager = windManager;
 
             _handledCruiserDeath = false;
             _handledGameEnd = false;
@@ -88,6 +93,8 @@ namespace BattleCruisers.Utils.BattleScene
             _uiManager.HideCurrentlyShownMenu();
             _uiManager.HideItemDetails();
             _targetIndicator.Hide();
+            // FELIX  Update tests :)
+            _windManager.Stop();
 
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _time.TimeScale = 1;

@@ -58,6 +58,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
 
+            // FELIX  Fix :)
             _gameEndHandler
                 = new GameEndHandler(
                     _playerCruiser,
@@ -69,7 +70,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _navigationPermitter,
                     _time,
                     _uiManager,
-                    _targetIndicator);
+                    _targetIndicator,
+                    null);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 

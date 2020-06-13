@@ -183,10 +183,34 @@ namespace BattleCruisers.Scenes.BattleScene
 
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);
 
+            // Audio
+            Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
+            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
+            ILayeredMusicPlayer layeredMusicPlayer
+                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
+                    factoryProvider.Sound.SoundFetcher,
+                    currentLevel.MusicKeys,
+                    dataProvider.SettingsManager.MuteMusic);
+            LandingSceneGod.MusicPlayer?.Stop();
+            _audioInitialiser
+                = new AudioInitialiser(
+                    helper,
+                    layeredMusicPlayer,
+                    playerCruiser,
+                    aiCruiser,
+                    components.Deferrer,
+                    time,
+                    battleCompletionHandler);
+
+            IWindManager windManager
+                = components.WindInitialiser.Initialise(
+                    cameraComponents.MainCamera,
+                    cameraComponents.Settings);
+            windManager.Play();
+
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
-            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.SlowerUpdater);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
@@ -206,38 +230,14 @@ namespace BattleCruisers.Scenes.BattleScene
                         navigationPermitters.NavigationFilter,
                         time,
                         uiManager,
-                        components.TargetIndicator));
+                        components.TargetIndicator,
+                        windManager));
 
             // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>();
             cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
 
-            // Audio
-            Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
-            ILayeredMusicPlayer layeredMusicPlayer
-                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
-                    currentLevel.MusicKeys,
-                    dataProvider.SettingsManager.MuteMusic);
-            LandingSceneGod.MusicPlayer?.Stop();
-            _audioInitialiser
-                = new AudioInitialiser(
-                    helper,
-                    layeredMusicPlayer,
-                    playerCruiser,
-                    aiCruiser,
-                    components.Deferrer,
-                    time,
-                    battleCompletionHandler);
-
-            // FELIX  Stop when battle is done
-            // FELIX  Add to AudioInitialiser so it's stored there?
-            IWindManager windManager
-                = components.WindInitialiser.Initialise(
-                    cameraComponents.MainCamera,
-                    cameraComponents.Settings);
-            windManager.Play();
-
+            // Tutorial
             StartTutorialIfNecessary(
                 prefabFactory, 
                 applicationModel, 
