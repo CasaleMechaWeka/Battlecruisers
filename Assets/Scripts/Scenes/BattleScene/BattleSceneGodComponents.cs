@@ -26,9 +26,12 @@ namespace BattleCruisers.Scenes.BattleScene
         private AudioSource uiSoundsAudioSource;
         public IAudioSource UISoundsAudioSource { get; private set; }
 
+        [SerializeField]
+        private LayeredMusicPlayerInitialiser _musicPlayerInitialiser;
+        public LayeredMusicPlayerInitialiser MusicPlayerInitialiser => _musicPlayerInitialiser;
+
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
-        public LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; private set; }
         public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private UpdaterProvider _updaterProvider;
@@ -45,7 +48,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void Initialise()
         {
-            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator, prioritisedSoundPlayerAudioSource, uiSoundsAudioSource);
+            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator, prioritisedSoundPlayerAudioSource, uiSoundsAudioSource, _musicPlayerInitialiser);
 
             AudioListener = new GameObjectBC(audioListener.gameObject);
 
@@ -60,9 +63,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);
-
-            MusicPlayerInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
-            Assert.IsNotNull(MusicPlayerInitialiser);
 
             _updaterProvider = GetComponentInChildren<UpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
