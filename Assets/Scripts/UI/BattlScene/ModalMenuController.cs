@@ -24,6 +24,9 @@ namespace BattleCruisers.UI.BattleScene
             ActionButton cancelButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/CancelButton");
             cancelButton.Initialise(soundPlayer, Cancel);
 
+			ActionButton retryButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/RetryButton");
+			retryButton.Initialise(soundPlayer, Retry);
+
             if (isTutorial)
             {
                 Destroy(endGameButton.gameObject);
@@ -51,19 +54,24 @@ namespace BattleCruisers.UI.BattleScene
 			}
 		}
 
-		public void Cancel()
+		public void HideMenu()
+		{
+			_canvas.gameObject.SetActive(false);
+		}
+
+		private void Cancel()
 		{
 			_menuManager.DismissMenu();
 		}
 
-		public void Quit()
+		private void Quit()
 		{
 			_menuManager.QuitGame();
 		}
 
-		public void HideMenu()
+		private void Retry()
 		{
-			_canvas.gameObject.SetActive(false);
+			_menuManager.RetryLevel();
 		}
 	}
 }
