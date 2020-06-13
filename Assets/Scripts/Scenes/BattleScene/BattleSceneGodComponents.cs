@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -18,17 +19,17 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         public IDeferrer Deferrer { get; private set; }
 
-        [SerializeField]
-        private AudioSource prioritisedSoundPlayerAudioSource;
+        public AudioSource prioritisedSoundPlayerAudioSource;
         public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
 
-        [SerializeField]
-        private AudioSource uiSoundsAudioSource;
+        public AudioSource uiSoundsAudioSource;
         public IAudioSource UISoundsAudioSource { get; private set; }
 
-        [SerializeField]
-        private LayeredMusicPlayerInitialiser _musicPlayerInitialiser;
-        public LayeredMusicPlayerInitialiser MusicPlayerInitialiser => _musicPlayerInitialiser;
+        public LayeredMusicPlayerInitialiser musicPlayerInitialiser;
+        public LayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;
+
+        public WindInitialiser windInitialiser;
+        public WindInitialiser WindInitialiser => windInitialiser;
 
         public CloudInitialiser CloudInitialiser { get; private set; }
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
@@ -48,7 +49,14 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void Initialise()
         {
-            Helper.AssertIsNotNull(backgroundClickableEmitter, audioListener, targetIndicator, prioritisedSoundPlayerAudioSource, uiSoundsAudioSource, _musicPlayerInitialiser);
+            Helper.AssertIsNotNull(
+                backgroundClickableEmitter, 
+                audioListener, 
+                targetIndicator, 
+                prioritisedSoundPlayerAudioSource, 
+                uiSoundsAudioSource, 
+                musicPlayerInitialiser, 
+                windInitialiser);
 
             AudioListener = new GameObjectBC(audioListener.gameObject);
 

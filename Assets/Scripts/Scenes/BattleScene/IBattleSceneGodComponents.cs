@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -20,5 +21,6 @@ namespace BattleCruisers.Scenes.BattleScene
         IClickableEmitter BackgroundClickableEmitter { get; }
         IGameObject AudioListener { get; }
         ITargetIndicator TargetIndicator { get; }
+        WindInitialiser WindInitialiser { get; }
     }
 }
