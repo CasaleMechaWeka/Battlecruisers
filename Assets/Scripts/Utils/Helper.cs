@@ -25,6 +25,7 @@ namespace BattleCruisers.Utils
 				.ToList();
 		}
 
+        // PERF  Remove at compile time like logs :)
         public static void AssertIsNotNull(params object[] objs)
         {
             foreach (object obj in objs)
