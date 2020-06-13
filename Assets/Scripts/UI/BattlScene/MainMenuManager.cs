@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using System;
 
 namespace BattleCruisers.UI.BattleScene
 {

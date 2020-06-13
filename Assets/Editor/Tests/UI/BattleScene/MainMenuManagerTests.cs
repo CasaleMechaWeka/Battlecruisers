@@ -1,4 +1,6 @@
-﻿using BattleCruisers.UI.BattleScene;
+﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
 using NUnit.Framework;
@@ -11,6 +13,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IPauseGameManager _pauseGameManager;
         private IModalMenu _modalMenu;
         private IBattleCompletionHandler _battleCompletionHandler;
+        private ISceneNavigator _sceneNavigator;
 
         [SetUp]
         public void TestSetup()
@@ -18,9 +21,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _pauseGameManager = Substitute.For<IPauseGameManager>();
             _modalMenu = Substitute.For<IModalMenu>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
+            _sceneNavigator = Substitute.For<ISceneNavigator>();
 
-            // FELIX  Update tests :)
-            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, null);
+            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _sceneNavigator);
         }
 
         [Test]
@@ -48,6 +51,13 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
             _modalMenu.Received().HideMenu();
+        }
+
+        [Test]
+        public void RetryLevel()
+        {
+            _mainMenuManager.RetryLevel();
+            _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE);
         }
     }
 }
