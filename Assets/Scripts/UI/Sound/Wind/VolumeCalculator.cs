@@ -13,9 +13,11 @@ namespace BattleCruisers.UI.Sound.Wind
             _validOrthographicSizes = validOrthographicSizes;
         }
 
-        // FELIX  Test :)
         public float FindVolume(float cameraOrthographicSize)
         {
+            Assert.IsTrue(cameraOrthographicSize >= _validOrthographicSizes.Min);
+            Assert.IsTrue(cameraOrthographicSize <= _validOrthographicSizes.Max);
+
             float orthographicSizeProportion = cameraOrthographicSize / _validOrthographicSizes.Max;
 
             // Don't play wind if less than halfway zoomed out
