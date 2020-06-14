@@ -26,6 +26,8 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Lightning
             lightningBolt.Trigger();
 
             collision.Target.TakeDamage(_damage, _parent);
+
+            _audioSource.Play();
         }
     }
 }
