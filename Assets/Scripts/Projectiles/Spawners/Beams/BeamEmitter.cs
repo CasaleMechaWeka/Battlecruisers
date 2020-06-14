@@ -2,6 +2,7 @@
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,6 +13,10 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
         private IBeamCollisionDetector _collisionDetector;
         protected ITarget _parent;
 
+        [SerializeField]
+        private AudioSource _platformAudioSource;
+        protected IAudioSource _audioSource;
+
         public BroadcastingParticleSystem constantSparks;
         public LayerMask unitsLayerMask, shieldsLayerMask;
 
@@ -19,6 +24,9 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
         {
             Assert.IsNotNull(constantSparks);
             constantSparks.Initialise();
+
+            Assert.IsNotNull(_platformAudioSource);
+            _audioSource = new AudioSourceBC(_platformAudioSource);
         }
 
         protected void Initialise(ITargetFilter targetFilter, ITarget parent)

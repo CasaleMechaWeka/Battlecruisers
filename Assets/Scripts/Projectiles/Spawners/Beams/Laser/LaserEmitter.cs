@@ -17,7 +17,6 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
     public class LaserEmitter : BeamEmitter, ILaserEmitter
     {
         private ILaserRenderer _laserRenderer;
-        private IAudioSource _audioSource;
         private ILaserSoundPlayer _laserSoundPlayer;
         private float _damagePerS;
         private LaserImpact _laserImpact;
@@ -33,10 +32,6 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 
             LineRenderer lineRenderer = GetComponent<LineRenderer>();
             _laserRenderer = new LaserRenderer(lineRenderer);
-
-            AudioSource audioSource = GetComponentInChildren<AudioSource>();
-            Assert.IsNotNull(audioSource);
-            _audioSource = new AudioSourceBC(audioSource);
 
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
