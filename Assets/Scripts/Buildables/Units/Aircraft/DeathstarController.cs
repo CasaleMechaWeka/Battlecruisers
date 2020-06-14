@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class DeathstarController : AircraftController
+	public class DeathstarController : AircraftController
 	{
 		private IBarrelWrapper _barrelWrapper;
 
@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.Laser);
+            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

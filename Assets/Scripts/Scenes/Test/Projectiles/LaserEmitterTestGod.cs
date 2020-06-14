@@ -5,7 +5,6 @@ using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
@@ -45,7 +44,6 @@ namespace BattleCruisers.Scenes.Test
 	public class LaserEmitterTestGod : TestGodBase
 	{
 		private Faction _enemyFaction;
-		private ISoundFetcher _soundFetcher;
         private IList<LaserTest<IBuilding>> _stationaryTargets;
         private IList<LaserTest<IUnit>> _movingTargets;
 
@@ -80,7 +78,6 @@ namespace BattleCruisers.Scenes.Test
         {
 			_enemyFaction = Faction.Blues;
 			Faction friendlyFaction = Faction.Reds;
-            _soundFetcher = new SoundFetcher();
 
 			// Stationary targets
 			_stationaryTargets = CreateStationaryTargetTests();
@@ -149,7 +146,6 @@ namespace BattleCruisers.Scenes.Test
                     targetFilter, 
                     damagePerS: 100, 
                     parent: parent, 
-                    soundFetcher: _soundFetcher, 
                     deltaTimeProvider: _updaterProvider.BarrelControllerUpdater);
         }
 

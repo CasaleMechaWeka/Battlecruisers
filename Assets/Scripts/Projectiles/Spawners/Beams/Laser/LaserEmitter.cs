@@ -53,16 +53,14 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
-            ISoundFetcher soundFetcher,
             IDeltaTimeProvider deltaTimeProvider)
         {
             base.Initialise(targetFilter, parent);
-            Helper.AssertIsNotNull(soundFetcher, deltaTimeProvider);
+            Assert.IsNotNull(deltaTimeProvider);
             Assert.IsTrue(damagePerS > 0);
 
             _damagePerS = damagePerS;
             _deltaTimeProvider = deltaTimeProvider;
-            _audioSource.AudioClip = await soundFetcher.GetSoundAsync(SoundKeys.Firing.Laser);
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
         }
 

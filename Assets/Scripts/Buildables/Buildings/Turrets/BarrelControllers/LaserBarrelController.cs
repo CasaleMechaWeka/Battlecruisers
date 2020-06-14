@@ -61,7 +61,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.TargetFilter, 
                     _laserTurretStats.damagePerS, 
                     args.Parent, 
-                    args.FactoryProvider.Sound.SoundFetcher, 
                     args.Updater);
 
             ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
