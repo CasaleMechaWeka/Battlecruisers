@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
@@ -25,7 +26,7 @@ namespace BattleCruisers.Utils
 				.ToList();
 		}
 
-        // PERF  Remove at compile time like logs :)
+        [Conditional("ENABLE_LOGS")]
         public static void AssertIsNotNull(params object[] objs)
         {
             foreach (object obj in objs)
