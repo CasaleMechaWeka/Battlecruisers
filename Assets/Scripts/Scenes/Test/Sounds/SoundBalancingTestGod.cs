@@ -15,6 +15,8 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private MusicController _music;
         private AudioListener _audioListener;
 
+        public WindButtonsPanelController windButtonsPanelController;
+
         protected override void Setup(Utilities.Helper helper)
         {
             base.Setup(helper);
@@ -28,6 +30,9 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             AudioSource singleSoundPlayerSource = transform.FindNamedComponent<AudioSource>("SingleSoundPlayer");
             SetupSoundPlayerObjects(singleSoundPlayerSource);
+
+            Assert.IsNotNull(windButtonsPanelController);
+            windButtonsPanelController.Initialise(_camera, _cameraCalculatorSettings);
         }
 
         private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource)

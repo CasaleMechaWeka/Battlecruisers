@@ -17,7 +17,8 @@ namespace BattleCruisers.Scenes.Test
     public class NavigationTestGod : TestGodBase
     {
         private ICameraAdjuster _cameraAdjuster;
-        private ICamera _camera;
+        protected ICamera _camera;
+        protected ICameraCalculatorSettings _cameraCalculatorSettings;
 
         public float smoothTime = 0.15f;
         public bool useCorners = true;
@@ -29,17 +30,17 @@ namespace BattleCruisers.Scenes.Test
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
             _camera = new CameraBC(Camera.main);
-            ICameraCalculatorSettings settings
+            _cameraCalculatorSettings
                 = new CameraCalculatorSettings(
                     Substitute.For<ISettingsManager>(),
                     _camera.Aspect);
-            ICameraCalculator cameraCalculator = new CameraCalculator(_camera, settings);
+            ICameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
 
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
                 = new CameraNavigationWheelCalculator(
                     navigationWheelPanel, 
                     cameraCalculator, 
-                    settings.ValidOrthographicSizes,
+                    _cameraCalculatorSettings.ValidOrthographicSizes,
                     new ProportionCalculator());
             ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, _camera);
 
@@ -54,7 +55,7 @@ namespace BattleCruisers.Scenes.Test
                         cameraTargetFinder,
                         new CornerIdentifier(
                             new CornerCutoffProvider(_camera.Aspect)),
-                        new CornerCameraTargetProvider(_camera, cameraCalculator, settings, playerCruiser, aiCruiser));
+                        new CornerCameraTargetProvider(_camera, cameraCalculator, _cameraCalculatorSettings, playerCruiser, aiCruiser));
             }
 
             ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder, cornersTargetFinder);
