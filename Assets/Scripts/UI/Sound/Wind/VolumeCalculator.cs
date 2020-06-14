@@ -15,8 +15,8 @@ namespace BattleCruisers.UI.Sound.Wind
 
         public float FindVolume(float cameraOrthographicSize)
         {
-            Assert.IsTrue(cameraOrthographicSize >= _validOrthographicSizes.Min);
-            Assert.IsTrue(cameraOrthographicSize <= _validOrthographicSizes.Max);
+            Assert.IsTrue(cameraOrthographicSize >= _validOrthographicSizes.Min, $"Too small, {cameraOrthographicSize} should be >= {_validOrthographicSizes.Min}");
+            Assert.IsTrue(cameraOrthographicSize <= _validOrthographicSizes.Max, $"Too big, {cameraOrthographicSize} should be <= {_validOrthographicSizes.Max}");
 
             float orthographicSizeProportion = cameraOrthographicSize / _validOrthographicSizes.Max;
 
