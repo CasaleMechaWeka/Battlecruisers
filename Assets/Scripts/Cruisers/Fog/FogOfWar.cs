@@ -10,24 +10,16 @@ namespace BattleCruisers.Cruisers.Fog
 
     public class FogOfWar : MonoBehaviourWrapper
     {
-        private const float STRONG_FOG_ALPHA = 1;
-        private const float WEAK_FOG_ALPHA = 0.2f;
-
-        public SpriteRenderer fogCore;
-        public ParticleSystem fogParticleSystem;
+        public GameObject weakFog, strongFog;
 
         public void Initialise(FogStrength fogStrength)
         {
-            Helper.AssertIsNotNull(fogCore, fogParticleSystem);
+            Helper.AssertIsNotNull(weakFog, strongFog);
 
             IsVisible = false;
 
-            float fogAlpha = fogStrength == FogStrength.Weak ? WEAK_FOG_ALPHA : STRONG_FOG_ALPHA;
-            // Black
-            Color fogColor = new Color(r: 0, g: 0, b: 0, a: fogAlpha);
-            fogCore.color = fogColor;
-
-            fogParticleSystem.gameObject.SetActive(fogStrength == FogStrength.Strong);
+            weakFog.SetActive(fogStrength == FogStrength.Weak);
+            strongFog.SetActive(fogStrength == FogStrength.Strong);
         }
     }
 }
