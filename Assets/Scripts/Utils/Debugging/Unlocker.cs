@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace BattleCruisers.Utils.Debugging
 {
-    public class Unlocker : MonoBehaviour, IPointerClickHandler
+    public class Unlocker : CheaterBase, IPointerClickHandler
     {
         private int _numOfClicks = 0;
 

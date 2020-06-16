@@ -9,8 +9,7 @@ namespace BattleCruisers.Utils.Debugging
     /// Applies area of effect damage whenever the "D" key is pressed, 
     /// at the location of the mouse.  For testing :P
     /// </summary>
-    /// TEMP  Turn this class off for final game :P
-    public class AreaDamageApplier : MonoBehaviour
+    public class AreaDamageApplier : CheaterBase
     {
         private IDamageApplier _areaDamageApplier;
 
@@ -20,16 +19,9 @@ namespace BattleCruisers.Utils.Debugging
 
         void Start()
         {
-            if (!Debug.isDebugBuild)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                IDamageStats damageStats = new DamageStats(damage, damageRadiusInM);
-                ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
-                _areaDamageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
-            }
+            IDamageStats damageStats = new DamageStats(damage, damageRadiusInM);
+            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+            _areaDamageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
         }
 
         void Update()

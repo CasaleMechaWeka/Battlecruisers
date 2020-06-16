@@ -3,18 +3,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
 {
-    public class KeyboardCheater : MonoBehaviour
+    public class KeyboardCheater : CheaterBase
     {
         public Cheater cheater;
 
         void Start()
         {
             Assert.IsNotNull(cheater);
-
-            if (!Debug.isDebugBuild)
-            {
-                Destroy(gameObject);
-            }
         }
 
         void Update()

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
 {
-    public class Cheater : MonoBehaviour, ICheater
+    public class Cheater : CheaterBase, ICheater
     {
         private IFactoryProvider _factoryProvider;
         private ICruiser _playerCruiser, _aiCruiser;
@@ -23,11 +23,6 @@ namespace BattleCruisers.Utils.Debugging
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _lastGameSpeed = 0;
-
-            if (!Debug.isDebugBuild)
-            {
-                Destroy(gameObject);
-            }
         }
 
         public void Win()
