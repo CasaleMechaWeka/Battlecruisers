@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Sound.Wind
 {
@@ -18,15 +17,19 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
         }
 
         [Test]
-        public void FindVolume_ArgTooSmall_Throws()
+        public void FindVolume_ArgTooSmall()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindVolume(_validOrthographicSizes.Min - 0.1f));
+            float expectedVolume = 0;
+            float actualVolume = _calculator.FindVolume(_validOrthographicSizes.Min - 0.1f);
+            Assert.AreEqual(expectedVolume, actualVolume);
         }
 
         [Test]
-        public void FindVolume_ArgTooLarge_Throws()
+        public void FindVolume_ArgTooLarge()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindVolume(_validOrthographicSizes.Max + 0.1f));
+            float expectedVolume = 1;
+            float actualVolume = _calculator.FindVolume(_validOrthographicSizes.Max + 0.1f);
+            Assert.AreEqual(expectedVolume, actualVolume);
         }
 
         [Test, Sequential]
