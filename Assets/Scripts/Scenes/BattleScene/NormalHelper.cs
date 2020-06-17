@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -18,7 +17,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
-using System;
 using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
@@ -46,27 +44,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IBuildProgressCalculatorFactory calculatorFactory = new BuildProgressCalculatorFactory(_dataProvider.SettingsManager);
             PlayerCruiserBuildProgressCalculator = calculatorFactory.CreatePlayerCruiserCalculator(); ;
             AICruiserBuildProgressCalculator = calculatorFactory.CreateAICruiserCalculator();
-        }
-
-        private float FindBuildSpeedMultiplier(ISettingsManager settingsManager)
-        {
-            switch (settingsManager.AIDifficulty)
-            {
-                case Difficulty.Easy:
-                    return BuildSpeedMultipliers.HALF_DEFAULT;
-
-                case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
-
-                case Difficulty.Hard:
-                    return BuildSpeedMultipliers.DEFAULT;
-
-                case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
-
-                default:
-                    throw new ArgumentException($"Unkown difficulty: {settingsManager.AIDifficulty}");
-            }
         }
 
         public ILoadout GetPlayerLoadout()

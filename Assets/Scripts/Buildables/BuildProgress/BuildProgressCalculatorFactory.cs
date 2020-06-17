@@ -9,6 +9,8 @@ namespace BattleCruisers.Buildables.BuildProgress
     {
         private readonly ISettingsManager _settingsManager;
 
+        public static IBuildSpeedController playerBuildSpeed, aiBuildSpeed;
+
         public BuildProgressCalculatorFactory(ISettingsManager settingsManager)
         {
             Assert.IsNotNull(settingsManager);
@@ -17,11 +19,21 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         public IBuildProgressCalculator CreatePlayerCruiserCalculator()
         {
+#if ENABLE_CHEATS
+            CompositeCalculator calculator = CreateCompositeCalculator(BuildSpeedMultipliers.DEFAULT);
+            playerBuildSpeed = calculator;
+            return calculator;
+#endif
             return new LinearCalculator(BuildSpeedMultipliers.DEFAULT);
         }
 
         public IBuildProgressCalculator CreateAICruiserCalculator()
         {
+#if ENABLE_CHEATS
+            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(_settingsManager));
+            aiBuildSpeed = calculator;
+            return calculator;
+#endif
             return new LinearCalculator(FindBuildSpeedMultiplier(_settingsManager));
         }
 
@@ -44,6 +56,19 @@ namespace BattleCruisers.Buildables.BuildProgress
                 default:
                     throw new ArgumentException($"Unkown difficulty: {settingsManager.AIDifficulty}");
             }
+        }
+
+        private CompositeCalculator CreateCompositeCalculator(float defaultBuildSpeedMultiplier)
+        {
+            CompositeCalculator calculator
+                = new CompositeCalculator(
+                    new LinearCalculator(defaultBuildSpeedMultiplier),
+                    new LinearCalculator(BuildSpeedMultipliers.FAST),
+                    new LinearCalculator(BuildSpeedMultipliers.VERY_FAST))
+                {
+                    BuildSpeed = BuildSpeed.InfinitelySlow
+                };
+            return calculator;
         }
     }
 }
