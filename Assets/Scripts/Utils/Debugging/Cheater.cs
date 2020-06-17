@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.BuildProgress;
+﻿using BattleCruisers.AI.Tasks;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
@@ -81,6 +82,17 @@ namespace BattleCruisers.Utils.Debugging
         {
             BuildProgressCalculatorFactory.playerBuildSpeed.BuildSpeed = buildSpeed;
             BuildProgressCalculatorFactory.aiBuildSpeed.BuildSpeed = buildSpeed;
+
+            switch (buildSpeed)
+            {
+                case BuildSpeed.InfinitelySlow:
+                    TaskFactory.delayProvider.DelayInS = TaskFactory.DEFAULT_DELAY_IN_S;
+                    break;
+
+                default:
+                    TaskFactory.delayProvider.DelayInS = TaskFactory.MIN_DELAY_IN_S;
+                    break;
+            }
         }
     }
 }

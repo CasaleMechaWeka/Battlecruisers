@@ -16,6 +16,7 @@ namespace BattleCruisers.AI.Tasks
         public static DelayProvider delayProvider;
 
         public const float DEFAULT_DELAY_IN_S = 1.5f;
+        public const float MIN_DELAY_IN_S = 0.1f;
 
         public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
         {
