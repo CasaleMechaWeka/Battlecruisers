@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Utils.Debugging
 {
@@ -7,14 +6,10 @@ namespace BattleCruisers.Utils.Debugging
     {
         void Awake()
         {
-            DisableCheats();
-        }
-
-        // TEMP  Define DISABLE_CHEATS in final game :)
-        [Conditional("DISABLE_CHEATS")]
-        private void DisableCheats()
-        {
+            // TEMP  Remove define symbol from final build :)
+#if !ENABLE_CHEATS
             Destroy(gameObject);
+#endif
         }
     }
 }
