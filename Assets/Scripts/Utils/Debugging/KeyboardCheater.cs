@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.BuildProgress;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Debugging
@@ -48,17 +47,17 @@ namespace BattleCruisers.Utils.Debugging
             // 1 = Normal build speed
             else if (Input.GetKeyUp(KeyCode.Alpha1))
             {
-                cheater.ChangeBuildSpeed(BuildSpeed.InfinitelySlow);
+                cheater.SetSpeedNormal();
             }
             // 2 = Fast build speed (50)
             else if (Input.GetKeyUp(KeyCode.Alpha2))
             {
-                cheater.ChangeBuildSpeed(BuildSpeed.Normal);
+                cheater.SetSpeedFast();
             }
             // 3 = Very fast build speed (500)
             else if (Input.GetKeyUp(KeyCode.Alpha3))
             {
-                cheater.ChangeBuildSpeed(BuildSpeed.VeryFast);
+                cheater.SetSpeedVeryFast();
             }
         }
     }

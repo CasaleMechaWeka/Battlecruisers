@@ -10,6 +10,8 @@ namespace BattleCruisers.Utils.Debugging
         void ShowNuke();
         void TogglePause();
         void ToggleUI();
-        void ChangeBuildSpeed(BuildSpeed buildSpeed);
+        void SetSpeedNormal();
+        void SetSpeedFast();
+        void SetSpeedVeryFast();
     }
 }
