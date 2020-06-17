@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -74,6 +75,12 @@ namespace BattleCruisers.Utils.Debugging
                 Time.timeScale = _lastGameSpeed;
                 _lastGameSpeed = 0;
             }
+        }
+
+        public void ChangeBuildSpeed(BuildSpeed buildSpeed)
+        {
+            BuildProgressCalculatorFactory.playerBuildSpeed.BuildSpeed = buildSpeed;
+            BuildProgressCalculatorFactory.aiBuildSpeed.BuildSpeed = buildSpeed;
         }
     }
 }

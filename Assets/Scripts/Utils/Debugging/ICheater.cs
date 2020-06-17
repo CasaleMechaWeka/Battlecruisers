@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Utils.Debugging
+﻿using BattleCruisers.Buildables.BuildProgress;
+
+namespace BattleCruisers.Utils.Debugging
 {
     public interface ICheater
     {
@@ -8,5 +10,6 @@
         void ShowNuke();
         void TogglePause();
         void ToggleUI();
+        void ChangeBuildSpeed(BuildSpeed buildSpeed);
     }
 }
