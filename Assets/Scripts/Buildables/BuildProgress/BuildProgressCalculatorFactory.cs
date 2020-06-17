@@ -9,6 +9,7 @@ namespace BattleCruisers.Buildables.BuildProgress
     {
         private readonly ISettingsManager _settingsManager;
 
+        // For cheating :)
         public static IBuildSpeedController playerBuildSpeed, aiBuildSpeed;
 
         public BuildProgressCalculatorFactory(ISettingsManager settingsManager)

@@ -19,7 +19,8 @@ namespace BattleCruisers.Tests.AI.Tasks
             _deferrer = SubstituteFactory.CreateDeferrer();
             _delayInS = 1;
 
-            _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer, _delayInS);
+            // FELIX  Fix :)
+            _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer, null);
         }
 
         [Test]
