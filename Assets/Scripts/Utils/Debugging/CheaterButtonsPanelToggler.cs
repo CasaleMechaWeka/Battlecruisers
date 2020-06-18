@@ -16,6 +16,12 @@ namespace BattleCruisers.Utils.Debugging
         void Start()
         {
             Assert.IsNotNull(cheaterButtonsPanel);
+
+#if !ENABLE_CHEATS
+            Destroy(cheaterButtonsPanel);
+            Destroy(gameObject);
+#endif
+
             _debouncer = new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS);
         }
 
