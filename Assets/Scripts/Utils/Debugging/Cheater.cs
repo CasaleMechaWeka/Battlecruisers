@@ -101,5 +101,10 @@ namespace BattleCruisers.Utils.Debugging
             BuildProgressCalculatorFactory.playerBuildSpeed.BuildSpeed = buildSpeed;
             BuildProgressCalculatorFactory.aiBuildSpeed.BuildSpeed = buildSpeed;
         }
+
+        public void ToggleCursor()
+        {
+            Cursor.visible = !Cursor.visible;
+        }
     }
 }

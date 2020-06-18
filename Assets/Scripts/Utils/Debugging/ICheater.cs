@@ -13,5 +13,6 @@ namespace BattleCruisers.Utils.Debugging
         void SetSpeedNormal();
         void SetSpeedFast();
         void SetSpeedVeryFast();
+        void ToggleCursor();
     }
 }

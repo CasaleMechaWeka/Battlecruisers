@@ -33,6 +33,7 @@ namespace BattleCruisers.Utils.Debugging
             else if (Input.GetKeyUp(KeyCode.T))
             {
                 cheater.ToggleUI();
+                cheater.ToggleCursor();
             }
             // N = Nuke
             else if (Input.GetKeyUp(KeyCode.N))
