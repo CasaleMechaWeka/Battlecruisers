@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.Loading
             {
                 "Build factories to produce units.",
                 "Builders automatically repair damaged buildings and your cruiser.",
-                "Buildings can be deleted by clicking them and then selecting the DEMOLISH button in the building details panel.",
+                "Buildings can be deleted by clicking them and then selecting the DEMOLISH button.",
                 "Click on a cruiser, unit or building to show more details."
             };
         }
@@ -32,12 +32,12 @@ namespace BattleCruisers.UI.Loading
         {
             return new List<string>()
             {
-                "The TARGET button in an enemy building’s details panel makes all your units and buildings attack that building.  The shortcut for this is to double click the enemy building.",
-                "The BUILDERS button in one of your building’s details panel makes all your builders try to work on that building.  The shortcut for this is to double click your building.",
+                "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
+                "The BUILDERS button for one of your building’s makes all your builders try to work on that building.  The shortcut is to double click your building.",
                 "Each cruiser has a unique benefit and a unique slot arrangement.  Choose your cruiser wisely!",
                 "Frequently check on the enemy cruiser to avoid nasty surprises!",
-                "Local boosters significantly increase adjacent turret fire rates, shield recharge rates and factory production rates.  They are well worth building!",
-                "It makes more sense to construct new builder bays one at a time instead of at the same time, so you get the benefit of a completed builder bay as soon as possible.",
+                "Local boosters significantly increase adjacent turret fire rates, shield recharge rates and factory production rates.",
+                "Contstruct buildings one at a time instead of all at once, to get their benefits sooner.",
                 "You can pause and resume building units by clicking the factory and selecting the unit you want to pause or resume."
             };
         }
