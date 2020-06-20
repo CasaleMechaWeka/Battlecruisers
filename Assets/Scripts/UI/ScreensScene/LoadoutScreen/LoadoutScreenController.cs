@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class LoadoutScreenController : ScreenController, ICancellable, IManagedDisposable
+    public class LoadoutScreenController : ScreenController, ILoadoutScreenController, IManagedDisposable
     {
         private IDataProvider _dataProvider;
         private IPrefabFactory _prefabFactory;
@@ -79,13 +79,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
             Assert.IsNotNull(itemPanels);
-            IList<IItemButton> itemButtons 
+            IList<IItemButton> itemButtons
                 = itemPanels.Initialise(
-                    _itemDetailsManager, 
-                    ItemType.Hull, 
-                    _comparingFamilyTracker, 
-                    dataProvider.GameModel, 
-                    selectCruiserButton.SelectedHull, 
+                    _itemDetailsManager,
+                    ItemType.Hull,
+                    _comparingFamilyTracker,
+                    dataProvider.GameModel,
+                    selectCruiserButton.SelectedHull,
                     soundPlayer,
                     prefabFactory);
 

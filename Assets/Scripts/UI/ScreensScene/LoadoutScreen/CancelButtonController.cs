@@ -5,20 +5,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class CancelButtonController : CanvasGroupButton
     {
-        private ICancellable _cancellable;
+        private ILoadoutScreenController _loadoutScreen;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, ICancellable cancellable)
+        public void Initialise(ISingleSoundPlayer soundPlayer, ILoadoutScreenController loadoutScreen)
         {
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, loadoutScreen);
 
-            Assert.IsNotNull(cancellable);
-            _cancellable = cancellable;
+            Assert.IsNotNull(loadoutScreen);
+            _loadoutScreen = loadoutScreen;
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
-            _cancellable.Cancel();
+            _loadoutScreen.Cancel();
         }
     }
 }

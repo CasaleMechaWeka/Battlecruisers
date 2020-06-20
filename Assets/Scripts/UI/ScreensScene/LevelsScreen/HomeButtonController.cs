@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Sound;
 using UnityEngine.Assertions;
 
@@ -8,9 +9,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     {
         private IScreensSceneGod _screensSceneGod;
 
-		public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
+		public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IPresentable parent)
 		{
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, parent);
 
             Assert.IsNotNull(screensSceneGod);
             _screensSceneGod = screensSceneGod;
