@@ -1,6 +1,8 @@
-﻿namespace BattleCruisers.UI.ScreensScene.HomeScreen
+﻿using BattleCruisers.UI.BattleScene.Presentables;
+
+namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
-    public interface IHomeScreen
+    public interface IHomeScreen : IPresentable
     {
         void Continue();
         void StartLevel1();

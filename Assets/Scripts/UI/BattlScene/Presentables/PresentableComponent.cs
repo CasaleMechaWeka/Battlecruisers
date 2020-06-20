@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.Presentables
 {
     public sealed class PresentableComponent : IPresentableComponent
     {
         private readonly IList<IPresentable> _childPresentables;
+
+        // FELIX  Update tests :)
+        public event EventHandler Presented;
+        public event EventHandler Dismissed;
 
         public bool IsPresented { get; private set; }
 
@@ -21,6 +26,8 @@ namespace BattleCruisers.UI.BattleScene.Presentables
             {
                 presentable.OnPresenting(activationParameter);
             }
+
+            Presented?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnDismissing()
@@ -31,6 +38,8 @@ namespace BattleCruisers.UI.BattleScene.Presentables
             {
                 presentable.OnDismissing();
             }
+
+            Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
         public void AddChildPresentable(IPresentable presentableToAdd)
