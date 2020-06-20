@@ -9,6 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Presentables
         private IPresentableComponent _component;
         private IPresentable _presentable1, _presentable2;
         private object _activationArgs;
+        private int _presentedCount, _dismissedCount;
 
         [SetUp]
         public void TestSetup()
@@ -22,6 +23,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Presentables
             _component.AddChildPresentable(_presentable2);
 
             _activationArgs = "sweet args";
+
+            _presentedCount = 0;
+            _component.Presented += (sender, e) => _presentedCount++;
+
+            _dismissedCount = 0;
+            _component.Dismissed += (sender, e) => _dismissedCount++;
         }
 
         [Test]
@@ -31,6 +38,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Presentables
 
             _presentable1.Received().OnPresenting(_activationArgs);
             _presentable2.Received().OnPresenting(_activationArgs);
+
+            Assert.AreEqual(1, _presentedCount);
         }
 
         [Test]
@@ -40,6 +49,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Presentables
 
             _presentable1.Received().OnDismissing();
             _presentable2.Received().OnDismissing();
+
+            Assert.AreEqual(1, _dismissedCount);
         }
     }
 }

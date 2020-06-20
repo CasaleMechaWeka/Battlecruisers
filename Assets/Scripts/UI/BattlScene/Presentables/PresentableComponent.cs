@@ -7,7 +7,6 @@ namespace BattleCruisers.UI.BattleScene.Presentables
     {
         private readonly IList<IPresentable> _childPresentables;
 
-        // FELIX  Update tests :)
         public event EventHandler Presented;
         public event EventHandler Dismissed;
 
