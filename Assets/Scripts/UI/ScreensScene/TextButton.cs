@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.BattleScene.Presentables;
+using BattleCruisers.UI.Sound;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -9,9 +10,9 @@ namespace BattleCruisers.UI.ScreensScene
         private MaskableGraphic _text;
         protected override MaskableGraphic Graphic => _text;
 
-        public override void Initialise(ISingleSoundPlayer soundPlayer)
+        public override void Initialise(ISingleSoundPlayer soundPlayer, IPresentable parent = null)
         {
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, parent);
 
             _text = GetComponentInChildren<Text>();
             Assert.IsNotNull(_text);

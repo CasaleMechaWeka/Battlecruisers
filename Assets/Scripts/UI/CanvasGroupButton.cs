@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.BattleScene.Presentables;
+using BattleCruisers.UI.Sound;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,9 +10,9 @@ namespace BattleCruisers.UI
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public override void Initialise(ISingleSoundPlayer soundPlayer)
+        public override void Initialise(ISingleSoundPlayer soundPlayer, IPresentable parent = null)
         {
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, parent);
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);

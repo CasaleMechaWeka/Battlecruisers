@@ -14,9 +14,9 @@ namespace BattleCruisers.UI.BattleScene.Presentables
         protected bool IsPresented => _presentableComponent.IsPresented;
         protected override ISoundKey ClickSound => null;
 
-        public override void Initialise(ISingleSoundPlayer soundPlayer)
+        public override void Initialise(ISingleSoundPlayer soundPlayer, IPresentable parent = null)
 		{
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, parent);
 
             _presentableComponent = new PresentableComponent();
 		}
