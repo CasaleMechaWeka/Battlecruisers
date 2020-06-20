@@ -8,7 +8,11 @@ namespace BattleCruisers.UI
         IPointerDownHandler,
         IPointerUpHandler,
         IPointerEnterHandler,
-        IPointerExitHandler
+        IPointerExitHandler,
+        // FELIX  TEMP
+        IDeselectHandler,
+        ISelectHandler,
+        IUpdateSelectedHandler
     {
         private bool _isPressed = false;
         private bool _isHover = false;
@@ -21,6 +25,8 @@ namespace BattleCruisers.UI
             Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             OnClicked();
+
+            // FELIX  Handle pointer up here?
         }
 
         protected abstract void OnClicked();
@@ -82,6 +88,21 @@ namespace BattleCruisers.UI
             {
                 SetAlpha(Alpha.ENABLED);
             }
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
+        }
+
+        public void OnUpdateSelected(BaseEventData eventData)
+        {
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
         }
     }
 }

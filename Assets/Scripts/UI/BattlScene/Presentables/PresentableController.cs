@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Presentables
 {
@@ -18,11 +19,13 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 
 		public virtual void OnPresenting(object activationParameter)
 		{
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
             _presentableComponent.OnPresenting(activationParameter);
 		}
 
 		public virtual void OnDismissing()
 		{
+            Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
             _presentableComponent.OnDismissing();
 		}
 
