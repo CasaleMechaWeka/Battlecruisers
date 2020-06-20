@@ -83,5 +83,13 @@ namespace BattleCruisers.UI
                 SetAlpha(Alpha.ENABLED);
             }
         }
+
+        protected void Reset()
+        {
+            _isHover = false;
+            _isPressed = false;
+            // Resets alpha
+            Enabled = Enabled;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models;
+﻿using System;
+using BattleCruisers.Data.Models;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 
@@ -17,6 +18,13 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 
             _homeScreen = homeScreen;
             _gameModel = gameModel;
+
+            _homeScreen.Dismissed += _homeScreen_Dismissed;
+        }
+
+        private void _homeScreen_Dismissed(object sender, EventArgs e)
+        {
+            Reset();
         }
     }
 }
