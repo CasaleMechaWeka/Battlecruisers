@@ -45,11 +45,21 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
-            saveButton.Initialise(soundPlayer, screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSlider.SliderValue, scrollSlider.SliderValue, muteMusicToggle.IsChecked);
+            saveButton
+                .Initialise(
+                    soundPlayer,
+                    screensSceneGod,
+                    settingsManager,
+                    musicPlayer,
+                    difficultyDropdown,
+                    zoomSlider.SliderValue,
+                    scrollSlider.SliderValue,
+                    muteMusicToggle.IsChecked,
+                    this);
 
             CancelButton cancelButton = GetComponentInChildren<CancelButton>();
             Assert.IsNotNull(cancelButton);
-            cancelButton.Initialise(_soundPlayer, screensSceneGod);
+            cancelButton.Initialise(_soundPlayer, screensSceneGod, this);
 		}
 	}
 }

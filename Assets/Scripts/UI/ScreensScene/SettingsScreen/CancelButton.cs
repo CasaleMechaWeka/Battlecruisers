@@ -1,6 +1,8 @@
-﻿using BattleCruisers.Scenes;
+﻿using System;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Sound;
-using UnityEngine.Assertions;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -8,12 +10,20 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IScreensSceneGod _screensSceneGod;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IPresentable parent)
         {
             base.Initialise(soundPlayer);
 
-            Assert.IsNotNull(screensSceneGod);
+            Helper.AssertIsNotNull(screensSceneGod, parent);
+
             _screensSceneGod = screensSceneGod;
+            parent.Dismissed += Parent_Dismissed;
+        }
+
+        // FELIX  Avoid duplicate code? :/
+        private void Parent_Dismissed(object sender, EventArgs e)
+        {
+            Reset();
         }
 
         protected override void OnClicked()

@@ -1,5 +1,7 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using System;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -29,11 +31,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
-            IBroadcastingProperty<bool> muteMusic)
+            IBroadcastingProperty<bool> muteMusic,
+            IPresentable parent)
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic, parent);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
@@ -42,6 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
             _muteMusic = muteMusic;
+            parent.Dismissed += Parent_Dismissed;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -52,6 +56,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _muteMusic.ValueChanged += (sender, e) => UpdateEnabledStatus();
 
             UpdateEnabledStatus();
+        }
+
+        private void Parent_Dismissed(object sender, EventArgs e)
+        {
+            Reset();
         }
 
         protected override void OnClicked()
