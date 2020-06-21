@@ -7,6 +7,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
@@ -16,6 +17,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         // Single prefab caches
         CountdownController Countdown { get; }
         DroneController Drone { get; }
+        AudioSourceInitialiser AudioSource { get; }
 
         // Multiple prefab caches
         BuildableWrapper<IBuilding> GetBuilding(IPrefabKey key);

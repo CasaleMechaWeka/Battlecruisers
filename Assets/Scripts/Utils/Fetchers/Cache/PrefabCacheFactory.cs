@@ -8,6 +8,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Timers;
 using System.Collections.Concurrent;
@@ -56,6 +57,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
 
+            Container<AudioSourceInitialiser> audioSourceContainer = new Container<AudioSourceInitialiser>();
+            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.AudioSource, audioSourceContainer));
+
             await Task.WhenAll(retrievePrefabsTasks);
 
             return
@@ -67,7 +71,8 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<ShipDeathInitialiser>(keyToDeath),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
                     countdownContainer.Value,
-                    droneContainer.Value);
+                    droneContainer.Value,
+                    audioSourceContainer.Value);
         }
 
         private async Task GetPrefabs<TPrefab>(

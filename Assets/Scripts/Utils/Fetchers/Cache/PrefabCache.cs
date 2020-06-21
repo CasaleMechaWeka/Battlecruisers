@@ -7,6 +7,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
@@ -22,6 +23,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
         public CountdownController Countdown { get; }
         public DroneController Drone { get; }
+        public AudioSourceInitialiser AudioSource { get; }
 
         public PrefabCache(
             IMultiCache<BuildableWrapper<IBuilding>> buildings, 
@@ -31,9 +33,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IMultiCache<ShipDeathInitialiser> shipDeaths, 
             IUntypedMultiCache<Projectile> projectiles, 
             CountdownController countdown, 
-            DroneController drone)
+            DroneController drone,
+            AudioSourceInitialiser audioSource)
         {
-            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, countdown, drone);
+            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, countdown, drone, audioSource);
 
             _buildings = buildings;
             _units = units;
@@ -43,6 +46,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             _projectiles = projectiles;
             Countdown = countdown;
             Drone = drone;
+            AudioSource = audioSource;
         }
 
         public BuildableWrapper<IBuilding> GetBuilding(IPrefabKey key)

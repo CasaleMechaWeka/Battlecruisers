@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    public class AudioSourceInitialiser : MonoBehaviour
+    public class AudioSourceInitialiser : Prefab
     {
         [SerializeField]
         private AudioSource _audioSource;
