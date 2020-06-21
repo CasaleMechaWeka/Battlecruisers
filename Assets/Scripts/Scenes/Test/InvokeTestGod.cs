@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Utils;
+using System;
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -14,8 +16,20 @@ namespace BattleCruisers.Scenes.Test
 
             Invoke(nameof(InvokeDone), 5);
 
+            StartCoroutine(Coroutines(CoroutineDone, 5));
             await Task.Delay(5000);
             Logging.Log(Tags.ALWAYS, "await Task.Delay() done :)");
+        }
+
+        private IEnumerator Coroutines(Action action, float Delay)
+        {
+            yield return new WaitForSecondsRealtime(Delay);
+            action();
+        }
+
+        private void CoroutineDone()
+        {
+            Logging.LogMethod(Tags.ALWAYS);
         }
 
         private void InvokeDone()
