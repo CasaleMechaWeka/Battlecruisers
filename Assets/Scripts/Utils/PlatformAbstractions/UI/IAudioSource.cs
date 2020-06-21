@@ -1,10 +1,14 @@
-﻿namespace BattleCruisers.Utils.PlatformAbstractions.UI
+﻿using UnityEngine;
+
+namespace BattleCruisers.Utils.PlatformAbstractions.UI
 {
     public interface IAudioSource
     {
         bool IsPlaying { get; }
         IAudioClipWrapper AudioClip { set; }
         float Volume { get; set; }
+        Vector2 Position { get; set; }
+        bool IsActive { get; set; }
 
         /// <param name="isSpatial">
         /// True if the sound should get quieter the further away from the camera it is.

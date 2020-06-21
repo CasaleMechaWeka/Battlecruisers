@@ -26,9 +26,7 @@ namespace BattleCruisers.UI.Sound
         // FELIX  Used by test scene, so prioritise this :)
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
         {
-            //// FELIX  Remove, once using pools
-            //_audioSource.Stop();
-
+            _audioSource.Position = position;
             _audioSource.AudioClip = sound;
             _audioSource.Play();
         }

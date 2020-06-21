@@ -25,6 +25,24 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
             get => _audioSource.volume;
             set => _audioSource.volume = value;
         }
+        public Vector2 Position
+        {
+            get => _audioSource.transform.position;
+            set
+            {
+                Vector3 newPosition = new Vector3(value.x, value.y, _audioSource.transform.position.z);
+                _audioSource.transform.position = newPosition;
+            }
+        }
+
+        public bool IsActive 
+        { 
+            get => _audioSource.gameObject.activeSelf;
+            set
+            {
+                _audioSource.gameObject.SetActive(value);
+            }
+        }
 
         public AudioSourceBC(AudioSource audioSource)
         {
