@@ -11,16 +11,16 @@ namespace BattleCruisers.UI.Sound.Pools
     public class AudioSourcePoolable : IPoolable<AudioSourceActivationArgs>
     {
         private readonly IAudioSource _source;
-        private readonly IDeferrer _deferrer;
+        private readonly IDeferrer _realTimeDeferrer;
 
         public event EventHandler Deactivated;
 
-        public AudioSourcePoolable(IAudioSource source, IDeferrer deferrer)
+        public AudioSourcePoolable(IAudioSource source, IDeferrer realTimeDeferrer)
         {
-            Helper.AssertIsNotNull(source, deferrer);
+            Helper.AssertIsNotNull(source, realTimeDeferrer);
 
             _source = source;
-            _deferrer = deferrer;
+            _realTimeDeferrer = realTimeDeferrer;
         }
 
         public void Activate(AudioSourceActivationArgs activationArgs)
@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.Sound.Pools
             _source.Position = activationArgs.Position;
             _source.Play();
 
-            _deferrer.Defer(CleanUp, activationArgs.Sound.AudioClip.length);
+            _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.AudioClip.length);
         }
 
         private void CleanUp()
