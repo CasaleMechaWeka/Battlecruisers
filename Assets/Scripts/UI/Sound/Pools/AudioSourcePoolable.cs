@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -8,7 +7,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Sound.Pools
 {
     // FELIX  Use, test
-    public class AudioSourcePoolable : IPoolable<AudioSourceActivationArgs>
+    public class AudioSourcePoolable : IAudioSourcePoolable
     {
         private readonly IAudioSource _source;
         private readonly IDeferrer _realTimeDeferrer;
@@ -21,6 +20,9 @@ namespace BattleCruisers.UI.Sound.Pools
 
             _source = source;
             _realTimeDeferrer = realTimeDeferrer;
+
+            // Do not activate until we are ready to play
+            _source.IsActive = false;
         }
 
         public void Activate(AudioSourceActivationArgs activationArgs)

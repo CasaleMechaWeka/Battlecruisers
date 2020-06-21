@@ -1,13 +1,26 @@
-﻿using BattleCruisers.Utils.BattleScene.Pools;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    public class AudioSourcePoolableFactory : IPoolableFactory<AudioSourcePoolable, AudioSourceActivationArgs>
+    public class AudioSourcePoolableFactory : IPoolableFactory<IAudioSourcePoolable, AudioSourceActivationArgs>
     {
-        public AudioSourcePoolable CreateItem()
+        private readonly IPrefabFactory _prefabFactory;
+        private readonly IDeferrer _realTimeDeferrer;
+
+        public AudioSourcePoolableFactory(IPrefabFactory prefabFactory, IDeferrer realTimeDeferrer)
         {
-            // FELIX :D
-            throw new System.NotImplementedException();
+            Helper.AssertIsNotNull(prefabFactory, realTimeDeferrer);
+
+            _prefabFactory = prefabFactory;
+            _realTimeDeferrer = realTimeDeferrer;
+        }
+
+        public IAudioSourcePoolable CreateItem()
+        {
+            return _prefabFactory.CreateAudioSource(_realTimeDeferrer);
         }
     }
 }

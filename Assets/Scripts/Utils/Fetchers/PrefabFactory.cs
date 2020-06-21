@@ -10,8 +10,10 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -125,6 +127,15 @@ namespace BattleCruisers.Utils.Fetchers
             DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
             newDrone.StaticInitialise();
             return newDrone;
+        }
+
+        // FELIX  Test in game to see initial pool capacity :)
+        public IAudioSourcePoolable CreateAudioSource(IDeferrer realTimeDeferrer)
+        {
+            Assert.IsNotNull(realTimeDeferrer);
+
+            AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
+            return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
     }
 }
