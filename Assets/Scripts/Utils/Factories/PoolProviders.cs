@@ -5,6 +5,7 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Utils.Factories
@@ -26,12 +27,19 @@ namespace BattleCruisers.Utils.Factories
         private Pool<IDroneController, DroneActivationArgs> _dronePool;
         public IPool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
 
+        private Pool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
+        public IPool<IAudioSourcePoolable, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
+
         public IUnitToPoolMap UnitToPoolMap { get; }
 
         // 16 per cruiser
         private const int DRONES_INITIAL_CAPACITY = 32;
+        private const int AUDIO_SOURCE_INITIAL_CAPACITY = 30;
 
-        public PoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager, IDroneFactory droneFactory)
+        public PoolProviders(
+            IFactoryProvider factoryProvider, 
+            IUIManager uiManager, 
+            IDroneFactory droneFactory)
         {
             Helper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 
@@ -40,6 +48,11 @@ namespace BattleCruisers.Utils.Factories
             _projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
+
+            // FELIX  Use real time deferrer!
+            IAudioSourcePoolableFactory audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.Deferrer);
+            _audioSourcePool = new Pool<IAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
+            
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }
 

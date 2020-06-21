@@ -1,11 +1,10 @@
 ﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    public class AudioSourcePoolableFactory : IPoolableFactory<IAudioSourcePoolable, AudioSourceActivationArgs>
+    public class AudioSourcePoolableFactory : IAudioSourcePoolableFactory
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _realTimeDeferrer;
