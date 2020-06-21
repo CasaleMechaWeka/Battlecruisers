@@ -194,5 +194,7 @@ namespace BattleCruisers.Data.Static
                 }
             }
         }
+
+        public static IPrefabKey AudioSource { get; } = new GenericKey("AudioSource", "UI/Sound/");
     }
 }
