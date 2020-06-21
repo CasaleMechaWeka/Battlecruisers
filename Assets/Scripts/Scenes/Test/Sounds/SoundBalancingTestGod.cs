@@ -7,6 +7,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Sounds
 {
@@ -16,10 +17,12 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private AudioListener _audioListener;
 
         public WindButtonsPanelController windButtonsPanelController;
+        public AudioSource audioSource;
 
         protected override void Setup(Utilities.Helper helper)
         {
             base.Setup(helper);
+            BCUtils.Helper.AssertIsNotNull(windButtonsPanelController, audioSource);
 
             _audioListener = Camera.main.GetComponentInChildren<AudioListener>();
             Assert.IsNotNull(_audioListener);
@@ -31,7 +34,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
             AudioSource singleSoundPlayerSource = transform.FindNamedComponent<AudioSource>("SingleSoundPlayer");
             SetupSoundPlayerObjects(singleSoundPlayerSource);
 
-            Assert.IsNotNull(windButtonsPanelController);
             windButtonsPanelController.Initialise(_camera, _cameraCalculatorSettings);
         }
 
@@ -40,10 +42,12 @@ namespace BattleCruisers.Scenes.Test.Sounds
             SoundFetcher soundFetcher = new SoundFetcher();
 
             ISoundPlayer soundPlayer
-                = new SoundPlayer(
-                    soundFetcher,
-                    new AudioClipPlayer(),
-                    new GameObjectBC(_audioListener.gameObject));
+                = new SoundPlayerV2(new AudioSourceBC(audioSource));
+            // FELIX  Remove :)
+                //= new SoundPlayer(
+                //    soundFetcher,
+                //    new AudioClipPlayer(),
+                //    new GameObjectBC(_audioListener.gameObject));
 
             ISingleSoundPlayer singleSoundPlayer
                 = new SingleSoundPlayer(
