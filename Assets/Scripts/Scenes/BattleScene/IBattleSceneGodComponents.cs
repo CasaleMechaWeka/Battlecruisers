@@ -20,7 +20,10 @@ namespace BattleCruisers.Scenes.BattleScene
         LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
         ILifetimeEventBroadcaster LifetimeEvents { get; }
         IClickableEmitter BackgroundClickableEmitter { get; }
+        
+        // FELIX  Remove?
         IGameObject AudioListener { get; }
+        
         ITargetIndicator TargetIndicator { get; }
         WindInitialiser WindInitialiser { get; }
     }

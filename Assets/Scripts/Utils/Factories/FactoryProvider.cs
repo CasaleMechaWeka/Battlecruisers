@@ -18,6 +18,8 @@ namespace BattleCruisers.Utils.Factories
 {
     public class FactoryProvider : IFactoryProvider
     {
+        private readonly IBattleSceneGodComponents _components;
+
         public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
         public IDeferrerProvider DeferrerProvider { get; }
@@ -25,14 +27,16 @@ namespace BattleCruisers.Utils.Factories
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
         public IPrefabFactory PrefabFactory { get; }
-        public ISoundFactoryProvider Sound { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
         public ISpriteChooserFactory SpriteChooserFactory { get; }
         public ITargetPositionPredictorFactory TargetPositionPredictorFactory { get; }
         public ITargetFactoriesProvider Targets { get; }
         public ITurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
+
+        // Circular dependencies :/
         public IPoolProviders PoolProviders { get; private set; }
+        public ISoundFactoryProvider Sound { get; private set; }
 
         public FactoryProvider(
             IBattleSceneGodComponents components,
@@ -41,6 +45,7 @@ namespace BattleCruisers.Utils.Factories
 		{
             Helper.AssertIsNotNull(components, prefabFactory, spriteProvider);
 
+            _components = components;
 			PrefabFactory = prefabFactory;
             Targets = new TargetFactoriesProvider();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
@@ -56,7 +61,6 @@ namespace BattleCruisers.Utils.Factories
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
 
-            Sound = new SoundFactoryProvider(components);
             Turrets = new TurretFactoryProvider();
         }
 
@@ -71,6 +75,8 @@ namespace BattleCruisers.Utils.Factories
             PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
+
+            Sound = new SoundFactoryProvider(_components, poolProviders);
         }
 	}
 }
