@@ -181,7 +181,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             // Sound
             ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
             soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
-            ISoundPlayer soundPlayer = new SoundPlayerV2(soundFetcher, poolProviders.AudioSourcePool);
+            ISoundPlayer soundPlayer = new SoundPlayer(soundFetcher, poolProviders.AudioSourcePool);
             soundFactoryProvider.SoundPlayer.Returns(soundPlayer);
             soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.Sound.Returns(soundFactoryProvider);

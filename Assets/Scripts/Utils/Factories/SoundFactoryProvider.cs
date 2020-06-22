@@ -20,7 +20,7 @@ namespace BattleCruisers.Utils.Factories
             Helper.AssertIsNotNull(components, poolProviders);
 
             SoundFetcher = new SoundFetcher();
-            SoundPlayer = new SoundPlayerV2(SoundFetcher, poolProviders.AudioSourcePool);
+            SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
             ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
             PrioritisedSoundPlayer = new PrioritisedSoundPlayer(singleSoundPlayer);
             UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);

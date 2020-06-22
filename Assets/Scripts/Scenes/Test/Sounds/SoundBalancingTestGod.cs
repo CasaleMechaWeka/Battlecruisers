@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
             SoundFetcher soundFetcher = new SoundFetcher();
 
             ISoundPlayer soundPlayer
-                = new SoundPlayerV2(
+                = new SoundPlayer(
                     soundFetcher,
                     poolProviders.AudioSourcePool);
 

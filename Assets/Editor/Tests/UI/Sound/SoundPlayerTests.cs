@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,45 +14,43 @@ namespace BattleCruisers.Tests.UI.Sound
     {
         private ISoundPlayer _soundPlayer;
         private ISoundFetcher _soundFetcher;
-        private IAudioClipPlayer _audioClipPlayer;
-        private IGameObject _audioListener;
-        private IAudioClipWrapper _audioClip;
+        private IPool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
+        private IAudioSourcePoolable _audioSource;
+        private IAudioClipWrapper _sound;
         private ISoundKey _soundKey;
+        private Vector2 _soundPosition;
+        private AudioSourceActivationArgs _activationArgs;
 
         [SetUp]
         public void SetuUp()
         {
             _soundFetcher = Substitute.For<ISoundFetcher>();
-            _audioClipPlayer = Substitute.For<IAudioClipPlayer>();
-            _audioListener = Substitute.For<IGameObject>();
-            _audioListener.Position.Returns(new Vector3(99, 88, 77));
+            _audioSourcePool = Substitute.For<IPool<IAudioSourcePoolable, AudioSourceActivationArgs>>();
 
-            _soundPlayer = new SoundPlayer(_soundFetcher, _audioClipPlayer, _audioListener);
+            _soundPlayer = new SoundPlayer(_soundFetcher, _audioSourcePool);
 
-            _audioClip = Substitute.For<IAudioClipWrapper>();
+            _sound = Substitute.For<IAudioClipWrapper>();
             _soundKey = Substitute.For<ISoundKey>();
-            _soundFetcher.GetSoundAsync(_soundKey).Returns(Task.FromResult(_audioClip));
+            _soundFetcher.GetSoundAsync(_soundKey).Returns(Task.FromResult(_sound));
+            
+            _soundPosition = new Vector2(2, 3);
+            _activationArgs = new AudioSourceActivationArgs(_sound, _soundPosition);
+            _audioSource = Substitute.For<IAudioSourcePoolable>();
+            _audioSourcePool.GetItem(_activationArgs).Returns(_audioSource);
         }
 
         [Test]
         public void PlaySoundAsync_ProvidePosition()
         {
-            Vector2 soundPosition = new Vector2(2, 3);
-            _soundPlayer.PlaySoundAsync(_soundKey, soundPosition);
-
-            Vector3 zAdjustedPosition = new Vector3(soundPosition.x, soundPosition.y, _audioListener.Position.z);
-            _audioClipPlayer.Received().PlaySound(_audioClip, zAdjustedPosition);
+            _soundPlayer.PlaySoundAsync(_soundKey, _soundPosition);
+            _audioSourcePool.GetItem(_activationArgs).Returns(_audioSource);
         }
 
         [Test]
         public void PlaySound_ProvidePosition()
         {
-            Vector2 soundPosition = new Vector2(2, 3);
-            _soundPlayer.PlaySound(_audioClip, soundPosition);
-
-            Vector3 zAdjustedPosition = new Vector3(soundPosition.x, soundPosition.y, _audioListener.Position.z);
-            _audioClipPlayer.Received().PlaySound(_audioClip, zAdjustedPosition);
+            _soundPlayer.PlaySound(_sound, _soundPosition);
+            _audioSourcePool.GetItem(_activationArgs).Returns(_audioSource);
         }
-
     }
 }

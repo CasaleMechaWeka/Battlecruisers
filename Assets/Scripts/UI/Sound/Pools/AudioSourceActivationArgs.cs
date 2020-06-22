@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -15,6 +16,19 @@ namespace BattleCruisers.UI.Sound.Pools
 
             Sound = sound;
             Position = position;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is AudioSourceActivationArgs other
+                && ReferenceEquals(Sound, other.Sound)
+                && Position == other.Position;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Sound, Position);
         }
     }
 }
