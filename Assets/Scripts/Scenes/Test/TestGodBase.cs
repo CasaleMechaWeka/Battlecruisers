@@ -63,6 +63,7 @@ namespace BattleCruisers.Scenes.Test
                 await HelperFactory.CreateHelperAsync(
                     updaterProvider: updaterProvider, 
                     deferrer: deferrer,
+                    realTimeDeferrer: realTimeDeferrer,
                     buildSpeedMultiplier: buildSpeedMultiplier);
         }
 
