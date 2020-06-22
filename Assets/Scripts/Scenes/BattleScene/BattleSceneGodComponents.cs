@@ -18,6 +18,7 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGodComponents : MonoBehaviour, IBattleSceneGodComponents
     {
         public IDeferrer Deferrer { get; private set; }
+        public IDeferrer RealTimeDeferrer { get; private set; }
 
         public AudioSource prioritisedSoundPlayerAudioSource;
         public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
@@ -62,6 +63,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
+
+            RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
+            Assert.IsNotNull(RealTimeDeferrer);
 
             PrioritisedSoundPlayerAudioSource = new AudioSourceBC(prioritisedSoundPlayerAudioSource);
             UISoundsAudioSource = new AudioSourceBC(uiSoundsAudioSource);

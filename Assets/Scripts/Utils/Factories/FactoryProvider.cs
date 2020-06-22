@@ -9,7 +9,6 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -53,7 +52,7 @@ namespace BattleCruisers.Utils.Factories
                 = new SpriteChooserFactory(
                     new AssignerFactory(),
                     spriteProvider);
-            DeferrerProvider = new DeferrerProvider(components.Deferrer);
+            DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
 

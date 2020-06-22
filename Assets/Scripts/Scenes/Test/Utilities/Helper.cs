@@ -58,7 +58,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 	{
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
-        private readonly IDeferrer _deferrer;
+        private readonly IDeferrer _deferrer, _realTimeDeferrer;
 
         public IUpdaterProvider UpdaterProvider { get; }
 
@@ -76,12 +76,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             int numOfDrones, 
             float buildSpeedMultiplier,
             IDeferrer deferrer,
+            IDeferrer realTimeDeferrer,
             IUpdaterProvider updaterProvider,
             IPrefabFactory prefabFactory)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             _deferrer = deferrer;
+            _realTimeDeferrer = realTimeDeferrer;
             UpdaterProvider = updaterProvider;
             _prefabFactory = prefabFactory;
 		}

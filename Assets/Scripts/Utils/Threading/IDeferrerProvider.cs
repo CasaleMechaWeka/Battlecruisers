@@ -3,5 +3,6 @@
     public interface IDeferrerProvider
     {
         IDeferrer Deferrer { get; }
+        IDeferrer RealTimeDeferrer { get; }
     }
 }

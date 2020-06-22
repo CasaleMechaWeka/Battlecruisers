@@ -1,15 +1,16 @@
-﻿using UnityEngine.Assertions;
-
-namespace BattleCruisers.Utils.Threading
+﻿namespace BattleCruisers.Utils.Threading
 {
     public class DeferrerProvider : IDeferrerProvider
     {
         public IDeferrer Deferrer { get; }
+        public IDeferrer RealTimeDeferrer { get; }
 
-        public DeferrerProvider(IDeferrer deferrer)
+        public DeferrerProvider(IDeferrer deferrer, IDeferrer realTimeDeferrer)
         {
-            Assert.IsNotNull(deferrer);
+            Helper.AssertIsNotNull(deferrer, realTimeDeferrer);
+
             Deferrer = deferrer;
+            RealTimeDeferrer = realTimeDeferrer;
         }
     }
 }

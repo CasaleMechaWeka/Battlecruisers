@@ -55,8 +55,9 @@ namespace BattleCruisers.Scenes.Test
         
         protected virtual async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            // May be null
-            IDeferrer deferrer = GetComponent<IDeferrer>();
+            // May both be null
+            IDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
+            IDeferrer realTimeDeferrer = GetComponent<RealTimeDeferrer>();
 
             return 
                 await HelperFactory.CreateHelperAsync(

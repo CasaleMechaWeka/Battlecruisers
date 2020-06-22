@@ -15,6 +15,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             int numOfDrones = DEFAULT_NUM_OF_DRONES,
             float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
             IDeferrer deferrer = null,
+            IDeferrer realTimeDeferrer = null,
             IUpdaterProvider updaterProvider = null)
         {
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
@@ -26,6 +27,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     numOfDrones,
                     buildSpeedMultiplier,
                     deferrer,
+                    realTimeDeferrer,
                     updaterProvider,
                     prefabFactory);
         }
