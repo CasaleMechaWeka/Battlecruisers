@@ -2,6 +2,7 @@
 using BattleCruisers.Scenes.Test.Utilities.Sound;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
@@ -32,12 +33,13 @@ namespace BattleCruisers.Scenes.Test.Sounds
             _music.Initialise();
 
             AudioSource singleSoundPlayerSource = transform.FindNamedComponent<AudioSource>("SingleSoundPlayer");
-            SetupSoundPlayerObjects(singleSoundPlayerSource);
+            BuildableInitialisationArgs initialisationArgs = helper.CreateBuildableInitialisationArgs();
+            SetupSoundPlayerObjects(singleSoundPlayerSource, initialisationArgs.FactoryProvider.PoolProviders);
 
             windButtonsPanelController.Initialise(_camera, _cameraCalculatorSettings);
         }
 
-        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource)
+        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource, IPoolProviders poolProviders)
         {
             SoundFetcher soundFetcher = new SoundFetcher();
 

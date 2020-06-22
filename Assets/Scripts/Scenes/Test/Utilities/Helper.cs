@@ -569,5 +569,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             });
             return droneConsumerProvider;
         }
+
+        public BuildableInitialisationArgs CreateBuildableInitialisationArgs()
+        {
+            return
+                new BuildableInitialisationArgs(
+                    this,
+                    deferrer: _deferrer,
+                    realTimeDeferrer: _realTimeDeferrer);
+        }
     }
 }
