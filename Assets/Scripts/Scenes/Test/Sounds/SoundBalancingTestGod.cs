@@ -4,7 +4,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -47,11 +46,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
                 = new SoundPlayerV2(
                     soundFetcher,
                     poolProviders.AudioSourcePool);
-            // FELIX  Remove :)
-                //= new SoundPlayer(
-                //    soundFetcher,
-                //    new AudioClipPlayer(),
-                //    new GameObjectBC(_audioListener.gameObject));
 
             ISingleSoundPlayer singleSoundPlayer
                 = new SingleSoundPlayer(
