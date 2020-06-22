@@ -6,6 +6,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.UI
     public class AudioClipWrapper : IAudioClipWrapper
     {
         public AudioClip AudioClip { get; }
+        public float Length => AudioClip.length;
 
         public AudioClipWrapper(AudioClip audioClip)
         {

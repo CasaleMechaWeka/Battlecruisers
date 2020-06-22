@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
-    // FELIX  Use, test
     public class AudioSourcePoolable : IAudioSourcePoolable
     {
         private readonly IAudioSource _source;
@@ -34,7 +33,7 @@ namespace BattleCruisers.UI.Sound.Pools
             _source.Position = activationArgs.Position;
             _source.Play();
 
-            _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.AudioClip.length);
+            _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.Length);
         }
 
         private void CleanUp()
