@@ -66,7 +66,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
             IAngleLimiterFactory angleLimiterFactory = null,
             ISoundFetcher soundFetcher = null,
-            ISoundPlayer soundPlayer = null,
             ISpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
             IDeferrer realTimeDeferrer = null,
@@ -85,6 +84,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
             soundFetcher = soundFetcher ?? new SoundFetcher();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
+            realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
             boostFactory = boostFactory ?? new BoostFactory();
             IGameObject audioListener = Camera.main != null ? new GameObjectBC(Camera.main.gameObject) : Substitute.For<IGameObject>();
@@ -103,7 +103,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetPositionValidatorFactory ?? new TargetPositionValidatorFactory(),
                     angleLimiterFactory ?? new AngleLimiterFactory(),
                     soundFetcher,
-                    soundPlayer ?? new SoundPlayer(soundFetcher, new AudioClipPlayer(), audioListener),
                     spriteChooserFactory ??
                         new SpriteChooserFactory(
                             new AssignerFactory(),
@@ -111,7 +110,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new SoundPlayerFactory(soundFetcher, deferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
-                    new DeferrerProvider(deferrer, realTimeDeferrer ?? Substitute.For<IDeferrer>()),
+                    new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
                     new SpawnDeciderFactory(),
                     updaterProvider,
@@ -142,7 +141,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetPositionValidatorFactory targetPositionValidatorFactory,
             IAngleLimiterFactory angleLimiterFactory,
             ISoundFetcher soundFetcher,
-            ISoundPlayer soundManager,
             ISpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             ITurretStatsFactory turretStatsFactory,
@@ -176,16 +174,17 @@ namespace BattleCruisers.Scenes.Test.Utilities
             turretFactoryProvider.TargetPositionValidatorFactory.Returns(targetPositionValidatorFactory);
             factoryProvider.Turrets.Returns(turretFactoryProvider);
 
-            // Sound
-            ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
-            soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
-            soundFactoryProvider.SoundPlayer.Returns(soundManager);
-            soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
-            factoryProvider.Sound.Returns(soundFactoryProvider);
-
             // Pools
             IPoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);
             factoryProvider.PoolProviders.Returns(poolProviders);
+
+            // Sound
+            ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
+            soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
+            ISoundPlayer soundPlayer = new SoundPlayerV2(soundFetcher, poolProviders.AudioSourcePool);
+            soundFactoryProvider.SoundPlayer.Returns(soundPlayer);
+            soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
+            factoryProvider.Sound.Returns(soundFactoryProvider);
 
             return factoryProvider;
         }
