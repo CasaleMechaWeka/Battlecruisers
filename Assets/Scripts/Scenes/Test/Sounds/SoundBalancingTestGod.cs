@@ -44,7 +44,9 @@ namespace BattleCruisers.Scenes.Test.Sounds
             SoundFetcher soundFetcher = new SoundFetcher();
 
             ISoundPlayer soundPlayer
-                = new SoundPlayerV2(new AudioSourceBC(audioSource));
+                = new SoundPlayerV2(
+                    soundFetcher,
+                    poolProviders.AudioSourcePool);
             // FELIX  Remove :)
                 //= new SoundPlayer(
                 //    soundFetcher,

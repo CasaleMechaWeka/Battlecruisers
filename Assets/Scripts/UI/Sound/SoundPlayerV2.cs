@@ -1,4 +1,8 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
+﻿using BattleCruisers.UI.Sound.Pools;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,27 +12,29 @@ namespace BattleCruisers.UI.Sound
     // FELIX  Renome (remove V2), once legacy sound player is removed :)
     public class SoundPlayerV2 : ISoundPlayer
     {
-        // FELIX  Use pool :)  (so current sound is not interrupted)
-        private readonly IAudioSource _audioSource;
+        private readonly ISoundFetcher _soundFetcher;
+        private readonly IPool<IAudioSourcePoolable, AudioSourceActivationArgs> _audioSourcePool;
 
-        public SoundPlayerV2(IAudioSource audioSource)
+        public SoundPlayerV2(ISoundFetcher soundFetcher, IPool<IAudioSourcePoolable, AudioSourceActivationArgs> audioSourcePool)
         {
-            Assert.IsNotNull(audioSource);
-            _audioSource = audioSource;
+            Helper.AssertIsNotNull(soundFetcher, audioSourcePool);
+
+            _soundFetcher = soundFetcher;
+            _audioSourcePool = audioSourcePool;
         }
 
-        public Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
+        public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
-            // FELIX  Fix :)
-            throw new System.NotImplementedException();
+            Assert.IsNotNull(soundKey);
+
+            IAudioClipWrapper sound = await _soundFetcher.GetSoundAsync(soundKey);
+            PlaySound(sound, position);
         }
 
-        // FELIX  Used by test scene, so prioritise this :)
         public void PlaySound(IAudioClipWrapper sound, Vector2 position)
         {
-            _audioSource.Position = position;
-            _audioSource.AudioClip = sound;
-            _audioSource.Play();
+            AudioSourceActivationArgs activationArgs = new AudioSourceActivationArgs(sound, position);
+            _audioSourcePool.GetItem(activationArgs);
         }
     }
 }
