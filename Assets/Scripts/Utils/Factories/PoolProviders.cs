@@ -49,8 +49,7 @@ namespace BattleCruisers.Utils.Factories
             _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
 
-            // FELIX  Use real time deferrer!
-            IAudioSourcePoolableFactory audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.Deferrer);
+            IAudioSourcePoolableFactory audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IAudioSourcePoolable, AudioSourceActivationArgs>(audioSourceFactory);
             
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
@@ -64,6 +63,7 @@ namespace BattleCruisers.Utils.Factories
             _projectilePoolProvider.SetInitialCapacity();
             _unitPoolProvider.SetInitialCapacity();
             _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
+            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
         }
     }
 }
