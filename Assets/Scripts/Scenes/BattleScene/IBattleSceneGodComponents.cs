@@ -4,7 +4,6 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 
@@ -20,10 +19,6 @@ namespace BattleCruisers.Scenes.BattleScene
         LayeredMusicPlayerInitialiser MusicPlayerInitialiser { get; }
         ILifetimeEventBroadcaster LifetimeEvents { get; }
         IClickableEmitter BackgroundClickableEmitter { get; }
-        
-        // FELIX  Remove?
-        IGameObject AudioListener { get; }
-        
         ITargetIndicator TargetIndicator { get; }
         WindInitialiser WindInitialiser { get; }
     }

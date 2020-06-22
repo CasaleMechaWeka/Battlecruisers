@@ -7,7 +7,6 @@ using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -42,9 +41,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public ClickableEmitter backgroundClickableEmitter;
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
-        public AudioListener audioListener;
-        public IGameObject AudioListener { get; private set; }
-
         public TargetIndicatorController targetIndicator;
         public ITargetIndicator TargetIndicator => targetIndicator;
 
@@ -52,14 +48,11 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Helper.AssertIsNotNull(
                 backgroundClickableEmitter, 
-                audioListener, 
                 targetIndicator, 
                 prioritisedSoundPlayerAudioSource, 
                 uiSoundsAudioSource, 
                 musicPlayerInitialiser, 
                 windInitialiser);
-
-            AudioListener = new GameObjectBC(audioListener.gameObject);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
