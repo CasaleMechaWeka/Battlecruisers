@@ -129,7 +129,6 @@ namespace BattleCruisers.Utils.Fetchers
             return newDrone;
         }
 
-        // FELIX  Test in game to see initial pool capacity :)
         public IAudioSourcePoolable CreateAudioSource(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);

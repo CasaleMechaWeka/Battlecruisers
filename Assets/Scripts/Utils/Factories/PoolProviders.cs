@@ -34,7 +34,7 @@ namespace BattleCruisers.Utils.Factories
 
         // 16 per cruiser
         private const int DRONES_INITIAL_CAPACITY = 32;
-        private const int AUDIO_SOURCE_INITIAL_CAPACITY = 30;
+        private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
         public PoolProviders(
             IFactoryProvider factoryProvider, 
