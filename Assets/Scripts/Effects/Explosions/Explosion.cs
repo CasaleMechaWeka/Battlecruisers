@@ -31,6 +31,7 @@ namespace BattleCruisers.Effects.Explosions
         private void ParticleSystem_Stopped(object sender, EventArgs e)
         {
             _systemsCompletedCount++;
+            Logging.Verbose(Tags.EXPLOSIONS, $"{_systemsCompletedCount}/{_particleSystems.Length} particle systems completed");
 
             if (_systemsCompletedCount == _particleSystems.Length)
             {

@@ -219,7 +219,9 @@ namespace BattleCruisers.Utils
             // Effects
             tagsToActiveness.Add(Tags.CLOUDS, false);
             tagsToActiveness.Add(Tags.DEATHS, false);
-            tagsToActiveness.Add(Tags.EXPLOSIONS, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.EXPLOSIONS, true);
+            //tagsToActiveness.Add(Tags.EXPLOSIONS, false);
 
             // Other
             tagsToActiveness.Add(Tags.ALWAYS, true);
