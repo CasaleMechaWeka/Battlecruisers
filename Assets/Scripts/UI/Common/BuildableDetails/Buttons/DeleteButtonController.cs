@@ -36,9 +36,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             ISingleSoundPlayer soundPlayer,
             IUIManager uiManager, 
             IFilter<ITarget> buttonVisibilityFilter,
-            IBroadcastingFilter helpLabelVisibilityFilter)
+            IBroadcastingFilter helpLabelVisibilityFilter,
+            IDismissableEmitter parent)
         {
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, parent);
 
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilter);
 
