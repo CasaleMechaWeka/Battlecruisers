@@ -219,9 +219,7 @@ namespace BattleCruisers.Utils
             // Effects
             tagsToActiveness.Add(Tags.CLOUDS, false);
             tagsToActiveness.Add(Tags.DEATHS, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.EXPLOSIONS, true);
-            //tagsToActiveness.Add(Tags.EXPLOSIONS, false);
+            tagsToActiveness.Add(Tags.EXPLOSIONS, false);
 
             // Other
             tagsToActiveness.Add(Tags.ALWAYS, true);
@@ -231,9 +229,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
             tagsToActiveness.Add(Tags.MODELS, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.POOLS, true);
-            //tagsToActiveness.Add(Tags.POOLS, false);
+            tagsToActiveness.Add(Tags.POOLS, false);
             tagsToActiveness.Add(Tags.PREDICTORS, false);
             tagsToActiveness.Add(Tags.PREFAB_FACTORY, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
