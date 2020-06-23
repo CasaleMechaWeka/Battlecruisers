@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 	{
         private IPresentableComponent _presentableComponent;
 
-        public event EventHandler Presented;
         public event EventHandler Dismissed;
 
         protected bool IsPresented => _presentableComponent.IsPresented;
@@ -25,7 +24,6 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 		{
             Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
             _presentableComponent.OnPresenting(activationParameter);
-            Presented?.Invoke(this, EventArgs.Empty);
 		}
 
 		public virtual void OnDismissing()

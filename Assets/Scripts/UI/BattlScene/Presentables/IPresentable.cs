@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace BattleCruisers.UI.BattleScene.Presentables
+﻿namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    public interface IPresentable
+    public interface IPresentable : IDismissableEmitter
     {
-        event EventHandler Presented;
-        event EventHandler Dismissed;
-
         // About to be shown
         void OnPresenting(object activationParameter);
 

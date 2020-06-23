@@ -7,7 +7,6 @@ namespace BattleCruisers.UI.BattleScene.Presentables
     {
         private readonly IList<IPresentable> _childPresentables;
 
-        public event EventHandler Presented;
         public event EventHandler Dismissed;
 
         public bool IsPresented { get; private set; }
@@ -25,8 +24,6 @@ namespace BattleCruisers.UI.BattleScene.Presentables
             {
                 presentable.OnPresenting(activationParameter);
             }
-
-            Presented?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnDismissing()
