@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IScreensSceneGod _screensSceneGod;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IPresentable parent)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDismissableEmitter parent)
         {
             base.Initialise(soundPlayer, parent);
 

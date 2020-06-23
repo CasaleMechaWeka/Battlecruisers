@@ -1,7 +1,6 @@
-﻿using System;
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.BattleScene.Presentables;
+﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
@@ -11,7 +10,7 @@ namespace BattleCruisers.UI
         protected ISingleSoundPlayer _soundPlayer;
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
-        public virtual void Initialise(ISingleSoundPlayer soundPlayer, IPresentable parent = null)
+        public virtual void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
         {
             base.Initialise();
 

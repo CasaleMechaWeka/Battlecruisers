@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
             IBroadcastingProperty<bool> muteMusic,
-            IPresentable parent)
+            IDismissableEmitter parent)
         {
             base.Initialise(soundPlayer, parent);
 
