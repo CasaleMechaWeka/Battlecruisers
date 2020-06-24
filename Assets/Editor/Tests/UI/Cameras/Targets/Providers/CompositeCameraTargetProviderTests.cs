@@ -12,7 +12,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
     public class CompositeCameraTargetProviderTests
     {
         private ICameraTargetProvider _compositeTargetProvider;
-        private IUserInputCameraTargetProvider _defaultTargetProvider, _highPriorityTargetProvider, _lowPriorityTargetProvider;
+        private IStaticCameraTargetProvider _defaultTargetProvider;
+        private IUserInputCameraTargetProvider _highPriorityTargetProvider, _lowPriorityTargetProvider;
         private INavigationWheel _navigationWheel;
         private ICameraNavigationWheelCalculator _navigationWheelCalculator;
         private ICameraTarget _defaultTarget, _highPriorityTarget, _lowPriorityTarget;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         [SetUp]
         public void TestSetup()
         {
-            _defaultTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
+            _defaultTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
             _highPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
             _lowPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
             _navigationWheel = Substitute.For<INavigationWheel>();

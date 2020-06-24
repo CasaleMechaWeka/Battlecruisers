@@ -31,9 +31,10 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// 2. Swipe
     /// 1. Navigation wheel
     /// </summary>
+    /// FELIX  Update tests
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
-        private readonly IUserInputCameraTargetProvider _defaultTargetProvider;
+        private readonly IStaticCameraTargetProvider _defaultTargetProvider;
         private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
         private readonly INavigationWheel _navigationWheel;
         private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
@@ -64,7 +65,8 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
-            IUserInputCameraTargetProvider defaultTargetProvider,
+            //FELIX  NEXT:  Add static CTP, use that as default instead of NWCTP :)
+            IStaticCameraTargetProvider defaultTargetProvider,
             IList<IUserInputCameraTargetProvider> targetProviders,
             INavigationWheel navigationWheel,
             ICameraNavigationWheelCalculator navigationWheelCalculator)
@@ -108,6 +110,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
                 Vector2 targetCenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
                 _navigationWheel.SetCenterPosition(targetCenterPosition, snapToCorners: false);
 
+                _defaultTargetProvider.SetTarget(ActiveTargetProvider.Target);
                 ActiveTargetProvider = _defaultTargetProvider;
             }
         }

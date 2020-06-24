@@ -5,6 +5,7 @@ using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
@@ -134,6 +135,7 @@ namespace BattleCruisers.UI.Cameras
                     new CornerIdentifier(
                         new CornerCutoffProvider(camera.Aspect)),
                     new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
+            // FELIX  Remove :)
             IUserInputCameraTargetProvider navigationWheelCameraTargetProvider 
                 = new NavigationWheelCameraTargetProvider(
                     navigationWheelPanel.NavigationWheel, 
@@ -149,9 +151,13 @@ namespace BattleCruisers.UI.Cameras
                     updater,
                     trumpCameraTargetProvider);
 
+            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
+            // FELIX  Set cruiser position :/
+            defaultCameraTargetProvider.SetTarget(new CameraTarget(position: new Vector3(-35, 0, -30), orthographicSize: 12));
+
             return
                 new CompositeCameraTargetProvider(
-                    navigationWheelCameraTargetProvider,
+                    defaultCameraTargetProvider,
                     cameraTargetProviders,
                     navigationWheelPanel.NavigationWheel,
                     cameraNavigationWheelCalculator);
