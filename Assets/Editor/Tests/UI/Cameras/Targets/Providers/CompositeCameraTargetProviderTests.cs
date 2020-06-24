@@ -1,6 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.Cameras.Targets;
+﻿using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,8 +12,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         private ICameraTargetProvider _compositeTargetProvider;
         private IStaticCameraTargetProvider _defaultTargetProvider;
         private IUserInputCameraTargetProvider _highPriorityTargetProvider, _lowPriorityTargetProvider;
-        private INavigationWheel _navigationWheel;
-        private ICameraNavigationWheelCalculator _navigationWheelCalculator;
         private ICameraTarget _defaultTarget, _highPriorityTarget, _lowPriorityTarget;
         private int _targetChangedCount;
 
@@ -25,8 +21,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _defaultTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
             _highPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
             _lowPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
-            _navigationWheel = Substitute.For<INavigationWheel>();
-            _navigationWheelCalculator = Substitute.For<ICameraNavigationWheelCalculator>();
 
             IList<IUserInputCameraTargetProvider> providers = new List<IUserInputCameraTargetProvider>()
             {
@@ -37,9 +31,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _compositeTargetProvider
                 = new CompositeCameraTargetProvider(
                     _defaultTargetProvider,
-                    providers,
-                    _navigationWheel,
-                    _navigationWheelCalculator);
+                    providers);
 
             _targetChangedCount = 0;
             _compositeTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;
@@ -86,7 +78,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         public void UserInputEnded_WhileNotActiveProvider()
         {
             _highPriorityTargetProvider.UserInputEnded += Raise.Event();
-            _navigationWheelCalculator.DidNotReceiveWithAnyArgs().FindNavigationWheelPosition(default);
         }
 
         [Test]
@@ -94,12 +85,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         {
             _highPriorityTargetProvider.UserInputStarted += Raise.Event();
             Vector2 targetCenterPosition = new Vector2(1, 2);
-            _navigationWheelCalculator.FindNavigationWheelPosition(_highPriorityTarget).Returns(targetCenterPosition);
 
             _highPriorityTargetProvider.UserInputEnded += Raise.Event();
-
-            _navigationWheelCalculator.Received().FindNavigationWheelPosition(_highPriorityTarget);
-            _navigationWheel.Received().SetCenterPosition(targetCenterPosition, snapToCorners: false);
         }
 
         [Test]

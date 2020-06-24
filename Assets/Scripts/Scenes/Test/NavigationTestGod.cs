@@ -4,12 +4,9 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.Cameras.Targets.Finders;
-using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
-using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -36,40 +33,17 @@ namespace BattleCruisers.Scenes.Test
                     _camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
 
-            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
-                = new CameraNavigationWheelCalculator(
-                    navigationWheelPanel, 
-                    cameraCalculator, 
-                    _cameraCalculatorSettings.ValidOrthographicSizes,
-                    new ProportionCalculator());
-            ICameraTargetFinder cameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, _camera);
+            // FELIX  Create scrollwheel CTP instead?
+            //// Instant, jerky adjuster
+            //_cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
 
-            ICameraTargetFinder cornersTargetFinder = cameraTargetFinder;
-            if (useCorners)
-            {
-                ICruiser playerCruiser = CreateCruiser(isPlayerCruiser: true);
-                ICruiser aiCruiser = CreateCruiser(isPlayerCruiser: false);
-
-                cornersTargetFinder
-                    = new NavigationWheelCornersCameraTargetFinder(
-                        cameraTargetFinder,
-                        new CornerIdentifier(
-                            new CornerCutoffProvider(_camera.Aspect)),
-                        new CornerCameraTargetProvider(_camera, cameraCalculator, _cameraCalculatorSettings, playerCruiser, aiCruiser));
-            }
-
-            ICameraTargetProvider cameraTargetProvider = new NavigationWheelCameraTargetProvider(navigationWheelPanel.NavigationWheel, cameraTargetFinder, cornersTargetFinder);
-
-            // Instant, jerky adjuster
-            _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
-
-            // Smooth adjuster
-            ITime time = TimeBC.Instance;
-            _cameraAdjuster
-                = new SmoothCameraAdjuster(
-                    cameraTargetProvider,
-                    new SmoothZoomAdjuster(_camera, time, smoothTime),
-                    new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
+            //// Smooth adjuster
+            //ITime time = TimeBC.Instance;
+            //_cameraAdjuster
+            //    = new SmoothCameraAdjuster(
+            //        cameraTargetProvider,
+            //        new SmoothZoomAdjuster(_camera, time, smoothTime),
+            //        new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
         }
 
         private ICruiser CreateCruiser(bool isPlayerCruiser)

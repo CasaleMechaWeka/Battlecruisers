@@ -5,8 +5,6 @@ using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
-using BattleCruisers.UI.Cameras.Targets;
-using BattleCruisers.UI.Cameras.Targets.Finders;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -51,18 +49,12 @@ namespace BattleCruisers.UI.Cameras
             ICamera camera = new CameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
+            // FELIX  Remove :P
             INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationPermitters.NavigationWheelFilter);
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
             IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
-
-            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
-                = new CameraNavigationWheelCalculator(
-                    navigationWheelPanel, 
-                    cameraCalculator, 
-                    settings.ValidOrthographicSizes,
-                    new ProportionCalculator());
 
             ICameraTargets targets
                 = new CameraTargets(
@@ -79,12 +71,8 @@ namespace BattleCruisers.UI.Cameras
                 = CreateCameraTargetProvider(
                     camera,
                     cameraCalculator,
-                    cameraNavigationWheelCalculator,
                     settingsManager,
                     settings,
-                    navigationWheelPanel,
-                    playerCruiser,
-                    aiCruiser,
                     navigationPermitters,
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider);
@@ -117,12 +105,8 @@ namespace BattleCruisers.UI.Cameras
         private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             ICameraCalculator cameraCalculator,
-            ICameraNavigationWheelCalculator cameraNavigationWheelCalculator,
             ISettingsManager settingsManager,
             ICameraCalculatorSettings settings,
-            INavigationWheelPanel navigationWheelPanel,
-            ICruiser playerCruiser,
-            ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
             IStaticCameraTargetProvider trumpCameraTargetProvider,
             IStaticCameraTargetProvider defaultCameraTargetProvider)
@@ -130,20 +114,6 @@ namespace BattleCruisers.UI.Cameras
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
-
-            ICameraTargetFinder coreCameraTargetFinder = new NavigationWheelCameraTargetFinder(cameraNavigationWheelCalculator, camera);
-            ICameraTargetFinder cornerCameraTargetFinder
-                = new NavigationWheelCornersCameraTargetFinder(
-                    coreCameraTargetFinder,
-                    new CornerIdentifier(
-                        new CornerCutoffProvider(camera.Aspect)),
-                    new CornerCameraTargetProvider(camera, cameraCalculator, settings, playerCruiser, aiCruiser));
-            // FELIX  Remove :)
-            IUserInputCameraTargetProvider navigationWheelCameraTargetProvider 
-                = new NavigationWheelCameraTargetProvider(
-                    navigationWheelPanel.NavigationWheel, 
-                    coreCameraTargetFinder,
-                    cornerCameraTargetFinder);
 
             IList<IUserInputCameraTargetProvider> cameraTargetProviders 
                 = CreateCameraTargetProviders(
@@ -157,9 +127,7 @@ namespace BattleCruisers.UI.Cameras
             return
                 new CompositeCameraTargetProvider(
                     defaultCameraTargetProvider,
-                    cameraTargetProviders,
-                    navigationWheelPanel.NavigationWheel,
-                    cameraNavigationWheelCalculator);
+                    cameraTargetProviders);
         }
 
         private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(

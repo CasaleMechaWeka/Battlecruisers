@@ -1,9 +1,6 @@
-﻿using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
@@ -22,22 +19,12 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// 3. Swipe
     /// 2. Button
     /// 1. Default
-    /// 
-    /// FELIX  Legacy, remove
-    /// Priorities:
-    /// 5. Static
-    /// 4. Scroll wheel
-    /// 3. Pinch zoom
-    /// 2. Swipe
-    /// 1. Navigation wheel
     /// </summary>
     /// FELIX  Update tests
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly IStaticCameraTargetProvider _defaultTargetProvider;
         private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
-        private readonly INavigationWheel _navigationWheel;
-        private readonly ICameraNavigationWheelCalculator _navigationWheelCalculator;
 
         private IUserInputCameraTargetProvider _activeTargetProvider;
         private IUserInputCameraTargetProvider ActiveTargetProvider
@@ -65,18 +52,13 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
-            //FELIX  NEXT:  Add static CTP, use that as default instead of NWCTP :)
             IStaticCameraTargetProvider defaultTargetProvider,
-            IList<IUserInputCameraTargetProvider> targetProviders,
-            INavigationWheel navigationWheel,
-            ICameraNavigationWheelCalculator navigationWheelCalculator)
+            IList<IUserInputCameraTargetProvider> targetProviders)
         {
-            Helper.AssertIsNotNull(defaultTargetProvider, targetProviders, navigationWheel, navigationWheelCalculator);
+            Helper.AssertIsNotNull(defaultTargetProvider, targetProviders);
 
             _defaultTargetProvider = defaultTargetProvider;
             _targetProviders = targetProviders;
-            _navigationWheel = navigationWheel;
-            _navigationWheelCalculator = navigationWheelCalculator;
 
             ActiveTargetProvider = _defaultTargetProvider;
 
@@ -107,9 +89,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             if (ReferenceEquals(ActiveTargetProvider, endingProvider))
             {
-                Vector2 targetCenterPosition = _navigationWheelCalculator.FindNavigationWheelPosition(_activeTargetProvider.Target);
-                _navigationWheel.SetCenterPosition(targetCenterPosition, snapToCorners: false);
-
                 _defaultTargetProvider.SetTarget(ActiveTargetProvider.Target);
                 ActiveTargetProvider = _defaultTargetProvider;
             }
