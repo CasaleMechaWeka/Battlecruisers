@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         [SetUp]
         public void TestSetup()
         {
-            _targetProvider = new StaticCameraTargetProvider();
+            _targetProvider = new StaticCameraTargetProvider(6);
             _target = Substitute.For<ICameraTarget>();
         }
 
@@ -21,6 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         public void InitialState()
         {
             Assert.IsNull(_targetProvider.Target);
+            Assert.AreEqual(6, _targetProvider.Priority);
         }
 
         [Test]

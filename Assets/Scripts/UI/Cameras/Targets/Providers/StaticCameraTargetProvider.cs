@@ -5,7 +5,12 @@
     /// </summary>
     public class StaticCameraTargetProvider : UserInputCameraTargetProvider, IStaticCameraTargetProvider
     {
-        public override int Priority => 6;
+        public override int Priority { get; }
+
+        public StaticCameraTargetProvider(int priority)
+        {
+            Priority = priority;
+        }
 
         public void SetTarget(ICameraTarget target)
         {

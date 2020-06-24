@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.Cameras
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
-            IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider();
+            IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
 
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
                 = new CameraNavigationWheelCalculator(
