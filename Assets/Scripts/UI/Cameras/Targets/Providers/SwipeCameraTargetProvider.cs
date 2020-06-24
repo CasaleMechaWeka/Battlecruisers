@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IScrollRecogniser _scrollRecogniser;
         private readonly IClamper _cameraXPositionClamper;
 
-        public override int Priority => 2;
+        public override int Priority => 3;
 
         public SwipeCameraTargetProvider(
             IDragTracker dragTracker,

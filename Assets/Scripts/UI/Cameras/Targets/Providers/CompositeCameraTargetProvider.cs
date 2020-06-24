@@ -16,6 +16,15 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// When multiple providers provide input choose the provider with the highest priority.
     /// 
     /// Priorities:
+    /// 6. Trump, static
+    /// 5. Scroll wheel
+    /// 4. Pinch zoom
+    /// 3. Swipe
+    /// 2. Button
+    /// 1. Default
+    /// 
+    /// FELIX  Legacy, remove
+    /// Priorities:
     /// 5. Static
     /// 4. Scroll wheel
     /// 3. Pinch zoom

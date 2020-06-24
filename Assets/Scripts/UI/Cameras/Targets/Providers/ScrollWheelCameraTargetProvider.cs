@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IZoomCalculator _zoomCalculator;
         private readonly IDirectionalZoom _directionalZoom;
 
-        public override int Priority => 4;
+        public override int Priority => 5;
 
         public ScrollWheelCameraTargetProvider(
             IInput input, 

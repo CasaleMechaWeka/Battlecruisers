@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IPinchTracker _pinchTracker;
 
-        public override int Priority => 3;
+        public override int Priority => 4;
 
         public PinchZoomCameraTargetProvider(
             IZoomCalculator zoomCalculator,
