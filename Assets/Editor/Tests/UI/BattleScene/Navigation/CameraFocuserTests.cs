@@ -3,7 +3,6 @@ using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 {
@@ -11,7 +10,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
     {
         private ICameraFocuser _cameraFocuser;
         private ICameraTargets _targets;
-        private INavigationWheel _navigationWheel;
         private IStaticCameraTargetProvider _trumpCameraTargetProvider;
         private ICameraTarget _playerCruiserCameraTarget, _playerCruiserDeathCameraTarget, _aiCruiserCameraTarget, _aiCruiserDeathCameraTarget;
 
@@ -19,7 +17,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void TestSetup()
         {
             _targets = Substitute.For<ICameraTargets>();
-            _navigationWheel = Substitute.For<INavigationWheel>();
             _trumpCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
 
         // FELIX  Fix :)

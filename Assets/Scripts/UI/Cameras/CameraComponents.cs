@@ -11,7 +11,6 @@ namespace BattleCruisers.UI.Cameras
     {
         public ICamera MainCamera { get; }
         public ICameraAdjuster CameraAdjuster { get; }
-        public INavigationWheel NavigationWheel { get; }
         public ICameraFocuser CameraFocuser { get; }
         public ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
@@ -20,17 +19,15 @@ namespace BattleCruisers.UI.Cameras
         public CameraComponents(
             ICamera mainCamera,
             ICameraAdjuster cameraAdjuster,
-            INavigationWheel navigationWheel,
             ICameraFocuser cameraFocuser,
             ICruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,
             ICameraCalculatorSettings settings)
         {
-            Helper.AssertIsNotNull(mainCamera, cameraAdjuster, navigationWheel, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings);
+            Helper.AssertIsNotNull(mainCamera, cameraAdjuster, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings);
 
             MainCamera = mainCamera;
             CameraAdjuster = cameraAdjuster;
-            NavigationWheel = navigationWheel;
             CameraFocuser = cameraFocuser;
             CruiserDeathCameraFocuser = cruiserDeathCameraFocuser;
             Skybox = skybox;

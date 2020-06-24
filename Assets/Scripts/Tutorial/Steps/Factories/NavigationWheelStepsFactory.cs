@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
+    // FELIX  Convert to NavigationButtonsStepFactory :)
     public class NavigationWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
@@ -36,11 +37,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationWheelPermitter, enableFeature: true));
 
             // Explain navigation wheel
-            steps.Add(
-                _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs(
-                        "This is the map control, which you use to look around the map.",
-                        _cameraComponents.NavigationWheel)));
+            //steps.Add(
+            //    _explanationDismissableStepFactory.CreateStep(
+            //        _argsFactory.CreateTutorialStepArgs(
+            //            "This is the map control, which you use to look around the map.",
+            //            _cameraComponents.NavigationWheel)));
 
             // Encourage user to experiment
             steps.Add(

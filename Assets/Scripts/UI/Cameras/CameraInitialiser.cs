@@ -32,7 +32,6 @@ namespace BattleCruisers.UI.Cameras
         public TogglableDragTracker dragTracker;
         public Camera mainCamera;
         public Skybox skybox;
-        public NavigationWheelInitialiser navigationWheelInitialiser;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
@@ -41,16 +40,13 @@ namespace BattleCruisers.UI.Cameras
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater)
         {
-            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationWheelInitialiser);
+            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox);
             Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
 
             ICamera camera = new CameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
-
-            // FELIX  Remove :P
-            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationPermitters.NavigationWheelFilter);
 
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
@@ -95,7 +91,6 @@ namespace BattleCruisers.UI.Cameras
                 new CameraComponents(
                     camera,
                     _cameraAdjuster,
-                    navigationWheelPanel.NavigationWheel,
                     cameraFocuser,
                     new CruiserDeathCameraFocuser(cameraFocuser),
                     skybox,

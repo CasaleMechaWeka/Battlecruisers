@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Filters;
@@ -22,9 +21,7 @@ namespace BattleCruisers.Scenes.Test
 
         protected override void Setup(Helper helper)
         {
-            NavigationWheelInitialiser navigationWheelInitialiser = FindObjectOfType<NavigationWheelInitialiser>();
             IBroadcastingFilter navigationWheelEnabledFilter = new StaticBroadcastingFilter(isMatch: true);
-            INavigationWheelPanel navigationWheelPanel = navigationWheelInitialiser.InitialiseNavigationWheel(navigationWheelEnabledFilter);
 
             _camera = new CameraBC(Camera.main);
             _cameraCalculatorSettings
