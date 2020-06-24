@@ -1,31 +1,30 @@
 ﻿using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // FELIX  update tests :)
     public class CameraFocuser : ICameraFocuser
     {
         private readonly INavigationWheelPositionProvider _positionProvider;
-        private readonly INavigationWheel _navigationWheel;
-        private readonly IStaticCameraTargetProvider _trumpCameraTargetProvider;
+        private readonly IStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
 
         public CameraFocuser(
             INavigationWheelPositionProvider positionProvider, 
-            INavigationWheel navigationWheel,
-            IStaticCameraTargetProvider trumpCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider)
         {
-            Helper.AssertIsNotNull(positionProvider, navigationWheel, trumpCameraTargetProvider);
+            Helper.AssertIsNotNull(positionProvider, trumpCameraTargetProvider, defaultCameraTargetProvider);
 
             _positionProvider = positionProvider;
-            _navigationWheel = navigationWheel;
             _trumpCameraTargetProvider = trumpCameraTargetProvider;
+            _defaultCameraTargetProvider = defaultCameraTargetProvider;
         }
 
         public void FocusOnPlayerCruiser()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.PlayerCruiserPosition);
+            _defaultCameraTargetProvider.SetTarget(_positionProvider.PlayerCruiserTarget);
         }
 
         public void FocusOnPlayerCruiserDeath()
@@ -37,13 +36,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public void FocusOnPlayerNavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.PlayerNavalFactoryPosition, snapToCorners: false);
+            _defaultCameraTargetProvider.SetTarget(_positionProvider.PlayerNavalFactoryTarget);
         }
 
         public void FocusOnAICruiser()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.AICruiserPosition);
+            _defaultCameraTargetProvider.SetTarget(_positionProvider.AICruiserTarget);
         }
 
         public void FocusOnAICruiserDeath()
@@ -55,25 +54,19 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public void FocusOnAINavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.AINavalFactoryPosition, snapToCorners: false);
+            _defaultCameraTargetProvider.SetTarget(_positionProvider.AINavalFactoryTarget);
         }
 
         public void FocusMidLeft()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.MidLeftPosition);
+            _defaultCameraTargetProvider.SetTarget(_positionProvider.MidLeftTarget);
         }
 
         public void FocusOnOverview()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            FocusCamera(_positionProvider.OverviewPosition);
-        }
-
-        private void FocusCamera(Vector2 centerPosition, bool snapToCorners = true)
-        {
-            Logging.Log(Tags.CAMERA_FOCUSER, $"centerPosition: {centerPosition}  snapToCorners: {snapToCorners}");
-            _navigationWheel.SetCenterPosition(centerPosition, snapToCorners);
+            _defaultCameraTargetProvider.SetTarget(_positionProvider.OverviewTarget);
         }
 
         public void FocusOnPlayerCruiserNuke()

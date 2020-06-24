@@ -8,60 +8,67 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
+    // FELIX  Rename, nothing to do with NW anymore :)
     public class NavigationWheelPositionProvider : INavigationWheelPositionProvider
     {
-        public Vector2 PlayerCruiserPosition { get; }
+        public ICameraTarget PlayerCruiserTarget { get; }
         public ICameraTarget PlayerCruiserDeathTarget { get; }
         public ICameraTarget PlayerCruiserNukedTarget { get; }
-        public Vector2 PlayerNavalFactoryPosition { get; }
+        public ICameraTarget PlayerNavalFactoryTarget { get; }
 
-        public Vector2 AICruiserPosition { get; }
+        public ICameraTarget AICruiserTarget { get; }
         public ICameraTarget AICruiserDeathTarget { get; }
         public ICameraTarget AICruiserNukedTarget { get; }
-        public Vector2 AINavalFactoryPosition { get; }
+        public ICameraTarget AINavalFactoryTarget { get; }
 
-        public Vector2 MidLeftPosition { get; }
-        public Vector2 OverviewPosition { get; }
+        public ICameraTarget MidLeftTarget { get; }
+        public ICameraTarget OverviewTarget { get; }
 
         private const float CRUISER_DEATH_ORTHOGRAPHIC_SIZE = 10;
+        private const float MID_ORTHOGRAPHIC_SIZE = 15;
         private const float NUKE_ORTHOGRAPHIC_SIZE = 30;
 
+        // FELIX  Remove unused parameters :)
         public NavigationWheelPositionProvider(
-            IPyramid navigationPanelArea,
             ICameraCalculator cameraCalculator,
-            ICameraNavigationWheelCalculator navWheelCalculator,
-            IRange<float> validOrthographicSizeRange,
+            ICameraCalculatorSettings cameraCalculatorSettings,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICamera camera)
         {
-            Helper.AssertIsNotNull(navigationPanelArea, cameraCalculator, navWheelCalculator, validOrthographicSizeRange, playerCruiser, aiCruiser, camera);
+            Helper.AssertIsNotNull(cameraCalculator, cameraCalculatorSettings, playerCruiser, aiCruiser, camera);
 
-            PlayerCruiserPosition = navigationPanelArea.BottomLeftVertex;
-            AICruiserPosition = navigationPanelArea.BottomRightVertex;
-            OverviewPosition = navigationPanelArea.TopCenterVertex;
+            PlayerCruiserTarget = FindCruiserTarget(camera, cameraCalculator, playerCruiser);
+            AICruiserTarget = FindCruiserTarget(camera, cameraCalculator, aiCruiser);
 
-            float midLeftX = navigationPanelArea.BottomLeftVertex.x + navigationPanelArea.Width / 4;
-            float midLeftY = navigationPanelArea.FindMaxY(midLeftX);
-            MidLeftPosition = new Vector2(midLeftX, midLeftY);
+            // Overview
+            Vector3 overviewPosition = camera.Transform.Position;
+            overviewPosition.y = cameraCalculator.FindCameraYPosition(cameraCalculatorSettings.ValidOrthographicSizes.Max);
+            OverviewTarget = new CameraTarget(overviewPosition, cameraCalculatorSettings.ValidOrthographicSizes.Max);
+
+            IRange<float> midXPositions = cameraCalculator.FindValidCameraXPositions(MID_ORTHOGRAPHIC_SIZE);
+            MidLeftTarget = CreateTarget(cameraCalculator, MID_ORTHOGRAPHIC_SIZE, midXPositions.Min);
 
             // Player cruiser naval factory
             float playerCruiserBowSlotXPosition = playerCruiser.Position.x + playerCruiser.Size.x / 2;
-            Vector3 playerCruiserNavalFactoryTargetPosition = new Vector3(playerCruiserBowSlotXPosition, float.MinValue);
-            ICameraTarget playerCruiserNavalFactoryTarget = new CameraTarget(playerCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
-            PlayerNavalFactoryPosition = navWheelCalculator.FindNavigationWheelPosition(playerCruiserNavalFactoryTarget);
+            PlayerNavalFactoryTarget = CreateTarget(cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, playerCruiserBowSlotXPosition);
 
             // AI cruiser naval factory
             float aiCruiserBowSlotXPosition = aiCruiser.Position.x - aiCruiser.Size.x / 2;
-            Vector3 aiCruiserNavalFactoryTargetPosition = new Vector3(aiCruiserBowSlotXPosition, float.MinValue);
-            ICameraTarget aiCruiserNavalFactoryTarget = new CameraTarget(aiCruiserNavalFactoryTargetPosition, validOrthographicSizeRange.Min);
-            AINavalFactoryPosition = navWheelCalculator.FindNavigationWheelPosition(aiCruiserNavalFactoryTarget);
+            AINavalFactoryTarget = CreateTarget(cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
 
             PlayerCruiserDeathTarget = CreateTarget(cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
             PlayerCruiserNukedTarget = CreateTarget(cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
 
             AICruiserDeathTarget = CreateTarget(cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
             AICruiserNukedTarget = CreateTarget(cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
+        }
+
+        private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
+        {
+            float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser);
+            Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Transform.Position.z);
+            return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
         private ICameraTarget CreateTarget(ICameraCalculator cameraCalculator, float orthographicSize, float xPosition)

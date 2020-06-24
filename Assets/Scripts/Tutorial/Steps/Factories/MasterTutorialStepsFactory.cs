@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
+    // FELIX  Replace NW step with navigation buttons step :)
     public class MasterTutorialStepsFactory : ITutorialStepsFactory
     {
         private readonly TutorialStepsFactoriesProvider _factoriesProvider;

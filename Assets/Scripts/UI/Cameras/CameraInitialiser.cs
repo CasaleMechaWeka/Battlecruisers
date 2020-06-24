@@ -56,6 +56,9 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
             IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
+            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
+            // FELIX  Set cruiser position :/
+            defaultCameraTargetProvider.SetTarget(new CameraTarget(position: new Vector3(-35, 0, -30), orthographicSize: 12));
 
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
                 = new CameraNavigationWheelCalculator(
@@ -75,7 +78,8 @@ namespace BattleCruisers.UI.Cameras
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,
-                    trumpCameraTargetProvider);
+                    trumpCameraTargetProvider,
+                    defaultCameraTargetProvider);
 
             ITime time = TimeBC.Instance;
 
@@ -87,10 +91,8 @@ namespace BattleCruisers.UI.Cameras
 
             INavigationWheelPositionProvider navigationWheelPositionProvider 
                 = new NavigationWheelPositionProvider(
-                    navigationWheelPanel.PanelArea,
                     cameraCalculator,
-                    cameraNavigationWheelCalculator,
-                    settings.ValidOrthographicSizes,
+                    settings,
                     playerCruiser,
                     aiCruiser,
                     camera);
@@ -98,8 +100,8 @@ namespace BattleCruisers.UI.Cameras
             CameraFocuser cameraFocuser 
                 = new CameraFocuser(
                     navigationWheelPositionProvider,
-                    navigationWheelPanel.NavigationWheel,
-                    trumpCameraTargetProvider);
+                    trumpCameraTargetProvider,
+                    defaultCameraTargetProvider);
             
             return
                 new CameraComponents(
@@ -122,7 +124,8 @@ namespace BattleCruisers.UI.Cameras
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
-            IStaticCameraTargetProvider trumpCameraTargetProvider)
+            IStaticCameraTargetProvider trumpCameraTargetProvider,
+            IStaticCameraTargetProvider defaultCameraTargetProvider)
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
@@ -150,10 +153,6 @@ namespace BattleCruisers.UI.Cameras
                     settings, 
                     updater,
                     trumpCameraTargetProvider);
-
-            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
-            // FELIX  Set cruiser position :/
-            defaultCameraTargetProvider.SetTarget(new CameraTarget(position: new Vector3(-35, 0, -30), orthographicSize: 12));
 
             return
                 new CompositeCameraTargetProvider(

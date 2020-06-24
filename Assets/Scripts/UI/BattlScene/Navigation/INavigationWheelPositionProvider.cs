@@ -1,21 +1,20 @@
 ﻿using BattleCruisers.UI.Cameras.Targets;
-using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public interface INavigationWheelPositionProvider
     {
-        Vector2 PlayerCruiserPosition { get; }
+        ICameraTarget PlayerCruiserTarget { get; }
         ICameraTarget PlayerCruiserDeathTarget { get; }
         ICameraTarget PlayerCruiserNukedTarget { get; }
-        Vector2 PlayerNavalFactoryPosition { get; }
+        ICameraTarget PlayerNavalFactoryTarget { get; }
 
-        Vector2 AICruiserPosition { get; }
+        ICameraTarget AICruiserTarget { get; }
         ICameraTarget AICruiserDeathTarget { get; }
         ICameraTarget AICruiserNukedTarget { get; }
-        Vector2 AINavalFactoryPosition { get; }
+        ICameraTarget AINavalFactoryTarget { get; }
 
-        Vector2 MidLeftPosition { get; }
-        Vector2 OverviewPosition { get; }
+        ICameraTarget MidLeftTarget { get; }
+        ICameraTarget OverviewTarget { get; }
     }
 }
