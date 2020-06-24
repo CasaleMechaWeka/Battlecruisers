@@ -46,21 +46,21 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             OverviewTarget = new CameraTarget(overviewPosition, cameraCalculatorSettings.ValidOrthographicSizes.Max);
 
             IRange<float> midXPositions = cameraCalculator.FindValidCameraXPositions(MID_ORTHOGRAPHIC_SIZE);
-            MidLeftTarget = CreateTarget(cameraCalculator, MID_ORTHOGRAPHIC_SIZE, midXPositions.Min);
+            MidLeftTarget = CreateTarget(camera, cameraCalculator, MID_ORTHOGRAPHIC_SIZE, midXPositions.Min);
 
             // Player cruiser naval factory
             float playerCruiserBowSlotXPosition = playerCruiser.Position.x + playerCruiser.Size.x / 2;
-            PlayerNavalFactoryTarget = CreateTarget(cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, playerCruiserBowSlotXPosition);
+            PlayerNavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, playerCruiserBowSlotXPosition);
 
             // AI cruiser naval factory
             float aiCruiserBowSlotXPosition = aiCruiser.Position.x - aiCruiser.Size.x / 2;
-            AINavalFactoryTarget = CreateTarget(cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
+            AINavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
 
-            PlayerCruiserDeathTarget = CreateTarget(cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
-            PlayerCruiserNukedTarget = CreateTarget(cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
+            PlayerCruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
+            PlayerCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
 
-            AICruiserDeathTarget = CreateTarget(cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
-            AICruiserNukedTarget = CreateTarget(cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
+            AICruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
+            AICruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
         }
 
         private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
@@ -70,10 +70,10 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
-        private ICameraTarget CreateTarget(ICameraCalculator cameraCalculator, float orthographicSize, float xPosition)
+        private ICameraTarget CreateTarget(ICamera camera, ICameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
-            Vector3 position = new Vector3(xPosition, yPosition);
+            Vector3 position = new Vector3(xPosition, yPosition, camera.Transform.Position.z);
             return new CameraTarget(position, orthographicSize);
         }
     }
