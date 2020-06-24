@@ -6,17 +6,17 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     // FELIX  update tests :)
     public class CameraFocuser : ICameraFocuser
     {
-        private readonly INavigationWheelPositionProvider _positionProvider;
+        private readonly ICameraTargets _targets;
         private readonly IStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
 
         public CameraFocuser(
-            INavigationWheelPositionProvider positionProvider, 
+            ICameraTargets targets, 
             IStaticCameraTargetProvider trumpCameraTargetProvider,
             IStaticCameraTargetProvider defaultCameraTargetProvider)
         {
-            Helper.AssertIsNotNull(positionProvider, trumpCameraTargetProvider, defaultCameraTargetProvider);
+            Helper.AssertIsNotNull(targets, trumpCameraTargetProvider, defaultCameraTargetProvider);
 
-            _positionProvider = positionProvider;
+            _targets = targets;
             _trumpCameraTargetProvider = trumpCameraTargetProvider;
             _defaultCameraTargetProvider = defaultCameraTargetProvider;
         }
@@ -24,61 +24,61 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public void FocusOnPlayerCruiser()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _defaultCameraTargetProvider.SetTarget(_positionProvider.PlayerCruiserTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.PlayerCruiserTarget);
         }
 
         public void FocusOnPlayerCruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _trumpCameraTargetProvider.SetTarget(_positionProvider.PlayerCruiserDeathTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.PlayerCruiserDeathTarget);
         }
 
         public void FocusOnPlayerNavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _defaultCameraTargetProvider.SetTarget(_positionProvider.PlayerNavalFactoryTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.PlayerNavalFactoryTarget);
         }
 
         public void FocusOnAICruiser()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _defaultCameraTargetProvider.SetTarget(_positionProvider.AICruiserTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.AICruiserTarget);
         }
 
         public void FocusOnAICruiserDeath()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _trumpCameraTargetProvider.SetTarget(_positionProvider.AICruiserDeathTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.AICruiserDeathTarget);
         }
 
         public void FocusOnAINavalFactory()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _defaultCameraTargetProvider.SetTarget(_positionProvider.AINavalFactoryTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.AINavalFactoryTarget);
         }
 
         public void FocusMidLeft()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _defaultCameraTargetProvider.SetTarget(_positionProvider.MidLeftTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.MidLeftTarget);
         }
 
         public void FocusOnOverview()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _defaultCameraTargetProvider.SetTarget(_positionProvider.OverviewTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.OverviewTarget);
         }
 
         public void FocusOnPlayerCruiserNuke()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _trumpCameraTargetProvider.SetTarget(_positionProvider.PlayerCruiserNukedTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.PlayerCruiserNukedTarget);
         }
 
         public void FocusOnAICruiserNuke()
         {
             Logging.LogMethod(Tags.CAMERA_FOCUSER);
-            _trumpCameraTargetProvider.SetTarget(_positionProvider.AICruiserNukedTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.AICruiserNukedTarget);
         }
     }
 }

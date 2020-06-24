@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  Rename, nothing to do with NW anymore :)
-    public class NavigationWheelPositionProvider : INavigationWheelPositionProvider
+    public class CameraTargets : ICameraTargets
     {
         public ICameraTarget PlayerCruiserTarget { get; }
         public ICameraTarget PlayerCruiserDeathTarget { get; }
@@ -29,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private const float NUKE_ORTHOGRAPHIC_SIZE = 30;
 
         // FELIX  Remove unused parameters :)
-        public NavigationWheelPositionProvider(
+        public CameraTargets(
             ICameraCalculator cameraCalculator,
             ICameraCalculatorSettings cameraCalculatorSettings,
             ICruiser playerCruiser,

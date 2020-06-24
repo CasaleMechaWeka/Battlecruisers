@@ -64,9 +64,8 @@ namespace BattleCruisers.UI.Cameras
                     settings.ValidOrthographicSizes,
                     new ProportionCalculator());
 
-
-            INavigationWheelPositionProvider navigationWheelPositionProvider
-                = new NavigationWheelPositionProvider(
+            ICameraTargets targets
+                = new CameraTargets(
                     cameraCalculator,
                     settings,
                     playerCruiser,
@@ -74,7 +73,7 @@ namespace BattleCruisers.UI.Cameras
                     camera);
 
             IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
-            defaultCameraTargetProvider.SetTarget(navigationWheelPositionProvider.PlayerCruiserTarget);
+            defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
             ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
@@ -100,7 +99,7 @@ namespace BattleCruisers.UI.Cameras
 
             CameraFocuser cameraFocuser 
                 = new CameraFocuser(
-                    navigationWheelPositionProvider,
+                    targets,
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider);
             

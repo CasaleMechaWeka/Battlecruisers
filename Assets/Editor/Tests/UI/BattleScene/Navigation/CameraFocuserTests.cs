@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
     public class CameraFocuserTests
     {
         private ICameraFocuser _cameraFocuser;
-        private INavigationWheelPositionProvider _positionProvider;
+        private ICameraTargets _targets;
         private INavigationWheel _navigationWheel;
         private IStaticCameraTargetProvider _trumpCameraTargetProvider;
         private ICameraTarget _playerCruiserCameraTarget, _playerCruiserDeathCameraTarget, _aiCruiserCameraTarget, _aiCruiserDeathCameraTarget;
@@ -18,12 +18,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         [SetUp]
         public void TestSetup()
         {
-            _positionProvider = Substitute.For<INavigationWheelPositionProvider>();
+            _targets = Substitute.For<ICameraTargets>();
             _navigationWheel = Substitute.For<INavigationWheel>();
             _trumpCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
 
         // FELIX  Fix :)
-            _cameraFocuser = new CameraFocuser(_positionProvider, _trumpCameraTargetProvider, null);
+            _cameraFocuser = new CameraFocuser(_targets, _trumpCameraTargetProvider, null);
 
             //_positionProvider.PlayerCruiserTarget.Returns(new Vector2(7, 7));
             //_positionProvider.PlayerNavalFactoryTarget.Returns(new Vector2(4, 4));
@@ -33,16 +33,16 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             //_positionProvider.OverviewTarget.Returns(new Vector2(762, 681));
 
             _playerCruiserCameraTarget = Substitute.For<ICameraTarget>();
-            _positionProvider.PlayerCruiserNukedTarget.Returns(_playerCruiserCameraTarget);
+            _targets.PlayerCruiserNukedTarget.Returns(_playerCruiserCameraTarget);
 
             _playerCruiserDeathCameraTarget = Substitute.For<ICameraTarget>();
-            _positionProvider.PlayerCruiserDeathTarget.Returns(_playerCruiserDeathCameraTarget);
+            _targets.PlayerCruiserDeathTarget.Returns(_playerCruiserDeathCameraTarget);
 
             _aiCruiserCameraTarget = Substitute.For<ICameraTarget>();
-            _positionProvider.AICruiserNukedTarget.Returns(_aiCruiserCameraTarget);
+            _targets.AICruiserNukedTarget.Returns(_aiCruiserCameraTarget);
 
             _aiCruiserDeathCameraTarget = Substitute.For<ICameraTarget>();
-            _positionProvider.AICruiserDeathTarget.Returns(_aiCruiserDeathCameraTarget);
+            _targets.AICruiserDeathTarget.Returns(_aiCruiserDeathCameraTarget);
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         public void FocusOnAICruiserZoomedOut()
         {
             _cameraFocuser.FocusOnAICruiserDeath();
-            _trumpCameraTargetProvider.Received().SetTarget(_positionProvider.AICruiserDeathTarget);
+            _trumpCameraTargetProvider.Received().SetTarget(_targets.AICruiserDeathTarget);
         }
 
         [Test]

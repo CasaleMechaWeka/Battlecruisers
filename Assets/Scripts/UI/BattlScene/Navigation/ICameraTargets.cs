@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public interface INavigationWheelPositionProvider
+    public interface ICameraTargets
     {
         ICameraTarget PlayerCruiserTarget { get; }
         ICameraTarget PlayerCruiserDeathTarget { get; }
