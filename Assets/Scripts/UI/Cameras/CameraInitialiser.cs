@@ -56,9 +56,6 @@ namespace BattleCruisers.UI.Cameras
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
             IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
-            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
-            // FELIX  Set cruiser position :/
-            defaultCameraTargetProvider.SetTarget(new CameraTarget(position: new Vector3(-35, 0, -30), orthographicSize: 12));
 
             ICameraNavigationWheelCalculator cameraNavigationWheelCalculator 
                 = new CameraNavigationWheelCalculator(
@@ -66,6 +63,18 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator, 
                     settings.ValidOrthographicSizes,
                     new ProportionCalculator());
+
+
+            INavigationWheelPositionProvider navigationWheelPositionProvider
+                = new NavigationWheelPositionProvider(
+                    cameraCalculator,
+                    settings,
+                    playerCruiser,
+                    aiCruiser,
+                    camera);
+
+            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
+            defaultCameraTargetProvider.SetTarget(navigationWheelPositionProvider.PlayerCruiserTarget);
 
             ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
@@ -88,14 +97,6 @@ namespace BattleCruisers.UI.Cameras
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(camera, time, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, time, cameraSmoothTime));
-
-            INavigationWheelPositionProvider navigationWheelPositionProvider 
-                = new NavigationWheelPositionProvider(
-                    cameraCalculator,
-                    settings,
-                    playerCruiser,
-                    aiCruiser,
-                    camera);
 
             CameraFocuser cameraFocuser 
                 = new CameraFocuser(
