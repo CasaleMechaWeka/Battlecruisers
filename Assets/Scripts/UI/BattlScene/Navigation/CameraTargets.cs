@@ -27,7 +27,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private const float MID_ORTHOGRAPHIC_SIZE = 15;
         private const float NUKE_ORTHOGRAPHIC_SIZE = 30;
 
-        // FELIX  Remove unused parameters :)
         public CameraTargets(
             ICameraCalculator cameraCalculator,
             ICameraCalculatorSettings cameraCalculatorSettings,
