@@ -24,7 +24,8 @@ namespace BattleCruisers.UI.Loading
                 "Build factories to produce units.",
                 "Builders automatically repair damaged buildings and your cruiser.",
                 "Buildings can be deleted by clicking them and then selecting the DEMOLISH button.",
-                "Click on a cruiser, unit or building to show more details."
+                "Click on a cruiser, unit or building to show more details.",
+                "Frequently check on the enemy cruiser to avoid nasty surprises!"
             };
         }
 
@@ -35,9 +36,8 @@ namespace BattleCruisers.UI.Loading
                 "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
                 "The BUILDERS button for one of your building’s makes all your builders try to work on that building.  The shortcut is to double click your building.",
                 "Each cruiser has a unique benefit and a unique slot arrangement.  Choose your cruiser wisely!",
-                "Frequently check on the enemy cruiser to avoid nasty surprises!",
                 "Local boosters significantly increase adjacent turret fire rates, shield recharge rates and factory production rates.",
-                "Contstruct buildings one at a time instead of all at once, to get their benefits sooner.",
+                "Construct buildings one at a time instead of all at once, to get their benefits sooner.",
                 "You can pause and resume building units by clicking the factory and selecting the unit you want to pause or resume."
             };
         }
