@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    // FELIX  update tests :)
     public class CameraFocuser : ICameraFocuser
     {
         private readonly ICameraTargets _targets;
