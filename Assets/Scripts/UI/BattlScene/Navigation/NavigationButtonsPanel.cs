@@ -1,11 +1,11 @@
-﻿using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationButtonsPanel : MonoBehaviour
+    public class NavigationButtonsPanel : Highlightable
     {
         private FilterToggler _enabledToggler;
 
@@ -13,6 +13,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void Initialise(IBroadcastingFilter enabledFilter, ICameraFocuser cameraFocuser, ISingleSoundPlayer singleSoundPlayer)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(overviewButton, playerCruiserButton, aiCruiserButton);
             Helper.AssertIsNotNull(enabledFilter, cameraFocuser);
 

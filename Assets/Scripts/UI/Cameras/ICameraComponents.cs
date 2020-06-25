@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -14,5 +15,6 @@ namespace BattleCruisers.UI.Cameras
         ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         Skybox Skybox { get; }
         ICameraCalculatorSettings Settings { get; }
+        IHighlightable NavigationButtonsPanel { get; }
     }
 }

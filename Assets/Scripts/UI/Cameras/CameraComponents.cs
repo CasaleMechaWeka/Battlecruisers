@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
@@ -15,6 +16,7 @@ namespace BattleCruisers.UI.Cameras
         public ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
         public ICameraCalculatorSettings Settings { get; }
+        public IHighlightable NavigationButtonsPanel { get; }
 
         public CameraComponents(
             ICamera mainCamera,
@@ -22,9 +24,10 @@ namespace BattleCruisers.UI.Cameras
             ICameraFocuser cameraFocuser,
             ICruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,
-            ICameraCalculatorSettings settings)
+            ICameraCalculatorSettings settings,
+            IHighlightable navigationButtonsPanel)
         {
-            Helper.AssertIsNotNull(mainCamera, cameraAdjuster, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings);
+            Helper.AssertIsNotNull(mainCamera, cameraAdjuster, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings, navigationButtonsPanel);
 
             MainCamera = mainCamera;
             CameraAdjuster = cameraAdjuster;
@@ -32,6 +35,7 @@ namespace BattleCruisers.UI.Cameras
             CruiserDeathCameraFocuser = cruiserDeathCameraFocuser;
             Skybox = skybox;
             Settings = settings;
+            NavigationButtonsPanel = navigationButtonsPanel;
         }
     }
 }
