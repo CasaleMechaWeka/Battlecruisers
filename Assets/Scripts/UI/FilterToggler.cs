@@ -4,25 +4,34 @@ using System;
 
 namespace BattleCruisers.UI
 {
+    // FELIX  Update tests :)
     public class FilterToggler
     {
         private readonly IBroadcastingFilter _shouldBeEnabledFilter;
-        private readonly ITogglable _togglable;
+        private readonly ITogglable[] _togglables;
 
-        public FilterToggler(IBroadcastingFilter shouldBeEnabledFilter, ITogglable togglable)
+        public FilterToggler(IBroadcastingFilter shouldBeEnabledFilter, params ITogglable[] togglables)
         {
-            Helper.AssertIsNotNull(shouldBeEnabledFilter, togglable);
+            Helper.AssertIsNotNull(shouldBeEnabledFilter, togglables);
 
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
-            _togglable = togglable;
+            _togglables = togglables;
 
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
-            _togglable.Enabled = _shouldBeEnabledFilter.IsMatch;
+            SetEnabledStatus();
         }
 
         private void _shouldBeEnabledFilter_PotentialMatchChange(object sender, EventArgs e)
         {
-            _togglable.Enabled = _shouldBeEnabledFilter.IsMatch;
+            SetEnabledStatus();
+        }
+
+        private void SetEnabledStatus()
+        {
+            foreach (ITogglable togglable in _togglables)
+            {
+                togglable.Enabled = _shouldBeEnabledFilter.IsMatch;
+            }
         }
     }
 }
