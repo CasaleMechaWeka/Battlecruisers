@@ -17,7 +17,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// 5. Scroll wheel
     /// 4. Pinch zoom
     /// 3. Swipe
-    /// 2. Button
     /// 1. Default
     /// </summary>
     /// FELIX  Update tests
