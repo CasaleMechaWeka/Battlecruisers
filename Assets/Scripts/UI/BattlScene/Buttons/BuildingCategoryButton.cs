@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             Togglable helpLabel = transform.FindNamedComponent<Togglable>("HelpLabel");
             helpLabel.Initialise();
-            _helpLabelToggler = new FilterToggler(helpLabel, helpLabelEnabledFilter);
+            _helpLabelToggler = new FilterToggler(helpLabelEnabledFilter, helpLabel);
 		}
 
         private void OnDestroy()

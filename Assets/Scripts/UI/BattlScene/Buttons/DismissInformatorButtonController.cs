@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             HelpLabel helpLabel = GetComponentInChildren<HelpLabel>();
             Assert.IsNotNull(helpLabel);
             helpLabel.Initialise();
-            _helpLabelVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
+            _helpLabelVisibilityToggler = new FilterToggler(helpLabelVisibilityFilter, helpLabel);
         }
 
         protected override void OnClicked()

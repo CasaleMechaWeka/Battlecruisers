@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
             _time = time;
             IsSelected = false;
-            _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
+            _isEnabledToggler = new FilterToggler(shouldBeEnabledFilter, this);
         }
 
         protected override void OnClicked()

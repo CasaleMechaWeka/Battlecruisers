@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             HelpLabel helpLabel = transform.GetComponentInChildren<HelpLabel>();
             Assert.IsNotNull(helpLabel);
             helpLabel.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabel, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
+            _helpLabelsVisibilityToggler = new FilterToggler(buttonVisibilityFilters.HelpLabelsVisibilityFilter, helpLabel);
         }
     }
 }

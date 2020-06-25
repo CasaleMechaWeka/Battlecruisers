@@ -6,15 +6,15 @@ namespace BattleCruisers.UI
 {
     public class FilterToggler
     {
-        private readonly ITogglable _togglable;
         private readonly IBroadcastingFilter _shouldBeEnabledFilter;
+        private readonly ITogglable _togglable;
 
-        public FilterToggler(ITogglable togglable, IBroadcastingFilter shouldBeEnabledFilter)
+        public FilterToggler(IBroadcastingFilter shouldBeEnabledFilter, ITogglable togglable)
         {
-            Helper.AssertIsNotNull(togglable, shouldBeEnabledFilter);
+            Helper.AssertIsNotNull(shouldBeEnabledFilter, togglable);
 
-            _togglable = togglable;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
+            _togglable = togglable;
 
             _shouldBeEnabledFilter.PotentialMatchChange += _shouldBeEnabledFilter_PotentialMatchChange;
             _togglable.Enabled = _shouldBeEnabledFilter.IsMatch;

@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         {
             Assert.IsNotNull(helpLabel);
             helpLabel.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabel, helpLabelVisibilityFilter);
+            _helpLabelsVisibilityToggler = new FilterToggler(helpLabelVisibilityFilter, helpLabel);
         }
 
         private Highlightable SetupHealthBar(ICruiser cruiser)

@@ -128,7 +128,7 @@ namespace BattleCruisers.UI.BattleScene
             HelpLabel helpLabels = GetComponentInChildren<HelpLabel>();
             Assert.IsNotNull(helpLabels);
             helpLabels.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabels, helpLabelsVisibilityFilter);
+            _helpLabelsVisibilityToggler = new FilterToggler(helpLabelsVisibilityFilter, helpLabels);
         }
     }
 }

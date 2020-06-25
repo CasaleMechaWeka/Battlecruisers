@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Helper.AssertIsNotNull(uiManager, shouldBeEnabledFilter);
 
             _uiManager = uiManager;
-            _isEnabledToggler = new FilterToggler(this, shouldBeEnabledFilter);
+            _isEnabledToggler = new FilterToggler(shouldBeEnabledFilter, this);
 
             _closeImage = transform.FindNamedComponent<Image>("CloseImage");
         }

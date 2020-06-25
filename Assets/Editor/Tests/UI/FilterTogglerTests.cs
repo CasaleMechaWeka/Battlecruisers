@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.UI
             _shouldBeEnabledFilter = Substitute.For<IBroadcastingFilter>();
             _shouldBeEnabledFilter.IsMatch.Returns(false);
 
-            _filterToggler = new FilterToggler(_togglable, _shouldBeEnabledFilter);
+            _filterToggler = new FilterToggler(_shouldBeEnabledFilter, _togglable);
         }
 
         [Test]
