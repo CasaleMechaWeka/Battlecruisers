@@ -116,7 +116,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,
-                    components.UpdaterProvider.SwitchableUpdater);
+                    components.UpdaterProvider.SwitchableUpdater,
+                    factoryProvider.Sound.UISoundPlayer);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
 
             // Initialise player cruiser

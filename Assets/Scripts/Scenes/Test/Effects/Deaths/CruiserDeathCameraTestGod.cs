@@ -4,7 +4,9 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Factories;
+using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
@@ -44,7 +46,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,
-                    _updaterProvider.SwitchableUpdater);
+                    _updaterProvider.SwitchableUpdater,
+                    Substitute.For<ISingleSoundPlayer>());
             _cameraFocuser = cameraComponents.CameraFocuser;
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);

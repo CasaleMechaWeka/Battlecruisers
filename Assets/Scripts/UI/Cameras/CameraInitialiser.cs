@@ -6,6 +6,7 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets.Providers;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;
@@ -32,16 +33,18 @@ namespace BattleCruisers.UI.Cameras
         public TogglableDragTracker dragTracker;
         public Camera mainCamera;
         public Skybox skybox;
+        public NavigationButtonsPanel navigationButtonsPanel;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
-            ISwitchableUpdater switchableUpdater)
+            ISwitchableUpdater switchableUpdater,
+            ISingleSoundPlayer uiSoundPlayer)
         {
-            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox);
-            Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater);
+            Helper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
+            Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater, uiSoundPlayer);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
 
@@ -86,7 +89,9 @@ namespace BattleCruisers.UI.Cameras
                     targets,
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider);
-            
+
+            navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
+
             return
                 new CameraComponents(
                     camera,
