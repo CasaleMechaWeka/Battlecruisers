@@ -1,12 +1,16 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
+using System.Collections.Generic;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test
 {
@@ -17,12 +21,9 @@ namespace BattleCruisers.Scenes.Test
         protected ICameraCalculatorSettings _cameraCalculatorSettings;
 
         public float smoothTime = 0.15f;
-        public bool useCorners = true;
 
         protected override void Setup(Helper helper)
         {
-            IBroadcastingFilter navigationWheelEnabledFilter = new StaticBroadcastingFilter(isMatch: true);
-
             _camera = new CameraBC(Camera.main);
             _cameraCalculatorSettings
                 = new CameraCalculatorSettings(
@@ -30,29 +31,43 @@ namespace BattleCruisers.Scenes.Test
                     _camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
 
-            // FELIX  Create scrollwheel CTP instead?
-            //// Instant, jerky adjuster
-            //_cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
+            IUserInputCameraTargetProvider scrollWheelCameraTargetProvider
+                = new ScrollWheelCameraTargetProvider(
+                    new InputBC(),
+                    _updaterProvider.PerFrameUpdater,
+                    new ZoomCalculator(
+                        _camera,
+                        TimeBC.Instance,
+                        _cameraCalculatorSettings.ValidOrthographicSizes,
+                        BCUtils.ZoomScale.SCROLL_WHEEL,
+                        zoomSettingsMultiplier: 1),
+                    new DirectionalZoom(
+                        _camera,
+                        cameraCalculator,
+                        _cameraCalculatorSettings.ValidOrthographicSizes));
 
-            //// Smooth adjuster
-            //ITime time = TimeBC.Instance;
-            //_cameraAdjuster
-            //    = new SmoothCameraAdjuster(
-            //        cameraTargetProvider,
-            //        new SmoothZoomAdjuster(_camera, time, smoothTime),
-            //        new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
-        }
+            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
+            CameraTarget target 
+                = new CameraTarget(
+                    position: new Vector3(-35, 0, _camera.Transform.Position.z), 
+                    orthographicSize: _cameraCalculatorSettings.ValidOrthographicSizes.Min);
+            defaultCameraTargetProvider.SetTarget(target);
 
-        private ICruiser CreateCruiser(bool isPlayerCruiser)
-        {
-            ICruiser cruiser = Substitute.For<ICruiser>();
+            ICameraTargetProvider cameraTargetProvider
+                = new CompositeCameraTargetProvider(
+                    defaultCameraTargetProvider,
+                    new List<IUserInputCameraTargetProvider>() { scrollWheelCameraTargetProvider });
 
-            cruiser.Size.Returns(new Vector2(5, 5));
-            float xPosition = isPlayerCruiser ? -35 : 35;
-            cruiser.Position.Returns(new Vector2(xPosition, 0));
-            cruiser.IsPlayerCruiser.Returns(isPlayerCruiser);
+            // Instant, jerky adjuster
+            _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
 
-            return cruiser;
+            // Smooth adjuster
+            ITime time = TimeBC.Instance;
+            _cameraAdjuster
+                = new SmoothCameraAdjuster(
+                    cameraTargetProvider,
+                    new SmoothZoomAdjuster(_camera, time, smoothTime),
+                    new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
         }
 
         protected virtual void Update()

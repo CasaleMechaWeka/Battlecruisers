@@ -146,14 +146,15 @@ namespace BattleCruisers.UI.Cameras
             bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
 
             float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
+            float zoomSettingsMultiplier = new ZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
+
             ZoomCalculator zoomCalculator
                 = new ZoomCalculator(
                     camera,
                     TimeBC.Instance,
                     settings.ValidOrthographicSizes,
-                    settingsManager,
-                    new ZoomLevelConverter(),
-                    zoomScale);
+                    zoomScale,
+                    zoomSettingsMultiplier);
 
             IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>()
             {

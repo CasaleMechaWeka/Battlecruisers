@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions.Time;
@@ -13,27 +12,24 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly ICamera _camera;
         private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
-        private readonly ISettingsManager _settingsManager;
-        private readonly ILevelToMultiplierConverter _zoomConverter;
-        private readonly float _zoomScale;
+        private readonly float _zoomScale, _zoomSettingsMultiplier;
 
         public ZoomCalculator(
             ICamera camera, 
             ITime time, 
             IRange<float> validOrthographicSizes,
-            ISettingsManager settingsManager,
-            ILevelToMultiplierConverter zoomConverter,
-            float zoomScale)
+            float zoomScale,
+            float zoomSettingsMultiplier)
         {
-            Helper.AssertIsNotNull(camera, time, validOrthographicSizes, settingsManager, zoomConverter);
+            Helper.AssertIsNotNull(camera, time, validOrthographicSizes);
             Assert.IsTrue(zoomScale > 0);
+            Assert.IsTrue(zoomSettingsMultiplier > 0);
 
             _camera = camera;
             _time = time;
             _validOrthographicSizes = validOrthographicSizes;
-            _settingsManager = settingsManager;
-            _zoomConverter = zoomConverter;
             _zoomScale = zoomScale;
+            _zoomSettingsMultiplier = zoomSettingsMultiplier;
         }
 
         public float FindMouseScrollOrthographicSizeDelta(float mouseScrollDeltaY)
@@ -56,7 +52,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 orthographicProportion *
                 _zoomScale *
                 _time.UnscaledDeltaTime *
-                _zoomConverter.LevelToMultiplier(_settingsManager.ZoomSpeedLevel);
+                _zoomSettingsMultiplier;
         }
     }
 }
