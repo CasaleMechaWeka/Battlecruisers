@@ -7,15 +7,21 @@ namespace BattleCruisers.UI
 {
     public class ElementWithClickSound : ClickableTogglable
     {
+        private Action _clickAction;
         protected ISingleSoundPlayer _soundPlayer;
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
-        public virtual void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
+        public virtual void Initialise(
+            ISingleSoundPlayer soundPlayer, 
+            IDismissableEmitter parent = null,
+            Action clickAction = null)
         {
             base.Initialise();
 
             Assert.IsNotNull(soundPlayer);
+
             _soundPlayer = soundPlayer;
+            _clickAction = clickAction;
 
             if (parent != null)
             {
@@ -34,6 +40,8 @@ namespace BattleCruisers.UI
             {
                 _soundPlayer.PlaySoundAsync(ClickSound);
             }
+
+            _clickAction?.Invoke();
         }
     }
 }
