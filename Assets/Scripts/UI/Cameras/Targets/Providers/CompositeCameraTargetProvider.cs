@@ -13,13 +13,14 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// When multiple providers provide input choose the provider with the highest priority.
     /// 
     /// Priorities:
+    /// (Highest)
     /// 6. Trump, static
     /// 5. Scroll wheel
     /// 4. Pinch zoom
     /// 3. Swipe
     /// 1. Default
+    /// (Lowest)
     /// </summary>
-    /// FELIX  Update tests
     public class CompositeCameraTargetProvider : ICameraTargetProvider
     {
         private readonly IStaticCameraTargetProvider _defaultTargetProvider;

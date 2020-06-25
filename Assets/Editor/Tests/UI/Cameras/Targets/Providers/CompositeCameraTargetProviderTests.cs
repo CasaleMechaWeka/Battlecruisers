@@ -3,7 +3,6 @@ using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
@@ -78,22 +77,26 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         public void UserInputEnded_WhileNotActiveProvider()
         {
             _highPriorityTargetProvider.UserInputEnded += Raise.Event();
+            _defaultTargetProvider.DidNotReceiveWithAnyArgs().SetTarget(default);
         }
 
         [Test]
         public void UserInputEnded_WhileActiveProvider()
         {
             _highPriorityTargetProvider.UserInputStarted += Raise.Event();
-            Vector2 targetCenterPosition = new Vector2(1, 2);
-
             _highPriorityTargetProvider.UserInputEnded += Raise.Event();
+            _defaultTargetProvider.Received().SetTarget(_highPriorityTarget);
         }
 
         [Test]
         public void _activeTargetProvider_TargetChanged()
         {
+            _defaultTargetProvider.Target.Returns(_lowPriorityTarget);
+
             _defaultTargetProvider.TargetChanged += Raise.Event();
+            
             Assert.AreEqual(1, _targetChangedCount);
+            Assert.AreSame(_lowPriorityTarget, _compositeTargetProvider.Target);
         }
     }
 }
