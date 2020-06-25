@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.UI
 {
-    // FELIX  Update tests :)
     public class FilterToggler
     {
         private readonly IBroadcastingFilter _shouldBeEnabledFilter;
