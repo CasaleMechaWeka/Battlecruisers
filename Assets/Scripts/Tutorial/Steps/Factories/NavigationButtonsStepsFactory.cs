@@ -5,15 +5,14 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    // FELIX  Convert to NavigationButtonsStepFactory :)
-    public class NavigationWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
+    public class NavigationButtonsStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _navigationButtonsPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ICameraComponents _cameraComponents;
 
-        public NavigationWheelStepsFactory(
+        public NavigationButtonsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationButtonsPermitter,
@@ -33,20 +32,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // Enable navigation wheel
+            // Enable navigation buttons
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: true));
 
-            // Explain navigation wheel
-            //steps.Add(
-            //    _explanationDismissableStepFactory.CreateStep(
-            //        _argsFactory.CreateTutorialStepArgs(
-            //            "This is the map control, which you use to look around the map.",
-            //            _cameraComponents.NavigationWheel)));
+            // Explain navigation buttons
+            steps.Add(
+                _explanationDismissableStepFactory.CreateStep(
+                    _argsFactory.CreateTutorialStepArgs(
+                        "These are the navigation buttons.",
+                        _cameraComponents.NavigationButtonsPanel)));
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Drag the map control to look around.  (Click \"DONE\" when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("Click them to look around the map.  (Click \"DONE\" when you have had enough.)")));
 
             // Disable navigation
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: false));

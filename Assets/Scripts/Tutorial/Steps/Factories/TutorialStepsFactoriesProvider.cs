@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class TutorialStepsFactoriesProvider
     {
         public ITutorialStepsFactory YourCruiserStepsFactory { get; }
-        public ITutorialStepsFactory NavigationWheelStepsFactory { get; }
+        public ITutorialStepsFactory NavigationButtonsStepsFactory { get; }
         public ITutorialStepsFactory ScrollWheelStepsFactory { get; }
         public ITutorialStepsFactory SwipeStepsFactory { get; }
         public ITutorialStepsFactory EnemyCruiserStepsFactory { get; }
@@ -58,8 +58,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.NavigationFilter);
 
-            NavigationWheelStepsFactory
-                = new NavigationWheelStepsFactory(
+            NavigationButtonsStepsFactory
+                = new NavigationButtonsStepsFactory(
                     argsFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.NavigationButtonsFilter,

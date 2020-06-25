@@ -38,8 +38,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // 1. Player cruiser
             steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
 
-            // 2. Navigation wheel
-            steps.AddRange(_factoriesProvider.NavigationWheelStepsFactory.CreateSteps());
+            // 2. Navigation buttons
+            steps.AddRange(_factoriesProvider.NavigationButtonsStepsFactory.CreateSteps());
 
             // 2.5 Scroll wheel
             if (_systemInfo.DeviceType != DeviceType.Handheld)
