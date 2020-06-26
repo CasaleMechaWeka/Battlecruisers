@@ -10,6 +10,7 @@ using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -49,6 +50,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
         private ExplanationPanelHeightManager _explanationPanelHeightManager;
+        private HintManager _hintManager;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -283,6 +285,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
+        // FELIX  Abstract?  Own class?
         private void StartTutorialIfNecessary(
             IPrefabFactory prefabFactory,
             IApplicationModel applicationModel,
@@ -298,6 +301,11 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.LogMethod(Tags.BATTLE_SCENE);
 
             // FELIX  Only initialise if:  < level 5 && setting enabled
+            if (applicationModel.SelectedLevel > 5)
+            {
+                return;
+            }
+
             explanationPanel.Initialise(playerCruiser.FactoryProvider.Sound.UISoundPlayer);
             _explanationPanelHeightManager
                 = new ExplanationPanelHeightManager(
@@ -306,6 +314,11 @@ namespace BattleCruisers.Scenes.BattleScene
 
             if (!applicationModel.IsTutorial)
             {
+                _hintManager
+                    = new HintManager(
+                        new BuildingMonitor(aiCruiser),
+                        new NonRepeatingHintDisplayer(
+                            new HintDisplayer(explanationPanel)));
                 // FELIX  Destroy some?
                 //Destroy(tutorialManager.gameObject);
                 return;
