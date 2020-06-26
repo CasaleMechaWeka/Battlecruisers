@@ -6,11 +6,9 @@ using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
-using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -49,8 +47,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private CruiserDeathManager _cruiserDeathManager;
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
-        private ExplanationPanelHeightManager _explanationPanelHeightManager;
-        private HintManager _hintManager;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -59,15 +55,14 @@ namespace BattleCruisers.Scenes.BattleScene
         public TopPanelInitialiser topPanelInitialiser;
         public LeftPanelInitialiser leftPanelInitialiser;
         public RightPanelInitialiser rightPanelInitialiser;
-        public TutorialManager tutorialManager;
-        public ExplanationPanel explanationPanel;
+        public TutorialInitialiser tutorialInitialiser;
 
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
 
             Assert.raiseExceptions = true;
-            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialManager, explanationPanel);
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser);
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
@@ -249,17 +244,21 @@ namespace BattleCruisers.Scenes.BattleScene
             cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
 
             // Tutorial
-            StartTutorialIfNecessary(
-                prefabFactory, 
-                applicationModel, 
-                playerCruiser, 
-                aiCruiser, 
-                components, 
-                cameraComponents, 
-                topPanelComponents,
-                leftPanelComponents, 
-                rightPanelComponents, 
-                uiManager);
+            ITutorialArgsBase tutorialArgs
+                = new TutorialArgsBase(
+                    applicationModel, 
+                    playerCruiser, 
+                    aiCruiser, 
+                    _tutorialProvider,
+                    prefabFactory,
+                    components, 
+                    cameraComponents, 
+                    topPanelComponents,
+                    leftPanelComponents, 
+                    rightPanelComponents, 
+                    uiManager,
+                    _gameEndMonitor);
+            tutorialInitialiser.Initialise(tutorialArgs);
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
@@ -284,66 +283,5 @@ namespace BattleCruisers.Scenes.BattleScene
                 return new NormalHelper(applicationModel.DataProvider, prefabFactory, deferrer);
             }
         }
-
-        // FELIX  Abstract?  Own class?
-        private void StartTutorialIfNecessary(
-            IPrefabFactory prefabFactory,
-            IApplicationModel applicationModel,
-            ICruiser playerCruiser,
-            ICruiser aiCruiser,
-            IBattleSceneGodComponents battleSceneGodComponents,
-            ICameraComponents cameraComponents,
-            TopPanelComponents topPanelComponents,
-            LeftPanelComponents leftPanelComponents,
-            RightPanelComponents rightPanelComponents,
-            IUIManager uiManager)
-        {
-            Logging.LogMethod(Tags.BATTLE_SCENE);
-
-            // FELIX  Only initialise if:  < level 5 && setting enabled
-            if (applicationModel.SelectedLevel > 5)
-            {
-                return;
-            }
-
-            explanationPanel.Initialise(playerCruiser.FactoryProvider.Sound.UISoundPlayer);
-            _explanationPanelHeightManager
-                = new ExplanationPanelHeightManager(
-                    explanationPanel,
-                    new HeightDecider());
-
-            if (!applicationModel.IsTutorial)
-            {
-                _hintManager
-                    = new HintManager(
-                        new BuildingMonitor(aiCruiser),
-                        new NonRepeatingHintDisplayer(
-                            new HintDisplayer(explanationPanel)));
-                // FELIX  Destroy some?
-                //Destroy(tutorialManager.gameObject);
-                return;
-            }
-
-            applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
-            applicationModel.DataProvider.SaveGame();
-
-            ITutorialArgs tutorialArgs
-                = new TutorialArgs(
-                    playerCruiser,
-                    aiCruiser,
-                    _tutorialProvider,
-                    prefabFactory,
-                    battleSceneGodComponents,
-                    cameraComponents,
-                    topPanelComponents,
-                    leftPanelComponents,
-                    rightPanelComponents,
-                    uiManager,
-                    _gameEndMonitor,
-                    explanationPanel);
-
-            tutorialManager.Initialise(tutorialArgs);
-            tutorialManager.StartTutorial();
-        }
-    }
+   }
 }

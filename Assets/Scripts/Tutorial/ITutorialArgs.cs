@@ -1,27 +1,9 @@
-﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Scenes.BattleScene;
-using BattleCruisers.Tutorial.Explanation;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Cameras;
-using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Tutorial.Explanation;
 
 namespace BattleCruisers.Tutorial
 {
-    public interface ITutorialArgs
+    public interface ITutorialArgs : ITutorialArgsBase
     {
-        ICruiser PlayerCruiser { get; }
-        ICruiser AICruiser { get; }
-        ITutorialProvider TutorialProvider { get; }
-        IPrefabFactory PrefabFactory { get; }
-        IBattleSceneGodComponents Components { get; }
-        ICameraComponents CameraComponents { get; }
-        TopPanelComponents TopPanelComponents { get; }
-        LeftPanelComponents LeftPanelComponents { get; }
-        RightPanelComponents RightPanelComponents { get; }
-        IUIManager UIManager { get; }
-        IGameEndMonitor GameEndMonitor { get; }
         ExplanationPanel ExplanationPanel { get; }
     }
 }
