@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
@@ -21,5 +22,6 @@ namespace BattleCruisers.Tutorial
         RightPanelComponents RightPanelComponents { get; }
         IUIManager UIManager { get; }
         IGameEndMonitor GameEndMonitor { get; }
+        ExplanationPanel ExplanationPanel { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
@@ -22,6 +23,7 @@ namespace BattleCruisers.Tutorial
         public RightPanelComponents RightPanelComponents { get; }
         public IUIManager UIManager { get; }
         public IGameEndMonitor GameEndMonitor { get; }
+        public ExplanationPanel ExplanationPanel { get; }
 
         public TutorialArgs(
             ICruiser playerCruiser, 
@@ -34,7 +36,8 @@ namespace BattleCruisers.Tutorial
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager,
-            IGameEndMonitor gameEndMonitor)
+            IGameEndMonitor gameEndMonitor,
+            ExplanationPanel explanationPanel)
         {
             Helper.AssertIsNotNull(
                 playerCruiser, 
@@ -47,7 +50,8 @@ namespace BattleCruisers.Tutorial
                 leftPanelComponents, 
                 rightPanelComponents,
                 uiManager,
-                gameEndMonitor);
+                gameEndMonitor, 
+                explanationPanel);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
@@ -60,6 +64,7 @@ namespace BattleCruisers.Tutorial
             RightPanelComponents = rightPanelComponents;
             UIManager = uiManager;
             GameEndMonitor = gameEndMonitor;
+            ExplanationPanel = explanationPanel;
         }
     }
 }

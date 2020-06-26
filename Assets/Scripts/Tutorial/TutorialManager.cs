@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.Factories;
 using BattleCruisers.Utils.BattleScene;
@@ -15,7 +14,6 @@ namespace BattleCruisers.Tutorial
     {
         private ITutorialStepConsumer _consumer;
         private IExplanationPanel _explanationPanel;
-        private ExplanationPanelHeightManager _explanationPanelHeightManager;
         private IGameEndMonitor _gameEndMonitor;
 
         public HighlighterInitialiser highlighterInitialiser;
@@ -25,25 +23,18 @@ namespace BattleCruisers.Tutorial
             Assert.IsNotNull(highlighterInitialiser);
             Assert.IsNotNull(tutorialArgs);
 
+            _explanationPanel = tutorialArgs.ExplanationPanel;
+
             ICoreHighlighter coreHighlighter = highlighterInitialiser.CreateHighlighter(tutorialArgs.CameraComponents.MainCamera);
             IHighlighter highlighter
                 = new Highlighter(
                     coreHighlighter,
                     new HighlightArgsFactory(tutorialArgs.CameraComponents.MainCamera));
 
-            ExplanationPanel explanationPanel = GetComponentInChildren<ExplanationPanel>(includeInactive: true);
-            Assert.IsNotNull(explanationPanel);
-            explanationPanel.Initialise(tutorialArgs.PlayerCruiser.FactoryProvider.Sound.UISoundPlayer);
-            _explanationPanel = explanationPanel;
-            _explanationPanelHeightManager 
-                = new ExplanationPanelHeightManager(
-                    _explanationPanel,
-                    new HeightDecider());
-
             ITutorialStepsFactory stepsFactory 
                 = new MasterTutorialStepsFactory(
                     highlighter, 
-                    explanationPanel, 
+                    _explanationPanel, 
                     tutorialArgs.Components.Deferrer, 
                     tutorialArgs);
 

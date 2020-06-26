@@ -6,6 +6,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -47,20 +48,24 @@ namespace BattleCruisers.Scenes.BattleScene
         private CruiserDeathManager _cruiserDeathManager;
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
+        private ExplanationPanelHeightManager _explanationPanelHeightManager;
 
-        public int DEFAULT_LEVEL = 1;
+        public int defaultLevel = 1;
+        public bool isTutorial = false;
+
         public CameraInitialiser cameraInitialiser;
         public TopPanelInitialiser topPanelInitialiser;
         public LeftPanelInitialiser leftPanelInitialiser;
         public RightPanelInitialiser rightPanelInitialiser;
         public TutorialManager tutorialManager;
+        public ExplanationPanel explanationPanel;
 
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
 
             Assert.raiseExceptions = true;
-            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialManager);
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialManager, explanationPanel);
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
@@ -74,14 +79,17 @@ namespace BattleCruisers.Scenes.BattleScene
             if (applicationModel.SelectedLevel == -1)
             {
                 // TEMP  Force level I'm currently testing :)
-                applicationModel.SelectedLevel = DEFAULT_LEVEL;
+                applicationModel.SelectedLevel = defaultLevel;
 
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            //// TEMP  Force  tutorial
-            //applicationModel.IsTutorial = true;
-            //applicationModel.SelectedLevel = 1;
+            // TEMP  Force  tutorial
+            if (isTutorial)
+            {
+                applicationModel.IsTutorial = true;
+                applicationModel.SelectedLevel = 1;
+            }
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
@@ -289,32 +297,40 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Logging.LogMethod(Tags.BATTLE_SCENE);
 
-            if (applicationModel.IsTutorial)
-            {
-                applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
-                applicationModel.DataProvider.SaveGame();
+            // FELIX  Only initialise if:  < level 5 && setting enabled
+            explanationPanel.Initialise(playerCruiser.FactoryProvider.Sound.UISoundPlayer);
+            _explanationPanelHeightManager
+                = new ExplanationPanelHeightManager(
+                    explanationPanel,
+                    new HeightDecider());
 
-                ITutorialArgs tutorialArgs
-                    = new TutorialArgs(
-                        playerCruiser,
-                        aiCruiser,
-                        _tutorialProvider,
-                        prefabFactory,
-                        battleSceneGodComponents,
-                        cameraComponents,
-                        topPanelComponents,
-                        leftPanelComponents,
-                        rightPanelComponents,
-                        uiManager,
-                        _gameEndMonitor);
-
-                tutorialManager.Initialise(tutorialArgs);
-                tutorialManager.StartTutorial();
-            }
-            else
+            if (!applicationModel.IsTutorial)
             {
-                Destroy(tutorialManager.gameObject);
+                // FELIX  Destroy some?
+                //Destroy(tutorialManager.gameObject);
+                return;
             }
+
+            applicationModel.DataProvider.GameModel.HasAttemptedTutorial = true;
+            applicationModel.DataProvider.SaveGame();
+
+            ITutorialArgs tutorialArgs
+                = new TutorialArgs(
+                    playerCruiser,
+                    aiCruiser,
+                    _tutorialProvider,
+                    prefabFactory,
+                    battleSceneGodComponents,
+                    cameraComponents,
+                    topPanelComponents,
+                    leftPanelComponents,
+                    rightPanelComponents,
+                    uiManager,
+                    _gameEndMonitor,
+                    explanationPanel);
+
+            tutorialManager.Initialise(tutorialArgs);
+            tutorialManager.StartTutorial();
         }
     }
 }
