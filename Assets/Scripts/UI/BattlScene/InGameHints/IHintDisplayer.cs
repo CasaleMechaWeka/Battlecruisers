@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BattleCruisers.UI.BattleScene.InGameHints
+﻿namespace BattleCruisers.UI.BattleScene.InGameHints
 {
     public interface IHintDisplayer
     {
