@@ -3,7 +3,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.InGameHints
 {
-    // FELIX  Use, test :)
     public class NonRepeatingHintDisplayer : IHintDisplayer
     {
         private readonly HashSet<string> _hints;
