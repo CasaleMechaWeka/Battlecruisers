@@ -3,7 +3,6 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.InGameHints
 {
-    // FELIX  Use, test
     public class HintManager
     {
         private readonly IBuildingMonitor _buildingMonitor;
