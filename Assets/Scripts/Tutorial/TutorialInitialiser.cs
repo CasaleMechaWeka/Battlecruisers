@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Tutorial.Explanation;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.InGameHints;
@@ -13,6 +14,8 @@ namespace BattleCruisers.Tutorial
         private ExplanationPanelHeightManager _explanationPanelHeightManager;
         private HintManager _hintManager;
 
+        private const int IN_GAME_HINTS_CUTOFF = 5;
+
         public TutorialManager tutorialManager;
         public ExplanationPanel explanationPanel;
         public HighlighterInitialiser highlighterInitialiser;
@@ -23,8 +26,8 @@ namespace BattleCruisers.Tutorial
             Helper.AssertIsNotNull(tutorialManager, explanationPanel, highlighterInitialiser, modalMainMenuButton);
             Assert.IsNotNull(baseArgs);
 
-            // FELIX  Only initialise if:  < level 5 && setting enabled
-            if (baseArgs.AppModel.SelectedLevel > 5)
+            if (!baseArgs.AppModel.IsTutorial
+                && !ShowInGameHints(baseArgs.AppModel))
             {
                 Destroy(gameObject);
                 return;
@@ -36,7 +39,16 @@ namespace BattleCruisers.Tutorial
                     explanationPanel,
                     new HeightDecider());
 
-            if (!baseArgs.AppModel.IsTutorial)
+            if (baseArgs.AppModel.IsTutorial)
+            {
+                baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
+                baseArgs.AppModel.DataProvider.SaveGame();
+
+                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel);
+                tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);
+                tutorialManager.StartTutorial();
+            }
+            else
             {
                 _hintManager
                     = new HintManager(
@@ -47,15 +59,14 @@ namespace BattleCruisers.Tutorial
                 // Destroy tutorial specific game objects
                 Destroy(highlighterInitialiser.gameObject);
                 Destroy(modalMainMenuButton.gameObject);
-                return;
             }
+        }
 
-            baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
-            baseArgs.AppModel.DataProvider.SaveGame();
-
-            ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel);
-            tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);
-            tutorialManager.StartTutorial();
+        private bool ShowInGameHints(IApplicationModel appModel)
+        {
+            return
+                appModel.DataProvider.SettingsManager.ShowInGameHints
+                && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
         }
     }
 }
