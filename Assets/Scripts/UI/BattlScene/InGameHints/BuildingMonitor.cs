@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.InGameHints
 {
-    // FELIX  Use, test :)
     public class BuildingMonitor : IBuildingMonitor
     {
         private readonly ICruiserController _aiCruiser;
@@ -34,8 +33,7 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             {
                 NavalFactoryStarted?.Invoke(this, EventArgs.Empty);
             }
-            else if(e.StartedBuilding.Category == BuildingCategory.Offence
-                || e.StartedBuilding.Category == BuildingCategory.Ultra)
+            else if(e.StartedBuilding.Category == BuildingCategory.Offence)
             {
                 OffensiveStarted?.Invoke(this, EventArgs.Empty);
             }
