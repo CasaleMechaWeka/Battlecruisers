@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -17,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private IMusicPlayer _musicPlayer;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
-        private IBroadcastingProperty<bool> _muteMusic;
+        private IBroadcastingProperty<bool> _muteMusic, _shouInGameHints;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
@@ -31,11 +30,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
             IBroadcastingProperty<bool> muteMusic,
+            IBroadcastingProperty<bool> showInGameHints,
             IDismissableEmitter parent)
         {
             base.Initialise(soundPlayer, parent);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic, showInGameHints);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
@@ -44,6 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
             _muteMusic = muteMusic;
+            _shouInGameHints = showInGameHints;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -52,6 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _muteMusic.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _shouInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
 
             UpdateEnabledStatus();
         }
@@ -66,6 +68,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.MuteMusic = _muteMusic.Value;
+            _settingsManager.ShowInGameHints = _shouInGameHints.Value;
             _settingsManager.Save();
 
             UpdateEnabledStatus();
@@ -93,7 +96,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
                 || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
                 || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
-                || _muteMusic.Value != _settingsManager.MuteMusic;
+                || _muteMusic.Value != _settingsManager.MuteMusic
+                || _shouInGameHints.Value != _settingsManager.ShowInGameHints;
         }
     }
 }

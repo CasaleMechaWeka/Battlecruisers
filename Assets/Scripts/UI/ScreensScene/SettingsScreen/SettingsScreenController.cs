@@ -10,6 +10,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
+        public DifficultyDropdown difficultyDropdown;
+        public SliderController zoomSlider, scrollSlider;
+        public ToggleController muteMusicToggle, showInGameHintsToggle;
+        public CancelButton cancelButton;
+
         public void Initialise(
             ISingleSoundPlayer soundPlayer, 
             IScreensSceneGod screensSceneGod, 
@@ -18,6 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, showInGameHintsToggle, cancelButton);
             Helper.AssertIsNotNull(settingsManager, musicPlayer);
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
@@ -28,20 +34,16 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 settingsManager.Save();
             }
 
-            DifficultyDropdown difficultyDropdown = GetComponentInChildren<DifficultyDropdown>();
-            Assert.IsNotNull(difficultyDropdown);
             difficultyDropdown.Initialise(settingsManager.AIDifficulty);
 
             IRange<int> zoomlLevelRange = new Range<int>(SettingsManager.MIN_ZOOM_SPEED_LEVEL, SettingsManager.MAX_ZOOM_SPEED_LEVEL);
-            SliderController zoomSlider = transform.FindNamedComponent<SliderController>("SettingsContainer/ZoomSpeedRow/Slider");
             zoomSlider.Initialise(settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
             IRange<int> scrollLevelRange = new Range<int>(SettingsManager.MIN_SCROLL_SPEED_LEVEL, SettingsManager.MAX_SCROLL_SPEED_LEVEL);
-            SliderController scrollSlider = transform.FindNamedComponent<SliderController>("SettingsContainer/ScrollSpeedRow/Slider");
             scrollSlider.Initialise(settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
-            ToggleController muteMusicToggle = GetComponentInChildren<ToggleController>();
             muteMusicToggle.Initialise(settingsManager.MuteMusic);
+            showInGameHintsToggle.Initialise(settingsManager.ShowInGameHints);
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
@@ -55,10 +57,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
                     muteMusicToggle.IsChecked,
+                    showInGameHintsToggle.IsChecked,
                     this);
 
-            CancelButton cancelButton = GetComponentInChildren<CancelButton>();
-            Assert.IsNotNull(cancelButton);
             cancelButton.Initialise(_soundPlayer, screensSceneGod, this);
 		}
 	}
