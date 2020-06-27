@@ -2,11 +2,11 @@
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Tutorial.Steps;
 using BattleCruisers.Tutorial.Steps.Factories;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {
@@ -16,12 +16,9 @@ namespace BattleCruisers.Tutorial
         private IExplanationPanel _explanationPanel;
         private IGameEndMonitor _gameEndMonitor;
 
-        public HighlighterInitialiser highlighterInitialiser;
-
-        public void Initialise(ITutorialArgs tutorialArgs)
+        public void Initialise(ITutorialArgs tutorialArgs, HighlighterInitialiser highlighterInitialiser)
         {
-            Assert.IsNotNull(highlighterInitialiser);
-            Assert.IsNotNull(tutorialArgs);
+            Helper.AssertIsNotNull(tutorialArgs, highlighterInitialiser);
 
             _explanationPanel = tutorialArgs.ExplanationPanel;
 
