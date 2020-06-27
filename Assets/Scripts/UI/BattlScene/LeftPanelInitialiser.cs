@@ -37,6 +37,7 @@ namespace BattleCruisers.UI.BattleScene
 
         public DronesPanelInitialiser dronesPanelInitialiser;
         public BuildMenuInitialiser buildMenuInitialiser;
+        public HelpLabel helpLabels;
 
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
@@ -63,7 +64,7 @@ namespace BattleCruisers.UI.BattleScene
                 prioritisedSoundPlayer,
                 soundPlayer,
                 populationLimitMonitor);
-            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser);
+            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, helpLabels);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IBuildMenu buildMenu 
@@ -120,8 +121,6 @@ namespace BattleCruisers.UI.BattleScene
 
         private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
         {
-            HelpLabel helpLabels = GetComponentInChildren<HelpLabel>();
-            Assert.IsNotNull(helpLabels);
             helpLabels.Initialise();
             _helpLabelsVisibilityToggler = new FilterToggler(helpLabelsVisibilityFilter, helpLabels);
         }
