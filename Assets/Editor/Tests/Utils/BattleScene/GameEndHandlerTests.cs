@@ -73,7 +73,9 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _time,
                     _uiManager,
                     _targetIndicator,
-                    _windManager);
+                    _windManager,
+                    // FELIX  Fix :)
+                    null);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 

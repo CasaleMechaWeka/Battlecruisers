@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
-        public IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IDeferrer deferrer)
         {

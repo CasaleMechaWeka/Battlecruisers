@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
@@ -27,6 +28,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IUIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
         private readonly IWindManager _windManager;
+        private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -43,7 +45,8 @@ namespace BattleCruisers.Utils.BattleScene
             ITime time,
             IUIManager uiManager,
             ITargetIndicator targetIndicator,
-            IWindManager windManager)
+            IWindManager windManager,
+            IBuildingCategoryPermitter buildingCategoryPermitter)
         {
             Helper.AssertIsNotNull(
                 playerCruiser, 
@@ -69,6 +72,7 @@ namespace BattleCruisers.Utils.BattleScene
             _uiManager = uiManager;
             _targetIndicator = targetIndicator;
             _windManager = windManager;
+            _buildingCategoryPermitter = buildingCategoryPermitter;
 
             _handledCruiserDeath = false;
             _handledGameEnd = false;
@@ -94,6 +98,7 @@ namespace BattleCruisers.Utils.BattleScene
             _uiManager.HideItemDetails();
             _targetIndicator.Hide();
             _windManager.Stop();
+            _buildingCategoryPermitter.AllowNoCategories();
 
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _time.TimeScale = 1;
