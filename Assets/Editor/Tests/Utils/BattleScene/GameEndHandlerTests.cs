@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
@@ -35,6 +36,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private ITargetIndicator _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IWindManager _windManager;
+        private IBuildingCategoryPermitter _buildingCategoryPermitter;
 
         private IBuilding _playerBuilding, _aiBuilding;
         private IShip _playerShip, _aiShip;
@@ -57,6 +59,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _uiManager = Substitute.For<IUIManager>();
             _targetIndicator = Substitute.For<ITargetIndicator>();
             _windManager = Substitute.For<IWindManager>();
+            _buildingCategoryPermitter = Substitute.For<IBuildingCategoryPermitter>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
@@ -74,8 +77,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _uiManager,
                     _targetIndicator,
                     _windManager,
-                    // FELIX  Fix :)
-                    null);
+                    _buildingCategoryPermitter);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
@@ -151,6 +153,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _uiManager.Received().HideCurrentlyShownMenu();
             _targetIndicator.Received().Hide();
             _windManager.Received().Stop();
+            _buildingCategoryPermitter.Received().AllowNoCategories();
         }
 
         [Test]
@@ -184,6 +187,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _uiManager.Received().HideCurrentlyShownMenu();
             _targetIndicator.Received().Hide();
             _windManager.Received().Stop();
+            _buildingCategoryPermitter.Received().AllowNoCategories();
         }
 
         [Test]
