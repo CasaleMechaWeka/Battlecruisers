@@ -4,7 +4,6 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    // FELIX  Update tests
     public class BuildingCategoryFilter : IBroadcastingFilter<BuildingCategory>, IBuildingCategoryPermitter
     {
         private bool _allowAll;
