@@ -26,14 +26,12 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 		public override void Start(Action completionCallback)
 		{
             base.Start(completionCallback);
-
-            _permitter.PermittedCategory = _category;
+            _permitter.AllowSingleCategory(_category);
 		}
 
 		protected override void OnCompleted()
 		{
-            _permitter.PermittedCategory = null;
-
+            _permitter.AllowNoCategories();
 			base.OnCompleted();
 		}
 	}

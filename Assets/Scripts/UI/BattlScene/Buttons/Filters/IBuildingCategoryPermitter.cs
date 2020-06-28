@@ -4,6 +4,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
     public interface IBuildingCategoryPermitter
     {
-        BuildingCategory? PermittedCategory { set; }
+        void AllowSingleCategory(BuildingCategory buildingCategory);
+        void AllowAllCategories();
+        void AllowNoCategories();
     }
 }

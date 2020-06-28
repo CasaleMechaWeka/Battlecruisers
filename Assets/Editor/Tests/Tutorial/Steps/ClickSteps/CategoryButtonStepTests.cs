@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         public void Start_PermitsCategory()
         {
             _clickStep.Start(_completionCallback);
-            _permitter.Received().PermittedCategory = _buildingCategoryButton.Category;
+            _permitter.Received().AllowSingleCategory(_buildingCategoryButton.Category);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             Start_PermitsCategory();
 
             _buildingCategoryButton.Clicked += Raise.Event();
-            _permitter.Received().PermittedCategory = null;
+            _permitter.Received().AllowNoCategories();
         }
     }
 }
