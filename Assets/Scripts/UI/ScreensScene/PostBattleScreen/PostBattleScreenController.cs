@@ -134,7 +134,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             PostBattleBackgroundController background = GetComponentInChildren<PostBattleBackgroundController>(includeInactive: true);
             Assert.IsNotNull(background);
-            bool isVictory = BattleResult == null || BattleResult.WasVictory;
+            bool isVictory = _applicationModel.IsTutorial || BattleResult.WasVictory;
             background.Initalise(isVictory);
         }
 
