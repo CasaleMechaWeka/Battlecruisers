@@ -18,6 +18,7 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
+        IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
 
         // Separate methods because of circular dependency between UIManager and everything else :/
         IUIManager CreateUIManager();

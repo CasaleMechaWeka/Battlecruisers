@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
@@ -33,6 +32,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
+        private readonly BuildingCategoryFilter _buildingCategoryFilter;
+        public IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+
         public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory, deferrer);
@@ -44,6 +46,10 @@ namespace BattleCruisers.Scenes.BattleScene
             IBuildProgressCalculatorFactory calculatorFactory = new BuildProgressCalculatorFactory(_dataProvider.SettingsManager);
             PlayerCruiserBuildProgressCalculator = calculatorFactory.CreatePlayerCruiserCalculator(); ;
             AICruiserBuildProgressCalculator = calculatorFactory.CreateAICruiserCalculator();
+            
+            // For the real game want to enable all building categories :)
+            _buildingCategoryFilter = new BuildingCategoryFilter();
+            _buildingCategoryFilter.AllowAllCategories();
         }
 
         public ILoadout GetPlayerLoadout()
@@ -68,8 +74,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new ButtonVisibilityFilters(
                     new AffordableBuildableFilter(droneManager),
-                    // For the real game want to enable all building categories :)
-                    new StaticBroadcastingFilter<BuildingCategory>(isMatch: true),
+                    _buildingCategoryFilter,
                     new ChooseTargetButtonVisibilityFilter(),
                     new DeleteButtonVisibilityFilter(),
                     new BroadcastingFilter(isMatch: true),
