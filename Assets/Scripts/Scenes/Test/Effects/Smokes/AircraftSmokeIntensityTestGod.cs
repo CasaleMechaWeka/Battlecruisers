@@ -69,6 +69,21 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
             SetPlaneHealthProportion(targetProportion: 0);
         }
 
+        public void WeakSmoke()
+        {
+            SetPlaneHealthProportion(targetProportion: 0.9f);
+        }
+
+        public void NormalSmoke()
+        {
+            SetPlaneHealthProportion(targetProportion: 0.5f);
+        }
+
+        public void StrongSmoke()
+        {
+            SetPlaneHealthProportion(targetProportion: 0.1f);
+        }
+
         private void SetPlaneHealthProportion(float targetProportion)
         {
             foreach (TestAircraftController aircraft in _aircraft)
