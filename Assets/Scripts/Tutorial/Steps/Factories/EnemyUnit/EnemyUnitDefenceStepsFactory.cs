@@ -90,7 +90,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                     _argsFactory.CreateTutorialStepArgs(),
                     factoryStepsResult.FactoryProvider));
 
-            string unitComingText = "Here comes the enemy " + UnitToBuild.Name + ".";
+            string unitComingText = "Here comes the enemy " + UnitToBuild.Name + "!";
 
             // 7.5  Optionally boost unit speed until just before it reaches the user's camera view
             enemyUnitDefenceSteps.AddRange(CreateSpeedBoostSteps(unitComingText));
