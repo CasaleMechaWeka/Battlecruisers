@@ -12,7 +12,9 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
     {
         private int _numOfCompletedAircraft;
         private TestAircraftController[] _aircraft;
+
         public List<Vector2> patrolPoints;
+        public float startingHealthProportion = 0.1f;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -53,7 +55,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
 
             if (_numOfCompletedAircraft == _aircraft.Length)
             {
-                DamagePlanes(_aircraft[0].MaxHealth - 1);
+                SetPlaneHealthProportion(startingHealthProportion);
             }
         }
 
@@ -64,14 +66,14 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
 
         public void KillPlanes()
         {
-            DamagePlanes(_aircraft[0].MaxHealth);
+            SetPlaneHealthProportion(targetProportion: 0);
         }
 
-        private void DamagePlanes(float damage)
+        private void SetPlaneHealthProportion(float targetProportion)
         {
             foreach (TestAircraftController aircraft in _aircraft)
             {
-                aircraft.TakeDamage(damage, damageSource: null);
+                aircraft.SetHealth(targetProportion);
             }
         }
     }

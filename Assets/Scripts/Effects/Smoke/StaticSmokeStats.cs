@@ -114,8 +114,10 @@ namespace BattleCruisers.Effects.Smoke
                 {
                     StartLifetime = new Range<float>(4, 6),
                     StartSize = 0.2f,
-                    RateOverTime = 2,
-                    RateOverDistance = 12
+                    RateOverTime = 1,
+                    //RateOverTime = 2,
+                    RateOverDistance = 2
+                    //RateOverDistance = 12
                 };
             }
         }

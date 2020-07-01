@@ -5,6 +5,7 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -64,6 +65,31 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
 			return BCUtils.Helper.ConvertVectorsToPatrolPoints(patrolPoints);
+		}
+
+		public void SetHealth(float healthProportion)
+		{
+			Assert.IsTrue(healthProportion >= 0);
+			Assert.IsTrue(healthProportion <= 1);
+
+			float currentProportion = Health / MaxHealth;
+
+			if (Mathf.Approximately(healthProportion, currentProportion))
+			{
+				return;
+			}
+			else if (healthProportion > currentProportion)
+			{
+				float proportionToAdd = healthProportion - currentProportion;
+				float healthToAdd = proportionToAdd * MaxHealth;
+				RepairCommandExecute(healthToAdd);
+			}
+			else if(healthProportion < currentProportion)
+			{
+				float proportionToRemove = currentProportion - healthProportion;
+				float healthToRemove = proportionToRemove * MaxHealth;
+				TakeDamage(healthToRemove, damageSource: null);
+			}
 		}
 	}
 }
