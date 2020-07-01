@@ -26,6 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
+		private const string TUTORIAL_TITLE = "Tutorial Completed :D";
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
@@ -59,6 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 // User completed (or rage quit) the tutorial
                 _applicationModel.IsTutorial = false;
+                title.text = TUTORIAL_TITLE;
                 postTutorialMessage.SetActive(true);
                 musicPlayer.PlayVictoryMusic();
 
