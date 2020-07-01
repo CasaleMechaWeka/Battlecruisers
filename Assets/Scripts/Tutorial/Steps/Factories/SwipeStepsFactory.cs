@@ -37,7 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Explain swiping and pinch zoom, encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("You can also swipe your finger to look around.  Swipe horizontally to scroll.  Swipe vertically to zoom.  Or just pinch zoom.  (Click \"DONE\" when you have had enough.)")));
+                    _argsFactory.CreateTutorialStepArgs("You can also swipe your finger to look around.  Swipe horizontally to scroll.  Swipe vertically to zoom.  Or just pinch zoom.  Give it a try :)")));
 
             // Disable swiping and pinch zoom
             steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: false));
