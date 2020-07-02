@@ -96,26 +96,26 @@ namespace BattleCruisers.Effects.Smoke
             {
                 Weak = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(0.3f, 0.6f),
-                    StartSize = 0.02f,
-                    RateOverTime = 2,
-                    RateOverDistance = 8
+                    StartLifetime = new Range<float>(1.1f, 1.3f),
+                    StartSize = 0.05f,
+                    RateOverTime = 0,
+                    RateOverDistance = 39
                 };
 
                 Normal = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(1.5f, 2),
-                    StartSize = 0.08f,
-                    RateOverTime = 2,
-                    RateOverDistance = 2
+                    StartLifetime = new Range<float>(1.7f, 1.9f),
+                    StartSize = 0.07f,
+                    RateOverTime = 0,
+                    RateOverDistance = 35
                 };
 
                 Strong = new SmokeStatistics()
                 {
-                    StartLifetime = new Range<float>(2, 4),
-                    StartSize = 0.15f,
-                    RateOverTime = 1,
-                    RateOverDistance = 3
+                    StartLifetime = new Range<float>(2, 2.3f),
+                    StartSize = 0.09f,
+                    RateOverTime = 0,
+                    RateOverDistance = 31
                 };
             }
         }
