@@ -16,7 +16,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _buildingMonitor = Substitute.For<IBuildingMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            _manager = new HintManager(_buildingMonitor, _hintDisplayer);
+            // FELIX  Fix :)
+            _manager = new HintManager(_buildingMonitor, null, _hintDisplayer);
         }
 
         [Test]
