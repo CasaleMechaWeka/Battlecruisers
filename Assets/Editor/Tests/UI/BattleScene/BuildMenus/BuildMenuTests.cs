@@ -65,10 +65,24 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         }
 
         [Test]
-        public void ShowBuildingGroupMenu()
+        public void ShowBuildingGroupMenu_DifferentMenu()
         {
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
             ReceivedShowMenu(_buildablesMenu1, activationParameter: null);
+        }
+
+        [Test]
+        public void ShowBuildingGroupMenu_SameMenu()
+        {
+            _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
+            _buildablesMenu1.ClearReceivedCalls();
+            _selectorPanel.ClearReceivedCalls();
+
+            _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
+
+            ReceivedHideCurrentlyShownMenu(_buildablesMenu1);
+            _buildablesMenu1.DidNotReceiveWithAnyArgs().OnPresenting(default);
+            _selectorPanel.DidNotReceive().Show();
         }
 
         [Test]

@@ -52,7 +52,16 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
 		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
 		{
-            ShowMenu(_buildingMenus.GetBuildablesMenu(buildingCategory));
+            IBuildablesMenu menuToShow = _buildingMenus.GetBuildablesMenu(buildingCategory);
+            
+            if (ReferenceEquals(_currentMenu, menuToShow))
+            {
+                HideCurrentlyShownMenu();
+            }
+            else
+            {
+                ShowMenu(menuToShow);
+            }
         }
 
         public void ShowUnitsMenu(IFactory factory)
@@ -72,9 +81,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             _selectorPanel.Show();
 
-			menu.OnPresenting(activationParameter);
+            menu.OnPresenting(activationParameter);
             menu.IsVisible = true;
-			_currentMenu = menu;
+            _currentMenu = menu;
         }
 
         public void HideCurrentlyShownMenu()
