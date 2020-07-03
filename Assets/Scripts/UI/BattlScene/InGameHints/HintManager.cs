@@ -5,19 +5,19 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
 {
     public class HintManager
     {
-        private readonly IBuildingMonitor _buildingMonitor;
+        private readonly IBuildingMonitor _enemyBuildingMonitor;
         private readonly IHintDisplayer _hintDisplayer;
 
-        public HintManager(IBuildingMonitor buildingMonitor, IHintDisplayer hintDisplayer)
+        public HintManager(IBuildingMonitor enemyBuildingMonitor, IHintDisplayer hintDisplayer)
         {
-            Helper.AssertIsNotNull(buildingMonitor, hintDisplayer);
+            Helper.AssertIsNotNull(enemyBuildingMonitor, hintDisplayer);
 
-            _buildingMonitor = buildingMonitor;
+            _enemyBuildingMonitor = enemyBuildingMonitor;
             _hintDisplayer = hintDisplayer;
 
-            _buildingMonitor.AirFactoryStarted += _buildingMonitor_AirFactoryStarted;
-            _buildingMonitor.NavalFactoryStarted += _buildingMonitor_NavalFactoryStarted;
-            _buildingMonitor.OffensiveStarted += _buildingMonitor_OffensiveStarted;
+            _enemyBuildingMonitor.AirFactoryStarted += _buildingMonitor_AirFactoryStarted;
+            _enemyBuildingMonitor.NavalFactoryStarted += _buildingMonitor_NavalFactoryStarted;
+            _enemyBuildingMonitor.OffensiveStarted += _buildingMonitor_OffensiveStarted;
         }
 
         private void _buildingMonitor_AirFactoryStarted(object sender, EventArgs e)
