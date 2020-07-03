@@ -42,7 +42,6 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             _hintDisplayer.ShowHint(Hints.OFFENSIVE_RESPONSE_HINT);
         }
 
-        // FELIX  Update tests :)
         private void _friendlyFactoryMonitor_FactoryCompleted(object sender, EventArgs e)
         {
             _hintDisplayer.ShowHint(Hints.FACTORY_COMPLETED_HINT);

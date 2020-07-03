@@ -7,38 +7,53 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     public class HintManagerTests
     {
         private HintManager _manager;
-        private IBuildingMonitor _buildingMonitor;
+        private IBuildingMonitor _enemyBuildingMonitor;
+        private IFactoryMonitor _friendlyFactoryMonitor;
         private IHintDisplayer _hintDisplayer;
 
         [SetUp]
         public void TestSetup()
         {
-            _buildingMonitor = Substitute.For<IBuildingMonitor>();
+            _enemyBuildingMonitor = Substitute.For<IBuildingMonitor>();
+            _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            // FELIX  Fix :)
-            _manager = new HintManager(_buildingMonitor, null, _hintDisplayer);
+            _manager = new HintManager(_enemyBuildingMonitor, _friendlyFactoryMonitor, _hintDisplayer);
         }
 
         [Test]
         public void AirFactoryStarted()
         {
-            _buildingMonitor.AirFactoryStarted += Raise.Event();
+            _enemyBuildingMonitor.AirFactoryStarted += Raise.Event();
             _hintDisplayer.Received().ShowHint(Hints.AIR_FACTORY_RESPONSE_HINT);
         }
 
         [Test]
         public void NavalFactoryStarted()
         {
-            _buildingMonitor.NavalFactoryStarted += Raise.Event();
+            _enemyBuildingMonitor.NavalFactoryStarted += Raise.Event();
             _hintDisplayer.Received().ShowHint(Hints.NAVAL_FACTORY_RESPONSE_HINT);
         }
 
         [Test]
         public void OffensiveStarted()
         {
-            _buildingMonitor.OffensiveStarted += Raise.Event();
+            _enemyBuildingMonitor.OffensiveStarted += Raise.Event();
             _hintDisplayer.Received().ShowHint(Hints.OFFENSIVE_RESPONSE_HINT);
+        }
+
+        [Test]
+        public void FactoryCompleted()
+        {
+            _friendlyFactoryMonitor.FactoryCompleted += Raise.Event();
+            _hintDisplayer.Received().ShowHint(Hints.FACTORY_COMPLETED_HINT);
+        }
+
+        [Test]
+        public void UnitChosen()
+        {
+            _friendlyFactoryMonitor.UnitChosen += Raise.Event();
+            _hintDisplayer.Received().ShowHint(Hints.UNIT_CHOSEN_HINT);
         }
     }
 }
