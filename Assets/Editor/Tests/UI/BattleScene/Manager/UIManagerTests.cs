@@ -90,6 +90,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             BuildingCategory buildingCategory = BuildingCategory.Ultra;
             _uiManager.SelectBuildingGroup(buildingCategory);
 
+            Received_HideItemDetails();
             _buildMenu.Received().ShowBuildingGroupMenu(buildingCategory);
         }
 
@@ -152,7 +153,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void ShowFactoryUnits_PlayerCruiserFactory_ShowsDetails()
         {
             _factory.ParentCruiser.Returns(_playerCruiser);
+
             _uiManager.ShowFactoryUnits(_factory);
+
+            Received_HideItemDetails();
             _buildMenu.Received().ShowUnitsMenu(_factory);
         }
 

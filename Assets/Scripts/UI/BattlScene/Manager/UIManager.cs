@@ -81,6 +81,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
+            HideItemDetails();
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
@@ -113,6 +114,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
             if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
             {
+                HideItemDetails();
                 _buildMenu.ShowUnitsMenu(factory);
             }
         }
