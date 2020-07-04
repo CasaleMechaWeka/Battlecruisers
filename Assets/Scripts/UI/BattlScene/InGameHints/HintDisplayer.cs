@@ -29,5 +29,15 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             _explanationPanel.TextDisplayer.DisplayText(hint);
             _explanationPanel.OkButton.Enabled = true;
         }
+
+        // FELIX  Test :)
+        public void HideHint(string hint)
+        {
+            if (_explanationPanel.IsVisible
+                && _explanationPanel.TextDisplayer.Text == hint)
+            {
+                _explanationPanel.IsVisible = false;
+            }
+        }
     }
 }
