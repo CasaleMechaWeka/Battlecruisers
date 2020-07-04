@@ -30,7 +30,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             {
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
-                if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
+                if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow
+                    || buildingClicked.Buildable.SlotSpecification.BuildingFunction == BuildingFunction.AntiShip)
                 {
                     _playerCruiserFocusHelper.FocusOnPlayerBowSlotIfNeeded();
                 }

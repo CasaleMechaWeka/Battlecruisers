@@ -44,8 +44,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         public void HandleClick_CanAffordBuliding_UpdatesUI_NotBowSlot_FocusesOnCruiser()
         {
             bool canAffordBuilding = true;
-            SlotSpecification nonBowSlotSpecification = new SlotSpecification(SlotType.Deck, default, default);
-            _building.Buildable.SlotSpecification.Returns(nonBowSlotSpecification);
+            _building.Buildable.SlotSpecification.SlotType.Returns(SlotType.Deck);
 
             _clickHandler.HandleClick(canAffordBuilding, _building);
 
@@ -57,8 +56,20 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         public void HandleClick_CanAffordBuliding_UpdatesUI_BowSlot_FocusesOnPlayerNavalFactory()
         {
             bool canAffordBuilding = true;
-            SlotSpecification bowSlotSpecification = new SlotSpecification(SlotType.Bow, default, default);
-            _building.Buildable.SlotSpecification.Returns(bowSlotSpecification);
+            _building.Buildable.SlotSpecification.SlotType.Returns(SlotType.Bow);
+
+            _clickHandler.HandleClick(canAffordBuilding, _building);
+
+            _playerCruiserFocusHelper.Received().FocusOnPlayerBowSlotIfNeeded();
+            _uiManager.Received().SelectBuildingFromMenu(_building);
+        }
+
+        [Test]
+        public void HandleClick_CanAffordBuliding_UpdatesUI_AntiShipBuilding_FocusesOnPlayerNavalFactory()
+        {
+            bool canAffordBuilding = true;
+            _building.Buildable.SlotSpecification.SlotType.Returns(SlotType.Deck);
+            _building.Buildable.SlotSpecification.BuildingFunction.Returns(BuildingFunction.AntiShip);
 
             _clickHandler.HandleClick(canAffordBuilding, _building);
 
