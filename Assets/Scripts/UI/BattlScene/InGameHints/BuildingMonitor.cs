@@ -14,6 +14,10 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         public event EventHandler AirFactoryStarted;
         public event EventHandler NavalFactoryStarted;
         public event EventHandler OffensiveStarted;
+        // FELIX  Update tests
+        public event EventHandler ShipDefensiveStarted;
+        public event EventHandler AirDefensiveStarted;
+        public event EventHandler ShieldStarted;
 
         public BuildingMonitor(ICruiserController cruiser)
         {
@@ -33,9 +37,24 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             {
                 NavalFactoryStarted?.Invoke(this, EventArgs.Empty);
             }
-            else if(e.StartedBuilding.Category == BuildingCategory.Offence)
+            else if (e.StartedBuilding.Category == BuildingCategory.Offence)
             {
                 OffensiveStarted?.Invoke(this, EventArgs.Empty);
+            }
+            else if (e.StartedBuilding.Category == BuildingCategory.Defence)
+            {
+                if (e.StartedBuilding.SlotSpecification.BuildingFunction == BuildingFunction.AntiAir)
+                {
+                    AirDefensiveStarted?.Invoke(this, EventArgs.Empty);
+                }
+                else if (e.StartedBuilding.SlotSpecification.BuildingFunction == BuildingFunction.AntiShip)
+                {
+                    ShipDefensiveStarted?.Invoke(this, EventArgs.Empty);
+                }
+                else if (e.StartedBuilding.SlotSpecification.BuildingFunction == BuildingFunction.Shield)
+                {
+                    ShieldStarted?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
