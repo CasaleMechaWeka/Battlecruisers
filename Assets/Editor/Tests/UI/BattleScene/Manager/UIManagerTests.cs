@@ -156,7 +156,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
 
             _uiManager.ShowFactoryUnits(_factory);
 
-            Received_HideItemDetails();
             _buildMenu.Received().ShowUnitsMenu(_factory);
         }
 
