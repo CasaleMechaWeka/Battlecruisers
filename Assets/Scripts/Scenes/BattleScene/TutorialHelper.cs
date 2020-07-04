@@ -31,9 +31,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly BroadcastingFilter _backButtonPermitter;
         private LimitableUIManager _uiManager;
 
-        // FELIX  Avoid duplicate code!!!
-        private const int IN_GAME_HINTS_CUTOFF = 5;
-
         public bool ShowInGameHints { get; }
         public ISlotPermitter SlotPermitter => _slotFilter;
         public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
@@ -62,11 +59,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _dataProvider = appModel.DataProvider;
             NavigationPermitters = navigationPermitters;
 
-            // FELIX  Avoid duplicate code!!!
-            ShowInGameHints =
-                appModel.DataProvider.SettingsManager.ShowInGameHints
-                && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
-
+            ShowInGameHints = false;
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();
@@ -125,7 +118,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new StaticFilter<ITarget>(isMatch: false),
                     _backButtonPermitter,
                     _speedButtonsFilter,
-                    new BroadcastingFilter(isMatch: false));
+                    new BroadcastingFilter(isMatch: ShowInGameHints));
         }
 
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)

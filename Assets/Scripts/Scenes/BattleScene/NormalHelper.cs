@@ -45,7 +45,6 @@ namespace BattleCruisers.Scenes.BattleScene
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
-            // FELIX  Avoid duplicate code!!!
             ShowInGameHints =
                 appModel.DataProvider.SettingsManager.ShowInGameHints
                 && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
@@ -86,7 +85,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new DeleteButtonVisibilityFilter(),
                     new BroadcastingFilter(isMatch: true),
                     new StaticBroadcastingFilter(isMatch: true),
-                    new BroadcastingFilter(isMatch: false));
+                    new BroadcastingFilter(isMatch: ShowInGameHints));
         }
 
         public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
