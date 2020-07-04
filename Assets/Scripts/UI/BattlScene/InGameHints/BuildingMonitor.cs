@@ -51,10 +51,10 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
                 {
                     ShipDefensiveStarted?.Invoke(this, EventArgs.Empty);
                 }
-                else if (e.StartedBuilding.SlotSpecification.BuildingFunction == BuildingFunction.Shield)
-                {
-                    ShieldStarted?.Invoke(this, EventArgs.Empty);
-                }
+            }
+            else if (e.StartedBuilding.SlotSpecification.BuildingFunction == BuildingFunction.Shield)
+            {
+                ShieldStarted?.Invoke(this, EventArgs.Empty);
             }
         }
     }

@@ -53,6 +53,7 @@ namespace BattleCruisers.Tutorial
                 _hintManager
                     = new HintManager(
                         new BuildingMonitor(baseArgs.AICruiser),
+                        new BuildingMonitor(baseArgs.PlayerCruiser),
                         new FactoryMonitor(baseArgs.PlayerCruiser.BuildingMonitor),
                         new NonRepeatingHintDisplayer(
                             new HintDisplayer(explanationPanel)));

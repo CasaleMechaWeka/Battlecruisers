@@ -18,7 +18,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            _manager = new HintManager(_enemyBuildingMonitor, _friendlyFactoryMonitor, _hintDisplayer);
+            // FELIX  fix :)
+            _manager = new HintManager(_enemyBuildingMonitor, null, _friendlyFactoryMonitor, _hintDisplayer);
         }
 
         [Test]
