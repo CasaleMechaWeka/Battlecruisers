@@ -30,7 +30,6 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             _explanationPanel.OkButton.Enabled = true;
         }
 
-        // FELIX  Test :)
         public void HideHint(string hint)
         {
             if (_explanationPanel.IsVisible
