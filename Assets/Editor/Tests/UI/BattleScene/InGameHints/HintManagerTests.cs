@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     public class HintManagerTests
     {
         private HintManager _manager;
-        private IBuildingMonitor _enemyBuildingMonitor;
+        private IBuildingMonitor _enemyBuildingMonitor, _friendlyBuildingMonitor;
         private IFactoryMonitor _friendlyFactoryMonitor;
         private IHintDisplayer _hintDisplayer;
 
@@ -15,11 +15,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         public void TestSetup()
         {
             _enemyBuildingMonitor = Substitute.For<IBuildingMonitor>();
+            _friendlyBuildingMonitor = Substitute.For<IBuildingMonitor>();
             _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            // FELIX  fix :)
-            _manager = new HintManager(_enemyBuildingMonitor, null, _friendlyFactoryMonitor, _hintDisplayer);
+            _manager = new HintManager(_enemyBuildingMonitor, _friendlyBuildingMonitor, _friendlyFactoryMonitor, _hintDisplayer);
         }
 
         [Test]
@@ -30,6 +30,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         }
 
         [Test]
+        public void FriedndlyAirDefensiveStarted()
+        {
+            _friendlyBuildingMonitor.AirDefensiveStarted+= Raise.Event();
+            _hintDisplayer.Received().HideHint(Hints.AIR_FACTORY_RESPONSE_HINT);
+        }
+
+        [Test]
         public void NavalFactoryStarted()
         {
             _enemyBuildingMonitor.NavalFactoryStarted += Raise.Event();
@@ -37,10 +44,24 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         }
 
         [Test]
+        public void FriedndlyShipDefensiveStarted()
+        {
+            _friendlyBuildingMonitor.ShipDefensiveStarted += Raise.Event();
+            _hintDisplayer.Received().HideHint(Hints.NAVAL_FACTORY_RESPONSE_HINT);
+        }
+
+        [Test]
         public void OffensiveStarted()
         {
             _enemyBuildingMonitor.OffensiveStarted += Raise.Event();
             _hintDisplayer.Received().ShowHint(Hints.OFFENSIVE_RESPONSE_HINT);
+        }
+
+        [Test]
+        public void FriendlyShieldStarted()
+        {
+            _friendlyBuildingMonitor.ShieldStarted += Raise.Event();
+            _hintDisplayer.Received().HideHint(Hints.OFFENSIVE_RESPONSE_HINT);
         }
 
         [Test]
