@@ -18,19 +18,14 @@ namespace BattleCruisers.UI.Sound.Wind
         {
             cameraOrthographicSize = Mathf.Clamp(cameraOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
 
-            float orthographicSizeProportion = cameraOrthographicSize / _validOrthographicSizes.Max;
-
-            // Don't play wind if less than halfway zoomed out
-            if (orthographicSizeProportion < 0.5)
-            {
-                return 0;
-            }
+            float sizeAboveMin = cameraOrthographicSize - _validOrthographicSizes.Min;
+            float range = _validOrthographicSizes.Max - _validOrthographicSizes.Min;
 
             // OS proportion    Wind volume
-            // 0.5              0
-            // 0.75             0.5
+            // 0                0
+            // 0.5              0.5
             // 1                1
-            return 2 * orthographicSizeProportion - 1;
+            return sizeAboveMin / range;
         }
     }
 }

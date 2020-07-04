@@ -34,8 +34,8 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
 
         [Test, Sequential]
         public void FindVolume(
-            [Values(2, 5, 7.5f, 10)] float cameraOrthographicSize,
-            [Values(0, 0, 0.5f, 1)] float expectedVolume)
+            [Values(2, 6, 8, 10)] float cameraOrthographicSize,
+            [Values(0, 0.5f, 0.75f, 1)] float expectedVolume)
         {
             float actualVolume = _calculator.FindVolume(cameraOrthographicSize);
             Assert.AreEqual(expectedVolume, actualVolume);
