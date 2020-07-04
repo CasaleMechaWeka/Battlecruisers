@@ -28,6 +28,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         public ModalMenuController modalMenu;
         public MainMenuButtonController modalMainMenuButton;
+        public HelpLabel helpLabels;
 
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -45,9 +46,8 @@ namespace BattleCruisers.UI.BattleScene
             ISingleSoundPlayer soundPlayer,
             ISceneNavigator sceneNavigator)
         {
+            Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels);
             Helper.AssertIsNotNull(
-                modalMenu, 
-                modalMainMenuButton,
                 applicationModel, 
                 uiManager, 
                 playerCruiser, 
@@ -125,8 +125,6 @@ namespace BattleCruisers.UI.BattleScene
 
         private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
         {
-            HelpLabel helpLabels = GetComponentInChildren<HelpLabel>();
-            Assert.IsNotNull(helpLabels);
             helpLabels.Initialise();
             _helpLabelsVisibilityToggler = new FilterToggler(helpLabelsVisibilityFilter, helpLabels);
         }
