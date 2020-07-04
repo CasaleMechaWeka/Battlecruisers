@@ -46,5 +46,12 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _nonRepeatingDisplayer.ShowHint(_hint2);
             _coreDisplayer.Received().ShowHint(_hint2);
         }
+
+        [Test]
+        public void HideHint()
+        {
+            _nonRepeatingDisplayer.HideHint(_hint1);
+            _coreDisplayer.Received().HideHint(_hint1);
+        }
     }
 }

@@ -29,7 +29,6 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             _coreDisplayer.ShowHint(hint);
         }
 
-        // FELIX  Update test :)
         public void HideHint(string hint)
         {
             _coreDisplayer.HideHint(hint);
