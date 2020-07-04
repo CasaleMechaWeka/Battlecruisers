@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings
         public SlotType slotType;
 
         public override TargetType TargetType => TargetType.Buildings;
-        public SlotSpecification SlotSpecification { get; private set; }
+        public ISlotSpecification SlotSpecification { get; private set; }
         public Vector3 PuzzleRootPoint { get; private set; }
 
         public BuildingCategory category;

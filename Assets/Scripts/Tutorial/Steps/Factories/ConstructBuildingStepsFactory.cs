@@ -41,7 +41,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public IList<ITutorialStep> CreateSteps(
             BuildingCategory buildingCategory,
             BuildableInfo buildingToConstruct,
-            SlotSpecification slotSpecification,
+            ISlotSpecification slotSpecification,
             string constructBuildingInstruction,
             bool waitForBuildingToComplete = true)
         {

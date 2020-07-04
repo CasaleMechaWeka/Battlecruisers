@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _bowSlot = Substitute.For<ISlot>();
             ReadOnlyCollection<ISlot> bowSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { _bowSlot });
             _playerCruiser.SlotAccessor
-                .GetSlots(Arg.Is<SlotSpecification>(s => s.SlotType == SlotType.Bow))
+                .GetSlots(Arg.Is<ISlotSpecification>(s => s.SlotType == SlotType.Bow))
                 .Returns(bowSlots);
         }
 

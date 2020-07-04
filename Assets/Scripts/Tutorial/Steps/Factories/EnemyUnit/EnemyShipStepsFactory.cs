@@ -21,8 +21,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         private readonly BuildableInfo _defenceToBuild;
         protected override BuildableInfo DefenceToBuild => _defenceToBuild;
 
-        private readonly SlotSpecification _slotSpecification;
-        protected override SlotSpecification SlotSpecification => _slotSpecification;
+        private readonly ISlotSpecification _slotSpecification;
+        protected override ISlotSpecification SlotSpecification => _slotSpecification;
 
         public EnemyShipStepsFactory(
             ITutorialStepArgsFactory argsFactory,

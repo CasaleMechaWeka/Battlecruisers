@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings
     public interface IBuilding : IBuildable, IPoolable<BuildingActivationArgs>
     {
         BuildingCategory Category { get; }
-        SlotSpecification SlotSpecification { get; }
+        ISlotSpecification SlotSpecification { get; }
         Vector3 PuzzleRootPoint { get; }
 
         /// <summary>

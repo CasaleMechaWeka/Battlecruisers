@@ -24,7 +24,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         protected abstract BuildableInfo UnitToBuild { get; }
         protected abstract ISingleBuildableProvider UnitBuiltProvider { get; }
         protected abstract BuildableInfo DefenceToBuild { get; }
-        protected abstract SlotSpecification SlotSpecification { get; }
+        protected abstract ISlotSpecification SlotSpecification { get; }
         protected abstract CameraFocuserTarget UnitCameraFocusTarget { get; }
 
         public EnemyUnitDefenceStepsFactory(

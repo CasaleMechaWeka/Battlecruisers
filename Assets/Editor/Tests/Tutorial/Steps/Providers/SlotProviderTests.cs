@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         private IItemProvider<IClickableEmitter> _clickableProvider;
 
         private ISlotAccessor _slotAccessor;
-        private SlotSpecification _slotSpecification;
+        private ISlotSpecification _slotSpecification;
 
         private ISlot _slot;
 

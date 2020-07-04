@@ -6,7 +6,7 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public interface ISlotAccessor
     {
-        bool IsSlotAvailable(SlotSpecification slotSpecification);
+        bool IsSlotAvailable(ISlotSpecification slotSpecification);
 
         /// <returns>
         /// If looking for anti-ship slots, only returns slot placed well for anti-ship
@@ -17,10 +17,10 @@ namespace BattleCruisers.Cruisers.Slots
         /// If looking for non anti-ship slots returns all slots of that SlotType
         /// (eg: all deck slots).
         /// </returns>
-        ReadOnlyCollection<ISlot> GetSlots(SlotSpecification slotSpecification);
+        ReadOnlyCollection<ISlot> GetSlots(ISlotSpecification slotSpecification);
 
         IList<ISlot> GetFreeSlots(SlotType slotType);
-        ISlot GetFreeSlot(SlotSpecification slotSpecification);
+        ISlot GetFreeSlot(ISlotSpecification slotSpecification);
 		
         /// <returns>
         /// The slot that currently contains the given building, or null if no such slot exists.

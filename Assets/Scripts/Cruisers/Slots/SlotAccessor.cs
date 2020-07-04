@@ -23,14 +23,14 @@ namespace BattleCruisers.Cruisers.Slots
                     .AsReadOnly();
         }
 
-		public bool IsSlotAvailable(SlotSpecification slotSpecification)
+		public bool IsSlotAvailable(ISlotSpecification slotSpecification)
 		{
 			return 
                 _slots[slotSpecification.SlotType]
                     .Any(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
-        public ReadOnlyCollection<ISlot> GetSlots(SlotSpecification slotSpecification)
+        public ReadOnlyCollection<ISlot> GetSlots(ISlotSpecification slotSpecification)
         {
             Assert.IsNotNull(slotSpecification);
             Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
@@ -56,7 +56,7 @@ namespace BattleCruisers.Cruisers.Slots
                     .ToList();
         }
 
-        public ISlot GetFreeSlot(SlotSpecification slotSpecification)
+        public ISlot GetFreeSlot(ISlotSpecification slotSpecification)
 		{
             return slotSpecification.PreferFromFront ?
                 _slots[slotSpecification.SlotType].First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :

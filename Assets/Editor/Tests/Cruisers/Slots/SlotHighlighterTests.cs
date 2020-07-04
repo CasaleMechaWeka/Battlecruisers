@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         private ISlotFilter _highlightableFilter;
         private ICruiserBuildingMonitor _parentCruiserBuildingMonitor;
         private ISlot _slot1, _slot2;
-        private SlotSpecification _slotSpec1, _slotSpec2;
+        private ISlotSpecification _slotSpec1, _slotSpec2;
         private ReadOnlyCollection<ISlot> _slotsToReturn1, _slotsToReturn2;
         private IList<ISlot> _mutableSlotsToReturn1, _mutableSlotsToReturn2;
         private IBuilding _building;

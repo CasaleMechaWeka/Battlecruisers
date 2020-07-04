@@ -2,15 +2,15 @@
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class  SlotSpecification
+    public class SlotSpecification : ISlotSpecification
     {
         public SlotType SlotType { get; }
         public BuildingFunction BuildingFunction { get; }
         public bool PreferFromFront { get; }
 
         public SlotSpecification(
-            SlotType slotType, 
-            BuildingFunction buildingFunction = BuildingFunction.Generic, 
+            SlotType slotType,
+            BuildingFunction buildingFunction = BuildingFunction.Generic,
             bool preferCruiserFront = true)
         {
             SlotType = slotType;

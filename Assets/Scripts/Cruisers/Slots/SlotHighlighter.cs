@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private readonly ISlotAccessor _slotAccessor;
         private readonly ISlotFilter _highlightableFilter;
-        private SlotSpecification _highlightedSlotSpec;
+        private ISlotSpecification _highlightedSlotSpec;
 
 		private ISlot _highlightedSlot;
         private ISlot HighlightedSlot
@@ -53,7 +53,7 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         // Only highlight one slot type at a time
-        public bool HighlightAvailableSlots(SlotSpecification slotSpecification)
+        public bool HighlightAvailableSlots(ISlotSpecification slotSpecification)
 		{
 			UnhighlightSlots();
 
@@ -83,7 +83,7 @@ namespace BattleCruisers.Cruisers.Slots
             HighlightedSlot = null;
 		}
 
-		private void UnhighlightSlots(SlotSpecification slotSpecification)
+		private void UnhighlightSlots(ISlotSpecification slotSpecification)
 		{
 			foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
 			{

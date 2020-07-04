@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
     public class SlotProvider : ISlotProvider
     {
         private readonly ISlotAccessor _slotAccessor;
-        private readonly SlotSpecification _slotSpecification;
+        private readonly ISlotSpecification _slotSpecification;
 
         private ISlot _slot;
         private ISlot Slot
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             }
         }
 
-        public SlotProvider(ISlotAccessor slotAccessor, SlotSpecification slotSpecification)
+        public SlotProvider(ISlotAccessor slotAccessor, ISlotSpecification slotSpecification)
         {
             Helper.AssertIsNotNull(slotAccessor, slotSpecification);
 
