@@ -259,7 +259,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     rightPanelComponents, 
                     uiManager,
                     _gameEndMonitor);
-            tutorialInitialiser.Initialise(tutorialArgs);
+            tutorialInitialiser.Initialise(tutorialArgs, helper.ShowInGameHints);
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
@@ -275,13 +275,13 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             if (applicationModel.IsTutorial)
             {
-                TutorialHelper helper = new TutorialHelper(applicationModel.DataProvider, prefabFactory, navigationPermitters);
+                TutorialHelper helper = new TutorialHelper(applicationModel, prefabFactory, navigationPermitters);
                 _tutorialProvider = helper;
                 return helper;
             }
             else
             {
-                return new NormalHelper(applicationModel.DataProvider, prefabFactory, deferrer);
+                return new NormalHelper(applicationModel, prefabFactory, deferrer);
             }
         }
    }

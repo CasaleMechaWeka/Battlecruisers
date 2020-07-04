@@ -14,20 +14,18 @@ namespace BattleCruisers.Tutorial
         private ExplanationPanelHeightManager _explanationPanelHeightManager;
         private HintManager _hintManager;
 
-        private const int IN_GAME_HINTS_CUTOFF = 5;
-
         public TutorialManager tutorialManager;
         public ExplanationPanel explanationPanel;
         public HighlighterInitialiser highlighterInitialiser;
         public MainMenuButtonController modalMainMenuButton;
 
-        public void Initialise(ITutorialArgsBase baseArgs)
+        public void Initialise(ITutorialArgsBase baseArgs, bool showInGameHints)
         {
             Helper.AssertIsNotNull(tutorialManager, explanationPanel, highlighterInitialiser, modalMainMenuButton);
             Assert.IsNotNull(baseArgs);
 
             if (!baseArgs.AppModel.IsTutorial
-                && !ShowInGameHints(baseArgs.AppModel))
+                && !showInGameHints)
             {
                 Destroy(gameObject);
                 return;
@@ -62,13 +60,6 @@ namespace BattleCruisers.Tutorial
                 Destroy(highlighterInitialiser.gameObject);
                 Destroy(modalMainMenuButton.gameObject);
             }
-        }
-
-        private bool ShowInGameHints(IApplicationModel appModel)
-        {
-            return
-                appModel.DataProvider.SettingsManager.ShowInGameHints
-                && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
         }
     }
 }

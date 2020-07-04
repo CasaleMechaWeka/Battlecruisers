@@ -28,20 +28,27 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
+        private const int IN_GAME_HINTS_CUTOFF = 5;
 
+        public bool ShowInGameHints { get; }
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
-        public NormalHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, IDeferrer deferrer)
+        public NormalHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, deferrer);
+            Helper.AssertIsNotNull(appModel, prefabFactory, deferrer);
 
-            _dataProvider = dataProvider;
+            _dataProvider = appModel.DataProvider;
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
+
+            // FELIX  Avoid duplicate code!!!
+            ShowInGameHints =
+                appModel.DataProvider.SettingsManager.ShowInGameHints
+                && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
             IBuildProgressCalculatorFactory calculatorFactory = new BuildProgressCalculatorFactory(_dataProvider.SettingsManager);
             PlayerCruiserBuildProgressCalculator = calculatorFactory.CreatePlayerCruiserCalculator(); ;

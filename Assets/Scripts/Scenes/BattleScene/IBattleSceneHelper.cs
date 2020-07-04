@@ -16,6 +16,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public interface IBattleSceneHelper
     {
+        bool ShowInGameHints { get; }
         IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }

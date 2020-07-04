@@ -31,6 +31,10 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly BroadcastingFilter _backButtonPermitter;
         private LimitableUIManager _uiManager;
 
+        // FELIX  Avoid duplicate code!!!
+        private const int IN_GAME_HINTS_CUTOFF = 5;
+
+        public bool ShowInGameHints { get; }
         public ISlotPermitter SlotPermitter => _slotFilter;
         public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
@@ -51,12 +55,17 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
-        public TutorialHelper(IDataProvider dataProvider, IPrefabFactory prefabFactory, NavigationPermitters navigationPermitters)
+        public TutorialHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, NavigationPermitters navigationPermitters)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory);
+            Helper.AssertIsNotNull(appModel, prefabFactory);
 
-            _dataProvider = dataProvider;
+            _dataProvider = appModel.DataProvider;
             NavigationPermitters = navigationPermitters;
+
+            // FELIX  Avoid duplicate code!!!
+            ShowInGameHints =
+                appModel.DataProvider.SettingsManager.ShowInGameHints
+                && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
