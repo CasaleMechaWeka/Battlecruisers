@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.Music
         private readonly IAudioSource _primarySource, _secondarySource;
         
         public const float FADE_TIME_IN_S = 2;
+        public const float MAX_VOLUME = 0.75f;
 
         public LayeredMusicPlayer(IAudioVolumeFade audioVolumeFade, IAudioSource primarySource, IAudioSource secondarySource)
         {
@@ -28,7 +29,7 @@ namespace BattleCruisers.UI.Music
                 return;
             }
 
-            _primarySource.Volume = 1;
+            _primarySource.Volume = MAX_VOLUME;
             _primarySource.Play(isSpatial: false, loop: true);
 
             _secondarySource.Volume = 0;
@@ -37,7 +38,7 @@ namespace BattleCruisers.UI.Music
 
         public void PlaySecondary()
         {
-            _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: 1, FADE_TIME_IN_S);
+            _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: MAX_VOLUME, FADE_TIME_IN_S);
         }
 
         public void StopSecondary()

@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.UI.Music
             _primarySource.IsPlaying.Returns(false);
             _musicPlayer.Play();
 
-            _primarySource.Received().Volume = 1;
+            _primarySource.Received().Volume = LayeredMusicPlayer.MAX_VOLUME;
             _primarySource.Received().Play(isSpatial: false, loop: true);
 
             _secondarySource.Received().Volume = 0;
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlaySecondary()
         {
             _musicPlayer.PlaySecondary();
-            _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 1, LayeredMusicPlayer.FADE_TIME_IN_S);
+            _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: LayeredMusicPlayer.MAX_VOLUME, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
