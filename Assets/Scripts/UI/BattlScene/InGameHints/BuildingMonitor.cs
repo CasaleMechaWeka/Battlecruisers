@@ -9,21 +9,21 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
 {
     public class BuildingMonitor : IBuildingMonitor
     {
-        private readonly ICruiserController _aiCruiser;
+        private readonly ICruiserController _cruiser;
 
         public event EventHandler AirFactoryStarted;
         public event EventHandler NavalFactoryStarted;
         public event EventHandler OffensiveStarted;
 
-        public BuildingMonitor(ICruiserController aiCruiser)
+        public BuildingMonitor(ICruiserController cruiser)
         {
-            Assert.IsNotNull(aiCruiser);
+            Assert.IsNotNull(cruiser);
 
-            _aiCruiser = aiCruiser;
-            _aiCruiser.BuildingStarted += _aiCruiser_BuildingStarted;
+            _cruiser = cruiser;
+            _cruiser.BuildingStarted += _cruiser_BuildingStarted;
         }
 
-        private void _aiCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
+        private void _cruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
         {
             if (e.StartedBuilding is AirFactory)
             {

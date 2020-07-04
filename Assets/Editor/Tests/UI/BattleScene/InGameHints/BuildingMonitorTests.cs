@@ -11,14 +11,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     public class BuildingMonitorTests
     {
         private IBuildingMonitor _monitor;
-        private ICruiserController _aiCruiser;
+        private ICruiserController _cruiser;
         private IBuilding _airFactory, _navalFactory, _offensive;
 
         [SetUp]
         public void TestSetup()
         {
-            _aiCruiser = Substitute.For<ICruiserController>();
-            _monitor = new BuildingMonitor(_aiCruiser);
+            _cruiser = Substitute.For<ICruiserController>();
+            _monitor = new BuildingMonitor(_cruiser);
 
             _airFactory = new AirFactory();
             _navalFactory = new NavalFactory();
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             int eventCount = 0;
             _monitor.AirFactoryStarted += (sender, e) => eventCount++;
 
-            _aiCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_airFactory));
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_airFactory));
 
             Assert.AreEqual(1, eventCount);
         }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             int eventCount = 0;
             _monitor.NavalFactoryStarted += (sender, e) => eventCount++;
 
-            _aiCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_navalFactory));
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_navalFactory));
 
             Assert.AreEqual(1, eventCount);
         }
@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             int eventCount = 0;
             _monitor.OffensiveStarted += (sender, e) => eventCount++;
 
-            _aiCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_offensive));
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_offensive));
 
             Assert.AreEqual(1, eventCount);
         }
