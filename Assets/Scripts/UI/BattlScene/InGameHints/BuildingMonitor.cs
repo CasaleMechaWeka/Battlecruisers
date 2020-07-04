@@ -14,9 +14,8 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         public event EventHandler AirFactoryStarted;
         public event EventHandler NavalFactoryStarted;
         public event EventHandler OffensiveStarted;
-        // FELIX  Update tests
-        public event EventHandler ShipDefensiveStarted;
         public event EventHandler AirDefensiveStarted;
+        public event EventHandler ShipDefensiveStarted;
         public event EventHandler ShieldStarted;
 
         public BuildingMonitor(ICruiserController cruiser)

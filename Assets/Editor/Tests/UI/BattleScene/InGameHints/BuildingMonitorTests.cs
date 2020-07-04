@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     {
         private IBuildingMonitor _monitor;
         private ICruiserController _cruiser;
-        private IBuilding _airFactory, _navalFactory, _offensive;
+        private IBuilding _airFactory, _navalFactory, _building;
 
         [SetUp]
         public void TestSetup()
@@ -23,8 +23,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _airFactory = new AirFactory();
             _navalFactory = new NavalFactory();
 
-            _offensive = Substitute.For<IBuilding>();
-            _offensive.Category.Returns(BuildingCategory.Offence);
+            _building = Substitute.For<IBuilding>();
         }
 
         [Test]
@@ -54,8 +53,47 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         {
             int eventCount = 0;
             _monitor.OffensiveStarted += (sender, e) => eventCount++;
+            _building.Category.Returns(BuildingCategory.Offence);
 
-            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_offensive));
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
+
+            Assert.AreEqual(1, eventCount);
+        }
+
+        [Test]
+        public void BuildingStarted_AirDefensive()
+        {
+            int eventCount = 0;
+            _monitor.AirDefensiveStarted += (sender, e) => eventCount++;
+            _building.Category.Returns(BuildingCategory.Defence);
+            _building.SlotSpecification.BuildingFunction.Returns(BuildingFunction.AntiAir);
+
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
+
+            Assert.AreEqual(1, eventCount);
+        }
+
+        [Test]
+        public void BuildingStarted_ShipDefensive()
+        {
+            int eventCount = 0;
+            _monitor.ShipDefensiveStarted += (sender, e) => eventCount++;
+            _building.Category.Returns(BuildingCategory.Defence);
+            _building.SlotSpecification.BuildingFunction.Returns(BuildingFunction.AntiShip);
+
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
+
+            Assert.AreEqual(1, eventCount);
+        }
+
+        [Test]
+        public void BuildingStarted_Shield()
+        {
+            int eventCount = 0;
+            _monitor.ShieldStarted += (sender, e) => eventCount++;
+            _building.SlotSpecification.BuildingFunction.Returns(BuildingFunction.Shield);
+
+            _cruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs(_building));
 
             Assert.AreEqual(1, eventCount);
         }

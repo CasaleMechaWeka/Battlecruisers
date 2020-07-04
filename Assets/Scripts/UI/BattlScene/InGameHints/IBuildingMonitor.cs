@@ -7,8 +7,8 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         event EventHandler AirFactoryStarted;
         event EventHandler NavalFactoryStarted;
         event EventHandler OffensiveStarted;
-        event EventHandler ShipDefensiveStarted;
         event EventHandler AirDefensiveStarted;
+        event EventHandler ShipDefensiveStarted;
         event EventHandler ShieldStarted;
     }
 }
