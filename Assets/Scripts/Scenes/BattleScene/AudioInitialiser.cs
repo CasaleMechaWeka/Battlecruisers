@@ -47,16 +47,17 @@ namespace BattleCruisers.Scenes.BattleScene
             IDeferrer deferrer,
             IBattleCompletionHandler battleCompletionHandler)
         {
+            IDangerMonitor dangerMonitor 
+                = new DangerMonitor(
+                    deferrer,
+                    playerCruiser,
+                    aiCruiser,
+                    new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
+                    new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f));
             return
                 new LevelMusicPlayer(
                     musicPlayer,
-                    new DangerMonitor(
-                        deferrer,
-                        playerCruiser,
-                        aiCruiser,
-                        new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
-                        new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f)),
-                    deferrer,
+                    new DangerMonitorSummariser(dangerMonitor),
                     battleCompletionHandler);
         }
 

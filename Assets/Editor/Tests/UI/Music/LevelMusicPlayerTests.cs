@@ -28,7 +28,8 @@ namespace BattleCruisers.Tests.UI.Music
             _deferrer = Substitute.For<IDeferrer>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
 
-            _levelMusicPlayer = new LevelMusicPlayer(_musicPlayer, _dangerMonitor, _deferrer, _battleCompletionHandler);
+            // FELIX  Fix :)
+            _levelMusicPlayer = new LevelMusicPlayer(_musicPlayer, null, _battleCompletionHandler);
 
             _deferredActions = new List<Action>();
             _deferrer.Defer(Arg.Do<Action>(action => _deferredActions.Add(action)), EXPECTED_DEFER_TIME_IN_S);
