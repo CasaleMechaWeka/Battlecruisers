@@ -5,6 +5,7 @@ using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
+using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -34,6 +35,8 @@ namespace BattleCruisers.UI.Cameras
         public Camera mainCamera;
         public Skybox skybox;
         public NavigationButtonsPanel navigationButtonsPanel;
+        public float overviewPositionEqualityMarginInM = 2;
+        public float overviewOrthographicSizeEqualityMargin = 2;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
@@ -94,7 +97,11 @@ namespace BattleCruisers.UI.Cameras
                 = new IndirectCameraFocuser(
                     coreCameraFocuser,
                     camera,
-                    _cameraAdjuster);
+                    new CameraTargetTracker(
+                        camera,
+                        targets.OverviewTarget,
+                        overviewPositionEqualityMarginInM,
+                        overviewOrthographicSizeEqualityMargin));
 
             navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
 

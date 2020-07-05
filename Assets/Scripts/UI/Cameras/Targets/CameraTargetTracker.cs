@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.Cameras.Targets
             _orthographicSizeEqualityMargin = orthographicSizeEqualityMargin;
 
             _isOnTarget = new SettableBroadcastingProperty<bool>(initialValue: FindIfOnTarget());
+            IsOnTarget = new BroadcastingProperty<bool>(_isOnTarget);
 
             _camera.PositionChanged += CameraChanged;
             _camera.OrthographicSizeChanged += CameraChanged;

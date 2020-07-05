@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Cameras.Adjusters;
+﻿using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -20,25 +20,30 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     {
         private readonly ICameraFocuser _coreFocuser;
         private readonly ICamera _camera;
-        private readonly ICameraAdjuster _cameraAdjuster;
+        private readonly ICameraTargetTracker _overviewTargetTracker;
         private IndirectFocusTarget _indirectFocusTarget;
 
         public const float INDIRECTION_BUFFER_IN_M = 10;
 
-        public IndirectCameraFocuser(ICameraFocuser coreFocuser, ICamera camera, ICameraAdjuster cameraAdjuster)
+        public IndirectCameraFocuser(ICameraFocuser coreFocuser, ICamera camera, ICameraTargetTracker overviewTargetTracker)
         {
-            Helper.AssertIsNotNull(coreFocuser, camera, cameraAdjuster);
+            Helper.AssertIsNotNull(coreFocuser, camera, overviewTargetTracker);
 
             _coreFocuser = coreFocuser;
             _camera = camera;
-            _cameraAdjuster = cameraAdjuster;
+            _overviewTargetTracker = overviewTargetTracker;
             _indirectFocusTarget = IndirectFocusTarget.None;
 
-            _cameraAdjuster.CompletedAdjustment += _cameraAdjuster_CompletedAdjustment;
+            _overviewTargetTracker.IsOnTarget.ValueChanged += IsOnTarget_ValueChanged;
         }
 
-        private void _cameraAdjuster_CompletedAdjustment(object sender, EventArgs e)
+        private void IsOnTarget_ValueChanged(object sender, EventArgs e)
         {
+            if (!_overviewTargetTracker.IsOnTarget.Value)
+            {
+                return;
+            }
+
             switch (_indirectFocusTarget)
             {
                 case IndirectFocusTarget.PlayerCruiser:
