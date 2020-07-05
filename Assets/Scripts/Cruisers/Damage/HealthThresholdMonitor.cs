@@ -18,7 +18,6 @@ namespace BattleCruisers.Cruisers.Damage
         private const float MAX_THRESHOLD = 1;
 
         public event EventHandler DroppedBelowThreshold;
-        // FELIX  Update test :)
         public event EventHandler RoseAboveThreshold;
 
         public HealthThresholdMonitor(IDamagable damagable, float thresholdProportion)

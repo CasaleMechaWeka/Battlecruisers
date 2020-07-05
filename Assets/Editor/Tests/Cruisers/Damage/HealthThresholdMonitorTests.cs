@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         private IHealthThresholdMonitor _monitor;
         private IDamagable _damagable;
         private float _thresholdHealth;
-        private int _eventCount;
+        private int _belowCount, _aboveCount;
 
         [SetUp]
         public void TestSetup()
@@ -24,8 +24,11 @@ namespace BattleCruisers.Tests.Cruisers.Damage
 
             _monitor = new HealthThresholdMonitor(_damagable, thresholdProportion);
 
-            _eventCount = 0;
-            _monitor.DroppedBelowThreshold += (sender, e) => _eventCount++;
+            _belowCount = 0;
+            _monitor.DroppedBelowThreshold += (sender, e) => _belowCount++;
+
+            _aboveCount = 0;
+            _monitor.RoseAboveThreshold += (sender, e) => _aboveCount++;
         }
 
         [Test]
@@ -33,7 +36,8 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         {
             _damagable.Health.Returns(_thresholdHealth + 1);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(0, _eventCount);
+            Assert.AreEqual(0, _belowCount);
+            Assert.AreEqual(0, _aboveCount);
         }
 
         [Test]
@@ -41,8 +45,10 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         {
             _damagable.Health.Returns(_thresholdHealth - 1);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(1, _eventCount);
+            Assert.AreEqual(1, _belowCount);
+            Assert.AreEqual(0, _aboveCount);
         }
+
 
         [Test]
         public void HealthChange_BelowThresholdSecondTime_DoesNotEmitEvent()
@@ -50,12 +56,14 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             // Go below threshold
             _damagable.Health.Returns(_thresholdHealth - 1);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(1, _eventCount);
+            Assert.AreEqual(1, _belowCount);
+            Assert.AreEqual(0, _aboveCount);
 
             // Go even further below threshold
             _damagable.Health.Returns(_thresholdHealth - 2);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(1, _eventCount);
+            Assert.AreEqual(1, _belowCount);
+            Assert.AreEqual(0, _aboveCount);
         }
 
         [Test]
@@ -64,17 +72,20 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             // Go below threshold
             _damagable.Health.Returns(_thresholdHealth - 1);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(1, _eventCount);
+            Assert.AreEqual(1, _belowCount);
+            Assert.AreEqual(0, _aboveCount);
 
             // Go above threshold
             _damagable.Health.Returns(_thresholdHealth + 1);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(1, _eventCount);
+            Assert.AreEqual(1, _belowCount);
+            Assert.AreEqual(1, _aboveCount);
 
             // Go below threshold again
             _damagable.Health.Returns(_thresholdHealth - 1);
             _damagable.HealthChanged += Raise.Event();
-            Assert.AreEqual(2, _eventCount);
+            Assert.AreEqual(2, _belowCount);
+            Assert.AreEqual(1, _aboveCount);
         }
     }
 }
