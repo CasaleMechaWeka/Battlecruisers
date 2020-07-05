@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityCommon.PlatformAbstractions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -35,7 +34,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         public float Aspect => _platformCamera.aspect;
         public float PixelWidth => _platformCamera.pixelWidth;
         public float PixelHeight => _platformCamera.pixelHeight;
-        public ITransform Transform { get; }
         
         public float FieldOfView
         {
@@ -47,8 +45,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		{
 			Assert.IsNotNull(platformCamera);
 			_platformCamera = platformCamera;
-
-            Transform = new TransformBC(_platformCamera.transform);
 		}
 
         // Not a getter as the value needs to be calculated.  Ie, not a straight

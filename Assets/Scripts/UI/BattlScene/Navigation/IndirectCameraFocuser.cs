@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnAICruiser()
         {
-            if (_camera.Transform.Position.x + INDIRECTION_BUFFER_IN_M > 0)
+            if (_camera.Position.x + INDIRECTION_BUFFER_IN_M > 0)
             {
                 // Direct
                 _indirectFocusTarget = IndirectFocusTarget.None;
@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnPlayerCruiser()
         {
-            if (_camera.Transform.Position.x - INDIRECTION_BUFFER_IN_M < 0)
+            if (_camera.Position.x - INDIRECTION_BUFFER_IN_M < 0)
             {
                 // Direct
                 _indirectFocusTarget = IndirectFocusTarget.None;

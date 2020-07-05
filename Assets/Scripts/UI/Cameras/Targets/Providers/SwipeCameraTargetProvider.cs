@@ -54,11 +54,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             {
                 // Interpret as horizontal swipe => horizontal scrolling
                 float targetXPosition = FindTargetXPosition(e.PointerEventData.Delta.x);
-                Logging.Log(Tags.SWIPE_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Transform.Position.x}");
+                Logging.Log(Tags.SWIPE_NAVIGATION, $"targetXPosition: {targetXPosition}  currentXPosition: {_camera.Position.x}");
 
                 Target
                     = new CameraTarget(
-                        new Vector3(targetXPosition, _camera.Transform.Position.y, _camera.Transform.Position.z),
+                        new Vector3(targetXPosition, _camera.Position.y, _camera.Position.z),
                         _camera.OrthographicSize);
             }
             else
@@ -80,7 +80,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private float FindTargetXPosition(float dragDeltaX)
         {
             float cameraDeltaX = _scrollCalculator.FindScrollDelta(dragDeltaX);
-            float targetXPosition = _camera.Transform.Position.x + cameraDeltaX;
+            float targetXPosition = _camera.Position.x + cameraDeltaX;
 
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize);
             return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);

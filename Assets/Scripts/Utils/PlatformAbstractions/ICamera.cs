@@ -14,7 +14,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         float PixelWidth { get; }
         float PixelHeight { get; }
         float FieldOfView { get; set; }
-        ITransform Transform { get; }
+        Vector3 Position { get; set; }
 
         Vector2 GetSize();
         Vector3 WorldToViewportPoint(Vector3 worldPoint);

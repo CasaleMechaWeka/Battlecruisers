@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerCruiserIfNeeded_CameraRoughlyOnCruiser_DoesNotMoveCamera()
         {
             _playerCruiser.Position.Returns(Vector2.zero);
-            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.PLAYER_CRUISER_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
+            _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.PLAYER_CRUISER_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
@@ -50,7 +50,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerCruiserIfNeeded_CameraNotRoughlyOnCruiser_MovesCamera()
         {
             _playerCruiser.Position.Returns(Vector2.zero);
-            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.PLAYER_CRUISER_CAMERA_MARGIN_IN_M, 0, 0));
+            _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.PLAYER_CRUISER_CAMERA_MARGIN_IN_M, 0, 0));
 
             _helper.FocusOnPlayerCruiserIfNeeded();
 
@@ -61,7 +61,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerBowSlotIfNeeded_CameraRoughlyOnBowSlot_DoesNotMoveCamera()
         {
             _bowSlot.Position.Returns(Vector2.zero);
-            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
+            _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
 
             _helper.FocusOnPlayerBowSlotIfNeeded();
 
@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void FocusOnPlayerBowSlotIfNeeded_CameraNOtRoughlyOnBowSlot_MovesCamera()
         {
             _bowSlot.Position.Returns(Vector2.zero);
-            _camera.Transform.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M, 0, 0));
+            _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M, 0, 0));
 
             _helper.FocusOnPlayerBowSlotIfNeeded();
 

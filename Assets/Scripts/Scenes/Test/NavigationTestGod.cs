@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes.Test
             IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
             CameraTarget target 
                 = new CameraTarget(
-                    position: new Vector3(-35, 0, _camera.Transform.Position.z), 
+                    position: new Vector3(-35, 0, _camera.Position.z), 
                     orthographicSize: _cameraCalculatorSettings.ValidOrthographicSizes.Min);
             defaultCameraTargetProvider.SetTarget(target);
 
@@ -67,13 +67,13 @@ namespace BattleCruisers.Scenes.Test
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(_camera, time, smoothTime),
-                    new SmoothPositionAdjuster(_camera.Transform, time, smoothTime));
+                    new SmoothPositionAdjuster(_camera, time, smoothTime));
         }
 
         protected virtual void Update()
         {
             _cameraAdjuster?.AdjustCamera();
-            //Debug.Log("Camera position: " + _camera.Transform.Position + "  Orthographic size: " + _camera.OrthographicSize);
+            //Debug.Log("Camera position: " + _camera.Position + "  Orthographic size: " + _camera.OrthographicSize);
         }
     }
 }

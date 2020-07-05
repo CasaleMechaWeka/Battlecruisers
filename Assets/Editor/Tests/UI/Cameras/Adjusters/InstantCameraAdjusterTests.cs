@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
         {
             _adjuster.AdjustCamera();
 
-            Assert.AreEqual(_cameraTarget.Position, _camera.Transform.Position);
+            Assert.AreEqual(_cameraTarget.Position, _camera.Position);
             Assert.AreEqual(_cameraTarget.OrthographicSize, _camera.OrthographicSize);
             Assert.AreEqual(1, _adjustmentCompletedCounter);
         }

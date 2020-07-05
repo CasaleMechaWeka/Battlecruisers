@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _cameraCalculator = Substitute.For<ICameraCalculator>();
             _validOrthographicSizes = new Range<float>(5, 40);
 
-            _camera.Transform.Position.Returns(new Vector3(1, 2, 3));
+            _camera.Position.Returns(new Vector3(1, 2, 3));
             _camera.OrthographicSize.Returns(17);
             _camera.Aspect.Returns(1.33f);
 
@@ -43,9 +43,9 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetOrthographicSize = _validOrthographicSizes.Min + _orthographicSizeDelta;
 
             // Find target camera x position
-            IRange<float> validXPositions = new Range<float>(_camera.Transform.Position.x - 5, _camera.Transform.Position.x + 5);
+            IRange<float> validXPositions = new Range<float>(_camera.Position.x - 5, _camera.Position.x + 5);
             _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize).Returns(validXPositions);
-            float targetXPosition = _camera.Transform.Position.x;
+            float targetXPosition = _camera.Position.x;
 
             // Find target camera y position
             float targetYPosition = 17;
@@ -53,7 +53,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
             ICameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
@@ -69,7 +69,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetOrthographicSize = _validOrthographicSizes.Max;
 
             // Find target camera x position
-            IRange<float> validXPositions = new Range<float>(_camera.Transform.Position.x - 5, _camera.Transform.Position.x - 1);
+            IRange<float> validXPositions = new Range<float>(_camera.Position.x - 5, _camera.Position.x - 1);
             _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize).Returns(validXPositions);
             float targetXPosition = validXPositions.Max;
 
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
             ICameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
@@ -95,7 +95,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetOrthographicSize = _validOrthographicSizes.Min;
 
             // Find target camera x position
-            IRange<float> validXPositions = new Range<float>(_camera.Transform.Position.x + 1, _camera.Transform.Position.x + 5);
+            IRange<float> validXPositions = new Range<float>(_camera.Position.x + 1, _camera.Position.x + 5);
             _cameraCalculator.FindValidCameraXPositions(targetOrthographicSize).Returns(validXPositions);
             float targetXPosition = validXPositions.Min;
 
@@ -105,7 +105,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
             ICameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
@@ -135,7 +135,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
                     contactViewportPosition,
                     targetOrthographicSize,
                     _camera.Aspect,
-                    _camera.Transform.Position.z)
+                    _camera.Position.z)
                 .Returns(contactZoomPosition);
 
             IRange<float> validXPositions = new Range<float>(contactZoomPosition.x - 5, contactZoomPosition.x + 5);
@@ -148,7 +148,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
             ICameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
@@ -176,7 +176,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
                     contactViewportPosition,
                     targetOrthographicSize,
                     _camera.Aspect,
-                    _camera.Transform.Position.z)
+                    _camera.Position.z)
                 .Returns(contactZoomPosition);
 
             IRange<float> validXPositions = new Range<float>(contactZoomPosition.x - 5, contactZoomPosition.x - 1);
@@ -189,7 +189,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
             ICameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
@@ -217,7 +217,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
                     contactViewportPosition,
                     targetOrthographicSize,
                     _camera.Aspect,
-                    _camera.Transform.Position.z)
+                    _camera.Position.z)
                 .Returns(contactZoomPosition);
 
             IRange<float> validXPositions = new Range<float>(contactZoomPosition.x + 1, contactZoomPosition.x + 5);
@@ -230,7 +230,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(targetXPosition, targetYPosition, _camera.Transform.Position.z),
+                    new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
             ICameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);

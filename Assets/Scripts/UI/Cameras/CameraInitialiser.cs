@@ -82,7 +82,7 @@ namespace BattleCruisers.UI.Cameras
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
                     new SmoothZoomAdjuster(camera, time, cameraSmoothTime),
-                    new SmoothPositionAdjuster(camera.Transform, time, cameraSmoothTime));
+                    new SmoothPositionAdjuster(camera, time, cameraSmoothTime));
 
             CameraFocuser coreCameraFocuser 
                 = new CameraFocuser(

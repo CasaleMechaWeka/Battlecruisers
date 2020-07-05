@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _inputEndedCount = 0;
             _targetProvider.UserInputEnded += (sender, e) => _inputEndedCount++;
 
-            _camera.Transform.Position.Returns(new Vector3(4, 8, 12));
+            _camera.Position.Returns(new Vector3(4, 8, 12));
             _camera.OrthographicSize.Returns(-17.3f);
 
             _pointerEventData = Substitute.For<IPointerEventData>();
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             float cameraDeltaX = -7.7f;
             _scrollCalculator.FindScrollDelta(_pointerEventData.Delta.x).Returns(cameraDeltaX);
 
-            float targetXPosition = _camera.Transform.Position.x + cameraDeltaX;
+            float targetXPosition = _camera.Position.x + cameraDeltaX;
 
             IRange<float> validXPositions = new Range<float>(17, 71);
             _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize).Returns(validXPositions);
@@ -99,7 +99,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
             ICameraTarget expectedTarget
                 = new CameraTarget(
-                    new Vector3(clampedXPosition, _camera.Transform.Position.y, _camera.Transform.Position.z),
+                    new Vector3(clampedXPosition, _camera.Position.y, _camera.Position.z),
                     _camera.OrthographicSize);
 
             _dragTracker.Drag += Raise.EventWith(_dragEventArgs);

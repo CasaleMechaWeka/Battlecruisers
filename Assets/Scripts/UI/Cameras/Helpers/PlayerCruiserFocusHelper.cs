@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         private bool IsCameraRoughlyOnPlayerCruiser()
         {
-            return Vector2.Distance(_camera.Transform.Position, _playerCruiser.Position) < PLAYER_CRUISER_CAMERA_MARGIN_IN_M;
+            return Vector2.Distance(_camera.Position, _playerCruiser.Position) < PLAYER_CRUISER_CAMERA_MARGIN_IN_M;
         }
 
         public void FocusOnPlayerBowSlotIfNeeded()
@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
             Assert.IsNotNull(bowSlot);
 
-            return Vector2.Distance(_camera.Transform.Position, bowSlot.Position) < BOW_SLOT_CAMERA_MARGIN_IN_M;
+            return Vector2.Distance(_camera.Position, bowSlot.Position) < BOW_SLOT_CAMERA_MARGIN_IN_M;
         }
     }
 }

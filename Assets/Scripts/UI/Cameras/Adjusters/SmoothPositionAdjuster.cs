@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Utils;
-using UnityCommon.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 {
     public class SmoothPositionAdjuster : ISmoothPositionAdjuster
     {
-		private readonly ITransform _cameraTransform;
+		private readonly ICamera _camera;
         private readonly ITime _time;
         private readonly float _smoothTime;
 		private Vector3 _cameraPositionChangeVelocity;
@@ -17,12 +17,12 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 		private const float MIN_SMOOTH_TIME = 0;
 		private const float MAX_SPEED = 1000;
 
-        public SmoothPositionAdjuster(ITransform cameraTransform, ITime time, float smoothTime)
+        public SmoothPositionAdjuster(ICamera camera, ITime time, float smoothTime)
 		{
-            Helper.AssertIsNotNull(cameraTransform, time);
+            Helper.AssertIsNotNull(camera, time);
 			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
 
-			_cameraTransform = cameraTransform;
+			_camera = camera;
             _time = time;
 			_smoothTime = smoothTime;
 			_cameraPositionChangeVelocity = Vector3.zero;
@@ -30,13 +30,13 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
         public bool AdjustPosition(Vector3 targetPosition)
 		{
-			bool isInPosition = (_cameraTransform.Position - targetPosition).magnitude < POSITION_EQUALITY_MARGIN;
+			bool isInPosition = (_camera.Position - targetPosition).magnitude < POSITION_EQUALITY_MARGIN;
 
             if (!isInPosition)
             {
-                _cameraTransform.Position 
+                _camera.Position 
                     = Vector3.SmoothDamp(
-                        _cameraTransform.Position, 
+                        _camera.Position, 
                         targetPosition, 
                         ref _cameraPositionChangeVelocity, 
                         _smoothTime, 
@@ -45,10 +45,10 @@ namespace BattleCruisers.UI.Cameras.Adjusters
             }
             else
             {
-                _cameraTransform.Position = targetPosition;
+                _camera.Position = targetPosition;
             }
 
-            Logging.Verbose(Tags.CAMERA, $"target: {targetPosition}  Actual: {_cameraTransform.Position}");
+            Logging.Verbose(Tags.CAMERA, $"target: {targetPosition}  Actual: {_camera.Position}");
 
             return isInPosition;
 		}

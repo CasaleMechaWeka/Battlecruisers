@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 
         public override void AdjustCamera()
         {
-            _camera.Transform.Position = _cameraTargetProvider.Target.Position;
+            _camera.Position = _cameraTargetProvider.Target.Position;
             _camera.OrthographicSize = _cameraTargetProvider.Target.OrthographicSize;
             InvokeCompletedAdjustmentEvent();
         }

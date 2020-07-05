@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             AICruiserTarget = FindCruiserTarget(camera, cameraCalculator, aiCruiser);
 
             // Overview
-            Vector3 overviewPosition = camera.Transform.Position;
+            Vector3 overviewPosition = camera.Position;
             overviewPosition.y = cameraCalculator.FindCameraYPosition(cameraCalculatorSettings.ValidOrthographicSizes.Max);
             OverviewTarget = new CameraTarget(overviewPosition, cameraCalculatorSettings.ValidOrthographicSizes.Max);
 
@@ -65,14 +65,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
         {
             float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser);
-            Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Transform.Position.z);
+            Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
         private ICameraTarget CreateTarget(ICamera camera, ICameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
-            Vector3 position = new Vector3(xPosition, yPosition, camera.Transform.Position.z);
+            Vector3 position = new Vector3(xPosition, yPosition, camera.Position.z);
             return new CameraTarget(position, orthographicSize);
         }
     }
