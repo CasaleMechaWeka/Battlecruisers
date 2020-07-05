@@ -5,7 +5,6 @@ using UnityCommon.Properties;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
-    // FELIX  use, test
     public class CameraTargetTracker : ICameraTargetTracker
     {
         private readonly ICamera _camera;
