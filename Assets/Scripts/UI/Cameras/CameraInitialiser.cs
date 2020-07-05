@@ -100,6 +100,7 @@ namespace BattleCruisers.UI.Cameras
                     new CameraTargetTracker(
                         camera,
                         targets.OverviewTarget,
+                        new CameraTargetEqualityCalculator(),
                         overviewPositionEqualityMarginInM,
                         overviewOrthographicSizeEqualityMargin));
 
