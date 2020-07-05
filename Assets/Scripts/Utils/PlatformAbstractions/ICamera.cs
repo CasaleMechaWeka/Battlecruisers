@@ -7,6 +7,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
     public interface ICamera
 	{
         event EventHandler OrthographicSizeChanged;
+        event EventHandler PositionChanged;
 
 		float OrthographicSize { get; set; }
         float Aspect { get; }

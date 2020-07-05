@@ -10,11 +10,16 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		private readonly Camera _platformCamera;
 
         public event EventHandler OrthographicSizeChanged;
+        public event EventHandler PositionChanged;
 
         public Vector3 Position 
 		{ 
 			get { return _platformCamera.transform.position; }
-			set { _platformCamera.transform.position = value; }
+			set 
+            { 
+                _platformCamera.transform.position = value;
+                PositionChanged?.Invoke(this, EventArgs.Empty);
+            }
 		}
 
 		public float OrthographicSize
@@ -23,7 +28,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 			set
             {
                 _platformCamera.orthographicSize = value;
-
                 OrthographicSizeChanged?.Invoke(this, EventArgs.Empty);
             }
 		}
