@@ -2,7 +2,6 @@
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityCommon.Properties;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
@@ -12,8 +11,6 @@ namespace BattleCruisers.UI.Cameras.Targets
         private readonly ICamera _camera;
         private readonly ICameraTarget _target;
         private readonly ICameraTargetEqualityCalculator _equalityCalculator;
-        private readonly float _positionEqualityMarginInM;
-        private readonly float _orthographicSizeEqualityMargin;
 
         private readonly ISettableBroadcastingProperty<bool> _isOnTarget;
         public IBroadcastingProperty<bool> IsOnTarget { get; }
@@ -21,19 +18,13 @@ namespace BattleCruisers.UI.Cameras.Targets
         public CameraTargetTracker(
             ICamera camera, 
             ICameraTarget target,
-            ICameraTargetEqualityCalculator equalityCalculator,
-            float positionEqualityMarginInM, 
-            float orthographicSizeEqualityMargin)
+            ICameraTargetEqualityCalculator equalityCalculator)
         {
             Helper.AssertIsNotNull(camera, target, equalityCalculator);
-            Assert.IsTrue(positionEqualityMarginInM > 0);
-            Assert.IsTrue(orthographicSizeEqualityMargin > 0);
 
             _camera = camera;
             _target = target;
             _equalityCalculator = equalityCalculator;
-            _positionEqualityMarginInM = positionEqualityMarginInM;
-            _orthographicSizeEqualityMargin = orthographicSizeEqualityMargin;
 
             _isOnTarget = new SettableBroadcastingProperty<bool>(initialValue: FindIfOnTarget());
             IsOnTarget = new BroadcastingProperty<bool>(_isOnTarget);
@@ -49,7 +40,7 @@ namespace BattleCruisers.UI.Cameras.Targets
 
         private bool FindIfOnTarget()
         {
-            return _equalityCalculator.IsOnTarget(_target, _camera, _orthographicSizeEqualityMargin, _positionEqualityMarginInM);
+            return _equalityCalculator.IsOnTarget(_target, _camera);
         }
     }
 }

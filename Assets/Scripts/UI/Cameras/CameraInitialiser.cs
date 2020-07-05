@@ -100,9 +100,9 @@ namespace BattleCruisers.UI.Cameras
                     new CameraTargetTracker(
                         camera,
                         targets.OverviewTarget,
-                        new CameraTargetEqualityCalculator(),
-                        overviewPositionEqualityMarginInM,
-                        overviewOrthographicSizeEqualityMargin));
+                        new CameraTargetEqualityCalculator(
+                            overviewPositionEqualityMarginInM,
+                            overviewOrthographicSizeEqualityMargin)));
 
             navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
 
