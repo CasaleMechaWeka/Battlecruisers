@@ -15,7 +15,6 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     /// cruisers where the camera will show the overview before going to
     /// the actual cruiser.
     /// </summary>
-    /// FELIX  Use, test
     public class IndirectCameraFocuser : ICameraFocuser
     {
         private readonly ICameraFocuser _coreFocuser;
