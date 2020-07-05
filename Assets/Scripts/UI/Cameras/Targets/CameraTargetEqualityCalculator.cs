@@ -3,11 +3,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
-    // FELIX  use, test
     public class CameraTargetEqualityCalculator : ICameraTargetEqualityCalculator
     {
-        private readonly float _positionEqualityMarginInM;
-        private readonly float _orthographicSizeEqualityMargin;
+        private readonly float _positionEqualityMarginInM, _orthographicSizeEqualityMargin;
 
         public CameraTargetEqualityCalculator(float positionEqualityMarginInM, float orthographicSizeEqualityMargin)
         {
