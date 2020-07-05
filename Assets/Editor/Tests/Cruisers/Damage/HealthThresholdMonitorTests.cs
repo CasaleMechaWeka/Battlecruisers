@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
             _monitor = new HealthThresholdMonitor(_damagable, thresholdProportion);
 
             _eventCount = 0;
-            _monitor.ThresholdReached += (sender, e) => _eventCount++;
+            _monitor.DroppedBelowThreshold += (sender, e) => _eventCount++;
         }
 
         [Test]

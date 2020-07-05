@@ -17,7 +17,9 @@ namespace BattleCruisers.Cruisers.Damage
         private const float MIN_THRESHOLD = 0;
         private const float MAX_THRESHOLD = 1;
 
-        public event EventHandler ThresholdReached;
+        public event EventHandler DroppedBelowThreshold;
+        // FELIX  Update test :)
+        public event EventHandler RoseAboveThreshold;
 
         public HealthThresholdMonitor(IDamagable damagable, float thresholdProportion)
         {
@@ -38,7 +40,12 @@ namespace BattleCruisers.Cruisers.Damage
             if (_wasAboveThreshold
                 && _damagable.Health < _threshold)
             {
-                ThresholdReached?.Invoke(this, EventArgs.Empty);
+                DroppedBelowThreshold?.Invoke(this, EventArgs.Empty);
+            }
+            else if (!_wasAboveThreshold
+                && _damagable.Health >= _threshold)
+            {
+                RoseAboveThreshold?.Invoke(this, EventArgs.Empty);
             }
 
             _wasAboveThreshold = _damagable.Health >= _threshold;

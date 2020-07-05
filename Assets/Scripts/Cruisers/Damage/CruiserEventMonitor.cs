@@ -31,11 +31,11 @@ namespace BattleCruisers.Cruisers.Damage
             _soundPlayer = soundPlayer;
             _damagedDebouncer = damagedDebouncer;
 
-            _cruiserHealthThresholdMonitor.ThresholdReached += _cruiserHealthThresholdMonitor_ThresholdReached;
+            _cruiserHealthThresholdMonitor.DroppedBelowThreshold += _cruiserHealthThresholdMonitor_DroppedBelowThreshold;
             _cruiserDamageMonitor.CruiserOrBuildingDamaged += _cruiserDamageMonitor_CruiserOrBuildingDamaged;
         }
 
-        private void _cruiserHealthThresholdMonitor_ThresholdReached(object sender, EventArgs e)
+        private void _cruiserHealthThresholdMonitor_DroppedBelowThreshold(object sender, EventArgs e)
         {
             _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.SignificantlyDamaged);
         }
@@ -47,7 +47,7 @@ namespace BattleCruisers.Cruisers.Damage
 
         public void DisposeManagedState()
         {
-            _cruiserHealthThresholdMonitor.ThresholdReached -= _cruiserHealthThresholdMonitor_ThresholdReached;
+            _cruiserHealthThresholdMonitor.DroppedBelowThreshold -= _cruiserHealthThresholdMonitor_DroppedBelowThreshold;
             _cruiserDamageMonitor.CruiserOrBuildingDamaged -= _cruiserDamageMonitor_CruiserOrBuildingDamaged;
         }
     }

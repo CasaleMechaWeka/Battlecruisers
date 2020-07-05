@@ -38,8 +38,8 @@ namespace BattleCruisers.UI.Music
             _aiCruiser.BuildingMonitor.BuildingCompleted += Cruiser_BuildingCompleted;
             _aiCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
 
-            _playerCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;
-            _aiCruiserHealthMonitor.ThresholdReached += CruiserHealthMonitor_ThresholdReached;
+            _playerCruiserHealthMonitor.DroppedBelowThreshold += CruiserHealthMonitor_DroppedBelowThreshold;
+            _aiCruiserHealthMonitor.DroppedBelowThreshold += CruiserHealthMonitor_DroppedBelowThreshold;
         }
 
         private void Cruiser_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.Music
             }
         }
 
-        private void CruiserHealthMonitor_ThresholdReached(object sender, EventArgs e)
+        private void CruiserHealthMonitor_DroppedBelowThreshold(object sender, EventArgs e)
         {
             if (_playerCruiser.IsAlive
                 && _aiCruiser.IsAlive)

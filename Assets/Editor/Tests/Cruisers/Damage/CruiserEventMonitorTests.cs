@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.Cruisers.Damage
         [Test]
         public void CruiserHealthThresholdReached_PlaysSound()
         {
-            _cruiserHealthThresholdMonitor.ThresholdReached += Raise.Event();
+            _cruiserHealthThresholdMonitor.DroppedBelowThreshold += Raise.Event();
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Cruiser.SignificantlyDamaged);
         }
 
