@@ -23,6 +23,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private readonly ICameraAdjuster _cameraAdjuster;
         private IndirectFocusTarget _indirectFocusTarget;
 
+        public const float INDIRECTION_BUFFER_IN_M = 10;
+
         public IndirectCameraFocuser(ICameraFocuser coreFocuser, ICamera camera, ICameraAdjuster cameraAdjuster)
         {
             Helper.AssertIsNotNull(coreFocuser, camera, cameraAdjuster);
@@ -53,7 +55,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnAICruiser()
         {
-            if (_camera.Transform.Position.x > 0)
+            if (_camera.Transform.Position.x + INDIRECTION_BUFFER_IN_M > 0)
             {
                 // Direct
                 _indirectFocusTarget = IndirectFocusTarget.None;
@@ -69,7 +71,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public void FocusOnPlayerCruiser()
         {
-            if (_camera.Transform.Position.x < 0)
+            if (_camera.Transform.Position.x - INDIRECTION_BUFFER_IN_M < 0)
             {
                 // Direct
                 _indirectFocusTarget = IndirectFocusTarget.None;
