@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
-    // PERF  struct candidate :)
     public class CameraTarget : ICameraTarget
     {
 		public Vector3 Position { get; } 
