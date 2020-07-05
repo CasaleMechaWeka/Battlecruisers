@@ -40,13 +40,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             switch (_indirectFocusTarget)
             {
                 case IndirectFocusTarget.PlayerCruiser:
-                    FocusOnPlayerCruiser();
+                    _coreFocuser.FocusOnPlayerCruiser();
                     break;
 
                 case IndirectFocusTarget.AICruiser:
-                    FocusOnAICruiser();
+                    _coreFocuser.FocusOnAICruiser();
                     break;
             }
+
+            _indirectFocusTarget = IndirectFocusTarget.None;
         }
 
         public void FocusOnAICruiser()

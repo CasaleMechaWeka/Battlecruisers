@@ -84,11 +84,17 @@ namespace BattleCruisers.UI.Cameras
                     new SmoothZoomAdjuster(camera, time, cameraSmoothTime),
                     new SmoothPositionAdjuster(camera.Transform, time, cameraSmoothTime));
 
-            CameraFocuser cameraFocuser 
+            CameraFocuser coreCameraFocuser 
                 = new CameraFocuser(
                     targets,
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider);
+
+            ICameraFocuser cameraFocuser
+                = new IndirectCameraFocuser(
+                    coreCameraFocuser,
+                    camera,
+                    _cameraAdjuster);
 
             navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
 
