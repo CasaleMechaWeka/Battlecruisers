@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.Music
         private readonly IDeferrer _deferrer;
         private int _currentDangerCount;
 
+        // FELIX  Remove
         private const float DANGER_MUSIC_PLAY_TIME_IN_S = 15;
 
         public LevelMusicPlayer(
@@ -31,7 +32,7 @@ namespace BattleCruisers.UI.Music
             _deferrer = deferrer;
             _currentDangerCount = 0;
 
-            _dangerMonitor.Danger += _dangerMonitor_Danger;
+            _dangerMonitor.DangerStart += _dangerMonitor_Danger;
             battleCompletionHandler.BattleCompleted += (sender, e) => _musicPlayer.Stop();
 
             _musicPlayer.Play();

@@ -27,13 +27,14 @@ namespace BattleCruisers.Tests.UI.Music
             _playerCruiserHealthMonitor = Substitute.For<IHealthThresholdMonitor>();
             _aiCruiserHealthMonitor = Substitute.For<IHealthThresholdMonitor>();
 
-            _dangerMonitor = new DangerMonitor(_playerCruiser, _aiCruiser, _playerCruiserHealthMonitor, _aiCruiserHealthMonitor);
+            // FELIX  fix tests :)
+            _dangerMonitor = new DangerMonitor(null, _playerCruiser, _aiCruiser, _playerCruiserHealthMonitor, _aiCruiserHealthMonitor);
 
             _buildingCompleted = Substitute.For<IBuilding>();
             _unitCompleted = Substitute.For<IUnit>();
 
             _dangerEventCount = 0;
-            _dangerMonitor.Danger += (sender, e) => _dangerEventCount++;
+            _dangerMonitor.DangerStart += (sender, e) => _dangerEventCount++;
         }
 
         [Test]

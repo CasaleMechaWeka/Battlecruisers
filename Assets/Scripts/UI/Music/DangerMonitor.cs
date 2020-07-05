@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using System;
 
 namespace BattleCruisers.UI.Music
@@ -15,19 +16,25 @@ namespace BattleCruisers.UI.Music
     /// </summary>
     public class DangerMonitor : IDangerMonitor
     {
+        private readonly IDeferrer _timeScaleDeferrer;
         private readonly ICruiserController _playerCruiser, _aiCruiser;
         private readonly IHealthThresholdMonitor _playerCruiserHealthMonitor, _aiCruiserHealthMonitor;
-
-        public event EventHandler Danger;
         
+        private const float DANGER_LIFETIME_IN_S = 15;
+
+        public event EventHandler DangerStart;
+        public event EventHandler DangerEnd;
+
         public DangerMonitor(
+            IDeferrer timeScaleDeferrer,
             ICruiserController playerCruiser, 
             ICruiserController aiCruiser,
             IHealthThresholdMonitor playerCruiserHealthMonitor,
             IHealthThresholdMonitor aiCruiserHealthMonitor)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, playerCruiserHealthMonitor, aiCruiserHealthMonitor);
+            Helper.AssertIsNotNull(timeScaleDeferrer, timeScaleDeferrer, playerCruiser, aiCruiser, playerCruiserHealthMonitor, aiCruiserHealthMonitor);
 
+            _timeScaleDeferrer = timeScaleDeferrer;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _playerCruiserHealthMonitor = playerCruiserHealthMonitor;
@@ -39,7 +46,9 @@ namespace BattleCruisers.UI.Music
             _aiCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
 
             _playerCruiserHealthMonitor.DroppedBelowThreshold += CruiserHealthMonitor_DroppedBelowThreshold;
+            _playerCruiserHealthMonitor.RoseAboveThreshold += CruiserHealthMonitor_RoseAboveThreshold;
             _aiCruiserHealthMonitor.DroppedBelowThreshold += CruiserHealthMonitor_DroppedBelowThreshold;
+            _aiCruiserHealthMonitor.RoseAboveThreshold += CruiserHealthMonitor_RoseAboveThreshold;
         }
 
         private void Cruiser_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
@@ -47,7 +56,7 @@ namespace BattleCruisers.UI.Music
             if (e.CompletedBuilding.Category == BuildingCategory.Offence
                 || e.CompletedBuilding.Category == BuildingCategory.Ultra)
             {
-                EmitDanger();
+                EmitDangerStart();
             }
         }
 
@@ -55,7 +64,7 @@ namespace BattleCruisers.UI.Music
         {
             if (e.CompletedUnit.IsUltra)
             {
-                EmitDanger();
+                EmitDangerStart();
             }
         }
 
@@ -64,13 +73,28 @@ namespace BattleCruisers.UI.Music
             if (_playerCruiser.IsAlive
                 && _aiCruiser.IsAlive)
             {
-                EmitDanger();
+                EmitDangerStart(deferDangerEnd: false);
             }
         }
 
-        private void EmitDanger()
+        private void CruiserHealthMonitor_RoseAboveThreshold(object sender, EventArgs e)
         {
-            Danger?.Invoke(this, EventArgs.Empty);
+            EmitDangerEnd();
+        }
+
+        private void EmitDangerStart(bool deferDangerEnd = true)
+        {
+            DangerStart?.Invoke(this, EventArgs.Empty);
+
+            if (deferDangerEnd)
+            {
+                _timeScaleDeferrer.Defer(EmitDangerEnd, DANGER_LIFETIME_IN_S);
+            }
+        }
+
+        private void EmitDangerEnd()
+        {
+            DangerEnd?.Invoke(this, EventArgs.Empty);
         }
     }
 }

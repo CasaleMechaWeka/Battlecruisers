@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.UI.Music
         [Test]
         public void DangerEvent_PlaysDangerMusic_DefersChangeMusicBack()
         {
-            _dangerMonitor.Danger += Raise.Event();
+            _dangerMonitor.DangerStart += Raise.Event();
 
             _musicPlayer.Received().PlaySecondary();
             Assert.AreEqual(1, _deferredActions.Count);
@@ -56,11 +56,11 @@ namespace BattleCruisers.Tests.UI.Music
         public void SecondDangerBeforeDeferralRuns_DoesNotStopDangerMusic()
         {
             // First danger event
-            _dangerMonitor.Danger += Raise.Event();
+            _dangerMonitor.DangerStart += Raise.Event();
             Assert.AreEqual(1, _deferredActions.Count);
 
             // Second danger event
-            _dangerMonitor.Danger += Raise.Event();
+            _dangerMonitor.DangerStart += Raise.Event();
             Assert.AreEqual(2, _deferredActions.Count);
 
             // Run first deferral => Does nothing

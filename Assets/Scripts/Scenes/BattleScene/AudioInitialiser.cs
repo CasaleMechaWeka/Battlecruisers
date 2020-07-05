@@ -51,6 +51,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 new LevelMusicPlayer(
                     musicPlayer,
                     new DangerMonitor(
+                        deferrer,
                         playerCruiser,
                         aiCruiser,
                         new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
