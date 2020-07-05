@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
-    // FELIX  Test :)
     public class DangerMonitorSummariser : IDangerMonitorSummariser
     {
         private readonly IDangerMonitor _dangerMonitor;
@@ -39,6 +38,7 @@ namespace BattleCruisers.UI.Music
 
         private void _dangerMonitor_DangerEnd(object sender, EventArgs e)
         {
+            Assert.IsTrue(_activeDangerEventCount > 0, "Should not get a danger end before the corresponing danger start event :/");
             _activeDangerEventCount--;
 
             if (_activeDangerEventCount == 0)
