@@ -25,7 +25,6 @@ namespace BattleCruisers.UI.Music
             _musicPlayer.Play();
         }
 
-        // FELIX  Update tests
         private void IsInDanger_ValueChanged(object sender, EventArgs e)
         {
             if (_dangerMonitorSummariser.IsInDanger.Value)
