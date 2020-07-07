@@ -12,6 +12,7 @@ namespace BattleCruisers.Data.Settings
 			public const string ZoomSpeedLevel = "ZoomSpeed";
             public const string ScrollSpeed = "ScrollSpeed";
             public const string MuteMusic = "MuteMusic";
+            public const string MuteVoices = "MuteVoices";
             public const string ShowInGameHints = "ShowInGameHints";
         }
 
@@ -78,6 +79,18 @@ namespace BattleCruisers.Data.Settings
             }
         }
 
+        public bool MuteVoices
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(Keys.MuteVoices) == TRUE;
+            }
+            set
+            {
+                PlayerPrefs.SetInt(Keys.MuteVoices, value ? TRUE : FALSE);
+            }
+        }
+
         public bool ShowInGameHints
         {
             get
@@ -96,6 +109,7 @@ namespace BattleCruisers.Data.Settings
                 || !PlayerPrefs.HasKey(Keys.ZoomSpeedLevel)
                 || !PlayerPrefs.HasKey(Keys.ScrollSpeed)
                 || !PlayerPrefs.HasKey(Keys.MuteMusic)
+                || !PlayerPrefs.HasKey(Keys.MuteVoices)
                 || !PlayerPrefs.HasKey(Keys.ShowInGameHints))
             {
                 CreateSettings();
@@ -108,6 +122,7 @@ namespace BattleCruisers.Data.Settings
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
 			ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
             MuteMusic = false;
+            MuteVoices = false;
             ShowInGameHints = true;
 
             Save();
