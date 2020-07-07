@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
-        public ToggleController muteMusicToggle, showInGameHintsToggle;
+        public ToggleController muteMusicToggle, muteVoicesToggle, showInGameHintsToggle;
         public CancelButton cancelButton;
 
         public void Initialise(
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, showInGameHintsToggle, cancelButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, cancelButton);
             Helper.AssertIsNotNull(settingsManager, musicPlayer);
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
@@ -43,6 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             scrollSlider.Initialise(settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
             muteMusicToggle.Initialise(settingsManager.MuteMusic);
+            muteVoicesToggle.Initialise(settingsManager.MuteVoices);
             showInGameHintsToggle.Initialise(settingsManager.ShowInGameHints);
 
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
@@ -57,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
                     muteMusicToggle.IsChecked,
+                    muteVoicesToggle.IsChecked,
                     showInGameHintsToggle.IsChecked,
                     this);
 
