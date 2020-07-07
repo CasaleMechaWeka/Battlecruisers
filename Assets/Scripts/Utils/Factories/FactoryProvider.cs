@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -65,9 +66,9 @@ namespace BattleCruisers.Utils.Factories
         }
 
         // Not in constructor because of circular dependency
-        public void Initialise(IUIManager uiManager)
+        public void Initialise(IUIManager uiManager, ISettingsManager settingsManager)
         {
-            Assert.IsNotNull(uiManager);
+            Helper.AssertIsNotNull(uiManager, settingsManager);
 
             IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
             DroneMonitor = new DroneMonitor(droneFactory);
@@ -76,7 +77,7 @@ namespace BattleCruisers.Utils.Factories
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
 
-            Sound = new SoundFactoryProvider(_components, poolProviders);
+            Sound = new SoundFactoryProvider(_components, poolProviders, settingsManager);
         }
 	}
 }

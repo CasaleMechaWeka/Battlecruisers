@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Scenes.BattleScene;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -15,17 +15,17 @@ namespace BattleCruisers.Utils.Factories
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 
-        public SoundFactoryProvider(IBattleSceneGodComponents components, IPoolProviders poolProviders)
+        public SoundFactoryProvider(IBattleSceneGodComponents components, IPoolProviders poolProviders, ISettingsManager settingsManager)
 		{
-            Helper.AssertIsNotNull(components, poolProviders);
+            Helper.AssertIsNotNull(components, poolProviders, settingsManager);
 
             SoundFetcher = new SoundFetcher();
             SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
             ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
-            PrioritisedSoundPlayer = new PrioritisedSoundPlayer(singleSoundPlayer);
             UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();
+            PrioritisedSoundPlayer = settingsManager.MuteVoices ? DummySoundPlayer : new PrioritisedSoundPlayer(singleSoundPlayer);
         }
 	}
 }
