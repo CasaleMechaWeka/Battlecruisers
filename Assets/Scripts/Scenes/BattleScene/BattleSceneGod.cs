@@ -24,6 +24,7 @@ using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityCommon.PlatformAbstractions.Time;
@@ -216,7 +217,10 @@ namespace BattleCruisers.Scenes.BattleScene
                     cameraComponents.Settings);
             windManager.Play();
 
-            _pausableAudioListener = new PausableAudioListener(pauseGameManager);
+            _pausableAudioListener
+                = new PausableAudioListener(
+                    new AudioListenerBC(),
+                    pauseGameManager);
 
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");

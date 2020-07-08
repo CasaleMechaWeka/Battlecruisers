@@ -1,8 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
-using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound
 {
@@ -10,16 +9,14 @@ namespace BattleCruisers.UI.Sound
     // FELIX  Fade sound in and out?
     public class PausableAudioListener
     {
-        // FELIX  Abstract
-        //private readonly AudioListener _audioListener;
+        private readonly IAudioListener _audioListener;
         private readonly IPauseGameManager _pauseGameManager;
 
-        public PausableAudioListener(IPauseGameManager pauseGameManager)
-        //public PausableAudioListener(AudioListener audioListener, IPauseGameManager pauseGameManager)
+        public PausableAudioListener(IAudioListener audioListener, IPauseGameManager pauseGameManager)
         {
-            Assert.IsNotNull(pauseGameManager);
-            //Helper.AssertIsNotNull(audioListener, pauseGameManager);
-            //_audioListener = audioListener;
+            Helper.AssertIsNotNull(audioListener, pauseGameManager);
+            
+            _audioListener = audioListener;
 
             pauseGameManager.GamePaused += PauseGameManager_GamePaused; ;
             pauseGameManager.GameResumed += PauseGameManager_GameResumed;
@@ -27,12 +24,12 @@ namespace BattleCruisers.UI.Sound
 
         private void PauseGameManager_GamePaused(object sender, EventArgs e)
         {
-            AudioListener.pause = true;
+            _audioListener.Pause();
         }
 
         private void PauseGameManager_GameResumed(object sender, EventArgs e)
         {
-            AudioListener.pause = false;
+            _audioListener.Resume();
         }
     }
 }
