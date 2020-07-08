@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.UI.Sound.ProjectileSpawners;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 

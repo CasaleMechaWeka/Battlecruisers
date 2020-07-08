@@ -2,7 +2,7 @@
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;

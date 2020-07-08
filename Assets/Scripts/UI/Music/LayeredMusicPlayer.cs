@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Audio;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.UI.Music
 {

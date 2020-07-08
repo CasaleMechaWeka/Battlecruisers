@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.Utils.PlatformAbstractions.UI
+namespace BattleCruisers.Utils.PlatformAbstractions.Audio
 {
     public interface IAudioSource
     {

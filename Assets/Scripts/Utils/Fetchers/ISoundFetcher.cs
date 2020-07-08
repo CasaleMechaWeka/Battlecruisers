@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Utils.Fetchers

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 

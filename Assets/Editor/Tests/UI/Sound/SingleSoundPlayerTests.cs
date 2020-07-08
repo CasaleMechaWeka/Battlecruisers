@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 using System.Threading.Tasks;
