@@ -49,6 +49,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
         {
             _mainMenuManager.QuitGame();
 
+            _pauseGameManager.Received().ResumeGame();
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
             _modalMenu.Received().HideMenu();
         }
@@ -57,6 +58,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
         public void RetryLevel()
         {
             _mainMenuManager.RetryLevel();
+
+            _pauseGameManager.Received().ResumeGame();
             _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE);
         }
     }

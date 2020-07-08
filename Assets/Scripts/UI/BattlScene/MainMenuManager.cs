@@ -39,12 +39,16 @@ namespace BattleCruisers.UI.BattleScene
 
         public void QuitGame()
         {
+            // Need to resume game to get music back
+            _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false);
             _modalMenu.HideMenu();
         }
 
         public void RetryLevel()
         {
+            // Need to resume game to get music back
+            _pauseGameManager.ResumeGame();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
         }
     }
