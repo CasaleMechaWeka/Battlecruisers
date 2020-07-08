@@ -15,6 +15,7 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -47,6 +48,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private CruiserDeathManager _cruiserDeathManager;
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
+        private PausableAudioListener _pausableAudioListener;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -213,6 +215,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     cameraComponents.MainCamera,
                     cameraComponents.Settings);
             windManager.Play();
+
+            _pausableAudioListener = new PausableAudioListener(pauseGameManager);
 
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
