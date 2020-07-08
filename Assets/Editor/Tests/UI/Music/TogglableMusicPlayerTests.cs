@@ -40,6 +40,14 @@ namespace BattleCruisers.Tests.UI.Music
         {
             _settings.MuteMusic.Returns(true);
             _togglablePlayer.PlayVictoryMusic();
+            _corePlayer.DidNotReceive().PlayVictoryMusic();
+        }
+
+        [Test]
+        public void PlayVictoryMusic_MusicNotMuted()
+        {
+            _settings.MuteMusic.Returns(false);
+            _togglablePlayer.PlayVictoryMusic();
             _corePlayer.Received().PlayVictoryMusic();
         }
 
@@ -47,6 +55,14 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlayDefeatMusic_MusicMuted()
         {
             _settings.MuteMusic.Returns(true);
+            _togglablePlayer.PlayDefeatMusic();
+            _corePlayer.DidNotReceive().PlayDefeatMusic();
+        }
+
+        [Test]
+        public void PlayDefeatMusic_MusicNotMuted()
+        {
+            _settings.MuteMusic.Returns(false);
             _togglablePlayer.PlayDefeatMusic();
             _corePlayer.Received().PlayDefeatMusic();
         }

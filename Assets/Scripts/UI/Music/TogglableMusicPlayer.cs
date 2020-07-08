@@ -26,14 +26,18 @@ namespace BattleCruisers.UI.Music
 
         public void PlayVictoryMusic()
         {
-            // Victory music is unmutable!
-            _corePlayer.PlayVictoryMusic();
+            if (!_settings.MuteMusic)
+            {
+                _corePlayer.PlayVictoryMusic();
+            }
         }
 
         public void PlayDefeatMusic()
         {
-            // Defeat music is unmutable!
-            _corePlayer.PlayDefeatMusic();
+            if (!_settings.MuteMusic)
+            {
+                _corePlayer.PlayDefeatMusic();
+            }
         }
 
         public void PlayLoadingMusic()
