@@ -69,21 +69,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     _tutorialProvider.PlayerCruiserBuildSpeedController, 
                     BuildSpeed.InfinitelySlow));
 
-            // Start 3 buildings
-            steps.AddRange(
-                _constructBuildingStepsFactory.CreateSteps(
-                    BuildingCategory.Defence,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "air turret"),
-                    new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: false),
-                    "First, another air turret.",
-                    waitForBuildingToComplete: false));
-
+            // Start 2 buildings
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
                     new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
-                    "Second, another builder bay.",
+                    "First, another builder bay.",
                     waitForBuildingToComplete: false));
 
             steps.AddRange(
@@ -91,7 +83,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     BuildingCategory.Offence,
                     new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
                     new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false),
-                    "And lastly, an artillery.",
+                    "And an artillery.",
                     waitForBuildingToComplete: false));
 
             // Slow build speed explanation
