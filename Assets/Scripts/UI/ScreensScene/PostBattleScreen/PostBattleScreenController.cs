@@ -111,7 +111,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 PostBattleButtonsPanel postBattleButtonsPanel = GetComponentInChildren<PostBattleButtonsPanel>(includeInactive: true);
                 Assert.IsNotNull(postBattleButtonsPanel);
-                postBattleButtonsPanel.Initialise(this, nextCommand, _soundPlayer);
+                postBattleButtonsPanel.Initialise(this, nextCommand, _soundPlayer, BattleResult.WasVictory);
                 postBattleButtonsPanel.gameObject.SetActive(true);
             }
 		}

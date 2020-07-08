@@ -8,7 +8,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleButtonsPanel : ButtonsPanel
     {
-        public void Initialise(IPostBattleScreen postBattleScreen, ICommand nextCommand, ISingleSoundPlayer soundPlayer)
+        public void Initialise(
+            IPostBattleScreen postBattleScreen, 
+            ICommand nextCommand, 
+            ISingleSoundPlayer soundPlayer,
+            bool wasVictory)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 
@@ -16,6 +20,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             ActionButton retryButton = transform.FindNamedComponent<ActionButton>("SmallButtons/RetryButton");
             retryButton.Initialise(soundPlayer, postBattleScreen.Retry);
+            if (wasVictory)
+            {
+                Destroy(retryButton.gameObject);
+            }
 
             ActionButton loadoutButton = transform.FindNamedComponent<ActionButton>("SmallButtons/LoadoutButton");
             loadoutButton.Initialise(soundPlayer, postBattleScreen.GoToLoadoutScreen);
