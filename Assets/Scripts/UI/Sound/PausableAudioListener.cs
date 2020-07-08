@@ -5,8 +5,6 @@ using System;
 
 namespace BattleCruisers.UI.Sound
 {
-    // FELIX  Test, use
-    // FELIX  Fade sound in and out?
     public class PausableAudioListener
     {
         private readonly IAudioListener _audioListener;
