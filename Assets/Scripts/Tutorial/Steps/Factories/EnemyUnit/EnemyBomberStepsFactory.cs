@@ -65,7 +65,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                 new DelayWaitStep(
                     _argsFactory.CreateTutorialStepArgs(),
                     _deferrer,
-                    waitTimeInS: 3.3f),
+                    waitTimeInS: 3.2f),
 
                 new RemoveAircraftBoostStep(
                     _argsFactory.CreateTutorialStepArgs(),
