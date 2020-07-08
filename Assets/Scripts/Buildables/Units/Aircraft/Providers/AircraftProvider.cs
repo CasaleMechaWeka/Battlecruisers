@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
 		// Want the bomber to be lower, so it is below the explanation text
-		public const float CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M = -4;
+		public const float CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M = 4;
 
         private bool IsEnemyToTheRight => _enemyCruiserPosition.x > _parentCruiserPosition.x;
 		public Rectangle FighterSafeZone { get; }
@@ -70,8 +70,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		{
 			if (_isTutorial)
 			{
-				// FELIX  Update tests :)
-				cruisingAltitudeInM += CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M;
+				cruisingAltitudeInM -= CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M;
 			}
 			else
 			{
