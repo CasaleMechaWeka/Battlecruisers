@@ -10,7 +10,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly ITime _time;
         private float _prePauseTimeScale;
 
-        public bool IsGamePaused
+        private bool IsGamePaused
         {
             get
             {
