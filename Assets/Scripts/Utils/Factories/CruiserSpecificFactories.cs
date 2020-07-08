@@ -26,11 +26,12 @@ namespace BattleCruisers.Utils.Factories
             ICruiser enemyCruiser, 
             IRankedTargetTracker userChosenTargetTracker, 
             IUpdaterProvider updaterProvider, 
-            Faction faction)
+            Faction faction,
+            bool isTutorial)
         {
             Helper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance);
+            AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new TurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
             BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;

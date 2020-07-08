@@ -10,6 +10,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
         private readonly IRandomGenerator _random;
+		private readonly bool _isTutorial;
 
 		private const float SAFE_ZONE_PARENT_CRUISER_OVERLAP = 10;
 		private const float SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE = 25;
@@ -24,16 +25,24 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
         public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
+		// Want the bomber to be lower, so it is below the explanation text
+		public const float CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M = -4;
+
         private bool IsEnemyToTheRight => _enemyCruiserPosition.x > _parentCruiserPosition.x;
 		public Rectangle FighterSafeZone { get; }
 
-		public AircraftProvider(Vector2 parentCruiserPosition, Vector2 enemyCruiserPosition, IRandomGenerator random)
+		public AircraftProvider(
+			Vector2 parentCruiserPosition, 
+			Vector2 enemyCruiserPosition, 
+			IRandomGenerator random, 
+			bool isTutorial = false)
 		{
 			_parentCruiserPosition = parentCruiserPosition;
 			_enemyCruiserPosition = enemyCruiserPosition;
 
             Assert.IsNotNull(random);
             _random = random;
+			_isTutorial = isTutorial;
 
 			float minX, maxX;
 
@@ -59,10 +68,18 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 
 		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
 		{
-            // Only let bombers fuzz downwards, so:
-            // 1. They will always be in range of AA guns
-            // 2. The don't cover the tutorial explanation text :)
-            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM, onlyDownwards: true);
+			if (_isTutorial)
+			{
+				// FELIX  Update tests :)
+				cruisingAltitudeInM += CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M;
+			}
+			else
+			{
+				// Only let bombers fuzz downwards, so:
+				// 1. They will always be in range of AA guns
+				// 2. The don't cover the tutorial explanation text :)
+				cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM, onlyDownwards: true);
+			}
 
             float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
 			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
