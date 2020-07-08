@@ -41,6 +41,10 @@ namespace BattleCruisers.Tutorial
 
             _gameEndMonitor = tutorialArgs.GameEndMonitor;
             _gameEndMonitor.GameEnded += GameEndMonitor_GameEnded;
+
+            // Want enough drones so that during drone focus step have more than 6 for artillery.
+            // So that togglng drone focus can move some off the artillery.
+            tutorialArgs.PlayerCruiser.DroneManager.NumOfDrones += 4;
         }
 
         private void _consumer_Completed(object sender, EventArgs e)

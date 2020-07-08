@@ -61,7 +61,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                    "Managing your builders is vital.  Let's start three buildings, so we can see how this works :)")));
+                    "Managing your builders is vital.  Let's start two buildings, so we can see how this works :)")));
 
             // Infinitely slow build speed
             steps.Add(
