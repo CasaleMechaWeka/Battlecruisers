@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             _cameraFocuser = Substitute.For<ICameraFocuser>();
             _playerCruiser = Substitute.For<ICruiser>();
 
-            _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser);
+            _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser, isTutorial: true);
 
             _bowSlot = Substitute.For<ISlot>();
             ReadOnlyCollection<ISlot> bowSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { _bowSlot });
@@ -58,8 +58,9 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
-        public void FocusOnPlayerBowSlotIfNeeded_CameraRoughlyOnBowSlot_DoesNotMoveCamera()
+        public void FocusOnPlayerBowSlotIfNeeded_IsTutorial_DoesNotMoveCamera()
         {
+            _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser, isTutorial: true);
             _bowSlot.Position.Returns(Vector2.zero);
             _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
 
@@ -69,8 +70,21 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         }
 
         [Test]
-        public void FocusOnPlayerBowSlotIfNeeded_CameraNOtRoughlyOnBowSlot_MovesCamera()
+        public void FocusOnPlayerBowSlotIfNeeded_IsNotTutorial_CameraRoughlyOnBowSlot_DoesNotMoveCamera()
         {
+            _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser, isTutorial: false);
+            _bowSlot.Position.Returns(Vector2.zero);
+            _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M - 0.1f, 0, 0));
+
+            _helper.FocusOnPlayerBowSlotIfNeeded();
+
+            _cameraFocuser.DidNotReceive().FocusOnPlayerNavalFactory();
+        }
+
+        [Test]
+        public void FocusOnPlayerBowSlotIfNeeded_IsNotTutorial_CameraNotRoughlyOnBowSlot_MovesCamera()
+        {
+            _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser, isTutorial: false);
             _bowSlot.Position.Returns(Vector2.zero);
             _camera.Position.Returns(new Vector3(PlayerCruiserFocusHelper.BOW_SLOT_CAMERA_MARGIN_IN_M, 0, 0));
 
