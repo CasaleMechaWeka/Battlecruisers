@@ -10,21 +10,19 @@ namespace BattleCruisers.UI.BattleScene
 		private Canvas _canvas;
 		private IMainMenuManager _menuManager;
 
+		public ActionButton endGameButton, skipTutorialButton, resumeButton, retryButton;
+
 		public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial)
 		{
+			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton);
+			Assert.IsNotNull(soundPlayer);
+
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
-            ActionButton endGameButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/EndGameButton");
             endGameButton.Initialise(soundPlayer, Quit);
-
-            ActionButton skipTutorialButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/SkipTutorialButton");
             skipTutorialButton.Initialise(soundPlayer, Quit);
-
-            ActionButton cancelButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/CancelButton");
-            cancelButton.Initialise(soundPlayer, Cancel);
-
-			ActionButton retryButton = transform.FindNamedComponent<ActionButton>("ModalMenuPanel/RetryButton");
+            resumeButton.Initialise(soundPlayer, Cancel);
 			retryButton.Initialise(soundPlayer, Retry);
 
             if (isTutorial)
