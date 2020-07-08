@@ -246,7 +246,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         uiManager,
                         components.TargetIndicator,
                         windManager,
-                        helper.BuildingCategoryPermitter));
+                        helper.BuildingCategoryPermitter,
+                        buttonVisibilityFilters.HelpLabelsVisibilityFilter));
 
             // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>();
