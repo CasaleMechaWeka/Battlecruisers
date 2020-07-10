@@ -38,5 +38,10 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
                 _explanationPanel.IsVisible = false;
             }
         }
+
+        public void HideAllHints()
+        {
+            _explanationPanel.IsVisible = false;
+        }
     }
 }

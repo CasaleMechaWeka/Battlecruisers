@@ -33,5 +33,10 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         {
             _coreDisplayer.HideHint(hint);
         }
+
+        public void HideAllHints()
+        {
+            _coreDisplayer.HideAllHints();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.InGameHints;
+using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -9,6 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         private HintManager _manager;
         private IBuildingMonitor _enemyBuildingMonitor, _friendlyBuildingMonitor;
         private IFactoryMonitor _friendlyFactoryMonitor;
+        private IGameEndMonitor _gameEndMonitor;
         private IHintDisplayer _hintDisplayer;
 
         [SetUp]
@@ -17,9 +19,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _enemyBuildingMonitor = Substitute.For<IBuildingMonitor>();
             _friendlyBuildingMonitor = Substitute.For<IBuildingMonitor>();
             _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
+            _gameEndMonitor = Substitute.For<IGameEndMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            _manager = new HintManager(_enemyBuildingMonitor, _friendlyBuildingMonitor, _friendlyFactoryMonitor, _hintDisplayer);
+            _manager = new HintManager(_enemyBuildingMonitor, _friendlyBuildingMonitor, _friendlyFactoryMonitor, _gameEndMonitor, _hintDisplayer);
         }
 
         [Test]
@@ -76,6 +79,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         {
             _friendlyFactoryMonitor.UnitChosen += Raise.Event();
             _hintDisplayer.Received().ShowHint(Hints.UNIT_CHOSEN_HINT);
+        }
+
+        [Test]
+        public void GameEnded()
+        {
+            _gameEndMonitor.GameEnded += Raise.Event();
+            _hintDisplayer.Received().HideAllHints();
         }
     }
 }

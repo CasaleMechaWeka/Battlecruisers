@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Tutorial.Explanation;
+﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.InGameHints;
@@ -53,6 +52,7 @@ namespace BattleCruisers.Tutorial
                         new BuildingMonitor(baseArgs.AICruiser),
                         new BuildingMonitor(baseArgs.PlayerCruiser),
                         new FactoryMonitor(baseArgs.PlayerCruiser.BuildingMonitor),
+                        baseArgs.GameEndMonitor,
                         new NonRepeatingHintDisplayer(
                             new HintDisplayer(explanationPanel)));
 
