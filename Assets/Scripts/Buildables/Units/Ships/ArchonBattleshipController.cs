@@ -18,12 +18,10 @@ namespace BattleCruisers.Buildables.Units.Ships
     public class ArchonBattleshipController : ShipController
     {
         private IBroadcastingAnimation _unfurlAnimation;
-        private bool _isUnfurled;
 
         public BarrelWrapper laser;
         public GameObject bones;
 
-        protected override bool IsOperational => _isUnfurled;
         public override bool IsUltra => true;
         public override Vector2 Size => base.Size * 2;
 
@@ -47,7 +45,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
-            _isUnfurled = false;
         }
 
         protected override void OnShipCompleted()
@@ -60,7 +57,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
-            _isUnfurled = true;
             base.OnShipCompleted();
         }
 

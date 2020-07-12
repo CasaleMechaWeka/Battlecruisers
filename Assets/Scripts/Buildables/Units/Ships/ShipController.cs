@@ -60,7 +60,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
 		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
-        protected virtual bool IsOperational => BuildableState == BuildableState.Completed;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
@@ -243,7 +242,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private void CleanUp()
         {
-            if (IsOperational)
+            if (_movementDecider != null)
             {
                 _movementDecider.DisposeManagedState();
                 _movementDecider = null;
