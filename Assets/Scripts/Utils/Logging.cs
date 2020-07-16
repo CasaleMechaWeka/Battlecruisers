@@ -213,7 +213,7 @@ namespace BattleCruisers.Utils
 
             // Cruiser
             tagsToActiveness.Add(Tags.CRUISER, false);
-            tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
+            tagsToActiveness.Add(Tags.UNIT_MONITOR, false);
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
             // Effects
