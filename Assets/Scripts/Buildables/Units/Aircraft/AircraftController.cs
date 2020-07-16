@@ -133,9 +133,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
             _onSeabed = false;
-		}
 
-		protected override void OnBuildableCompleted()
+            _kamikazeController.gameObject.SetActive(false);
+        }
+
+        protected override void OnBuildableCompleted()
 		{
 			base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
@@ -259,8 +261,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             // Make aircraft spin a bit for coolness
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
-
-            _kamikazeController.gameObject.SetActive(false);
         }
 
         private void OnKamikaze()
