@@ -88,6 +88,7 @@ namespace BattleCruisers.Utils
 
         // Cruiser
         public const string CRUISER = "Cruiser";
+        public const string UNIT_MONITOR = "UnitMonitor";
         public const string UNIT_TARGETS = "UnitTargets";
 
         // Effects
@@ -144,7 +145,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
-            tagsToActiveness.Add(Tags.BUILDABLE, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.BUILDABLE, true);
+            //tagsToActiveness.Add(Tags.BUILDABLE, false);
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
             tagsToActiveness.Add(Tags.FACTORY, false);
@@ -213,6 +216,9 @@ namespace BattleCruisers.Utils
             // Cruiser
             tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.UNIT_MONITOR, true);
+            //tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
             // Effects
             tagsToActiveness.Add(Tags.CLOUDS, false);

@@ -238,7 +238,14 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        protected override void OnDeathWhileCompleted()
+        protected override bool ShouldShowDeathEffects()
+        {
+            return
+                base.ShouldShowDeathEffects()
+                && !IsInKamikazeMode;
+        }
+
+        protected override void ShowDeathEffects()
         {
             Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
             HealthBar.IsVisible = false;

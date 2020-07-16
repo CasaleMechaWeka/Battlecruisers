@@ -152,9 +152,11 @@ namespace BattleCruisers.Buildables.Units
 
         protected override void InternalDestroy()
         {
-            if (BuildableState == BuildableState.Completed)
+            Logging.Log(Tags.BUILDABLE, this);
+
+            if (ShouldShowDeathEffects())
             {
-                OnDeathWhileCompleted();
+                ShowDeathEffects();
             }
             else
             {
@@ -162,7 +164,12 @@ namespace BattleCruisers.Buildables.Units
             }
         }
 
-        protected abstract void OnDeathWhileCompleted();
+        protected virtual bool ShouldShowDeathEffects()
+        {
+            return BuildableState == BuildableState.Completed;
+        }
+
+        protected abstract void ShowDeathEffects();
 
         void IRemovable.RemoveFromScene()
         {

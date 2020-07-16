@@ -13,7 +13,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public class KamikazeController : MonoBehaviour, IRemovable
     {
         private IUnit _parentAircraft;
-        private IRemovable _parentAsRemovable;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private IExplosionPoolProvider _explosionPoolProvider;
@@ -31,7 +30,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Helper.AssertIsNotNull(parentAircraft, factoryProvider);
 
             _parentAircraft = parentAircraft;
-            _parentAsRemovable = parentAircraft;
             _targetToDamage = null;
 
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
@@ -86,7 +84,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             _targetToDamage = null;
             _parentAircraft.Destroy();
-            _parentAsRemovable.RemoveFromScene();
         }
     }
 }

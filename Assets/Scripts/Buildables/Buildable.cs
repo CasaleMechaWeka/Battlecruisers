@@ -271,6 +271,7 @@ namespace BattleCruisers.Buildables
             Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(true);");
             Assert.IsNotNull(activationArgs);
 
+            Assert.IsFalse(_parent.activeSelf);
             _parent.SetActive(true);
 
             ParentCruiser = activationArgs.ParentCruiser;
@@ -455,6 +456,7 @@ namespace BattleCruisers.Buildables
         {
             Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
 
+            Assert.IsTrue(_parent.activeSelf);
             _parent.SetActive(false);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }

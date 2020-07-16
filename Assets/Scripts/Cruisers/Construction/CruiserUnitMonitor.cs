@@ -43,6 +43,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
+            Logging.Log(Tags.UNIT_MONITOR, $"_aliveUnits.Count: {_aliveUnits.Count}  e.StartedUnit: {e.StartedUnit}");
+
             Assert.IsFalse(_aliveUnits.Contains(e.StartedUnit));
             _aliveUnits.Add(e.StartedUnit);
 
@@ -58,6 +60,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void Unit_Destroyed(object sender, DestroyedEventArgs e)
         {
+            Logging.Log(Tags.UNIT_MONITOR, $"_aliveUnits.Count: {_aliveUnits.Count}  e.DestroyedTarget: {e.DestroyedTarget}");
+
             IUnit destroyedUnit = e.DestroyedTarget.Parse<IUnit>();
             destroyedUnit.Destroyed -= Unit_Destroyed;
 

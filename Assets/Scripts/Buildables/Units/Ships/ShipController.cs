@@ -212,7 +212,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.OnDestroyed();
         }
 
-        protected override void OnDeathWhileCompleted()
+        protected override void ShowDeathEffects()
         {
             _deathPool.GetItem(Position);
             Deactivate();
