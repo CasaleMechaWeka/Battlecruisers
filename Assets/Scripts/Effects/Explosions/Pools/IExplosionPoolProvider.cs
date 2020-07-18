@@ -14,7 +14,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         // Bomber (variation of 0.75m)
         IPool<IExplosion, Vector3> BombExplosionPool { get; }
 
-        // Radius 1m    => Mortar, destroyer missiles, archon front launcher missiles
+        // Radius 1m    => Small shells: Mortar, frigate & destroyer front cannon.   Missiles: Destroyer missiles, archon front launcher missiles
         IPool<IExplosion, Vector3> MediumExplosionsPool { get; }
         
         // Radius 1.5m  => Artillery, rocket launcher, broadsides, archon back missile launcher, archon primary cannon
