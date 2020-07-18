@@ -1,4 +1,6 @@
-﻿using BattleCruisers.UI.BattleScene.InGameHints;
+﻿using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
 using NUnit.Framework;
@@ -10,6 +12,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         private HintManager _manager;
         private IBuildingMonitor _enemyBuildingMonitor, _friendlyBuildingMonitor;
         private IFactoryMonitor _friendlyFactoryMonitor;
+        private ICruiserDamageMonitor _playerCruiserDamageMonitor;
+        private IDroneFocuser _playerCruiserDroneFocuser;
         private IGameEndMonitor _gameEndMonitor;
         private IHintDisplayer _hintDisplayer;
 
@@ -19,17 +23,18 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
             _enemyBuildingMonitor = Substitute.For<IBuildingMonitor>();
             _friendlyBuildingMonitor = Substitute.For<IBuildingMonitor>();
             _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
+            _playerCruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
+            _playerCruiserDroneFocuser = Substitute.For<IDroneFocuser>();
             _gameEndMonitor = Substitute.For<IGameEndMonitor>();
             _hintDisplayer = Substitute.For<IHintDisplayer>();
 
-            // FELIX  Fix :)
             _manager 
                 = new HintManager(
                     _enemyBuildingMonitor, 
                     _friendlyBuildingMonitor, 
                     _friendlyFactoryMonitor, 
-                    null, 
-                    null, 
+                    _playerCruiserDamageMonitor,
+                    _playerCruiserDroneFocuser,
                     _gameEndMonitor, 
                     _hintDisplayer);
         }
@@ -88,6 +93,20 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         {
             _friendlyFactoryMonitor.UnitChosen += Raise.Event();
             _hintDisplayer.Received().ShowHint(Hints.UNIT_CHOSEN_HINT);
+        }
+
+        [Test]
+        public void PlayerDamaged()
+        {
+            _playerCruiserDamageMonitor.CruiserOrBuildingDamaged += Raise.Event();
+            _hintDisplayer.Received().ShowHint(Hints.PLAYER_DAMAGED_HINT);
+        }
+
+        [Test]
+        public void PlayerTriggeredRepair()
+        {
+            _playerCruiserDroneFocuser.PlayerTriggeredRepair += Raise.Event();
+            _hintDisplayer.Received().HideHint(Hints.PLAYER_DAMAGED_HINT);
         }
 
         [Test]

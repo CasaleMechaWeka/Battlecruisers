@@ -14,7 +14,6 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             IBuildingMonitor enemyBuildingMonitor,
             IBuildingMonitor friendlyBuildingMonitor,
             IFactoryMonitor friendlyFactoryMonitor,
-            // FELIX  Update tests
             ICruiserDamageMonitor playerCruiserDamageMonitor,
             IDroneFocuser playerCruiserDroneFocuser,
             IGameEndMonitor gameEndMonitor,
