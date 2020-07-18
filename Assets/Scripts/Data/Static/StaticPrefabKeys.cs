@@ -128,7 +128,8 @@ namespace BattleCruisers.Data.Static
         {
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
             public static ExplosionKey BombExplosion { get; } = new ExplosionKey("ExplosionBomb");
-            public static ExplosionKey Explosion75 { get; } = new ExplosionKey("ExplosionSAM");
+            public static ExplosionKey FlakExplosion { get; } = new ExplosionKey("ExplosionSAM");
+            public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
             public static ExplosionKey Explosion100 { get; } = new ExplosionKey("Explosion1.0");
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
             public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
@@ -139,7 +140,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        BulletImpact, BombExplosion, Explosion75, Explosion100, Explosion150, Explosion500
+                        BulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
                     };
                 }
             }

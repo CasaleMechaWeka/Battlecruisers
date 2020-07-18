@@ -51,7 +51,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             if (!_parentAircraft.IsDestroyed)
             {
-                _explosionPoolProvider.SmallExplosionsPool.GetItem(transform.position);
+                _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
                 CleanUp();
             }
         }
@@ -76,7 +76,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 && !_parentAircraft.IsDestroyed)
             {
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
-                _explosionPoolProvider.SmallExplosionsPool.GetItem(transform.position);
+                _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
                 CleanUp();
             }
         }

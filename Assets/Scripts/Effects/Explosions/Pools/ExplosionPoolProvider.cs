@@ -11,6 +11,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
     {
         public IPool<IExplosion, Vector3> BulletImpactPool { get; }
         public IPool<IExplosion, Vector3> BombExplosionPool { get; }
+        public IPool<IExplosion, Vector3> FlakExplosionsPool { get; }
         public IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
         public IPool<IExplosion, Vector3> MediumExplosionsPool { get; }
         public IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
@@ -22,6 +23,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
 
             BulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
             BombExplosionPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BombExplosion);
+            FlakExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.FlakExplosion);
             SmallExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion75);
             MediumExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion100);
             LargeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion150);
@@ -41,6 +43,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         {
             BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             BombExplosionPool.AddCapacity(InitialCapacity.BOMB);
+            FlakExplosionsPool.AddCapacity(InitialCapacity.FLAK);
             SmallExplosionsPool.AddCapacity(InitialCapacity.SMALL);
             MediumExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
             LargeExplosionsPool.AddCapacity(InitialCapacity.LARGE);
