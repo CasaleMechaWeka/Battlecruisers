@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Cruisers.Drones
 {
-    public class DroneFocuserTests
+    public class PlayerCruiserDroneFocuserTests
     {
         private IDroneFocuser _droneFocuser;
         private IDroneManager _droneManager;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             _soundPicker = Substitute.For<IDroneFocusSoundPicker>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 
-            _droneFocuser = new DroneFocuser(_droneManager, _soundPicker, _soundPlayer);
+            _droneFocuser = new PlayerCruiserDroneFocuser(_droneManager, _soundPicker, _soundPlayer);
 
             _droneConsumer = Substitute.For<IDroneConsumer>();
 

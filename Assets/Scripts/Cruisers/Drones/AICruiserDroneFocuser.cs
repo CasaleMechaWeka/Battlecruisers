@@ -3,15 +3,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    // FELIX  Rename to AIDF?
-    public class SimpleDroneFocuser : IDroneFocuser
+    public class AICruiserDroneFocuser : IDroneFocuser
     {
         private readonly IDroneManager _droneManager;
 
         // Never the case for AI cruiser
         public event EventHandler PlayerTriggeredRepair;
 
-        public SimpleDroneFocuser(IDroneManager droneManager)
+        public AICruiserDroneFocuser(IDroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
             _droneManager = droneManager;

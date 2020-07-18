@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    public class DroneFocuser : IDroneFocuser
+    public class PlayerCruiserDroneFocuser : IDroneFocuser
     {
         private readonly IDroneManager _droneManager;
         private readonly IDroneFocusSoundPicker _soundPicker;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers.Drones
 
         public event EventHandler PlayerTriggeredRepair;
 
-        public DroneFocuser(IDroneManager droneManager, IDroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
+        public PlayerCruiserDroneFocuser(IDroneManager droneManager, IDroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(droneManager, soundPicker, soundPlayer);
 

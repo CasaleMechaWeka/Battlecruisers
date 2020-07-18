@@ -200,11 +200,11 @@ namespace BattleCruisers.Cruisers
         {
             if (isPlayerCruiser)
             {
-                return new DroneFocuser(droneManager, new DroneFocusSoundPicker(), soundPlayer);
+                return new PlayerCruiserDroneFocuser(droneManager, new DroneFocusSoundPicker(), soundPlayer);
             }
             else
             {
-                return new SimpleDroneFocuser(droneManager);
+                return new AICruiserDroneFocuser(droneManager);
             }
         }
 
