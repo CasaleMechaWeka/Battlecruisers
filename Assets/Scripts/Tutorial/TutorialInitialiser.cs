@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Tutorial.Explanation;
+﻿using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.InGameHints;
@@ -18,10 +19,10 @@ namespace BattleCruisers.Tutorial
         public HighlighterInitialiser highlighterInitialiser;
         public MainMenuButtonController modalMainMenuButton;
 
-        public void Initialise(ITutorialArgsBase baseArgs, bool showInGameHints)
+        public void Initialise(ITutorialArgsBase baseArgs, bool showInGameHints, ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
             Helper.AssertIsNotNull(tutorialManager, explanationPanel, highlighterInitialiser, modalMainMenuButton);
-            Assert.IsNotNull(baseArgs);
+            Helper.AssertIsNotNull(baseArgs, playerCruiserDamageMonitor);
 
             if (!baseArgs.AppModel.IsTutorial
                 && !showInGameHints)
@@ -52,6 +53,7 @@ namespace BattleCruisers.Tutorial
                         new BuildingMonitor(baseArgs.AICruiser),
                         new BuildingMonitor(baseArgs.PlayerCruiser),
                         new FactoryMonitor(baseArgs.PlayerCruiser.BuildingMonitor),
+                        playerCruiserDamageMonitor,
                         baseArgs.GameEndMonitor,
                         new NonRepeatingHintDisplayer(
                             new HintDisplayer(explanationPanel)));

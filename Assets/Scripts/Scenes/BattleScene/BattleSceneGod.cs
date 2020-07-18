@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers;
@@ -201,6 +202,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager.MuteMusic);
             LandingSceneGod.MusicPlayer?.Stop();
+            ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);
             _audioInitialiser
                 = new AudioInitialiser(
                     helper,
@@ -209,7 +211,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     components.Deferrer,
                     time,
-                    battleCompletionHandler);
+                    battleCompletionHandler,
+                    playerCruiserDamageMonitor);
 
             IWindManager windManager
                 = components.WindInitialiser.Initialise(
@@ -268,7 +271,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     rightPanelComponents, 
                     uiManager,
                     _gameEndMonitor);
-            tutorialInitialiser.Initialise(tutorialArgs, helper.ShowInGameHints);
+            tutorialInitialiser.Initialise(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor);
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;

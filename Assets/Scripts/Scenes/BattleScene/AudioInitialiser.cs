@@ -29,13 +29,14 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser aiCruiser,
             IDeferrer deferrer,
             ITime time,
-            IBattleCompletionHandler battleCompletionHandler)
+            IBattleCompletionHandler battleCompletionHandler,
+            ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
-            Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler);
+            Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor);
 
             _levelMusicPlayer = CreateLevelMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer, battleCompletionHandler);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
-            _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time);
+            _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time, playerCruiserDamageMonitor);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
             _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time);
         }
@@ -61,12 +62,15 @@ namespace BattleCruisers.Scenes.BattleScene
                     battleCompletionHandler);
         }
 
-        private CruiserEventMonitor CreateCruiserEventMonitor(ICruiser playerCruiser, ITime time)
+        private CruiserEventMonitor CreateCruiserEventMonitor(
+            ICruiser playerCruiser, 
+            ITime time,
+            ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
             return
                 new CruiserEventMonitor(
                     new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
-                    new CruiserDamageMonitor(playerCruiser),
+                    playerCruiserDamageMonitor,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using System;
 
@@ -12,10 +13,12 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             IBuildingMonitor enemyBuildingMonitor,
             IBuildingMonitor friendlyBuildingMonitor,
             IFactoryMonitor friendlyFactoryMonitor,
+            // FELIX  Update tests
+            ICruiserDamageMonitor playerCruiserDamageMonitor,
             IGameEndMonitor gameEndMonitor,
             IHintDisplayer hintDisplayer)
         {
-            Helper.AssertIsNotNull(enemyBuildingMonitor, friendlyBuildingMonitor, friendlyFactoryMonitor, gameEndMonitor, hintDisplayer);
+            Helper.AssertIsNotNull(enemyBuildingMonitor, friendlyBuildingMonitor, friendlyFactoryMonitor, playerCruiserDamageMonitor, gameEndMonitor, hintDisplayer);
 
             _hintDisplayer = hintDisplayer;
 
@@ -30,6 +33,8 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             
             friendlyFactoryMonitor.FactoryCompleted += friendlyFactoryMonitor_FactoryCompleted;
             friendlyFactoryMonitor.UnitChosen += friendlyFactoryMonitor_UnitChosen;
+
+            playerCruiserDamageMonitor.CruiserOrBuildingDamaged += PlayerCruiserDamageMonitor_CruiserOrBuildingDamaged;
 
             gameEndMonitor.GameEnded += GameEndMonitor_GameEnded;
         }
@@ -72,6 +77,11 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         private void friendlyFactoryMonitor_UnitChosen(object sender, EventArgs e)
         {
             _hintDisplayer.ShowHint(Hints.UNIT_CHOSEN_HINT);
+        }
+
+        private void PlayerCruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
+        {
+            _hintDisplayer.ShowHint(Hints.PLAYER_DAMAGED_HINT);
         }
 
         private void GameEndMonitor_GameEnded(object sender, EventArgs e)
