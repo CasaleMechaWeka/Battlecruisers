@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using System;
@@ -15,10 +16,18 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             IFactoryMonitor friendlyFactoryMonitor,
             // FELIX  Update tests
             ICruiserDamageMonitor playerCruiserDamageMonitor,
+            IDroneFocuser playerCruiserDroneFocuser,
             IGameEndMonitor gameEndMonitor,
             IHintDisplayer hintDisplayer)
         {
-            Helper.AssertIsNotNull(enemyBuildingMonitor, friendlyBuildingMonitor, friendlyFactoryMonitor, playerCruiserDamageMonitor, gameEndMonitor, hintDisplayer);
+            Helper.AssertIsNotNull(
+                enemyBuildingMonitor, 
+                friendlyBuildingMonitor, 
+                friendlyFactoryMonitor, 
+                playerCruiserDamageMonitor, 
+                playerCruiserDroneFocuser,
+                gameEndMonitor, 
+                hintDisplayer);
 
             _hintDisplayer = hintDisplayer;
 
@@ -35,6 +44,7 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
             friendlyFactoryMonitor.UnitChosen += friendlyFactoryMonitor_UnitChosen;
 
             playerCruiserDamageMonitor.CruiserOrBuildingDamaged += PlayerCruiserDamageMonitor_CruiserOrBuildingDamaged;
+            playerCruiserDroneFocuser.PlayerTriggeredRepair += PlayerCruiserDroneFocuser_PlayerTriggeredRepair;
 
             gameEndMonitor.GameEnded += GameEndMonitor_GameEnded;
         }
@@ -82,6 +92,11 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         private void PlayerCruiserDamageMonitor_CruiserOrBuildingDamaged(object sender, EventArgs e)
         {
             _hintDisplayer.ShowHint(Hints.PLAYER_DAMAGED_HINT);
+        }
+
+        private void PlayerCruiserDroneFocuser_PlayerTriggeredRepair(object sender, EventArgs e)
+        {
+            _hintDisplayer.HideHint(Hints.PLAYER_DAMAGED_HINT);
         }
 
         private void GameEndMonitor_GameEnded(object sender, EventArgs e)

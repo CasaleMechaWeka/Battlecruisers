@@ -29,10 +29,10 @@ namespace BattleCruisers.Buildables.Repairables
         private readonly ICruiser _cruiser;
         private readonly IDictionary<IRepairable, IDroneFeedback> _repairableToFeedback;
 
-        private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
+        public const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
 
         // Code smell :D  ICruiser contains DroneConsumerProvider property, but this is not set
-        // unit cruiser has been initialised.  Hence directly pass drone consumer provider.
+        // until cruiser has been initialised.  Hence directly pass drone consumer provider.
         public RepairManager(
             IDroneFeedbackFactory feedbackFactory,
             IDroneConsumerProvider droneConsumerProvider,

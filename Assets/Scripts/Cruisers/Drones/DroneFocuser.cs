@@ -1,5 +1,7 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
@@ -9,6 +11,8 @@ namespace BattleCruisers.Cruisers.Drones
         private readonly IDroneManager _droneManager;
         private readonly IDroneFocusSoundPicker _soundPicker;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
+
+        public event EventHandler PlayerTriggeredRepair;
 
         public DroneFocuser(IDroneManager droneManager, IDroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
         {
@@ -30,6 +34,12 @@ namespace BattleCruisers.Cruisers.Drones
             if (isTriggeredByPlayer)
             {
                 _soundPlayer.PlaySound(_soundPicker.PickSound(preFocusState, postFocusState));
+
+                // FELIX  Test :)
+                if (droneConsumer.NumOfDronesRequired == RepairManager.NUM_OF_DRONES_REQUIRED_FOR_REPAIR)
+                {
+                    PlayerTriggeredRepair?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }

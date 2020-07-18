@@ -54,6 +54,7 @@ namespace BattleCruisers.Tutorial
                         new BuildingMonitor(baseArgs.PlayerCruiser),
                         new FactoryMonitor(baseArgs.PlayerCruiser.BuildingMonitor),
                         playerCruiserDamageMonitor,
+                        baseArgs.PlayerCruiser.DroneFocuser,
                         baseArgs.GameEndMonitor,
                         new NonRepeatingHintDisplayer(
                             new HintDisplayer(explanationPanel)));
