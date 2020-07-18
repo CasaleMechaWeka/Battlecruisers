@@ -35,7 +35,6 @@ namespace BattleCruisers.Cruisers.Drones
             {
                 _soundPlayer.PlaySound(_soundPicker.PickSound(preFocusState, postFocusState));
 
-                // FELIX  Test :)
                 if (droneConsumer.NumOfDronesRequired == RepairManager.NUM_OF_DRONES_REQUIRED_FOR_REPAIR)
                 {
                     PlayerTriggeredRepair?.Invoke(this, EventArgs.Empty);
