@@ -15,6 +15,12 @@ namespace BattleCruisers.Data
 
         ILevel GetLevel(int levelNum);
         void SaveGame();
+
+        /// <summary>
+        /// Deletes the saved game and resets all settings to their default values.
+        /// Designed for user playtests, so users can start with a clean slate.
+        /// </summary>
+        void Reset();
     }
 }
 	

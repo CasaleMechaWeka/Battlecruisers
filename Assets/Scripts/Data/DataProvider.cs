@@ -55,5 +55,11 @@ namespace BattleCruisers.Data
 		{
             _serializer.SaveGame(_gameModel);
 		}
-	}
+
+        public void Reset()
+        {
+            _serializer.DeleteSavedGame();
+            SettingsManager.Reset();
+        }
+    }
 }
