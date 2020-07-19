@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Music
         private readonly IAudioSource _primarySource, _secondarySource;
         
         public const float FADE_TIME_IN_S = 2;
-        public const float MAX_VOLUME = 0.75f;
+        public const float MAX_VOLUME = 1;
 
         public LayeredMusicPlayer(IAudioVolumeFade audioVolumeFade, IAudioSource primarySource, IAudioSource secondarySource)
         {
