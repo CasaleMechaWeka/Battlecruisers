@@ -37,5 +37,13 @@ namespace BattleCruisers.Data.Serialization
 			file.Close();
 			return game;
 		}
-	}
+
+        public void DeleteSavedGame()
+        {
+            if (DoesSavedGameExist())
+            {
+				File.Delete(_modelFilePathProvider.GameModelFilePath);
+            }
+        }
+    }
 }

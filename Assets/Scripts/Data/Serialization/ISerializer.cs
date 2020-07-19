@@ -7,5 +7,6 @@ namespace BattleCruisers.Data.Serialization
         bool DoesSavedGameExist();
         void SaveGame(GameModel game);
         GameModel LoadGame();
+        void DeleteSavedGame();
     }
 }
