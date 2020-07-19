@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -16,6 +17,20 @@ namespace BattleCruisers.Cruisers.Slots
             SlotType = slotType;
             BuildingFunction = buildingFunction;
             PreferFromFront = preferCruiserFront;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return 
+                obj is SlotSpecification specification &&
+                SlotType == specification.SlotType &&
+                BuildingFunction == specification.BuildingFunction &&
+                PreferFromFront == specification.PreferFromFront;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(SlotType, BuildingFunction, PreferFromFront);
         }
     }
 }

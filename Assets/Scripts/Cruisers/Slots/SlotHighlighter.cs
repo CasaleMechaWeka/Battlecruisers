@@ -46,7 +46,9 @@ namespace BattleCruisers.Cruisers.Slots
 
         private void ParentCruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
         {
-            if (_highlightedSlotSpec != null)
+            // FELIX  Update test
+            if (_highlightedSlotSpec != null
+                && _highlightedSlotSpec.Equals(e.DestroyedBuilding.SlotSpecification))
             {
                 HighlightAvailableSlots(_highlightedSlotSpec);
             }
@@ -72,7 +74,20 @@ namespace BattleCruisers.Cruisers.Slots
             return wasAnySlotHighlighted;
 		}
 
-		public void UnhighlightSlots()
+        // FELIX  Test :)
+        public void HighlightSlots(ISlotSpecification slotSpecification)
+        {
+            UnhighlightSlots();
+
+            _highlightedSlotSpec = slotSpecification;
+
+            foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
+            {
+                slot.IsVisible = true;
+            }
+        }
+
+        public void UnhighlightSlots()
 		{
 			if (_highlightedSlotSpec != null)
 			{
