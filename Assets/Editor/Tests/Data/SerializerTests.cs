@@ -133,15 +133,16 @@ namespace BattleCruisers.Tests.Data
 			Assert.Throws<UnityAsserts.AssertionException>(() => _serializer.LoadGame());
 		}
 
-		[Test]
-		public void DeleteSavedGame()
-		{
-            FileStream savedGameFile = File.Create(_filePathProvider.GameModelFilePath);
-            savedGameFile.Dispose();
+		// Do not test this, because it deletes the game model for real :)
+		//[Test]
+		//public void DeleteSavedGame()
+		//{
+  //          FileStream savedGameFile = File.Create(_filePathProvider.GameModelFilePath);
+  //          savedGameFile.Dispose();
 
-			_serializer.DeleteSavedGame();
+		//	_serializer.DeleteSavedGame();
 
-			Assert.IsFalse(_serializer.DoesSavedGameExist());
-		}
+		//	Assert.IsFalse(_serializer.DoesSavedGameExist());
+		//}
 	}
 }
