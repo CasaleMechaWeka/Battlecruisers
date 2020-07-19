@@ -61,7 +61,7 @@ namespace BattleCruisers.Utils.Timers
 
         void Update()
         {
-            _countdown.OnUpdate(_time.DeltaTime);
+            _countdown.OnUpdate(_time.UnscaledDeltaTime);
         }
     }
 }
