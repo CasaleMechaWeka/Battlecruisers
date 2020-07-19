@@ -78,6 +78,8 @@ namespace BattleCruisers.Utils.Debugging
                 }
             }
 
+            dataProvider.GameModel.HasAttemptedTutorial = true;
+
             dataProvider.SaveGame();
 
             Debug.Log("Everything unlocked :D  Restart game.");
