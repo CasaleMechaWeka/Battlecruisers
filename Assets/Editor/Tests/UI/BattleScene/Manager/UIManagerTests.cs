@@ -122,8 +122,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
             _detailsManager.Received().ShowDetails(buildingWrapper.Buildable);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Cruiser.NoBuildingSlotsLeft);
+            _playerCruiser.SlotHighlighter.Received().HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
         }
-
 
         #region SelectBuilding()
         [Test]
