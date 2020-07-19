@@ -116,6 +116,11 @@ namespace BattleCruisers.Data.Settings
             }
         }
 
+        public void Reset()
+        {
+            CreateSettings();
+        }
+
         private void CreateSettings()
         {
             AIDifficulty = Difficulty.Normal;

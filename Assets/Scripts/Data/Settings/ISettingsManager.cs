@@ -15,5 +15,6 @@
         bool ShowInGameHints { get; set; }
 
         void Save();
+        void Reset();
     }
 }
