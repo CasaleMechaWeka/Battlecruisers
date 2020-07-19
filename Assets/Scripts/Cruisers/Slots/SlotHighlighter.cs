@@ -46,7 +46,6 @@ namespace BattleCruisers.Cruisers.Slots
 
         private void ParentCruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
         {
-            // FELIX  Update test
             if (_highlightedSlotSpec != null
                 && _highlightedSlotSpec.Equals(e.DestroyedBuilding.SlotSpecification))
             {
@@ -74,7 +73,6 @@ namespace BattleCruisers.Cruisers.Slots
             return wasAnySlotHighlighted;
 		}
 
-        // FELIX  Test :)
         public void HighlightSlots(ISlotSpecification slotSpecification)
         {
             UnhighlightSlots();
