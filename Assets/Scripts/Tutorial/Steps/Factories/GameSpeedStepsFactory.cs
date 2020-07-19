@@ -65,7 +65,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Play around with the speed buttons a bit.")));
+                    _argsFactory.CreateTutorialStepArgs("Try all three speeds:  Slow motion, fast forward, and normal.")));
 
             return steps;
         }
