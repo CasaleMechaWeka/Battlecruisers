@@ -80,6 +80,13 @@ namespace BattleCruisers.Utils.Debugging
 
             dataProvider.GameModel.HasAttemptedTutorial = true;
 
+            // If never played a level, need to set last battle result, because levels should
+            // not be unlocked without a continue result.
+            if (dataProvider.GameModel.LastBattleResult == null)
+            {
+                dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
+            }
+
             dataProvider.SaveGame();
 
             Debug.Log("Everything unlocked :D  Restart game.");
