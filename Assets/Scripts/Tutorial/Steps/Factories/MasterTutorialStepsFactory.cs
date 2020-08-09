@@ -34,12 +34,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // FELIX  TEMP :P
-            //// 1. Player cruiser
-            //steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
+            // 1. Player cruiser
+            steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
 
-            //// 2. Navigation buttons
-            //steps.AddRange(_factoriesProvider.NavigationButtonsStepsFactory.CreateSteps());
+            // 2. Navigation buttons
+            steps.AddRange(_factoriesProvider.NavigationButtonsStepsFactory.CreateSteps());
 
             // 2.5 Scroll wheel
             if (_systemInfo.DeviceType != DeviceType.Handheld)
