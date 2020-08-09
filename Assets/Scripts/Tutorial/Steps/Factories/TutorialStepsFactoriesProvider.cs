@@ -12,7 +12,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public ITutorialStepsFactory YourCruiserStepsFactory { get; }
         public ITutorialStepsFactory NavigationButtonsStepsFactory { get; }
         public ITutorialStepsFactory ScrollWheelStepsFactory { get; }
-        public ITutorialStepsFactory SwipeStepsFactory { get; }
+        public ITutorialStepsFactory TouchSwipeStepsFactory { get; }
+        public ITutorialStepsFactory MousePanStepsFactory { get; }
+        public ITutorialStepsFactory PinchZoomStepsFactory { get; }
         public ITutorialStepsFactory EnemyCruiserStepsFactory { get; }
         public ITutorialStepsFactory PlayerCruiserWidgetsStepsFactory { get; }
         public ITutorialStepsFactory ConstructDroneStationStepsFactory { get; }
@@ -73,11 +75,24 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
                     explanationDismissableStepFactory);
 
-            SwipeStepsFactory
-                = new SwipeStepsFactory(
+            TouchSwipeStepsFactory
+                = new TouchSwipeStepsFactory(
                     argsFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
+                    explanationDismissableStepFactory);
+
+            MousePanStepsFactory
+                = new MousePanStepsFactory(
+                    argsFactory,
+                    featurePermitterStepFactory,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
+                    explanationDismissableStepFactory);
+
+            PinchZoomStepsFactory
+                = new PinchZoomStepsFactory(
+                    argsFactory,
+                    featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
                     explanationDismissableStepFactory);
 
