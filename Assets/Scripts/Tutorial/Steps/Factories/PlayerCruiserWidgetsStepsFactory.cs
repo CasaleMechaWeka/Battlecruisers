@@ -37,16 +37,21 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is your cruiser's health.",
                     _playerCruiserHealthBar);
-
             steps.Add(_explanationDismissableStepFactory.CreateStep(healthDialArgs));
 
             // Drone number
             ITutorialStepArgs droneNumberArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    "Builders are the only resource.  This is how many builders you have.  The more builders you have the faster your cruiser works and the better buildings and units you can build.",
+                    "Builders are the only resource.  This is how many builders you have.",
                     _numOfDrones);
-
             steps.Add(_explanationDismissableStepFactory.CreateStep(droneNumberArgs));
+
+            // More drones is better
+            ITutorialStepArgs moreDronesArgs
+                = _argsFactory.CreateTutorialStepArgs(
+                    "The more builders you have the faster your cruiser works and the better buildings and units you can build.",
+                    _numOfDrones);
+            steps.Add(_explanationDismissableStepFactory.CreateStep(moreDronesArgs));
 
             return steps;
         }
