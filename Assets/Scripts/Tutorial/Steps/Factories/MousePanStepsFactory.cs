@@ -8,7 +8,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly IPermitter _scrollWheelPermitter;
 
-        // FELIX  Enable scrollwheel
         public MousePanStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,

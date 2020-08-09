@@ -95,6 +95,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
                     explanationDismissableStepFactory);
 
             EnemyCruiserStepsFactory
