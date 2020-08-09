@@ -6,7 +6,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public abstract class SwipeStepsFactoryBase : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        protected readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _swipePermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly string _message;
@@ -31,18 +31,25 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // Enable swiping
-            steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: true));
+            EnableNavigation(steps);
 
-            // Explain swiping, encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(_message)));
 
-            // Disable swiping
-            steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: false));
+            DisableNavigation(steps);
 
             return steps;
+        }
+
+        protected virtual void EnableNavigation(IList<ITutorialStep> steps)
+        {
+            steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: true));
+        }
+
+        protected virtual void DisableNavigation(IList<ITutorialStep> steps)
+        {
+            steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: false));
         }
     }
 }

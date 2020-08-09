@@ -24,6 +24,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
+        // FELIX  Enable swiping
         public IList<ITutorialStep> CreateSteps()
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
