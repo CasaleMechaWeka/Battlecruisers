@@ -181,32 +181,23 @@ namespace BattleCruisers.UI.Cameras
                 trumpCameraTargetProvider
             };
 
+            IScrollRecogniser scrollRecogniser;
+
             if (hasTouch)
             {
+                scrollRecogniser = new ScrollRecogniser();
+                
                 targetProviders.Add(
                     new PinchZoomCameraTargetProvider(
                         zoomCalculator,
                         directionalZoom,
                         pinchTracker));
-
-                targetProviders.Add(
-                    new SwipeCameraTargetProvider(
-                        dragTracker,
-                        new ScrollCalculator(
-                            camera,
-                            TimeBC.Instance,
-                            settings.ValidOrthographicSizes,
-                            settingsManager,
-                            new ScrollLevelConverter()),
-                        zoomCalculator,
-                        camera,
-                        cameraCalculator,
-                        directionalZoom,
-                        new ScrollRecogniser(),
-                        new BufferClamper(CAMERA_X_POSITION_BUFFER_IN_M)));
             }
             else
             {
+                // Always interpret as scroll (swipe), never zoom.  Zoom is handled by scroll wheel :)
+                scrollRecogniser = new StaticScrollRecogniser(isScroll: true);
+
                 targetProviders.Add(
                     new ScrollWheelCameraTargetProvider(
                         input,
@@ -214,6 +205,22 @@ namespace BattleCruisers.UI.Cameras
                         zoomCalculator,
                         directionalZoom));
             }
+
+            targetProviders.Add(
+                new SwipeCameraTargetProvider(
+                    dragTracker,
+                    new ScrollCalculator(
+                        camera,
+                        TimeBC.Instance,
+                        settings.ValidOrthographicSizes,
+                        settingsManager,
+                        new ScrollLevelConverter()),
+                    zoomCalculator,
+                    camera,
+                    cameraCalculator,
+                    directionalZoom,
+                    scrollRecogniser,
+                    new BufferClamper(CAMERA_X_POSITION_BUFFER_IN_M)));
 
             return targetProviders;
         }
