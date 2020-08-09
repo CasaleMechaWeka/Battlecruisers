@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Sound
             Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");
 
             IAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
-            PlaySound(soundToPlay);
+            PlaySound(soundToPlay, loop);
         }
 
         public void PlaySound(IAudioClipWrapper sound, bool loop = false)

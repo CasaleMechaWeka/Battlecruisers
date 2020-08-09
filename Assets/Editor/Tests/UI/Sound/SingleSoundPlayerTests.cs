@@ -28,13 +28,25 @@ namespace BattleCruisers.Tests.UI.Sound
         }
 
         [Test]
-        public void PlaySound()
+        public void PlaySoundAsync()
         {
-            _soundPlayer.PlaySoundAsync(_soundKey);
+            bool loop = true;
+            _soundPlayer.PlaySoundAsync(_soundKey, loop);
 
             _audioSource.Received().Stop();
             _audioSource.Received().AudioClip = _soundToPlay;
-            _audioSource.Received().Play(isSpatial: false);
+            _audioSource.Received().Play(isSpatial: false, loop);
+        }
+
+        [Test]
+        public void PlaySound()
+        {
+            bool loop = true;
+            _soundPlayer.PlaySound(_soundToPlay, loop);
+
+            _audioSource.Received().Stop();
+            _audioSource.Received().AudioClip = _soundToPlay;
+            _audioSource.Received().Play(isSpatial: false, loop);
         }
 
         [Test]
