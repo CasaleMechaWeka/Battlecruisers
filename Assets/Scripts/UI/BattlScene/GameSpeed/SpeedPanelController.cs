@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         private ToggleButtonGroup _speedButtonGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        private const int EXPECTED_NUM_OF_BUTTONS = 2;  // Slow motion, fast forward
+        private const int EXPECTED_NUM_OF_BUTTONS = 3;  // Slow motion, play (normal), fast forward
 
         public IHighlightable Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
