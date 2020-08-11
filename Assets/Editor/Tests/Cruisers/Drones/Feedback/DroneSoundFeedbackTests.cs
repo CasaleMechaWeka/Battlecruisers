@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _parentCruiserHasActiveDrones.Value.Returns(true);
             _parentCruiserHasActiveDrones.ValueChanged += Raise.Event();
 
-            _audioSource.Received().Play(isSpatial: true, loop: true);
+            _audioSource.Received().Play(isSpatial: true, loop: false);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _parentCruiserHasActiveDrones.Value.Returns(false);
             _parentCruiserHasActiveDrones.ValueChanged += Raise.Event();
 
-            _audioSource.Received().Stop();
+            _audioSource.DidNotReceiveWithAnyArgs().Play(default, default);
         }
 
         [Test]
@@ -44,10 +44,10 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _feedback.DisposeManagedState();
 
-            _parentCruiserHasActiveDrones.Value.Returns(false);
+            _parentCruiserHasActiveDrones.Value.Returns(true);
             _parentCruiserHasActiveDrones.ValueChanged += Raise.Event();
 
-            _audioSource.DidNotReceive().Stop();
+            _audioSource.DidNotReceiveWithAnyArgs().Play(default, default);
         }
     }
 }

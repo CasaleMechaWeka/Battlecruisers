@@ -6,8 +6,7 @@ using UnityCommon.Properties;
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     /// <summary>
-    /// If the parent cruiser has any active drones, play the drones sound.
-    /// Otherwise, stop playing the drones sound.
+    /// When drones go from idle to active, play a drones sound.
     /// </summary>
     public class DroneSoundFeedback : IManagedDisposable
     {
@@ -30,11 +29,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
             if (_parentCruiserHasActiveDrones.Value)
             {
-                _audioSource.Play(isSpatial: true, loop: true);
-            }
-            else
-            {
-                _audioSource.Stop();
+                _audioSource.Play(isSpatial: true);
             }
         }
 
