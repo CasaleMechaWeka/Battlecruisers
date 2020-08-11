@@ -7,7 +7,6 @@ using System;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Update tests :)
     public class PopulationLimitAnnouncer
     {
         private readonly IPopulationLimitMonitor _populationLimitMonitor;

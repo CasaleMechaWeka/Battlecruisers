@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,6 +15,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         private IPrioritisedSoundPlayer _soundPlayer;
         private IDebouncer _debouncer;
         private IPopulationLimitMonitor _populationLimitMonitor;
+        private IGameObject _popLimitReachedFeedback;
+        private Action _debouncedAction;
 
         [SetUp]
         public void TestSetup()
@@ -21,23 +24,35 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _populationLimitMonitor = Substitute.For<IPopulationLimitMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _debouncer = Substitute.For<IDebouncer>();
+            _popLimitReachedFeedback = Substitute.For<IGameObject>();
 
-            // FELIX  Fix :)
-            _populationLimitAnnouncer = new PopulationLimitAnnouncer(_populationLimitMonitor, _soundPlayer, _debouncer, null);
+            _populationLimitAnnouncer = new PopulationLimitAnnouncer(_populationLimitMonitor, _soundPlayer, _debouncer, _popLimitReachedFeedback);
+
+            _debouncer.Debounce(Arg.Do<Action>(x => _debouncedAction = x));
         }
 
         [Test]
-        public void PopulationLimitReached()
+        public void IsPopulationLimitReached_ValueChanged_True()
         {
-            Action debouncedAction = null;
-            _debouncer.Debounce(Arg.Do<Action>(x => debouncedAction = x));
+            _populationLimitMonitor.IsPopulationLimitReached.Value.Returns(true);
 
-            // FELIX  Fix :)
-            //_populationLimitMonitor.PopulationLimitReached += Raise.Event();
+            _populationLimitMonitor.IsPopulationLimitReached.ValueChanged += Raise.Event();
 
-            Assert.IsNotNull(debouncedAction);
-            debouncedAction.Invoke();
+            _popLimitReachedFeedback.Received().IsVisible = true;
+            Assert.IsNotNull(_debouncedAction);
+            _debouncedAction.Invoke();
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+        }
+
+        [Test]
+        public void IsPopulationLimitReached_ValueChanged_False()
+        {
+            _populationLimitMonitor.IsPopulationLimitReached.Value.Returns(false);
+
+            _populationLimitMonitor.IsPopulationLimitReached.ValueChanged += Raise.Event();
+
+            _popLimitReachedFeedback.Received().IsVisible = false;
+            Assert.IsNull(_debouncedAction);
         }
     }
 }
