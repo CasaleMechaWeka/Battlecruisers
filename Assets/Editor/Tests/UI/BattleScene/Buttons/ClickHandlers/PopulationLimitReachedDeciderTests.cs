@@ -36,14 +36,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         [Test]
         public void ShouldPlayPopulationLimitReachedWarning_PopulationLimitNotReached()
         {
-            _populationLimitMonitor.IsPopulationLimitReached.Returns(false);
+            _populationLimitMonitor.IsPopulationLimitReached.Value.Returns(false);
             Assert.IsFalse(_decider.ShouldPlayPopulationLimitReachedWarning(_factory));
         }
 
         [Test]
         public void ShouldPlayPopulationLimitReachedWarning_PopulationLimitReached_UnitUnderConstruction()
         {
-            _populationLimitMonitor.IsPopulationLimitReached.Returns(true);
+            _populationLimitMonitor.IsPopulationLimitReached.Value.Returns(true);
             _factory.UnitUnderConstruction.Returns(_unit);
             Assert.IsFalse(_decider.ShouldPlayPopulationLimitReachedWarning(_factory));
         }
@@ -51,7 +51,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         [Test]
         public void ShouldPlayPopulationLimitReachedWarning_PopulationLimitReached_NoUnitUnderConstruction_UnitPaused()
         {
-            _populationLimitMonitor.IsPopulationLimitReached.Returns(true);
+            _populationLimitMonitor.IsPopulationLimitReached.Value.Returns(true);
             _factory.UnitUnderConstruction.Returns((IUnit)null);
             _factory.IsUnitPaused.Value.Returns(true);
             Assert.IsFalse(_decider.ShouldPlayPopulationLimitReachedWarning(_factory));
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         [Test]
         public void ShouldPlayPopulationLimitReachedWarning_PopulationLimitReached_NoUnitUnderConstruction_UnitNotPaused()
         {
-            _populationLimitMonitor.IsPopulationLimitReached.Returns(true);
+            _populationLimitMonitor.IsPopulationLimitReached.Value.Returns(true);
             _factory.UnitUnderConstruction.Returns((IUnit)null);
             _factory.IsUnitPaused.Value.Returns(false);
             Assert.IsTrue(_decider.ShouldPlayPopulationLimitReachedWarning(_factory));

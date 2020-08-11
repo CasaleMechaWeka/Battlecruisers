@@ -1,11 +1,9 @@
-﻿using System;
+﻿using UnityCommon.Properties;
 
 namespace BattleCruisers.Cruisers.Construction
 {
     public interface IPopulationLimitMonitor
     {
-        bool IsPopulationLimitReached { get; }
-
-        event EventHandler PopulationLimitReached;
+        IBroadcastingProperty<bool> IsPopulationLimitReached { get; }
     }
 }

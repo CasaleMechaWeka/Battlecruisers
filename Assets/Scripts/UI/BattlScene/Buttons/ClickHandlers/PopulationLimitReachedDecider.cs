@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Assert.IsNotNull(factory);
 
             return
-                _populationLimitMonitor.IsPopulationLimitReached
+                _populationLimitMonitor.IsPopulationLimitReached.Value
                 && factory.UnitUnderConstruction == null
                 && !factory.IsUnitPaused.Value;
         }

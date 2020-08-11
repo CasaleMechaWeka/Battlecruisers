@@ -18,21 +18,22 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _populationLimitMonitor = new PopulationLimitMonitor(_unitMonitor);
 
             _populationLimitReachedCount = 0;
-            _populationLimitMonitor.PopulationLimitReached += (sender, e) => _populationLimitReachedCount++;
+            // FELIX  Fix :P
+            //_populationLimitMonitor.PopulationLimitReached. += (sender, e) => _populationLimitReachedCount++;
         }
 
         [Test]
         public void IsPopulationLimitReached_True()
         {
             _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT);
-            Assert.IsTrue(_populationLimitMonitor.IsPopulationLimitReached);
+            Assert.IsTrue(_populationLimitMonitor.IsPopulationLimitReached.Value);
         }
 
         [Test]
         public void IsPopulationLimitReached_False()
         {
             _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT - 1);
-            Assert.IsFalse(_populationLimitMonitor.IsPopulationLimitReached);
+            Assert.IsFalse(_populationLimitMonitor.IsPopulationLimitReached.Value);
         }
 
         [Test]

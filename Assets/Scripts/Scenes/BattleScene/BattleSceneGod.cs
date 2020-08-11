@@ -212,7 +212,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     components.Deferrer,
                     time,
                     battleCompletionHandler,
-                    playerCruiserDamageMonitor);
+                    playerCruiserDamageMonitor,
+                    leftPanelComponents.PopLimitReachedFeedback);
 
             IWindManager windManager
                 = components.WindInitialiser.Initialise(

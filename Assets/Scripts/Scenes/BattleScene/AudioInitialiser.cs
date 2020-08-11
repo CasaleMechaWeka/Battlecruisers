@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using UnityCommon.PlatformAbstractions.Time;
@@ -30,15 +31,16 @@ namespace BattleCruisers.Scenes.BattleScene
             IDeferrer deferrer,
             ITime time,
             IBattleCompletionHandler battleCompletionHandler,
-            ICruiserDamageMonitor playerCruiserDamageMonitor)
+            ICruiserDamageMonitor playerCruiserDamageMonitor,
+            IGameObject popLimitReachedFeedback)
         {
-            Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor);
+            Helper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor, popLimitReachedFeedback);
 
             _levelMusicPlayer = CreateLevelMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer, battleCompletionHandler);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time, playerCruiserDamageMonitor);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser);
-            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time);
+            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time, popLimitReachedFeedback);
         }
 
         private LevelMusicPlayer CreateLevelMusicPlayer(
@@ -83,13 +85,14 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer);
         }
 
-        private PopulationLimitAnnouncer CreatePopulationLimitAnnouncer(ICruiser playerCruiser, ITime time)
+        private PopulationLimitAnnouncer CreatePopulationLimitAnnouncer(ICruiser playerCruiser, ITime time, IGameObject popLimitReachedFeedback)
         {
             return
                 new PopulationLimitAnnouncer(
+                    playerCruiser.PopulationLimitMonitor,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
-                    playerCruiser.PopulationLimitMonitor);
+                    popLimitReachedFeedback);
         }
     }
 }

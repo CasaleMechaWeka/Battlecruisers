@@ -15,10 +15,10 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
@@ -38,6 +38,7 @@ namespace BattleCruisers.UI.BattleScene
         public DronesPanelInitialiser dronesPanelInitialiser;
         public BuildMenuInitialiser buildMenuInitialiser;
         public HelpLabel helpLabels;
+        public GameObject popLimitReachedFeedback;
 
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
@@ -64,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene
                 prioritisedSoundPlayer,
                 soundPlayer,
                 populationLimitMonitor);
-            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, helpLabels);
+            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, helpLabels, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IBuildMenu buildMenu 
@@ -80,7 +81,7 @@ namespace BattleCruisers.UI.BattleScene
                     populationLimitMonitor);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
-            return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu);
+            return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
 
         private IHighlightable SetupDronesPanel(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)

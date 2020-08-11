@@ -1,29 +1,44 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using System;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update tests :)
     public class PopulationLimitAnnouncer
     {
+        private readonly IPopulationLimitMonitor _populationLimitMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _debouncer;
+        private readonly IGameObject _popLimitReachedFeedback;
 
-        public PopulationLimitAnnouncer(IPrioritisedSoundPlayer soundPlayer, IDebouncer debouncer, IPopulationLimitMonitor populationLimitMonitor)
+        public PopulationLimitAnnouncer(
+            IPopulationLimitMonitor populationLimitMonitor,
+            IPrioritisedSoundPlayer soundPlayer, 
+            IDebouncer debouncer, 
+            IGameObject popLimitReachedFeedback)
         {
-            Helper.AssertIsNotNull(soundPlayer, debouncer, populationLimitMonitor);
+            Helper.AssertIsNotNull(populationLimitMonitor, soundPlayer, debouncer, popLimitReachedFeedback);
 
+            _populationLimitMonitor = populationLimitMonitor;
             _soundPlayer = soundPlayer;
             _debouncer = debouncer;
+            _popLimitReachedFeedback = popLimitReachedFeedback;
 
-            populationLimitMonitor.PopulationLimitReached += PopulationLimitMonitor_PopulationLimitReached;
+            _populationLimitMonitor.IsPopulationLimitReached.ValueChanged += IsPopulationLimitReached_ValueChanged;
         }
 
-        private void PopulationLimitMonitor_PopulationLimitReached(object sender, EventArgs e)
+        private void IsPopulationLimitReached_ValueChanged(object sender, EventArgs e)
         {
-            _debouncer.Debounce(() => _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached));
+            if (_populationLimitMonitor.IsPopulationLimitReached.Value)
+            {
+                _debouncer.Debounce(() => _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached));
+            }
+
+            _popLimitReachedFeedback.IsVisible = _populationLimitMonitor.IsPopulationLimitReached.Value;
         }
     }
 }

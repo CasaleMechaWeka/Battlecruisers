@@ -18,11 +18,12 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [SetUp]
         public void TestSetup()
         {
+            _populationLimitMonitor = Substitute.For<IPopulationLimitMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _debouncer = Substitute.For<IDebouncer>();
-            _populationLimitMonitor = Substitute.For<IPopulationLimitMonitor>();
 
-            _populationLimitAnnouncer = new PopulationLimitAnnouncer(_soundPlayer, _debouncer, _populationLimitMonitor);
+            // FELIX  Fix :)
+            _populationLimitAnnouncer = new PopulationLimitAnnouncer(_populationLimitMonitor, _soundPlayer, _debouncer, null);
         }
 
         [Test]
@@ -31,7 +32,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             Action debouncedAction = null;
             _debouncer.Debounce(Arg.Do<Action>(x => debouncedAction = x));
 
-            _populationLimitMonitor.PopulationLimitReached += Raise.Event();
+            // FELIX  Fix :)
+            //_populationLimitMonitor.PopulationLimitReached += Raise.Event();
 
             Assert.IsNotNull(debouncedAction);
             debouncedAction.Invoke();
