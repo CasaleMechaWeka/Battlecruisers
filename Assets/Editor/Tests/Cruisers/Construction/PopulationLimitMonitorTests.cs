@@ -9,47 +9,50 @@ namespace BattleCruisers.Tests.Cruisers.Construction
     {
         private IPopulationLimitMonitor _populationLimitMonitor;
         private ICruiserUnitMonitor _unitMonitor;
-        private int _populationLimitReachedCount;
 
         [SetUp]
         public void TestSetup()
         {
             _unitMonitor = Substitute.For<ICruiserUnitMonitor>();
             _populationLimitMonitor = new PopulationLimitMonitor(_unitMonitor);
-
-            _populationLimitReachedCount = 0;
-            // FELIX  Fix :P
-            //_populationLimitMonitor.PopulationLimitReached. += (sender, e) => _populationLimitReachedCount++;
         }
 
         [Test]
-        public void IsPopulationLimitReached_True()
+        public void InitialState()
         {
-            _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT);
-            Assert.IsTrue(_populationLimitMonitor.IsPopulationLimitReached.Value);
-        }
-
-        [Test]
-        public void IsPopulationLimitReached_False()
-        {
-            _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT - 1);
             Assert.IsFalse(_populationLimitMonitor.IsPopulationLimitReached.Value);
         }
 
         [Test]
-        public void UnitCompleted_PopulationLimitReached_EmitsEvent()
+        public void UnitCompleted_PopulationLimitReached()
         {
             _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT);
             _unitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(null));
-            Assert.AreEqual(1, _populationLimitReachedCount);
+            Assert.IsTrue(_populationLimitMonitor.IsPopulationLimitReached.Value);
         }
 
         [Test]
-        public void UnitCompleted_PopulationLimitNotReached_DoesNotEmitEvent()
+        public void UnitCompleted_PopulationLimitNotReached()
         {
             _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT - 1);
             _unitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(null));
-            Assert.AreEqual(0, _populationLimitReachedCount);
+            Assert.IsFalse(_populationLimitMonitor.IsPopulationLimitReached.Value);
+        }
+
+        [Test]
+        public void UnitDestroyed_PopulationLimitReached()
+        {
+            _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT);
+            _unitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(null));
+            Assert.IsTrue(_populationLimitMonitor.IsPopulationLimitReached.Value);
+        }
+
+        [Test]
+        public void UnitDestroyed_PopulationLimitNotReached()
+        {
+            _unitMonitor.AliveUnits.Count.Returns(Constants.POPULATION_LIMIT - 1);
+            _unitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(null));
+            Assert.IsFalse(_populationLimitMonitor.IsPopulationLimitReached.Value);
         }
     }
 }

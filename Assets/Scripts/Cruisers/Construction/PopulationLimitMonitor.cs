@@ -1,19 +1,15 @@
 ﻿using BattleCruisers.Utils;
-using System;
 using UnityCommon.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Update tests
     public class PopulationLimitMonitor : IPopulationLimitMonitor
     {
         private readonly ICruiserUnitMonitor _unitMonitor;
 
         private readonly ISettableBroadcastingProperty<bool> _isPopulationLimitReached;
         public IBroadcastingProperty<bool> IsPopulationLimitReached { get; }
-
-        public event EventHandler PopulationLimitReached;
 
         public PopulationLimitMonitor(ICruiserUnitMonitor unitMonitor)
         {
