@@ -20,6 +20,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Timers;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,10 @@ namespace BattleCruisers.Buildables
         public int numOfDronesRequired;
         public float buildTimeInS;
 
+        private IAudioClipWrapper _deathSound;
+        [Header("Sounds")]
+        public AudioClip deathSound;
+
         private const float MAX_BUILD_PROGRESS = 1;
 
         #region Properties
@@ -73,7 +78,10 @@ namespace BattleCruisers.Buildables
         public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
+
+        // FELI  Remove :)
         protected virtual ISoundKey DeathSoundKey => SoundKeys.Explosions.Default;
+        
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
         public ICruiser ParentCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
@@ -208,6 +216,9 @@ namespace BattleCruisers.Buildables
 
             _smokeInitialiser = GetComponentInChildren<SmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
+
+            Assert.IsNotNull(deathSound);
+            _deathSound = new AudioClipWrapper(deathSound);
         }
 
         protected void AddDamageStats(IDamageCapability statsToAdd)
@@ -473,7 +484,7 @@ namespace BattleCruisers.Buildables
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
 
-            _factoryProvider.Sound.SoundPlayer.PlaySoundAsync(DeathSoundKey, transform.position);
+            _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
         }
 
         protected void SetupDroneConsumer(int numOfDrones, bool showDroneFeedback)

@@ -17,6 +17,7 @@ namespace BattleCruisers.Buildables.Buildings
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
         protected ISlot _parentSlot;
 
+        [Header("Slots")]
         public BuildingFunction function;
         public bool preferCruiserFront;
         public SlotType slotType;
@@ -25,6 +26,7 @@ namespace BattleCruisers.Buildables.Buildings
         public ISlotSpecification SlotSpecification { get; private set; }
         public Vector3 PuzzleRootPoint { get; private set; }
 
+        [Header("Other")]
         public BuildingCategory category;
         public BuildingCategory Category => category;
 

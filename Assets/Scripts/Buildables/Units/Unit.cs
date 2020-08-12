@@ -18,6 +18,7 @@ namespace BattleCruisers.Buildables.Units
         private IAudioClipWrapper _engineAudioClip;
         private IAudioSource _audioSource;
 
+        [Header("Other")]
         public UnitCategory category;
 		public Rigidbody2D rigidBody;
 
