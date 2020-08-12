@@ -18,6 +18,8 @@ namespace BattleCruisers.Buildables.Units
         private IAudioClipWrapper _engineAudioClip;
         private IAudioSource _audioSource;
 
+        public AudioClip
+
         [Header("Other")]
         public UnitCategory category;
 		public Rigidbody2D rigidBody;
@@ -51,6 +53,7 @@ namespace BattleCruisers.Buildables.Units
 
         protected override bool IsDroneConsumerFocusable => false;
 
+        // FELIX  Remove :)
         protected abstract ISoundKey EngineSoundKey { get; }
         #endregion Properties
 
@@ -63,6 +66,7 @@ namespace BattleCruisers.Buildables.Units
             AudioSource audioSource = transform.FindNamedComponent<AudioSource>("AudioSource");
             Assert.IsNotNull(audioSource);
             _audioSource = new AudioSourceBC(audioSource);
+            // FELIX  Assert audio clip is not null
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -86,6 +90,8 @@ namespace BattleCruisers.Buildables.Units
 
         protected async void PlayEngineSoundAsync()
         {
+            // FELIX  Can replace this method with the last line :P
+
             if (_engineAudioClip == null)
             {
                 _engineAudioClip = await _factoryProvider.Sound.SoundFetcher.GetSoundAsync(EngineSoundKey);
