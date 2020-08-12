@@ -29,7 +29,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public event EventHandler UnitUnderConstructionDestroyed;
 
         #region Properties
-        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building3;
         public abstract LayerMask UnitLayerMask { get; }
         public IUnit UnitUnderConstruction { get; private set; }
         public override bool IsBoostable => true;

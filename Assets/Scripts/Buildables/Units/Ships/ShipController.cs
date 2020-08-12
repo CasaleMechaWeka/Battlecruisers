@@ -46,7 +46,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
         public override TargetType TargetType => TargetType.Ships;
-        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Ship;
 
         /// <summary>
         /// Optimal range for ship to do the most damage, while staying out of

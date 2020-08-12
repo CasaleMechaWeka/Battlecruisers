@@ -4,17 +4,6 @@ namespace BattleCruisers.Data.Static
 {
     public static class SoundKeys
     {
-        public static class Deaths
-        {
-            public static ISoundKey Aircraft { get; } = new SoundKey(SoundType.Deaths, "aircraft");
-            public static ISoundKey Ship { get; } = new SoundKey(SoundType.Deaths, "ship");
-            public static ISoundKey Building1 { get; } = new SoundKey(SoundType.Deaths, "building1");
-            public static ISoundKey Building2 { get; } = new SoundKey(SoundType.Deaths, "building2");
-            public static ISoundKey Building3 { get; } = new SoundKey(SoundType.Deaths, "building3");
-            public static ISoundKey Building4 { get; } = new SoundKey(SoundType.Deaths, "building4");
-            public static ISoundKey Building5 { get; } = new SoundKey(SoundType.Deaths, "building5");
-        }
-
         public static class Engines
         {
             // Ships

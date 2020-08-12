@@ -78,10 +78,6 @@ namespace BattleCruisers.Buildables
         public IBoostable BuildProgressBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
-
-        // FELI  Remove :)
-        protected virtual ISoundKey DeathSoundKey => SoundKeys.Explosions.Default;
-        
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
         public ICruiser ParentCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;

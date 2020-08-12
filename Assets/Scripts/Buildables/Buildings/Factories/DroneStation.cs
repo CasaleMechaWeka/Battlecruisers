@@ -11,7 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
 		public int numOfDronesProvided;
 
-        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building4;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 

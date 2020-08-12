@@ -48,7 +48,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		public float PatrollingVelocityInMPerS => MaxPatrollingVelocity;
         public float VelocityInMPerS => EffectiveMaxVelocityInMPerS;
         protected virtual float PositionEqualityMarginInM => 0.5f;
-        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Aircraft;
         protected override bool ShowSmokeWhenDestroyed => true;
 
         protected IMovementController DummyMovementController { get; private set; }

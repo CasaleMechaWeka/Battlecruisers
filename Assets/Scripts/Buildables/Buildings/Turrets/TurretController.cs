@@ -16,7 +16,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         private IAnimation _barrelAnimation;
 		protected IBarrelWrapper _barrelWrapper;
 
-        protected override ISoundKey DeathSoundKey => SoundKeys.Deaths.Building2;
         public override bool IsBoostable => true;
 
         // By default have null (no) sound
