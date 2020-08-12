@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 

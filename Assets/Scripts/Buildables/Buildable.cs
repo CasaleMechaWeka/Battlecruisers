@@ -7,7 +7,6 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Movement;
 using BattleCruisers.Targets.Factories;

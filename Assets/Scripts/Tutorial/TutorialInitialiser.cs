@@ -5,7 +5,6 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial
 {

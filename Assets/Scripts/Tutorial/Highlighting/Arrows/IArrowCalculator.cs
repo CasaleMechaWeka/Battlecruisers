@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Masked;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Highlighting.Arrows
 {

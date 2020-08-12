@@ -3,11 +3,9 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
-using BattleCruisers.UI.BattleScene.Clouds;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static

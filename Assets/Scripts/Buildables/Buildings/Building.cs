@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

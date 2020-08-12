@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Utils;
 

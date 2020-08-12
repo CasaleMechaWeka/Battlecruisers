@@ -3,7 +3,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.Sound;

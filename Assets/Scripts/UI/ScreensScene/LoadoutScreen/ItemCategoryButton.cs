@@ -5,7 +5,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Models;
 using System.Collections.Generic;

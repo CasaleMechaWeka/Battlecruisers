@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;

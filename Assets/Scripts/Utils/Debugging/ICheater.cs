@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.BuildProgress;
-
-namespace BattleCruisers.Utils.Debugging
+﻿namespace BattleCruisers.Utils.Debugging
 {
     public interface ICheater
     {

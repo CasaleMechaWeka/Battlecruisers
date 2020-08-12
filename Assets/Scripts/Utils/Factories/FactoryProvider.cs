@@ -13,7 +13,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
