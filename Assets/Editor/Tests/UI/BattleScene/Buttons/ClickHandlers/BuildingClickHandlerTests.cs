@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -15,9 +16,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
     public class BuildingClickHandlerTests
     {
         private IBuildingClickHandler _clickHandler;
-        private IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
         private IUIManager _uiManager;
-        private IPrioritisedSoundPlayer _soundPlayer;
+        private IPrioritisedSoundPlayer _eventSoundPlayer;
+        private ISingleSoundPlayer _uiSoundPlayer;
+        private IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
+        private IAudioClipWrapper _selectedSound;
         private IBuildableWrapper<IBuilding> _building;
 
         [SetUp]
@@ -25,11 +28,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         {
             UnityAsserts.Assert.raiseExceptions = true;
 
-            _playerCruiserFocusHelper = Substitute.For<IPlayerCruiserFocusHelper>();
             _uiManager = Substitute.For<IUIManager>();
-            _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
+            _eventSoundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
+            _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
+            _playerCruiserFocusHelper = Substitute.For<IPlayerCruiserFocusHelper>();
+            _selectedSound = Substitute.For<IAudioClipWrapper>();
 
-            _clickHandler = new BuildingClickHandler(_playerCruiserFocusHelper, _uiManager, _soundPlayer);
+            _clickHandler = new BuildingClickHandler(_uiManager, _eventSoundPlayer, _uiSoundPlayer, _playerCruiserFocusHelper, _selectedSound);
 
             _building = Substitute.For<IBuildableWrapper<IBuilding>>();
         }
@@ -48,6 +53,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _clickHandler.HandleClick(canAffordBuilding, _building);
 
+            _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _playerCruiserFocusHelper.Received().FocusOnPlayerCruiserIfNeeded();
             _uiManager.Received().SelectBuildingFromMenu(_building);
         }
@@ -60,6 +66,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _clickHandler.HandleClick(canAffordBuilding, _building);
 
+            _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _playerCruiserFocusHelper.Received().FocusOnPlayerBowSlotIfNeeded();
             _uiManager.Received().SelectBuildingFromMenu(_building);
         }
@@ -73,6 +80,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _clickHandler.HandleClick(canAffordBuilding, _building);
 
+            _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _playerCruiserFocusHelper.Received().FocusOnPlayerBowSlotIfNeeded();
             _uiManager.Received().SelectBuildingFromMenu(_building);
         }
@@ -81,8 +89,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         public void HandleClick_CannotAffordBuilding_PlaysInsufficientFundsSound()
         {
             bool canAffordBuilding = false;
+
             _clickHandler.HandleClick(canAffordBuilding, _building);
-            _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
+
+            _uiSoundPlayer.Received().PlaySound(_selectedSound);
+            _eventSoundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
         }
     }
 }

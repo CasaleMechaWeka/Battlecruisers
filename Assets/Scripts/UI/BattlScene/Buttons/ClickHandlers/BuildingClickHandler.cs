@@ -4,6 +4,8 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
@@ -11,20 +13,27 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     public class BuildingClickHandler : BuildableClickHandler, IBuildingClickHandler
     {
         private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
+        private readonly IAudioClipWrapper _buildingSelectedSound;
 
         public BuildingClickHandler(
-            IPlayerCruiserFocusHelper playerCruiserFocusHelper, 
             IUIManager uiManager, 
-            IPrioritisedSoundPlayer eventSoundPlayer)
-            : base(uiManager, eventSoundPlayer)
+            IPrioritisedSoundPlayer eventSoundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper, 
+            IAudioClipWrapper buildingSelectedSound)
+            : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
-            Assert.IsNotNull(playerCruiserFocusHelper);
+            Helper.AssertIsNotNull(playerCruiserFocusHelper, buildingSelectedSound);
+
             _playerCruiserFocusHelper = playerCruiserFocusHelper;
+            _buildingSelectedSound = buildingSelectedSound;
         }
 
         public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IBuilding> buildingClicked)
         {
             Assert.IsNotNull(buildingClicked);
+
+            _uiSoundPlayer.PlaySound(_buildingSelectedSound);
 
             if (canAffordBuildable)
             {

@@ -12,26 +12,22 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
-        private readonly ISingleSoundPlayer _uiSoundPlayer;
 
         public UnitClickHandler(
             IUIManager uiManager, 
             IPrioritisedSoundPlayer eventSoundPlayer, 
-            IPopulationLimitReachedDecider populationLimitReachedDecider,
-            ISingleSoundPlayer uiSoundPlayer)
-            : base(uiManager, eventSoundPlayer)
+            ISingleSoundPlayer uiSoundPlayer,
+            IPopulationLimitReachedDecider populationLimitReachedDecider)
+            : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
-            Helper.AssertIsNotNull(populationLimitReachedDecider, uiSoundPlayer);
-
+            Assert.IsNotNull(populationLimitReachedDecider);
             _populationLimitReachedDecider = populationLimitReachedDecider;
-            _uiSoundPlayer = uiSoundPlayer;
         }
 
         public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
-            // FELIX  Update tests :)
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
 
             if (canAffordBuildable)

@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
             _populationLimitReachedDecider = Substitute.For<IPopulationLimitReachedDecider>();
             _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
 
-            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, _populationLimitReachedDecider, _uiSoundPlayer);
+            _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, _uiSoundPlayer, _populationLimitReachedDecider);
 
             _unit = Substitute.For<IUnit>();
             _unitWrapper = Substitute.For<IBuildableWrapper<IUnit>>();

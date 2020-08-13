@@ -9,6 +9,7 @@ using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenuInitialiser : MonoBehaviour
 	{
+        public AudioClip buildingButtonSelectedSound;
+
         public IBuildMenu Initialise(
 			IUIManager uiManager,
             IList<IBuildingGroup> buildingGroups, 
@@ -41,6 +44,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 eventSoundPlayer,
                 uiSoundPlayer,
                 populationLimitMonitor);
+            Assert.IsNotNull(buildingButtonSelectedSound);
 
             // Selector panel
             SelectorPanelController selectorPanel = GetComponentInChildren<SelectorPanelController>();
@@ -58,7 +62,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, eventSoundPlayer);
+            IBuildingClickHandler buildingClickHandler 
+                = new BuildingClickHandler(
+                    uiManager, 
+                    eventSoundPlayer,
+                    uiSoundPlayer,
+                    playerCruiserFocusHelper,
+                    new AudioClipWrapper(buildingButtonSelectedSound));
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler);
 
             // Unit menus
@@ -66,8 +76,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 = new UnitClickHandler(
                     uiManager,
                     eventSoundPlayer,
-                    new PopulationLimitReachedDecider(populationLimitMonitor),
-                    uiSoundPlayer);
+                    uiSoundPlayer,
+                    new PopulationLimitReachedDecider(populationLimitMonitor));
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
