@@ -52,8 +52,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Gunship;
-
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
             base.StaticInitialise(parent, healthBar);

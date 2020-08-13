@@ -22,7 +22,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 			set { patrolPoints = new List<Vector2>(value); }
 		}
 
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Gunship;
 		public override TargetType TargetType => _targetType;
 
 		private bool _useDummyMovementController = false; 

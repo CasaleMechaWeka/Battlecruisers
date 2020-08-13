@@ -76,7 +76,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Archon;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override IList<IBarrelWrapper> GetTurrets()

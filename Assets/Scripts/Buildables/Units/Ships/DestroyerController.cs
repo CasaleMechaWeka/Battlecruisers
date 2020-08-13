@@ -17,8 +17,6 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private const float OPTIMAL_RANGE_BUFFER_IN_M = 1;
 
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Destroyer;
-
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);

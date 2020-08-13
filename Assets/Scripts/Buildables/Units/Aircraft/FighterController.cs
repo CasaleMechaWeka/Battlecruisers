@@ -60,7 +60,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR;
         protected override float PositionEqualityMarginInM => 2;
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Fighter;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{

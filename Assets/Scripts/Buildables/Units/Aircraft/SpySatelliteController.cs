@@ -8,9 +8,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class SpySatelliteController : AircraftController
     {
-		// TEMP  Use satellite sound once we have it :)
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Bomber;
-
         public override TargetType TargetType => TargetType.Satellite;
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

@@ -4,21 +4,6 @@ namespace BattleCruisers.Data.Static
 {
     public static class SoundKeys
     {
-        // FELIX  remove :)
-        public static class Engines
-        {
-            // Ships
-			public static ISoundKey AtatckBoat{ get; } = new SoundKey(SoundType.Engines, "attack-boat");
-			public static ISoundKey Frigate { get; } = new SoundKey(SoundType.Engines, "frigate");
-			public static ISoundKey Destroyer { get; } = new SoundKey(SoundType.Engines, "destroyer");
-            public static ISoundKey Archon { get; } = new SoundKey(SoundType.Engines, "archon");
-
-            // Aircraft
-            public static ISoundKey Bomber { get; } = new SoundKey(SoundType.Engines, "bomber");
-            public static ISoundKey Gunship { get; } = new SoundKey(SoundType.Engines, "gunship");
-            public static ISoundKey Fighter { get; } = new SoundKey(SoundType.Engines, "fighter");
-        }
-
         public static class Firing
         {
             public static ISoundKey AntiAir { get; } = new SoundKey(SoundType.Firing, "anti-air");

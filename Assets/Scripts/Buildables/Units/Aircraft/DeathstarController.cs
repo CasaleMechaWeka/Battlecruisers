@@ -24,9 +24,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		private const float RIGHT_WING_TARGET_ANGLE_IN_DEGREES = 90;
 		private const float WING_ROTATE_SPEED_IN_M_DEGREES_S = 45;
 
-        // TEMP  Use satellite sound once we have it :)
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Bomber;
-
         public override TargetType TargetType => TargetType.Satellite;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)

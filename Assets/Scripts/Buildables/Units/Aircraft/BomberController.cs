@@ -50,8 +50,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-        protected override ISoundKey EngineSoundKey => SoundKeys.Engines.Bomber;
-
         protected override Vector2 MaskHighlightableSize
         {
             get
