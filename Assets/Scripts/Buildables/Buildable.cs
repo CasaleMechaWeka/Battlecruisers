@@ -370,7 +370,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        public void StartConstruction()
+        public virtual void StartConstruction()
         {
             Logging.Log(Tags.BUILDABLE, this);
 

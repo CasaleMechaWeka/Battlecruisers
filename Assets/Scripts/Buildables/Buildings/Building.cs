@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,6 +15,9 @@ namespace BattleCruisers.Buildables.Buildings
 
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
         protected ISlot _parentSlot;
+
+        private IAudioClipWrapper _placementSound;
+        public AudioClip placementSound;
 
         [Header("Slots")]
         public BuildingFunction function;
@@ -41,6 +45,9 @@ namespace BattleCruisers.Buildables.Buildings
 
             Transform puzzleRootPoint = transform.FindNamedComponent<Transform>("PuzzleRootPoint");
             PuzzleRootPoint = puzzleRootPoint.position;
+
+            Assert.IsNotNull(placementSound);
+            _placementSound = new AudioClipWrapper(placementSound);
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)
@@ -50,6 +57,16 @@ namespace BattleCruisers.Buildables.Buildings
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
             _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+        }
+
+        public override void StartConstruction()
+        {
+            base.StartConstruction();
+
+            if (ParentCruiser.IsPlayerCruiser)
+            {
+                _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+            }
         }
 
         protected override void OnSingleClick()
