@@ -2,7 +2,7 @@
 {
     public interface IModalMenu
     {
-        void ShowMenu(IMainMenuManager menuManager);
+        void ShowMenu();
         void HideMenu();
     }
 }

@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene
         public void ShowMenu()
         {
             _pauseGameManager.PauseGame();
-            _modalMenu.ShowMenu(this);
+            _modalMenu.ShowMenu();
         }
 
         public void DismissMenu()

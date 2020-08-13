@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.ShowMenu();
 
             _pauseGameManager.Received().PauseGame();
-            _modalMenu.Received().ShowMenu(_mainMenuManager);
+            _modalMenu.Received().ShowMenu();
         }
 
         [Test]

@@ -12,18 +12,20 @@ namespace BattleCruisers.UI.BattleScene
 
 		public ActionButton endGameButton, skipTutorialButton, resumeButton, retryButton;
 
-		public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial)
+		public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial, IMainMenuManager menuManager)
 		{
 			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton);
-			Assert.IsNotNull(soundPlayer);
+			Helper.AssertIsNotNull(soundPlayer, menuManager);
+
+			_menuManager = menuManager;
 
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
-            endGameButton.Initialise(soundPlayer, Quit);
-            skipTutorialButton.Initialise(soundPlayer, Quit);
-            resumeButton.Initialise(soundPlayer, Cancel);
-			retryButton.Initialise(soundPlayer, Retry);
+            endGameButton.Initialise(soundPlayer, _menuManager.QuitGame);
+            skipTutorialButton.Initialise(soundPlayer, _menuManager.QuitGame);
+            resumeButton.Initialise(soundPlayer, _menuManager.DismissMenu);
+			retryButton.Initialise(soundPlayer, _menuManager.RetryLevel);
 
             if (isTutorial)
             {
@@ -38,39 +40,30 @@ namespace BattleCruisers.UI.BattleScene
 			HideMenu();
 		}
 
-		public void ShowMenu(IMainMenuManager menuManager)
-		{
-			_menuManager = menuManager;
-			_canvas.gameObject.SetActive(true);
-		}
-
 		void Update()
 		{
 			// IPAD  Adapt for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{
-                Cancel();
+				if (_canvas.enabled)
+                {
+					_menuManager.DismissMenu();
+                }
+				else
+                {
+					_menuManager.ShowMenu();
+                }
 			}
+		}
+
+		public void ShowMenu()
+		{
+			_canvas.enabled = true;
 		}
 
 		public void HideMenu()
 		{
-			_canvas.gameObject.SetActive(false);
-		}
-
-		private void Cancel()
-		{
-			_menuManager.DismissMenu();
-		}
-
-		private void Quit()
-		{
-			_menuManager.QuitGame();
-		}
-
-		private void Retry()
-		{
-			_menuManager.RetryLevel();
+			_canvas.enabled = false;
 		}
 	}
 }

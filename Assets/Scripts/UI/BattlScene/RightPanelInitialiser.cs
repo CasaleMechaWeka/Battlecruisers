@@ -58,11 +58,11 @@ namespace BattleCruisers.UI.BattleScene
                 soundPlayer,
                 sceneNavigator);
 
-            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             IHighlightable speedButtonPanel = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = CreateMainMenuManager(pauseGameManager, battleCompletionHandler, sceneNavigator);
+            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
