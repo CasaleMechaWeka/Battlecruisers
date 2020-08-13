@@ -4,6 +4,8 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -19,6 +21,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         private IBuildingCategoriesMenu _buildingCategoriesMenu;
         private IBuildableMenus<BuildingCategory> _buildingMenus;
         private IBuildableMenus<UnitCategory> _unitMenus;
+        private ISingleSoundPlayer _uiSoundPlayer;
+        private IAudioClipWrapper _selectorOpeningSound;
         private IBuildablesMenu _buildablesMenu1, _buildablesMenu2;
         private BuildingCategory _buildingCategory1, _buildingCategory2;
         private IBuildableButton _button1, _button2;
@@ -52,8 +56,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
 
             _selectorPanel = Substitute.For<IPanel>();
             _buildingCategoriesMenu = Substitute.For<IBuildingCategoriesMenu>();
+            _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
+            _selectorOpeningSound = Substitute.For<IAudioClipWrapper>();
 
-            _buildMenu = new BuildMenu(_selectorPanel, _buildingCategoriesMenu, _buildingMenus, _unitMenus);
+            _buildMenu = new BuildMenu(_selectorPanel, _buildingCategoriesMenu, _buildingMenus, _unitMenus, _uiSoundPlayer, _selectorOpeningSound);
         }
 
         [Test]
@@ -68,7 +74,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         public void ShowBuildingGroupMenu_DifferentMenu()
         {
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
-            ReceivedShowMenu(_buildablesMenu1, activationParameter: null);
+            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true);
         }
 
         [Test]
@@ -94,7 +100,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
 
             _buildMenu.ShowUnitsMenu(unitFactory);
 
-            ReceivedShowMenu(_buildablesMenu1, unitFactory);
+            ReceivedShowMenu(_buildablesMenu1, unitFactory, currentMenuIsNull: true);
         }
 
         [Test]
@@ -102,13 +108,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         {
             // Show first menu
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
-            ReceivedShowMenu(_buildablesMenu1, activationParameter: null);
+            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true);
 
             // Show second menu
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory2);
 
             ReceivedHideCurrentlyShownMenu(_buildablesMenu1);
-            ReceivedShowMenu(_buildablesMenu2, activationParameter: null);
+            ReceivedShowMenu(_buildablesMenu2, activationParameter: null, currentMenuIsNull: false);
         }
 
         [Test]
@@ -116,7 +122,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         {
             // Show menu
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
-            ReceivedShowMenu(_buildablesMenu1, activationParameter: null);
+            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true);
 
             // Hide menu
             _buildMenu.HideCurrentlyShownMenu();
@@ -145,11 +151,16 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
             Assert.AreSame(buildableButtons, returnedButtons);
         }
 
-        private void ReceivedShowMenu(IMenu shownMenu, object activationParameter)
+        private void ReceivedShowMenu(IMenu shownMenu, object activationParameter, bool currentMenuIsNull)
         {
             _selectorPanel.Received().Show();
             shownMenu.Received().OnPresenting(activationParameter);
             shownMenu.Received().IsVisible = true;
+
+            if (currentMenuIsNull)
+            {
+                _uiSoundPlayer.Received().PlaySound(_selectorOpeningSound);
+            }
         }
 
         private void ReceivedHideCurrentlyShownMenu(IMenu hiddenMenu)

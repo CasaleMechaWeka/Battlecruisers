@@ -2,7 +2,9 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -14,6 +16,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IBuildableMenus<UnitCategory> _unitMenus;
+        private readonly ISingleSoundPlayer _uiSoundPlayer;
+        private readonly IAudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu;
 
         public IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
@@ -22,14 +26,19 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			IPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IBuildableMenus<BuildingCategory> buildingMenus,
-            IBuildableMenus<UnitCategory> unitMenus)
+            IBuildableMenus<UnitCategory> unitMenus,
+            ISingleSoundPlayer uiSoundPlayer,
+            IAudioClipWrapper selectorOpeningSound)
 		{
-            Helper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus);
+            Helper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus, uiSoundPlayer, selectorOpeningSound);
 
             _selectorPanel = selectorPanel;
             _buildingCategoriesMenu = buildingCategoriesMenu;
             _buildingMenus = buildingMenus;
             _unitMenus = unitMenus;
+            _uiSoundPlayer = uiSoundPlayer;
+            _selectorOpeningSound = selectorOpeningSound;
+
             BuildableButtons = FindBuildableButtons();
         }
 
@@ -77,6 +86,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         /// </summary>
 		private void ShowMenu(IMenu menu, object activationParameter = null)
 		{
+            if (_currentMenu == null)
+            {
+                _uiSoundPlayer.PlaySound(_selectorOpeningSound);
+            }
+
             HideCurrentlyShownMenu();
 
             _selectorPanel.Show();

@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenuInitialiser : MonoBehaviour
 	{
-        public AudioClip buildingButtonSelectedSound;
+        public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
 
         public IBuildMenu Initialise(
 			IUIManager uiManager,
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 eventSoundPlayer,
                 uiSoundPlayer,
                 populationLimitMonitor);
-            Assert.IsNotNull(buildingButtonSelectedSound);
+            Helper.AssertIsNotNull(buildingButtonSelectedSound, selectorOpeningSound);
 
             // Selector panel
             SelectorPanelController selectorPanel = GetComponentInChildren<SelectorPanelController>();
@@ -88,7 +88,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     selectorPanel,
                     buildingCategoriesMenu,
                     buildingMenus,
-                    unitMenus);
+                    unitMenus,
+                    uiSoundPlayer,
+                    new AudioClipWrapper(selectorOpeningSound));
         }
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> ConvertGroupsToDictionary(IList<IBuildingGroup> buildingGroups)
