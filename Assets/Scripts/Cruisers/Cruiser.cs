@@ -10,13 +10,16 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -34,6 +37,7 @@ namespace BattleCruisers.Cruisers
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
+        private IAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
@@ -126,7 +130,7 @@ namespace BattleCruisers.Cruisers
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
         }
 
-        public virtual void Initialise(ICruiserArgs args)
+        public async virtual void Initialise(ICruiserArgs args)
         {
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
@@ -166,6 +170,9 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(droneSoundFeedbackInitialiser);
             _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones);
 
+            ISoundKey selectedSoundKey = IsPlayerCruiser ? SoundKeys.UI.Selected.FriendlyCruiser : SoundKeys.UI.Selected.EnemyCruiser;
+            _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 		}
@@ -176,6 +183,7 @@ namespace BattleCruisers.Cruisers
 
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
+            FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
 
             Clicked?.Invoke(this, EventArgs.Empty);
         }
