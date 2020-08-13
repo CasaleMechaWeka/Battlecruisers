@@ -18,6 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _uiSoundPlayer;
 
         private ITarget _shownItem;
         private ITarget ShownItem
@@ -50,6 +51,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _playerCruiser = args.PlayerCruiser;
             _aiCruiser = args.AICruiser;
             _soundPlayer = args.SoundPlayer;
+            _uiSoundPlayer = args.UISoundPlayer;
         }
 
         private void _shownItem_Destroyed(object sender, DestroyedEventArgs e)
@@ -116,6 +118,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             if (ReferenceEquals(factory.ParentCruiser, _playerCruiser))
             {
                 _buildMenu.ShowUnitsMenu(factory);
+                _uiSoundPlayer.PlaySound(factory.SelectedSound);
             }
         }
 

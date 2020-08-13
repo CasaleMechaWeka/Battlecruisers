@@ -7,6 +7,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -77,12 +78,18 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 return DroneConsumer != null ? DroneConsumer.NumOfDrones : 0;
             }
         }
+
+        public AudioClip selectedSound;
+        public IAudioClipWrapper SelectedSound { get; private set; }
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
             _isUnitPaused = new ObservableValue<bool>(false);
+
+            Assert.IsNotNull(selectedSound);
+            SelectedSound = new AudioClipWrapper(selectedSound);
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)

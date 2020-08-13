@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
@@ -13,21 +14,24 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public IBuildMenu BuildMenu { get; }
         public IItemDetailsManager DetailsManager { get; }
         public IPrioritisedSoundPlayer SoundPlayer { get; }
+        public ISingleSoundPlayer UISoundPlayer { get; }
 
         public ManagerArgs(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBuildMenu buildMenu,
             IItemDetailsManager detailsManager,
-            IPrioritisedSoundPlayer soundPlayer)
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer)
         {
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, buildMenu, detailsManager, soundPlayer);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, buildMenu, detailsManager, soundPlayer, uiSoundPlayer);
 
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
             BuildMenu = buildMenu;
             DetailsManager = detailsManager;
             SoundPlayer = soundPlayer;
+            UISoundPlayer = uiSoundPlayer;
         }    
     }
 }

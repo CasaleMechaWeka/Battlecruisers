@@ -188,7 +188,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     leftPanelComponents.BuildMenu,
                     itemDetailsManager,
-                    factoryProvider.Sound.PrioritisedSoundPlayer);
+                    factoryProvider.Sound.PrioritisedSoundPlayer,
+                    factoryProvider.Sound.UISoundPlayer);
             helper.InitialiseUIManager(args);
 
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);

@@ -23,6 +23,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
+        private ISingleSoundPlayer _uiSoundPlayer;
         private IBuilding _building;
         private IFactory _factory;
         private IUnit _unit;
@@ -37,6 +38,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _buildMenu = Substitute.For<IBuildMenu>();
             _detailsManager = Substitute.For<IItemDetailsManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
+            _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
 
             ManagerArgs managerArgs
                 = new ManagerArgs(
@@ -44,7 +46,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
                     _aiCruiser,
                     _buildMenu,
                     _detailsManager,
-                    _soundPlayer);
+                    _soundPlayer,
+                    _uiSoundPlayer);
             _uiManager = new UIManager();
             _uiManager.Initialise(managerArgs);
 
@@ -157,14 +160,18 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             _uiManager.ShowFactoryUnits(_factory);
 
             _buildMenu.Received().ShowUnitsMenu(_factory);
+            _uiSoundPlayer.Received().PlaySound(_factory.SelectedSound);
         }
 
         [Test]
         public void ShowFactoryUnits_NotPlayerCruiserFactory_DoesNothing()
         {
             _factory.ParentCruiser.Returns(_aiCruiser);
+            
             _uiManager.ShowFactoryUnits(_factory);
+
             _buildMenu.DidNotReceive().ShowUnitsMenu(_factory);
+            _uiSoundPlayer.DidNotReceive().PlaySound(_factory.SelectedSound);
         }
         #endregion ShowFactoryUnits
 

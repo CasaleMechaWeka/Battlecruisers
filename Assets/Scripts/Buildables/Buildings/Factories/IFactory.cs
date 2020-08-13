@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         IUnit UnitUnderConstruction { get; }
         IObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
+        IAudioClipWrapper SelectedSound { get; }
 
         void StartBuildingUnit(IBuildableWrapper<IUnit> unit);
         void StopBuildingUnit();
