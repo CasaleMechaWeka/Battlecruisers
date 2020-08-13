@@ -12,20 +12,27 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
     {
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
+        private readonly ISingleSoundPlayer _uiSoundPlayer;
 
         public UnitClickHandler(
             IUIManager uiManager, 
-            IPrioritisedSoundPlayer soundPlayer, 
-            IPopulationLimitReachedDecider populationLimitReachedDecider)
-            : base(uiManager, soundPlayer)
+            IPrioritisedSoundPlayer eventSoundPlayer, 
+            IPopulationLimitReachedDecider populationLimitReachedDecider,
+            ISingleSoundPlayer uiSoundPlayer)
+            : base(uiManager, eventSoundPlayer)
         {
-            Assert.IsNotNull(populationLimitReachedDecider);
+            Helper.AssertIsNotNull(populationLimitReachedDecider, uiSoundPlayer);
+
             _populationLimitReachedDecider = populationLimitReachedDecider;
+            _uiSoundPlayer = uiSoundPlayer;
         }
 
         public void HandleClick(bool canAffordBuildable, IBuildableWrapper<IUnit> unitClicked, IFactory unitFactory)
         {
             Helper.AssertIsNotNull(unitClicked, unitFactory);
+
+            // FELIX  Update tests :)
+            _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
 
             if (canAffordBuildable)
             {
@@ -34,7 +41,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
                 {
-                    _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+                    _eventSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
                 }
             }
             else if (unitFactory.BuildableState == BuildableState.Completed)
@@ -43,7 +50,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
             else
             {
-                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.IncompleteFactory);
+                _eventSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.IncompleteFactory);
             }
         }
 

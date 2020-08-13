@@ -49,8 +49,8 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer prioritisedSoundPlayer,
-            ISingleSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer eventSoundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
             Helper.AssertIsNotNull(
@@ -62,8 +62,8 @@ namespace BattleCruisers.UI.BattleScene
                 spriteProvider,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
-                prioritisedSoundPlayer,
-                soundPlayer,
+                eventSoundPlayer,
+                uiSoundPlayer,
                 populationLimitMonitor);
             Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, helpLabels, popLimitReachedFeedback);
 
@@ -76,8 +76,8 @@ namespace BattleCruisers.UI.BattleScene
                     spriteProvider, 
                     buttonVisibilityFilters, 
                     playerCruiserFocusHelper, 
-                    prioritisedSoundPlayer, 
-                    soundPlayer, 
+                    eventSoundPlayer, 
+                    uiSoundPlayer, 
                     populationLimitMonitor);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
@@ -96,8 +96,8 @@ namespace BattleCruisers.UI.BattleScene
             ISpriteProvider spriteProvider,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer prioritisedSoundPlayer,
-            ISingleSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer eventSoundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
@@ -115,8 +115,8 @@ namespace BattleCruisers.UI.BattleScene
                     buttonVisibilityFilters,
                     spriteProvider,
                     playerCruiserFocusHelper,
-                    prioritisedSoundPlayer,
-                    soundPlayer,
+                    eventSoundPlayer,
+                    uiSoundPlayer,
                     populationLimitMonitor);
         }
 

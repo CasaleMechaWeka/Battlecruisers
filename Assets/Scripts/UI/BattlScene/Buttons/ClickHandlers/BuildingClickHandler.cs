@@ -15,8 +15,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         public BuildingClickHandler(
             IPlayerCruiserFocusHelper playerCruiserFocusHelper, 
             IUIManager uiManager, 
-            IPrioritisedSoundPlayer soundPlayer)
-            : base(uiManager, soundPlayer)
+            IPrioritisedSoundPlayer eventSoundPlayer)
+            : base(uiManager, eventSoundPlayer)
         {
             Assert.IsNotNull(playerCruiserFocusHelper);
             _playerCruiserFocusHelper = playerCruiserFocusHelper;

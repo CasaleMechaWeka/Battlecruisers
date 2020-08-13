@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         IObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
         IAudioClipWrapper SelectedSound { get; }
+        IAudioClipWrapper UnitSelectedSound { get; }
 
         void StartBuildingUnit(IBuildableWrapper<IUnit> unit);
         void StopBuildingUnit();

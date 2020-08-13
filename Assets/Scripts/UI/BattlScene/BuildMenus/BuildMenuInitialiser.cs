@@ -26,8 +26,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             ISpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPrioritisedSoundPlayer prioritisedSoundPlayer,
-            ISingleSoundPlayer soundPlayer,
+            IPrioritisedSoundPlayer eventSoundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
 		{
             Helper.AssertIsNotNull(
@@ -38,39 +38,40 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 buttonVisibilityFilters,
                 spriteProvider,
                 playerCruiserFocusHelper,
-                prioritisedSoundPlayer,
-                soundPlayer,
+                eventSoundPlayer,
+                uiSoundPlayer,
                 populationLimitMonitor);
 
             // Selector panel
             SelectorPanelController selectorPanel = GetComponentInChildren<SelectorPanelController>();
             Assert.IsNotNull(selectorPanel);
-            selectorPanel.Initialise(uiManager, buttonVisibilityFilters, soundPlayer);
+            selectorPanel.Initialise(uiManager, buttonVisibilityFilters, uiSoundPlayer);
             selectorPanel.Hide();
 
             // Building categories menu
             BuildingCategoriesMenu buildingCategoriesMenu = GetComponentInChildren<BuildingCategoriesMenu>();
             Assert.IsNotNull(buildingCategoriesMenu);
-            buildingCategoriesMenu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
+            buildingCategoriesMenu.Initialise(uiSoundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
 
             // Building menus
             BuildingMenus buildingMenus = GetComponentInChildren<BuildingMenus>();
             Assert.IsNotNull(buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, prioritisedSoundPlayer);
-            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, soundPlayer, buildingClickHandler);
+            IBuildingClickHandler buildingClickHandler = new BuildingClickHandler(playerCruiserFocusHelper, uiManager, eventSoundPlayer);
+            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler);
 
             // Unit menus
-            IUnitClickHandler unitClickHandler 
+            IUnitClickHandler unitClickHandler
                 = new UnitClickHandler(
-                    uiManager, 
-                    prioritisedSoundPlayer, 
-                    new PopulationLimitReachedDecider(populationLimitMonitor));
+                    uiManager,
+                    eventSoundPlayer,
+                    new PopulationLimitReachedDecider(populationLimitMonitor),
+                    uiSoundPlayer);
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
             IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
-            unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, soundPlayer, unitClickHandler);
+            unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, uiSoundPlayer, unitClickHandler);
 
             return
                 new BuildMenu(

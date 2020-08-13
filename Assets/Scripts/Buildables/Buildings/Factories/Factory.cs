@@ -81,6 +81,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public AudioClip selectedSound;
         public IAudioClipWrapper SelectedSound { get; private set; }
+
+        public AudioClip unitSelectedSound;
+        public IAudioClipWrapper UnitSelectedSound { get; private set; }
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
@@ -90,6 +93,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             Assert.IsNotNull(selectedSound);
             SelectedSound = new AudioClipWrapper(selectedSound);
+
+            Assert.IsNotNull(unitSelectedSound);
+            UnitSelectedSound = new AudioClipWrapper(unitSelectedSound);
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)

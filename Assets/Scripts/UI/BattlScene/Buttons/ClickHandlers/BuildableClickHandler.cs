@@ -7,20 +7,20 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
     public abstract class BuildableClickHandler
     {
-        protected readonly IPrioritisedSoundPlayer _soundPlayer;
+        protected readonly IPrioritisedSoundPlayer _eventSoundPlayer;
         protected readonly IUIManager _uiManager;
 
-        public BuildableClickHandler(IUIManager uiManager, IPrioritisedSoundPlayer soundPlayer)
+        public BuildableClickHandler(IUIManager uiManager, IPrioritisedSoundPlayer eventSoundPlayer)
         {
-            Helper.AssertIsNotNull(uiManager, soundPlayer);
+            Helper.AssertIsNotNull(uiManager, eventSoundPlayer);
 
             _uiManager = uiManager;
-            _soundPlayer = soundPlayer;
+            _eventSoundPlayer = eventSoundPlayer;
         }
 
         protected void PlayUnaffordableSound()
         {
-            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
+            _eventSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
         }
     }
 }
