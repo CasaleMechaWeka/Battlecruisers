@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
@@ -14,6 +15,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IModalMenu _modalMenu;
         private IBattleCompletionHandler _battleCompletionHandler;
         private ISceneNavigator _sceneNavigator;
+        private IPermitter _navigationPermitter;
 
         [SetUp]
         public void TestSetup()
@@ -22,8 +24,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _modalMenu = Substitute.For<IModalMenu>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
             _sceneNavigator = Substitute.For<ISceneNavigator>();
+            _navigationPermitter = Substitute.For<IPermitter>();
 
-            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _sceneNavigator);
+            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _sceneNavigator, _navigationPermitter);
         }
 
         [Test]
@@ -32,6 +35,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.ShowMenu();
 
             _pauseGameManager.Received().PauseGame();
+            _navigationPermitter.Received().IsMatch = false;
             _modalMenu.Received().ShowMenu();
         }
 
@@ -41,6 +45,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.DismissMenu();
 
             _pauseGameManager.Received().ResumeGame();
+            _navigationPermitter.Received().IsMatch = true;
             _modalMenu.Received().HideMenu();
         }
 

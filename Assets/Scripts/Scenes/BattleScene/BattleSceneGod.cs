@@ -166,7 +166,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser.PopulationLimitMonitor);
 
             RightPanelComponents rightPanelComponents
-                = rightPanelInitialiser.Initialise(
+                = rightPanelInitialiser.
+                Initialise(
                     applicationModel,
                     uiManager,
                     playerCruiser,
@@ -175,7 +176,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     pauseGameManager,
                     battleCompletionHandler,
                     factoryProvider.Sound.UISoundPlayer,
-                    sceneNavigator);
+                    sceneNavigator,
+                    navigationPermitters.NavigationFilter);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);

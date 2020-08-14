@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 
@@ -10,30 +11,35 @@ namespace BattleCruisers.UI.BattleScene
         private readonly IModalMenu _modalMenu;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
         private readonly ISceneNavigator _sceneNavigator;
+        private readonly IPermitter _navigationPermitter;
 
         public MainMenuManager(
             IPauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IBattleCompletionHandler battleCompletionHandler,
-            ISceneNavigator sceneNavigator)
+            ISceneNavigator sceneNavigator,
+            IPermitter navigationPermitter)
         {
-            Helper.AssertIsNotNull(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator);
+            Helper.AssertIsNotNull(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator, navigationPermitter);
 
             _pauseGameManager = pauseGameManager;
             _modalMenu = modalMenu;
             _battleCompletionHandler = battleCompletionHandler;
             _sceneNavigator = sceneNavigator;
+            _navigationPermitter = navigationPermitter;
         }
 
         public void ShowMenu()
         {
             _pauseGameManager.PauseGame();
+            _navigationPermitter.IsMatch = false;
             _modalMenu.ShowMenu();
         }
 
         public void DismissMenu()
         {
             _pauseGameManager.ResumeGame();
+            _navigationPermitter.IsMatch = true;
             _modalMenu.HideMenu();
         }
 
