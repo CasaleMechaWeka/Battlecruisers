@@ -1,6 +1,4 @@
-﻿using UnityCommon.Properties;
-
-namespace BattleCruisers.UI.Cameras.Helpers
+﻿namespace BattleCruisers.UI.Cameras.Helpers
 {
     public interface IEdgeDetector
     {

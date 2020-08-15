@@ -36,6 +36,7 @@ namespace BattleCruisers.UI.Cameras
         public NavigationButtonsPanel navigationButtonsPanel;
         public float overviewPositionEqualityMarginInM = 2;
         public float overviewOrthographicSizeEqualityMargin = 2;
+        public int edgeRegionWidthInPixels = 5;
 
         [Header("Smooth Time")]
         public float normalCameraSmoothTime = 0.15f;
@@ -187,11 +188,12 @@ namespace BattleCruisers.UI.Cameras
             };
 
             IScrollRecogniser scrollRecogniser;
+            ScrollLevelConverter scrollLevelConverter = new ScrollLevelConverter();
 
             if (hasTouch)
             {
                 scrollRecogniser = new ScrollRecogniser();
-                
+
                 targetProviders.Add(
                     new PinchZoomCameraTargetProvider(
                         zoomCalculator,
@@ -209,6 +211,20 @@ namespace BattleCruisers.UI.Cameras
                         updater,
                         zoomCalculator,
                         directionalZoom));
+
+                targetProviders.Add(
+                    new EdgeScrollingCameraTargetProvider(
+                        updater,
+                        new EdgeScrollCalculator(
+                            TimeBC.Instance,
+                            settingsManager,
+                            scrollLevelConverter),
+                        camera,
+                        cameraCalculator,
+                        new EdgeDetector(
+                            input,
+                            new ScreenBC(),
+                            edgeRegionWidthInPixels)));
             }
 
             targetProviders.Add(
@@ -219,7 +235,7 @@ namespace BattleCruisers.UI.Cameras
                         TimeBC.Instance,
                         settings.ValidOrthographicSizes,
                         settingsManager,
-                        new ScrollLevelConverter()),
+                        scrollLevelConverter),
                     zoomCalculator,
                     camera,
                     cameraCalculator,

@@ -17,7 +17,6 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly IEdgeScrollCalculator _scrollCalculator;
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
-        private readonly IClamper _cameraXPositionClamper;
         private readonly IEdgeDetector _edgeDetector;
 
         public override int Priority => 2;
@@ -27,16 +26,14 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             IEdgeScrollCalculator scrollCalculator, 
             ICamera camera, 
             ICameraCalculator cameraCalculator, 
-            IClamper cameraXPositionClamper, 
             IEdgeDetector edgeDetector)
         {
-            Helper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, cameraXPositionClamper, edgeDetector);
+            Helper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, edgeDetector);
 
             _updater = updater;
             _scrollCalculator = scrollCalculator;
             _camera = camera;
             _cameraCalculator = cameraCalculator;
-            _cameraXPositionClamper = cameraXPositionClamper;
             _edgeDetector = edgeDetector;
 
             _updater.Updated += _updater_Updated;
@@ -66,7 +63,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             float targetXPosition = _camera.Position.x + (directionMultiplier * cameraDeltaX);
 
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize);
-            return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);
+            return Mathf.Clamp(targetXPosition, validXPositions.Min, validXPositions.Max);
         }
     }
 }

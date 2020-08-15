@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly ISettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
 
-        public const float SCROLL_SCALE = 16;
+        public const float SCROLL_SCALE = 128;
 
         public EdgeScrollCalculator(
             ITime time,
