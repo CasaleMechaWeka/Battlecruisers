@@ -14,11 +14,12 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// 
     /// Priorities:
     /// (Highest)
-    /// 6. Trump, static
+    /// 6. Trump (static)
     /// 5. Scroll wheel
     /// 4. Pinch zoom
     /// 3. Swipe
-    /// 1. Default
+    /// 2. Edge scrolling
+    /// 1. Default (static)
     /// (Lowest)
     /// </summary>
     public class CompositeCameraTargetProvider : ICameraTargetProvider
