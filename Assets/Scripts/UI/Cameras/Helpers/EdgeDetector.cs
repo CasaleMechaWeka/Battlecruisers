@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    // FELIX  Test
     public class EdgeDetector : IEdgeDetector
     {
         private readonly IInput _input;
