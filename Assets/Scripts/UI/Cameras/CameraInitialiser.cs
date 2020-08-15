@@ -218,7 +218,9 @@ namespace BattleCruisers.UI.Cameras
                         new EdgeScrollCalculator(
                             TimeBC.Instance,
                             settingsManager,
-                            scrollLevelConverter),
+                            scrollLevelConverter,
+                            camera,
+                            settings.ValidOrthographicSizes),
                         camera,
                         cameraCalculator,
                         new EdgeDetector(
