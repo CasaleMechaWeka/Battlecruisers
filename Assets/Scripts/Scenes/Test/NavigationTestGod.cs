@@ -20,7 +20,8 @@ namespace BattleCruisers.Scenes.Test
         protected ICamera _camera;
         protected ICameraCalculatorSettings _cameraCalculatorSettings;
 
-        public float smoothTime = 0.15f;
+        public float normalSmoothTime = 0.15f;
+        public float slowSmoothTime = 0.5f;
 
         protected override void Setup(Helper helper)
         {
@@ -63,11 +64,12 @@ namespace BattleCruisers.Scenes.Test
 
             // Smooth adjuster
             ITime time = TimeBC.Instance;
+            ICameraSmoothTimeProvider smoothTimeProvider = new CameraTransitionSpeedManager(normalSmoothTime, slowSmoothTime);
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
-                    new SmoothZoomAdjuster(_camera, time, smoothTime),
-                    new SmoothPositionAdjuster(_camera, time, smoothTime));
+                    new SmoothZoomAdjuster(_camera, time, smoothTimeProvider),
+                    new SmoothPositionAdjuster(_camera, time, smoothTimeProvider));
         }
 
         protected virtual void Update()

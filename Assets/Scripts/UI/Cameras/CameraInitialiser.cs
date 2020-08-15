@@ -30,13 +30,16 @@ namespace BattleCruisers.UI.Cameras
         // "springy" effect, instead of a hard stop of the swipe doing nothing.
         private const float CAMERA_X_POSITION_BUFFER_IN_M = 2;
 
-        public float cameraSmoothTime;
         public TogglableDragTracker dragTracker;
         public Camera mainCamera;
         public Skybox skybox;
         public NavigationButtonsPanel navigationButtonsPanel;
         public float overviewPositionEqualityMarginInM = 2;
         public float overviewOrthographicSizeEqualityMargin = 2;
+
+        [Header("Smooth Time")]
+        public float normalCameraSmoothTime = 0.15f;
+        public float slowCameraSmoothTime = 0.5f;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
@@ -80,12 +83,13 @@ namespace BattleCruisers.UI.Cameras
                     defaultCameraTargetProvider);
 
             ITime time = TimeBC.Instance;
+            CameraTransitionSpeedManager cameraTransitionSpeedManager = new CameraTransitionSpeedManager(normalCameraSmoothTime, slowCameraSmoothTime);
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
-                    new SmoothZoomAdjuster(camera, time, cameraSmoothTime),
-                    new SmoothPositionAdjuster(camera, time, cameraSmoothTime));
+                    new SmoothZoomAdjuster(camera, time, cameraTransitionSpeedManager),
+                    new SmoothPositionAdjuster(camera, time, cameraTransitionSpeedManager));
 
             CameraFocuser coreCameraFocuser 
                 = new CameraFocuser(

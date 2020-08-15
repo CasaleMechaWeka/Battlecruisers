@@ -2,7 +2,6 @@
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
@@ -10,21 +9,20 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     {
 		private readonly ICamera _camera;
         private readonly ITime _time;
-        private readonly float _smoothTime;
+        private readonly ICameraSmoothTimeProvider _smoothTimeProvider;
 		private Vector3 _cameraPositionChangeVelocity;
         
 		private const float POSITION_EQUALITY_MARGIN = 0.1f;
 		private const float MIN_SMOOTH_TIME = 0;
 		private const float MAX_SPEED = 1000;
 
-        public SmoothPositionAdjuster(ICamera camera, ITime time, float smoothTime)
+        public SmoothPositionAdjuster(ICamera camera, ITime time, ICameraSmoothTimeProvider smoothTimeProvider)
 		{
-            Helper.AssertIsNotNull(camera, time);
-			Assert.IsTrue(smoothTime > MIN_SMOOTH_TIME);
+            Helper.AssertIsNotNull(camera, time, smoothTimeProvider);
 
 			_camera = camera;
             _time = time;
-			_smoothTime = smoothTime;
+			_smoothTimeProvider = smoothTimeProvider;
 			_cameraPositionChangeVelocity = Vector3.zero;
 		}
 
@@ -39,7 +37,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
                         _camera.Position, 
                         targetPosition, 
                         ref _cameraPositionChangeVelocity, 
-                        _smoothTime, 
+                        _smoothTimeProvider.SmoothTime, 
                         MAX_SPEED, 
                         _time.UnscaledDeltaTime);
             }
