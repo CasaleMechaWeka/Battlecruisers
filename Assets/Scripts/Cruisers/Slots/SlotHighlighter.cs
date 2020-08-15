@@ -46,6 +46,8 @@ namespace BattleCruisers.Cruisers.Slots
 
         private void ParentCruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
         {
+            Logging.LogMethod(Tags.SLOTS);
+
             if (_highlightedSlotSpec != null
                 && _highlightedSlotSpec.Equals(e.DestroyedBuilding.SlotSpecification))
             {
@@ -56,6 +58,8 @@ namespace BattleCruisers.Cruisers.Slots
         // Only highlight one slot type at a time
         public bool HighlightAvailableSlots(ISlotSpecification slotSpecification)
 		{
+            Logging.LogMethod(Tags.SLOTS);
+
 			UnhighlightSlots();
 
             bool wasAnySlotHighlighted = false;
@@ -75,6 +79,8 @@ namespace BattleCruisers.Cruisers.Slots
 
         public void HighlightSlots(ISlotSpecification slotSpecification)
         {
+            Logging.LogMethod(Tags.SLOTS);
+            
             UnhighlightSlots();
 
             _highlightedSlotSpec = slotSpecification;
@@ -87,7 +93,9 @@ namespace BattleCruisers.Cruisers.Slots
 
         public void UnhighlightSlots()
 		{
-			if (_highlightedSlotSpec != null)
+            Logging.LogMethod(Tags.SLOTS);
+
+            if (_highlightedSlotSpec != null)
 			{
 				UnhighlightSlots(_highlightedSlotSpec);
 				_highlightedSlotSpec = null;
@@ -106,6 +114,8 @@ namespace BattleCruisers.Cruisers.Slots
 
         public void HighlightBuildingSlot(IBuilding building)
         {
+            Logging.LogMethod(Tags.SLOTS);
+
             HighlightedSlot = _slotAccessor.GetSlot(building);
             Assert.IsNotNull(HighlightedSlot);
         }

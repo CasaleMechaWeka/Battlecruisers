@@ -25,6 +25,7 @@ namespace BattleCruisers.Cruisers.Slots
         Deck = 5
 	}
 
+    // FELIX  Remove, unused?
     public class SlotBuildingDestroyedEventArgs : EventArgs
     {
         public ISlot BuildingParent { get; }
@@ -72,6 +73,7 @@ namespace BattleCruisers.Cruisers.Slots
         /// </summary>
         ReadOnlyCollection<ISlot> NeighbouringSlots { get; }
 
+        // FELIX  Remove, unused?
         event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
 
         void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer);

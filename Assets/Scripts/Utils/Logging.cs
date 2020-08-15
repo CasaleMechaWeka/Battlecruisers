@@ -88,6 +88,7 @@ namespace BattleCruisers.Utils
 
         // Cruiser
         public const string CRUISER = "Cruiser";
+        public const string SLOTS = "Slots";
         public const string UNIT_MONITOR = "UnitMonitor";
         public const string UNIT_TARGETS = "UnitTargets";
 
@@ -110,7 +111,6 @@ namespace BattleCruisers.Utils
         public const string PYRAMID = "Pyramid";
         public const string REPAIR_MANAGER = "RepairManager";
         public const string SCENE_NAVIGATION = "SceneNavigation";
-        public const string SLOTS = "Slots";
         public const string SOUND = "Sound";
         public const string TIME = "Time";
     }
@@ -213,6 +213,7 @@ namespace BattleCruisers.Utils
 
             // Cruiser
             tagsToActiveness.Add(Tags.CRUISER, false);
+            tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.UNIT_MONITOR, false);
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
@@ -235,7 +236,6 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
-            tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.SOUND, false);
             tagsToActiveness.Add(Tags.TIME, false);
 
