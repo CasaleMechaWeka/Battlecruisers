@@ -95,7 +95,8 @@ namespace BattleCruisers.UI.Cameras
                 = new CameraFocuser(
                     targets,
                     trumpCameraTargetProvider,
-                    defaultCameraTargetProvider);
+                    defaultCameraTargetProvider,
+                    cameraTransitionSpeedManager);
 
             ICameraFocuser cameraFocuser
                 = new IndirectCameraFocuser(
