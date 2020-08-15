@@ -4,7 +4,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 {
 	public class ScreenBC : IScreen
 	{
-		public float Width => Screen.width;
-		public float Height => Screen.height;
+		public float WidthInPixels => Screen.width;
+		public float HeightInPixels => Screen.height;
 	}
 }
