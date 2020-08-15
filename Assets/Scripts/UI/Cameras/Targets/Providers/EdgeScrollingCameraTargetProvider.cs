@@ -2,6 +2,7 @@
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -9,7 +10,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    // FELIX  Use, test :)
     public class EdgeScrollingCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IUpdater _updater;
@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         private readonly ICamera _camera;
         private readonly ICameraCalculator _cameraCalculator;
         private readonly IEdgeDetector _edgeDetector;
+        private readonly IClamper _cameraXPositionClamper;
 
         public override int Priority => 2;
 
@@ -25,15 +26,17 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             IEdgeScrollCalculator scrollCalculator, 
             ICamera camera, 
             ICameraCalculator cameraCalculator, 
-            IEdgeDetector edgeDetector)
+            IEdgeDetector edgeDetector,
+            IClamper cameraXPositionClamper)
         {
-            Helper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, edgeDetector);
+            Helper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, edgeDetector, cameraXPositionClamper);
 
             _updater = updater;
             _scrollCalculator = scrollCalculator;
             _camera = camera;
             _cameraCalculator = cameraCalculator;
             _edgeDetector = edgeDetector;
+            _cameraXPositionClamper = cameraXPositionClamper;
 
             _updater.Updated += _updater_Updated;
         }
@@ -63,7 +66,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             float targetXPosition = _camera.Position.x + (directionMultiplier * cameraDeltaX);
 
             IRange<float> validXPositions = _cameraCalculator.FindValidCameraXPositions(_camera.OrthographicSize);
-            return Mathf.Clamp(targetXPosition, validXPositions.Min, validXPositions.Max);
+            return _cameraXPositionClamper.Clamp(targetXPosition, validXPositions);
         }
     }
 }

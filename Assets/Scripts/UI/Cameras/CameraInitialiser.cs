@@ -226,7 +226,8 @@ namespace BattleCruisers.UI.Cameras
                         new EdgeDetector(
                             input,
                             new ScreenBC(),
-                            edgeRegionWidthInPixels)));
+                            edgeRegionWidthInPixels),
+                        new Clamper()));
             }
 
             targetProviders.Add(
