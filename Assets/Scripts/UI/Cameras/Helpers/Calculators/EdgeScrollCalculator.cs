@@ -6,7 +6,6 @@ using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    // FELIX  use, test
     public class EdgeScrollCalculator : IEdgeScrollCalculator
     {
         private readonly ITime _time;
