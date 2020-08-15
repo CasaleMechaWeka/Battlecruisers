@@ -77,7 +77,6 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public event EventHandler<SlotBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
         public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer)
@@ -123,8 +122,6 @@ namespace BattleCruisers.Cruisers.Slots
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
 			SlotBuilding = null;
-
-            BuildingDestroyed?.Invoke(this, new SlotBuildingDestroyedEventArgs(this));
 		}
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
