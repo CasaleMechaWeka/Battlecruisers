@@ -1,52 +1,30 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Common.BuildableDetails.Stats;
-using System;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelStatsController : MonoBehaviour
     {
-        private const int EXPECTED_NUM_OF_STAR = 4;
+        public Image difficultyCompletedImage;
 
-        public void Initialise(Difficulty? levelCompletedDifficulty)
+        public async Task InitialiseAsync(Difficulty? levelCompletedDifficulty, IDifficultySpritesProvider difficultySpritesProvider)
         {
-            StarController[] stars = GetComponentsInChildren<StarController>();
-            Assert.AreEqual(EXPECTED_NUM_OF_STAR, stars.Length);
+            Assert.IsNotNull(difficultySpritesProvider);
+            Assert.IsNotNull(difficultyCompletedImage);
 
-            int numOfStarsToShow = FindNumOfStarsToShow(levelCompletedDifficulty);
-
-            for (int i = 0; i < stars.Length; ++i)
-            {
-                StarController star = stars[i];
-                star.Initialise();
-                star.Enabled = numOfStarsToShow > i;
-            }
-        }
-
-        private int FindNumOfStarsToShow(Difficulty? levelCompletedDifficulty)
-        {
             if (levelCompletedDifficulty == null)
             {
-                return 0;
+                difficultyCompletedImage.enabled = false;
+                return;
             }
 
-            Difficulty completedDifficulty = (Difficulty)levelCompletedDifficulty;
-
-            switch (completedDifficulty)
-            {
-                case Difficulty.Easy:
-                    return 1;
-                case Difficulty.Normal:
-                    return 2;
-                case Difficulty.Hard:
-                    return 3;
-                case Difficulty.Harder:
-                    return 4;
-                default:
-                    throw new ArgumentException();
-            }
+            ISpriteWrapper difficultySprite = await difficultySpritesProvider.GetSpriteAsync((Difficulty)levelCompletedDifficulty);
+            difficultyCompletedImage.sprite = difficultySprite.Sprite;
         }
     }
 }

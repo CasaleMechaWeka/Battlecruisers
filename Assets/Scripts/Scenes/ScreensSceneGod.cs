@@ -13,6 +13,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System.Collections.Generic;
@@ -96,7 +97,7 @@ namespace BattleCruisers.Scenes
 
             // TEMP  Go to specific screen :)
             //GoToSettingsScreen();
-            GoToLevelsScreen();
+            //GoToLevelsScreen();
             //GoToLoadoutScreen();
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
@@ -127,8 +128,9 @@ namespace BattleCruisers.Scenes
             int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
 
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
+            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(new SpriteFetcher());
 
-            levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel);
+            levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel, difficultySpritesProvider);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)

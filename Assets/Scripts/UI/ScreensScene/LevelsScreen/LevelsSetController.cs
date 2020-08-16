@@ -1,16 +1,23 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsSetController : MonoBehaviourWrapper
     {
-		public void Initialise(IScreensSceneGod screensSceneGod, IList<LevelInfo> levels, int numOfLevelsUnlocked, ISingleSoundPlayer soundPlayer)
+		public async Task InitialiseAsync(
+            IScreensSceneGod screensSceneGod, 
+            IList<LevelInfo> levels, 
+            int numOfLevelsUnlocked, 
+            ISingleSoundPlayer soundPlayer,
+            IDifficultySpritesProvider difficultySpritesProvider)
         {
-            Helper.AssertIsNotNull(screensSceneGod, levels, soundPlayer);
+            Helper.AssertIsNotNull(screensSceneGod, levels, soundPlayer, difficultySpritesProvider);
 
             LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
             Assert.AreEqual(levels.Count, levelButtons.Length);
@@ -20,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelButtonController button = levelButtons[i];
                 LevelInfo level = levels[i];
 
-                button.Initialise(soundPlayer, level, screensSceneGod, numOfLevelsUnlocked);
+                await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked);
             }
 		}
 	}

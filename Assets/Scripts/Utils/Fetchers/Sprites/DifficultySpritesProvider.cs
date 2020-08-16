@@ -11,10 +11,10 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         private readonly ISpriteFetcher _spriteFetcher;
 
         private const string SPRITES_PATH = "Assets/Resources_moved/Sprites/UI/ScreensScene/LevelsScreen/";
-        private const string EASY_SPRITE = "MedalStars-1";
-        private const string NORMAL_SPRITE = "MedalStars-2";
-        private const string HARD_SPRITE = "MedalStars-3";
-        private const string HARDER_SPRITE = "MedalStars-4";
+        private const string EASY_SPRITE = "MedalStars-1.png";
+        private const string NORMAL_SPRITE = "MedalStars-2.png";
+        private const string HARD_SPRITE = "MedalStars-3.png";
+        private const string HARDER_SPRITE = "MedalStars-4.png";
 
         public DifficultySpritesProvider(ISpriteFetcher spriteFetcher)
         {

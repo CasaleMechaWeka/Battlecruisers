@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -19,18 +21,24 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 		private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, LevelInfo level, IScreensSceneGod screensSceneGod, int numOfLevelsUnlocked)
+        public async Task InitialiseAsync(
+            ISingleSoundPlayer soundPlayer,
+            LevelInfo level, 
+            IScreensSceneGod screensSceneGod, 
+            IDifficultySpritesProvider difficultySpritesProvider,
+            int numOfLevelsUnlocked)
 		{
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, level, screensSceneGod);
+            Helper.AssertIsNotNull(level, screensSceneGod, difficultySpritesProvider);
+            Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController);
 
             _level = level;
             _screensSceneGod = screensSceneGod;
 
             levelNumberText.text = level.Num.ToString();
             levelNameText.text = level.Name;
-            levelStatsController.Initialise(level.DifficultyCompleted);
+            await levelStatsController.InitialiseAsync(level.DifficultyCompleted, difficultySpritesProvider);
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
