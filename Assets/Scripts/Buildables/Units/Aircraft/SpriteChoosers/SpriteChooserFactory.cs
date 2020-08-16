@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Movement.Velocity.Providers;
+﻿using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using UnityEngine;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {

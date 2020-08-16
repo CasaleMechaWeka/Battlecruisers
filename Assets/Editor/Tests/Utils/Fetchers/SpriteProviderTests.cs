@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Utils.Fetchers;
+﻿using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;

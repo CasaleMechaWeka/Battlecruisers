@@ -15,6 +15,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;

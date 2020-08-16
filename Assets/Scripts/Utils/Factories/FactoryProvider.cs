@@ -12,6 +12,7 @@ using BattleCruisers.Targets.Factories;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Utils.Factories

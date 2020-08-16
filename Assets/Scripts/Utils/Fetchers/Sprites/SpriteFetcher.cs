@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace BattleCruisers.Utils.Fetchers
+namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public class SpriteFetcher : ISpriteFetcher
 	{

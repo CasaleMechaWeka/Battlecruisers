@@ -5,7 +5,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
 
@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
+            
             ISpriteProvider spriteProvider,
             ISingleSoundPlayer soundPlayer,
             IBuildingClickHandler clickHandler)

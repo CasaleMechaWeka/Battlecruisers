@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Utils.Fetchers
+namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public class SpriteProvider : ISpriteProvider
     {
