@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private Dropdown _difficultyDropdown;
         private IList<Difficulty> _difficulties;
 
+        public List<Sprite> difficultySymbols;
         public Difficulty Difficulty => _difficulties[_difficultyDropdown.value];
 
         public event EventHandler DifficultyChanged;
@@ -26,12 +27,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             int currentIndex = 0;
 
             Difficulty[] difficulties = (Difficulty[])Enum.GetValues(typeof(Difficulty));
+            Assert.AreEqual(difficultySymbols.Count, difficulties.Length);
 
             for (int i = 0; i < difficulties.Length; ++i)
             {
                 Difficulty difficulty = difficulties[i];
 
-                options.Add(new Dropdown.OptionData(difficulty.ToString()));
+                options.Add(new Dropdown.OptionData(difficulty.ToString(), difficultySymbols[i]));
                 _difficulties.Add(difficulty);
 
                 if (difficulty == selectedDifficulty)
