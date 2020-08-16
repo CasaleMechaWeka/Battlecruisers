@@ -11,6 +11,20 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class SpriteFetcher : ISpriteFetcher
 	{
+        public async Task<ISpriteWrapper> GetSpriteAsync(string spritePath)
+        {
+            AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(spritePath);
+            await handle.Task;
+
+            if (handle.Status != AsyncOperationStatus.Succeeded
+                || handle.Result == null)
+            {
+                throw new ArgumentException("Failed to retrieve sprite for path: " + spritePath);
+            }
+
+            return new SpriteWrapper(handle.Result);
+        }
+
         public async Task<IList<ISpriteWrapper>> GetMultiSpritesAsync(string spritePath)
 		{
             AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(spritePath);
@@ -27,5 +41,5 @@ namespace BattleCruisers.Utils.Fetchers
                     .Select(sprite => (ISpriteWrapper)new SpriteWrapper(sprite))
                     .ToList();
 		}
-	}
+    }
 }
