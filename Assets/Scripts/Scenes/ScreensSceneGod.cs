@@ -18,6 +18,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Common = UnityCommon.PlatformAbstractions.Time;
@@ -75,7 +76,7 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-
+            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(new SpriteFetcher());
             homeScreen.Initialise(_soundPlayer, this, _gameModel, _dataProvider.Levels.Count);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
 
@@ -84,7 +85,7 @@ namespace BattleCruisers.Scenes
             {
 				_applicationModel.ShowPostBattleScreen = false;
     
-                GoToPostBattleScreen();
+                await GoToPostBattleScreenAsync(difficultySpritesProvider);
             }
             else
             {
@@ -92,7 +93,7 @@ namespace BattleCruisers.Scenes
             }
 
             // After potentially initialising post battle screen, because that can modify the data model.
-            InitialiseLevelsScreen();
+            InitialiseLevelsScreen(difficultySpritesProvider);
             loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
@@ -104,10 +105,10 @@ namespace BattleCruisers.Scenes
             Common.TimeBC.Instance.TimeScale = 1;
         }
         
-        private void GoToPostBattleScreen()
+        private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            postBattleScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, _musicPlayer);
+            await postBattleScreen.InitialiseAsync(_soundPlayer, this, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
@@ -122,13 +123,12 @@ namespace BattleCruisers.Scenes
             GoToScreen(levelsScreen);
         }
 
-        private void InitialiseLevelsScreen()
+        private void InitialiseLevelsScreen(IDifficultySpritesProvider difficultySpritesProvider)
         {
             BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
             int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
 
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
-            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(new SpriteFetcher());
 
             levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel, difficultySpritesProvider);
         }

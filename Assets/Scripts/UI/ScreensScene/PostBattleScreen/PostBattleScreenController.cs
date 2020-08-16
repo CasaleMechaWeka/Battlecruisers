@@ -4,9 +4,12 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -23,6 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		public GameObject unlockedItemSection;
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage;
         public LevelNameController levelName;
+        public LevelStatsController completedDifficultySymbol;
 
         private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -30,12 +34,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
-		public void Initialise(
+		public async Task InitialiseAsync(
             ISingleSoundPlayer soundPlayer,
             ScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
-            IMusicPlayer musicPlayer)
+            IMusicPlayer musicPlayer,
+            IDifficultySpritesProvider difficultySpritesProvider)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
@@ -46,8 +51,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 completedGameMessage, 
                 defeatMessage,
                 victoryNoLootMessage,
-                levelName);
-            Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer);
+                levelName,
+                completedDifficultySymbol);
+            Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
@@ -78,6 +84,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 {
                     title.text = VICTORY_TITLE;
                     musicPlayer.PlayVictoryMusic();
+                    await completedDifficultySymbol.InitialiseAsync(_dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
+                    completedDifficultySymbol.gameObject.SetActive(true);
 
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
