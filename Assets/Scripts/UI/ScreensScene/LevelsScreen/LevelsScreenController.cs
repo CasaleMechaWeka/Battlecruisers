@@ -8,6 +8,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -40,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
-		public void Initialise(
+		public async Task InitialiseAsync(
             ISingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             IList<LevelInfo> levels, 
@@ -53,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Helper.AssertIsNotNull(levels, difficultySpritesProvider);
 
             int numOfSets = levels.Count / SET_SIZE;
-            InitialiseLevelSets(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets, difficultySpritesProvider);
+            await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets, difficultySpritesProvider);
 			
 			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(_soundPlayer, _nextSetCommand);
@@ -73,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             homeButton.Initialise(_soundPlayer, screensSceneGod, this);
         }
 
-        private void InitialiseLevelSets(
+        private async Task InitialiseLevelSetsAsync(
             IScreensSceneGod screensSceneGod, 
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
@@ -97,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                         .ToList();
 
                 LevelsSetController levelsSet = levelSets[j];
-                levelsSet.InitialiseAsync(screensSceneGod, setLevels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider);
+                await levelsSet.InitialiseAsync(screensSceneGod, setLevels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }

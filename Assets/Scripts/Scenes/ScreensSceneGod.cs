@@ -93,7 +93,7 @@ namespace BattleCruisers.Scenes
             }
 
             // After potentially initialising post battle screen, because that can modify the data model.
-            InitialiseLevelsScreen(difficultySpritesProvider);
+            await InitialiseLevelsScreenAsync(difficultySpritesProvider);
             loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
@@ -123,14 +123,14 @@ namespace BattleCruisers.Scenes
             GoToScreen(levelsScreen);
         }
 
-        private void InitialiseLevelsScreen(IDifficultySpritesProvider difficultySpritesProvider)
+        private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
         {
             BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
             int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
 
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
-            levelsScreen.Initialise(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel, difficultySpritesProvider);
+            await levelsScreen.InitialiseAsync(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel, difficultySpritesProvider);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
