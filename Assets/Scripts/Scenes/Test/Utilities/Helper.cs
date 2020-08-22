@@ -241,6 +241,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiser.BuildProgressCalculator.Returns(buildProgressCalculator);
             cruiser.Size.Returns(new Vector2(5, 2));
             IUnitTargets unitTargets = new UnitTargets(cruiser.UnitMonitor);
+
             cruiser.UnitTargets.Returns(unitTargets);
 
             float xPosition = facingDirection == Direction.Right ? -35 : 35;
@@ -506,16 +507,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
         // So UnitTargets knows about ships, and ManualProximityTargetProcessor works.
         public static void SetupUnitForUnitMonitor(IUnit unit, ICruiser parentCruiser)
         {
-            EventHandler completedHandler = (sender, e) => parentCruiser.UnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(unit));
+            parentCruiser.UnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(unit));
+
             void destroyedHandler(object sender, DestroyedEventArgs e)
             {
-                unit.CompletedBuildable -= completedHandler;
                 unit.Destroyed -= destroyedHandler;
-
                 parentCruiser.UnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(unit));
             }
 
-            unit.CompletedBuildable += completedHandler;
             unit.Destroyed += destroyedHandler;
         }
 

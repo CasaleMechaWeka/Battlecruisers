@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update tests
     public class UnitTargets : IUnitTargets
     {
         private readonly HashSet<ITarget> _ships;
@@ -20,29 +21,28 @@ namespace BattleCruisers.Cruisers.Construction
             _ships = new HashSet<ITarget>();
             _aircraft = new HashSet<ITarget>();
 
-            cruiserUnitMonitor.UnitCompleted += CruiserUnitMonitor_UnitCompleted;
+            cruiserUnitMonitor.UnitStarted += CruiserUnitMonitor_UnitStarted;
             cruiserUnitMonitor.UnitDestroyed += CruiserUnitMonitor_UnitDestroyed;
         }
 
-        private void CruiserUnitMonitor_UnitCompleted(object sender, UnitCompletedEventArgs e)
+        private void CruiserUnitMonitor_UnitStarted(object sender, UnitStartedEventArgs e)
         {
-            Logging.Log(Tags.UNIT_TARGETS, $"{e.CompletedUnit}  id: {e.CompletedUnit?.GameObject?.GetInstanceID()}");
+            Logging.Log(Tags.UNIT_TARGETS, $"{e.StartedUnit}  id: {e.StartedUnit?.GameObject?.GetInstanceID()}");
 
-            switch (e.CompletedUnit.TargetType)
+            switch (e.StartedUnit.TargetType)
             {
                 case TargetType.Ships:
-                    Assert.IsFalse(_ships.Contains(e.CompletedUnit));
-                    _ships.Add(e.CompletedUnit);
+                    Assert.IsFalse(_ships.Contains(e.StartedUnit));
+                    _ships.Add(e.StartedUnit);
                     break;
 
                 case TargetType.Aircraft:
-                    Assert.IsFalse(_aircraft.Contains(e.CompletedUnit));
-                    _aircraft.Add(e.CompletedUnit);
+                    Assert.IsFalse(_aircraft.Contains(e.StartedUnit));
+                    _aircraft.Add(e.StartedUnit);
                     break;
             }
         }
 
-        // May occur for uncompleted unit.
         private void CruiserUnitMonitor_UnitDestroyed(object sender, UnitDestroyedEventArgs e)
         {
             Logging.Log(Tags.UNIT_TARGETS, $"{e.DestroyedUnit}  id: {e.DestroyedUnit?.GameObject?.GetInstanceID()}");

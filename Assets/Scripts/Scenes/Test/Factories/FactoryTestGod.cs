@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.Test.Factories
             OnStart();
 		}
 
-		protected virtual void OnStart() { }
+        protected virtual void OnStart() { }
 
 		private void Factory_CompletedBuildable(object sender, EventArgs e)
 		{
