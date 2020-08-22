@@ -88,7 +88,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
             boostFactory = boostFactory ?? new BoostFactory();
-            IGameObject audioListener = Camera.main != null ? new GameObjectBC(Camera.main.gameObject) : Substitute.For<IGameObject>();
 
             FactoryProvider
                 = CreateFactoryProvider(
