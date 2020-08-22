@@ -121,7 +121,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
-            ITargetPositionValidatorFactory targetPositionValidatorFactory = null)
+            ITargetPositionValidatorFactory targetPositionValidatorFactory = null,
+            IUserChosenTargetManager userChosenTargetManager = null)
         {
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -143,7 +144,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
                     deferrer: _deferrer,
-                    updaterProvider: UpdaterProvider);
+                    updaterProvider: UpdaterProvider,
+                    userChosenTargetManager: userChosenTargetManager);
 
             InitialiseBuilding(building, args, parentSlot);
         }
