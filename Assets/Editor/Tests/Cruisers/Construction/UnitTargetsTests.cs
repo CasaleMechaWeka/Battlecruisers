@@ -44,43 +44,43 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         }
 
         [Test]
-        public void UnitCompleted_Ship_AddsShip()
+        public void UnitStarted_Ship_AddsShip()
         {
-            _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_ship));
+            _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ship));
 
             Assert.AreEqual(1, _unitTargets.Ships.Count);
             Assert.AreSame(_ship, _unitTargets.Ships.First());
         }
 
         [Test]
-        public void UnitCompleted_Aircraft_AddsAircraft()
+        public void UnitStarted_Aircraft_AddsAircraft()
         {
-            _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_aircraft));
+            _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_aircraft));
 
             Assert.AreEqual(1, _unitTargets.Aircraft.Count);
             Assert.AreSame(_aircraft, _unitTargets.Aircraft.First());
         }
 
         [Test]
-        public void UnitCompleted_Building_DoesNothing()
+        public void UnitStarted_Building_DoesNothing()
         {
-            _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_building));
+            _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_building));
 
             Assert.AreEqual(0, _unitTargets.Ships.Count);
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
         }
 
         [Test]
-        public void UnitCompleted_Duplicate_Throws()
+        public void UnitStarted_Duplicate_Throws()
         {
-            _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_ship));
-            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_ship)));
+            _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ship));
+            Assert.Throws<UnityAsserts.AssertionException>(() => _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ship)));
         }
 
         [Test]
         public void UnitDestroyed_ExistingShip_Removes()
         {
-            _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_ship));
+            _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ship));
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_ship));
             Assert.AreEqual(0, _unitTargets.Ships.Count);
         }
@@ -95,7 +95,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [Test]
         public void UnitDestroyed_ExistingAircraft_Removes()
         {
-            _cruiserUnitMonitor.UnitCompleted += Raise.EventWith(new UnitCompletedEventArgs(_aircraft));
+            _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_aircraft));
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_aircraft));
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
         }

@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
-    // FELIX  Update tests
     public class UnitTargets : IUnitTargets
     {
         private readonly HashSet<ITarget> _ships;
