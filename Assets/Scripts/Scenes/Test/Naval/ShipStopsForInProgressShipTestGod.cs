@@ -4,10 +4,8 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
@@ -45,10 +43,6 @@ namespace BattleCruisers.Scenes.Test.Factories
             userChosenTargetManager.Target = targetOnRight;
 
             // Setup left factory
-            // FELIX
-            //IList<TargetType> targetTypes = new List<TargetType>() { targetOnRight.TargetType };
-            //ITargetFilter targetFilter = new FactionAndTargetTypeFilter(targetOnRight.Faction, targetTypes);
-            //ITargetFactories targetFactories = helper.CreateTargetFactories(targetOnRight.GameObject, blueCruiser, redCruiser, helper.UpdaterProvider, targetFilter);
             helper
                 .InitialiseBuilding(
                     leftFactory,
@@ -57,8 +51,7 @@ namespace BattleCruisers.Scenes.Test.Factories
                     parentCruiser: blueCruiser,
                     enemyCruiser: redCruiser,
                     userChosenTargetManager: userChosenTargetManager);
-            // FELIX
-                    //targetFactories: targetFactories);
+
             Helper.SetupFactoryForUnitMonitor(leftFactory, blueCruiser);
             leftFactory.CompletedBuildable += (sender, e) => leftFactory.StartBuildingUnit(leftBoatPrefab);
             leftFactory.StartConstruction();
@@ -71,15 +64,10 @@ namespace BattleCruisers.Scenes.Test.Factories
                     parentCruiserDirection: redCruiser.Direction,
                     parentCruiser: redCruiser,
                     enemyCruiser: blueCruiser);
+
             Helper.SetupFactoryForUnitMonitor(rightFactory, redCruiser);
             rightFactory.CompletedBuildable += (sender, e) => rightFactory.StartBuildingUnit(rightBoatPrefab);
             rightFactory.StartConstruction();
-
-            // Left factory should be AB, build normal speed
-
-            // Left units should all attack the target
-
-            // Right factory should build slow, so ship remains in progress
         }
     }
 }
