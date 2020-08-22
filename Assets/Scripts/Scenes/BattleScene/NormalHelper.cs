@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
-        private const int IN_GAME_HINTS_CUTOFF = 5;
+        private const int IN_GAME_HINTS_CUTOFF = 3;
 
         public bool ShowInGameHints { get; }
         public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
