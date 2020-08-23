@@ -50,6 +50,8 @@ namespace BattleCruisers.Data.Static
 			
             InitialGameModel = CreateInitialGameModel();
             Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
+
+            // FELIX  Migrating code from 27 to 25 levels
 		}
 
 		private List<HullKey> AllHullKeys()
@@ -194,41 +196,44 @@ namespace BattleCruisers.Data.Static
 		{
 			return new List<ILevel>()
 			{
-                // Set 1
+                // Set 1:  Raptor
                 new Level(1, "Daisy", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
                 new Level(2, "Rain", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
                 new Level(3, "Jurassic Wolf", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
+                
+                // Set 2:  Bullshark
                 new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
                 new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
-                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Bobby, SkyMaterials.Midnight),
+                new Level(6, "Surprise", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Midnight),
                 new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunrise),
 
-                // Set 2
-                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new Level(9, "Magic", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
-                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
-                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
-                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
-                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
+                // Set 3:  Rockjaw
+                new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(9, "Magic", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
+                new Level(10, "Control Freak", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
 
-                // Set 3
+                // Set 4:  Eagle
+                new Level(11, "Bald Eagle", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+                new Level(12, "Fast Snow", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
+                new Level(13, "Stealthrest", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
+                new Level(14, "Atomic Hammer", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
+
+                // Set 5:  Hammerhead
                 new Level(15, "Drone Millionaire", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
-                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
-                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
-                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
-                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Midnight),
-                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
+                new Level(16, "Japanese Heritage", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
+                new Level(17, "Pirate Power", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
 
-                // Set 4
+                // Set 6: Longbow
+                new Level(18, "British Domination", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
+                new Level(19, "Athenian Topdog", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Midnight),
+                new Level(20, "King of the Depths", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(21, "Let Down", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
+
+                // Set 7:  Megolodon
                 new Level(22, "Big Pond", StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
                 new Level(23, "Indecision", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-                new Level(24, "Premature", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Morning),
-                new Level(26, "Goldrush", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Experimental, SkyMaterials.Midday),
-                new Level(27, "Dawn", StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
-                new Level(28, "Mastery", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunrise)
+                new Level(24, "Premature", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new Level(25, "Metrocity", StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Morning)
             };
 		}
 
@@ -243,29 +248,29 @@ namespace BattleCruisers.Data.Static
 
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
-                { StaticPrefabKeys.Buildings.LocalBooster, 10 },
-                { StaticPrefabKeys.Buildings.ControlTower, 11 },
-                { StaticPrefabKeys.Buildings.StealthGenerator, 14 },
-                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 14 },
+                { StaticPrefabKeys.Buildings.LocalBooster, 9 },
+                { StaticPrefabKeys.Buildings.ControlTower, 23 },
+                { StaticPrefabKeys.Buildings.StealthGenerator, 16 },
+                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 16 },
 
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
                 { StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
                 { StaticPrefabKeys.Buildings.Mortar, 3 },
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
-                { StaticPrefabKeys.Buildings.TeslaCoil, 13 },
+                { StaticPrefabKeys.Buildings.TeslaCoil, 20 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
-                { StaticPrefabKeys.Buildings.RocketLauncher, 13 },
-                { StaticPrefabKeys.Buildings.Railgun, 7 },
+                { StaticPrefabKeys.Buildings.RocketLauncher, 19 },
+                { StaticPrefabKeys.Buildings.Railgun, 6 },
 
                 // Ultras
-                { StaticPrefabKeys.Buildings.DeathstarLauncher, 8 },
-                { StaticPrefabKeys.Buildings.NukeLauncher, 15 },
-                { StaticPrefabKeys.Buildings.Ultralisk, 16 },
-                { StaticPrefabKeys.Buildings.KamikazeSignal, 17 },
-                { StaticPrefabKeys.Buildings.Broadsides, 18 }
+                { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
+                { StaticPrefabKeys.Buildings.NukeLauncher, 10 },
+                { StaticPrefabKeys.Buildings.Ultralisk, 14 },
+                { StaticPrefabKeys.Buildings.KamikazeSignal, 21 },
+                { StaticPrefabKeys.Buildings.Broadsides, 24 }
             };
         }
 
@@ -276,13 +281,13 @@ namespace BattleCruisers.Data.Static
                 // Aircraft
                 { StaticPrefabKeys.Units.Bomber, 1 },
                 { StaticPrefabKeys.Units.Gunship, 5 },
-                { StaticPrefabKeys.Units.Fighter, 9 },
+                { StaticPrefabKeys.Units.Fighter, 12 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
                 { StaticPrefabKeys.Units.Frigate, 3 },
-                { StaticPrefabKeys.Units.Destroyer, 9 },
-                { StaticPrefabKeys.Units.ArchonBattleship, 20 }
+                { StaticPrefabKeys.Units.Destroyer, 13 },
+                { StaticPrefabKeys.Units.ArchonBattleship, 17 }
             };
         }
 

@@ -24,37 +24,40 @@ namespace BattleCruisers.Data.Static
         {
             return new List<IBaseStrategy>()
 			{
-                // Set 1:  Levels 1 - 7
+                // Set 1:  Levels 1 - 3
                 new BalancedStrategy(),
 				new BalancedStrategy(),
 				new RushStrategy(),
+
+                // Set 2:  Levels 4 - 7
 				new BoomStrategy(),
 				new BoomStrategy(),
 				new RushStrategy(),
 				new BalancedStrategy(),
                 
-                // Set 2:  Levels 8 - 14
-                new BoomStrategy(),
+                // Set 3:  Levels 8 - 10
 				new RushStrategy(),
-				new BalancedStrategy(),
+                new BoomStrategy(),
 				new BoomStrategy(),
+
+                // Set 4:  Levels 11 - 14
+				new RushStrategy(),
+				new BoomStrategy(),
+				new BalancedStrategy(),
+				new BalancedStrategy(),
+
+                // Set 5:  Levels 15 - 17
+				new RushStrategy(),
+                new BoomStrategy(),
+                new BoomStrategy(),
+
+                // Set 6:  Levels 18 - 21
+				new BalancedStrategy(),
 				new RushStrategy(),
 				new BoomStrategy(),
 				new BalancedStrategy(),
 
-                // Set 3:  Levels 15 - 21
-				new BalancedStrategy(),
-				new BoomStrategy(),
-				new RushStrategy(),
-				new BoomStrategy(),
-				new BoomStrategy(),
-				new RushStrategy(),
-				new BalancedStrategy(),
-
-                // Set 4:  Levels 22 - 28
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new RushStrategy(),
+                // Set 7:  Levels 22 - 25
                 new BalancedStrategy(),
                 new BoomStrategy(),
                 new RushStrategy(),
@@ -66,40 +69,43 @@ namespace BattleCruisers.Data.Static
 		{
 			return new List<IBaseStrategy>()
 			{
-                // Set 1:  Levels 1 - 7
+                // Set 1:  Levels 1 - 3
                 new BasicTurtleStrategy(),
 				new BasicTurtleStrategy(),
                 new BasicRushStrategy(),
+
+                // Set 2:  Levels 4 - 7
                 new BasicBoomDefensiveStrategy(),
                 new BasicBoomAggressiveStrategy(),
 				new BasicRushStrategy(),
                 new BasicBalancedStrategy(),
 				
-				// Set 2:  Levels 8 - 14
+				// Set 3:  Levels 8 - 10
+                new BasicRushStrategy(),
                 new BasicTurtleStrategy(),
-                new BasicRushStrategy(),
-                new BasicBalancedStrategy(),
                 new BasicBoomAggressiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBalancedStrategy(),
 
-                // Set 3:  Levels 15 - 21
-				new BasicTurtleStrategy(),
-				new BasicBoomAggressiveStrategy(),
+                // Set 4:  Levels 11 - 14
+                new BasicRushStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicBalancedStrategy(),
+                new BasicTurtleStrategy(),
+
+                // Set 5:  Levels 15 - 17
 				new BasicRushStrategy(),
 				new BasicBoomDefensiveStrategy(),
 				new BasicBoomAggressiveStrategy(),
+
+                // Set 6:  Levels 18 - 21
+				new BasicBalancedStrategy(),
 				new BasicRushStrategy(),
+				new BasicBoomAggressiveStrategy(),
 				new BasicBalancedStrategy(),
 
-                // Set 4: Levels 22 - 28
-                new BasicBoomAggressiveStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicRushStrategy(),
+                // Set 7: Levels 22 - 25
                 new BasicTurtleStrategy(),
                 new BasicBoomDefensiveStrategy(),
-                new RushStrategy(),
+                new BasicRushStrategy(),
                 new BasicBoomAggressiveStrategy()
             };
 		}
@@ -108,7 +114,7 @@ namespace BattleCruisers.Data.Static
         {
             return new List<IOffensiveRequest[]>()
             {
-                // Set 1:  Levels 1 - 7
+                // Set 1:  Levels 1 - 3
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
@@ -122,21 +128,23 @@ namespace BattleCruisers.Data.Static
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
+
+                // Set 2:  Levels 4 - 7
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
                 },
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
                 new IOffensiveRequest[]
                 {
@@ -144,11 +152,7 @@ namespace BattleCruisers.Data.Static
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
                 
-                // Set 2:  Levels 8 - 14
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
-                },
+                // Set 3:  Levels 8 - 10
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
@@ -157,7 +161,90 @@ namespace BattleCruisers.Data.Static
                 },
                 new IOffensiveRequest[]
                 {
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
+                },
+
+                // Set 4:  Levels 11 - 14
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+
+                // Set 5:  Levels 15 - 17
+                new IOffensiveRequest[]
+                {
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+				new IOffensiveRequest[]
+				{
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+				},
+				new IOffensiveRequest[]
+				{
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+				},
+
+                // Set 6:  Levels 18 - 21
+				new IOffensiveRequest[]
+				{
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low)
+				},
+				new IOffensiveRequest[]
+				{
+					new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+				},
+				new IOffensiveRequest[]
+				{
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
+				},
+				new IOffensiveRequest[]
+				{
+					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+				},
+
+                // Set 7:  Levels 22 - 25
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
                 new IOffensiveRequest[]
@@ -169,102 +256,10 @@ namespace BattleCruisers.Data.Static
                 },
                 new IOffensiveRequest[]
                 {
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-                },
-
-                // Set 3:  Levels 15 - 21
-                new IOffensiveRequest[]
-                {
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-                },
-				new IOffensiveRequest[]
-				{
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-				},
-				new IOffensiveRequest[]
-				{
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
-				},
-				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-				},
-				new IOffensiveRequest[]
-				{
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-				},
-				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-				},
-				new IOffensiveRequest[]
-				{
-					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-					new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-				},
-
-                // Set 4:  Levels 22 - 28
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-                },
-                new IOffensiveRequest[]
-                {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
-                },
-                new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 }
             };
         }
