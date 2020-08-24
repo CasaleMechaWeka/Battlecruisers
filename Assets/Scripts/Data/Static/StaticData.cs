@@ -50,8 +50,6 @@ namespace BattleCruisers.Data.Static
 			
             InitialGameModel = CreateInitialGameModel();
             Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
-
-            // FELIX  Migrating code from 27 to 25 levels
 		}
 
 		private List<HullKey> AllHullKeys()
