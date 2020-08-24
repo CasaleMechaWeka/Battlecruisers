@@ -10,25 +10,43 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsSetController : MonoBehaviourWrapper
     {
+        private int _numOfLevels;
+        public int firstLevelIndex;
+
+        public int SetIndex { get; private set; }
+
 		public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod, 
-            IList<LevelInfo> levels, 
+            IList<LevelInfo> allLevels, 
             int numOfLevelsUnlocked, 
             ISingleSoundPlayer soundPlayer,
-            IDifficultySpritesProvider difficultySpritesProvider)
+            IDifficultySpritesProvider difficultySpritesProvider,
+            int setIndex)
         {
-            Helper.AssertIsNotNull(screensSceneGod, levels, soundPlayer, difficultySpritesProvider);
+            Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider);
+
+            SetIndex = setIndex;
 
             LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
-            Assert.AreEqual(levels.Count, levelButtons.Length);
+            _numOfLevels = levelButtons.Length;
 
-            for (int i = 0; i < levels.Count; ++i)
+            Assert.IsTrue(firstLevelIndex >= 0);
+            Assert.IsTrue(firstLevelIndex + _numOfLevels <= allLevels.Count);
+
+            for (int i = 0; i < _numOfLevels; ++i)
             {
                 LevelButtonController button = levelButtons[i];
-                LevelInfo level = levels[i];
+                LevelInfo level = allLevels[firstLevelIndex + i];
 
                 await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked);
             }
 		}
+
+        public bool ContainsLevel(int levelNum)
+        {
+            return
+                levelNum > firstLevelIndex
+                && levelNum <= firstLevelIndex + _numOfLevels;
+        }
 	}
 }

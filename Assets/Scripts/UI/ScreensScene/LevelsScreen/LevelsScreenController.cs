@@ -7,7 +7,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
@@ -15,12 +14,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsScreenController : ScreenController
 	{
-        private IList<IGameObject> _levelSets;
+        private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
 
         public ButtonController nextSetButton, previousSetButton;
-
-        private const int SET_SIZE = 7;
 
         private IGameObject VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
@@ -53,10 +50,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             Helper.AssertIsNotNull(levels, difficultySpritesProvider);
 
-            int numOfSets = levels.Count / SET_SIZE;
-            await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, numOfSets, difficultySpritesProvider);
-			
-			_nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
+            await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider);
+
+            _nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
             nextSetButton.Initialise(_soundPlayer, _nextSetCommand);
 
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
@@ -64,43 +60,43 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
             Assert.IsNotNull(navigationFeedbackButtonsPanel);
-            navigationFeedbackButtonsPanel.Initialise(this, numOfSets);
-
-            VisibleSetIndex = (lastPlayedLevelNum - 1) / SET_SIZE;
-            ShowSet(VisibleSetIndex);
+            navigationFeedbackButtonsPanel.Initialise(this);
 
             HomeButtonController homeButton = GetComponentInChildren<HomeButtonController>();
             Assert.IsNotNull(homeButton);
             homeButton.Initialise(_soundPlayer, screensSceneGod, this);
+
+            ShowLastPlayedLevelSet(_levelSets, lastPlayedLevelNum);
         }
 
         private async Task InitialiseLevelSetsAsync(
             IScreensSceneGod screensSceneGod, 
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
-            int numOfSets,
             IDifficultySpritesProvider difficultySpritesProvider)
         {
-            Assert.IsTrue(levels.Count % SET_SIZE == 0);
-
             LevelsSetController[] levelSets = GetComponentsInChildren<LevelsSetController>();
 
-            Assert.AreEqual(numOfSets, levelSets.Length);
-            _levelSets = new List<IGameObject>(numOfSets);
+            _levelSets = new List<LevelsSetController>(levelSets.Length);
 
-            for (int j = 0; j < numOfSets; j++)
+            for (int j = 0; j < levelSets.Length; j++)
             {
-                int startIndex = j * SET_SIZE;
-                IList<LevelInfo> setLevels
-                    = levels
-                        .Skip(startIndex)
-                        .Take(SET_SIZE)
-                        .ToList();
-
                 LevelsSetController levelsSet = levelSets[j];
-                await levelsSet.InitialiseAsync(screensSceneGod, setLevels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider);
+                await levelsSet.InitialiseAsync(screensSceneGod, levels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider, setIndex: j);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
+            }
+        }
+
+        private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int lastPlayedLevelNum)
+        {
+            foreach (LevelsSetController levelSet in levelSets)
+            {
+                if (levelSet.ContainsLevel(lastPlayedLevelNum))
+                {
+                    ShowSet(levelSet.SetIndex);
+                    break;
+                }
             }
         }
 

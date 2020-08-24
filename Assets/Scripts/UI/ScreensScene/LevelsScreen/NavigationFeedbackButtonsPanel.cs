@@ -5,14 +5,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class NavigationFeedbackButtonsPanel : MonoBehaviour
     {
-        public void Initialise(LevelsScreenController levelsScreenController, int numOfSets)
+        public void Initialise(LevelsScreenController levelsScreenController)
         {
             Assert.IsNotNull(levelsScreenController);
 
             NavigationFeedbackButton[] feedbackButtons = GetComponentsInChildren<NavigationFeedbackButton>();
-            Assert.AreEqual(numOfSets, feedbackButtons.Length);
 
-            for (int i = 0; i < numOfSets; ++i)
+            for (int i = 0; i < feedbackButtons.Length; ++i)
             {
                 feedbackButtons[i].Initialise(levelsScreenController, i);
             }
