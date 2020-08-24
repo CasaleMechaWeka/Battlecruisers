@@ -220,6 +220,7 @@ namespace BattleCruisers.Data.Static
 				},
 				new IOffensiveRequest[]
 				{
+					new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
 					new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
 				},
 				new IOffensiveRequest[]
