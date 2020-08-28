@@ -6,6 +6,21 @@ namespace BattleCruisers.Effects.Explosions
 {
     public class SynchronizedParticleSystemsController : MonoBehaviour
     {
+        void Awake()
+        {
+            Logging.Log(Tags.EXPLOSIONS, ToString());
+
+            int seed = RandomGenerator.Instance.Range(0, int.MaxValue);
+
+            ParticleSystem[] particleSystems = GetComponentsInChildren<ParticleSystem>(includeInactive: true);
+
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                particleSystem.randomSeed = (uint)seed;
+            }
+        }
+
+        // FELIX  Remove?
         public void Initialise(IRandomGenerator randomGenerator)
         {
             Assert.IsNotNull(randomGenerator);
