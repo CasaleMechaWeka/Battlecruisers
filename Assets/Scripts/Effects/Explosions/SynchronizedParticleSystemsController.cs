@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Explosions
 {
@@ -8,24 +7,9 @@ namespace BattleCruisers.Effects.Explosions
     {
         void Awake()
         {
-            Logging.Log(Tags.EXPLOSIONS, ToString());
+            Logging.Verbose(Tags.EXPLOSIONS, ToString());
 
             int seed = RandomGenerator.Instance.Range(0, int.MaxValue);
-
-            ParticleSystem[] particleSystems = GetComponentsInChildren<ParticleSystem>(includeInactive: true);
-
-            foreach (ParticleSystem particleSystem in particleSystems)
-            {
-                particleSystem.randomSeed = (uint)seed;
-            }
-        }
-
-        // FELIX  Remove?
-        public void Initialise(IRandomGenerator randomGenerator)
-        {
-            Assert.IsNotNull(randomGenerator);
-
-            int seed = randomGenerator.Range(0, int.MaxValue);
 
             ParticleSystem[] particleSystems = GetComponentsInChildren<ParticleSystem>(includeInactive: true);
 
