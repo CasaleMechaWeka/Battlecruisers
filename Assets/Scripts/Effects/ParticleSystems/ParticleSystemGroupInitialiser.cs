@@ -12,6 +12,8 @@ namespace BattleCruisers.Effects.ParticleSystems
 
         protected virtual IBroadcastingParticleSystem[] GetParticleSystems()
         {
+            // FELIX  Add assert to make sure all ParticleSystems have a BroadcastingParticleSystem attached?  So Peter gets an error :)
+
             BroadcastingParticleSystem[] particleSystems = GetComponentsInChildren<BroadcastingParticleSystem>();
             Assert.IsTrue(particleSystems.Length != 0);
 
