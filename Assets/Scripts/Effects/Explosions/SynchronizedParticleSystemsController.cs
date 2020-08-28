@@ -5,6 +5,8 @@ namespace BattleCruisers.Effects.Explosions
 {
     public class SynchronizedParticleSystemsController : MonoBehaviour
     {
+        // FELIX  Need to change random seed on every Activate() :/
+        // FELIX  Check out subemitters???
         void Awake()
         {
             Logging.Verbose(Tags.EXPLOSIONS, ToString());
