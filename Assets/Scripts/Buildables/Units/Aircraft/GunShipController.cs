@@ -30,7 +30,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
-        private ManualProximityTargetProcessorWrapper _followingTargetProcessorWrapper;
+        
+        public ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
 
         private const float WITHTIN_RANGE_MULTIPLIER = 0.5f;
 
@@ -55,6 +56,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
 		{
             base.StaticInitialise(parent, healthBar);
+
+            Assert.IsNotNull(followingTargetProcessorWrapper);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
 			Assert.IsNotNull(_barrelWrapper);
@@ -106,9 +109,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     enemyFollowRangeInM,
                     parentTarget: this);
 
-            _followingTargetProcessorWrapper = GetComponentInChildren<ManualProximityTargetProcessorWrapper>();
-            Assert.IsNotNull(_followingTargetProcessorWrapper);
-            _followingTargetProcessor = _followingTargetProcessorWrapper.CreateTargetProcessor(args);
+            _followingTargetProcessor = followingTargetProcessorWrapper.CreateTargetProcessor(args);
             _followingTargetProcessor.AddTargetConsumer(this);
 
             // Create target tracker => For keeping track of in range targets
@@ -172,8 +173,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
             base.CleanUp();
 
-            _followingTargetProcessorWrapper.DisposeManagedState();
-            _followingTargetProcessorWrapper = null;
+            followingTargetProcessorWrapper.DisposeManagedState();
+            followingTargetProcessorWrapper = null;
 
             _followingTargetProcessor.DisposeManagedState();
             _followingTargetProcessor = null;

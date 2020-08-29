@@ -148,7 +148,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _enemyFaction,
                     DamageCapability.AttackCapabilities,
                     RangeInM,
-                    _minRangeInM);
+                    _minRangeInM,
+                    parent);
 
             TargetProcessorWrapper targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
             Assert.IsNotNull(targetProcessorWrapper);
