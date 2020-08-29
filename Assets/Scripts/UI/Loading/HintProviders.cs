@@ -35,8 +35,8 @@ namespace BattleCruisers.UI.Loading
             {
                 "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
                 "The BUILDERS button for one of your building’s makes all your builders try to work on that building.  The shortcut is to double click your building.",
-                "Each cruiser has a unique benefit and a unique slot arrangement.  Choose your cruiser wisely!",
-                "Local boosters significantly increase adjacent turret fire rates, shield recharge rates and factory production rates.",
+                "Each cruiser has a unique benefit and slot arrangement.  Choose your cruiser wisely!",
+                "Local boosters are well worth building.",
                 "Construct buildings one at a time instead of all at once, to get their benefits sooner.",
                 "You can pause and resume building units by clicking the factory and selecting the unit you want to pause or resume."
             };
