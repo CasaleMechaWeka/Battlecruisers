@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.Explosions;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,8 +15,14 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
         {
             Assert.IsNotNull(explosionController);
             _explosion = explosionController.Initialise();
+            _explosion.Deactivated += _explosion_Deactivated;
 
-            InvokeRepeating(nameof(ActivateExplosion), time: 0, repeatRate: 3.1f);
+            ActivateExplosion();
+        }
+
+        private void _explosion_Deactivated(object sender, EventArgs e)
+        {
+            ActivateExplosion();
         }
 
         private void ActivateExplosion()
