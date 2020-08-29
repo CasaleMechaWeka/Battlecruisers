@@ -13,6 +13,8 @@ namespace BattleCruisers.Tests.Effects.Explosions
         private IGameObject _controller;
         private IBroadcastingParticleSystem _particleSystem1, _particleSystem2;
         private IBroadcastingParticleSystem[] _particleSystems;
+        private ISynchronizedParticleSystems _system1, _system2;
+        private ISynchronizedParticleSystems[] _synchronizedSystems;
         private int _deactivatedCount;
 
         [SetUp]
@@ -26,9 +28,15 @@ namespace BattleCruisers.Tests.Effects.Explosions
                 _particleSystem1,
                 _particleSystem2
             };
+            _system1 = Substitute.For<ISynchronizedParticleSystems>();
+            _system2 = Substitute.For<ISynchronizedParticleSystems>();
+            _synchronizedSystems = new ISynchronizedParticleSystems[]
+            {
+                _system1,
+                _system2
+            };
 
-            // FELIX  Fix :)
-            _explosion = new Explosion(_controller, _particleSystems, null);
+            _explosion = new Explosion(_controller, _particleSystems, _synchronizedSystems);
 
             _deactivatedCount = 0;
             _explosion.Deactivated += (sender, e) => _deactivatedCount++;
@@ -49,6 +57,8 @@ namespace BattleCruisers.Tests.Effects.Explosions
 
             _controller.Received().Position = position;
             _controller.Received().IsVisible = true;
+            _system1.Received().ResetSeed();
+            _system2.Received().ResetSeed();
             _particleSystem1.Received().Play();
             _particleSystem2.Received().Play();
         }
