@@ -15,7 +15,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Explosions
             Assert.IsNotNull(explosionController);
             _explosion = explosionController.Initialise();
 
-            InvokeRepeating(nameof(ActivateExplosion), time: 0, repeatRate: 3);
+            InvokeRepeating(nameof(ActivateExplosion), time: 0, repeatRate: 3.1f);
         }
 
         private void ActivateExplosion()

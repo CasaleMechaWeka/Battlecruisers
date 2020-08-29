@@ -7,7 +7,11 @@ namespace BattleCruisers.Effects.Explosions
         public virtual IExplosion Initialise()
         {
             IBroadcastingParticleSystem[] particleSystems = GetParticleSystems();
-            return new Explosion(this, particleSystems);
+            return 
+                new Explosion(
+                    this, 
+                    GetParticleSystems(),
+                    GetSynchronizedSystems());
         }
     }
 }

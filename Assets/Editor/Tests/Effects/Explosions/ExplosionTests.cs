@@ -27,7 +27,8 @@ namespace BattleCruisers.Tests.Effects.Explosions
                 _particleSystem2
             };
 
-            _explosion = new Explosion(_controller, _particleSystems);
+            // FELIX  Fix :)
+            _explosion = new Explosion(_controller, _particleSystems, null);
 
             _deactivatedCount = 0;
             _explosion.Deactivated += (sender, e) => _deactivatedCount++;

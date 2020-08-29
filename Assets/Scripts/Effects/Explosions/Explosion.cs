@@ -14,8 +14,8 @@ namespace BattleCruisers.Effects.Explosions
 
         public event EventHandler Deactivated;
 
-        public Explosion(IGameObject explosionController, IBroadcastingParticleSystem[] particleSystems)
-            : base(particleSystems)
+        public Explosion(IGameObject explosionController, IBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
+            : base(particleSystems, synchronizedSystems)
         {
             Assert.IsNotNull(explosionController);
             _explosionController = explosionController;

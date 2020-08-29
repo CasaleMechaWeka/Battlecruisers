@@ -1,4 +1,5 @@
-﻿using UnityEngine.Assertions;
+﻿using BattleCruisers.Effects.Explosions;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.ParticleSystems
 {
@@ -6,8 +7,10 @@ namespace BattleCruisers.Effects.ParticleSystems
     {
         public IParticleSystemGroup CreateParticleSystemGroup()
         {
-            IBroadcastingParticleSystem[] particleSystems = GetParticleSystems();
-            return new ParticleSystemGroup(particleSystems);
+            return
+                new ParticleSystemGroup(
+                    GetParticleSystems(),
+                    GetSynchronizedSystems());
         }
 
         protected virtual IBroadcastingParticleSystem[] GetParticleSystems()
@@ -23,6 +26,18 @@ namespace BattleCruisers.Effects.ParticleSystems
             }
 
             return particleSystems;
+        }
+
+        protected ISynchronizedParticleSystems[] GetSynchronizedSystems()
+        {
+            SynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<SynchronizedParticleSystemsController>();
+
+            foreach (SynchronizedParticleSystemsController system in synchronizedSystems)
+            {
+                system.Initialise();
+            }
+
+            return synchronizedSystems;
         }
     }
 }
