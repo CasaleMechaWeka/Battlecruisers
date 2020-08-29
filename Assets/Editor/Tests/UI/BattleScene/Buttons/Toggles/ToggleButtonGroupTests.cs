@@ -16,11 +16,16 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Toggles
             _button1 = Substitute.For<IToggleButton>();
             _button2 = Substitute.For<IToggleButton>();
 
-            // FELIX  Fix :)
             _toggleGroup 
                 = new ToggleButtonGroup(
                     new List<IToggleButton>() { _button1, _button2 },
-                    null);
+                    _button2);
+        }
+
+        [Test]
+        public void InitialState()
+        {
+            _button2.Received().IsSelected = true;
         }
 
         [Test]
@@ -31,20 +36,23 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Toggles
         }
 
         [Test]
-        public void SelectedButtonClicked_DeselectsButton()
+        public void SelectedButtonClicked()
         {
             // Select button
             _button1.Clicked += Raise.Event();
             _button1.Received().IsSelected = true;
+            _button1.ClearReceivedCalls();
 
-            // Deselect button
+            // Select button again
             _button1.Clicked += Raise.Event();
-            _button1.Received().IsSelected = false;
+            _button1.Received().IsSelected = true;
         }
 
         [Test]
         public void UnselectedButtonClicked_DeselectsCurrentlySelectedButton_AndSelectsClickedButton()
         {
+            _button2.ClearReceivedCalls();
+
             // Select button
             _button1.Clicked += Raise.Event();
             _button1.Received().IsSelected = true;
