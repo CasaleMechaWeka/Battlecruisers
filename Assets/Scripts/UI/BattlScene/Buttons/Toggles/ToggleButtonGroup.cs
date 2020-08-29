@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Toggles
 {
@@ -27,20 +26,21 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Toggles
             }
         }
 
-        public ToggleButtonGroup(IList<IToggleButton> buttons)
+        public ToggleButtonGroup(IList<IToggleButton> buttons, IToggleButton defaultButton)
         {
-            Assert.IsNotNull(buttons);
+            Helper.AssertIsNotNull(buttons, defaultButton);
 
             foreach (IToggleButton button in buttons)
             {
                 button.Clicked += Button_Clicked;
             }
+
+            SelectedButton = defaultButton;
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            IToggleButton clickedButton = sender.Parse<IToggleButton>();
-            SelectedButton = ReferenceEquals(SelectedButton, clickedButton) ? null : clickedButton;
+            SelectedButton = sender.Parse<IToggleButton>();
         }
     }
 }

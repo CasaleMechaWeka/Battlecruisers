@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System.Collections.Generic;
 using System.Linq;
 using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
@@ -17,22 +18,26 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         private ToggleButtonGroup _speedButtonGroup;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        private const int EXPECTED_NUM_OF_BUTTONS = 3;  // Slow motion, play (normal), fast forward
+        public GameSpeedButton slowMotion, normalSpeed, fastForward;
 
         public IHighlightable Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
+            Helper.AssertIsNotNull(slowMotion, normalSpeed, fastForward);
 
-            GameSpeedButton[] speedButtons = GetComponentsInChildren<GameSpeedButton>();
-            Assert.AreEqual(EXPECTED_NUM_OF_BUTTONS, speedButtons.Length);
-            ITime time = TimeBC.Instance;
+            List<GameSpeedButton> speedButtons = new List<GameSpeedButton>()
+            {
+                slowMotion,
+                normalSpeed,
+                fastForward
+            };
 
             foreach (GameSpeedButton speedButton in speedButtons)
             {
-                speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, time);
+                speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, TimeBC.Instance);
             }
 
-            _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>());
+            _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
 
             Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);

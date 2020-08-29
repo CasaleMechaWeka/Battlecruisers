@@ -16,7 +16,11 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Toggles
             _button1 = Substitute.For<IToggleButton>();
             _button2 = Substitute.For<IToggleButton>();
 
-            _toggleGroup = new ToggleButtonGroup(new List<IToggleButton>() { _button1, _button2 });
+            // FELIX  Fix :)
+            _toggleGroup 
+                = new ToggleButtonGroup(
+                    new List<IToggleButton>() { _button1, _button2 },
+                    null);
         }
 
         [Test]
