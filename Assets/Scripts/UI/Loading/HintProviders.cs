@@ -25,6 +25,8 @@ namespace BattleCruisers.UI.Loading
                 "Builders automatically repair damaged buildings and your cruiser.",
                 "Buildings can be deleted by clicking them and then selecting the DEMOLISH button.",
                 "Click on a cruiser, unit or building to show more details.",
+                "Too easy or too hard?  Change the difficulty from the options screen.",
+                "Want to change your cruiser?  Head to the loadout screen.",
                 "Frequently check on the enemy cruiser to avoid nasty surprises!"
             };
         }
