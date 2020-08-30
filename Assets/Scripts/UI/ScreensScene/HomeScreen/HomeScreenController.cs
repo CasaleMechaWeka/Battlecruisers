@@ -11,19 +11,19 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
     public class HomeScreenController : ScreenController, IHomeScreen
 	{
 		private BattleResult _lastBattleResult;
-		private int _totalNumOfLevels;
+        private ILockedInformation _lockedInfo;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IGameModel gameModel, int totalNumOfLevels)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDataProvider dataProvider)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Assert.IsNotNull(gameModel);
+            Assert.IsNotNull(dataProvider);
 
-            _lastBattleResult = gameModel.LastBattleResult;
-            _totalNumOfLevels = totalNumOfLevels;
+            _lastBattleResult = dataProvider.GameModel.LastBattleResult;
+            _lockedInfo = dataProvider.LockedInfo;
 
-            HomeScreenLayout layout = GetLayout(gameModel);
-            layout.Initialise(this, gameModel, soundPlayer);
+            HomeScreenLayout layout = GetLayout(dataProvider.GameModel);
+            layout.Initialise(this, dataProvider.GameModel, soundPlayer);
             layout.IsVisible = true;
 		}
 
@@ -58,7 +58,8 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
 			int nextLevelToPlay = _lastBattleResult.LevelNum;
 
-			if (_lastBattleResult.WasVictory && nextLevelToPlay < _totalNumOfLevels)
+			if (_lastBattleResult.WasVictory 
+                && nextLevelToPlay < _lockedInfo.NumOfLevelsUnlocked)
 			{
 				nextLevelToPlay++;
 			}

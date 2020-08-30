@@ -77,7 +77,7 @@ namespace BattleCruisers.Scenes
             }
 
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(new SpriteFetcher());
-            homeScreen.Initialise(_soundPlayer, this, _gameModel, _dataProvider.Levels.Count);
+            homeScreen.Initialise(_soundPlayer, this, _dataProvider);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
 
 
