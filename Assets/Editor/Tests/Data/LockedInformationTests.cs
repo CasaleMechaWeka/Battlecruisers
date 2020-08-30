@@ -25,13 +25,14 @@ namespace BattleCruisers.Tests.Data
             _gameModel = Substitute.For<IGameModel>();
             _staticData = Substitute.For<IStaticData>();
 
-            IList<ILevel> levels = new List<ILevel>()
+            IList<ILevel> levels = new List<ILevel>();
+            for (int i = 0; i < LockedInformation.NUM_OF_LEVELS_IN_DEMO + 1; ++i)
             {
-                Substitute.For<ILevel>(),
-                Substitute.For<ILevel>()
+                levels.Add(Substitute.For<ILevel>());
             };
             _levels = new ReadOnlyCollection<ILevel>(levels);
             _staticData.Levels.Returns(_levels);
+            _staticData.IsDemo.Returns(false);
 
             _lockedInfo = new LockedInformation(_gameModel, _staticData);
         }
@@ -49,6 +50,14 @@ namespace BattleCruisers.Tests.Data
         {
             _gameModel.NumOfLevelsCompleted.Returns(_levels.Count);
             Assert.AreEqual(_levels.Count, _lockedInfo.NumOfLevelsUnlocked);
+        }
+
+        [Test]
+        public void NumOfLevelsUnlocked_IsDemo()
+        {
+            _gameModel.NumOfLevelsCompleted.Returns(_levels.Count);
+            _staticData.IsDemo.Returns(true);
+            Assert.AreEqual(LockedInformation.NUM_OF_LEVELS_IN_DEMO, _lockedInfo.NumOfLevelsUnlocked);
         }
         #endregion NumOfLevelsUnlocked
 

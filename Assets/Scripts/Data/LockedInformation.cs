@@ -13,6 +13,8 @@ namespace BattleCruisers.Data
         private readonly IGameModel _gameModel;
         private readonly IStaticData _staticData;
 
+        public const int NUM_OF_LEVELS_IN_DEMO = 7;
+
         public LockedInformation(IGameModel gameModel, IStaticData staticData)
         {
             Helper.AssertIsNotNull(gameModel, staticData);
@@ -25,7 +27,8 @@ namespace BattleCruisers.Data
         {
             get
             {
-                return Mathf.Min(_gameModel.NumOfLevelsCompleted + 1, _staticData.Levels.Count);
+                int maxLevelCount = _staticData.IsDemo ? NUM_OF_LEVELS_IN_DEMO : _staticData.Levels.Count;
+                return Mathf.Min(_gameModel.NumOfLevelsCompleted + 1, maxLevelCount);
             }
         }
 
