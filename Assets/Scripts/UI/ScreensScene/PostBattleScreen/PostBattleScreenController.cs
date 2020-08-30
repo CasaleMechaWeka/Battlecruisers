@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public Text title;
 		public GameObject unlockedItemSection;
-        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage;
+        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedMessage;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
 
@@ -45,12 +45,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(
-                title, 
-                unlockedItemSection, 
-                postTutorialMessage, 
-                completedGameMessage, 
+                title,
+                unlockedItemSection,
+                postTutorialMessage,
+                completedGameMessage,
                 defeatMessage,
                 victoryNoLootMessage,
+                demoCompletedMessage,
                 levelName,
                 completedDifficultySymbol);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
@@ -89,7 +90,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
-                        unlockedItemSection.SetActive(true);
+                        if (_dataProvider.StaticData.IsDemo
+                            && BattleResult.LevelNum == LockedInformation.NUM_OF_LEVELS_IN_DEMO)
+                        {
+                            demoCompletedMessage.SetActive(true);
+                        }
+                        else
+                        {
+                            unlockedItemSection.SetActive(true);
+                        }
+    
                         _lootManager.UnlockLoot(BattleResult.LevelNum);
                     }
                     else if (BattleResult.LevelNum == _dataProvider.Levels.Count
