@@ -1,8 +1,11 @@
-﻿namespace BattleCruisers.Cruisers.Helpers
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
+
+namespace BattleCruisers.Cruisers.Helpers
 {
     public interface ICruiserHelper
     {
         void FocusCameraOnCruiser();
-        void ShowBuildingGroupButtons();
+        void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor);
     }
 }

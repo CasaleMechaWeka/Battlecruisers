@@ -1,4 +1,6 @@
-﻿using BattleCruisers.UI.BattleScene.Manager;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 
@@ -18,6 +20,6 @@ namespace BattleCruisers.Cruisers.Helpers
         }
 
         public abstract void FocusCameraOnCruiser();
-        public abstract void ShowBuildingGroupButtons();
+        public abstract void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor);
     }
 }

@@ -221,9 +221,8 @@ namespace BattleCruisers.Cruisers
 			building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
 
-            _helper.ShowBuildingGroupButtons();
-
 			building.StartConstruction();
+            _helper.OnBuildingConstructionStarted(building, SlotAccessor);
 
 			BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
 
