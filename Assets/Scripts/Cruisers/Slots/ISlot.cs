@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI;
-using System;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
 using UnityCommon.Properties;
@@ -14,8 +13,8 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public enum SlotType
 	{
-        // Explicitly set integner values, because the Unity inspector binds
-        // to the interger values.  So now, if I decide to get rid of a slot
+        // Explicitly set integer values, because the Unity inspector binds
+        // to the integer values.  So now, if I decide to get rid of a slot
         // type (yet again), I don't need to adjust every single prefab 
         // that has a slot type field.  Thanks Manya!
         Utility = 1, 
