@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers.Helpers
              // Disabled for tutorial
         }
 
-        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor)
+        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)
         {
             _uiManager.HideCurrentlyShownMenu();
         }

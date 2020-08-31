@@ -17,11 +17,16 @@ namespace BattleCruisers.Cruisers.Helpers
             _cameraFocuser.FocusOnPlayerCruiser();
         }
 
-        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor)
+        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)
         {
             if (!slotAccessor.IsSlotAvailable(buildingStarted.SlotSpecification))
             {
                 _uiManager.HideCurrentlyShownMenu();
+            }
+            else
+            {
+                // Unhighlight the one slot that has just been taken
+                slotHighlighter.HighlightAvailableSlots(buildingStarted.SlotSpecification);
             }
         }
     }

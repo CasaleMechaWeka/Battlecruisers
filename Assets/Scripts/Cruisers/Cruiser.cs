@@ -222,7 +222,7 @@ namespace BattleCruisers.Cruisers
             building.Destroyed += Building_Destroyed;
 
 			building.StartConstruction();
-            _helper.OnBuildingConstructionStarted(building, SlotAccessor);
+            _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
 			BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
 
