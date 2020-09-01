@@ -87,7 +87,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
-        public override void Activate(UnitActivationArgs activationArgs)
+        public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 

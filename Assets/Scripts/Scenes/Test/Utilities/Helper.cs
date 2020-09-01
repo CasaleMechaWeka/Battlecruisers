@@ -221,11 +221,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             unit.StaticInitialise(unitWrapper.gameObject, healthBar);
             unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             unit.Activate(
-                new UnitActivationArgs(
+                new BuildableActivationArgs(
                     initialisationArgs.ParentCruiser,
                     initialisationArgs.EnemyCruiser,
-                    initialisationArgs.CruiserSpecificFactories,
-                    parentFactory: null));
+                    initialisationArgs.CruiserSpecificFactories));
         }
 
 		public ICruiser CreateCruiser(Direction facingDirection, Faction faction)

@@ -5,6 +5,6 @@ namespace BattleCruisers.Buildables.Pools
 {
     public interface IUnitToPoolMap
     {
-        IPool<Unit, UnitActivationArgs> GetPool(IUnit unit);
+        IPool<Unit, BuildableActivationArgs> GetPool(IUnit unit);
     }
 }

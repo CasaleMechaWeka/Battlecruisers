@@ -18,7 +18,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 	{
         private IUnitSpawnPositionFinder _unitSpawnPositionFinder;
         private IUnitSpawnDecider _unitSpawnDecider;
-        private IPool<Unit, UnitActivationArgs> _unitPool;
+        private IPool<Unit, BuildableActivationArgs> _unitPool;
 
         public abstract UnitCategory UnitCategory { get; }
 
@@ -134,7 +134,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
             Logging.LogMethod(Tags.FACTORY);
 
-            UnitActivationArgs activationArgs = new UnitActivationArgs(ParentCruiser, _enemyCruiser, _cruiserSpecificFactories, this);
+            BuildableActivationArgs activationArgs = new BuildableActivationArgs(ParentCruiser, _enemyCruiser, _cruiserSpecificFactories);
             UnitUnderConstruction = _unitPool.GetItem(activationArgs);
 
             UnitUnderConstruction.DroneConsumerProvider = this;

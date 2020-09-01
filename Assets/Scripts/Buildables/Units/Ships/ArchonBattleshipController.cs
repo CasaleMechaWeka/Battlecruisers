@@ -42,8 +42,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        // FELIX  Remove does nothing?
-        public override void Activate(UnitActivationArgs activationArgs)
+        public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
         }

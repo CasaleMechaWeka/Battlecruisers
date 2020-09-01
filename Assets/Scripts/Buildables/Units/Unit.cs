@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -14,10 +13,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units
 {
-    public abstract class Unit : Buildable<UnitActivationArgs>, IUnit
+    public abstract class Unit : Buildable<BuildableActivationArgs>, IUnit
     {
         private IAudioSource _engineAudioSource;
-        private IFactory _parentFactory;
 
         [Header("Other")]
         public UnitCategory category;
@@ -65,11 +63,10 @@ namespace BattleCruisers.Buildables.Units
             _engineAudioSource = new AudioSourceBC(engineAudioSource);
         }
 
-        public override void Activate(UnitActivationArgs activationArgs)
+        public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 
-            _parentFactory = activationArgs.ParentFactory;
 			FacingDirection = ParentCruiser.Direction;
 
             HealthBar.IsVisible = true;

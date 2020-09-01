@@ -4,13 +4,13 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Pools
 {
-    public abstract class BuildableActivationArgs
+    public class BuildableActivationArgs
     {
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
         public ICruiserSpecificFactories CruiserSpecificFactories { get; }
 
-        protected BuildableActivationArgs(
+        public BuildableActivationArgs(
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
             ICruiserSpecificFactories cruiserSpecificFactories)

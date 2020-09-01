@@ -105,7 +105,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 
-        public override void Activate(UnitActivationArgs activationArgs)
+        public override void Activate(BuildableActivationArgs activationArgs)
         {
             Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
 
