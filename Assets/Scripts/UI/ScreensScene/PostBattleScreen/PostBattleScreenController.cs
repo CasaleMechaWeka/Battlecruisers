@@ -22,11 +22,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private IDataProvider _dataProvider;
         private ILootManager _lootManager;
 
+        public bool showDemoScreen = true;
 		public Text title;
 		public GameObject unlockedItemSection;
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
+        public ActionButton wishlistGameButton;
 
         private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -53,7 +55,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 victoryNoLootMessage,
                 demoCompletedScreen,
                 levelName,
-                completedDifficultySymbol);
+                completedDifficultySymbol,
+                wishlistGameButton);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
@@ -62,6 +65,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             levelName.Initialise(applicationModel);
             SetupBackground();
+            wishlistGameButton.Initialise(soundPlayer, WishlistGame);
+
+            if (showDemoScreen)
+            {
+                demoCompletedScreen.SetActive(true);
+                return;
+            }
 
             if (_applicationModel.IsTutorial)
             {
@@ -194,6 +204,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public void StartLevel1()
         {
             _screensSceneGod.LoadLevel(levelNum: 1);
+        }
+
+        public void WishlistGame()
+        {
+            Application.OpenURL("https://store.steampowered.com/app/955870/Battlecruisers/");
         }
 	}
 }
