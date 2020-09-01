@@ -29,11 +29,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
+            // FELIX  Update tests :)
+			_uiManager.ShowUnitDetails(unitClicked.Buildable);
 
             if (canAffordBuildable)
             {
                 HandleFactory(unitClicked, unitFactory);
-			    _uiManager.ShowUnitDetails(unitClicked.Buildable);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
                 {
