@@ -61,6 +61,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _factory.Received().PauseBuildingUnit();
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
 
         [Test]
@@ -73,6 +74,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _factory.Received().StartBuildingUnit(_unitWrapper);
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
 
         [Test]
@@ -96,6 +98,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
 
         [Test]
@@ -108,6 +111,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _soundPlayer.DidNotReceive().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
 
         [Test]
@@ -120,6 +124,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _soundPlayer.DidNotReceive().PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached);
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
 
         [Test]
@@ -132,10 +137,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
-            _uiManager.DidNotReceiveWithAnyArgs().ShowUnitDetails(null);
             _factory.DidNotReceive().StartBuildingUnit(null);
             _factory.DidNotReceive().PauseBuildingUnit();
             _factory.DidNotReceive().ResumeBuildingUnit();
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
 
         [Test]
@@ -148,10 +153,10 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _soundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.IncompleteFactory);
-            _uiManager.DidNotReceiveWithAnyArgs().ShowUnitDetails(null);
             _factory.DidNotReceive().StartBuildingUnit(null);
             _factory.DidNotReceive().PauseBuildingUnit();
             _factory.DidNotReceive().ResumeBuildingUnit();
+            _uiManager.Received().ShowUnitDetails(_unit);
         }
     }
 }
