@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _playerCruiserFocusHelper.Received().FocusOnPlayerCruiserIfNeeded();
-            _uiManager.Received().SelectBuildingFromMenu(_building, canAffordBuilding);
+            _uiManager.Received().SelectBuildingFromMenu(_building);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _playerCruiserFocusHelper.Received().FocusOnPlayerBowSlotIfNeeded();
-            _uiManager.Received().SelectBuildingFromMenu(_building, canAffordBuilding);
+            _uiManager.Received().SelectBuildingFromMenu(_building);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _playerCruiserFocusHelper.Received().FocusOnPlayerBowSlotIfNeeded();
-            _uiManager.Received().SelectBuildingFromMenu(_building, canAffordBuilding);
+            _uiManager.Received().SelectBuildingFromMenu(_building);
         }
 
         [Test]

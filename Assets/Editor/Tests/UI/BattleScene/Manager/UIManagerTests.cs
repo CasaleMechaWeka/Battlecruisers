@@ -104,8 +104,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             buildingWrapper.Buildable.Returns(_building);
             _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification).Returns(true);
 
-            // FELIX  Fix :)
-            //_uiManager.SelectBuildingFromMenu(buildingWrapper);
+            _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
             _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
@@ -120,8 +119,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
             buildingWrapper.Buildable.Returns(_building);
             _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification).Returns(false);
 
-            // FELIX  Fix :)
-            //_uiManager.SelectBuildingFromMenu(buildingWrapper);
+            _uiManager.SelectBuildingFromMenu(buildingWrapper);
 
             Assert.AreSame(buildingWrapper, _playerCruiser.SelectedBuildingPrefab);
             _playerCruiser.SlotHighlighter.Received().HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);

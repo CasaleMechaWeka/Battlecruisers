@@ -34,10 +34,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Assert.IsNotNull(buildingClicked);
 
             _uiSoundPlayer.PlaySound(_buildingSelectedSound);
-            _uiManager.SelectBuildingFromMenu(buildingClicked, canAffordBuildable);
 
             if (canAffordBuildable)
             {
+                _uiManager.SelectBuildingFromMenu(buildingClicked);
+
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow
                     || buildingClicked.Buildable.SlotSpecification.BuildingFunction == BuildingFunction.AntiShip)
                 {
