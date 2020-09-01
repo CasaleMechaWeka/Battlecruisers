@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
@@ -24,12 +25,12 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IDeferrer _deferrer;
         private readonly ICruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
-        private readonly ITime _time;
         private readonly IUIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
         private readonly IWindManager _windManager;
         private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
         private readonly IPermitter _helpLabelsPermitter;
+        private readonly IToggleButtonGroup _speedButtonGroup;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -43,12 +44,12 @@ namespace BattleCruisers.Utils.BattleScene
             IDeferrer deferrer,
             ICruiserDeathCameraFocuser cameraFocuser, 
             IPermitter navigationPermitter,
-            ITime time,
             IUIManager uiManager,
             ITargetIndicator targetIndicator,
             IWindManager windManager,
             IBuildingCategoryPermitter buildingCategoryPermitter,
-            IPermitter helpLabelsPermitter)
+            IPermitter helpLabelsPermitter,
+            IToggleButtonGroup speedButtonGroup)
         {
             Helper.AssertIsNotNull(
                 playerCruiser, 
@@ -58,11 +59,11 @@ namespace BattleCruisers.Utils.BattleScene
                 deferrer, 
                 cameraFocuser, 
                 navigationPermitter, 
-                time, 
                 uiManager, 
                 targetIndicator,
                 windManager,
-                helpLabelsPermitter);
+                helpLabelsPermitter,
+                speedButtonGroup);
 
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
@@ -71,12 +72,12 @@ namespace BattleCruisers.Utils.BattleScene
             _deferrer = deferrer;
             _cameraFocuser = cameraFocuser;
             _navigationPermitter = navigationPermitter;
-            _time = time;
             _uiManager = uiManager;
             _targetIndicator = targetIndicator;
             _windManager = windManager;
             _buildingCategoryPermitter = buildingCategoryPermitter;
             _helpLabelsPermitter = helpLabelsPermitter;
+            _speedButtonGroup = speedButtonGroup;
 
             _handledCruiserDeath = false;
             _handledGameEnd = false;
@@ -104,9 +105,9 @@ namespace BattleCruisers.Utils.BattleScene
             _windManager.Stop();
             _buildingCategoryPermitter.AllowNoCategories();
             _helpLabelsPermitter.IsMatch = false;
-
+            // FELIX  Update tests :)
             // Want to play cruiser sinking animation in real time, regardless of time player has set
-            _time.TimeScale = 1;
+            _speedButtonGroup.SelectDefaultButton();
 
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory), POST_GAME_WAIT_TIME_IN_S);
         }

@@ -13,14 +13,9 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
     public class SpeedPanelController : MonoBehaviour
     {
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private ToggleButtonGroup _speedButtonGroup;
-#pragma warning restore CS0414  // Variable is assigned but never used
-
         public GameSpeedButton slowMotion, normalSpeed, fastForward;
 
-        public IHighlightable Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
+        public SpeedComponents Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
             Helper.AssertIsNotNull(slowMotion, normalSpeed, fastForward);
@@ -37,12 +32,16 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                 speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, TimeBC.Instance);
             }
 
-            _speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
+            IToggleButtonGroup speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
 
             Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);
             speedButtonPanel.Initialise();
-            return speedButtonPanel;
+
+            return 
+                new SpeedComponents(
+                    speedButtonPanel,
+                    speedButtonGroup);
         }
     }
 }

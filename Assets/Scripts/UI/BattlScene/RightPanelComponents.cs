@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 
@@ -7,19 +7,19 @@ namespace BattleCruisers.UI.BattleScene
     public class RightPanelComponents
     {
         public IInformatorPanel InformatorPanel { get; }
-        public IHighlightable SpeedButtonPanel { get; }
         public IMainMenuManager MainMenuManager { get; }
+        public SpeedComponents SpeedComponents { get; }
 
         public RightPanelComponents(
             IInformatorPanel informatorPanel, 
-            IHighlightable speedButtonPanel,
-            IMainMenuManager mainMenuManager)
+            IMainMenuManager mainMenuManager,
+            SpeedComponents speedComponents)
         {
-            Helper.AssertIsNotNull(informatorPanel, speedButtonPanel, mainMenuManager);
+            Helper.AssertIsNotNull(informatorPanel, mainMenuManager, speedComponents);
 
             InformatorPanel = informatorPanel;
-            SpeedButtonPanel = speedButtonPanel;
             MainMenuManager = mainMenuManager;
+            SpeedComponents = speedComponents;
         }
     }
 }

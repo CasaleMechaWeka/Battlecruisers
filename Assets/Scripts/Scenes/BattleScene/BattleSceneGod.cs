@@ -250,12 +250,12 @@ namespace BattleCruisers.Scenes.BattleScene
                         components.Deferrer,
                         cameraComponents.CruiserDeathCameraFocuser,
                         navigationPermitters.NavigationFilter,
-                        time,
                         uiManager,
                         components.TargetIndicator,
                         windManager,
                         helper.BuildingCategoryPermitter,
-                        buttonVisibilityFilters.HelpLabelsVisibilityFilter));
+                        buttonVisibilityFilters.HelpLabelsVisibilityFilter,
+                        rightPanelComponents.SpeedComponents.SpeedButtonGroup));
 
             // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>();

@@ -75,12 +75,13 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _deferrer,
                     _cameraFocuser,
                     _navigationPermitter,
-                    _time,
                     _uiManager,
                     _targetIndicator,
                     _windManager,
                     _buildingCategoryPermitter,
-                    _helpLabelPermitter);
+                    _helpLabelPermitter,
+                    // FELIX Fix :)
+                    null);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
