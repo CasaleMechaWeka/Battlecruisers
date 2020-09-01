@@ -209,7 +209,7 @@ namespace BattleCruisers.Data.Static
                 new Level(4, "Sky Turtles", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
                 new Level(5, "Pigheaded", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
                 new Level(6, "Surprise", StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Midnight),
-                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunrise),
+                new Level(7, "Rockstar", StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Sleeper, SkyMaterials.Sunrise),
 
                 // Set 3:  Rockjaw
                 new Level(8, "Boomtown", StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
