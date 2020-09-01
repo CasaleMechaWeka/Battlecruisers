@@ -15,7 +15,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         private RepairButtonController _repairButton;
         private ChooseTargetButtonController _chooseTargetButton;
-        private DeleteButtonController _deleteButton;
 
         private ToggleDroneButtonController _toggleDronesButton;
         public IButton ToggleDronesButton => _toggleDronesButton;

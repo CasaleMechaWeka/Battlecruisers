@@ -14,7 +14,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public abstract class BuildableDetailsController<TItem> : ItemDetails<TItem>, IBuildableDetails<TItem> where TItem : class, IBuildable
     {
-        private RectTransform _rectTransform;
         private DeleteButtonController _deleteButton;
         private InformatorWidgetManager _buttonManager;
 
@@ -31,8 +30,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             base.Initialise();
 
             Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
-
-            _rectTransform = transform.Parse<RectTransform>();
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
