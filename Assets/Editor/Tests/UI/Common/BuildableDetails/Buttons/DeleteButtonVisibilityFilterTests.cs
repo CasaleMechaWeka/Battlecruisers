@@ -25,29 +25,18 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails.Buttons
             Assert.IsFalse(_filter.IsMatch(_target));
         }
 
-        [Test]
-        public void IsMatch_NonNull_AIFaction_ReturnsFalse()
+        [Test, Sequential]
+        public void IsMatch(
+            [Values(Faction.Reds, Faction.Blues, Faction.Blues, Faction.Blues)] Faction faction,
+            [Values(TargetType.Buildings, TargetType.Ships, TargetType.Buildings, TargetType.Buildings)] TargetType targetType,
+            [Values(true, true, false, true)] bool isInScene,
+            [Values(false, false, false, true)] bool expectedResult)
         {
-            _target.Faction.Returns(Faction.Reds);
-            Assert.IsFalse(_filter.IsMatch(_target));
-        }
+            _target.Faction.Returns(faction);
+            _target.TargetType.Returns(targetType);
+            _target.IsInScene.Returns(isInScene);
 
-        [Test]
-        public void IsMatch_NonNull_PlayerFaction_TargetIsNotBuilding_ReturnsFalse()
-        {
-            _target.Faction.Returns(Faction.Blues);
-            _target.TargetType.Returns(TargetType.Aircraft);
-
-            Assert.IsFalse(_filter.IsMatch(_target));
-        }
-
-        [Test]
-        public void IsMatch_NonNull_PlayerFaction_TargetIsBuilding_ReturnsTrue()
-        {
-            _target.Faction.Returns(Faction.Blues);
-            _target.TargetType.Returns(TargetType.Buildings);
-
-            Assert.IsTrue(_filter.IsMatch(_target));
+            Assert.AreEqual(expectedResult, _filter.IsMatch(_target));
         }
     }
 }
