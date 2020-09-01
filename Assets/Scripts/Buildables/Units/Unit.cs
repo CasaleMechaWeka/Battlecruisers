@@ -47,9 +47,6 @@ namespace BattleCruisers.Buildables.Units
 				OnDirectionChange();
 			}
 		}
-
-        // FELIX  TEMP
-        //protected override bool IsDroneConsumerFocusable => false;
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
