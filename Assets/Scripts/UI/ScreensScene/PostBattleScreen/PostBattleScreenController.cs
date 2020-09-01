@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public Text title;
 		public GameObject unlockedItemSection;
-        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedMessage;
+        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 completedGameMessage,
                 defeatMessage,
                 victoryNoLootMessage,
-                demoCompletedMessage,
+                demoCompletedScreen,
                 levelName,
                 completedDifficultySymbol);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
@@ -93,7 +93,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         if (_dataProvider.StaticData.IsDemo
                             && BattleResult.LevelNum == LockedInformation.NUM_OF_LEVELS_IN_DEMO)
                         {
-                            demoCompletedMessage.SetActive(true);
+                            demoCompletedScreen.SetActive(true);
                         }
                         else
                         {
