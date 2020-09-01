@@ -6,15 +6,15 @@ namespace BattleCruisers.Buildables.Pools
     public interface IUnitPoolProvider
     {
         // Aircraft
-        IPool<Unit, BuildableActivationArgs> BomberPool { get; }
-        IPool<Unit, BuildableActivationArgs> FighterPool { get; }
-        IPool<Unit, BuildableActivationArgs> GunshipPool { get; }
-        IPool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
+        IPool<Unit, UnitActivationArgs> BomberPool { get; }
+        IPool<Unit, UnitActivationArgs> FighterPool { get; }
+        IPool<Unit, UnitActivationArgs> GunshipPool { get; }
+        IPool<Unit, UnitActivationArgs> TestAircraftPool { get; }
 
         // Ships
-        IPool<Unit, BuildableActivationArgs> AttackBoatPool { get; }
-        IPool<Unit, BuildableActivationArgs> FrigatePool { get; }
-        IPool<Unit, BuildableActivationArgs> DestroyerPool { get; }
-        IPool<Unit, BuildableActivationArgs> ArchonPool { get; }
+        IPool<Unit, UnitActivationArgs> AttackBoatPool { get; }
+        IPool<Unit, UnitActivationArgs> FrigatePool { get; }
+        IPool<Unit, UnitActivationArgs> DestroyerPool { get; }
+        IPool<Unit, UnitActivationArgs> ArchonPool { get; }
     }
 }

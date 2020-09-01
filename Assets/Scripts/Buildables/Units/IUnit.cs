@@ -17,7 +17,7 @@ namespace BattleCruisers.Buildables.Units
 		Left, Right, Up, Down
 	}
 
-    public interface IUnit : IBuildable, IRemovable, IPoolable<BuildableActivationArgs>
+    public interface IUnit : IBuildable, IRemovable, IPoolable<UnitActivationArgs>
     {
 		UnitCategory Category { get; }
         IDroneConsumerProvider DroneConsumerProvider { set; }

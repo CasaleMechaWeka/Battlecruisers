@@ -78,7 +78,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 		}
 
-        public override void Activate(BuildableActivationArgs activationArgs)
+        public override void Activate(UnitActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
             _isAtCruisingHeight = false;

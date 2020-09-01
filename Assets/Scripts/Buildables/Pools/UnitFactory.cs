@@ -8,7 +8,7 @@ using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Buildables.Pools
 {
-    public class UnitFactory : IPoolableFactory<Unit, BuildableActivationArgs>
+    public class UnitFactory : IPoolableFactory<Unit, UnitActivationArgs>
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IPrefabKey _unitKey;

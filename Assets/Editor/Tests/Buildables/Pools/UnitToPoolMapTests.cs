@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_Bomber()
         {
             _aircraft.Name.Returns("Bomber");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_aircraft);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_aircraft);
             Assert.AreSame(_unitPoolProvider.BomberPool, pool);
         }
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_Fighter()
         {
             _aircraft.Name.Returns("Fighter");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_aircraft);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_aircraft);
             Assert.AreSame(_unitPoolProvider.FighterPool, pool);
         }
 
@@ -62,7 +62,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_Gunship()
         {
             _aircraft.Name.Returns("Gunship");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_aircraft);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_aircraft);
             Assert.AreSame(_unitPoolProvider.GunshipPool, pool);
         }
 
@@ -70,7 +70,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_TestAircraft()
         {
             _aircraft.Name.Returns("Test Aircraft");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_aircraft);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_aircraft);
             Assert.AreSame(_unitPoolProvider.TestAircraftPool, pool);
         }
 
@@ -85,7 +85,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_AttackBoat()
         {
             _ship.Name.Returns("Attack Boat");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_ship);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_ship);
             Assert.AreSame(_unitPoolProvider.AttackBoatPool, pool);
         }
 
@@ -93,7 +93,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_Frigate()
         {
             _ship.Name.Returns("Frigate");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_ship);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_ship);
             Assert.AreSame(_unitPoolProvider.FrigatePool, pool);
         }
 
@@ -101,7 +101,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_Destroyer()
         {
             _ship.Name.Returns("Destroyer");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_ship);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_ship);
             Assert.AreSame(_unitPoolProvider.DestroyerPool, pool);
         }
 
@@ -109,7 +109,7 @@ namespace BattleCruisers.Tests.Buildables.Pools
         public void GetPool_Archon()
         {
             _ship.Name.Returns("Mann o' War");
-            IPool<Unit, BuildableActivationArgs> pool = _map.GetPool(_ship);
+            IPool<Unit, UnitActivationArgs> pool = _map.GetPool(_ship);
             Assert.AreSame(_unitPoolProvider.ArchonPool, pool);
         }
     }

@@ -77,7 +77,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
         }
 
-        public override void Activate(BuildableActivationArgs activationArgs)
+        public override void Activate(UnitActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 

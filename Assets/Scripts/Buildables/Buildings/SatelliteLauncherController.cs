@@ -28,10 +28,11 @@ namespace BattleCruisers.Buildables.Buildings
 			_satellite.Position = transform.position + SpawnPositionAdjustment;
 
             _satellite.Activate(
-                new BuildableActivationArgs(
+                new UnitActivationArgs(
                     ParentCruiser,
                     _enemyCruiser,
-                    _cruiserSpecificFactories));
+                    _cruiserSpecificFactories,
+					parentFactory: null));
 
             _satellite.StartConstruction();
 		}
