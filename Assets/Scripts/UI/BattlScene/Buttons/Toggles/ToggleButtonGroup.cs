@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Toggles
 {
-    public class ToggleButtonGroup
+    public class ToggleButtonGroup : IToggleButtonGroup
     {
+        private readonly IToggleButton _defaultButton;
+
         private IToggleButton _selectedButton;
         private IToggleButton SelectedButton
         {
@@ -30,17 +32,24 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Toggles
         {
             Helper.AssertIsNotNull(buttons, defaultButton);
 
+            _defaultButton = defaultButton;
+
             foreach (IToggleButton button in buttons)
             {
                 button.Clicked += Button_Clicked;
             }
 
-            SelectedButton = defaultButton;
+            SelectDefaultButton();
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
             SelectedButton = sender.Parse<IToggleButton>();
+        }
+
+        public void SelectDefaultButton()
+        {
+            SelectedButton = _defaultButton;
         }
     }
 }

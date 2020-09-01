@@ -2,6 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
+    // FELIX  Remove.  Unused :D
     /// <summary>
     /// Ensures only one speed button is selected at a time.  Simply
     /// deselects the previously selected speed button when a new button
