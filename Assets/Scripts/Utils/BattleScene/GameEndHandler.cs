@@ -12,7 +12,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
-using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene
@@ -105,7 +104,6 @@ namespace BattleCruisers.Utils.BattleScene
             _windManager.Stop();
             _buildingCategoryPermitter.AllowNoCategories();
             _helpLabelsPermitter.IsMatch = false;
-            // FELIX  Update tests :)
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _speedButtonGroup.SelectDefaultButton();
 

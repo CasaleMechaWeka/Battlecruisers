@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
@@ -16,7 +17,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions.Time;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Utils.BattleScene
@@ -31,13 +31,13 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IDeferrer _deferrer;
         private ICruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
-        private ITime _time;
         private IUIManager _uiManager;
         private ITargetIndicator _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IWindManager _windManager;
         private IBuildingCategoryPermitter _buildingCategoryPermitter;
         private IPermitter _helpLabelPermitter;
+        private IToggleButtonGroup _speedButtonGroup;
 
         private IBuilding _playerBuilding, _aiBuilding;
         private IShip _playerShip, _aiShip;
@@ -56,12 +56,12 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _deferrer = Substitute.For<IDeferrer>();
             _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
-            _time = Substitute.For<ITime>();
             _uiManager = Substitute.For<IUIManager>();
             _targetIndicator = Substitute.For<ITargetIndicator>();
             _windManager = Substitute.For<IWindManager>();
             _buildingCategoryPermitter = Substitute.For<IBuildingCategoryPermitter>();
             _helpLabelPermitter = Substitute.For<IPermitter>();
+            _speedButtonGroup = Substitute.For<IToggleButtonGroup>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
@@ -80,8 +80,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _windManager,
                     _buildingCategoryPermitter,
                     _helpLabelPermitter,
-                    // FELIX Fix :)
-                    null);
+                    _speedButtonGroup);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
 
@@ -133,8 +132,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             _gameEndHandler.HandleCruiserDestroyed(wasPlayerVictory: true);
 
-            _time.Received().TimeScale = 1;
-
             _soundPlayer.Received().Enabled = false;
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
@@ -159,6 +156,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _windManager.Received().Stop();
             _buildingCategoryPermitter.Received().AllowNoCategories();
             _helpLabelPermitter.Received().IsMatch = false;
+            _speedButtonGroup.Received().SelectDefaultButton();
         }
 
         [Test]
@@ -168,8 +166,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             ICruiser losingCruiser = _playerCruiser;
 
             _gameEndHandler.HandleCruiserDestroyed(wasPlayerVictory: false);
-
-            _time.Received().TimeScale = 1;
 
             _ai.Received().DisposeManagedState();
             victoryCruiser.Received().MakeInvincible();
@@ -194,6 +190,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _windManager.Received().Stop();
             _buildingCategoryPermitter.Received().AllowNoCategories();
             _helpLabelPermitter.Received().IsMatch = false;
+            _speedButtonGroup.Received().SelectDefaultButton();
         }
 
         [Test]
