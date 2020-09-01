@@ -87,12 +87,19 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
-		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
+        // FELIX  Update tests
+		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper, bool canAffordBuilding)
 		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
-            _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
+
+            if (!canAffordBuilding)
+            {
+                return;
+            }
+
+            _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
 
             if (!wasAnySlotHighlighted)

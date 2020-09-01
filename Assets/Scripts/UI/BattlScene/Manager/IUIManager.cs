@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
 	{
         void HideCurrentlyShownMenu();
         void SelectBuildingGroup(BuildingCategory buildingCategory);
-        void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper);
+        void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper, bool canAffordBuilding);
         void SelectBuilding(IBuilding building);
         void ShowFactoryUnits(IFactory factory);
         void ShowUnitDetails(IUnit unit);
