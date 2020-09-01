@@ -128,7 +128,7 @@ namespace BattleCruisers.Buildables
             }
         }
 
-        protected virtual bool IsDroneConsumerFocusable => DroneConsumer != null;
+        private bool IsDroneConsumerFocusable => DroneConsumer != null;
 
         public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
 
