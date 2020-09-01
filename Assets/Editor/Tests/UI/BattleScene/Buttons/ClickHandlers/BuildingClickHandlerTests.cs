@@ -86,12 +86,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         }
 
         [Test]
-        public void HandleClick_CannotAffordBuilding_PlaysInsufficientFundsSound()
+        public void HandleClick_CannotAffordBuilding_UpdatesUI_PlaysInsufficientFundsSound()
         {
             bool canAffordBuilding = false;
 
             _clickHandler.HandleClick(canAffordBuilding, _building);
 
+            _uiManager.Received().SelectBuilding(_building.Buildable);
             _uiSoundPlayer.Received().PlaySound(_selectedSound);
             _eventSoundPlayer.Received().PlaySound(PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToBuild);
         }

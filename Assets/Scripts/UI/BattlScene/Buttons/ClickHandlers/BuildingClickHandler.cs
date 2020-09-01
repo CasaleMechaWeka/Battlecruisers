@@ -51,7 +51,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
             else
             {
-                // FELIX  Update tests :)
                 _uiManager.SelectBuilding(buildingClicked.Buildable);
                 PlayUnaffordableSound();
             }
