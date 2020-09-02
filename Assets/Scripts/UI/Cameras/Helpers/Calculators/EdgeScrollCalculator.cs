@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly ICamera _camera;
         private readonly IRange<float> _validOrthographicSizes;
 
-        public const float SCROLL_SCALE = 512;
+        public const float SCROLL_SCALE = 2048;
 
         public EdgeScrollCalculator(
             ITime time,
