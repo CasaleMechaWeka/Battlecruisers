@@ -1,7 +1,6 @@
-﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions;
+﻿using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
 {
@@ -17,15 +16,11 @@ namespace BattleCruisers.Cruisers
 
         private void SetupCruiserDeath(ICruiser cruiser)
         {
-            GameObject cruiserDeath = Object.Instantiate(cruiser.DeathPrefab);
-            cruiserDeath.transform.position = cruiser.Transform.Position;
+            ExplosionController cruiserDeath = Object.Instantiate(cruiser.DeathPrefab);
             cruiserDeath.transform.rotation = cruiser.Transform.Rotation;
+            IExplosion deathExplosion = cruiserDeath.Initialise();
 
-            IGameObject cruiserDeathGameObject = cruiserDeath.GetComponent<IGameObject>();
-            Assert.IsNotNull(cruiserDeathGameObject);
-            cruiserDeathGameObject.IsVisible = false;
-
-            cruiser.Destroyed += (sender, e) => cruiserDeathGameObject.IsVisible = true;
+            cruiser.Destroyed += (sender, e) => deathExplosion.Activate(cruiser.Transform.Position);
         }
     }
 }

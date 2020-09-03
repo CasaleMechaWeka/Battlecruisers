@@ -15,9 +15,9 @@ namespace BattleCruisers.Effects.Explosions
 
         public void ResetSeed()
         {
-            Logging.Verbose(Tags.EXPLOSIONS, ToString());
-
             int seed = RandomGenerator.Instance.Range(0, int.MaxValue);
+
+            Logging.Verbose(Tags.EXPLOSIONS, $"{ToString()}  seed: {seed}");
 
             foreach (ParticleSystem particleSystem in _particleSystems)
             {

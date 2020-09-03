@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Cruisers
         IFactoryProvider FactoryProvider { get; }
         ICruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
-        GameObject DeathPrefab { get; }
+        ExplosionController DeathPrefab { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
         void MakeInvincible();

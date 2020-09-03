@@ -11,6 +11,7 @@ using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
@@ -76,8 +77,8 @@ namespace BattleCruisers.Cruisers
         public int NumOfDrones => numOfDrones;
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
-        public GameObject deathPrefab;
-        public GameObject DeathPrefab => deathPrefab;
+        public ExplosionController deathPrefab;
+        public ExplosionController DeathPrefab => deathPrefab;
 
 
         // ICruiserController
