@@ -8,7 +8,6 @@ namespace BattleCruisers.UI
         Shown, Hidden
     }
 
-    // FELIX  Use, test
     public class SlidingPanel : Panel
     {
 		private Vector2 _slideVelocity;
