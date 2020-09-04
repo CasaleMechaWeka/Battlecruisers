@@ -39,8 +39,8 @@ namespace BattleCruisers.UI
         }
         
         public Vector2 hiddenPosition, shownPosition;
-        public float showSmoothTimeInS = 0.2f;
-        public float hideSmoothTimeInS = 0.5f;
+        public float showSmoothTimeInS = 0.05f;
+        public float hideSmoothTimeInS = 0.2f;
         public float positionEqualityMarginInPixels = 2;
 
         public void Initialise(TargetState startingState)
