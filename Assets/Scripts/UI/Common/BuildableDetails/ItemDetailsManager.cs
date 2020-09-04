@@ -7,6 +7,7 @@ using UnityCommon.Properties;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
+    // FELIX  Update tests
     public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IInformatorPanel _informatorPanel;
@@ -28,13 +29,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
             SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
-
-            _informatorPanel.Hide();
         }
 
         public void ShowDetails(IBuilding building)
         {
-            HideDetails();
+            HideEverything();
 
             _informatorPanel.Show();
             _buildingDetails.ShowBuildableDetails(building);
@@ -43,7 +42,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void ShowDetails(IUnit unit)
         {
-            HideDetails();
+            HideEverything();
 
             _informatorPanel.Show();
             _unitDetails.ShowBuildableDetails(unit);
@@ -52,7 +51,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void ShowDetails(ICruiser cruiser)
         {
-            HideDetails();
+            HideEverything();
 
             _informatorPanel.Show();
             _cruiserDetails.ShowCruiserDetails(cruiser);
@@ -61,11 +60,26 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		
         public void HideDetails()
         {
+            HideInformator();
+        }
+
+        private void HideEverything()
+        {
+            HideInformator();
+            HideInformatorContent();
+        }
+
+        private void HideInformator()
+        {
+            _informatorPanel.Hide();
+            _selectedItem.Value = null;
+        }
+
+        private void HideInformatorContent()
+        {
             _buildingDetails.Hide();
             _unitDetails.Hide();
             _cruiserDetails.Hide();
-            _informatorPanel.Hide();
-            _selectedItem.Value = null;
         }
     }
 }
