@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.UI
 {
-    // FELIX Remove? :P
     public class SlidingPanelTestGod : MonoBehaviour
     {
         public SlidingPanel panel;
@@ -12,16 +11,7 @@ namespace BattleCruisers.Scenes.Test.UI
         void Start()
         {
             Assert.IsNotNull(panel);
-        }
-
-        public void Show()
-        {
-            panel.Show();
-        }
-
-        public void Hide()
-        {
-            panel.Hide();
+            panel.Initialise(TargetState.Shown);
         }
     }
 }

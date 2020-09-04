@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class SelectorPanelController : Panel
+    public class SelectorPanelController : SlidingPanel
     {
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -16,6 +16,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public void Initialise(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters, ISingleSoundPlayer soundPlayer)
         {
+            base.Initialise(TargetState.Hidden);
+
             Helper.AssertIsNotNull(uiManager, buttonVisibilityFilters);
 
             DismissSelectorPanelButtonController dismissButton = GetComponentInChildren<DismissSelectorPanelButtonController>();

@@ -43,20 +43,9 @@ namespace BattleCruisers.UI
         public float hideSmoothTimeInS = 0.5f;
         public float positionEqualityMarginInPixels = 2;
 
-        void Start()
+        public void Initialise(TargetState startingState)
         {
-            if (transform.position.Equals(hiddenPosition))
-            {
-                TargetState = TargetState.Hidden;
-            }
-            else if (transform.position.Equals(shownPosition))
-            {
-                TargetState = TargetState.Shown;
-            }
-            else
-            {
-                Assert.IsTrue(false, "Starting position should match shown or hidden position.");
-            }
+            TargetState = startingState;
         }
 
         void Update()
