@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.UI
         void Start()
         {
             Assert.IsNotNull(panel);
-            panel.Initialise(TargetState.Shown);
+            panel.Initialise();
         }
     }
 }

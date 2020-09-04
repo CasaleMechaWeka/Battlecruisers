@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
 {
@@ -12,6 +11,7 @@ namespace BattleCruisers.UI
     {
 		private Vector2 _slideVelocity;
         private bool _isInitialised = false;
+        private Vector2 _hiddenPosition, _shownPosition;
 
         private float _smoothTimeinS;
         private bool _haveReachedTarget;
@@ -28,24 +28,27 @@ namespace BattleCruisers.UI
                 if (_targetState == TargetState.Shown)
                 {
                     _smoothTimeinS = showSmoothTimeInS;
-                    _targetPosition = shownPosition;
+                    _targetPosition = _shownPosition;
                 }
                 else
                 {
                     _smoothTimeinS = hideSmoothTimeInS;
-                    _targetPosition = hiddenPosition;
+                    _targetPosition = _hiddenPosition;
                 }
             }
         }
         
-        public Vector2 hiddenPosition, shownPosition;
+        public float shownPositionYDelta = 500;
         public float showSmoothTimeInS = 0.05f;
         public float hideSmoothTimeInS = 0.2f;
         public float positionEqualityMarginInPixels = 2;
 
-        public void Initialise(TargetState startingState)
+        public void Initialise()
         {
-            TargetState = startingState;
+            _hiddenPosition = transform.position;
+            float yDelta = transform.lossyScale.y * shownPositionYDelta;
+            _shownPosition = new Vector2(transform.position.x, transform.position.y + yDelta);
+            TargetState = TargetState.Hidden;
             _isInitialised = true;
         }
 
