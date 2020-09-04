@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI
@@ -11,8 +11,11 @@ namespace BattleCruisers.UI
     // FELIX  Use, test
     public class SlidingPanel : Panel
     {
+		private Vector2 _slideVelocity;
+
         private float _smoothTimeinS;
         private bool _haveReachedTarget;
+        private Vector2 _targetPosition;
         private TargetState _targetState;
         private TargetState TargetState
         {
@@ -21,13 +24,24 @@ namespace BattleCruisers.UI
             {
                 _targetState = value;
                 _haveReachedTarget = false;
-                _smoothTimeinS = _targetState == TargetState.Shown ? showSmoothTimeInS : hideSmoothTimeInS;
+
+                if (_targetState == TargetState.Shown)
+                {
+                    _smoothTimeinS = showSmoothTimeInS;
+                    _targetPosition = shownPosition;
+                }
+                else
+                {
+                    _smoothTimeinS = hideSmoothTimeInS;
+                    _targetPosition = hiddenPosition;
+                }
             }
         }
         
-        public Vector3 hiddenPosition, shownPosition;
+        public Vector2 hiddenPosition, shownPosition;
         public float showSmoothTimeInS = 0.2f;
         public float hideSmoothTimeInS = 0.5f;
+        public float positionEqualityMarginInPixels = 2;
 
         void Start()
         {
@@ -47,27 +61,33 @@ namespace BattleCruisers.UI
 
         void Update()
         {
-            // FELIX  NEXT  Adjust position, copying PatrollingMovementController :)
+            if (_haveReachedTarget)
+            {
+                return;
+            }
+
+            if (Vector2.Distance(transform.position, _targetPosition) <= positionEqualityMarginInPixels)
+            {
+                _haveReachedTarget = true;
+                return;
+            }
+
+            transform.position
+                = Vector2.SmoothDamp(
+                    transform.position,
+                    _targetPosition,
+                    ref _slideVelocity,
+                    _smoothTimeinS);
         }
 
         public override void Show()
         {
-            if (TargetState == TargetState.Shown)
-            {
-                return;
-            }
-
-            gameObject.SetActive(true);
+            TargetState = TargetState.Shown;
         }
 
         public override void Hide()
         {
-            if (TargetState == TargetState.Hidden)
-            {
-                return;
-            }
-
-            gameObject.SetActive(false);
+            TargetState = TargetState.Hidden;
         }
     }
 }
