@@ -28,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
-        public ActionButton wishlistGameButton;
 
         private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -55,8 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 victoryNoLootMessage,
                 demoCompletedScreen,
                 levelName,
-                completedDifficultySymbol,
-                wishlistGameButton);
+                completedDifficultySymbol);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
@@ -65,7 +63,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             levelName.Initialise(applicationModel);
             SetupBackground();
-            wishlistGameButton.Initialise(soundPlayer, WishlistGame);
 
             if (showDemoScreen)
             {
