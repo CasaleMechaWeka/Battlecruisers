@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class InformatorPanelController : Panel, IInformatorPanel
+    public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
         private DismissInformatorButtonController _dismissButton;
 
@@ -32,6 +32,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IButtonVisibilityFilters visibilityFilters,
             ISingleSoundPlayer soundPlayer)
         {
+            base.Initialise();
+
             Helper.AssertIsNotNull(
                 uiManager,
                 playerCruiser,
