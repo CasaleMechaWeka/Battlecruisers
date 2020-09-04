@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private readonly IBuildableMenus<UnitCategory> _unitMenus;
         private readonly ISingleSoundPlayer _uiSoundPlayer;
         private readonly IAudioClipWrapper _selectorOpeningSound;
-        private IMenu _currentMenu;
+        private IMenu _currentMenu, _lastShownMenu;
 
         public IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
 
@@ -38,6 +38,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             _unitMenus = unitMenus;
             _uiSoundPlayer = uiSoundPlayer;
             _selectorOpeningSound = selectorOpeningSound;
+
+            _currentMenu = null;
+            _lastShownMenu = null;
 
             BuildableButtons = FindBuildableButtons();
         }
@@ -95,6 +98,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             _selectorPanel.Show();
 
+            // FELIX  Update tests :)
+            if (_lastShownMenu != null)
+            {
+                _lastShownMenu.IsVisible = false;
+                _lastShownMenu = null;
+            }
+
             menu.OnPresenting(activationParameter);
             menu.IsVisible = true;
             _currentMenu = menu;
@@ -104,8 +114,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         {
 			if (_currentMenu != null)
 			{
+                _lastShownMenu = _currentMenu;
 				_currentMenu.OnDismissing();
-                _currentMenu.IsVisible = false;
                 _currentMenu = null;
 
                 _selectorPanel.Hide();
