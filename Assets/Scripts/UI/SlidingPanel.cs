@@ -11,6 +11,7 @@ namespace BattleCruisers.UI
     public class SlidingPanel : Panel
     {
 		private Vector2 _slideVelocity;
+        private bool _isInitialised = false;
 
         private float _smoothTimeinS;
         private bool _haveReachedTarget;
@@ -45,11 +46,13 @@ namespace BattleCruisers.UI
         public void Initialise(TargetState startingState)
         {
             TargetState = startingState;
+            _isInitialised = true;
         }
 
         void Update()
         {
-            if (_haveReachedTarget)
+            if (_haveReachedTarget
+                || !_isInitialised)
             {
                 return;
             }
