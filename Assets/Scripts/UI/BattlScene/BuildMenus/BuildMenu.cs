@@ -98,7 +98,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             _selectorPanel.Show();
 
-            // FELIX  Update tests :)
             if (_lastShownMenu != null)
             {
                 _lastShownMenu.IsVisible = false;

@@ -74,7 +74,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         public void ShowBuildingGroupMenu_DifferentMenu()
         {
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
-            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true);
+            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true, lastShownMenu: null);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
 
             _buildMenu.ShowUnitsMenu(unitFactory);
 
-            ReceivedShowMenu(_buildablesMenu1, unitFactory, currentMenuIsNull: true);
+            ReceivedShowMenu(_buildablesMenu1, unitFactory, currentMenuIsNull: true, lastShownMenu: null);
         }
 
         [Test]
@@ -108,13 +108,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         {
             // Show first menu
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
-            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true);
+            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true, lastShownMenu: null);
 
             // Show second menu
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory2);
 
             ReceivedHideCurrentlyShownMenu(_buildablesMenu1);
-            ReceivedShowMenu(_buildablesMenu2, activationParameter: null, currentMenuIsNull: false);
+            ReceivedShowMenu(_buildablesMenu2, activationParameter: null, currentMenuIsNull: false, lastShownMenu: _buildablesMenu1);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         {
             // Show menu
             _buildMenu.ShowBuildingGroupMenu(_buildingCategory1);
-            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true);
+            ReceivedShowMenu(_buildablesMenu1, activationParameter: null, currentMenuIsNull: true, lastShownMenu: null);
 
             // Hide menu
             _buildMenu.HideCurrentlyShownMenu();
@@ -151,7 +151,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
             Assert.AreSame(buildableButtons, returnedButtons);
         }
 
-        private void ReceivedShowMenu(IMenu shownMenu, object activationParameter, bool currentMenuIsNull)
+        private void ReceivedShowMenu(IMenu shownMenu, object activationParameter, bool currentMenuIsNull, IMenu lastShownMenu)
         {
             _selectorPanel.Received().Show();
             shownMenu.Received().OnPresenting(activationParameter);
@@ -161,12 +161,16 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
             {
                 _uiSoundPlayer.Received().PlaySound(_selectorOpeningSound);
             }
+
+            if (lastShownMenu != null)
+            {
+                lastShownMenu.Received().IsVisible = false;
+            }
         }
 
         private void ReceivedHideCurrentlyShownMenu(IMenu hiddenMenu)
         {
             hiddenMenu.Received().OnDismissing();
-            hiddenMenu.Received().IsVisible = false;
             _selectorPanel.Received().Hide();
         }
     }
