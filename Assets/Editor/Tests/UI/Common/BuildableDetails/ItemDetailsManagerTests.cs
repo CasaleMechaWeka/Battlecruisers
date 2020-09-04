@@ -39,8 +39,6 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();
             _cruiser = Substitute.For<ICruiser>();
-
-            _informatorPanel.Received().Hide();   
         }
 
         [Test]
@@ -48,7 +46,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.ShowDetails(_building);
 
-            AllDetails_ReceivedHide();
+            ReceivedHideEverything();
             _buildingDetails.Received().ShowBuildableDetails(_building);
             _informatorPanel.Received().Show();
             Assert.AreSame(_building, _detailsManager.SelectedItem.Value);
@@ -59,7 +57,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.ShowDetails(_unit);
 
-            AllDetails_ReceivedHide();
+            ReceivedHideEverything();
             _unitDetails.Received().ShowBuildableDetails(_unit);
             _informatorPanel.Received().Show();
             Assert.AreSame(_unit, _detailsManager.SelectedItem.Value);
@@ -70,7 +68,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.ShowDetails(_cruiser);
 
-            AllDetails_ReceivedHide();
+            ReceivedHideEverything();
             _cruiserDetails.Received().ShowCruiserDetails(_cruiser);
             _informatorPanel.Received().Show();
             Assert.AreSame(_cruiser, _detailsManager.SelectedItem.Value);
@@ -81,16 +79,26 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         {
             _detailsManager.HideDetails();
 
-            AllDetails_ReceivedHide();
+            ReceivedHideInformator();
             Assert.IsNull(_detailsManager.SelectedItem.Value);
         }
 
-        private void AllDetails_ReceivedHide()
+        private void ReceivedHideEverything()
         {
-            _buildingDetails.Received().Hide();
-            _unitDetails.Received().Hide();
-            _cruiserDetails.Received().Hide();
-            _informatorPanel.Received().Hide();
+            ReceivedHideInformator();
+            ReceivedHideInformatorContent();
+        }
+
+        private void ReceivedHideInformator()
+        {
+            _informatorPanel.Hide();
+        }
+
+        private void ReceivedHideInformatorContent()
+        {
+            _buildingDetails.Hide();
+            _unitDetails.Hide();
+            _cruiserDetails.Hide();
         }
     }
 }

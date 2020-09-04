@@ -7,7 +7,6 @@ using UnityCommon.Properties;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // FELIX  Update tests
     public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IInformatorPanel _informatorPanel;
