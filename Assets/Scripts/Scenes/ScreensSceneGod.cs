@@ -63,10 +63,10 @@ namespace BattleCruisers.Scenes
                     new AudioSourceBC(_uiAudioSource));
 
             // TEMP  For showing PostBattleScreen :)
-            //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
-            ////_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
-            //_applicationModel.ShowPostBattleScreen = true;
-            ////_applicationModel.IsTutorial = true;
+            _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
+            //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
+            _applicationModel.ShowPostBattleScreen = true;
+            //_applicationModel.IsTutorial = true;
 
 
             // TEMP  For when not coming from LandingScene :)

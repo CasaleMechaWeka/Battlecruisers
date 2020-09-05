@@ -24,8 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool showDemoScreen = true;
 		public Text title;
-		public GameObject unlockedItemSection;
-        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
+		public SlidingPanel unlockedItemSection;
+        public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen, lootAcquiredText;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
 
@@ -54,7 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 victoryNoLootMessage,
                 demoCompletedScreen,
                 levelName,
-                completedDifficultySymbol);
+                completedDifficultySymbol,
+                lootAcquiredText);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
@@ -62,6 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _lootManager = CreateLootManager(prefabFactory);
 
             levelName.Initialise(applicationModel);
+            unlockedItemSection.Initialise();
             SetupBackground();
 
             if (showDemoScreen)
@@ -95,7 +97,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     await completedDifficultySymbol.InitialiseAsync(_dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
                     completedDifficultySymbol.gameObject.SetActive(true);
 
-                    if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
+                    // FELIX  TEMP
+                    if (true)
+                    //if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
                         if (_dataProvider.StaticData.IsDemo
                             && BattleResult.LevelNum == LockedInformation.NUM_OF_LEVELS_IN_DEMO)
@@ -104,10 +108,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         }
                         else
                         {
-                            unlockedItemSection.SetActive(true);
+                            lootAcquiredText.SetActive(true);
+                            unlockedItemSection.Show();
                         }
     
-                        _lootManager.UnlockLoot(BattleResult.LevelNum);
+                        // FELIX  TEMP
+                        _lootManager.UnlockLoot(2);
+                        //_lootManager.UnlockLoot(BattleResult.LevelNum);
                     }
                     else if (BattleResult.LevelNum == _dataProvider.Levels.Count
                         && BattleResult.LevelNum > _dataProvider.GameModel.NumOfLevelsCompleted)
