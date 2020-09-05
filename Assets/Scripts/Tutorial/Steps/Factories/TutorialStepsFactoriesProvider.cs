@@ -166,7 +166,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     constructBuildingStepsFactory,
                     tutorialArgs.TutorialProvider,
                     lastPlayerIncompleteBuildingStartedProvider,
-                    tutorialArgs.RightPanelComponents);
+                    tutorialArgs.RightPanelComponents,
+                    slidingPanelShownWaitStepFactory);
 
             GameSpeedStepsFactory
                 = new GameSpeedStepsFactory(
