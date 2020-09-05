@@ -1,32 +1,35 @@
 ﻿using UnityCommon.PlatformAbstractions.Time;
+using UnityCommon.Properties;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Panels
 {
-    public enum TargetState
+    public enum PanelState
     {
-        Shown, Hidden
+        Shown, Hidden, Sliding
     }
 
-    public class SlidingPanel : Panel
+    public class SlidingPanel : Panel, ISlidingPanel
     {
 		private Vector2 _slideVelocity;
         private bool _isInitialised = false;
         private Vector2 _hiddenPosition, _shownPosition;
 
         private float _smoothTimeinS;
-        private bool _haveReachedTarget;
         private Vector2 _targetPosition;
-        private TargetState _targetState;
-        private TargetState TargetState
+        private PanelState _targetState;
+        private PanelState TargetState
         {
             get => _targetState;
             set
             {
-                _targetState = value;
-                _haveReachedTarget = false;
+                Assert.IsTrue(value != PanelState.Sliding);
 
-                if (_targetState == TargetState.Shown)
+                _targetState = value;
+                _state.Value = PanelState.Sliding;
+
+                if (_targetState == PanelState.Shown)
                 {
                     _smoothTimeinS = showSmoothTimeInS;
                     _targetPosition = _shownPosition;
@@ -38,7 +41,10 @@ namespace BattleCruisers.UI.Panels
                 }
             }
         }
-        
+
+        private ISettableBroadcastingProperty<PanelState> _state;
+        public IBroadcastingProperty<PanelState> State { get; private set; }
+
         public float shownPositionYDelta = 500;
         public float showSmoothTimeInS = 0.05f;
         public float hideSmoothTimeInS = 0.2f;
@@ -49,21 +55,25 @@ namespace BattleCruisers.UI.Panels
             _hiddenPosition = transform.position;
             float yDelta = transform.lossyScale.y * shownPositionYDelta;
             _shownPosition = new Vector2(transform.position.x, transform.position.y + yDelta);
-            TargetState = TargetState.Hidden;
+
+            _state = new SettableBroadcastingProperty<PanelState>(initialValue: PanelState.Sliding);
+            State = new BroadcastingProperty<PanelState>(_state);
+            TargetState = PanelState.Hidden;
+
             _isInitialised = true;
         }
 
         void Update()
         {
-            if (_haveReachedTarget
-                || !_isInitialised)
+            if (!_isInitialised
+                || _state.Value != PanelState.Sliding)
             {
                 return;
             }
 
             if (Vector2.Distance(transform.position, _targetPosition) <= positionEqualityMarginInPixels)
             {
-                _haveReachedTarget = true;
+                _state.Value = TargetState;
                 return;
             }
 
@@ -79,12 +89,12 @@ namespace BattleCruisers.UI.Panels
 
         public override void Show()
         {
-            TargetState = TargetState.Shown;
+            TargetState = PanelState.Shown;
         }
 
         public override void Hide()
         {
-            TargetState = TargetState.Hidden;
+            TargetState = PanelState.Hidden;
         }
     }
 }
