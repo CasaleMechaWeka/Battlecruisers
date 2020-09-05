@@ -27,7 +27,8 @@ namespace BattleCruisers.UI.Loading
                 "Click on a cruiser, unit or building to show more details.",
                 "Too easy or too hard?  Change the difficulty from the options screen.",
                 "Want to change your cruiser?  Head to the loadout screen.",
-                "Frequently check on the enemy cruiser to avoid nasty surprises!"
+                "Frequently check on the enemy cruiser to avoid nasty surprises!",
+                "Use the in game question mark (bottom right) to show help labels."
             };
         }
 
