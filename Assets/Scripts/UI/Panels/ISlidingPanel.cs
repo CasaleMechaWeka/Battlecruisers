@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Panels
 {
-    public interface ISlidingPanel 
+    public interface ISlidingPanel : IPanel
     { 
         IBroadcastingProperty<PanelState> State { get; }
     }

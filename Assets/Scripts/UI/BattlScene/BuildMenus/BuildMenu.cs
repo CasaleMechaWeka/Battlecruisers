@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenu : IBuildMenu
 	{
-        private readonly IPanel _selectorPanel;
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IBuildableMenus<UnitCategory> _unitMenus;
@@ -21,10 +20,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private readonly IAudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
+        public ISlidingPanel SelectorPanel { get; }
         public IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
 
         public BuildMenu(
-			IPanel selectorPanel,
+			ISlidingPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IBuildableMenus<BuildingCategory> buildingMenus,
             IBuildableMenus<UnitCategory> unitMenus,
@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 		{
             Helper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus, uiSoundPlayer, selectorOpeningSound);
 
-            _selectorPanel = selectorPanel;
+            SelectorPanel = selectorPanel;
             _buildingCategoriesMenu = buildingCategoriesMenu;
             _buildingMenus = buildingMenus;
             _unitMenus = unitMenus;
@@ -97,7 +97,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             HideCurrentlyShownMenu();
 
-            _selectorPanel.Show();
+            SelectorPanel.Show();
 
             if (_lastShownMenu != null)
             {
@@ -118,7 +118,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 				_currentMenu.OnDismissing();
                 _currentMenu = null;
 
-                _selectorPanel.Hide();
+                SelectorPanel.Hide();
 			}
         }
 

@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
     public class BuildMenuTests
     {
         private IBuildMenu _buildMenu;
-        private IPanel _selectorPanel;
+        private ISlidingPanel _selectorPanel;
         private IBuildingCategoriesMenu _buildingCategoriesMenu;
         private IBuildableMenus<BuildingCategory> _buildingMenus;
         private IBuildableMenus<UnitCategory> _unitMenus;
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
             IReadOnlyCollection<IBuildablesMenu> unitMenus = new List<IBuildablesMenu>() { _buildablesMenu2 }.AsReadOnly();
             _unitMenus.Menus.Returns(unitMenus);
 
-            _selectorPanel = Substitute.For<IPanel>();
+            _selectorPanel = Substitute.For<ISlidingPanel>();
             _buildingCategoriesMenu = Substitute.For<IBuildingCategoriesMenu>();
             _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
             _selectorOpeningSound = Substitute.For<IAudioClipWrapper>();

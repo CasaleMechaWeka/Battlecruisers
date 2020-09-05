@@ -1,10 +1,13 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.UI.Panels;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public interface IBuildMenu : IBuildMenuButtons
     {
+        ISlidingPanel SelectorPanel { get; }
+
         /// <summary>
         /// Shows the building group menu for the given buildingCategory.
         /// Hides any currently shown menu.
