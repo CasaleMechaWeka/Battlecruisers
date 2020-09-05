@@ -30,7 +30,6 @@ namespace BattleCruisers.Cruisers.Slots
                     .Any(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
 		}
 
-        // FELIX  Update tests :)
         public bool IsSlotAvailableForPlayer(ISlotSpecification slotSpecification)
         {
             ReadOnlyCollection<ISlot> slots = GetSlots(slotSpecification);

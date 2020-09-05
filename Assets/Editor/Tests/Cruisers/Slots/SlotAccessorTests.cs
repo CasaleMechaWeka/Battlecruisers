@@ -137,6 +137,28 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
         #endregion GetSlots
 
+        [Test]
+        public void IsSlotAvailableForPlayer_True()
+        {
+            _antiShipDeckSlot.IsFree.Returns(false);
+            _genericDeckSlot.IsFree.Returns(true);
+
+            SlotSpecification desiredSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.Shield, preferCruiserFront: false);
+
+            Assert.IsTrue(_slotAccessor.IsSlotAvailableForPlayer(desiredSpecification));
+        }
+
+        [Test]
+        public void IsSlotAvailableForPlayer_False()
+        {
+            _antiShipDeckSlot.IsFree.Returns(false);
+            _genericDeckSlot.IsFree.Returns(true);
+
+            SlotSpecification desiredSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: false);
+
+            Assert.IsFalse(_slotAccessor.IsSlotAvailableForPlayer(desiredSpecification));
+        }
+
         #region GetFreeSlot
         [Test]
         public void GetFreeSlot_PreferFront_ReturnsFrontSlot()
