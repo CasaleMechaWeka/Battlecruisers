@@ -39,15 +39,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void UnlockLoot(int levelCompleted)
         {
-            // FELIX  TEMP
-            //Assert.IsTrue(ShouldShowLoot(levelCompleted));
+            Assert.IsTrue(ShouldShowLoot(levelCompleted));
 
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
             {
-                // FELIX  TEMP
-                //UnlockLootItems(unlockedLoot);
+                UnlockLootItems(unlockedLoot);
                 ShowLoot(unlockedLoot);
             }
 
