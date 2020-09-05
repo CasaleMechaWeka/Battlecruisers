@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityCommon.PlatformAbstractions.Time;
+using UnityEngine;
 
 namespace BattleCruisers.UI
 {
@@ -71,7 +72,9 @@ namespace BattleCruisers.UI
                     transform.position,
                     _targetPosition,
                     ref _slideVelocity,
-                    _smoothTimeinS);
+                    _smoothTimeinS,
+                    maxSpeed: float.MaxValue,
+                    deltaTime: TimeBC.Instance.UnscaledDeltaTime);
         }
 
         public override void Show()
