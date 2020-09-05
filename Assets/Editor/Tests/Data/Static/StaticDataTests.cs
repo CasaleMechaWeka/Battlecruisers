@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Data.Static
@@ -53,66 +51,6 @@ namespace BattleCruisers.Tests.Data.Static
         public void AIBannedUltraKeys()
         {
             Assert.AreEqual(2, _staticData.AIBannedUltrakeys.Count);
-        }
-
-        #region IsUnitAvailable
-        [Test]
-        public void IsUnitAvailable_NonExistantUnitKey_Throws()
-        {
-            UnitKey bogusKey = new UnitKey(UnitCategory.Aircraft, "Breckenridge");
-            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsUnitAvailable(bogusKey, levelNum: 1));
-        }
-
-        [Test]
-        public void IsUnitAvailable_True()
-        {
-            Assert.IsTrue(_staticData.IsUnitAvailable(StaticPrefabKeys.Units.AttackBoat, levelNum: 1));
-        }
-
-        [Test]
-        public void IsUnitAvailable_False()
-        {
-            Assert.IsFalse(_staticData.IsUnitAvailable(StaticPrefabKeys.Units.Frigate, levelNum: 1));
-        }
-        #endregion IsUnitAvailable
-
-        #region IsBuildingAvailable
-        [Test]
-        public void IsBuildingAvailable_NonExistantBuildingKey_Throws()
-        {
-            BuildingKey bogusKey = new BuildingKey(BuildingCategory.Ultra, "Veil");
-            Assert.Throws<UnityAsserts.AssertionException>(() => _staticData.IsBuildingAvailable(bogusKey, levelNum: 1));
-        }
-
-        [Test]
-        public void IsBuildingAvailable_True()
-        {
-            Assert.IsTrue(_staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.AirFactory, levelNum: 1));
-        }
-
-        [Test]
-        public void IsBuildingAvailable_False()
-        {
-            Assert.IsFalse(_staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.Railgun, levelNum: 1));
-        }
-        #endregion IsBuildingAvailable
-
-        [Test]
-        public void GetAvailableUnits()
-        {
-            Assert.AreEqual(1, _staticData.GetAvailableUnits(UnitCategory.Aircraft, levelNum: 1).Count);
-            Assert.AreEqual(1, _staticData.GetAvailableUnits(UnitCategory.Naval, levelNum: 1).Count);
-            Assert.AreEqual(0, _staticData.GetAvailableUnits(UnitCategory.Untouchable, levelNum: 1).Count);
-        }
-
-        [Test]
-        public void GetAvailableBuildings()
-        {
-            Assert.AreEqual(2, _staticData.GetAvailableBuildings(BuildingCategory.Defence, levelNum: 1).Count);
-            Assert.AreEqual(3, _staticData.GetAvailableBuildings(BuildingCategory.Factory, levelNum: 1).Count);
-            Assert.AreEqual(1, _staticData.GetAvailableBuildings(BuildingCategory.Offence, levelNum: 1).Count);
-            Assert.AreEqual(0, _staticData.GetAvailableBuildings(BuildingCategory.Tactical, levelNum: 1).Count);
-            Assert.AreEqual(0, _staticData.GetAvailableBuildings(BuildingCategory.Ultra, levelNum: 1).Count);
         }
 
         #region GetLevelLoot

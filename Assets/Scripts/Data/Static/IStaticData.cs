@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Data.Static
 {
@@ -25,14 +22,6 @@ namespace BattleCruisers.Data.Static
         ReadOnlyCollection<BuildingKey> AIBannedUltrakeys{ get; }
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
-
-        // FELIX  Remove
-        bool IsUnitAvailable(UnitKey unitKey, int levelNum);
-        IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum);
-
-        // FELIX  Remove
-        bool IsBuildingAvailable(BuildingKey buildingKey, int levelNum);
-        IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
 
         ILoot GetLevelLoot(int levelCompleted);
 	}

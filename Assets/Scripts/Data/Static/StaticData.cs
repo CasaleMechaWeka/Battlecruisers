@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using System.Collections.Generic;
@@ -310,24 +308,6 @@ namespace BattleCruisers.Data.Static
             };
         }
 
-        // FELIX  Remove
-        public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
-        {
-            return 
-                _allBuildings
-                    .Where(buildingKey => buildingKey.BuildingCategory == category && IsBuildingAvailable(buildingKey, levelNum))
-	                .ToList();
-        }
-
-        // FELIX  Remove
-        public IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum)
-        {
-            return
-                _allUnits
-                    .Where(unitKey => unitKey.UnitCategory == category && IsUnitAvailable(unitKey, levelNum))
-                    .ToList();
-        }
-
         /// <summary>
         /// Availability level number:  The first level that prefab is available.
         /// Loot level number (level completed):  The level that unlocks the prefab when you complete
@@ -380,24 +360,6 @@ namespace BattleCruisers.Data.Static
                     .Where(hullToLevel => hullToLevel.Value == levelFirstAvailableIn)
                     .Select(hullToLevel => hullToLevel.Key)
                     .ToList();
-        }
-		
-        // FELIX  If player has unlocked
-        public bool IsUnitAvailable(UnitKey unitKey, int levelNum)
-        {
-            Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
-
-            int firstLevelUnitIsAvailableIn = _unitToUnlockedLevel[unitKey];
-            return levelNum >= firstLevelUnitIsAvailableIn;
-        }
-
-        // FELIX  If player has unlocked
-        public bool IsBuildingAvailable(BuildingKey buildingKey, int levelNum)
-        {
-            Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
-
-            int firstlevelBuildingIsAvailableIn = _buildingToUnlockedLevel[buildingKey];
-            return levelNum >= firstlevelBuildingIsAvailableIn;
         }
     }
 }
