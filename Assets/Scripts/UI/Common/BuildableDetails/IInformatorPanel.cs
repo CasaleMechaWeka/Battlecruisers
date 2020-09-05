@@ -4,7 +4,7 @@ using BattleCruisers.UI.Panels;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public interface IInformatorPanel : IPanel
+    public interface IInformatorPanel : ISlidingPanel
     {
         IBuildableDetails<IBuilding> BuildingDetails { get; }
         IBuildableDetails<IUnit> UnitDetails { get; }

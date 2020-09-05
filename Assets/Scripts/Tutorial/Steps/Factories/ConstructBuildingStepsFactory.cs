@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Offensive;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -21,21 +22,24 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
+        private readonly ISlidingPanelShownWaitStepFactory _slidingPanelShownWaitStepFactory;
 
         public ConstructBuildingStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             LeftPanelComponents leftPanelComponents,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
-            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider)
+            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
+            ISlidingPanelShownWaitStepFactory slidingPanelShownWaitStepFactory)
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider);
+            Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelShownWaitStepFactory);
 
             _leftPanelComponents = leftPanelComponents;
             _tutorialProvider = tutorialProvider;
             _playerCruiser = playerCruiser;
             _lastPlayerIncompleteBuildingStartedProvider = lastPlayerIncompleteBuildingStartedProvider;
+            _slidingPanelShownWaitStepFactory = slidingPanelShownWaitStepFactory;
         }
 
         public IList<ITutorialStep> CreateSteps(
@@ -52,6 +56,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             Assert.IsNotNull(buildingCategoryButton);
             ITutorialStepArgs buildingCategoryArgs = _argsFactory.CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialProvider.BuildingCategoryPermitter));
+
+            constructionSteps.Add(_slidingPanelShownWaitStepFactory.CreateSelectorShownWaitStep());
 
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);

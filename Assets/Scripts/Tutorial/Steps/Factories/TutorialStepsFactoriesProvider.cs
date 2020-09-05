@@ -41,6 +41,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new AutoNavigationStepFactory(argsFactory, cameraAdjustmentWaitStepFactory, tutorialArgs.CameraComponents);
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider 
                 = tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(tutorialArgs.PlayerCruiser);
+            ISlidingPanelShownWaitStepFactory slidingPanelShownWaitStepFactory
+                = new SlidingPanelShownWaitStepFactory(
+                    argsFactory,
+                    tutorialArgs.LeftPanelComponents.BuildMenu.SelectorPanel,
+                    tutorialArgs.RightPanelComponents.InformatorPanel);
 
             IConstructBuildingStepsFactory constructBuildingStepsFactory
                 = new ConstructBuildingStepsFactory(
@@ -48,7 +53,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     tutorialArgs.LeftPanelComponents,
                     tutorialArgs.TutorialProvider,
                     tutorialArgs.PlayerCruiser,
-                    lastPlayerIncompleteBuildingStartedProvider);
+                    lastPlayerIncompleteBuildingStartedProvider,
+                    slidingPanelShownWaitStepFactory);
 
             YourCruiserStepsFactory
                 = new 
