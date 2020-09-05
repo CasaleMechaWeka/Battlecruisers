@@ -71,13 +71,13 @@ namespace BattleCruisers.AI
             taskProducers.Add(_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder));
 
             // Anti rocket
-            if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable(levelInfo.LevelNum))
+            if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable())
             {
                 taskProducers.Add(_taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder()));
             }
 
             // Anti stealth
-            if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable(levelInfo.LevelNum))
+            if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable())
             {
                 taskProducers.Add(_taskProducerFactory.CreateAntiStealthTaskProducer(tasks, _buildOrderFactory.CreateAntiStealthBuildOrder()));
             }

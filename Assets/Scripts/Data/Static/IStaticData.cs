@@ -26,9 +26,11 @@ namespace BattleCruisers.Data.Static
         int LastLevelWithLoot { get; }
         ILevelStrategies Strategies { get; }
 
+        // FELIX  Remove
         bool IsUnitAvailable(UnitKey unitKey, int levelNum);
         IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum);
 
+        // FELIX  Remove
         bool IsBuildingAvailable(BuildingKey buildingKey, int levelNum);
         IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum);
 

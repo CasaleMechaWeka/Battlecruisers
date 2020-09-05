@@ -29,5 +29,8 @@ namespace BattleCruisers.Data.Models
 
         IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory);
+
+        bool IsUnitUnlocked(UnitKey unitKey);
+        bool IsBuildingUnlocked(BuildingKey buildingKey);
     }
 }

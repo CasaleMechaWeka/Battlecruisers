@@ -310,6 +310,7 @@ namespace BattleCruisers.Data.Static
             };
         }
 
+        // FELIX  Remove
         public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category, int levelNum)
         {
             return 
@@ -318,6 +319,7 @@ namespace BattleCruisers.Data.Static
 	                .ToList();
         }
 
+        // FELIX  Remove
         public IList<UnitKey> GetAvailableUnits(UnitCategory category, int levelNum)
         {
             return
@@ -380,6 +382,7 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 		
+        // FELIX  If player has unlocked
         public bool IsUnitAvailable(UnitKey unitKey, int levelNum)
         {
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
@@ -388,6 +391,7 @@ namespace BattleCruisers.Data.Static
             return levelNum >= firstLevelUnitIsAvailableIn;
         }
 
+        // FELIX  If player has unlocked
         public bool IsBuildingAvailable(BuildingKey buildingKey, int levelNum)
         {
             Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));

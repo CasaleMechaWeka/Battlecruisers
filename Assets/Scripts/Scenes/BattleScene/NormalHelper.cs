@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes.BattleScene
 		
         public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
-            ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.StaticData, _prefabFactory, currentLevelNum);
+            ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.GameModel, _prefabFactory, currentLevelNum);
             IAIManager aiManager = new AIManager(_prefabFactory, _dataProvider, _deferrer, playerCruiser);
             return aiManager.CreateAI(levelInfo);
 		}

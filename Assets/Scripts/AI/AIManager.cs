@@ -37,10 +37,10 @@ namespace BattleCruisers.AI
 
             _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, TimeBC.Instance, deferrer);
-            _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.StaticData, _prefabFactory, _threatMonitorFactory);
+            _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.GameModel, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
-            _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData);
+            _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData, _dataProvider.GameModel);
 
             _factoryMonitorFactory = new FactoryMonitorFactory(RandomGenerator.Instance);
         }

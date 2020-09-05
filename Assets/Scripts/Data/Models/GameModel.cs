@@ -206,5 +206,16 @@ namespace BattleCruisers.Data.Models
                 NewBuildings,
                 NewUnits);
         }
+
+        // FELIX  Update tests :)
+        public bool IsUnitUnlocked(UnitKey unitKey)
+        {
+            return UnlockedUnits.Contains(unitKey);
+        }
+
+        public bool IsBuildingUnlocked(BuildingKey buildingKey)
+        {
+            return UnlockedBuildings.Contains(buildingKey);
+        }
     }
 }

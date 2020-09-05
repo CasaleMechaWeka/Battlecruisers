@@ -8,12 +8,13 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
+using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
     public class FactoryManagerFactory : IFactoryManagerFactory
     {
-        private readonly IStaticData _staticData;
+        private readonly IGameModel _gameModel;
         private readonly IPrefabFactory _prefabFactory;
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
 
@@ -21,18 +22,18 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly static UnitKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
         private readonly static UnitKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
 
-		public FactoryManagerFactory(IStaticData staticData, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
+		public FactoryManagerFactory(IGameModel gameModel, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(staticData, prefabFactory, threatMonitorFactory);
+            Helper.AssertIsNotNull(gameModel, prefabFactory, threatMonitorFactory);
 
-            _staticData = staticData;
+            _gameModel = gameModel;
             _prefabFactory = prefabFactory;
             _threatMonitorFactory = threatMonitorFactory;
         }
 
         public IFactoryManager CreateNavalFactoryManager(ILevelInfo levelInfo)
         {
-            IList<UnitKey> availableShipKeys = _staticData.GetAvailableUnits(UnitCategory.Naval, levelInfo.LevelNum);
+            IList<UnitKey> availableShipKeys = _gameModel.GetUnlockedUnits(UnitCategory.Naval);
             IList<IBuildableWrapper<IUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
@@ -48,16 +49,16 @@ namespace BattleCruisers.AI.FactoryManagers
 
         public IFactoryManager CreateAirfactoryManager(ILevelInfo levelInfo)
         {
-            Assert.IsTrue(_staticData.IsUnitAvailable(DEFAULT_PLANE_KEY, levelInfo.LevelNum),"Default plane should always be available.");
+            Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY),"Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
 
             IBuildableWrapper<IUnit> antiAirPlane =
-                _staticData.IsUnitAvailable(ANTI_AIR_PLANE_KEY, levelInfo.LevelNum) ?
+                _gameModel.IsUnitUnlocked(ANTI_AIR_PLANE_KEY) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
                 defaultPlane;
 
             IBuildableWrapper<IUnit> antiNavalPlane =
-                _staticData.IsUnitAvailable(ANTI_NAVAL_PLANE_KEY, levelInfo.LevelNum) ?
+                _gameModel.IsUnitUnlocked(ANTI_NAVAL_PLANE_KEY) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 

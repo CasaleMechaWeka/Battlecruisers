@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Data.Static;
@@ -16,17 +17,19 @@ namespace BattleCruisers.AI.BuildOrders
 	{
         private readonly ISlotAssigner _slotAssigner;
         private readonly IStaticData _staticData;
+        private readonly IGameModel _gameModel;
 		
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData)
+		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel)
 		{
-            Helper.AssertIsNotNull(slotAssigner, staticData);
+            Helper.AssertIsNotNull(slotAssigner, staticData, gameModel);
 
             _slotAssigner = slotAssigner;
             _staticData = staticData;
+            _gameModel = gameModel;
 		}
 
 		/// <summary>
@@ -155,9 +158,9 @@ namespace BattleCruisers.AI.BuildOrders
 					numOfSlotsToUse: numOfSlotsToUse);
 		}
 		
-        public bool IsAntiRocketBuildOrderAvailable(int levelNum)
+        public bool IsAntiRocketBuildOrderAvailable()
         {
-            return _staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.TeslaCoil, levelNum);
+            return _gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.TeslaCoil);
         }
 
         public IDynamicBuildOrder CreateAntiRocketBuildOrder()
@@ -165,9 +168,9 @@ namespace BattleCruisers.AI.BuildOrders
             return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.TeslaCoil, size: 1);
         }
 		
-		public bool IsAntiStealthBuildOrderAvailable(int levelNum)
+		public bool IsAntiStealthBuildOrderAvailable()
 		{
-            return _staticData.IsBuildingAvailable(StaticPrefabKeys.Buildings.SpySatelliteLauncher, levelNum);
+            return _gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.SpySatelliteLauncher);
 		}
 
         public IDynamicBuildOrder CreateAntiStealthBuildOrder()
