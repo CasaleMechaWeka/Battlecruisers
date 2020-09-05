@@ -19,7 +19,7 @@ namespace BattleCruisers.Cruisers.Helpers
 
         public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)
         {
-            if (!slotAccessor.IsSlotAvailable(buildingStarted.SlotSpecification))
+            if (!slotAccessor.IsSlotAvailableForPlayer(buildingStarted.SlotSpecification))
             {
                 _uiManager.HideCurrentlyShownMenu();
             }

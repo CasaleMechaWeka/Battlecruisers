@@ -7,6 +7,7 @@ namespace BattleCruisers.Cruisers.Slots
     public interface ISlotAccessor
     {
         bool IsSlotAvailable(ISlotSpecification slotSpecification);
+        bool IsSlotAvailableForPlayer(ISlotSpecification slotSpecification);
 
         /// <returns>
         /// If looking for anti-ship slots, only returns slot placed well for anti-ship
