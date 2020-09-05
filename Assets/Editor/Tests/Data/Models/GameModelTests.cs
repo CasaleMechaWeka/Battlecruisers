@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -142,5 +143,33 @@ namespace BattleCruisers.Tests.Data.Models
             Assert.AreSame(firstTime, _gameModel.CompletedLevels[0]);
         }
         #endregion AddCompletedLevel
-    }
+
+		[Test]
+		public void IsUnitUnlocked_False()
+        {
+			Assert.IsFalse(_gameModel.IsUnitUnlocked(StaticPrefabKeys.Units.ArchonBattleship));
+		}
+
+		[Test]
+		public void IsUnitUnlocked_True()
+		{
+			UnitKey unitKey = StaticPrefabKeys.Units.ArchonBattleship;
+			_gameModel.AddUnlockedUnit(unitKey);
+            Assert.IsTrue(_gameModel.IsUnitUnlocked(unitKey));
+		}
+
+		[Test]
+		public void IsBuildingUnlocked_False()
+		{
+			Assert.IsFalse(_gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.DeathstarLauncher));
+		}
+
+		[Test]
+		public void IsBuildingUnlocked_True()
+		{
+			BuildingKey buildingKey = StaticPrefabKeys.Buildings.DeathstarLauncher;
+			_gameModel.AddUnlockedBuilding(buildingKey);
+			Assert.IsTrue(_gameModel.IsBuildingUnlocked(buildingKey));
+		}
+	}
 }
