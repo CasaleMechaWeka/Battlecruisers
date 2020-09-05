@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions.Time;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
@@ -13,23 +14,25 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly IRange<float> _validOrthographicSizes;
         private readonly ISettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
-
-        public const float SCROLL_SCALE = 16;
+        private readonly float _scrollMultiplier;
 
         public ScrollCalculator(
             ICamera camera,
             ITime time,
             IRange<float> validOrthographicSizes,
             ISettingsManager settingsManager,
-            ILevelToMultiplierConverter scrollLevelConverter)
+            ILevelToMultiplierConverter scrollLevelConverter,
+            float scrollMultiplier)
         {
             Helper.AssertIsNotNull(camera, time, validOrthographicSizes, settingsManager, scrollLevelConverter);
+            Assert.IsTrue(scrollMultiplier > 0);
 
             _camera = camera;
             _time = time;
             _validOrthographicSizes = validOrthographicSizes;
             _settingsManager = settingsManager;
             _scrollLevelConverter = scrollLevelConverter;
+            _scrollMultiplier = scrollMultiplier;
         }
 
         public float FindScrollDelta(float swipeDeltaX)
@@ -43,7 +46,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
                 swipeDeltaX *
                 directionMultiplier *
                 orthographicProportion *
-                SCROLL_SCALE *
+                _scrollMultiplier *
                 _time.UnscaledDeltaTime *
                 _scrollLevelConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
         }

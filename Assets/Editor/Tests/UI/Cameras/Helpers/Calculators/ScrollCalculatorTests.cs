@@ -28,7 +28,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _settingsManager = Substitute.For<ISettingsManager>();
             _scrollConverter = Substitute.For<ILevelToMultiplierConverter>();
 
-            _calculator = new ScrollCalculator(_camera, _time, _validOrthographicSizes, _settingsManager, _scrollConverter);
+            float multiplier = 4;
+            _calculator = new ScrollCalculator(_camera, _time, _validOrthographicSizes, _settingsManager, _scrollConverter, multiplier);
 
             _camera.OrthographicSize.Returns(20);
             _time.UnscaledDeltaTime.Returns(0.1f);
@@ -40,7 +41,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _scrollDeltaMultiplier
                 = directionMultiplier *
                     orthographicProportion *
-                    ScrollCalculator.SCROLL_SCALE *
+                    multiplier *
                     _time.UnscaledDeltaTime *
                     _scrollConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
         }

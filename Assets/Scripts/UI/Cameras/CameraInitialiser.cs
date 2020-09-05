@@ -30,6 +30,9 @@ namespace BattleCruisers.UI.Cameras
         // "springy" effect, instead of a hard stop of the swipe doing nothing.
         private const float CAMERA_X_POSITION_BUFFER_IN_M = 2;
 
+        private const float TOUCH_SWIPE_MULTIPLIER = 16;
+        private const float MOUSE_SWIPE_MULTIPLIER = 64;
+
         public TogglableDragTracker dragTracker;
         public Camera mainCamera;
         public Skybox skybox;
@@ -189,9 +192,12 @@ namespace BattleCruisers.UI.Cameras
 
             IScrollRecogniser scrollRecogniser;
             ScrollLevelConverter scrollLevelConverter = new ScrollLevelConverter();
+            float swipeMultiplier = MOUSE_SWIPE_MULTIPLIER;
 
             if (hasTouch)
             {
+                swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
+
                 scrollRecogniser = new ScrollRecogniser();
 
                 targetProviders.Add(
@@ -238,7 +244,8 @@ namespace BattleCruisers.UI.Cameras
                         TimeBC.Instance,
                         settings.ValidOrthographicSizes,
                         settingsManager,
-                        scrollLevelConverter),
+                        scrollLevelConverter,
+                        swipeMultiplier),
                     zoomCalculator,
                     camera,
                     cameraCalculator,
