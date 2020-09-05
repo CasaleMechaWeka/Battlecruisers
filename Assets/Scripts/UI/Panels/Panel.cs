@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI
+namespace BattleCruisers.UI.Panels
 {
     public class Panel : MonoBehaviour, IPanel
     {

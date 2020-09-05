@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI;
+﻿using BattleCruisers.UI.Panels;
 using UnityEngine;
 using UnityEngine.Assertions;
 

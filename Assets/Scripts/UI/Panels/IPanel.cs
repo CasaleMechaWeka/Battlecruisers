@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI
+﻿namespace BattleCruisers.UI.Panels
 {
     public interface IPanel
     {

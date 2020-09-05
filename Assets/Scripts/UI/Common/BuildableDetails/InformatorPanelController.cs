@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;

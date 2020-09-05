@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.UI.Panels;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {

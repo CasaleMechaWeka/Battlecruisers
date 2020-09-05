@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
+﻿using BattleCruisers.UI.Panels;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public enum ItemType
     {

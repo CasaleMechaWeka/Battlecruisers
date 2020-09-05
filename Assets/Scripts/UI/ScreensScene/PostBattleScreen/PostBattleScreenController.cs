@@ -4,6 +4,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
