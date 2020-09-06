@@ -210,7 +210,14 @@ namespace BattleCruisers.Cruisers
 
         private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            return new AICruiserHelper(uiManager, cameraFocuser);
+            if (_applicationModel.IsTutorial)
+            {
+                return new TutorialAICruiserHelper(uiManager, cameraFocuser);
+            }
+            else
+            {
+                return new AICruiserHelper(uiManager, cameraFocuser);
+            }
         }
 
         private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
