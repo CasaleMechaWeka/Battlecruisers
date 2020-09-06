@@ -33,7 +33,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         protected override void DisableNavigation(IList<ITutorialStep> steps)
         {
-            base.EnableNavigation(steps);
+            base.DisableNavigation(steps);
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));
         }
     }
