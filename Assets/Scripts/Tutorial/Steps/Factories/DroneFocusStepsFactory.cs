@@ -83,6 +83,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     "First, another builder bay.",
                     waitForBuildingToComplete: false));
 
+            steps.Add(_slidingPanelWaitStepFactory.CreateSelectorHiddenWaitStep());
+
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Offence,

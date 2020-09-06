@@ -4,5 +4,6 @@
     {
         ITutorialStep CreateInformatorShownWaitStep();
         ITutorialStep CreateSelectorShownWaitStep();
+        ITutorialStep CreateSelectorHiddenWaitStep();
     }
 }
