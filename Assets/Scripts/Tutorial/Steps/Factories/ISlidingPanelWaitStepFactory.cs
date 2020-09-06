@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public interface ISlidingPanelShownWaitStepFactory
+    public interface ISlidingPanelWaitStepFactory
     {
         ITutorialStep CreateInformatorShownWaitStep();
         ITutorialStep CreateSelectorShownWaitStep();

@@ -21,7 +21,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
-        private readonly ISlidingPanelShownWaitStepFactory _slidingPanelShownWaitStepFactory;
+        private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
 
         public DroneFocusStepsFactory(
             ITutorialStepArgsFactory argsFactory, 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialProvider tutorialProvider, 
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider, 
             RightPanelComponents rightPanelComponents,
-            ISlidingPanelShownWaitStepFactory slidingPanelShownWaitStepFactory)
+            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 tutorialProvider,
                 lastPlayerIncompleteBuildingStartedProvider,
                 rightPanelComponents,
-                slidingPanelShownWaitStepFactory);
+                slidingPanelWaitStepFactory);
 
             _autoNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _tutorialProvider = tutorialProvider;
             _lastPlayerIncompleteBuildingStartedProvider = lastPlayerIncompleteBuildingStartedProvider;
             _rightPanelComponents = rightPanelComponents;
-            _slidingPanelShownWaitStepFactory = slidingPanelShownWaitStepFactory;
+            _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -109,7 +109,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
                     _lastPlayerIncompleteBuildingStartedProvider));
 
-            steps.Add(_slidingPanelShownWaitStepFactory.CreateInformatorShownWaitStep());
+            steps.Add(_slidingPanelWaitStepFactory.CreateInformatorShownWaitStep());
 
             // Explain drone focus buttons
             steps.Add(

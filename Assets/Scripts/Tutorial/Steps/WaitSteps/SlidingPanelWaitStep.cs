@@ -5,25 +5,29 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Tutorial.Steps.WaitSteps
 {
     /// <summary>
-    /// Completed when the sliding panel reaches the shown state.  Completes
-    /// instantly if the panel is already in the shown state.
+    /// Completed when the sliding panel reaches the desired state.  Completes
+    /// instantly if the panel is already in the desired state.
     /// </summary>
-    public class SlidingPanelShownWaitStep : TutorialStep
+    /// FELIX  Test :P
+    public class SlidingPanelWaitStep : TutorialStep
     {
         private readonly ISlidingPanel _slidingPanel;
+        private readonly PanelState _desiredState;
 
-        public SlidingPanelShownWaitStep(ITutorialStepArgs args, ISlidingPanel slidingPanel)
+        public SlidingPanelWaitStep(ITutorialStepArgs args, ISlidingPanel slidingPanel, PanelState desiredState)
             : base(args)
         {
             Assert.IsNotNull(slidingPanel);
+
             _slidingPanel = slidingPanel;
+            _desiredState = desiredState;
         }
 
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
 
-            if (_slidingPanel.State.Value == PanelState.Shown)
+            if (_slidingPanel.State.Value == _desiredState)
             {
                 OnCompleted();
             }
@@ -35,7 +39,7 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
 
         private void State_ValueChanged(object sender, EventArgs e)
         {
-            if (_slidingPanel.State.Value == PanelState.Shown)
+            if (_slidingPanel.State.Value == _desiredState)
             {
                 _slidingPanel.State.ValueChanged -= State_ValueChanged;
                 OnCompleted();

@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
-        private readonly ISlidingPanelShownWaitStepFactory _slidingPanelShownWaitStepFactory;
+        private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
 
         public ConstructBuildingStepsFactory(
             ITutorialStepArgsFactory argsFactory,
@@ -30,16 +30,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
-            ISlidingPanelShownWaitStepFactory slidingPanelShownWaitStepFactory)
+            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelShownWaitStepFactory);
+            Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelWaitStepFactory);
 
             _leftPanelComponents = leftPanelComponents;
             _tutorialProvider = tutorialProvider;
             _playerCruiser = playerCruiser;
             _lastPlayerIncompleteBuildingStartedProvider = lastPlayerIncompleteBuildingStartedProvider;
-            _slidingPanelShownWaitStepFactory = slidingPanelShownWaitStepFactory;
+            _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
         }
 
         public IList<ITutorialStep> CreateSteps(
@@ -58,7 +58,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialProvider.BuildingCategoryPermitter));
 
             // Wait for selector panel to slide out
-            constructionSteps.Add(_slidingPanelShownWaitStepFactory.CreateSelectorShownWaitStep());
+            constructionSteps.Add(_slidingPanelWaitStepFactory.CreateSelectorShownWaitStep());
 
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);

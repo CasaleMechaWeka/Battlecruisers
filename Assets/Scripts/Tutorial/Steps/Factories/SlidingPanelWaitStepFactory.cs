@@ -4,11 +4,11 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class SlidingPanelShownWaitStepFactory : TutorialFactoryBase, ISlidingPanelShownWaitStepFactory
+    public class SlidingPanelWaitStepFactory : TutorialFactoryBase, ISlidingPanelWaitStepFactory
     {
         private readonly ISlidingPanel _selector, _informator;
 
-        public SlidingPanelShownWaitStepFactory(
+        public SlidingPanelWaitStepFactory(
             ITutorialStepArgsFactory argsFactory,
             ISlidingPanel selector,
             ISlidingPanel informator)
@@ -23,17 +23,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public ITutorialStep CreateSelectorShownWaitStep()
         {
             return
-                new SlidingPanelShownWaitStep(
+                new SlidingPanelWaitStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _selector);
+                    _selector,
+                    desiredState: PanelState.Shown);
         }
 
         public ITutorialStep CreateInformatorShownWaitStep()
         {
             return
-                new SlidingPanelShownWaitStep(
+                new SlidingPanelWaitStep(
                     _argsFactory.CreateTutorialStepArgs(),
-                    _informator);
+                    _informator,
+                    desiredState: PanelState.Shown);
         }
     }
 }

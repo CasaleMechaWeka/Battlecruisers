@@ -59,8 +59,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             //// 4. Player cruiser widgets
             //steps.AddRange(_factoriesProvider.PlayerCruiserWidgetsStepsFactory.CreateSteps());
 
-            // 5. Construct drone station
-            steps.AddRange(_factoriesProvider.ConstructDroneStationStepsFactory.CreateSteps());
+            //// 5. Construct drone station
+            //steps.AddRange(_factoriesProvider.ConstructDroneStationStepsFactory.CreateSteps());
 
             //// 6. Enemy ship
             //steps.AddRange(_factoriesProvider.EnemyShipStepsFactory.CreateSteps());
