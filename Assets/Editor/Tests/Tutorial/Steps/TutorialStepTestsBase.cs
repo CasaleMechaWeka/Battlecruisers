@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             _highlightableProvider = Substitute.For<IItemProvider<IHighlightable>>();
             _highlightableProvider.FindItem().Returns(_highlightable);
 
-            _args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
+            _args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider, shouldUnhighlight: true);
 
             _completionCallback = () => _callbackCounter++;
             _callbackCounter = 0;

@@ -20,14 +20,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay = null,
-            IHighlightable highlightable = null)
+            IHighlightable highlightable = null,
+            bool shouldUnhighlight = true)
         {
-            return CreateTutorialStepArgs(textToDisplay, new StaticProvider<IHighlightable>(highlightable));
+            return 
+                CreateTutorialStepArgs(
+                    textToDisplay, 
+                    new StaticProvider<IHighlightable>(highlightable), 
+                    shouldUnhighlight);
         }
 
         public ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay,
-            IItemProvider<IHighlightable> highlightableProvider)
+            IItemProvider<IHighlightable> highlightableProvider,
+            bool shouldUnhighlight = true)
         {
             Assert.IsNotNull(highlightableProvider);
 
@@ -36,7 +42,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     _highlighter,
                     textToDisplay,
                     _displayer,
-                    highlightableProvider);
+                    highlightableProvider,
+                    shouldUnhighlight);
         }
     }
 }

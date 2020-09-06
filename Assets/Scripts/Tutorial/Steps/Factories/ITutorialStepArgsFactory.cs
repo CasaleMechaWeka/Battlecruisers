@@ -7,10 +7,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay = null,
-            IHighlightable highlightable = null);
+            IHighlightable highlightable = null,
+            bool shouldUnhighlight = true);
 
         ITutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay,
-            IItemProvider<IHighlightable> highlightableProvider);
+            IItemProvider<IHighlightable> highlightableProvider,
+            bool shouldUnhighlight = true);
     }
 }

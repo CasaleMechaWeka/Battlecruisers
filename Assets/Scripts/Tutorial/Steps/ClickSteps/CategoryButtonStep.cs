@@ -11,8 +11,6 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly IBuildingCategoryPermitter _permitter;
         private readonly BuildingCategory _category;
 
-        protected override bool ShouldUnhighlight => false;
-
         public CategoryButtonStep(
             ITutorialStepArgs args, 
             IBuildingCategoryButton buildingCategoryButton,

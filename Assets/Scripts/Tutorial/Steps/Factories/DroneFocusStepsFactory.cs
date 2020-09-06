@@ -106,9 +106,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.Add(
                 new ExplanationClickStep(
-                    _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider),
-                    _lastPlayerIncompleteBuildingStartedProvider,
-                    shouldUnhighlight: false));
+                    _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
+                    _lastPlayerIncompleteBuildingStartedProvider));
 
             steps.Add(_slidingPanelShownWaitStepFactory.CreateInformatorShownWaitStep());
 

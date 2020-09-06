@@ -11,9 +11,8 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly string _textToDisplay;
         private readonly ITextDisplayer _displayer;
         private readonly IItemProvider<IHighlightable> _highlightableProvider;
+        private readonly bool _shouldUnhighlight;
         private Action _completionCallback;
-
-        protected virtual bool ShouldUnhighlight => true;
 
         protected TutorialStep(ITutorialStepArgs args)
         {
@@ -23,6 +22,7 @@ namespace BattleCruisers.Tutorial.Steps
             _textToDisplay = args.TextToDisplay;
             _displayer = args.Displayer;
             _highlightableProvider = args.HighlightableProvider;
+            _shouldUnhighlight = args.ShouldUnhighlight;
         }
 
         public virtual void Start(Action completionCallback)
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tutorial.Steps
         {
             Assert.IsNotNull(_completionCallback, "OnCompleted() should not be called before Start(), or more than once.");
 
-            if (ShouldUnhighlight)
+            if (_shouldUnhighlight)
             {
                 _highlighter.Unhighlight();
             }

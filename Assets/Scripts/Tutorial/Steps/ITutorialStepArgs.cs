@@ -9,5 +9,6 @@ namespace BattleCruisers.Tutorial.Steps
         string TextToDisplay { get; }
         ITextDisplayer Displayer { get; }
 		IItemProvider<IHighlightable> HighlightableProvider { get; }
+        bool ShouldUnhighlight { get; }
     }
 }

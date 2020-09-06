@@ -45,7 +45,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         public void Start_NullText_DoesNotDisplayText()
         {
             _textToDisplay = null;
-            ITutorialStepArgs args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider);
+            ITutorialStepArgs args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider, shouldUnhighlight: true);
             _tutorialStep = new DummyTutorialStep(args);
 
             _tutorialStep.Start(_completionCallback);

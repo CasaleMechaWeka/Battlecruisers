@@ -10,12 +10,14 @@ namespace BattleCruisers.Tutorial.Steps
         public string TextToDisplay { get; }
         public ITextDisplayer Displayer { get; }
 		public IItemProvider<IHighlightable> HighlightableProvider { get; }
+        public bool ShouldUnhighlight { get; }
 
         public TutorialStepArgs(
             IHighlighter highlighter,
             string textToDisplay,
             ITextDisplayer displayer,
-            IItemProvider<IHighlightable> highlightableProvider)
+            IItemProvider<IHighlightable> highlightableProvider,
+            bool shouldUnhighlight)
         {
             // textToDisplay may be null
             Helper.AssertIsNotNull(highlighter, displayer, highlightableProvider);
@@ -24,6 +26,7 @@ namespace BattleCruisers.Tutorial.Steps
             TextToDisplay = textToDisplay;
             Displayer = displayer;
             HighlightableProvider = highlightableProvider;
+            ShouldUnhighlight = shouldUnhighlight;
         }
     }
 }
