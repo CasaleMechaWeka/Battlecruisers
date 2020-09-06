@@ -57,6 +57,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialStepArgs buildingCategoryArgs = _argsFactory.CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton);
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialProvider.BuildingCategoryPermitter));
 
+            // Wait for selector panel to slide out
             constructionSteps.Add(_slidingPanelShownWaitStepFactory.CreateSelectorShownWaitStep());
 
             // Select building

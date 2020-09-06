@@ -62,11 +62,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // 5. Construct drone station
             steps.AddRange(_factoriesProvider.ConstructDroneStationStepsFactory.CreateSteps());
 
-            // 6. Enemy ship
-            steps.AddRange(_factoriesProvider.EnemyShipStepsFactory.CreateSteps());
+            //// 6. Enemy ship
+            //steps.AddRange(_factoriesProvider.EnemyShipStepsFactory.CreateSteps());
 
-            // 7. Enemy bomber
-            steps.AddRange(_factoriesProvider.EnemyBomberStepsFactory.CreateSteps());
+            //// 7. Enemy bomber
+            //steps.AddRange(_factoriesProvider.EnemyBomberStepsFactory.CreateSteps());
 
             // 8. Drone focus
             steps.AddRange(_factoriesProvider.DroneFocusStepsFactory.CreateSteps());

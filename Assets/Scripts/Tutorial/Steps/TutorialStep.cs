@@ -13,6 +13,8 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly IItemProvider<IHighlightable> _highlightableProvider;
         private Action _completionCallback;
 
+        protected virtual bool ShouldUnhighlight => true;
+
         protected TutorialStep(ITutorialStepArgs args)
         {
             Assert.IsNotNull(args);
@@ -45,7 +47,11 @@ namespace BattleCruisers.Tutorial.Steps
         {
             Assert.IsNotNull(_completionCallback, "OnCompleted() should not be called before Start(), or more than once.");
 
-            _highlighter.Unhighlight();
+            if (ShouldUnhighlight)
+            {
+                _highlighter.Unhighlight();
+            }
+            
             _completionCallback.Invoke();
             _completionCallback = null;
         }

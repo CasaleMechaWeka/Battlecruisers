@@ -10,17 +10,21 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly IItemProvider<IClickableEmitter> _clickableProvider;
         private IClickableEmitter _clickableEmitter;
 
+        private readonly bool _shouldUnhighlight;
+        protected override bool ShouldUnhighlight => _shouldUnhighlight;
+
         public ExplanationClickStep(ITutorialStepArgs args, IClickableEmitter clickable)
             : this(args, new StaticProvider<IClickableEmitter>(clickable))
         {
             // empty
         }
 
-        public ExplanationClickStep(ITutorialStepArgs args, IItemProvider<IClickableEmitter> clickableProvider)
+        public ExplanationClickStep(ITutorialStepArgs args, IItemProvider<IClickableEmitter> clickableProvider, bool shouldUnhighlight = true)
             : base(args)
         {
             Assert.IsNotNull(clickableProvider);
             _clickableProvider = clickableProvider;
+            _shouldUnhighlight = shouldUnhighlight;
         }
 
         public override void Start(Action completionCallback)
