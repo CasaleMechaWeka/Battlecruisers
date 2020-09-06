@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps;
 using NSubstitute;

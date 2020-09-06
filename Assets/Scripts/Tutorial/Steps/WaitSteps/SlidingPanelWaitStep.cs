@@ -8,7 +8,6 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// Completed when the sliding panel reaches the desired state.  Completes
     /// instantly if the panel is already in the desired state.
     /// </summary>
-    /// FELIX  Test :P
     public class SlidingPanelWaitStep : TutorialStep
     {
         private readonly ISlidingPanel _slidingPanel;
