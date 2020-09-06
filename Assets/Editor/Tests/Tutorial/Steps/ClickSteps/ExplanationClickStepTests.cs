@@ -13,7 +13,6 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         private IItemProvider<IClickableEmitter> _clickableProvider;
         private IClickableEmitter _clickable;
 
-        // FELIX  Update tests
         [SetUp]
         public override void SetuUp()
         {

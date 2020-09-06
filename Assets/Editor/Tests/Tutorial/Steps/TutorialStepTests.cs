@@ -6,7 +6,6 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
 {
-    // FELIX  Update tests
     public class DummyTutorialStep : TutorialStep
     {
         public DummyTutorialStep(ITutorialStepArgs args) : base(args)
@@ -99,6 +98,18 @@ namespace BattleCruisers.Tests.Tutorial.Steps
             _tutorialStep.Complete();
 
             Assert.Throws<UnityAsserts.AssertionException>(_tutorialStep.Complete);
+        }
+
+        [Test]
+        public void ShouldNotUnhighlight()
+        {
+            ITutorialStepArgs args = new TutorialStepArgs(_highlighter, _textToDisplay, _displayer, _highlightableProvider, shouldUnhighlight: false);
+            _tutorialStep = new DummyTutorialStep(args);
+            _tutorialStep.Start(_completionCallback);
+
+            _tutorialStep.Complete();
+
+            _highlighter.DidNotReceive().Unhighlight();
         }
         #endregion OnCompleted
     }
