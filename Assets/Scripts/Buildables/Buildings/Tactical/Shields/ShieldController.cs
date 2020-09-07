@@ -2,6 +2,9 @@
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
+using System.Threading.Tasks;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 	{
         private ISoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
+		private IDebouncer _takeDamageSoundDebouncer;
 
         public GameObject visuals;
         public CircleCollider2D circleCollider;
@@ -37,7 +41,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             Assert.IsNotNull(Stats);
 
             float diameter = 2 * Stats.ShieldRadiusInM;
-            _size = new Vector2(diameter, diameter); 
+            _size = new Vector2(diameter, diameter);
+
+			_takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
 		public void Initialise(Faction faction, ISoundPlayer soundPlayer)
@@ -96,8 +102,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		}
 
 		protected override void OnTakeDamage()
-		{
-			_timeSinceDamageInS = 0;
+        {
+            _timeSinceDamageInS = 0;
+            _takeDamageSoundDebouncer.Debounce(PlayDamagedSound);
+        }
+
+        private void PlayDamagedSound()
+        {
             _soundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
         }
 
