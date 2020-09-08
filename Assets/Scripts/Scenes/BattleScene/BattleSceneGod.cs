@@ -164,7 +164,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.UISoundPlayer,
-                    playerCruiser.PopulationLimitMonitor);
+                    playerCruiser.PopulationLimitMonitor,
+                    dataProvider.StaticData);
 
             RightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.
