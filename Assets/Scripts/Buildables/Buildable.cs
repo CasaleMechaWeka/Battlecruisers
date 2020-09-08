@@ -215,11 +215,6 @@ namespace BattleCruisers.Buildables
 
             Assert.IsNotNull(deathSound);
             _deathSound = new AudioClipWrapper(deathSound);
-
-            // FELIX TEMP
-            string n = name;
-            Debug.Log($"name: {name}");
-            Debug.Log($"parent name: {parent.name}");
         }
 
         protected void AddDamageStats(IDamageCapability statsToAdd)
