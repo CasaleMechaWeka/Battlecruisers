@@ -12,6 +12,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
         {
             foreach (ExplosionController cruiserDeath in cruiserDeathExplosions)
             {
+                if (!cruiserDeath.isActiveAndEnabled)
+                {
+                    continue;
+                }
+
                 IExplosion explosion = cruiserDeath.Initialise();
                 explosion.Activate(cruiserDeath.Position);
             }
