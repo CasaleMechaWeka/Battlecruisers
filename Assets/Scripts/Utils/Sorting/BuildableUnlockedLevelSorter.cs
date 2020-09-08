@@ -3,7 +3,6 @@ using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Utils.Sorting
 {
-    // FELIX  Test, use
     public abstract class BuildableUnlockedLevelSorter
     {
         protected readonly IStaticData _staticData;

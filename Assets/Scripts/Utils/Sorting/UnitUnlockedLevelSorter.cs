@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace BattleCruisers.Utils.Sorting
 {
-    // FELIX  Test, use
     public class UnitUnlockedLevelSorter : BuildableUnlockedLevelSorter, IBuildableSorter<IUnit>
     {
         public UnitUnlockedLevelSorter(IStaticData staticData, IBuildableKeyFactory keyFactory)
