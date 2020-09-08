@@ -24,6 +24,9 @@ namespace BattleCruisers.Data.Static
         ILevelStrategies Strategies { get; }
 
         ILoot GetLevelLoot(int levelCompleted);
-	}
+        int LevelFirstAvailableIn(UnitKey unitKey);
+        int LevelFirstAvailableIn(BuildingKey buildingKey);
+
+    }
 }
 	

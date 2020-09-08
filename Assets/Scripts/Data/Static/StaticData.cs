@@ -361,5 +361,17 @@ namespace BattleCruisers.Data.Static
                     .Select(hullToLevel => hullToLevel.Key)
                     .ToList();
         }
+
+        public int LevelFirstAvailableIn(UnitKey unitKey)
+        {
+            Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
+            return _unitToUnlockedLevel[unitKey];
+        }
+
+        public int LevelFirstAvailableIn(BuildingKey buildingKey)
+        {
+            Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
+            return _buildingToUnlockedLevel[buildingKey];
+        }
     }
 }
