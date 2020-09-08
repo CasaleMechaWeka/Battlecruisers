@@ -25,6 +25,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override bool IsUltra => true;
         public override Vector2 Size => base.Size * 2;
 
+        public override Vector2 DroneAreaSize => base.Size;
+
+        public Vector2 droneAreaPositionAdjustment;
+        public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
+
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);

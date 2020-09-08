@@ -491,7 +491,7 @@ namespace BattleCruisers.Buildables
             DroneConsumer = _droneConsumerProvider.RequestDroneConsumer(numOfDrones);
             _droneFeedback
                 = showDroneFeedback ?
-                    _cruiserSpecificFactories.DroneFeedbackFactory.CreateFeedback(DroneConsumer, Position, Size) :
+                    _cruiserSpecificFactories.DroneFeedbackFactory.CreateFeedback(DroneConsumer, DroneAreaPosition, DroneAreaSize) :
                     _cruiserSpecificFactories.DroneFeedbackFactory.CreateDummyFeedback();
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 
