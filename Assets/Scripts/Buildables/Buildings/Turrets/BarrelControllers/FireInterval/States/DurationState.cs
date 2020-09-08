@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States
 {
-    // FELIX  Update tests
     public abstract class DurationState : State
     {
         private float _elapsedTimeInS;
