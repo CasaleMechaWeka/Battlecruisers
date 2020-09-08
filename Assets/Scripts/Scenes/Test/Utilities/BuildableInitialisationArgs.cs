@@ -22,6 +22,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
@@ -125,7 +126,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
                 targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
                 targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider),
-                targetFactories?.TargetProviderFactory ?? new TargetProviderFactory(CruiserSpecificFactories, targetFactoriesProvider));
+                targetFactories?.TargetProviderFactory ?? new TargetProviderFactory(CruiserSpecificFactories, targetFactoriesProvider),
+                new DroneFeedbackFactory(
+                    FactoryProvider.PoolProviders.DronePool,
+                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                    faction));
         }
 
         private IFactoryProvider CreateFactoryProvider(
@@ -197,7 +202,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetProcessorFactory targetProcessorFactory,
             ITargetTrackerFactory targetTrackerFactory,
             ITargetDetectorFactory targetDetectorFactory,
-            ITargetProviderFactory targetProviderFactory)
+            ITargetProviderFactory targetProviderFactory,
+            IDroneFeedbackFactory droneFeedbackFactory)
         {
             cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
@@ -206,6 +212,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.Targets.TrackerFactory.Returns(targetTrackerFactory);
             cruiserSpecificFactories.Targets.DetectorFactory.Returns(targetDetectorFactory);
             cruiserSpecificFactories.Targets.ProviderFactory.Returns(targetProviderFactory);
+            cruiserSpecificFactories.DroneFeedbackFactory.Returns(droneFeedbackFactory);
         }
 
         private static IPoolProviders GetPoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager)
