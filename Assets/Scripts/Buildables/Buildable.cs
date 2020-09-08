@@ -80,6 +80,7 @@ namespace BattleCruisers.Buildables
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
         public ICruiser ParentCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
+        public string PrefabName => _parent.name;
 
         private HealthBarController _healthBar;
         public IHealthBar HealthBar => _healthBar;
@@ -214,6 +215,11 @@ namespace BattleCruisers.Buildables
 
             Assert.IsNotNull(deathSound);
             _deathSound = new AudioClipWrapper(deathSound);
+
+            // FELIX TEMP
+            string n = name;
+            Debug.Log($"name: {name}");
+            Debug.Log($"parent name: {parent.name}");
         }
 
         protected void AddDamageStats(IDamageCapability statsToAdd)
