@@ -10,7 +10,6 @@ namespace BattleCruisers.Utils.Sorting
     /// 2. [Cost part 2]  Build time in seconds
     /// 3. Name
     /// </summary>
-    /// FELIX  Sort by when is unlocked instead :)
     public class CostAndNameSorter<TBuildable> : IBuildableSorter<TBuildable> 
         where TBuildable : class, IBuildable
     {
