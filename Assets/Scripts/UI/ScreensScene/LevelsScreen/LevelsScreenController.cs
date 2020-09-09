@@ -18,6 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private ICommand _nextSetCommand, _previousSetCommand;
 
         public ButtonController nextSetButton, previousSetButton;
+        public ActionButton cancelButton;
 
         private IGameObject VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
@@ -49,6 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(levels, difficultySpritesProvider);
+            Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
 
             await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider);
 
@@ -62,9 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Assert.IsNotNull(navigationFeedbackButtonsPanel);
             navigationFeedbackButtonsPanel.Initialise(this);
 
-            HomeButtonController homeButton = GetComponentInChildren<HomeButtonController>();
-            Assert.IsNotNull(homeButton);
-            homeButton.Initialise(_soundPlayer, screensSceneGod, this);
+            cancelButton.Initialise(_soundPlayer, GoHome);
 
             ShowLastPlayedLevelSet(_levelSets, lastPlayedLevelNum);
         }
@@ -129,7 +129,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             return VisibleSetIndex > 0;
         }
 
-        public void GoHome()
+        private void GoHome()
         {
             _screensSceneGod.GoToHomeScreen();
         }
