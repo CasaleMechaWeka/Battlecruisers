@@ -202,5 +202,13 @@ namespace BattleCruisers.Scenes
         {
             loadoutScreen.DisposeManagedState();
         }
+
+        void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                _currentScreen?.Cancel();
+            }
+        }
     }
 }
