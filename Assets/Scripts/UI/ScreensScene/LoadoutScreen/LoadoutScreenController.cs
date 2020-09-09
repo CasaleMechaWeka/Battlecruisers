@@ -110,7 +110,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemDetailsManager.ShowDetails(playerCruiser);
         }
 
-        public void Cancel()
+        public override void Cancel()
         {
             _dataProvider.SaveGame();
             _comparingFamilyTracker.SetComparingFamily(null);

@@ -18,5 +18,7 @@ namespace BattleCruisers.UI.ScreensScene
             Assert.IsNotNull(screensSceneGod);
 			_screensSceneGod = screensSceneGod;
 		}
+
+		public virtual void Cancel() { }
 	}
 }

@@ -62,7 +62,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     showInGameHintsToggle.IsChecked,
                     this);
 
-            cancelButton.Initialise(_soundPlayer, screensSceneGod, this);
+            cancelButton.Initialise(_soundPlayer, this);
 		}
-	}
+
+        public override void Cancel()
+        {
+            _screensSceneGod.GoToHomeScreen();
+        }
+    }
 }

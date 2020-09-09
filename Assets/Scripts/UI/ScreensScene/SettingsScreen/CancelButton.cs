@@ -1,25 +1,24 @@
-﻿using BattleCruisers.Scenes;
-using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class CancelButton : TextButton
     {
-        private IScreensSceneGod _screensSceneGod;
+        private ScreenController _settingsScreen;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDismissableEmitter parent)
+        public void Initialise(ISingleSoundPlayer soundPlayer, ScreenController settingsScreen)
         {
-            base.Initialise(soundPlayer, parent);
+            base.Initialise(soundPlayer, settingsScreen);
 
-            Assert.IsNotNull(screensSceneGod);
-            _screensSceneGod = screensSceneGod;
+            Assert.IsNotNull(settingsScreen);
+            _settingsScreen = settingsScreen;
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
-            _screensSceneGod.GoToHomeScreen();
+            _settingsScreen.Cancel();
         }
     }
 }

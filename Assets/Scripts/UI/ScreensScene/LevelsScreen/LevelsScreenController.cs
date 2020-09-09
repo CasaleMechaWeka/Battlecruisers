@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Assert.IsNotNull(navigationFeedbackButtonsPanel);
             navigationFeedbackButtonsPanel.Initialise(this);
 
-            cancelButton.Initialise(_soundPlayer, GoHome);
+            cancelButton.Initialise(_soundPlayer, Cancel);
 
             ShowLastPlayedLevelSet(_levelSets, lastPlayedLevelNum);
         }
@@ -129,9 +129,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             return VisibleSetIndex > 0;
         }
 
-        private void GoHome()
+        public override void Cancel()
         {
             _screensSceneGod.GoToHomeScreen();
         }
-	}
+    }
 }
