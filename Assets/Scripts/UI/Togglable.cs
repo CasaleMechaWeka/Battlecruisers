@@ -35,8 +35,14 @@ namespace BattleCruisers.UI
                     enabled = value;
                 }
 
-                float alpha = value ? Alpha.ENABLED : Alpha.DISABLED;
-                SetAlpha(alpha);
+                if (value)
+                {
+                    ShowEnabledState();
+                }
+                else
+                {
+                    ShowDisabledState();
+                }
 
                 if (ToggleVisibility)
                 {
@@ -45,6 +51,16 @@ namespace BattleCruisers.UI
 
                 EnabledChange?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        protected virtual void ShowEnabledState()
+        {
+            SetAlpha(Alpha.ENABLED);
+        }
+
+        protected virtual void ShowDisabledState()
+        {
+            SetAlpha(Alpha.DISABLED);
         }
 
         protected void SetAlpha(float alpha)

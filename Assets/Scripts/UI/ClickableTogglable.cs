@@ -33,7 +33,7 @@ namespace BattleCruisers.UI
 
             if (Enabled && ShowPressedFeedback)
             {
-                SetAlpha(Alpha.PRESSED);
+                ShowClickedState();
             }
         }
 
@@ -47,11 +47,11 @@ namespace BattleCruisers.UI
             {
                 if (_isHover)
                 {
-                    SetAlpha(Alpha.HOVER);
+                    ShowHoverState();
                 }
                 else
                 {
-                    SetAlpha(Alpha.ENABLED);
+                    ShowEnabledState();
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace BattleCruisers.UI
                 && ShowHoverFeedback
                 && !_isPressed)
             {
-                SetAlpha(Alpha.HOVER);
+                ShowHoverState();
             }
         }
 
@@ -80,8 +80,18 @@ namespace BattleCruisers.UI
                 && ShowHoverFeedback
                 && !_isPressed)
             {
-                SetAlpha(Alpha.ENABLED);
+                ShowEnabledState();
             }
+        }
+
+        protected virtual void ShowClickedState()
+        {
+            SetAlpha(Alpha.PRESSED);
+        }
+
+        protected virtual void ShowHoverState()
+        {
+            SetAlpha(Alpha.HOVER);
         }
 
         protected void Reset()
