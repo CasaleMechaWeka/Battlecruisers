@@ -18,6 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public Image captainImage, backgroundImage, targeter;
         public int enabledCaptainImageWidth = 300;
         public int disabledCaptainImageWidth = 150;
+        public Sprite defaultBackground, clickedBackground;
+        public Color battlecruisersRed;
 
         public async Task InitialiseAsync(
             ISingleSoundPlayer soundPlayer,
@@ -29,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(level, screensSceneGod, difficultySpritesProvider);
-            Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter);
+            Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
 
             _level = level;
             _screensSceneGod = screensSceneGod;
@@ -47,17 +49,42 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _screensSceneGod.LoadLevel(_level.Num);
         }
 
-        protected override void ShowEnabledState()
-        {
-            captainImage.rectTransform.sizeDelta = new Vector2(enabledCaptainImageWidth, enabledCaptainImageWidth);
-            SetEnabledState(isEnabled: true);
-            captainImage.color = Color.black;
-        }
-
         protected override void ShowDisabledState()
         {
             captainImage.rectTransform.sizeDelta = new Vector2(disabledCaptainImageWidth, disabledCaptainImageWidth);
             SetEnabledState(isEnabled: false);
+        }
+
+        protected override void ShowEnabledState()
+        {
+            captainImage.rectTransform.sizeDelta = new Vector2(enabledCaptainImageWidth, enabledCaptainImageWidth);
+            SetEnabledState(isEnabled: true);
+
+            backgroundImage.sprite = defaultBackground;
+            
+            captainImage.color = Color.black;
+            levelNumberText.color = Color.white;
+            levelNameText.color = Color.white;
+            levelStatsController.SetColour(Color.white);
+        }
+
+        protected override void ShowClickedState()
+        {
+            captainImage.rectTransform.sizeDelta = new Vector2(enabledCaptainImageWidth, enabledCaptainImageWidth);
+            SetEnabledState(isEnabled: true);
+            
+            backgroundImage.sprite = clickedBackground;
+
+            captainImage.color = battlecruisersRed;
+            levelNumberText.color = battlecruisersRed;
+            levelNameText.color = battlecruisersRed;
+            levelStatsController.SetColour(battlecruisersRed);
+        }
+
+        protected override void ShowHoverState()
+        {
+            ShowEnabledState();
+            captainImage.color = Color.white;
         }
 
         private void SetEnabledState(bool isEnabled)
@@ -67,16 +94,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             levelStatsController.enabled = isEnabled;
             backgroundImage.enabled = isEnabled;
             targeter.enabled = isEnabled;
-        }
-
-        protected override void ShowClickedState()
-        {
-            captainImage.color = Color.white;
-        }
-
-        protected override void ShowHoverState()
-        {
-            ShowClickedState();
         }
     }
 }

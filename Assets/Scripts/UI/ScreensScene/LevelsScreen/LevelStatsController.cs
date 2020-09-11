@@ -26,5 +26,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             ISpriteWrapper difficultySprite = await difficultySpritesProvider.GetSpriteAsync((Difficulty)levelCompletedDifficulty);
             difficultyCompletedImage.sprite = difficultySprite.Sprite;
         }
+
+        public void SetColour(Color color)
+        {
+            difficultyCompletedImage.color = color;
+        }
     }
 }
