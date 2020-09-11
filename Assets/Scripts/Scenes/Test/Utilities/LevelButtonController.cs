@@ -1,25 +1,35 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Data;
+using UnityEngine.UI;
+using BCUtils = BattleCruisers.Utils;
 
-namespace Assets.Scripts.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class LevelButtonController : MonoBehaviour
     {
+        private ISkySetter _skySetter;
+        private ISkyStats _levelSkyStats;
+
         public Text levelNumText;
 
-        public void Initialise(int levelNum, SkyStatsGroup skyStatsGroup, IStaticData staticData)
+        public void Initialise(int levelNum, SkyStatsGroup skyStats, ISkySetter skySetter, IStaticData staticData)
         {
             Assert.IsNotNull(levelNumText);
+            BCUtils.Helper.AssertIsNotNull(skyStats, skySetter, staticData);
 
+            _skySetter = skySetter;
             levelNumText.text = levelNum.ToString();
 
             ILevel level = staticData.Levels[levelNum - 1];
-            // FELIX  TODO :)
+            _levelSkyStats = skyStats.GetSkyStats(level.SkyMaterialName);
+        }
+
+        public void ChangeSky()
+        {
+            _skySetter.SetSky(_levelSkyStats);
         }
     }
 }
