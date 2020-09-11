@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI.BattlScene.Clouds.Stats
+namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageStats : MonoBehaviour, IBackgroundImageStats
     {
@@ -33,28 +33,5 @@ namespace BattleCruisers.UI.BattlScene.Clouds.Stats
 
         public int orderInLayer;
         public int OrderInLayer => orderInLayer;
-
-        // FELIX  Move :P
-        void Start()
-        {
-            if (sprite == null)
-            {
-                return;
-            }
-
-            RectTransform t = null;
-
-            t.position = position;
-            t.localScale = new Vector3(scale.x, scale.y, 1);
-            t.rotation = Quaternion.Euler(0, 0, zRotation);
-
-            SpriteRenderer s = null;
-
-            s.sprite = sprite;
-            s.color = colour;
-            s.flipX = flipX;
-            s.flipY = flipY;
-            s.sortingOrder = orderInLayer;
-        }
     }
 }

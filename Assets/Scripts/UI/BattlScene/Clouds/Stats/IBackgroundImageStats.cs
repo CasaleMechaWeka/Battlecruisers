@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCruisers.UI.BattlScene.Clouds.Stats
+namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public interface IBackgroundImageStats
     {
