@@ -21,13 +21,6 @@ namespace BattleCruisers.Buildables.Units
         public UnitCategory category;
 		public Rigidbody2D rigidBody;
 
-        /// <summary>
-        /// For most buildables the in game sprite is used on buttons.  However for some planes
-        /// that have multiple sprites (eg: bomber), can use a nicer sprite designed for the UI.
-        /// </summary>
-        public Sprite uiFriendlySprite;
-        public override Sprite Sprite => uiFriendlySprite != null ? uiFriendlySprite : base.Sprite;
-
         #region Properties
         public IDroneConsumerProvider DroneConsumerProvider	{ set { _droneConsumerProvider = value;	} }
 		public UnitCategory Category => category;

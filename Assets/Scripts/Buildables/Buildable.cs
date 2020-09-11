@@ -175,7 +175,14 @@ namespace BattleCruisers.Buildables
         }
 
         #region IComparableItem
-        public virtual Sprite Sprite => _buildableProgress.FillableImage.sprite;
+        /// <summary>
+        /// Allow different sprites to be used for the UI, so:
+        /// + Can user higher res sprites
+        /// + Can chooser nicer sprites for planes, which have multiple sprites
+        /// </summary>
+        public Sprite uiFriendlySprite;
+        public Sprite Sprite => uiFriendlySprite != null ? uiFriendlySprite : _buildableProgress.FillableImage.sprite;
+
         string IComparableItem.Description => description;
         string IComparableItem.Name => buildableName;
         #endregion IComparableItem
