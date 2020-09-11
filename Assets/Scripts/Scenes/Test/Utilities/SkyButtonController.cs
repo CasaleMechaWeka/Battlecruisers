@@ -8,6 +8,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
+    // FELIX  Move sky test related classes to own namespace :)
     public class SkyButtonController : MonoBehaviour
     {
         private Skybox _skybox;
