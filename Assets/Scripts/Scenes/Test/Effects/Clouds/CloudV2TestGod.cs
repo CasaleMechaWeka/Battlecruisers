@@ -16,12 +16,14 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         public SkyStatsGroup skyStatsGroup;
         public SkyButtonGroup skyButtonGroup;
         public LevelButtonList levelButtonList;
+        public BackgroundStatsList backgroundStatsList;
 
         public Skybox skybox;
         public List<CloudController> clouds;
         public MistController mist;
         public MoonController moon;
         public FogController fog;
+        public BackgroundImageController backgroundImage;
 
         [Header("Peter can change these :D")]
         [Range(1, 25)]
@@ -30,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         protected override void Setup(Helper helper)
         {
             base.Setup(helper);
-            BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skyButtonGroup, levelButtonList, skybox, clouds, mist, moon, fog);
+            BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skyButtonGroup, levelButtonList, backgroundStatsList, skybox, clouds, mist, moon, fog, backgroundImage);
 
             IList<ICloud> cloudList
                 = clouds
@@ -52,8 +54,10 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             Assert.IsNotNull(cloudInitialiser);
             cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater);
 
+            backgroundStatsList.Initialise();
+
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
-            levelButtonList.Initialise(skyStatsGroup, skySetter, staticData, startingLevelNum);
+            levelButtonList.Initialise(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData, startingLevelNum);
         }
     }
 }

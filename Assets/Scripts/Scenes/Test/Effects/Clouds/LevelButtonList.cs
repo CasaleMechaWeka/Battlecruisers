@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,9 +11,15 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
     {
         private const int NUM_OF_LEVELS = 25;
 
-        public void Initialise(SkyStatsGroup skyStats, ISkySetter skySetter, IStaticData staticData, int startingLevelNum)
+        public void Initialise(
+            SkyStatsGroup skyStatsGroup, 
+            ISkySetter skySetter, 
+            BackgroundStatsList backgroundStatsList, 
+            BackgroundImageController backgroundImage,
+            IStaticData staticData, 
+            int startingLevelNum)
         {
-            BCUtils.Helper.AssertIsNotNull(skyStats, skySetter, staticData);
+            BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData);
 
             LevelButtonController[] buttons = GetComponentsInChildren<LevelButtonController>();
             Assert.AreEqual(NUM_OF_LEVELS, buttons.Length);
@@ -20,8 +27,13 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             for (int i = 0; i < buttons.Length; ++i)
             {
                 int levelNum = i + 1;
+
+                ILevel level = staticData.Levels[levelNum - 1];
+                ISkyStats skyStats = skyStatsGroup.GetSkyStats(level.SkyMaterialName);
+                IBackgroundImageStats backgroundStats = backgroundStatsList.GetStats(levelNum);
+                
                 LevelButtonController button = buttons[i];
-                button.Initialise(levelNum, skyStats, skySetter, staticData);
+                button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage);
 
                 if (startingLevelNum == levelNum)
                 {

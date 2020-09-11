@@ -4,10 +4,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageStats : MonoBehaviour, IBackgroundImageStats
     {
-        [Range(1, 25)]
-        public int levelNum = 1;
-        public int LevelNum => levelNum;
-
         [Header("Transform")]
         public Vector3 position;
         public Vector3 Position => position;
