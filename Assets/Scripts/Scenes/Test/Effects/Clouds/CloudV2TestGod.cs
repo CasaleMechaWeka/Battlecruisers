@@ -23,6 +23,10 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         public MoonController moon;
         public FogController fog;
 
+        [Header("Peter can change these :D")]
+        [Range(1, 25)]
+        public int startingLevelNum = 1;
+
         protected override void Setup(Helper helper)
         {
             base.Setup(helper);
@@ -49,7 +53,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater);
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
-            levelButtonList.Initialise(skyStatsGroup, skySetter, staticData);
+            levelButtonList.Initialise(skyStatsGroup, skySetter, staticData, startingLevelNum);
         }
     }
 }

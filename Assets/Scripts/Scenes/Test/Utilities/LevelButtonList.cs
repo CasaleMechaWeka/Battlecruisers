@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         private const int NUM_OF_LEVELS = 25;
 
-        public void Initialise(SkyStatsGroup skyStats, ISkySetter skySetter, IStaticData staticData)
+        public void Initialise(SkyStatsGroup skyStats, ISkySetter skySetter, IStaticData staticData, int startingLevelNum)
         {
             BCUtils.Helper.AssertIsNotNull(skyStats, skySetter, staticData);
 
@@ -20,7 +20,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             for (int i = 0; i < buttons.Length; ++i)
             {
                 int levelNum = i + 1;
-                buttons[i].Initialise(levelNum, skyStats, skySetter, staticData);
+                LevelButtonController button = buttons[i];
+                button.Initialise(levelNum, skyStats, skySetter, staticData);
+
+                if (startingLevelNum == levelNum)
+                {
+                    button.ChangeSky();
+                }
             }
         }
     }
