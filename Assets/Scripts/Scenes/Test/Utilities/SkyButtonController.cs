@@ -1,6 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene.Clouds;
-using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using System.Collections.Generic;
+﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -11,48 +9,25 @@ namespace BattleCruisers.Scenes.Test.Utilities
     // FELIX  Move sky test related classes to own namespace :)
     public class SkyButtonController : MonoBehaviour
     {
-        private Skybox _skybox;
+        private ISkySetter _skySetter;
         private ISkyStats _skyStats;
-        private IList<ICloud> _clouds;
-        private MistController _mist;
-        private MoonController _moon;
-        private FogController _fog;
 
         public Text skyName;
 
-        public void Initialise(
-            Skybox skybox, 
-            ISkyStats skyStats, 
-            IList<ICloud> clouds, 
-            MistController mist,
-            MoonController moon,
-            FogController fog)
+        public void Initialise(ISkySetter skySetter, ISkyStats skyStats)
         {
-            BCUtils.Helper.AssertIsNotNull(skybox, skyStats, clouds, mist, moon, fog);
+            BCUtils.Helper.AssertIsNotNull(skySetter, skyStats);
             Assert.IsNotNull(skyName);
 
-            _skybox = skybox;
+            _skySetter = skySetter;
             _skyStats = skyStats;
-            _clouds = clouds;
-            _mist = mist;
-            _moon = moon;
-            _fog = fog;
 
             skyName.text = _skyStats.SkyMaterial.name;
         }
 
         public void SelectSky()
         {
-            _skybox.material = _skyStats.SkyMaterial;
-
-            foreach (ICloud cloud in _clouds)
-            {
-                cloud.Initialise(_skyStats);
-            }
-
-            _mist.Initialise(_skyStats);
-            _moon.Initialise(_skyStats.MoonStats);
-            _fog.Initialise(_skyStats.FogColour);
+            _skySetter.SetSky(_skyStats);
         }
     }
 }

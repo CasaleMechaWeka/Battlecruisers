@@ -6,15 +6,15 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
-    public class SkySetter : MonoBehaviour, ISkySetter
+    public class SkySetter : ISkySetter
     {
-        private Skybox _skybox;
-        private IList<ICloud> _clouds;
-        private MistController _mist;
-        private MoonController _moon;
-        private FogController _fog;
+        private readonly Skybox _skybox;
+        private readonly IList<ICloud> _clouds;
+        private readonly MistController _mist;
+        private readonly MoonController _moon;
+        private readonly FogController _fog;
 
-        public void Initialise(
+        public SkySetter(
             Skybox skybox,
             IList<ICloud> clouds,
             MistController mist,
