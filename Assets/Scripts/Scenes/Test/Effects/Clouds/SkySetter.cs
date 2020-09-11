@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class SkySetter : ISkySetter
     {

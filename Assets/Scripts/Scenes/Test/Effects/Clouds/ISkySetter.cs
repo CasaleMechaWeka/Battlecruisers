@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public interface ISkySetter
     {

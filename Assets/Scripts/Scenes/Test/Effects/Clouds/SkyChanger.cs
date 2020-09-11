@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class SkyChanger : MonoBehaviour
     {

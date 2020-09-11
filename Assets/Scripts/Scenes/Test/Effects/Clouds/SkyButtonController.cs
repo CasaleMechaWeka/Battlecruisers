@@ -4,9 +4,8 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
-    // FELIX  Move sky test related classes to own namespace :)
     public class SkyButtonController : MonoBehaviour
     {
         private ISkySetter _skySetter;

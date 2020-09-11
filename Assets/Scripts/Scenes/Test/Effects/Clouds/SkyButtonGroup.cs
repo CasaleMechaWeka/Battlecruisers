@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
 
-namespace BattleCruisers.Scenes.Test.Utilities
+namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class SkyButtonGroup : MonoBehaviour
     {
