@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using NSubstitute;
 

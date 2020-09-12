@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityEngine;

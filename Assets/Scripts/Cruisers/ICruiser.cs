@@ -10,7 +10,6 @@ using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
-using UnityEngine;
 
 namespace BattleCruisers.Cruisers
 {

@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;

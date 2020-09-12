@@ -7,7 +7,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails

@@ -27,10 +27,8 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
-using UnityEngine;
 using UnityEngine.Assertions;
 using BcUtils = BattleCruisers.Utils;
 

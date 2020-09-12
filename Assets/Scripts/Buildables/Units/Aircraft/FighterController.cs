@@ -10,7 +10,6 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

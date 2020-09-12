@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;

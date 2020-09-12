@@ -8,7 +8,6 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {

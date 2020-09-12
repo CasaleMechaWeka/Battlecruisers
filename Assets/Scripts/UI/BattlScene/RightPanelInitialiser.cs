@@ -2,7 +2,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
-using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.GameSpeed;

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.UI.Sound;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft

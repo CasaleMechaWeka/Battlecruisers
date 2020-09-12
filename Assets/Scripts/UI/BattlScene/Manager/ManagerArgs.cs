@@ -3,7 +3,6 @@ using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using System;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {

@@ -44,7 +44,6 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityCommon.PlatformAbstractions;
