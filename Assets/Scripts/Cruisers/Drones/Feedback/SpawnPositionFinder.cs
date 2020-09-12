@@ -35,10 +35,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     Mathf.Max(droneConsumerInfo.Position.y - yDeltaInM, _waterLine),
                     Mathf.Max(droneConsumerInfo.Position.y + yDeltaInM, _waterLine));
 
-            return 
-                new Vector2(
-                    _random.Range(xPositionRange),
-                    _random.Range(yPositionRange));
+            float xPosition = _random.Range(xPositionRange);
+            float yPosition = _random.Range(yPositionRange);
+
+            return new Vector2(xPosition, yPosition);
         }
     }
 }

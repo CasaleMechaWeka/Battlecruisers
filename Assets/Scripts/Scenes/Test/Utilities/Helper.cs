@@ -185,7 +185,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IAccuracyAdjusterFactory accuracyAdjusterFactory = null,
-            IUserChosenTargetManager userChosenTargetManager = null)
+            IUserChosenTargetManager userChosenTargetManager = null,
+            bool showDroneFeedback = false)
 		{
             BuildableInitialisationArgs args
                 = new BuildableInitialisationArgs(
@@ -207,7 +208,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
                     deferrer: _deferrer,
-                    updaterProvider: UpdaterProvider);
+                    updaterProvider: UpdaterProvider,
+                    showDroneFeedback: showDroneFeedback);
 
             InitialiseUnit(unit, args);
 		}

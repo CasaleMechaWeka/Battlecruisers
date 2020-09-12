@@ -73,7 +73,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer realTimeDeferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
             IUpdaterProvider updaterProvider = null,
-            ITurretStatsFactory turretStatsFactory = null)
+            ITurretStatsFactory turretStatsFactory = null,
+            bool showDroneFeedback = false)
         {
             Assert.IsNotNull(helper);
 
@@ -117,6 +118,16 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     updaterProvider,
                     UiManager);
 
+            IDroneFeedbackFactory droneFeedbackFactory = Substitute.For<IDroneFeedbackFactory>();
+            if (showDroneFeedback)
+            {
+                droneFeedbackFactory
+                    = new DroneFeedbackFactory(
+                        FactoryProvider.PoolProviders.DronePool,
+                        new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                        faction);
+            }
+
             CruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
             SetupCruiserSpecificFactories(
                 CruiserSpecificFactories,
@@ -127,10 +138,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
                 targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider),
                 targetFactories?.TargetProviderFactory ?? new TargetProviderFactory(CruiserSpecificFactories, targetFactoriesProvider),
-                new DroneFeedbackFactory(
-                    FactoryProvider.PoolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
-                    faction));
+                droneFeedbackFactory);
         }
 
         private IFactoryProvider CreateFactoryProvider(

@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.Test.Naval
                 Vector3 position = battleship.transform.position;
                 Faction faction = GetBattleshipFaction(position);
                 Direction direction = GetBattleshipDirection(position);
-                helper.InitialiseUnit(battleship, faction, parentCruiserDirection: direction);
+                helper.InitialiseUnit(battleship, faction, parentCruiserDirection: direction, showDroneFeedback: true);
                 battleship.StartConstruction();
 			}
         }

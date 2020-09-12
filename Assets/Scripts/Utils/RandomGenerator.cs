@@ -36,7 +36,7 @@ namespace BattleCruisers.Utils
 
         public float Range(float minInclusive, float maxInclusive)
         {
-            Assert.IsTrue(minInclusive < maxInclusive);
+            Assert.IsTrue(minInclusive < maxInclusive, $"{minInclusive} should be < than {maxInclusive}");
             return Random.Range(minInclusive, maxInclusive);
         }
 
