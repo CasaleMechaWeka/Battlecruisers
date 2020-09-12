@@ -174,7 +174,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             base.CleanUp();
 
             followingTargetProcessorWrapper.DisposeManagedState();
-            followingTargetProcessorWrapper = null;
 
             _followingTargetProcessor.DisposeManagedState();
             _followingTargetProcessor = null;
