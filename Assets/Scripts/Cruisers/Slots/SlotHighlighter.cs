@@ -49,7 +49,7 @@ namespace BattleCruisers.Cruisers.Slots
             Logging.LogMethod(Tags.SLOTS);
 
             if (_highlightedSlotSpec != null
-                && _highlightedSlotSpec.Equals(e.DestroyedBuilding.SlotSpecification))
+                && _highlightedSlotSpec.SlotType == e.DestroyedBuilding.SlotSpecification.SlotType)
             {
                 HighlightAvailableSlots(_highlightedSlotSpec);
             }

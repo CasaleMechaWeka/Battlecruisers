@@ -205,7 +205,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         }
 
         [Test]
-        public void BuildingDestroyed_AreHighlightingMatchingSlots_Rehighlights()
+        public void BuildingDestroyed_AreHighlightingMatchingSlotType_Rehighlights()
         {
             // Highlight slots
             _mutableSlotsToReturn2.Add(_slot2);
@@ -217,8 +217,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _slot2.Received().IsVisible = true;
 
             // Building destroyed
+            ISlotSpecification sameSlotType = new SlotSpecification(_slot2.Type, BuildingFunction.Shield, preferCruiserFront: false);
             _slot2.ClearReceivedCalls();
-            _building.SlotSpecification.Returns(_slotSpec2);
+            _building.SlotSpecification.Returns(sameSlotType);
             _parentCruiserBuildingMonitor.EmitBuildingDestroyed(_building);
 
             // Received highlight refresh
