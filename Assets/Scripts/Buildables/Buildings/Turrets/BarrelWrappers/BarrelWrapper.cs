@@ -28,6 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     public abstract class BarrelWrapper : MonoBehaviour, IBarrelWrapper
     {
         protected BarrelController[] _barrels;
+        private TargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
         protected IFactoryProvider _factoryProvider;
         protected ICruiserSpecificFactories _cruiserSpecificFactories;
@@ -151,9 +152,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                     _minRangeInM,
                     parent);
 
-            TargetProcessorWrapper targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
-            Assert.IsNotNull(targetProcessorWrapper);
-            _targetProcessor = targetProcessorWrapper.CreateTargetProcessor(args);
+            _targetProcessorWrapper = gameObject.GetComponentInChildren<TargetProcessorWrapper>();
+            Assert.IsNotNull(_targetProcessorWrapper);
+            _targetProcessor = _targetProcessorWrapper.CreateTargetProcessor(args);
             _targetProcessor.AddTargetConsumer(this);
         }
 
@@ -262,6 +263,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             Target = null;
 
             _targetProcessor?.DisposeManagedState();
+            _targetProcessorWrapper?.DisposeManagedState();
 
             foreach (BarrelController barrel in _barrels)
             {

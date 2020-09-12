@@ -141,7 +141,9 @@ namespace BattleCruisers.Utils
 			Dictionary<string, bool> tagsToActiveness = new Dictionary<string, bool>();
 
             // Units
-            tagsToActiveness.Add(Tags.AIRCRAFT, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.AIRCRAFT, true);
+            //tagsToActiveness.Add(Tags.AIRCRAFT, false);
             tagsToActiveness.Add(Tags.FIGHTER, false);
             tagsToActiveness.Add(Tags.SHIPS, false);
 

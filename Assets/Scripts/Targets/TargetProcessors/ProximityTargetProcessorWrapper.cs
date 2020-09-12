@@ -5,11 +5,12 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers;
+using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    public class ProximityTargetProcessorWrapper : TargetProcessorWrapper
+    public class ProximityTargetProcessorWrapper : TargetProcessorWrapper, IManagedDisposable
 	{
 		private ITargetFinder _targetFinder;
         private IRankedTargetTracker _targetTracker;
@@ -49,6 +50,15 @@ namespace BattleCruisers.Targets.TargetProcessors
 			// Create target finder
 			ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
 			return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+        }
+
+        public override void DisposeManagedState()
+        {
+            _targetFinder.DisposeManagedState();
+            _targetFinder = null;
+
+            _targetTracker.DisposeManagedState();
+            _targetTracker = null;
         }
     }
 }
