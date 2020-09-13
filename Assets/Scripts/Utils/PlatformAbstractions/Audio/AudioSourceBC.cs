@@ -25,6 +25,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
             get => _audioSource.volume;
             set => _audioSource.volume = value;
         }
+
         public Vector2 Position
         {
             get => _audioSource.transform.position;
