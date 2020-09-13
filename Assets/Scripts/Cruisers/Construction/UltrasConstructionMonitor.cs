@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Cruisers.Construction
 {
@@ -10,14 +11,19 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly ICruiserBuildingMonitor _cruiserBuildingMonitor;
         private readonly ICruiserUnitMonitor _cruiserUnitMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
+        private readonly IDebouncer _debouncer;
 
-        public UltrasConstructionMonitor(ICruiserController cruiser, IPrioritisedSoundPlayer soundPlayer)
+        public UltrasConstructionMonitor(
+            ICruiserController cruiser, 
+            IPrioritisedSoundPlayer soundPlayer,
+            IDebouncer debouncer)
         {
-            Helper.AssertIsNotNull(cruiser, soundPlayer);
+            Helper.AssertIsNotNull(cruiser, soundPlayer, debouncer);
 
             _cruiserBuildingMonitor = cruiser.BuildingMonitor;
             _cruiserUnitMonitor = cruiser.UnitMonitor;
             _soundPlayer = soundPlayer;
+            _debouncer = debouncer;
 
             _cruiserBuildingMonitor.BuildingStarted += _buildingMonitor_BuildingStarted;
             _cruiserUnitMonitor.UnitStarted += _unitMonitor_StartedBuildingUnit;
@@ -27,7 +33,7 @@ namespace BattleCruisers.Cruisers.Construction
         {
             if (e.StartedBuilding.Category == BuildingCategory.Ultra)
             {
-                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
+                _debouncer.Debounce(PlayAlert);
             }
         }
 
@@ -35,8 +41,13 @@ namespace BattleCruisers.Cruisers.Construction
         {
             if (e.StartedUnit.IsUltra)
             {
-                _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
+                _debouncer.Debounce(PlayAlert);
             }
+        }
+
+        private void PlayAlert()
+        {
+            _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.EnemyStartedUltra);
         }
 
         public void DisposeManagedState()
