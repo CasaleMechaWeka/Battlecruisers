@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen, lootAcquiredText;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
+        public ActionButton demoHomeButton;
 
         private const string VICTORY_TITLE = "Sweet as!";
 		private const string LOSS_TITLE = "Bad luck!";
@@ -56,7 +57,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 demoCompletedScreen,
                 levelName,
                 completedDifficultySymbol,
-                lootAcquiredText);
+                lootAcquiredText,
+                demoHomeButton);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
@@ -91,6 +93,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
 
+                
+                // FELIX  TEMP
+                demoCompletedScreen.SetActive(true);
+                demoHomeButton.Initialise(soundPlayer, GoToHomeScreen);
+                return;
+
+
                 if (BattleResult.WasVictory)
                 {
                     title.text = VICTORY_TITLE;
@@ -104,6 +113,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             && BattleResult.LevelNum == LockedInformation.NUM_OF_LEVELS_IN_DEMO)
                         {
                             demoCompletedScreen.SetActive(true);
+                            demoHomeButton.Initialise(soundPlayer, GoToHomeScreen);
                         }
                         else
                         {
@@ -211,5 +221,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             Application.OpenURL("https://store.steampowered.com/app/955870/Battlecruisers/");
         }
-	}
+
+        public override void Cancel()
+        {
+            GoToHomeScreen();
+        }
+    }
 }
