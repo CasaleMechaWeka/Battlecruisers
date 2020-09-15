@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             if (showDemoScreen)
             {
-                demoCompletedScreen.SetActive(true);
+                ShowDemoCompletionScreen(soundPlayer);
                 return;
             }
 
@@ -93,13 +93,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
 
-                
-                // FELIX  TEMP
-                demoCompletedScreen.SetActive(true);
-                demoHomeButton.Initialise(soundPlayer, GoToHomeScreen);
-                return;
-
-
                 if (BattleResult.WasVictory)
                 {
                     title.text = VICTORY_TITLE;
@@ -112,8 +105,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         if (_dataProvider.StaticData.IsDemo
                             && BattleResult.LevelNum == LockedInformation.NUM_OF_LEVELS_IN_DEMO)
                         {
-                            demoCompletedScreen.SetActive(true);
-                            demoHomeButton.Initialise(soundPlayer, GoToHomeScreen);
+                            ShowDemoCompletionScreen(soundPlayer);
                         }
                         else
                         {
@@ -177,6 +169,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Assert.IsNotNull(background);
             bool isVictory = _applicationModel.IsTutorial || BattleResult.WasVictory;
             background.Initalise(isVictory);
+        }
+
+        private void ShowDemoCompletionScreen(ISingleSoundPlayer soundPlayer)
+        {
+            demoCompletedScreen.SetActive(true);
+            demoHomeButton.Initialise(soundPlayer, GoToHomeScreen);
         }
 
 		public void Retry()
