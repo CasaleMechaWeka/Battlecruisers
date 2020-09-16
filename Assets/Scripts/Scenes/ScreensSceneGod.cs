@@ -44,6 +44,8 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private AudioSource _uiAudioSource;
 
+        public bool goToPostBattleScreen = false;
+
 		async void Start()
 		{
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, _uiAudioSource);
@@ -63,10 +65,13 @@ namespace BattleCruisers.Scenes
                     new AudioSourceBC(_uiAudioSource));
 
             // TEMP  For showing PostBattleScreen :)
-            //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
-            ////_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
-            //_applicationModel.ShowPostBattleScreen = true;
-            ////_applicationModel.IsTutorial = true;
+            if (goToPostBattleScreen)
+            {
+                _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
+                //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
+                _applicationModel.ShowPostBattleScreen = true;
+                //_applicationModel.IsTutorial = true;
+            }
 
 
             // TEMP  For when not coming from LandingScene :)
