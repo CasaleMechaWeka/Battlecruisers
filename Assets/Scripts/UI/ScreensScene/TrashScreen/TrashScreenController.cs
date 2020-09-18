@@ -14,9 +14,12 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashScreenController : ScreenController
     {
+        private int _levelNum;
+
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
         public Image sky, enemyCharacter;
+        public ActionButton startBattleButton;
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
@@ -32,9 +35,11 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter);
+            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton);
             Helper.AssertIsNotNull(trashTalkData, level, prefabFactory, playerCruiser, spriteFetcher);
 
+            _levelNum = level.Num;
+            startBattleButton.Initialise(soundPlayer, StartBattle);
             enemyCharacter.sprite = trashTalkData.EnemyImage;
             trashTalkBubbles.Initialise(trashTalkData);
 
@@ -48,6 +53,11 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ISpriteWrapper skySprite = await spriteFetcher.GetSpriteAsync(skyPath);
             sky.sprite = skySprite.Sprite;
 		}
+
+        private void StartBattle()
+        {
+            _screensSceneGod.LoadLevel(_levelNum);
+        }
 
         public override void Cancel()
         {
