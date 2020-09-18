@@ -7,6 +7,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
@@ -20,13 +21,13 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IScreensSceneGod screensSceneGod,
             ITrashTalkData trashTalkData,
             ILevel level,
-            IPrefabFetcher prefabFetcher,
+            IPrefabFactory prefabFactory,
             HullKey playerCruiser)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
             Assert.IsNotNull(trashTalkBubbles);
-            Helper.AssertIsNotNull(trashTalkData, level, prefabFetcher, playerCruiser);
+            Helper.AssertIsNotNull(trashTalkData, level, prefabFactory, playerCruiser);
 
             trashTalkBubbles.Initialise(trashTalkData);
 
