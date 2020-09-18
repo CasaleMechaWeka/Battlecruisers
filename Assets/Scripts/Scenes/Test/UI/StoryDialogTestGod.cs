@@ -15,13 +15,14 @@ namespace BattleCruisers.Scenes.Test.UI
 
         [Range(1, 25)]
         public int startingLevelNum = 2;
+        public PrefabKeyName playerCruiserKey;
 
         protected override void Setup(Utilities.Helper helper)
         {
             Helper.AssertIsNotNull(trashScreen, trashData, trashDataList, levelButtonsPanel);
 
             trashDataList.Initialise();
-            HullKey playerCruiser = StaticPrefabKeys.Hulls.Trident;
+            HullKey playerCruiser = StaticPrefabKeyHelper.GetPrefabKey<HullKey>(playerCruiserKey);
 
             levelButtonsPanel
                 .Initialise(
