@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
-    public class TrashTalkDataList : MonoBehaviour
+    public class TrashTalkDataList : MonoBehaviour, ITrashTalkDataList
     {
         private ITrashTalkData[] _trashDataList;
 
