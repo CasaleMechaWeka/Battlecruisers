@@ -13,6 +13,7 @@ namespace BattleCruisers.Scenes.Test.UI
         public TrashTalkDataList trashDataList;
         public LevelButtonsPanel levelButtonsPanel;
 
+        [Header("Peter can change these :D")]
         [Range(1, 25)]
         public int startingLevelNum = 2;
         public PrefabKeyName playerCruiserKey;
