@@ -30,7 +30,6 @@ namespace BattleCruisers.Scenes.Test.UI
             IList<ILevel> levels = ApplicationModelProvider.ApplicationModel.DataProvider.Levels;
             Assert.IsTrue(startingLevelNum <= levels.Count);
             ILevel level = levels[startingLevelNum - 1];
-            IPrefabFetcher prefabFetcher = new PrefabFetcher();
             HullKey playerCruiser = StaticPrefabKeys.Hulls.Eagle;
 
             trashScreen.Initialise(soundPlayer, screensSceneGod, trashData, level, helper.PrefabFactory, playerCruiser);
