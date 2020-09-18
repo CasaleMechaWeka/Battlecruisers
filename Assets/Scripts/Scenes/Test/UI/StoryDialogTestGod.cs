@@ -4,9 +4,10 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using NSubstitute;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,12 +18,10 @@ namespace BattleCruisers.Scenes.Test.UI
         public TrashScreenController trashScreen;
         public TrashTalkData trashData;
         [Range(1, 25)]
-        public int startingLevelNum = 1;
+        public int startingLevelNum = 2;
 
-        protected override void Setup(Utilities.Helper helper)
+        protected async override Task SetupAsync(Utilities.Helper helper)
         {
-            base.Setup(helper);
-
             Helper.AssertIsNotNull(trashScreen, trashData);
 
             ISingleSoundPlayer soundPlayer = Substitute.For<ISingleSoundPlayer>();
@@ -31,8 +30,9 @@ namespace BattleCruisers.Scenes.Test.UI
             Assert.IsTrue(startingLevelNum <= levels.Count);
             ILevel level = levels[startingLevelNum - 1];
             HullKey playerCruiser = StaticPrefabKeys.Hulls.Eagle;
+            ISpriteFetcher spriteFetcher = new SpriteFetcher();
 
-            trashScreen.Initialise(soundPlayer, screensSceneGod, trashData, level, helper.PrefabFactory, playerCruiser);
+            await trashScreen.InitialiseAsync(soundPlayer, screensSceneGod, trashData, level, helper.PrefabFactory, playerCruiser, spriteFetcher);
         }
     }
 }
