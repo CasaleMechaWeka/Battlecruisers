@@ -17,12 +17,13 @@ namespace BattleCruisers.Scenes.Test.UI
     {
         public TrashScreenController trashScreen;
         public TrashTalkData trashData;
+        public TrashTalkDataList trashDataList;
         [Range(1, 25)]
         public int startingLevelNum = 2;
 
         protected async override Task SetupAsync(Utilities.Helper helper)
         {
-            Helper.AssertIsNotNull(trashScreen, trashData);
+            Helper.AssertIsNotNull(trashScreen, trashData, trashDataList);
 
             ISingleSoundPlayer soundPlayer = Substitute.For<ISingleSoundPlayer>();
             IScreensSceneGod screensSceneGod = Substitute.For<IScreensSceneGod>();
@@ -34,7 +35,7 @@ namespace BattleCruisers.Scenes.Test.UI
 
             await trashScreen.InitialiseAsync(soundPlayer, screensSceneGod, trashData, level, helper.PrefabFactory, playerCruiser, spriteFetcher);
 
-            // FELIX  NEXT  Initialise TrashTalkDataList :)
+            trashDataList.Initialise();
         }
     }
 }
