@@ -9,7 +9,6 @@ namespace BattleCruisers.Scenes.Test.UI
     public class StoryDialogTestGod : TestGodBase
     {
         public TrashScreenController trashScreen;
-        public TrashTalkData trashData;
         public TrashTalkDataList trashDataList;
         public LevelButtonsPanel levelButtonsPanel;
 
@@ -20,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.UI
 
         protected override void Setup(Utilities.Helper helper)
         {
-            Helper.AssertIsNotNull(trashScreen, trashData, trashDataList, levelButtonsPanel);
+            Helper.AssertIsNotNull(trashScreen, trashDataList, levelButtonsPanel);
 
             trashDataList.Initialise();
             HullKey playerCruiser = StaticPrefabKeyHelper.GetPrefabKey<HullKey>(playerCruiserKey);
