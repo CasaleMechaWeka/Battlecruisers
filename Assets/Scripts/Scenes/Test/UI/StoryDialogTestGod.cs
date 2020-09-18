@@ -33,6 +33,8 @@ namespace BattleCruisers.Scenes.Test.UI
             ISpriteFetcher spriteFetcher = new SpriteFetcher();
 
             await trashScreen.InitialiseAsync(soundPlayer, screensSceneGod, trashData, level, helper.PrefabFactory, playerCruiser, spriteFetcher);
+
+            // FELIX  NEXT  Initialise TrashTalkDataList :)
         }
     }
 }

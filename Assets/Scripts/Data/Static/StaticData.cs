@@ -18,6 +18,8 @@ namespace BattleCruisers.Data.Static
         private readonly IList<UnitKey> _allUnits;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
+        // FELIX  Replace all duplicates of this (search for "25" :) )
+        public const int NUM_OF_LEVELS = 25;
 
 #if IS_DEMO
         public bool IsDemo => true;
