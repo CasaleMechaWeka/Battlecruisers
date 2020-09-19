@@ -192,16 +192,30 @@ namespace BattleCruisers.Scenes
             }
         }
 
-		public void LoadLevel(int levelNum)
+		public void LoadLevelTrashScreen(int levelNum)
 		{
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			_applicationModel.SelectedLevel = levelNum;
+
+            // FELIX  :P
+            //ISingleSoundPlayer soundPlayer,
+            //IScreensSceneGod screensSceneGod,
+            //ITrashTalkData trashTalkData,
+            //ILevel level,
+            //IPrefabFactory prefabFactory,
+            //HullKey playerCruiser,
+            //ISpriteFetcher spriteFetcher
+
+        }
+
+        public void LoadBattleScene()
+        { 
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
             CleanUp();
-		}
+        }
 
         private void CleanUp()
         {

@@ -8,55 +8,70 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Threading.Tasks;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashScreenController : ScreenController
     {
-        private int _levelNum;
+        private IApplicationModel _appModel;
+        private IPrefabFactory _prefabFactory;
+        private ISpriteFetcher _spriteFetcher;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
         public Image sky, enemyCharacter;
         public ActionButton startBattleButton;
+        public TrashTalkDataList trashDataList;
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
 
-        public async Task InitialiseAsync(
+        public void Initialise(
             ISingleSoundPlayer soundPlayer, 
             IScreensSceneGod screensSceneGod,
-            ITrashTalkData trashTalkData,
-            ILevel level,
+            IApplicationModel appModel,
             IPrefabFactory prefabFactory,
-            HullKey playerCruiser,
             ISpriteFetcher spriteFetcher)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton);
-            Helper.AssertIsNotNull(trashTalkData, level, prefabFactory, playerCruiser, spriteFetcher);
+            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList);
+            Helper.AssertIsNotNull(prefabFactory, spriteFetcher);
 
-            _levelNum = level.Num;
+            _appModel = appModel;
+            _prefabFactory = prefabFactory;
+            _spriteFetcher = spriteFetcher;
+
             startBattleButton.Initialise(soundPlayer, StartBattle);
+		}
+
+        public async override void OnPresenting(object activationParameter)
+        {
+            base.OnPresenting(activationParameter);
+
+            int levelIndex = _appModel.SelectedLevel - 1;
+            ILevel level = _appModel.DataProvider.Levels[levelIndex];
+
+            ITrashTalkData trashTalkData = trashDataList.GetTrashTalk(_appModel.SelectedLevel);
             enemyCharacter.sprite = trashTalkData.EnemyImage;
             trashTalkBubbles.Initialise(trashTalkData);
 
             // Cruisers
-            ICruiser playerCruiserPrefab = prefabFactory.GetCruiserPrefab(playerCruiser);
-            ICruiser enemyCruiserPrefab = prefabFactory.GetCruiserPrefab(level.Hull);
+            ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_appModel.DataProvider.GameModel.PlayerLoadout.Hull);
+            ICruiser enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
             cruisers.Initialise(playerCruiserPrefab.Sprite, enemyCruiserPrefab.Sprite);
 
             // Sky
             string skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
-            ISpriteWrapper skySprite = await spriteFetcher.GetSpriteAsync(skyPath);
+            ISpriteWrapper skySprite = await _spriteFetcher.GetSpriteAsync(skyPath);
             sky.sprite = skySprite.Sprite;
-		}
+        }
 
         private void StartBattle()
         {
-            _screensSceneGod.LoadLevel(_levelNum);
+            _screensSceneGod.LoadBattleScene();
         }
 
         public override void Cancel()

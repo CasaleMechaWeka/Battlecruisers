@@ -1,7 +1,9 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using NSubstitute;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.UI
@@ -15,22 +17,26 @@ namespace BattleCruisers.Scenes.Test.UI
         [Header("Peter can change these :D")]
         [Range(1, 25)]
         public int startingLevelNum = 2;
-        public PrefabKeyName playerCruiserKey;
 
         protected override void Setup(Utilities.Helper helper)
         {
             Helper.AssertIsNotNull(trashScreen, trashDataList, levelButtonsPanel);
 
             trashDataList.Initialise();
-            HullKey playerCruiser = StaticPrefabKeyHelper.GetPrefabKey<HullKey>(playerCruiserKey);
+
+            trashScreen
+                .Initialise(
+                    Substitute.For<ISingleSoundPlayer>(),
+                    Substitute.For<IScreensSceneGod>(),
+                    ApplicationModelProvider.ApplicationModel,
+                    helper.PrefabFactory,
+                    new SpriteFetcher());
 
             levelButtonsPanel
                 .Initialise(
+                    ApplicationModelProvider.ApplicationModel,
                     trashScreen,
-                    helper.PrefabFactory,
-                    startingLevelNum,
-                    playerCruiser,
-                    trashDataList);
+                    startingLevelNum);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 				nextLevelToPlay++;
 			}
 
-			_screensSceneGod.LoadLevel(nextLevelToPlay);
+			_screensSceneGod.LoadLevelTrashScreen(nextLevelToPlay);
 		}
 
         public void GoToLevelsScreen()
@@ -85,7 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         public void StartTutorial()
         {
             ApplicationModelProvider.ApplicationModel.IsTutorial = true;
-            _screensSceneGod.LoadLevel(levelNum: 1);
+            _screensSceneGod.LoadLevelTrashScreen(levelNum: 1);
         }
 
         public void Quit()
@@ -95,7 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void StartLevel1()
         {
-            _screensSceneGod.LoadLevel(levelNum: 1);
+            _screensSceneGod.LoadLevelTrashScreen(levelNum: 1);
         }
     }
 }

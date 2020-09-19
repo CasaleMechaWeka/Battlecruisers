@@ -1,6 +1,4 @@
-﻿using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.Utils;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -10,25 +8,23 @@ namespace BattleCruisers.Scenes.Test.UI
     {
         private LevelButtonsPanel _levelButtonsPanel;
         private int _levelNum;
-        private ITrashTalkData _trashTalkData;
 
         public Text levelNumText;
 
-        public void Initialise(LevelButtonsPanel levelButtonsPanel, int levelNum, ITrashTalkData trashTalkData)
+        public void Initialise(LevelButtonsPanel levelButtonsPanel, int levelNum)
         {
             Assert.IsNotNull(levelNumText);
-            Helper.AssertIsNotNull(levelButtonsPanel, trashTalkData);
+            Assert.IsNotNull(levelButtonsPanel);
 
             _levelButtonsPanel = levelButtonsPanel;
             _levelNum = levelNum;
-            _trashTalkData = trashTalkData;
 
             levelNumText.text = levelNum.ToString();
         }
 
         public void ChangeLevel()
         {
-            _levelButtonsPanel.ChangeLevelAsync(_levelNum, _trashTalkData);
+            _levelButtonsPanel.ChangeLevel(_levelNum);
         }
     }
 }

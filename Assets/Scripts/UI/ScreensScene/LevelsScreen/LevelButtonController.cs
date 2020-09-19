@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-            _screensSceneGod.LoadLevel(_level.Num);
+            _screensSceneGod.LoadLevelTrashScreen(_level.Num);
         }
 
         protected override void ShowDisabledState()
