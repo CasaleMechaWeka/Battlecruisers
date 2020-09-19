@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
         public Image sky, enemyCharacter;
-        public ActionButton startBattleButton;
+        public ActionButton startBattleButton, homeButton;
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList);
+            Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList, homeButton);
             Helper.AssertIsNotNull(prefabFactory, spriteFetcher);
 
             _appModel = appModel;
@@ -44,6 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _trashDataList = trashDataList;
 
             startBattleButton.Initialise(soundPlayer, StartBattle);
+            homeButton.Initialise(soundPlayer, Cancel);
 		}
 
         public async override void OnPresenting(object activationParameter)
