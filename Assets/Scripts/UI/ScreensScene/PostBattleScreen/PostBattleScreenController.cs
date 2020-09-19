@@ -179,7 +179,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public void Retry()
 		{
-			_screensSceneGod.LoadLevelTrashScreen(BattleResult.LevelNum);
+			_screensSceneGod.GoToTrashScreen(BattleResult.LevelNum);
 		}
 
 		public void GoToLoadoutScreen()
@@ -191,7 +191,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 		{
 			int nextLevelNum = BattleResult.LevelNum + 1;
             Assert.IsTrue(nextLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked);
-			_screensSceneGod.LoadLevelTrashScreen(nextLevelNum);
+			_screensSceneGod.GoToTrashScreen(nextLevelNum);
 		}
 
         private bool CanNextCommandExecute()
@@ -207,12 +207,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public void RetryTutorial()
         {
             ApplicationModelProvider.ApplicationModel.IsTutorial = true;
-            _screensSceneGod.LoadLevelTrashScreen(levelNum: 1);
+            _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
 
         public void StartLevel1()
         {
-            _screensSceneGod.LoadLevelTrashScreen(levelNum: 1);
+            _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
 
         public void WishlistGame()

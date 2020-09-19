@@ -1,14 +1,11 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System.Threading.Tasks;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
@@ -44,6 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _prefabFactory = prefabFactory;
             _spriteFetcher = spriteFetcher;
 
+            trashDataList.Initialise();
             startBattleButton.Initialise(soundPlayer, StartBattle);
 		}
 

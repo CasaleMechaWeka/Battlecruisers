@@ -9,6 +9,7 @@ using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
+using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -41,6 +42,7 @@ namespace BattleCruisers.Scenes
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
+        public TrashScreenController trashScreen;
         [SerializeField]
         private AudioSource _uiAudioSource;
 
@@ -48,7 +50,7 @@ namespace BattleCruisers.Scenes
 
 		async void Start()
 		{
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, _uiAudioSource);
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
@@ -81,10 +83,11 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(new SpriteFetcher());
+            SpriteFetcher spriteFetcher = new SpriteFetcher();
+            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             homeScreen.Initialise(_soundPlayer, this, _dataProvider);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
-
+            trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -169,6 +172,16 @@ namespace BattleCruisers.Scenes
             GoToScreen(settingsScreen);
         }
 
+		public void GoToTrashScreen(int levelNum)
+		{
+            Assert.IsTrue(
+                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+
+			_applicationModel.SelectedLevel = levelNum;
+            GoToScreen(trashScreen);
+        }
+
 		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
@@ -190,25 +203,6 @@ namespace BattleCruisers.Scenes
             {
                 _musicPlayer.PlayScreensSceneMusic();
             }
-        }
-
-		public void LoadLevelTrashScreen(int levelNum)
-		{
-            Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
-                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
-
-			_applicationModel.SelectedLevel = levelNum;
-
-            // FELIX  :P
-            //ISingleSoundPlayer soundPlayer,
-            //IScreensSceneGod screensSceneGod,
-            //ITrashTalkData trashTalkData,
-            //ILevel level,
-            //IPrefabFactory prefabFactory,
-            //HullKey playerCruiser,
-            //ISpriteFetcher spriteFetcher
-
         }
 
         public void LoadBattleScene()
