@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Data.Static;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
@@ -10,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public void Initialise()
         {
             _stats = GetComponentsInChildren<BackgroundImageStats>();
-            Assert.AreEqual(25, _stats.Length);
+            Assert.AreEqual(StaticData.NUM_OF_LEVELS, _stats.Length);
         }
 
         public IBackgroundImageStats GetStats(int levelNum)

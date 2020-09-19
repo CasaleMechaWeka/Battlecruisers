@@ -9,8 +9,6 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class LevelButtonList : MonoBehaviour
     {
-        private const int NUM_OF_LEVELS = 25;
-
         public void Initialise(
             SkyStatsGroup skyStatsGroup, 
             ISkySetter skySetter, 
@@ -22,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData);
 
             LevelButtonController[] buttons = GetComponentsInChildren<LevelButtonController>();
-            Assert.AreEqual(NUM_OF_LEVELS, buttons.Length);
+            Assert.AreEqual(StaticData.NUM_OF_LEVELS, buttons.Length);
 
             for (int i = 0; i < buttons.Length; ++i)
             {
