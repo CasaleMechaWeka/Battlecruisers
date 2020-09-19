@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
@@ -21,9 +22,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked, 
             ISingleSoundPlayer soundPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
+            ITrashTalkDataList trashDataList,
             int setIndex)
         {
-            Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider);
+            Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider, trashDataList);
 
             SetIndex = setIndex;
 
@@ -37,8 +39,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             {
                 LevelButtonController button = levelButtons[i];
                 LevelInfo level = allLevels[firstLevelIndex + i];
+                ITrashTalkData trashTalkData = trashDataList.GetTrashTalk(level.Num);
 
-                await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked);
+                await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData);
             }
 		}
 

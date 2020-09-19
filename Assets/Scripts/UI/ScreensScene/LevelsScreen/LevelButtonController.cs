@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
@@ -26,18 +27,20 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             LevelInfo level, 
             IScreensSceneGod screensSceneGod, 
             IDifficultySpritesProvider difficultySpritesProvider,
-            int numOfLevelsUnlocked)
+            int numOfLevelsUnlocked,
+            ITrashTalkData trashTalkData)
 		{
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(level, screensSceneGod, difficultySpritesProvider);
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
+            Helper.AssertIsNotNull(level, screensSceneGod, difficultySpritesProvider, trashTalkData);
 
             _level = level;
             _screensSceneGod = screensSceneGod;
 
             levelNumberText.text = level.Num.ToString();
-            levelNameText.text = level.Name;
+            levelNameText.text = trashTalkData.EnemyName;
+            captainImage.sprite = trashTalkData.EnemyImage;
             await levelStatsController.InitialiseAsync(level.DifficultyCompleted, difficultySpritesProvider);
 
             Enabled = numOfLevelsUnlocked >= level.Num;
