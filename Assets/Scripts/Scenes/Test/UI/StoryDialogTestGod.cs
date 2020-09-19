@@ -30,7 +30,8 @@ namespace BattleCruisers.Scenes.Test.UI
                     Substitute.For<IScreensSceneGod>(),
                     ApplicationModelProvider.ApplicationModel,
                     helper.PrefabFactory,
-                    new SpriteFetcher());
+                    new SpriteFetcher(),
+                    trashDataList);
 
             levelButtonsPanel
                 .Initialise(

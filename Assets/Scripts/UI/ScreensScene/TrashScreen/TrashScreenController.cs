@@ -15,12 +15,12 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private IApplicationModel _appModel;
         private IPrefabFactory _prefabFactory;
         private ISpriteFetcher _spriteFetcher;
+        private ITrashTalkDataList _trashDataList;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
         public Image sky, enemyCharacter;
         public ActionButton startBattleButton;
-        public TrashTalkDataList trashDataList;
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
@@ -30,7 +30,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IScreensSceneGod screensSceneGod,
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
-            ISpriteFetcher spriteFetcher)
+            ISpriteFetcher spriteFetcher,
+            ITrashTalkDataList trashDataList)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
@@ -40,8 +41,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _appModel = appModel;
             _prefabFactory = prefabFactory;
             _spriteFetcher = spriteFetcher;
+            _trashDataList = trashDataList;
 
-            trashDataList.Initialise();
             startBattleButton.Initialise(soundPlayer, StartBattle);
 		}
 
@@ -52,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             int levelIndex = _appModel.SelectedLevel - 1;
             ILevel level = _appModel.DataProvider.Levels[levelIndex];
 
-            ITrashTalkData trashTalkData = trashDataList.GetTrashTalk(_appModel.SelectedLevel);
+            ITrashTalkData trashTalkData = _trashDataList.GetTrashTalk(_appModel.SelectedLevel);
             enemyCharacter.sprite = trashTalkData.EnemyImage;
             trashTalkBubbles.Initialise(trashTalkData);
 

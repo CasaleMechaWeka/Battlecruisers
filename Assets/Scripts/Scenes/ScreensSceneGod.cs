@@ -43,6 +43,7 @@ namespace BattleCruisers.Scenes
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
         public TrashScreenController trashScreen;
+        public TrashTalkDataList trashDataList;
         [SerializeField]
         private AudioSource _uiAudioSource;
 
@@ -50,11 +51,12 @@ namespace BattleCruisers.Scenes
 
 		async void Start()
 		{
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, trashDataList, _uiAudioSource);
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             _prefabFactory = new PrefabFactory(prefabCache);
+            trashDataList.Initialise();
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
 			_dataProvider = _applicationModel.DataProvider;
@@ -87,7 +89,7 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             homeScreen.Initialise(_soundPlayer, this, _dataProvider);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
-            trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher);
+            trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher, trashDataList);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
