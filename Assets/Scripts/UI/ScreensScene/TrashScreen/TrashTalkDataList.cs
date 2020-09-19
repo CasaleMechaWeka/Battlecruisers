@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public void Initialise()
         {
-            // FELIX  unsure if interface works :/
             _trashDataList = GetComponentsInChildren<ITrashTalkData>();
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, _trashDataList.Length);
         }

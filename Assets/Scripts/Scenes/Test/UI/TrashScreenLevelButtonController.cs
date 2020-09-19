@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes.Test.UI
 {
-    // FELIX  Rename, so can tell apart in inspector :P
     public class TrashScreenLevelButtonController : MonoBehaviour
     {
         private LevelButtonsPanel _levelButtonsPanel;
