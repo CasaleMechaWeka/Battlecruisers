@@ -189,7 +189,15 @@ namespace BattleCruisers.Scenes
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			_applicationModel.SelectedLevel = levelNum;
-            GoToScreen(trashScreen);
+
+            if (_applicationModel.IsTutorial)
+            {
+                LoadBattleScene();
+            }
+            else
+            {
+                GoToScreen(trashScreen);
+            }
         }
 
 		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
