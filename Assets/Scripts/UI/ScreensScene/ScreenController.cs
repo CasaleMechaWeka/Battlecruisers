@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Sound;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene
@@ -20,5 +21,10 @@ namespace BattleCruisers.UI.ScreensScene
 		}
 
 		public virtual void Cancel() { }
-	}
+
+        public void WishlistGame()
+        {
+            Application.OpenURL("https://store.steampowered.com/app/955870/Battlecruisers/");
+        }
+    }
 }

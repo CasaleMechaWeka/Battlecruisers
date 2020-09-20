@@ -140,7 +140,15 @@ namespace BattleCruisers.Scenes
 
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
-            await levelsScreen.InitialiseAsync(_soundPlayer, this, levels, _dataProvider.LockedInfo.NumOfLevelsUnlocked, lastPlayedLevel, difficultySpritesProvider, trashDataList);
+            await levelsScreen.InitialiseAsync(
+                _soundPlayer, 
+                this, 
+                levels, 
+                _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                lastPlayedLevel, 
+                difficultySpritesProvider, 
+                trashDataList, 
+                _dataProvider.StaticData.IsDemo);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)

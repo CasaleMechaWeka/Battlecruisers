@@ -215,11 +215,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
 
-        public void WishlistGame()
-        {
-            Application.OpenURL("https://store.steampowered.com/app/955870/Battlecruisers/");
-        }
-
         public override void Cancel()
         {
             GoToHomeScreen();

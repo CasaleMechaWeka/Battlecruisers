@@ -9,6 +9,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -17,11 +18,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 	{
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
+        private bool _isDemo;
 
         public ButtonController nextSetButton, previousSetButton;
         public ActionButton cancelButton;
+        public GameObject lockedInDemoMessage;
 
-        private IGameObject VisibleLevelsSet => _levelSets[VisibleSetIndex];
+        private LevelsSetController VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
         private int _visibleSetIndex;
         public int VisibleSetIndex 
@@ -47,12 +50,15 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked, 
             int lastPlayedLevelNum,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashDataList)
+            ITrashTalkDataList trashDataList,
+            bool isDemo)
         {
             base.Initialise(soundPlayer, screensSceneGod);
 
-            Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
+            Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton, lockedInDemoMessage);
             Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList);
+
+            _isDemo = isDemo;
 
             await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
 
@@ -110,6 +116,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             VisibleLevelsSet.IsVisible = false;
             VisibleSetIndex = setIndex;
             VisibleLevelsSet.IsVisible = true;
+
+            bool showLockedInDemoMessage
+                = _isDemo
+                    && !VisibleLevelsSet.HasUnlockedLevel;
+            lockedInDemoMessage.SetActive(showLockedInDemoMessage);
         }
 
 		private void NextSetCommandExecute()
