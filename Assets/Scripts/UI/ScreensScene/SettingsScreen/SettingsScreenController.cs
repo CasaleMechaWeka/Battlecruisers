@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
@@ -27,19 +28,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Helper.AssertIsNotNull(settingsManager, musicPlayer);
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
-            if (settingsManager.ScrollSpeedLevel < SettingsManager.MIN_SCROLL_SPEED_LEVEL
-                || settingsManager.ScrollSpeedLevel > SettingsManager.MAX_SCROLL_SPEED_LEVEL)
+            if (settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
+                || settingsManager.ScrollSpeedLevel > SettingsModel.MAX_SCROLL_SPEED_LEVEL)
             {
-                settingsManager.ScrollSpeedLevel = SettingsManager.DEFAULT_SCROLL_SPEED_LEVEL;
+                settingsManager.ScrollSpeedLevel = SettingsModel.DEFAULT_SCROLL_SPEED_LEVEL;
                 settingsManager.Save();
             }
 
             difficultyDropdown.Initialise(settingsManager.AIDifficulty);
 
-            IRange<int> zoomlLevelRange = new Range<int>(SettingsManager.MIN_ZOOM_SPEED_LEVEL, SettingsManager.MAX_ZOOM_SPEED_LEVEL);
+            IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
-            IRange<int> scrollLevelRange = new Range<int>(SettingsManager.MIN_SCROLL_SPEED_LEVEL, SettingsManager.MAX_SCROLL_SPEED_LEVEL);
+            IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
             scrollSlider.Initialise(settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
             muteMusicToggle.Initialise(settingsManager.MuteMusic);

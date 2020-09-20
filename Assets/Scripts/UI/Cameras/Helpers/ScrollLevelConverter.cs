@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data.Models;
 using System;
 using UnityEngine.Assertions;
 
@@ -8,8 +8,8 @@ namespace BattleCruisers.UI.Cameras.Helpers
     {
         public float LevelToMultiplier(int scrollLevel)
         {
-            Assert.IsTrue(scrollLevel >= SettingsManager.MIN_SCROLL_SPEED_LEVEL);
-            Assert.IsTrue(scrollLevel <= SettingsManager.MAX_SCROLL_SPEED_LEVEL);
+            Assert.IsTrue(scrollLevel >= SettingsModel.MIN_SCROLL_SPEED_LEVEL);
+            Assert.IsTrue(scrollLevel <= SettingsModel.MAX_SCROLL_SPEED_LEVEL);
 
             switch (scrollLevel)
             {

@@ -20,13 +20,12 @@ namespace BattleCruisers.Data
         private readonly GameModel _gameModel;
         public IGameModel GameModel => _gameModel;
 
-        public DataProvider(IStaticData staticData, ISerializer serializer, ISettingsManager settingsManager)
+        public DataProvider(IStaticData staticData, ISerializer serializer)
 		{
-            Helper.AssertIsNotNull(staticData, serializer, settingsManager);
+            Helper.AssertIsNotNull(staticData, serializer);
 
 			StaticData = staticData;
 			_serializer = serializer;
-            SettingsManager = settingsManager;
 
 			if (_serializer.DoesSavedGameExist())
 			{
@@ -37,10 +36,9 @@ namespace BattleCruisers.Data
                 // First time run
                 _gameModel = StaticData.InitialGameModel;
                 SaveGame();
-				
-                SettingsManager.AIDifficulty = Difficulty.Normal;
-                SettingsManager.Save();
 			}
+
+            SettingsManager = new SettingsManager(this);
 
             LockedInfo = new LockedInformation(GameModel, StaticData);
 		}
@@ -59,7 +57,6 @@ namespace BattleCruisers.Data
         public void Reset()
         {
             _serializer.DeleteSavedGame();
-            SettingsManager.Reset();
         }
     }
 }

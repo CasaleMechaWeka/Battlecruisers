@@ -1,15 +1,15 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data.Models;
 using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
-{   
+{
     public class ZoomLevelConverter : ILevelToMultiplierConverter
     {
         public float LevelToMultiplier(int zoomLevel)
         {
-            Assert.IsTrue(zoomLevel >= SettingsManager.MIN_ZOOM_SPEED_LEVEL);
-            Assert.IsTrue(zoomLevel <= SettingsManager.MAX_ZOOM_SPEED_LEVEL);
+            Assert.IsTrue(zoomLevel >= SettingsModel.MIN_ZOOM_SPEED_LEVEL);
+            Assert.IsTrue(zoomLevel <= SettingsModel.MAX_ZOOM_SPEED_LEVEL);
 
             switch (zoomLevel)
             {
