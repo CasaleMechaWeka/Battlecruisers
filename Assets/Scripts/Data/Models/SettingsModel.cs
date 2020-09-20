@@ -87,23 +87,6 @@ namespace BattleCruisers.Data.Models
             ShowInGameHints = true;
         }
 
-        // FELIX  Remove unused?
-        public SettingsModel(
-            Difficulty aiDifficulty,
-            bool muteMusic,
-            bool muteVoices,
-            int scrollSpeedLevel,
-            bool showInGameHints,
-            int zoomSpeedLevel)
-        {
-            AIDifficulty = aiDifficulty;
-            MuteMusic = muteMusic;
-            MuteVoices = muteVoices;
-            ScrollSpeedLevel = scrollSpeedLevel;
-            ShowInGameHints = showInGameHints;
-            ZoomSpeedLevel = zoomSpeedLevel;
-        }
-
         public override bool Equals(object obj)
         {
             SettingsModel other = obj as SettingsModel;
