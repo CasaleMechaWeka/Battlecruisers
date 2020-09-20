@@ -10,6 +10,7 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class SettingsModel : ISettingsModel
     {
+        private const int DEFAULT_ZOOM_SPEED_LEVEL = 5;
         public const int MIN_ZOOM_SPEED_LEVEL = 1;
         public const int MAX_ZOOM_SPEED_LEVEL = 9;
 
@@ -73,6 +74,16 @@ namespace BattleCruisers.Data.Models
         {
             get => _showInGameHints;
             set => _showInGameHints = value;
+        }
+
+        public SettingsModel()
+        {
+            AIDifficulty = Difficulty.Normal;
+            ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
+            ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
+            MuteMusic = false;
+            MuteVoices = false;
+            ShowInGameHints = true;
         }
 
         public SettingsModel(
