@@ -20,6 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private ICommand _nextSetCommand, _previousSetCommand;
         private bool _isDemo;
 
+        private const int LAST_SET_IN_DEMO_INDEX = 1; // Demo has sets 0 and 1 available
+
         public ButtonController nextSetButton, previousSetButton;
         public ActionButton cancelButton;
         public GameObject lockedInDemoMessage;
@@ -119,7 +121,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             bool showLockedInDemoMessage
                 = _isDemo
-                    && !VisibleLevelsSet.HasUnlockedLevel;
+                    && setIndex > LAST_SET_IN_DEMO_INDEX;
             lockedInDemoMessage.SetActive(showLockedInDemoMessage);
         }
 

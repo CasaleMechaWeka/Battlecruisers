@@ -5,7 +5,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -16,7 +15,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public int firstLevelIndex;
 
         public int SetIndex { get; private set; }
-        public bool HasUnlockedLevel { get; private set; }
 
 		public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod, 
@@ -30,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider, trashDataList);
 
             SetIndex = setIndex;
-            HasUnlockedLevel = numOfLevelsUnlocked > firstLevelIndex;
 
             LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
             _numOfLevels = levelButtons.Length;

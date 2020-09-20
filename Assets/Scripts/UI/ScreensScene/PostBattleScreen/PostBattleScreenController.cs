@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -103,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
                         if (_dataProvider.StaticData.IsDemo
-                            && BattleResult.LevelNum == LockedInformation.NUM_OF_LEVELS_IN_DEMO)
+                            && BattleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO)
                         {
                             ShowDemoCompletionScreen(soundPlayer);
                         }

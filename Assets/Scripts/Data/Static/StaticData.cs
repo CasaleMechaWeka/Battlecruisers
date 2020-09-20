@@ -19,6 +19,7 @@ namespace BattleCruisers.Data.Static
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
         public const int NUM_OF_LEVELS = 25;
+        public const int NUM_OF_LEVELS_IN_DEMO = 7;
 
 #if IS_DEMO
         public bool IsDemo => true;
