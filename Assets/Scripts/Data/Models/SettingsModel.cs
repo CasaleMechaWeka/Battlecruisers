@@ -1,0 +1,94 @@
+﻿using BattleCruisers.Data.Settings;
+using System;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Data.Models
+{
+    // Serialise settings instead of using UnityEngine.PlayerPrefs, so that
+    // settings can be cloud synced via steam.
+    [Serializable]
+    public class SettingsModel : ISettingsModel
+    {
+        public const int MIN_ZOOM_SPEED_LEVEL = 1;
+        public const int MAX_ZOOM_SPEED_LEVEL = 9;
+
+        public const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
+        public const int MIN_SCROLL_SPEED_LEVEL = 1;
+        public const int MAX_SCROLL_SPEED_LEVEL = 9;
+
+        [SerializeField]
+        private Difficulty _aiDifficulty;
+        public Difficulty AIDifficulty
+        {
+            get => _aiDifficulty;
+            set => _aiDifficulty = value;
+        }
+
+        [SerializeField]
+        private int _zoomSpeedLevel;
+        public int ZoomSpeedLevel
+        {
+            get => _zoomSpeedLevel;
+            set
+            {
+                Assert.IsTrue(value >= MIN_ZOOM_SPEED_LEVEL);
+                Assert.IsTrue(value <= MAX_ZOOM_SPEED_LEVEL);
+                _zoomSpeedLevel = value;
+            }
+        }
+
+        [SerializeField]
+        private int _scrollSpeedLevel;
+        public int ScrollSpeedLevel
+        {
+            get => _scrollSpeedLevel;
+            set
+            {
+                Assert.IsTrue(value >= MIN_SCROLL_SPEED_LEVEL);
+                Assert.IsTrue(value <= MAX_SCROLL_SPEED_LEVEL);
+                _scrollSpeedLevel = value;
+            }
+        }
+
+        [SerializeField]
+        private bool _muteMusic;
+        public bool MuteMusic
+        {
+            get => _muteMusic;
+            set => _muteMusic = value;
+        }
+
+        [SerializeField]
+        private bool _muteVoices;
+        public bool MuteVoices
+        {
+            get => _muteVoices;
+            set => _muteVoices = value;
+        }
+
+        [SerializeField]
+        private bool _showInGameHints;
+        public bool ShowInGameHints
+        {
+            get => _showInGameHints;
+            set => _showInGameHints = value;
+        }
+
+        public SettingsModel(
+            Difficulty aiDifficulty,
+            bool muteMusic,
+            bool muteVoices,
+            int scrollSpeedLevel,
+            bool showInGameHints,
+            int zoomSpeedLevel)
+        {
+            AIDifficulty = aiDifficulty;
+            MuteMusic = muteMusic;
+            MuteVoices = muteVoices;
+            ScrollSpeedLevel = scrollSpeedLevel;
+            ShowInGameHints = showInGameHints;
+            ZoomSpeedLevel = zoomSpeedLevel;
+        }
+    }
+}
