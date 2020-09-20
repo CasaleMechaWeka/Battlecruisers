@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -86,6 +87,7 @@ namespace BattleCruisers.Data.Models
             ShowInGameHints = true;
         }
 
+        // FELIX  Remove unused?
         public SettingsModel(
             Difficulty aiDifficulty,
             bool muteMusic,
@@ -100,6 +102,25 @@ namespace BattleCruisers.Data.Models
             ScrollSpeedLevel = scrollSpeedLevel;
             ShowInGameHints = showInGameHints;
             ZoomSpeedLevel = zoomSpeedLevel;
+        }
+
+        public override bool Equals(object obj)
+        {
+            SettingsModel other = obj as SettingsModel;
+
+            return
+                other != null
+                && AIDifficulty == other.AIDifficulty
+                && MuteMusic == other.MuteMusic
+                && MuteVoices == other.MuteVoices
+                && ScrollSpeedLevel == other.ScrollSpeedLevel
+                && ShowInGameHints == other.ShowInGameHints
+                && ZoomSpeedLevel == other.ZoomSpeedLevel;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(AIDifficulty, MuteMusic, MuteVoices, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel);
         }
     }
 }

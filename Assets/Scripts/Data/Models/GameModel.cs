@@ -36,6 +36,9 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
+        [SerializeField]
+        private SettingsModel _settings;
+
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial
@@ -54,6 +57,12 @@ namespace BattleCruisers.Data.Models
         {
             get { return _lastBattleResult; }
             set { _lastBattleResult = value; }
+        }
+
+        public SettingsModel Settings
+        {
+            get { return _settings; }
+            set { _settings = value; }
         }
 
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
@@ -82,6 +91,8 @@ namespace BattleCruisers.Data.Models
             NewHulls = new NewItems<HullKey>();
             NewBuildings = new NewItems<BuildingKey>();
             NewUnits = new NewItems<UnitKey>();
+
+            Settings = new SettingsModel();
         }
 
         public GameModel(
@@ -171,6 +182,10 @@ namespace BattleCruisers.Data.Models
             {
                 NewUnits = new NewItems<UnitKey>();
             }
+            if (Settings == null)
+            {
+                Settings = new SettingsModel();
+            }
         }
 
         public override bool Equals(object obj)
@@ -182,6 +197,7 @@ namespace BattleCruisers.Data.Models
                 && other.NumOfLevelsCompleted == NumOfLevelsCompleted
                 && PlayerLoadout.SmartEquals(other.PlayerLoadout)
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
+                && Settings.SmartEquals(other.Settings)
                 && NewHulls.SmartEquals(other.NewHulls)
                 && NewBuildings.SmartEquals(other.NewBuildings)
                 && NewUnits.SmartEquals(other.NewUnits)
@@ -198,6 +214,7 @@ namespace BattleCruisers.Data.Models
                 NumOfLevelsCompleted, 
                 PlayerLoadout, 
                 LastBattleResult, 
+                Settings,
                 _unlockedHulls, 
                 _unlockedUnits, 
                 _unlockedBuildings, 

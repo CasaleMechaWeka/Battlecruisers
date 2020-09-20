@@ -12,6 +12,7 @@ namespace BattleCruisers.Data.Models
         bool HasAttemptedTutorial { get; set; }
         Loadout PlayerLoadout { get; set; }
         BattleResult LastBattleResult { get; set; }
+        SettingsModel Settings { get; set; }
 
         ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
