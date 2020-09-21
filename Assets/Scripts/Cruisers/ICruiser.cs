@@ -10,6 +10,7 @@ using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers
 {
@@ -19,6 +20,7 @@ namespace BattleCruisers.Cruisers
         IDroneConsumerProvider DroneConsumerProvider { get; }
         Direction Direction { get; }
         float YAdjustmentInM { get; }
+        Vector2 TrashTalkScreenPosition { get; }
         IGameObject Fog { get; }
         IRepairManager RepairManager { get; }
         int NumOfDrones { get; }

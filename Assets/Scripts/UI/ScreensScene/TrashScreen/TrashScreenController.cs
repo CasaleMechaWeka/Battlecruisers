@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             // Cruisers
             ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_appModel.DataProvider.GameModel.PlayerLoadout.Hull);
             ICruiser enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
-            cruisers.Initialise(playerCruiserPrefab.Sprite, enemyCruiserPrefab.Sprite);
+            cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
             string skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;

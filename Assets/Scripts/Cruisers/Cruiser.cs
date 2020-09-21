@@ -46,6 +46,7 @@ namespace BattleCruisers.Cruisers
 
         public int numOfDrones;
         public float yAdjustmentInM;
+        public Vector2 trashTalkScreenPosition;
         public string description;
         public string cruiserName;
 
@@ -69,6 +70,7 @@ namespace BattleCruisers.Cruisers
         public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public Direction Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
+        public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
         public IFactoryProvider FactoryProvider { get; private set; }
         public ICruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private FogOfWar _fog;

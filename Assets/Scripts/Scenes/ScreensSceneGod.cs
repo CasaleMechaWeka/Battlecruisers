@@ -110,6 +110,7 @@ namespace BattleCruisers.Scenes
             //GoToSettingsScreen();
             //GoToLevelsScreen();
             //GoToLoadoutScreen();
+            //GoToTrashScreen(levelNum: 1);
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
             Common.TimeBC.Instance.TimeScale = 1;
