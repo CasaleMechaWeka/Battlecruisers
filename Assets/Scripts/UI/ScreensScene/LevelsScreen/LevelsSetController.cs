@@ -14,6 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private int _numOfLevels;
         public int firstLevelIndex;
 
+        private const int LAST_SET_INDEX = 6;
+
         public int SetIndex { get; private set; }
 
 		public async Task InitialiseAsync(
@@ -29,6 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             SetIndex = setIndex;
 
+            // Set up levels
             LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
             _numOfLevels = levelButtons.Length;
 
@@ -43,7 +46,18 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
                 await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData);
             }
-		}
+
+            // Set up trails
+            TrailController[] trails = GetComponentsInChildren<TrailController>();
+            int expectedNumberOfTrails = SetIndex == LAST_SET_INDEX ? _numOfLevels - 1 : _numOfLevels;
+            Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
+
+            for (int i = 0; i > trails.Length; ++i)
+            {
+                bool isTrailVisible = numOfLevelsUnlocked - firstLevelIndex - 1 > i;
+                trails[i].IsVisible = isTrailVisible;
+            }
+        }
 
         public bool ContainsLevel(int levelNum)
         {
