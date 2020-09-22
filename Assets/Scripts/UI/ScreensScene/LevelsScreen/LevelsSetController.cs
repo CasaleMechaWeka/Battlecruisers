@@ -12,13 +12,16 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsSetController : MonoBehaviourWrapper
     {
         private int _numOfLevels;
+
         public int firstLevelIndex;
+        public NavigationFeedbackButton navigationFeedbackButton;
 
         public int SetIndex { get; private set; }
         public int LastLevelNum { get; private set; }
 
-		public async Task InitialiseAsync(
-            IScreensSceneGod screensSceneGod, 
+        public async Task InitialiseAsync(
+            IScreensSceneGod screensSceneGod,
+            LevelsScreenController levelsScreen,
             IList<LevelInfo> allLevels, 
             int numOfLevelsUnlocked, 
             ISingleSoundPlayer soundPlayer,
@@ -26,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             ITrashTalkDataList trashDataList,
             int setIndex)
         {
+            Assert.IsNotNull(navigationFeedbackButton);
             Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider, trashDataList);
 
             SetIndex = setIndex;
@@ -58,6 +62,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 bool isTrailVisible = numOfLevelsUnlocked - firstLevelIndex - 1 > i;
                 trails[i].IsVisible = isTrailVisible;
             }
+
+            // Setup navigation feedback button
+            bool hasUnlockedLevels = numOfLevelsUnlocked > firstLevelIndex;
+            navigationFeedbackButton.Initialise(levelsScreen, setIndex, hasUnlockedLevels);
         }
 
         public bool ContainsLevel(int levelNum)

@@ -5,7 +5,6 @@ using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -72,9 +71,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             previousSetButton.Initialise(_soundPlayer, _previousSetCommand);
 
-            NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
-            Assert.IsNotNull(navigationFeedbackButtonsPanel);
-            navigationFeedbackButtonsPanel.Initialise(this);
+            //NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
+            //Assert.IsNotNull(navigationFeedbackButtonsPanel);
+            //navigationFeedbackButtonsPanel.Initialise(this);
 
             cancelButton.Initialise(_soundPlayer, Cancel);
 
@@ -95,7 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             for (int j = 0; j < levelSets.Length; j++)
             {
                 LevelsSetController levelsSet = levelSets[j];
-                await levelsSet.InitialiseAsync(screensSceneGod, levels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j);
+                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }

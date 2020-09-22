@@ -3,6 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
+    // FELIX  delete :)
     public class NavigationFeedbackButtonsPanel : MonoBehaviour
     {
         public void Initialise(LevelsScreenController levelsScreenController)
@@ -13,7 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             for (int i = 0; i < feedbackButtons.Length; ++i)
             {
-                feedbackButtons[i].Initialise(levelsScreenController, i);
+                // FELIX
+                feedbackButtons[i].Initialise(levelsScreenController, i, true);
             }
         }
     }

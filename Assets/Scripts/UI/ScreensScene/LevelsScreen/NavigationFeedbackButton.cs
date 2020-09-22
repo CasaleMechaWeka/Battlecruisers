@@ -1,6 +1,8 @@
 ﻿using System;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -11,14 +13,21 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private bool _isSelected;
         private RectTransform _transform;
 
+        public Button button;
+
         private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.5f;
 
-        public void Initialise(LevelsScreenController levelScreenController, int setIndex)
+        public void Initialise(LevelsScreenController levelScreenController, int setIndex, bool isEnabled)
         {
+            Assert.IsNotNull(button);
+            Assert.IsNotNull(levelScreenController);
+
             _levelScreenController = levelScreenController;
             _setIndex = setIndex;
             _isSelected = true;
             _transform = transform.Parse<RectTransform>();
+
+            button.interactable = isEnabled;
 
             _levelScreenController.VisibleSetChanged += _levelScreenController_VisibleSetChanged;
         }
