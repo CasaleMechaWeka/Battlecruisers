@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public int firstLevelIndex;
 
         public int SetIndex { get; private set; }
+        public int LastLevelNum { get; private set; }
 
 		public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod, 
@@ -35,6 +36,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             Assert.IsTrue(firstLevelIndex >= 0);
             Assert.IsTrue(firstLevelIndex + _numOfLevels <= allLevels.Count);
+
+            LastLevelNum = firstLevelIndex + _numOfLevels;
 
             for (int i = 0; i < _numOfLevels; ++i)
             {

@@ -19,6 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
         private bool _isDemo;
+        private int _numOfLevelsUnlocked;
 
         private const int LAST_SET_IN_DEMO_INDEX = 1; // Demo has sets 0 and 1 available
 
@@ -61,6 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList);
 
             _isDemo = isDemo;
+            _numOfLevelsUnlocked = numOfLevelsUnlocked;
 
             await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
 
@@ -132,7 +134,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
 		private bool CanNextSetCommandExecute()
 		{
-			return VisibleSetIndex < _levelSets.Count - 1;
+            return
+                VisibleSetIndex < _levelSets.Count - 1
+                && VisibleLevelsSet.LastLevelNum < _numOfLevelsUnlocked;
 		}
 
         private void PreviousSetCommandExecute()
