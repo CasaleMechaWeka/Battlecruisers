@@ -6,6 +6,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
@@ -55,8 +56,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ILevel level = _appModel.DataProvider.Levels[levelIndex];
 
             ITrashTalkData trashTalkData = _trashDataList.GetTrashTalk(_appModel.SelectedLevel);
-            enemyCharacter.sprite = trashTalkData.EnemyImage;
             trashTalkBubbles.Initialise(trashTalkData);
+            SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
             ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_appModel.DataProvider.GameModel.PlayerLoadout.Hull);
@@ -67,6 +68,13 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             string skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
             ISpriteWrapper skySprite = await _spriteFetcher.GetSpriteAsync(skyPath);
             sky.sprite = skySprite.Sprite;
+        }
+
+        private void SetupEnemyCharacter(ITrashTalkData trashTalkData)
+        {
+            enemyCharacter.sprite = trashTalkData.EnemyImage;
+            enemyCharacter.transform.localPosition = trashTalkData.EnemyPosition;
+            enemyCharacter.transform.localScale = new Vector3(trashTalkData.EnemyScale, trashTalkData.EnemyScale, 1);
         }
 
         private void StartBattle()
