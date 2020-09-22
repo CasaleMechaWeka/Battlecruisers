@@ -149,8 +149,7 @@ namespace BattleCruisers.Scenes
                 _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
                 lastPlayedLevel, 
                 difficultySpritesProvider, 
-                trashDataList, 
-                _dataProvider.StaticData.IsDemo);
+                trashDataList);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)

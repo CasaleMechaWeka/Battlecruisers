@@ -8,7 +8,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -17,14 +16,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 	{
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
-        private bool _isDemo;
         private int _numOfLevelsUnlocked;
-
-        private const int LAST_SET_IN_DEMO_INDEX = 1; // Demo has sets 0 and 1 available
 
         public ButtonController nextSetButton, previousSetButton;
         public ActionButton cancelButton;
-        public GameObject lockedInDemoMessage;
 
         private LevelsSetController VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
@@ -52,15 +47,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked, 
             int lastPlayedLevelNum,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashDataList,
-            bool isDemo)
+            ITrashTalkDataList trashDataList)
         {
             base.Initialise(soundPlayer, screensSceneGod);
 
-            Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton, lockedInDemoMessage);
+            Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
             Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList);
 
-            _isDemo = isDemo;
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
 
             await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
@@ -115,11 +108,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             VisibleLevelsSet.IsVisible = false;
             VisibleSetIndex = setIndex;
             VisibleLevelsSet.IsVisible = true;
-
-            bool showLockedInDemoMessage
-                = _isDemo
-                    && setIndex > LAST_SET_IN_DEMO_INDEX;
-            lockedInDemoMessage.SetActive(showLockedInDemoMessage);
         }
 
 		private void NextSetCommandExecute()
