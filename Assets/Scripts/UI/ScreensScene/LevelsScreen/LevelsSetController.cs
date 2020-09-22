@@ -14,8 +14,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private int _numOfLevels;
         public int firstLevelIndex;
 
-        private const int LAST_SET_INDEX = 6;
-
         public int SetIndex { get; private set; }
 
 		public async Task InitialiseAsync(
@@ -49,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();
-            int expectedNumberOfTrails = SetIndex == LAST_SET_INDEX ? _numOfLevels - 1 : _numOfLevels;
+            int expectedNumberOfTrails = _numOfLevels -1;
             Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
 
             for (int i = 0; i > trails.Length; ++i)
