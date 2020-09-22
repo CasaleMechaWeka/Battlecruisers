@@ -71,10 +71,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             previousSetButton.Initialise(_soundPlayer, _previousSetCommand);
 
-            //NavigationFeedbackButtonsPanel navigationFeedbackButtonsPanel = GetComponentInChildren<NavigationFeedbackButtonsPanel>();
-            //Assert.IsNotNull(navigationFeedbackButtonsPanel);
-            //navigationFeedbackButtonsPanel.Initialise(this);
-
             cancelButton.Initialise(_soundPlayer, Cancel);
 
             ShowLastPlayedLevelSet(_levelSets, lastPlayedLevelNum);
