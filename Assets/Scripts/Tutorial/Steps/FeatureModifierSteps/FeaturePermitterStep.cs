@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
 
@@ -21,6 +22,8 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
         public override void Start(Action completionCallback)
         {
             base.Start(completionCallback);
+
+            Logging.Log(Tags.TUTORIAL_STEP, $"{_featurePermitter}  enable: {_enableFeature}");
             _featurePermitter.IsMatch = _enableFeature;
             OnCompleted();
         }
