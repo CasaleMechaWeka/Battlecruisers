@@ -91,8 +91,8 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 
         public IRange<float> FindValidCameraXPositions(float desiredOrthographicSize)
         {
-            Assert.IsTrue(desiredOrthographicSize >= _settings.ValidOrthographicSizes.Min);
-            Assert.IsTrue(desiredOrthographicSize <= _settings.ValidOrthographicSizes.Max);
+            Assert.IsTrue(desiredOrthographicSize >= _settings.ValidOrthographicSizes.Min, $"Othographic size should be >= {_settings.ValidOrthographicSizes.Min}, but is: {desiredOrthographicSize}");
+            Assert.IsTrue(desiredOrthographicSize <= _settings.ValidOrthographicSizes.Max, $"Othographic size should be <= {_settings.ValidOrthographicSizes.Max}, but is: {desiredOrthographicSize}");
 
             float cameraHeight = 2 * desiredOrthographicSize;
             float cameraWidth = _camera.Aspect * cameraHeight;
