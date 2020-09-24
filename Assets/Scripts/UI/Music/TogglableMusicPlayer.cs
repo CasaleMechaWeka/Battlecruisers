@@ -48,6 +48,14 @@ namespace BattleCruisers.UI.Music
             }
         }
 
+        public void PlayTrashMusic()
+        {
+            if (!_settings.MuteMusic)
+            {
+                _corePlayer.PlayTrashMusic();
+            }
+        }
+
         public void Stop()
         {
             _corePlayer.Stop();

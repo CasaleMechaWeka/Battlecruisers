@@ -6,6 +6,7 @@
         void PlayVictoryMusic();
         void PlayDefeatMusic();
         void PlayLoadingMusic();
+        void PlayTrashMusic();
         void Stop();
     }
 }
