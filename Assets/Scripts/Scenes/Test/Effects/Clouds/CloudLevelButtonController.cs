@@ -6,7 +6,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
-    public class LevelButtonController : MonoBehaviour
+    public class CloudLevelButtonController : MonoBehaviour
     {
         private ISkySetter _skySetter;
         private ISkyStats _skyStats;
