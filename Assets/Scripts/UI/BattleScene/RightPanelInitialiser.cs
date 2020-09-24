@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
@@ -44,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene
             IBattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
             ISceneNavigator sceneNavigator,
-            IPermitter navigationPermitter)
+            INavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels);
             Helper.AssertIsNotNull(
@@ -57,12 +58,12 @@ namespace BattleCruisers.UI.BattleScene
                 battleCompletionHandler,
                 soundPlayer,
                 sceneNavigator,
-                navigationPermitter);
+                navigationPermitterManager);
 
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
-            IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator, navigationPermitter);
+            IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator, navigationPermitterManager);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
@@ -15,7 +15,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IModalMenu _modalMenu;
         private IBattleCompletionHandler _battleCompletionHandler;
         private ISceneNavigator _sceneNavigator;
-        private IPermitter _navigationPermitter;
+        private INavigationPermitterManager _navigationPermitterManager;
+        private NavigationPermittersState _preMenuState;
 
         [SetUp]
         public void TestSetup()
@@ -24,9 +25,12 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _modalMenu = Substitute.For<IModalMenu>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
             _sceneNavigator = Substitute.For<ISceneNavigator>();
-            _navigationPermitter = Substitute.For<IPermitter>();
+            _navigationPermitterManager = Substitute.For<INavigationPermitterManager>();
 
-            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _sceneNavigator, _navigationPermitter);
+            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _sceneNavigator, _navigationPermitterManager);
+
+            _preMenuState = new NavigationPermittersState(default, default, default, default);
+            _navigationPermitterManager.PauseNavigation().Returns(_preMenuState);
         }
 
         [Test]
@@ -35,17 +39,29 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.ShowMenu();
 
             _pauseGameManager.Received().PauseGame();
-            _navigationPermitter.Received().IsMatch = false;
+            _navigationPermitterManager.Received().PauseNavigation();
             _modalMenu.Received().ShowMenu();
         }
 
         [Test]
-        public void DismissMenu()
+        public void DismissMenu_WithouPreviousShow()
         {
             _mainMenuManager.DismissMenu();
 
+            _navigationPermitterManager.DidNotReceiveWithAnyArgs().RestoreNavigation(default);
             _pauseGameManager.Received().ResumeGame();
-            _navigationPermitter.Received().IsMatch = true;
+            _modalMenu.Received().HideMenu();
+        }
+
+        [Test]
+        public void DismissMenu_WithPreviousShow()
+        {
+            _mainMenuManager.ShowMenu();
+
+            _mainMenuManager.DismissMenu();
+
+            _navigationPermitterManager.RestoreNavigation(_preMenuState);
+            _pauseGameManager.Received().ResumeGame();
             _modalMenu.Received().HideMenu();
         }
 
