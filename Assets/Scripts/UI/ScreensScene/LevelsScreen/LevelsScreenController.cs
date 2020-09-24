@@ -91,14 +91,18 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int lastPlayedLevelNum)
         {
+            int levelSetToShow = 0;
+
             foreach (LevelsSetController levelSet in levelSets)
             {
                 if (levelSet.ContainsLevel(lastPlayedLevelNum))
                 {
-                    ShowSet(levelSet.SetIndex);
+                    levelSetToShow = levelSet.SetIndex;
                     break;
                 }
             }
+
+            ShowSet(levelSetToShow);
         }
 
         public void ShowSet(int setIndex)
