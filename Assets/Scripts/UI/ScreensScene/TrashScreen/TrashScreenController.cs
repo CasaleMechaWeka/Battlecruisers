@@ -84,7 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public override void Cancel()
         {
-            _screensSceneGod.GoToHomeScreen();
+            _screensSceneGod.GoToLevelsScreen();
         }
     }
 }
