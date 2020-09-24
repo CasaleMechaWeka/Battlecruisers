@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -17,6 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private IPrefabFactory _prefabFactory;
         private ISpriteFetcher _spriteFetcher;
         private ITrashTalkDataList _trashDataList;
+        private IMusicPlayer _musicPlayer;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
@@ -32,17 +34,19 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
             ISpriteFetcher spriteFetcher,
-            ITrashTalkDataList trashDataList)
+            ITrashTalkDataList trashDataList,
+            IMusicPlayer musicPlayer)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList, homeButton);
-            Helper.AssertIsNotNull(prefabFactory, spriteFetcher);
+            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, trashDataList, musicPlayer);
 
             _appModel = appModel;
             _prefabFactory = prefabFactory;
             _spriteFetcher = spriteFetcher;
             _trashDataList = trashDataList;
+            _musicPlayer = musicPlayer;
 
             startBattleButton.Initialise(soundPlayer, StartBattle);
             homeButton.Initialise(soundPlayer, Cancel);
@@ -68,6 +72,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             string skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
             ISpriteWrapper skySprite = await _spriteFetcher.GetSpriteAsync(skyPath);
             sky.sprite = skySprite.Sprite;
+
+            _musicPlayer.PlayTrashMusic();
         }
 
         private void SetupEnemyCharacter(ITrashTalkData trashTalkData)

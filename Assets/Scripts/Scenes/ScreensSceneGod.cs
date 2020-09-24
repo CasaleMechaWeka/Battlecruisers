@@ -89,7 +89,7 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             homeScreen.Initialise(_soundPlayer, this, _dataProvider);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
-            trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher, trashDataList);
+            trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -196,7 +196,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                GoToScreen(trashScreen);
+                GoToScreen(trashScreen, playDefaultMusic: false);
             }
         }
 

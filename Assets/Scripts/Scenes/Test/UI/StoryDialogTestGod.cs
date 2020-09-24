@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -31,7 +32,8 @@ namespace BattleCruisers.Scenes.Test.UI
                     ApplicationModelProvider.ApplicationModel,
                     helper.PrefabFactory,
                     new SpriteFetcher(),
-                    trashDataList);
+                    trashDataList,
+                    Substitute.For<IMusicPlayer>());
 
             levelButtonsPanel
                 .Initialise(
