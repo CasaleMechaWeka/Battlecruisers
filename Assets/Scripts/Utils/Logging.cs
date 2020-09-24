@@ -183,9 +183,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
             tagsToActiveness.Add(Tags.TUTORIAL_EXPLANATION_PANEL, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.TUTORIAL_STEP, true);
-            //tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
+            tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
             tagsToActiveness.Add(Tags.UI, false);
 
