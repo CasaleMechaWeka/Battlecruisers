@@ -4,10 +4,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public interface IBackgroundImageStats
     {
-        // FELIX  Remove
-        Vector3 Position { get; }
-
-
         Vector2 Scale { get; }
         float ZRotation { get; }
         Vector3 PositionAt4to3 { get; }

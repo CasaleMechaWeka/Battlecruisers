@@ -4,11 +4,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageStats : MonoBehaviour, IBackgroundImageStats
     {
-        // FELIX  Remove :)
-        public Vector3 position;
-        public Vector3 Position => position;
-
-
         public Vector2 scale;
         public Vector2 Scale => scale;
 
