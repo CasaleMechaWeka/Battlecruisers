@@ -4,15 +4,24 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageStats : MonoBehaviour, IBackgroundImageStats
     {
-        [Header("Transform")]
+        // FELIX  Remove :)
         public Vector3 position;
         public Vector3 Position => position;
+
 
         public Vector2 scale;
         public Vector2 Scale => scale;
 
         public float zRotation;
         public float ZRotation => zRotation;
+
+        [Header("Position for 4:3 aspect ratio")]
+        public Vector3 positionAt4to3;
+        public Vector3 PositionAt4to3 => positionAt4to3;
+
+        [Header("Position for 16:9 aspect ratio")]
+        public Vector3 positionAt16to9;
+        public Vector3 PositionAt16to9 => positionAt16to9;
 
         [Header("Sprite (leave empty if no background for this level)")]
         public Sprite sprite;

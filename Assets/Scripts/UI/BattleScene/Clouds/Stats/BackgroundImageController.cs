@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
     {
         public SpriteRenderer background;
 
-        public void Initialise(IBackgroundImageStats stats)
+        public void Initialise(IBackgroundImageStats stats, float cameraAspectRatio)
         {
             Assert.IsNotNull(stats);
             Assert.IsNotNull(background);
@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             
             gameObject.SetActive(true);
 
-            transform.position = stats.Position;
+            transform.position = FindPosition(stats, cameraAspectRatio);
             transform.localScale = new Vector3(stats.Scale.x, stats.Scale.y, 1);
             transform.rotation = Quaternion.Euler(0, 0, stats.ZRotation);
 
@@ -29,6 +29,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             background.flipX = stats.FlipX;
             background.flipY = stats.FlipY;
             background.sortingOrder = stats.OrderInLayer;
+        }
+
+        // FELIX  Abstract & test?
+        public Vector3 FindPosition(IBackgroundImageStats stats, float cameraAspectRatio)
+        {
+            // FELIX
+            return stats.Position;
         }
     }
 }

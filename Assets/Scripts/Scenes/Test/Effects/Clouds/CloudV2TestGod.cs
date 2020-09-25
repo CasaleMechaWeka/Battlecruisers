@@ -24,6 +24,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         public MoonController moon;
         public FogController fog;
         public BackgroundImageController backgroundImage;
+        public Camera mainCamera;
 
         [Header("Peter can change these :D")]
         [Range(1, 25)]
@@ -32,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         protected override void Setup(Helper helper)
         {
             base.Setup(helper);
-            BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skyButtonGroup, levelButtonList, backgroundStatsList, skybox, clouds, mist, moon, fog, backgroundImage);
+            BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skyButtonGroup, levelButtonList, backgroundStatsList, skybox, clouds, mist, moon, fog, backgroundImage, mainCamera);
 
             IList<ICloud> cloudList
                 = clouds
@@ -52,7 +53,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum);
+            cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum, mainCamera.aspect);
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
             levelButtonList.Initialise(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData, startingLevelNum);

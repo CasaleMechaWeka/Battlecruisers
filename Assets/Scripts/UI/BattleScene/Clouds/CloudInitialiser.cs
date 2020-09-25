@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public BackgroundStatsList backgroundStatsList;
         public BackgroundImageController background;
 
-        public void Initialise(string skyMaterialName, IUpdater updater, int levelNum)
+        public void Initialise(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio)
         {
             Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, backgroundStatsList, background);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             backgroundStatsList.Initialise();
             IBackgroundImageStats backgroudStats = backgroundStatsList.GetStats(levelNum);
-            background.Initialise(backgroudStats);
+            background.Initialise(backgroudStats, cameraAspectRatio);
 
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);

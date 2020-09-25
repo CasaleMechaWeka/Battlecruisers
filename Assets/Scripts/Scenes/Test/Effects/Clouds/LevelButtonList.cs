@@ -9,6 +9,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class LevelButtonList : MonoBehaviour
     {
+        public Camera mainCamera;
+
         public void Initialise(
             SkyStatsGroup skyStatsGroup, 
             ISkySetter skySetter, 
@@ -17,6 +19,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             IStaticData staticData, 
             int startingLevelNum)
         {
+            Assert.IsNotNull(mainCamera);
             BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData);
 
             CloudLevelButtonController[] buttons = GetComponentsInChildren<CloudLevelButtonController>();
@@ -31,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
                 IBackgroundImageStats backgroundStats = backgroundStatsList.GetStats(levelNum);
                 
                 CloudLevelButtonController button = buttons[i];
-                button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage);
+                button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage, mainCamera.aspect);
 
                 if (startingLevelNum == levelNum)
                 {
