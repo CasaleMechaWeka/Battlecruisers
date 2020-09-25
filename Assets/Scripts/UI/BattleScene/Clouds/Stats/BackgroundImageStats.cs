@@ -19,9 +19,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public Vector3 positionAt4to3;
         public Vector3 PositionAt4to3 => positionAt4to3;
 
-        [Header("Position for 16:9 aspect ratio")]
-        public Vector3 positionAt16to9;
-        public Vector3 PositionAt16to9 => positionAt16to9;
+        [Header("Y position for 16:9 aspect ratio")]
+        public float yPositionAt16to9;
+        public float YPositionAt16to9 => yPositionAt16to9;
 
         [Header("Sprite (leave empty if no background for this level)")]
         public Sprite sprite;

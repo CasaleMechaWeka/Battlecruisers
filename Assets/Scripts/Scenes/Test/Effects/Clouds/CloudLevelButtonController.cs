@@ -31,6 +31,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             _skySetter = skySetter;
             _backgroundStats = backgroundStats;
             _backgroundImage = backgroundImage;
+            _cameraAspectRatio = cameraAspectRatio;
             levelNumText.text = levelNum.ToString();
         }
 
