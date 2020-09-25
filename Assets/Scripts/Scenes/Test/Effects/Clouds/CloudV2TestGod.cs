@@ -52,9 +52,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater);
-
-            backgroundStatsList.Initialise();
+            cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum);
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
             levelButtonList.Initialise(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData, startingLevelNum);

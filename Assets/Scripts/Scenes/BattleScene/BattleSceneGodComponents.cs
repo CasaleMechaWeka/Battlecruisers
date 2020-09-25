@@ -31,7 +31,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public WindInitialiser windInitialiser;
         public WindInitialiser WindInitialiser => windInitialiser;
 
-        public CloudInitialiser CloudInitialiser { get; private set; }
+        public CloudInitialiser cloudInitialiser;
+        public CloudInitialiser CloudInitialiser => cloudInitialiser;
+
         public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
@@ -52,7 +54,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 prioritisedSoundPlayerAudioSource, 
                 uiSoundsAudioSource, 
                 musicPlayerInitialiser, 
-                windInitialiser);
+                windInitialiser,
+                cloudInitialiser);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
@@ -62,9 +65,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             PrioritisedSoundPlayerAudioSource = new AudioSourceBC(prioritisedSoundPlayerAudioSource);
             UISoundsAudioSource = new AudioSourceBC(uiSoundsAudioSource);
-
-            CloudInitialiser = GetComponentInChildren<CloudInitialiser>();
-            Assert.IsNotNull(CloudInitialiser);
 
             SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);

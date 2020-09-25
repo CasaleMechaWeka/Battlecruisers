@@ -5,12 +5,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageController : MonoBehaviour
     {
-        public SpriteRenderer renderer;
+        public SpriteRenderer background;
 
         public void Initialise(IBackgroundImageStats stats)
         {
             Assert.IsNotNull(stats);
-            Assert.IsNotNull(renderer);
+            Assert.IsNotNull(background);
 
             if (stats.Sprite == null)
             {
@@ -24,11 +24,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             transform.localScale = new Vector3(stats.Scale.x, stats.Scale.y, 1);
             transform.rotation = Quaternion.Euler(0, 0, stats.ZRotation);
 
-            renderer.sprite = stats.Sprite;
-            renderer.color = stats.Colour;
-            renderer.flipX = stats.FlipX;
-            renderer.flipY = stats.FlipY;
-            renderer.sortingOrder = stats.OrderInLayer;
+            background.sprite = stats.Sprite;
+            background.color = stats.Colour;
+            background.flipX = stats.FlipX;
+            background.flipY = stats.FlipY;
+            background.sortingOrder = stats.OrderInLayer;
         }
     }
 }

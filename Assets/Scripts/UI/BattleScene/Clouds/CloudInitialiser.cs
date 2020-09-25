@@ -15,19 +15,23 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public CloudController leftCloud, rightCloud;
         public MistController mist;
         public MoonController moon;
-        [SerializeField]
-        private FogController _fog;
+        public FogController fog;
+        public SkyStatsGroup skyStatsGroup;
+        public BackgroundStatsList backgroundStatsList;
+        public BackgroundImageController background;
 
-        public void Initialise(string skyMaterialName, IUpdater updater)
+        public void Initialise(string skyMaterialName, IUpdater updater, int levelNum)
         {
-            Helper.AssertIsNotNull(skyMaterialName, updater, moon, _fog);
+            Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, backgroundStatsList, background);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
-            SkyStatsGroup skyStatsGroup = GetComponentInChildren<SkyStatsGroup>();
-            Assert.IsNotNull(skyStatsGroup);
             skyStatsGroup.Initialise();
             ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
+
+            backgroundStatsList.Initialise();
+            IBackgroundImageStats backgroudStats = backgroundStatsList.GetStats(levelNum);
+            background.Initialise(backgroudStats);
 
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);
@@ -47,7 +51,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             mist.Initialise(skyStats);
             moon.Initialise(skyStats.MoonStats);
-            _fog.Initialise(skyStats.FogColour);
+            fog.Initialise(skyStats.FogColour);
         }
     }
 }
