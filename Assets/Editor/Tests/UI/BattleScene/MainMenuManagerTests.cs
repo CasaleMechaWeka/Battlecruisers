@@ -38,8 +38,23 @@ namespace BattleCruisers.Tests.UI.BattleScene
         {
             _mainMenuManager.ShowMenu();
 
-            _pauseGameManager.Received().PauseGame();
             _navigationPermitterManager.Received().PauseNavigation();
+            _pauseGameManager.Received().PauseGame();
+            _modalMenu.Received().ShowMenu();
+        }
+
+        [Test]
+        public void ShowMenu_SecondTme()
+        {
+            _mainMenuManager.ShowMenu();
+            _pauseGameManager.ClearReceivedCalls();
+            _navigationPermitterManager.ClearReceivedCalls();
+            _modalMenu.ClearReceivedCalls();
+
+            _mainMenuManager.ShowMenu();
+
+            _navigationPermitterManager.DidNotReceive().PauseNavigation();
+            _pauseGameManager.Received().PauseGame();
             _modalMenu.Received().ShowMenu();
         }
 
