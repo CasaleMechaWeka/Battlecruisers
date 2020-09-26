@@ -170,15 +170,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 
         #region FindValidCameraXPositions
         [Test]
-        public void FindValidCameraXPositions_TooSmallOrthographicSize_Throws()
+        public void FindValidCameraXPositions_TooSmallOrthographicSize_DoesNotThrow()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.ValidOrthographicSizes.Min - 0.0001f));
+            _calculator.FindValidCameraXPositions(_settings.ValidOrthographicSizes.Min - 0.0001f);
         }
 
         [Test]
-        public void FindValidCameraXPositions_TooLargeOrthographicSize_Throws()
+        public void FindValidCameraXPositions_TooLargeOrthographicSize_DoesNotThrow()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _calculator.FindValidCameraXPositions(_settings.ValidOrthographicSizes.Max + 0.0001f));
+            _calculator.FindValidCameraXPositions(_settings.ValidOrthographicSizes.Max + 0.0001f);
         }
 
         [Test]
