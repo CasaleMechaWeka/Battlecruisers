@@ -101,18 +101,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     await completedDifficultySymbol.InitialiseAsync(_dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
                     completedDifficultySymbol.gameObject.SetActive(true);
 
+                    if (_dataProvider.StaticData.IsDemo
+                        && BattleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO)
+                    {
+                        ShowDemoCompletionScreen(soundPlayer);
+                    }
+
                     if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
                     {
-                        if (_dataProvider.StaticData.IsDemo
-                            && BattleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO)
-                        {
-                            ShowDemoCompletionScreen(soundPlayer);
-                        }
-                        else
-                        {
-                            lootAcquiredText.SetActive(true);
-                            unlockedItemSection.Show();
-                        }
+                        lootAcquiredText.SetActive(true);
+                        unlockedItemSection.Show();
 
                         _lootManager.UnlockLoot(BattleResult.LevelNum);
                     }
