@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
         private int _numOfLevelsUnlocked;
-        private IApplicationModel _appModel;
+        private INextLevelHelper _nextLevelHelper;
 
         public ButtonController nextSetButton, previousSetButton;
         public ActionButton cancelButton;
@@ -50,15 +51,15 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked, 
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkDataList trashDataList,
-            IApplicationModel appModel)
+            INextLevelHelper nextLevelHelper)
         {
             base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
-            Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList, appModel);
+            Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList, nextLevelHelper);
 
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
-            _appModel = appModel;
+            _nextLevelHelper = nextLevelHelper;
 
             await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
 
@@ -95,35 +96,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.OnPresenting(activationParameter);
 
-            int levelNumToShow = FindLevelNumToShow();
+            int levelNumToShow = _nextLevelHelper.FindNextLevel();
             ShowLastPlayedLevelSet(_levelSets, levelNumToShow);
         }
-
-        private int FindLevelNumToShow()
-        {
-            if (_appModel.SelectedLevel != ApplicationModel.DEFAULT_SELECTED_LEVEL)
-            {
-                return _appModel.SelectedLevel;
-            }
-
-            BattleResult lastBattleResult = _appModel.DataProvider.GameModel.LastBattleResult;
-            if (lastBattleResult != null)
-            {
-                // FELIX  Avoid duplicate code with HomeScreenController
-                int nextLevelToShow = lastBattleResult.LevelNum;
-
-                if (lastBattleResult.WasVictory
-                    && nextLevelToShow < _appModel.DataProvider.LockedInfo.NumOfLevelsUnlocked)
-                {
-                    nextLevelToShow++;
-                }
-
-                return nextLevelToShow;
-            }
-
-            return 1;
-        }
-
         private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int levelToShow)
         {
             int levelSetToShow = 0;

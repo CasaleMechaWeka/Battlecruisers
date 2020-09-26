@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
@@ -87,7 +88,8 @@ namespace BattleCruisers.Scenes
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
-            homeScreen.Initialise(_soundPlayer, this, _dataProvider);
+            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
+            homeScreen.Initialise(_soundPlayer, this, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
             trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
 
@@ -103,7 +105,7 @@ namespace BattleCruisers.Scenes
             }
 
             // After potentially initialising post battle screen, because that can modify the data model.
-            await InitialiseLevelsScreenAsync(difficultySpritesProvider);
+            await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
             loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
@@ -134,11 +136,8 @@ namespace BattleCruisers.Scenes
             GoToScreen(levelsScreen);
         }
 
-        private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
+        private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {
-            BattleResult lastBattleResult = _dataProvider.GameModel.LastBattleResult;
-            int lastPlayedLevel = lastBattleResult != null ? lastBattleResult.LevelNum : 0;
-
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
             await levelsScreen.InitialiseAsync(
@@ -148,7 +147,7 @@ namespace BattleCruisers.Scenes
                 _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
                 difficultySpritesProvider, 
                 trashDataList,
-                _applicationModel);
+                nextLevelHelper);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
@@ -11,16 +12,20 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
     public class HomeScreenController : ScreenController, IHomeScreen
 	{
 		private BattleResult _lastBattleResult;
-        private ILockedInformation _lockedInfo;
+        private INextLevelHelper _nextLevelHelper;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDataProvider dataProvider)
+        public void Initialise(
+            ISingleSoundPlayer soundPlayer, 
+            IScreensSceneGod screensSceneGod, 
+            IDataProvider dataProvider,
+            INextLevelHelper nextLevelHelper)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
-            Assert.IsNotNull(dataProvider);
+            Helper.AssertIsNotNull(dataProvider, nextLevelHelper);
 
             _lastBattleResult = dataProvider.GameModel.LastBattleResult;
-            _lockedInfo = dataProvider.LockedInfo;
+            _nextLevelHelper = nextLevelHelper;
 
             HomeScreenLayout layout = GetLayout(dataProvider.GameModel);
             layout.Initialise(this, dataProvider.GameModel, soundPlayer);
@@ -56,14 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 		{
 			Assert.IsNotNull(_lastBattleResult);
 
-			int nextLevelToPlay = _lastBattleResult.LevelNum;
-
-			if (_lastBattleResult.WasVictory 
-                && nextLevelToPlay < _lockedInfo.NumOfLevelsUnlocked)
-			{
-				nextLevelToPlay++;
-			}
-
+            int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
 			_screensSceneGod.GoToTrashScreen(nextLevelToPlay);
 		}
 
