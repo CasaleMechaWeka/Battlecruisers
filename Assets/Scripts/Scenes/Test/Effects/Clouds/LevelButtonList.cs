@@ -22,6 +22,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             Assert.IsNotNull(mainCamera);
             BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData);
 
+            IBackgroundImageCalculator calculator = new BackgroundImageCalculator();
+
             CloudLevelButtonController[] buttons = GetComponentsInChildren<CloudLevelButtonController>();
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, buttons.Length);
 
@@ -34,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
                 IBackgroundImageStats backgroundStats = backgroundStatsList.GetStats(levelNum);
                 
                 CloudLevelButtonController button = buttons[i];
-                button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage, mainCamera.aspect);
+                button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage, mainCamera.aspect, calculator);
 
                 if (startingLevelNum == levelNum)
                 {

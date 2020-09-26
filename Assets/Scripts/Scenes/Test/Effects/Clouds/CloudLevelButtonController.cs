@@ -13,6 +13,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         private IBackgroundImageStats _backgroundStats;
         private BackgroundImageController _backgroundImage;
         private float _cameraAspectRatio;
+        private IBackgroundImageCalculator _calculator;
 
         public Text levelNumText;
 
@@ -22,23 +23,25 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             ISkySetter skySetter,
             IBackgroundImageStats backgroundStats,
             BackgroundImageController backgroundImage,
-            float cameraAspectRatio)
+            float cameraAspectRatio,
+            IBackgroundImageCalculator calculator)
         {
             Assert.IsNotNull(levelNumText);
-            BCUtils.Helper.AssertIsNotNull(skyStats, skySetter, backgroundStats, backgroundImage);
+            BCUtils.Helper.AssertIsNotNull(skyStats, skySetter, backgroundStats, backgroundImage, calculator);
 
             _skyStats = skyStats;
             _skySetter = skySetter;
             _backgroundStats = backgroundStats;
             _backgroundImage = backgroundImage;
             _cameraAspectRatio = cameraAspectRatio;
+            _calculator = calculator;
             levelNumText.text = levelNum.ToString();
         }
 
         public void ChangeSky()
         {
             _skySetter.SetSky(_skyStats);
-            _backgroundImage.Initialise(_backgroundStats, _cameraAspectRatio);
+            _backgroundImage.Initialise(_backgroundStats, _cameraAspectRatio, _calculator);
         }
     }
 }

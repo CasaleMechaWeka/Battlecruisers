@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             backgroundStatsList.Initialise();
             IBackgroundImageStats backgroudStats = backgroundStatsList.GetStats(levelNum);
-            background.Initialise(backgroudStats, cameraAspectRatio);
+            background.Initialise(backgroudStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);
