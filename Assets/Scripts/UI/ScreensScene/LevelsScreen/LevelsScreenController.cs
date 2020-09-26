@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -17,6 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
         private int _numOfLevelsUnlocked;
+        private IApplicationModel _appModel;
 
         public ButtonController nextSetButton, previousSetButton;
         public ActionButton cancelButton;
@@ -45,16 +48,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IScreensSceneGod screensSceneGod,
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
-            int lastPlayedLevelNum,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashDataList)
+            ITrashTalkDataList trashDataList,
+            IApplicationModel appModel)
         {
             base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
-            Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList);
+            Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList, appModel);
 
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
+            _appModel = appModel;
 
             await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
 
@@ -65,8 +69,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             previousSetButton.Initialise(_soundPlayer, _previousSetCommand);
 
             cancelButton.Initialise(_soundPlayer, Cancel);
-
-            ShowLastPlayedLevelSet(_levelSets, lastPlayedLevelNum);
         }
 
         private async Task InitialiseLevelSetsAsync(
@@ -89,13 +91,46 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             }
         }
 
-        private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int lastPlayedLevelNum)
+        public override void OnPresenting(object activationParameter)
+        {
+            base.OnPresenting(activationParameter);
+
+            int levelNumToShow = FindLevelNumToShow();
+            ShowLastPlayedLevelSet(_levelSets, levelNumToShow);
+        }
+
+        private int FindLevelNumToShow()
+        {
+            if (_appModel.SelectedLevel != ApplicationModel.DEFAULT_SELECTED_LEVEL)
+            {
+                return _appModel.SelectedLevel;
+            }
+
+            BattleResult lastBattleResult = _appModel.DataProvider.GameModel.LastBattleResult;
+            if (lastBattleResult != null)
+            {
+                // FELIX  Avoid duplicate code with HomeScreenController
+                int nextLevelToShow = lastBattleResult.LevelNum;
+
+                if (lastBattleResult.WasVictory
+                    && nextLevelToShow < _appModel.DataProvider.LockedInfo.NumOfLevelsUnlocked)
+                {
+                    nextLevelToShow++;
+                }
+
+                return nextLevelToShow;
+            }
+
+            return 1;
+        }
+
+        private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int levelToShow)
         {
             int levelSetToShow = 0;
 
             foreach (LevelsSetController levelSet in levelSets)
             {
-                if (levelSet.ContainsLevel(lastPlayedLevelNum))
+                if (levelSet.ContainsLevel(levelToShow))
                 {
                     levelSetToShow = levelSet.SetIndex;
                     break;

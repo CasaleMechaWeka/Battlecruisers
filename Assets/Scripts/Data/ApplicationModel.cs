@@ -5,6 +5,7 @@ namespace BattleCruisers.Data
 {
     public class ApplicationModel : IApplicationModel
     {
+        public const int DEFAULT_SELECTED_LEVEL = -1;
         private int _selectedLevel;
         public int SelectedLevel 
         {
@@ -27,7 +28,7 @@ namespace BattleCruisers.Data
             Assert.IsNotNull(dataProvider);
 
             DataProvider = dataProvider;
-            _selectedLevel = -1;
+            _selectedLevel = DEFAULT_SELECTED_LEVEL;
             ShowPostBattleScreen = false;
             IsTutorial = false;
         }
