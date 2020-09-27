@@ -150,8 +150,9 @@ namespace BattleCruisers.Scenes.BattleScene
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
+            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
 
-            TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
+            TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter, currentLevel.Num);
             LeftPanelComponents leftPanelComponents 
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
@@ -200,7 +201,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Audio
             Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
-            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
