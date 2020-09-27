@@ -4,6 +4,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers
 {
+    /// <summary>
+    /// Performs the debounce action immediately the first time.  Subsequently, performs the action
+    /// only if there has been no debounce call in the last specified time.
+    /// </summary>
     public class Debouncer : IDebouncer
     {
         private readonly ITimeSinceGameStartProvider _time;
