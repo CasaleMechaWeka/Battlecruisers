@@ -15,7 +15,7 @@ namespace BattleCruisers.Data.Helpers
 
         public int FindNextLevel()
         {
-            if (_appModel.SelectedLevel != ApplicationModel.DEFAULT_SELECTED_LEVEL)
+            if (_appModel.SelectedLevel != GameModel.UNSET_SELECTED_LEVEL)
             {
                 return _appModel.SelectedLevel;
             }

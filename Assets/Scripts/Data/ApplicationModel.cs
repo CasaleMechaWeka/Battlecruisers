@@ -4,9 +4,6 @@ namespace BattleCruisers.Data
 {
     public class ApplicationModel : IApplicationModel
     {
-        // FELIX Remove :)
-        public const int DEFAULT_SELECTED_LEVEL = -1;
-
         public int SelectedLevel 
         {
             get => DataProvider.GameModel.SelectedLevel;

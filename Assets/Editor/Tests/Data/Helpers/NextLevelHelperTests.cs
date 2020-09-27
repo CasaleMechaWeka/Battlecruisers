@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Data.Helpers
             _battleResult = new BattleResult(levelNum: 2, wasVictory: true);
             _appModel.DataProvider.GameModel.LastBattleResult.Returns(_battleResult);
 
-            _appModel.SelectedLevel.Returns(ApplicationModel.DEFAULT_SELECTED_LEVEL);
+            _appModel.SelectedLevel.Returns(GameModel.UNSET_SELECTED_LEVEL);
         }
 
         [Test]
