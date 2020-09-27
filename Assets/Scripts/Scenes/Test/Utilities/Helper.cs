@@ -57,7 +57,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
 	{
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
-        private readonly IDeferrer _deferrer, _realTimeDeferrer;
+        
+        public IDeferrer Deferrer { get; }
+        public IDeferrer RealTimeDeferrer { get; }
 
         public IUpdaterProvider UpdaterProvider { get; }
 
@@ -81,8 +83,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
-            _deferrer = deferrer;
-            _realTimeDeferrer = realTimeDeferrer;
+            Deferrer = deferrer;
+            RealTimeDeferrer = realTimeDeferrer;
             UpdaterProvider = updaterProvider;
             _prefabFactory = prefabFactory;
 		}
@@ -97,7 +99,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             _numOfDrones = numOfDrones ?? helper._numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier ?? helper._buildSpeedMultiplier;
-            _deferrer = deferrer ?? helper._deferrer;
+            Deferrer = deferrer ?? helper.Deferrer;
             UpdaterProvider = updaterProvider ?? helper.UpdaterProvider;
             _prefabFactory = prefabFactory ?? helper._prefabFactory;
         }
@@ -142,7 +144,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parentCruiserDirection,
                     accuracyAdjusterFactory,
                     targetPositionValidatorFactory,
-                    deferrer: _deferrer,
+                    deferrer: Deferrer,
                     updaterProvider: UpdaterProvider,
                     userChosenTargetManager: userChosenTargetManager);
 
@@ -206,7 +208,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parentCruiserDirection,
                     accuracyAdjusterFactory,
                     userChosenTargetManager: userChosenTargetManager,
-                    deferrer: _deferrer,
+                    deferrer: Deferrer,
                     updaterProvider: UpdaterProvider,
                     showDroneFeedback: showDroneFeedback);
 
@@ -436,7 +438,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             IAttackablePositionFinder attackablePositionFinder = null)
         {
-            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: _deferrer);
+            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: Deferrer);
 
             return
                 new BarrelControllerArgs(
@@ -530,7 +532,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     globalBoostProviders);
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
 
-            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: _deferrer);
+            BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: Deferrer);
 
             ICruiserArgs cruiserArgs
                 = new CruiserArgs(
@@ -577,8 +579,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return
                 new BuildableInitialisationArgs(
                     this,
-                    deferrer: _deferrer,
-                    realTimeDeferrer: _realTimeDeferrer);
+                    deferrer: Deferrer,
+                    realTimeDeferrer: RealTimeDeferrer);
         }
     }
 }

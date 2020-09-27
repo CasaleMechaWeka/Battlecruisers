@@ -3,6 +3,7 @@ using BattleCruisers.Effects.Laser;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using UnityCommon.PlatformAbstractions.Time;
 using UnityCommon.Properties;
@@ -32,7 +33,6 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 
             _laserImpact = GetComponentInChildren<LaserImpact>();
             Assert.IsNotNull(_laserImpact);
-            _laserImpact.Initialise();
 
             IParticleSystemGroupInitialiser laserMuzzleEffectInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("LaserMuzzleEffect");
             _laserMuzzleEffect = laserMuzzleEffectInitialiser.CreateParticleSystemGroup();
@@ -45,7 +45,8 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
-            IDeltaTimeProvider deltaTimeProvider)
+            IDeltaTimeProvider deltaTimeProvider,
+            IDeferrer timeScaleDeferrer)
         {
             base.Initialise(targetFilter, parent);
             Assert.IsNotNull(deltaTimeProvider);
@@ -54,6 +55,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             _damagePerS = damagePerS;
             _deltaTimeProvider = deltaTimeProvider;
             _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
+            _laserImpact.Initialise(timeScaleDeferrer);
         }
 
         protected override void HandleCollision(IBeamCollision collision)

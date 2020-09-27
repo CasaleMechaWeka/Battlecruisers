@@ -1,5 +1,8 @@
 ﻿using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.Timers;
+using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,15 +11,21 @@ namespace BattleCruisers.Effects.Laser
     public class LaserImpact : MonoBehaviour, ILaserImpact
     {
         private IParticleSystemGroup _effects;
+        private IDebouncer _debouncer;
 
-        public void Initialise()
+        private const float HIDE_IMPACT_DEBOUNCE_TIME_IN_S = 0.25f;
+
+        public void Initialise(IDeferrer timeScaleDeferrer)
         {
             Logging.LogMethod(Tags.LASER);
+            Assert.IsNotNull(timeScaleDeferrer);
 
             ParticleSystemGroupInitialiser effectsInitialiser = GetComponent<ParticleSystemGroupInitialiser>();
             Assert.IsNotNull(effectsInitialiser);
             _effects = effectsInitialiser.CreateParticleSystemGroup();
             _effects.Stop();
+
+            _debouncer = new DeferredDebouncer(TimeBC.Instance.TimeSinceGameStartProvider, timeScaleDeferrer, HIDE_IMPACT_DEBOUNCE_TIME_IN_S);
         }
 
         public void Show(Vector3 position)
@@ -25,13 +34,21 @@ namespace BattleCruisers.Effects.Laser
 
             transform.position = position;
             _effects.Play();
+
+            _debouncer.Debounce(DebouncedHide);
         }
 
+        // FELIX  Remove :)
         public void Hide()
         {
             Logging.LogMethod(Tags.LASER);
-            // FELIX
-            //_effects.Stop();
+            //_debouncer.Debounce(DebouncedHide);
+        }
+
+        private void DebouncedHide()
+        {
+            Logging.LogMethod(Tags.LASER);
+            _effects.Stop();
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Projectiles
 {
     public class LaserStats
     {
@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes.Test
                 helper.InitialiseBuilding(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
-                await SetupLaserAsync(test.LaserStats.Laser);
+                await SetupLaserAsync(test.LaserStats.Laser, helper.Deferrer);
             }
 
             // Moving targets
@@ -97,7 +97,7 @@ namespace BattleCruisers.Scenes.Test
                 helper.InitialiseUnit(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
-                await SetupLaserAsync(test.LaserStats.Laser);
+                await SetupLaserAsync(test.LaserStats.Laser, helper.Deferrer);
 			}
 
 			// Blocking targets
@@ -136,7 +136,7 @@ namespace BattleCruisers.Scenes.Test
             return movingTargets;
         }
 
-        private async Task SetupLaserAsync(LaserEmitter laserEmitter)
+        private async Task SetupLaserAsync(LaserEmitter laserEmitter, IDeferrer timeScaleDeferrer)
         {
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
@@ -146,7 +146,8 @@ namespace BattleCruisers.Scenes.Test
                     targetFilter, 
                     damagePerS: 100, 
                     parent: parent, 
-                    deltaTimeProvider: _updaterProvider.BarrelControllerUpdater);
+                    deltaTimeProvider: _updaterProvider.BarrelControllerUpdater,
+                    timeScaleDeferrer: timeScaleDeferrer);
         }
 
         private void SetupMovingTarget(TestAircraftController movingTarget, bool isSourceMirrored)
