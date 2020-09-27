@@ -7,6 +7,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -44,7 +45,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
-            IDifficultySpritesProvider difficultySpritesProvider)
+            IDifficultySpritesProvider difficultySpritesProvider,
+            ITrashTalkDataList trashTalkList)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
@@ -59,14 +61,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 levelName,
                 completedDifficultySymbol,
                 lootAcquiredText,
-                demoHomeButton);
+                demoHomeButton,
+                trashTalkList);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
 
-            levelName.Initialise(applicationModel);
+            levelName.Initialise(applicationModel, trashTalkList);
             unlockedItemSection.Initialise();
             SetupBackground();
 

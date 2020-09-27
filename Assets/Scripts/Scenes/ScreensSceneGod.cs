@@ -121,7 +121,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(_soundPlayer, this, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider);
+            await postBattleScreen.InitialiseAsync(_soundPlayer, this, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
