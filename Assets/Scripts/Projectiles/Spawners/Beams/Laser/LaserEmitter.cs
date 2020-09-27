@@ -75,7 +75,6 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             Logging.LogMethod(Tags.BEAM);
 
             _laserRenderer.HideLaser();
-            _laserImpact.Hide();
             _laserMuzzleEffect.Stop();
             _isLaserFiring.Value = false;
         }

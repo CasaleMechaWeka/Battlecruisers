@@ -35,17 +35,10 @@ namespace BattleCruisers.Effects.Laser
             transform.position = position;
             _effects.Play();
 
-            _debouncer.Debounce(DebouncedHide);
+            _debouncer.Debounce(Hide);
         }
 
-        // FELIX  Remove :)
-        public void Hide()
-        {
-            Logging.LogMethod(Tags.LASER);
-            //_debouncer.Debounce(DebouncedHide);
-        }
-
-        private void DebouncedHide()
+        private void Hide()
         {
             Logging.LogMethod(Tags.LASER);
             _effects.Stop();
