@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private SettingsModel _settings;
 
+        [SerializeField]
+        private int _selectedLevel;
+
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial
@@ -65,6 +69,17 @@ namespace BattleCruisers.Data.Models
             set { _settings = value; }
         }
 
+        public int SelectedLevel
+        {
+            get { return _selectedLevel; }
+            set 
+            {
+                Assert.IsTrue(value > 0);
+                Assert.IsTrue(value <= StaticData.NUM_OF_LEVELS);
+                _selectedLevel = value; 
+            }
+        }
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
@@ -73,6 +88,8 @@ namespace BattleCruisers.Data.Models
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
+        
+        public const int UNSET_SELECTED_LEVEL = -1;
 
         public GameModel()
         {
@@ -93,6 +110,7 @@ namespace BattleCruisers.Data.Models
             NewUnits = new NewItems<UnitKey>();
 
             Settings = new SettingsModel();
+            _selectedLevel = UNSET_SELECTED_LEVEL;
         }
 
         public GameModel(
@@ -186,8 +204,13 @@ namespace BattleCruisers.Data.Models
             {
                 Settings = new SettingsModel();
             }
+            if (_selectedLevel == default)
+            {
+                _selectedLevel = UNSET_SELECTED_LEVEL;
+            }
         }
 
+        // FELIX  Update tests
         public override bool Equals(object obj)
         {
             GameModel other = obj as GameModel;
@@ -195,6 +218,7 @@ namespace BattleCruisers.Data.Models
             return other != null
                 && other.HasAttemptedTutorial == HasAttemptedTutorial
                 && other.NumOfLevelsCompleted == NumOfLevelsCompleted
+                && other._selectedLevel == SelectedLevel
                 && PlayerLoadout.SmartEquals(other.PlayerLoadout)
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
                 && Settings.SmartEquals(other.Settings)
@@ -212,6 +236,7 @@ namespace BattleCruisers.Data.Models
             return this.GetHashCode(
                 HasAttemptedTutorial, 
                 NumOfLevelsCompleted, 
+                SelectedLevel,
                 PlayerLoadout, 
                 LastBattleResult, 
                 Settings,

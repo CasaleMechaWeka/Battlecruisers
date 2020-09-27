@@ -77,6 +77,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
+            // FELIX  Fix standalone battle scene
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
             if (applicationModel.SelectedLevel == -1)
             {
