@@ -19,21 +19,12 @@ namespace BattleCruisers.Effects.Laser
             _effects.Stop();
         }
 
-        // FELIX TEMP
-        bool isFirst = true;
-
         public void Show(Vector3 position)
         {
             Logging.Log(Tags.LASER, $"position: {position}");
 
-            // FELIX
-            if (isFirst)
-            {
-                isFirst = false;
-
-                transform.position = position;
-                _effects.Play();
-            }
+            transform.position = position;
+            _effects.Play();
         }
 
         public void Hide()
