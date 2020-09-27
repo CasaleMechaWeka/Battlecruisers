@@ -57,10 +57,15 @@ namespace BattleCruisers.Data.Models
             set { _playerLoadout = value; }
         }
 
+        // FELIX  Comment, test :)
         public BattleResult LastBattleResult
         {
             get { return _lastBattleResult; }
-            set { _lastBattleResult = value; }
+            set 
+            { 
+                _lastBattleResult = value;
+                _selectedLevel = UNSET_SELECTED_LEVEL;
+            }
         }
 
         public SettingsModel Settings
