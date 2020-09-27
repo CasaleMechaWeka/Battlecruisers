@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers
 {
-    // FELIX  Test :)
     /// <summary>
     /// Performs the debounce action after the specified time after the last debounce call.
     /// </summary>
