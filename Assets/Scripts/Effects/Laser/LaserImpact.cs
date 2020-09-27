@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,14 +17,17 @@ namespace BattleCruisers.Effects.Laser
             _effects.Stop();
         }
 
-        public void Show(Vector3 postion)
+        public void Show(Vector3 position)
         {
-            transform.position = postion;
+            Logging.Log(Tags.LASER, $"position: {position}");
+
+            transform.position = position;
             _effects.Play();
         }
 
         public void Hide()
         {
+            Logging.LogMethod(Tags.LASER);
             _effects.Stop();
         }
     }
