@@ -214,7 +214,6 @@ namespace BattleCruisers.Data.Models
             }
         }
 
-        // FELIX  Update tests
         public override bool Equals(object obj)
         {
             GameModel other = obj as GameModel;
