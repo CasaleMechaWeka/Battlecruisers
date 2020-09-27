@@ -21,7 +21,12 @@ namespace BattleCruisers.Effects.ParticleSystems
 
         public void Play()
         {
-            _particleSystem.Play();
+            // FELIX
+            if (!_particleSystem.isPlaying)
+            {
+                _particleSystem.Play();
+            }
+            //_particleSystem.Play();
         }
 
         public void Stop()
