@@ -236,6 +236,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.SlowerUpdater, currentLevel.Num, cameraComponents.MainCamera.Aspect);
+            components.CloudInitialiser.DestroyStats();
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
             _gameEndMonitor 
                 = new GameEndMonitor(

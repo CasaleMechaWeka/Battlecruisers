@@ -53,5 +53,18 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
         }
+
+        /// <summary>
+        /// For a level we only need the stats once, to set the sky and the background.
+        /// Afterwards, they can be safely destroyed.
+        /// 
+        /// For test scenes, we want to keep the stats, as we want to by able to change
+        /// the sky/backrgound.
+        /// </summary>
+        public void DestroyStats()
+        {
+            Destroy(skyStatsGroup.gameObject);
+            Destroy(backgroundStatsList.gameObject);
+        }
     }
 }
