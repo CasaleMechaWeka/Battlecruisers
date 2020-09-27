@@ -171,5 +171,14 @@ namespace BattleCruisers.Tests.Data.Models
 			_gameModel.AddUnlockedBuilding(buildingKey);
 			Assert.IsTrue(_gameModel.IsBuildingUnlocked(buildingKey));
 		}
+
+		[Test]
+		public void LastBattleResult_ResetsSelectedLevel()
+        {
+			_gameModel.SelectedLevel = 3;
+			_gameModel.LastBattleResult = null;
+
+			Assert.AreEqual(GameModel.UNSET_SELECTED_LEVEL, _gameModel.SelectedLevel);
+        }
 	}
 }

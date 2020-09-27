@@ -57,7 +57,6 @@ namespace BattleCruisers.Data.Models
             set { _playerLoadout = value; }
         }
 
-        // FELIX  Comment, test :)
         public BattleResult LastBattleResult
         {
             get { return _lastBattleResult; }
