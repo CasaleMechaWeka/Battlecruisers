@@ -165,7 +165,7 @@ namespace BattleCruisers.Scenes
                     completedDifficulty = completedLevel.HardestDifficulty;
                 }
 
-                levels.Add(new LevelInfo(staticLevel.Num, staticLevel.Name, completedDifficulty));
+                levels.Add(new LevelInfo(staticLevel.Num, completedDifficulty));
             }
 
             return levels;

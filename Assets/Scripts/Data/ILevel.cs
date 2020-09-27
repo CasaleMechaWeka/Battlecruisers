@@ -6,7 +6,6 @@ namespace BattleCruisers.Data
     public interface ILevel
     {
         int Num { get; }
-        string Name { get; }
         IPrefabKey Hull { get; }
         SoundKeyPair MusicKeys { get; }
         string SkyMaterialName { get; }
