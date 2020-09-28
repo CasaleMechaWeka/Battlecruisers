@@ -135,25 +135,32 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits.AddRange(unlockedUnits);
         }
 
+        // FELIX  Update tests
         public void AddUnlockedHull(HullKey hull)
         {
-            Assert.IsFalse(_unlockedHulls.Contains(hull));
-            _unlockedHulls.Add(hull);
-            NewHulls.AddItem(hull);
+            if(!_unlockedHulls.Contains(hull))
+            {
+                _unlockedHulls.Add(hull);
+                NewHulls.AddItem(hull);
+            }
         }
 
         public void AddUnlockedBuilding(BuildingKey building)
         {
-            Assert.IsFalse(_unlockedBuildings.Contains(building));
-            _unlockedBuildings.Add(building);
-            NewBuildings.AddItem(building);
+            if (!_unlockedBuildings.Contains(building))
+            {
+                _unlockedBuildings.Add(building);
+                NewBuildings.AddItem(building);
+            }
         }
 
         public void AddUnlockedUnit(UnitKey unit)
         {
-            Assert.IsFalse(_unlockedUnits.Contains(unit));
-            _unlockedUnits.Add(unit);
-            NewUnits.AddItem(unit);
+            if (!_unlockedUnits.Contains(unit))
+            {
+                _unlockedUnits.Add(unit);
+                NewUnits.AddItem(unit);
+            }
         }
 
         public void AddCompletedLevel(CompletedLevel completedLevel)

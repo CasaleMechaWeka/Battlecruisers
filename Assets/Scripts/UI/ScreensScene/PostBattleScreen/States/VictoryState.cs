@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
+    // FELIX  Test all states :)
     public class VictoryState
     {
         private const string VICTORY_TITLE = "Sweet as!";
@@ -19,7 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             IMusicPlayer musicPlayer,
             IDataProvider dataProvider,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ILootManager lootManager)
+            ILootManager lootManager,
+            PostBattleScreenBehaviour desiredBehaviour)
         {
             Helper.AssertIsNotNull(postBattleScreen, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager);
 
@@ -30,24 +32,28 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             await postBattleScreen.completedDifficultySymbol.InitialiseAsync(dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
             postBattleScreen.completedDifficultySymbol.gameObject.SetActive(true);
 
-            if (dataProvider.StaticData.IsDemo
-                && battleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO)
+            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_DemoCompleted
+                || (desiredBehaviour == PostBattleScreenBehaviour.Default
+                    && dataProvider.StaticData.IsDemo
+                    && battleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO))
             {
                 postBattleScreen.demoCompletedScreen.SetActive(true);
                 postBattleScreen.demoHomeButton.Initialise(soundPlayer, postBattleScreen.GoToHomeScreen);
             }
 
-            if (lootManager.ShouldShowLoot(battleResult.LevelNum))
+            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked
+                || (desiredBehaviour == PostBattleScreenBehaviour.Default
+                    && lootManager.ShouldShowLoot(battleResult.LevelNum)))
             {
                 postBattleScreen.lootAcquiredText.SetActive(true);
                 postBattleScreen.unlockedItemSection.Show();
 
                 lootManager.UnlockLoot(battleResult.LevelNum);
             }
-            else if (battleResult.LevelNum == dataProvider.Levels.Count
-                && battleResult.LevelNum > dataProvider.GameModel.NumOfLevelsCompleted)
+            else if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted
+                || (desiredBehaviour == PostBattleScreenBehaviour.Default
+                    && battleResult.LevelNum == dataProvider.Levels.Count))
             {
-                // Completed last level for the frist time
                 postBattleScreen.completedGameMessage.SetActive(true);
             }
             else

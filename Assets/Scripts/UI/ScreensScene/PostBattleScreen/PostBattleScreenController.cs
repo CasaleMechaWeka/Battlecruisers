@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -20,13 +19,23 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
+    public enum PostBattleScreenBehaviour
+    {
+        Default,
+        TutorialCompleted,
+        Defeat,
+        Victory_LootUnlocked,
+        Victory_NoNewLoot,
+        Victory_DemoCompleted,
+        Victory_GameCompleted
+    }
+
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
     {
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
         private ILootManager _lootManager;
 
-        public bool showDemoScreen = true;
 		public Text title;
 		public SlidingPanel unlockedItemSection;
         public GameObject postTutorialMessage, completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen, lootAcquiredText;
@@ -34,6 +43,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public LevelStatsController completedDifficultySymbol;
         public ActionButton demoHomeButton;
         public PostTutorialButtonsPanel postTutorialButtonsPanel;
+        
+        [Header("Can change these for testing")]
+        public PostBattleScreenBehaviour desiredBehaviour;
+        [Range(1, 25)]
+        public int levelNum = 2;
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
@@ -68,22 +82,23 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
 
+            if (desiredBehaviour != PostBattleScreenBehaviour.Default)
+            {
+                BattleResult.LevelNum = levelNum;
+                BattleResult.WasVictory = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
+            }
+
             levelName.Initialise(applicationModel, trashTalkList);
             unlockedItemSection.Initialise();
             SetupBackground();
 
-            // FELIX  :P
-            //if (showDemoScreen)
-            //{
-            //    ShowDemoCompletionScreen(soundPlayer);
-            //    return;
-            //}
-
-            if (_applicationModel.IsTutorial)
+            if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
+                || _applicationModel.IsTutorial)
             {
                 new TutorialCompletedState()
                     .Initialise(
-                    this, _applicationModel,
+                    this, 
+                    _applicationModel,
                     soundPlayer, 
                     musicPlayer);
             }
@@ -92,7 +107,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
 
-                if (BattleResult.WasVictory)
+                if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
+                    || !BattleResult.WasVictory)
+                {
+                    new DefeatState().Initialise(this, musicPlayer);
+                }
+                else
                 {
                     await new VictoryState()
                         .InitialiseAsync(
@@ -101,11 +121,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             musicPlayer,
                             _dataProvider,
                             difficultySpritesProvider,
-                            _lootManager);
-                }
-                else
-                {
-                    new DefeatState().Initialise(this, musicPlayer);
+                            _lootManager,
+                            desiredBehaviour);
                 }
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels

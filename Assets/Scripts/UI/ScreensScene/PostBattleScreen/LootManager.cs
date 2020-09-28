@@ -37,10 +37,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
 
+        // FELIX  Update tests, assert removed :)
         public void UnlockLoot(int levelCompleted)
         {
-            Assert.IsTrue(ShouldShowLoot(levelCompleted));
-
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)

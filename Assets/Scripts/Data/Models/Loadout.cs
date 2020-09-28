@@ -52,10 +52,13 @@ namespace BattleCruisers.Data.Models
 			return _units.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
 		}
 
+		// FELIX  Update tests :)
 		public void AddBuilding(BuildingKey buildingToAdd)
 		{
-			Assert.IsFalse(_buildings.Contains(buildingToAdd));
-			_buildings.Add(buildingToAdd);
+			if (!_buildings.Contains(buildingToAdd))
+            {
+				_buildings.Add(buildingToAdd);
+            }
 		}
 
 		public void RemoveBuilding(BuildingKey buildingToRemove)
@@ -66,8 +69,10 @@ namespace BattleCruisers.Data.Models
 
         public void AddUnit(UnitKey unitToAdd)
         {
-            Assert.IsFalse(_units.Contains(unitToAdd));
-            _units.Add(unitToAdd);
+            if (!_units.Contains(unitToAdd))
+            {
+	            _units.Add(unitToAdd);
+            }
         }
 
         public void RemoveUnit(UnitKey unitToRemove)
