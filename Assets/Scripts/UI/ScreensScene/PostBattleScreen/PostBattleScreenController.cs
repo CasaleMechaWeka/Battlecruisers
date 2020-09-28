@@ -7,6 +7,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.UI.ScreensScene.PostBattleScreen.States;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -33,11 +34,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public LevelStatsController completedDifficultySymbol;
         public ActionButton demoHomeButton;
         public PostTutorialButtonsPanel postTutorialButtonsPanel;
-
-        // FELIX  Remove :)
-        private const string VICTORY_TITLE = "Sweet as!";
-		private const string LOSS_TITLE = "Bad luck!";
-		private const string TUTORIAL_TITLE = "Tutorial Completed :D";
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
@@ -76,24 +72,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             unlockedItemSection.Initialise();
             SetupBackground();
 
-            if (showDemoScreen)
-            {
-                ShowDemoCompletionScreen(soundPlayer);
-                return;
-            }
+            // FELIX  :P
+            //if (showDemoScreen)
+            //{
+            //    ShowDemoCompletionScreen(soundPlayer);
+            //    return;
+            //}
 
             if (_applicationModel.IsTutorial)
             {
-                // User completed (or rage quit) the tutorial
-                _applicationModel.IsTutorial = false;
-                title.text = TUTORIAL_TITLE;
-                postTutorialMessage.SetActive(true);
-                musicPlayer.PlayVictoryMusic();
-
-                PostTutorialButtonsPanel postTutorialButtonsPanel = GetComponentInChildren<PostTutorialButtonsPanel>(includeInactive: true);
-                Assert.IsNotNull(postTutorialButtonsPanel);
-                postTutorialButtonsPanel.Initialise(this, _soundPlayer);
-                postTutorialButtonsPanel.gameObject.SetActive(true);
+                new TutorialCompletedState()
+                    .Initialise(
+                    this, _applicationModel,
+                    soundPlayer, 
+                    musicPlayer);
             }
             else
             {
@@ -102,44 +94,18 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 if (BattleResult.WasVictory)
                 {
-                    title.text = VICTORY_TITLE;
-                    musicPlayer.PlayVictoryMusic();
-                    await completedDifficultySymbol.InitialiseAsync(_dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
-                    completedDifficultySymbol.gameObject.SetActive(true);
-
-                    if (_dataProvider.StaticData.IsDemo
-                        && BattleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO)
-                    {
-                        ShowDemoCompletionScreen(soundPlayer);
-                    }
-
-                    if (_lootManager.ShouldShowLoot(BattleResult.LevelNum))
-                    {
-                        lootAcquiredText.SetActive(true);
-                        unlockedItemSection.Show();
-
-                        _lootManager.UnlockLoot(BattleResult.LevelNum);
-                    }
-                    else if (BattleResult.LevelNum == _dataProvider.Levels.Count
-                        && BattleResult.LevelNum > _dataProvider.GameModel.NumOfLevelsCompleted)
-                    {
-                        // Completed last level for the frist time
-                        completedGameMessage.SetActive(true);
-                    }
-                    else
-                    {
-                        victoryNoLootMessage.SetActive(true);
-                    }
-
-                    CompletedLevel level = new CompletedLevel(levelNum: BattleResult.LevelNum, hardestDifficulty: _dataProvider.SettingsManager.AIDifficulty);
-                    _dataProvider.GameModel.AddCompletedLevel(level);
-                    _dataProvider.SaveGame();
+                    await new VictoryState()
+                        .InitialiseAsync(
+                            this,
+                            soundPlayer,
+                            musicPlayer,
+                            _dataProvider,
+                            difficultySpritesProvider,
+                            _lootManager);
                 }
                 else
                 {
-                    title.text = LOSS_TITLE;
-                    defeatMessage.SetActive(true);
-                    musicPlayer.PlayDefeatMusic();
+                    new DefeatState().Initialise(this, musicPlayer);
                 }
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
@@ -168,18 +134,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return detailsGroup;
         }
 
+        // FELIX  Move to states :)
         private void SetupBackground()
         {
             PostBattleBackgroundController background = GetComponentInChildren<PostBattleBackgroundController>(includeInactive: true);
             Assert.IsNotNull(background);
             bool isVictory = _applicationModel.IsTutorial || BattleResult.WasVictory;
             background.Initalise(isVictory);
-        }
-
-        private void ShowDemoCompletionScreen(ISingleSoundPlayer soundPlayer)
-        {
-            demoCompletedScreen.SetActive(true);
-            demoHomeButton.Initialise(soundPlayer, GoToHomeScreen);
         }
 
 		public void Retry()

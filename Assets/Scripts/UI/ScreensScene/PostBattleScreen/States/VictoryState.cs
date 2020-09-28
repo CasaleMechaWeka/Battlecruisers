@@ -15,14 +15,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public async Task InitialiseAsync(
             PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
             ISingleSoundPlayer soundPlayer,
             IMusicPlayer musicPlayer,
             IDataProvider dataProvider,
             IDifficultySpritesProvider difficultySpritesProvider,
             ILootManager lootManager)
         {
-            Helper.AssertIsNotNull(postBattleScreen, appModel, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager);
+            Helper.AssertIsNotNull(postBattleScreen, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager);
 
             BattleResult battleResult = dataProvider.GameModel.LastBattleResult;
 
