@@ -32,6 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
         public ActionButton demoHomeButton;
+        public PostTutorialButtonsPanel postTutorialButtonsPanel;
 
         // FELIX  Remove :)
         private const string VICTORY_TITLE = "Sweet as!";
@@ -63,7 +64,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 completedDifficultySymbol,
                 lootAcquiredText,
                 demoHomeButton,
-                trashTalkList);
+                trashTalkList,
+                postTutorialButtonsPanel);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;

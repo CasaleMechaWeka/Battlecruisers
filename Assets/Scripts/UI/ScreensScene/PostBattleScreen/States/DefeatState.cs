@@ -1,10 +1,9 @@
 ﻿using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
-using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class DefeatState : MonoBehaviour
+    public class DefeatState
     {
 		private const string LOSS_TITLE = "Bad luck!";
 

@@ -1,14 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Assertions;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
+using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.UI.Music;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class TutorialCompletedState : MonoBehaviour
+    public class TutorialCompletedState
     {
 		private const string TUTORIAL_TITLE = "Tutorial Completed :D";
 
@@ -25,10 +22,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.postTutorialMessage.SetActive(true);
             musicPlayer.PlayVictoryMusic();
 
-            PostTutorialButtonsPanel postTutorialButtonsPanel = GetComponentInChildren<PostTutorialButtonsPanel>(includeInactive: true);
-            Assert.IsNotNull(postTutorialButtonsPanel);
-            postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer);
-            postTutorialButtonsPanel.gameObject.SetActive(true);
+            postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer);
+            postBattleScreen.postTutorialButtonsPanel.gameObject.SetActive(true);
         }
     }
 }

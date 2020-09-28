@@ -6,11 +6,10 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class VictoryState : MonoBehaviour
+    public class VictoryState
     {
         private const string VICTORY_TITLE = "Sweet as!";
 
