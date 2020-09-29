@@ -8,6 +8,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
@@ -39,6 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             BattleResult battleResult = dataProvider.GameModel.LastBattleResult;
 
             postBattleScreen.title.text = VICTORY_TITLE;
+            postBattleScreen.title.color = Color.black;
             musicPlayer.PlayVictoryMusic();
             await postBattleScreen.completedDifficultySymbol.InitialiseAsync(dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
             postBattleScreen.completedDifficultySymbol.gameObject.SetActive(true);
