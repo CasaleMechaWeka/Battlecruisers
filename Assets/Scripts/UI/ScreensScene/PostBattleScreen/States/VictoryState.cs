@@ -62,9 +62,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
             else
             {
-                postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                postBattleScreen.lootAcquiredText.SetActive(true);
-                _unlockedLoot = lootManager.UnlockLoot(battleResult.LevelNum);
+                if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked
+                    || (desiredBehaviour == PostBattleScreenBehaviour.Default
+                    && _lootManager.ShouldShowLoot(battleResult.LevelNum)))
+                {
+                    _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
+                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
+                    postBattleScreen.lootAcquiredText.SetActive(true);
+                    _unlockedLoot = lootManager.UnlockLoot(battleResult.LevelNum);
+                }
+                else
+                {
+                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer);
+                }
             }
 
             CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: dataProvider.SettingsManager.AIDifficulty);
