@@ -1,7 +1,8 @@
-﻿using BattleCruisers.UI.ScreensScene.PostBattleScreen.States;
-using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
@@ -11,13 +12,23 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public Text appraisalDroneText;
         public ActionButton lootButton;
 
-        public void Initialise(string appraisalText, ISingleSoundPlayer soundPlayer, VictoryState victoryState)
+        public void Initialise(string appraisalText, ISingleSoundPlayer soundPlayer, Action lootButtonAction = null)
         {
             Helper.AssertIsNotNull(appraisalDroneText, lootButton);
-            Helper.AssertIsNotNull(soundPlayer, victoryState);
+            Assert.IsNotNull(soundPlayer);
 
             appraisalDroneText.text = appraisalText;
-            lootButton.Initialise(soundPlayer, victoryState.ShowLoot);
+
+            if (lootButtonAction != null)
+            {
+                lootButton.Initialise(soundPlayer, lootButtonAction);
+            }
+            else
+            {
+                lootButton.gameObject.SetActive(false);
+            }
+
+            gameObject.SetActive(true);
         }
     }
 }

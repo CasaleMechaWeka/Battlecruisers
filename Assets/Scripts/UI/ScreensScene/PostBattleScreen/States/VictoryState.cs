@@ -62,10 +62,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
             else
             {
-                postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText ,soundPlayer, this);
-
+                postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
                 postBattleScreen.lootAcquiredText.SetActive(true);
-                postBattleScreen.appraisalSection.gameObject.SetActive(true);
                 _unlockedLoot = lootManager.UnlockLoot(battleResult.LevelNum);
             }
 

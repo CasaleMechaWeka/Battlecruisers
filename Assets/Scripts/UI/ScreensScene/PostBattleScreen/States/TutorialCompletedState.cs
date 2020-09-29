@@ -9,6 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
     public class TutorialCompletedState
     {
 		private const string TUTORIAL_TITLE = "Tutorial Completed :D";
+		private const string TUTORIAL_APPRAISAL_DRONE_TEXT = "Your 10 minute tutorial simulation is complete! You are now a qualified Battlecruiser Captain, certified by the UAC.";
 
         public void Initialise(
             PostBattleScreenController postBattleScreen,
@@ -22,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.title.text = TUTORIAL_TITLE;
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
-            postBattleScreen.postTutorialMessage.SetActive(true);
+            postBattleScreen.appraisalSection.Initialise(TUTORIAL_APPRAISAL_DRONE_TEXT, soundPlayer);
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);
 
