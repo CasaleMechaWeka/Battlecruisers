@@ -11,5 +11,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         bool PlayerTalksFirst { get; }
         string PlayerText { get; }
         string EnemyText { get; }
+        string AppraisalDroneText { get; }
     }
 }

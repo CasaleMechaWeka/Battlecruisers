@@ -24,5 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public string enemyText = "Kia Ora";
         public string EnemyText => enemyText;
+
+        public string appraisalDroneText = "Chummy Chinese chums chosen challenge";
+        public string AppraisalDroneText => appraisalDroneText;
     }
 }
