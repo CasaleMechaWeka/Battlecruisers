@@ -1,10 +1,9 @@
-﻿using System;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using UnityEngine.Assertions;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
@@ -37,18 +36,18 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
 
-        // FELIX  Update tests, assert removed :)
-        public void UnlockLoot(int levelCompleted)
+        // FELIX  Update tests
+        public ILoot UnlockLoot(int levelCompleted)
         {
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
             {
                 UnlockLootItems(unlockedLoot);
-                ShowLoot(unlockedLoot);
+                _dataProvider.SaveGame();
             }
 
-            _dataProvider.SaveGame();
+            return unlockedLoot;
         }
 
         private void UnlockLootItems(ILoot unlockedLoot)
@@ -59,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
         }
 
-        private void ShowLoot(ILoot unlockedLoot)
+        public void ShowLoot(ILoot unlockedLoot)
         {
             switch (unlockedLoot.Items.Count)
             {
