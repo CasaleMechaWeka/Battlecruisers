@@ -2,6 +2,7 @@
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
@@ -19,8 +20,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             appModel.IsTutorial = false;
             postBattleScreen.title.text = TUTORIAL_TITLE;
+            postBattleScreen.title.color = Color.black;
+            postBattleScreen.levelName.levelName.color = Color.black;
             postBattleScreen.postTutorialMessage.SetActive(true);
             musicPlayer.PlayVictoryMusic();
+            postBattleScreen.levelName.gameObject.SetActive(false);
 
             postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer);
             postBattleScreen.postTutorialButtonsPanel.gameObject.SetActive(true);

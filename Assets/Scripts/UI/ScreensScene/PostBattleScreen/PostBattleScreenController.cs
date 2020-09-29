@@ -93,7 +93,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             ITrashTalkData levelTrashTalkData = trashTalkList.GetTrashTalk(BattleResult.LevelNum);
-            levelName.Initialise(applicationModel, levelTrashTalkData);
+            levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
             unlockedItemSection.Initialise();
             SetupBackground();
 

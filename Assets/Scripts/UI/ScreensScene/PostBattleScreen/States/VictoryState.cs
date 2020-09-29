@@ -41,6 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             postBattleScreen.title.text = VICTORY_TITLE;
             postBattleScreen.title.color = Color.black;
+            postBattleScreen.levelName.levelName.color = Color.black;
             musicPlayer.PlayVictoryMusic();
             await postBattleScreen.completedDifficultySymbol.InitialiseAsync(dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
             postBattleScreen.completedDifficultySymbol.gameObject.SetActive(true);
