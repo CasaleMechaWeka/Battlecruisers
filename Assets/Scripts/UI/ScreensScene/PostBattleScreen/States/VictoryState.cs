@@ -1,17 +1,24 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Threading.Tasks;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
     // FELIX  Test all states :)
     public class VictoryState
     {
+        private PostBattleScreenController _postBattleScreen;
+        private ILootManager _lootManager;
+        private ILoot _unlockedLoot;
+
         private const string VICTORY_TITLE = "Sweet as!";
 
         public async Task InitialiseAsync(
@@ -21,9 +28,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             IDataProvider dataProvider,
             IDifficultySpritesProvider difficultySpritesProvider,
             ILootManager lootManager,
+            ITrashTalkData levelTrashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)
         {
-            Helper.AssertIsNotNull(postBattleScreen, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager);
+            Helper.AssertIsNotNull(postBattleScreen, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager, levelTrashTalkData);
+
+            _postBattleScreen = postBattleScreen;
+            _lootManager = lootManager;
 
             BattleResult battleResult = dataProvider.GameModel.LastBattleResult;
 
@@ -40,16 +51,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 postBattleScreen.demoCompletedScreen.SetActive(true);
                 postBattleScreen.demoHomeButton.Initialise(soundPlayer, postBattleScreen.GoToHomeScreen);
             }
-
-            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked
-                || (desiredBehaviour == PostBattleScreenBehaviour.Default
-                    && lootManager.ShouldShowLoot(battleResult.LevelNum)))
-            {
-                postBattleScreen.lootAcquiredText.SetActive(true);
-                postBattleScreen.unlockedItemSection.Show();
-
-                lootManager.UnlockLoot(battleResult.LevelNum);
-            }
             else if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted
                 || (desiredBehaviour == PostBattleScreenBehaviour.Default
                     && battleResult.LevelNum == dataProvider.Levels.Count))
@@ -58,12 +59,26 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
             else
             {
-                postBattleScreen.victoryNoLootMessage.SetActive(true);
+                postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText ,soundPlayer, this);
+
+                postBattleScreen.lootAcquiredText.SetActive(true);
+                postBattleScreen.appraisalSection.gameObject.SetActive(true);
+                _unlockedLoot = lootManager.UnlockLoot(battleResult.LevelNum);
             }
 
             CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: dataProvider.SettingsManager.AIDifficulty);
             dataProvider.GameModel.AddCompletedLevel(level);
             dataProvider.SaveGame();
+        }
+
+        public void ShowLoot()
+        {
+            Assert.IsNotNull(_unlockedLoot);
+
+            _postBattleScreen.appraisalSection.gameObject.SetActive(false);
+            _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+            _postBattleScreen.unlockedItemSection.Show();
+            _lootManager.ShowLoot(_unlockedLoot);
         }
     }
 }

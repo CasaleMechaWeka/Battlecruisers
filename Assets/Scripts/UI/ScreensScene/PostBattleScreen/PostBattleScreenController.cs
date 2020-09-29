@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         TutorialCompleted,
         Defeat,
         Victory_LootUnlocked,
-        Victory_NoNewLoot,
+        Victory_NoNewLoot,  // Currently the same behaviour as Victory_LootUnlocked
         Victory_DemoCompleted,
         Victory_GameCompleted
     }
@@ -43,6 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public LevelStatsController completedDifficultySymbol;
         public ActionButton demoHomeButton;
         public PostTutorialButtonsPanel postTutorialButtonsPanel;
+        public PostBattleButtonsPanel postBattleButtonsPanel;
+        public AppraisalSectionController appraisalSection;
         
         [Header("Can change these for testing")]
         public PostBattleScreenBehaviour desiredBehaviour;
@@ -75,7 +77,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 lootAcquiredText,
                 demoHomeButton,
                 trashTalkList,
-                postTutorialButtonsPanel);
+                postTutorialButtonsPanel,
+                postBattleButtonsPanel,
+                appraisalSection);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
@@ -88,7 +92,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 BattleResult.WasVictory = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
             }
 
-            levelName.Initialise(applicationModel, trashTalkList);
+            ITrashTalkData levelTrashTalkData = trashTalkList.GetTrashTalk(BattleResult.LevelNum);
+            levelName.Initialise(applicationModel, levelTrashTalkData);
             unlockedItemSection.Initialise();
             SetupBackground();
 
@@ -122,16 +127,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             _dataProvider,
                             difficultySpritesProvider,
                             _lootManager,
+                            levelTrashTalkData,
                             desiredBehaviour);
                 }
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-
-                PostBattleButtonsPanel postBattleButtonsPanel = GetComponentInChildren<PostBattleButtonsPanel>(includeInactive: true);
-                Assert.IsNotNull(postBattleButtonsPanel);
                 postBattleButtonsPanel.Initialise(this, nextCommand, _soundPlayer, BattleResult.WasVictory);
-                postBattleButtonsPanel.gameObject.SetActive(true);
             }
 		}
 

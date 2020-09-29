@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.title.text = LOSS_TITLE;
             postBattleScreen.defeatMessage.SetActive(true);
             musicPlayer.PlayDefeatMusic();
+            postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
         }
     }
 }

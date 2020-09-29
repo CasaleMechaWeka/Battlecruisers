@@ -10,9 +10,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class LevelNameController : MonoBehaviour
     {
-        public void Initialise(IApplicationModel appModel, ITrashTalkDataList trashTalkList)
+        public void Initialise(IApplicationModel appModel, ITrashTalkData levelTrashTalkData)
         {
-            Helper.AssertIsNotNull(appModel, trashTalkList);
+            Helper.AssertIsNotNull(appModel, levelTrashTalkData);
 
             if (appModel.IsTutorial)
             {
@@ -24,15 +24,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 Text levelName = GetComponent<Text>();
                 Assert.IsNotNull(levelName);
-                levelName.text = CreateLevelName(appModel.DataProvider.GameModel.LastBattleResult, trashTalkList);
+                levelName.text = CreateLevelName(appModel.DataProvider.GameModel.LastBattleResult, levelTrashTalkData);
             }
         }
 
-        private string CreateLevelName(BattleResult result, ITrashTalkDataList trashTalkList)
+        private string CreateLevelName(BattleResult result, ITrashTalkData levelTrashTalkData)
         {
             int levelNum = result.LevelNum;
-            ITrashTalkData trashTalkData = trashTalkList.GetTrashTalk(levelNum);
-            return $"#{levelNum} {trashTalkData.EnemyName}";
+            return $"#{levelNum} {levelTrashTalkData.EnemyName}";
         }
     }
 }

@@ -4,6 +4,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
@@ -60,6 +61,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void ShowLoot(ILoot unlockedLoot)
         {
+            Assert.IsNotNull(unlockedLoot);
+
             switch (unlockedLoot.Items.Count)
             {
                 case 1:
