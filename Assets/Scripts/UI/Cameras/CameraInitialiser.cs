@@ -31,7 +31,8 @@ namespace BattleCruisers.UI.Cameras
         private const float CAMERA_X_POSITION_BUFFER_IN_M = 2;
 
         private const float TOUCH_SWIPE_MULTIPLIER = 16;
-        private const float MOUSE_SWIPE_MULTIPLIER = 64;
+        private const float MOUSE_SWIPE_MULTIPLIER = 16;
+        private const float EDGE_SCROLL_MULTIPLIER = 512;
 
         public TogglableDragTracker dragTracker;
         public Camera mainCamera;
@@ -192,12 +193,10 @@ namespace BattleCruisers.UI.Cameras
 
             IScrollRecogniser scrollRecogniser;
             ScrollLevelConverter scrollLevelConverter = new ScrollLevelConverter();
-            float swipeMultiplier = MOUSE_SWIPE_MULTIPLIER;
+            float swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
 
             if (hasTouch)
             {
-                swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
-
                 scrollRecogniser = new ScrollRecogniser();
 
                 targetProviders.Add(
@@ -208,6 +207,13 @@ namespace BattleCruisers.UI.Cameras
             }
             else
             {
+                swipeMultiplier = MOUSE_SWIPE_MULTIPLIER;
+                if (Application.isEditor)
+                {
+                    // For some reason the editor scrolls slower than a Windows build :/
+                    swipeMultiplier *= 4;
+                }
+
                 // Always interpret as scroll (swipe), never zoom.  Zoom is handled by scroll wheel :)
                 scrollRecogniser = new StaticScrollRecogniser(isScroll: true);
 
@@ -218,6 +224,13 @@ namespace BattleCruisers.UI.Cameras
                         zoomCalculator,
                         directionalZoom));
 
+                float edgeScrollMultiplier = EDGE_SCROLL_MULTIPLIER;
+                if (Application.isEditor)
+                {
+                    // For some reason the editor scrolls slower than a Windows build :/
+                    edgeScrollMultiplier *= 4;
+                }
+
                 targetProviders.Add(
                     new EdgeScrollingCameraTargetProvider(
                         updater,
@@ -226,7 +239,8 @@ namespace BattleCruisers.UI.Cameras
                             settingsManager,
                             scrollLevelConverter,
                             camera,
-                            settings.ValidOrthographicSizes),
+                            settings.ValidOrthographicSizes,
+                            edgeScrollMultiplier),
                         camera,
                         cameraCalculator,
                         new EdgeDetector(

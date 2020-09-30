@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions.Time;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
@@ -13,23 +14,25 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
         private readonly ICamera _camera;
         private readonly IRange<float> _validOrthographicSizes;
-
-        public const float SCROLL_SCALE = 2048;
+        private readonly float _scrollMultiplier;
 
         public EdgeScrollCalculator(
             ITime time,
             ISettingsManager settingsManager,
             ILevelToMultiplierConverter scrollLevelConverter,
             ICamera camera,
-            IRange<float> validOrthographicSizes)
+            IRange<float> validOrthographicSizes,
+            float scrollMultiplier)
         {
             Helper.AssertIsNotNull(time, settingsManager, scrollLevelConverter, camera, validOrthographicSizes);
+            Assert.IsTrue(scrollMultiplier > 0);
 
             _time = time;
             _settingsManager = settingsManager;
             _scrollLevelConverter = scrollLevelConverter;
             _camera = camera;
             _validOrthographicSizes = validOrthographicSizes;
+            _scrollMultiplier = scrollMultiplier;
         }
 
         public float FindCameraPositionDeltaMagnituteInM()
@@ -38,7 +41,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             float orthographicProportion = _camera.OrthographicSize / _validOrthographicSizes.Max;
 
             return
-                SCROLL_SCALE *
+                _scrollMultiplier *
                 _time.UnscaledDeltaTime *
                 orthographicProportion *
                 _scrollLevelConverter.LevelToMultiplier(_settingsManager.ScrollSpeedLevel);
