@@ -37,7 +37,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot;
         }
 
-        // FELIX  Update tests
         public ILoot UnlockLoot(int levelCompleted)
         {
             ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);

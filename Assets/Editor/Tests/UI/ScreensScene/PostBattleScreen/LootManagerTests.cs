@@ -80,7 +80,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         }
         #endregion ShouldShowLoot
 
-        #region UnlockLoot
         [Test]
         public void UnlockLoot_UnlocksLootItems()
         {
@@ -93,39 +92,40 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _item2.Received().UnlockItem(_dataProvider.GameModel);
         }
 
+        #region ShowLoot
         [Test]
-        public void UnlockLoot_ShowLoot_InvalidItemCount_Throws()
+        public void ShowLoot_InvalidItemCount_Throws()
         {
             // Should only ever have <= 2 loot items, not 3
             _lootItems.Add(_item1);
             _lootItems.Add(_item1);
             _lootItems.Add(_item1);
 
-            Assert.Throws<ArgumentException>(TriggerUnlock);
+            Assert.Throws<ArgumentException>(() => _lootManager.ShowLoot(_unlockedLoot));
         }
 
         [Test]
-        public void UnlockLoot_ShowLoot_SingleItem()
+        public void ShowLoot_SingleItem()
         {
             _lootItems.Add(_item1);
 
-            TriggerUnlock();
+            _lootManager.ShowLoot(_unlockedLoot);
 
             _item1.Received().ShowItemDetails(_prefabFactory, _middleDetailsGroup);
         }
 
         [Test]
-        public void UnlockLoot_ShowLoot_TwoItems()
+        public void ShowLoot_TwoItems()
         {
             _lootItems.Add(_item1);
             _lootItems.Add(_item2);
 
-            TriggerUnlock();
+            _lootManager.ShowLoot(_unlockedLoot);
 
             _item1.Received().ShowItemDetails(_prefabFactory, _leftDetailsGroup);
             _item2.Received().ShowItemDetails(_prefabFactory, _rightDetailsGroup);
         }
-        #endregion UnlockLoot
+        #endregion ShowLoot
 
         private void TriggerUnlock()
         {
