@@ -151,7 +151,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return detailsGroup;
         }
 
-        // FELIX  Move to states :)
         private void SetupBackground()
         {
             PostBattleBackgroundController background = GetComponentInChildren<PostBattleBackgroundController>(includeInactive: true);

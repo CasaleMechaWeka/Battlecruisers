@@ -13,7 +13,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    // FELIX  Test all states :)
     public class VictoryState
     {
         private PostBattleScreenController _postBattleScreen;
