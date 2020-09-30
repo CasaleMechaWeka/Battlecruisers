@@ -5,6 +5,8 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Data.Models
@@ -42,10 +44,13 @@ namespace BattleCruisers.Tests.Data.Models
 		}
 
 		[Test]
-		public void AddUnlockedHull_ExistingHull_Throws()
+		public void AddUnlockedHull_ExistingHull_DoesNoting()
 		{
-			AddUnlockedHull();
-			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddUnlockedHull(_hull));
+			_gameModel.AddUnlockedHull(_hull);
+			Assert.AreEqual(1, FindCount(_gameModel.UnlockedHulls, _hull));
+
+			_gameModel.AddUnlockedHull(_hull);
+			Assert.AreEqual(1, FindCount(_gameModel.UnlockedHulls, _hull));
 		}
 		#endregion AddUnlockedHull
 
@@ -63,10 +68,13 @@ namespace BattleCruisers.Tests.Data.Models
 		}
 
 		[Test]
-		public void AddUnlockedBuilding_ExistingBuilding_Throws()
+		public void AddUnlockedBuilding_ExistingBuilding_DoesNothing()
 		{
-			AddUnlockedBuilding();
-			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddUnlockedBuilding(_building));
+			_gameModel.AddUnlockedBuilding(_building);
+			Assert.AreEqual(1, FindCount(_gameModel.UnlockedBuildings, _building));
+
+			_gameModel.AddUnlockedBuilding(_building);
+			Assert.AreEqual(1, FindCount(_gameModel.UnlockedBuildings, _building));
 		}
 		#endregion AddUnlockedBuilding
 
@@ -84,10 +92,13 @@ namespace BattleCruisers.Tests.Data.Models
 		}
 
 		[Test]
-		public void AddUnlockedUnit_ExistingUnit_Throws()
+		public void AddUnlockedUnit_ExistingUnit_DoesNothing()
 		{
-			AddUnlockedUnit();
-			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddUnlockedUnit(_unit));
+			_gameModel.AddUnlockedUnit(_unit);
+			Assert.AreEqual(1, FindCount(_gameModel.UnlockedUnits, _unit));
+
+			_gameModel.AddUnlockedUnit(_unit);
+			Assert.AreEqual(1, FindCount(_gameModel.UnlockedUnits, _unit));
 		}
         #endregion AddUnlockedUnit
 
@@ -180,5 +191,10 @@ namespace BattleCruisers.Tests.Data.Models
 
 			Assert.AreEqual(GameModel.UNSET_SELECTED_LEVEL, _gameModel.SelectedLevel);
         }
+
+		private int FindCount<TKey>(ICollection<TKey> list, TKey instance)
+        {
+			return list.Count(item => ReferenceEquals(item, instance));
+		}
 	}
 }

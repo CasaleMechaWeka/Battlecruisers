@@ -135,10 +135,9 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits.AddRange(unlockedUnits);
         }
 
-        // FELIX  Update tests
         public void AddUnlockedHull(HullKey hull)
         {
-            if(!_unlockedHulls.Contains(hull))
+            if (!_unlockedHulls.Contains(hull))
             {
                 _unlockedHulls.Add(hull);
                 NewHulls.AddItem(hull);
