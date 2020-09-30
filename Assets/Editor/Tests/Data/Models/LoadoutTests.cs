@@ -63,9 +63,11 @@ namespace BattleCruisers.Tests.Data.Models
         }
 
         [Test]
-        public void AddBuilding_Duplicate_Throws()
+        public void AddBuilding_Duplicate_DoesNothing()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _loadout.AddBuilding(_offensiveBuildingKey));
+            Assert.AreEqual(1, _loadout.GetBuildings(BuildingCategory.Offence).Count);
+            _loadout.AddBuilding(_offensiveBuildingKey);
+            Assert.AreEqual(1, _loadout.GetBuildings(BuildingCategory.Offence).Count);
         }
 
         [Test]
@@ -98,9 +100,11 @@ namespace BattleCruisers.Tests.Data.Models
         }
 
         [Test]
-        public void AddUnit_Duplicate_Throws()
+        public void AddUnit_Duplicate_DoesNothing()
         {
-            Assert.Throws<UnityAsserts.AssertionException>(() => _loadout.AddUnit(_aircraftUnitKey));
+            Assert.AreEqual(1, _loadout.GetUnits(UnitCategory.Aircraft).Count);
+            _loadout.AddUnit(_aircraftUnitKey);
+            Assert.AreEqual(1, _loadout.GetUnits(UnitCategory.Aircraft).Count);
         }
 
         [Test]

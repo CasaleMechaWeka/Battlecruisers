@@ -52,7 +52,6 @@ namespace BattleCruisers.Data.Models
 			return _units.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
 		}
 
-		// FELIX  Update tests :)
 		public void AddBuilding(BuildingKey buildingToAdd)
 		{
 			if (!_buildings.Contains(buildingToAdd))
