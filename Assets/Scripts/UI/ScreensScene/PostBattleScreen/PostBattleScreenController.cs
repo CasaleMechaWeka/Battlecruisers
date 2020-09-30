@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public Text title;
 		public SlidingPanel unlockedItemSection;
-        public GameObject completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen, lootAcquiredText;
+        public GameObject completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
         public ActionButton demoHomeButton;
@@ -73,7 +73,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 demoCompletedScreen,
                 levelName,
                 completedDifficultySymbol,
-                lootAcquiredText,
                 demoHomeButton,
                 trashTalkList,
                 postTutorialButtonsPanel,

@@ -20,7 +20,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         private ILootManager _lootManager;
         private ILoot _unlockedLoot;
 
-        private const string VICTORY_TITLE = "Sweet as!";
+        private const string VICTORY_TITLE_NO_LOOT = "Sweet as!";
+        private const string VICTORY_TITLE_LOOT = "Found some Schematics!";
+        private const int VICTORY_TITLE_LOOT_FONT_SIZE = 125;
 
         public async Task InitialiseAsync(
             PostBattleScreenController postBattleScreen,
@@ -39,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             BattleResult battleResult = dataProvider.GameModel.LastBattleResult;
 
-            postBattleScreen.title.text = VICTORY_TITLE;
+            postBattleScreen.title.text = VICTORY_TITLE_NO_LOOT;
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
             musicPlayer.PlayVictoryMusic();
@@ -66,9 +68,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     || (desiredBehaviour == PostBattleScreenBehaviour.Default
                     && _lootManager.ShouldShowLoot(battleResult.LevelNum)))
                 {
+                    postBattleScreen.title.text = VICTORY_TITLE_LOOT;
+                    postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
+
                     _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                     postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                    postBattleScreen.lootAcquiredText.SetActive(true);
                     _unlockedLoot = lootManager.UnlockLoot(battleResult.LevelNum);
                 }
                 else
