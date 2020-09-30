@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Assert.IsNotNull(levelTrashTalkData);
 
             levelName.text = $"#{levelNum} {levelTrashTalkData.EnemyName}";
+            gameObject.SetActive(true);
         }
     }
 }

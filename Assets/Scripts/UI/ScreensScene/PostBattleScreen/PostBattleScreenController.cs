@@ -86,13 +86,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
             {
-                BattleResult.LevelNum = levelNum;
-                BattleResult.WasVictory = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
+                SetupBattleResult();
             }
 
-            ITrashTalkData levelTrashTalkData = trashTalkList.GetTrashTalk(BattleResult.LevelNum);
-            levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
-            unlockedItemSection.Initialise();
             SetupBackground();
 
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
@@ -109,6 +105,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
+                ITrashTalkData levelTrashTalkData = trashTalkList.GetTrashTalk(BattleResult.LevelNum);
+                levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
+                unlockedItemSection.Initialise();
 
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
                     || !BattleResult.WasVictory)
@@ -149,6 +148,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ItemDetailsGroupController detailsGroup = transform.FindNamedComponent<ItemDetailsGroupController>(componentPath);
             detailsGroup.Initialise();
             return detailsGroup;
+        }
+
+        private void SetupBattleResult()
+        {
+            bool wasVicotry = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
+
+            if (BattleResult == null)
+            {
+                _dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
+            }
+
+            BattleResult.LevelNum = levelNum;
+            BattleResult.WasVictory = wasVicotry;
         }
 
         private void SetupBackground()
