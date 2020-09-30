@@ -48,9 +48,14 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private AudioSource _uiAudioSource;
 
+        [Header("For testing the post battle screen")]
         public bool goToPostBattleScreen = false;
+        [Header("For testing the levels screen")]
+        public bool testLevelsScreen = false;
+        [Range(1, 25)]
+        public int numOfLevelsUnlocked = 1;
 
-		async void Start()
+        async void Start()
 		{
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, trashDataList, _uiAudioSource);
 
@@ -110,9 +115,13 @@ namespace BattleCruisers.Scenes
 
             // TEMP  Go to specific screen :)
             //GoToSettingsScreen();
-            //GoToLevelsScreen();
             //GoToLoadoutScreen();
             //GoToTrashScreen(levelNum: 1);
+
+            if (testLevelsScreen)
+            {
+                GoToLevelsScreen();
+            }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
             Common.TimeBC.Instance.TimeScale = 1;
@@ -144,7 +153,7 @@ namespace BattleCruisers.Scenes
                 _soundPlayer, 
                 this, 
                 levels, 
-                _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
                 difficultySpritesProvider, 
                 trashDataList,
                 nextLevelHelper);

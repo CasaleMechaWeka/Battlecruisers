@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int expectedNumberOfTrails = _numOfLevels -1;
             Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
 
-            for (int i = 0; i > trails.Length; ++i)
+            for (int i = 0; i < trails.Length; ++i)
             {
                 bool isTrailVisible = numOfLevelsUnlocked - firstLevelIndex - 1 > i;
                 trails[i].IsVisible = isTrailVisible;
