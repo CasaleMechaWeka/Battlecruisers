@@ -17,8 +17,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public MoonController moon;
         public FogController fog;
         public SkyStatsGroup skyStatsGroup;
-        public BackgroundStatsList backgroundStatsList;
         public BackgroundImageController background;
+        // FELIX  Remove.  Replace with async version :P
+        public BackgroundStatsList backgroundStatsList;
 
         public void Initialise(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio)
         {
