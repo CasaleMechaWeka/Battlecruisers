@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    public class BackgroundStatsList : MonoBehaviour
+    public class BackgroundStatsList : MonoBehaviour, IBackgroundStatsProvider
     {
         private BackgroundImageStats[] _stats;
 
