@@ -47,6 +47,7 @@ namespace BattleCruisers.Cruisers
         public int numOfDrones;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
+        [TextAreaAttribute(minLines: 3, maxLines: 10)]
         public string description;
         public string cruiserName;
 

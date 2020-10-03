@@ -59,6 +59,7 @@ namespace BattleCruisers.Buildables
         protected BuildableProgressController _buildableProgress;
 
         public string buildableName;
+        [TextAreaAttribute(minLines: 3, maxLines: 10)]
         public string description;
         public int numOfDronesRequired;
         public float buildTimeInS;
