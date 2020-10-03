@@ -45,11 +45,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public PostTutorialButtonsPanel postTutorialButtonsPanel;
         public PostBattleButtonsPanel postBattleButtonsPanel;
         public AppraisalSectionController appraisalSection;
-        
+        public AppraisalButtonsPanel appraisalButtonsPanel;
+
         [Header("Can change these for testing")]
         public PostBattleScreenBehaviour desiredBehaviour;
         [Range(1, 25)]
         public int levelNum = 2;
+        public bool showAppraisalButtons = false;
 
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
@@ -77,7 +79,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 trashTalkList,
                 postTutorialButtonsPanel,
                 postBattleButtonsPanel,
-                appraisalSection);
+                appraisalSection,
+                appraisalButtonsPanel);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
 
             _applicationModel = applicationModel;
@@ -128,11 +131,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             desiredBehaviour);
                 }
 
+                SetupAppraisalButtons(soundPlayer, trashTalkList);
+
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
                 postBattleButtonsPanel.Initialise(this, nextCommand, _soundPlayer, BattleResult.WasVictory);
             }
-		}
+        }
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory)
         {
@@ -171,7 +176,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             background.Initalise(isVictory);
         }
 
-		public void Retry()
+        private void SetupAppraisalButtons(ISingleSoundPlayer soundPlayer, ITrashTalkDataList trashTalkList)
+        {
+            if (showAppraisalButtons)
+            {
+                appraisalButtonsPanel.Initialise(appraisalSection, soundPlayer, trashTalkList);
+                appraisalButtonsPanel.gameObject.SetActive(true);
+            }
+            else
+            {
+                Destroy(appraisalButtonsPanel.gameObject);
+            }
+        }
+
+        public void Retry()
 		{
 			_screensSceneGod.GoToTrashScreen(BattleResult.LevelNum);
 		}
