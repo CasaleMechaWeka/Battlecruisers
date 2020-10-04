@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Data.Static;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
-    public class TrashTalkDataList : MonoBehaviour, ITrashTalkDataList
+    public class TrashTalkDataList : MonoBehaviour, ITrashTalkProvider
     {
         private ITrashTalkData[] _trashDataList;
 
@@ -14,12 +15,12 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, _trashDataList.Length);
         }
 
-        public ITrashTalkData GetTrashTalk(int levelNum)
+        public Task<ITrashTalkData> GetTrashTalkAsync(int levelNum)
         {
             int index = levelNum - 1;
             Assert.IsTrue(index >= 0);
             Assert.IsTrue(index < _trashDataList.Length);
-            return _trashDataList[index];
+            return Task.FromResult(_trashDataList[index]);
         }
     }
 }

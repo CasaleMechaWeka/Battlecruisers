@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashTalkList)
+            ITrashTalkProvider trashTalkList)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
 
@@ -108,7 +108,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
-                ITrashTalkData levelTrashTalkData = trashTalkList.GetTrashTalk(BattleResult.LevelNum);
+                ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
                 levelName.Initialise(BattleResult.LevelNum, levelTrashTalkData);
                 unlockedItemSection.Initialise();
 
@@ -176,11 +176,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             background.Initalise(isVictory);
         }
 
-        private void SetupAppraisalButtons(ISingleSoundPlayer soundPlayer, ITrashTalkDataList trashTalkList)
+        private void SetupAppraisalButtons(ISingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
         {
             if (showAppraisalButtons)
             {
-                appraisalButtonsPanel.Initialise(appraisalSection, soundPlayer, trashTalkList);
+                appraisalButtonsPanel.InitialiseAsync(appraisalSection, soundPlayer, trashTalkList);
                 appraisalButtonsPanel.gameObject.SetActive(true);
             }
             else

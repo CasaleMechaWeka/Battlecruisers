@@ -2,6 +2,7 @@
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,10 +10,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class AppraisalButtonsPanel : MonoBehaviour
     {
-        public void Initialise(
+        public async Task InitialiseAsync(
             AppraisalSectionController appraisalSection,
             ISingleSoundPlayer soundPlayer,
-            ITrashTalkDataList trashTalkList)
+            ITrashTalkProvider trashTalkList)
         {
             Helper.AssertIsNotNull(appraisalSection, soundPlayer, trashTalkList);
 
@@ -22,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             for (int i = 0; i < buttons.Length; ++i)
             {
                 int levelNum = i + 1;
-                ITrashTalkData trashData = trashTalkList.GetTrashTalk(levelNum);
+                ITrashTalkData trashData = await trashTalkList.GetTrashTalkAsync(levelNum);
                 buttons[i]
                     .Initialise(
                         appraisalSection,

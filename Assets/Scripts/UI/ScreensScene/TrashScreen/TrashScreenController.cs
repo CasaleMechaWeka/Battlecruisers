@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private IApplicationModel _appModel;
         private IPrefabFactory _prefabFactory;
         private ISpriteFetcher _spriteFetcher;
-        private ITrashTalkDataList _trashDataList;
+        private ITrashTalkProvider _trashDataList;
         private IMusicPlayer _musicPlayer;
 
         public TrashTalkBubblesController trashTalkBubbles;
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
             ISpriteFetcher spriteFetcher,
-            ITrashTalkDataList trashDataList,
+            ITrashTalkProvider trashDataList,
             IMusicPlayer musicPlayer)
 		{
 			base.Initialise(soundPlayer, screensSceneGod);
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             int levelIndex = _appModel.SelectedLevel - 1;
             ILevel level = _appModel.DataProvider.Levels[levelIndex];
 
-            ITrashTalkData trashTalkData = _trashDataList.GetTrashTalk(_appModel.SelectedLevel);
+            ITrashTalkData trashTalkData = await _trashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
             trashTalkBubbles.Initialise(trashTalkData);
             SetupEnemyCharacter(trashTalkData);
 

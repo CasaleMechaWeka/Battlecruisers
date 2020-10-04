@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked, 
             ISingleSoundPlayer soundPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashDataList,
+            ITrashTalkProvider trashDataList,
             int setIndex)
         {
             Assert.IsNotNull(navigationFeedbackButton);
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             {
                 LevelButtonController button = levelButtons[i];
                 LevelInfo level = allLevels[firstLevelIndex + i];
-                ITrashTalkData trashTalkData = trashDataList.GetTrashTalk(level.Num);
+                ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(level.Num);
 
                 await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData);
             }

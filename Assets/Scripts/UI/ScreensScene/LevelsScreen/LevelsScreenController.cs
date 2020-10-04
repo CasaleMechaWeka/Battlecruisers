@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashDataList,
+            ITrashTalkProvider trashDataList,
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(soundPlayer, screensSceneGod);
@@ -78,7 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkDataList trashDataList)
+            ITrashTalkProvider trashDataList)
         {
             LevelsSetController[] levelSets = GetComponentsInChildren<LevelsSetController>();
 

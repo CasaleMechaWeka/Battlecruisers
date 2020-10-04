@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene
         public TrashTalkDataList trashTalkList;
         public Text enemyHealthBarHelpLabel;
 
-        public TopPanelComponents Initialise(
+        public async Task<TopPanelComponents> InitialiseAsync(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             IBroadcastingFilter helpLabelVisibilityFilter,
@@ -33,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene
             IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser, helpLabelVisibilityFilter);
 
             trashTalkList.Initialise();
-            ITrashTalkData levelTrashTalkData = trashTalkList.GetTrashTalk(levelNum);
+            ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(levelNum);
             Destroy(trashTalkList.gameObject);
             enemyHealthBarHelpLabel.text = levelTrashTalkData.EnemyName.ToUpper();
 
