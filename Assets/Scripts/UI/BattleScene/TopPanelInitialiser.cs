@@ -4,6 +4,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,17 +14,17 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class TopPanelInitialiser : MonoBehaviour
     {
-        public TrashTalkDataList trashTalkList;
         public Text enemyHealthBarHelpLabel;
 
         public async Task<TopPanelComponents> InitialiseAsync(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
             IBroadcastingFilter helpLabelVisibilityFilter,
-            int levelNum)
+            int levelNum,
+            IPrefabFetcher prefabFetcher)
         {
-            Helper.AssertIsNotNull(trashTalkList, enemyHealthBarHelpLabel);
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, helpLabelVisibilityFilter);
+            Assert.IsNotNull(enemyHealthBarHelpLabel);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, helpLabelVisibilityFilter, prefabFetcher);
 
             CruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
             Assert.IsNotNull(playerHealthInitialiser);
@@ -33,9 +34,8 @@ namespace BattleCruisers.UI.BattleScene
             Assert.IsNotNull(aiHealthInitialiser);
             IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser, helpLabelVisibilityFilter);
 
-            trashTalkList.Initialise();
-            ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(levelNum);
-            Destroy(trashTalkList.gameObject);
+            ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(prefabFetcher);
+            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
             enemyHealthBarHelpLabel.text = levelTrashTalkData.EnemyName.ToUpper();
 
             return new TopPanelComponents(playerCruiserHealthBar, aiCruiserHealthBar);

@@ -153,7 +153,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
             ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
 
-            TopPanelComponents topPanelComponents = await topPanelInitialiser.InitialiseAsync(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter, currentLevel.Num);
+            TopPanelComponents topPanelComponents = await topPanelInitialiser.InitialiseAsync(playerCruiser, aiCruiser, buttonVisibilityFilters.HelpLabelsVisibilityFilter, currentLevel.Num, prefabFetcher);
             LeftPanelComponents leftPanelComponents 
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
