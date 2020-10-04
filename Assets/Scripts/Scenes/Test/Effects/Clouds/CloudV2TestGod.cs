@@ -3,6 +3,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            await cloudInitialiser.InitialiseAsync(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum, mainCamera.aspect);
+            await cloudInitialiser.InitialiseAsync(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum, mainCamera.aspect, new PrefabFetcher());
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
             await levelButtonList.InitialiseAsync(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData, startingLevelNum);

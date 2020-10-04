@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -19,20 +20,19 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public FogController fog;
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
-        // FELIX  Remove.  Replace with async version :P
-        public BackgroundStatsList backgroundStatsList;
+        public BackgroundStatsProviderInitialiserBase backgroundStatsProviderInitialiser;
 
-        public async Task InitialiseAsync(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio)
+        public async Task InitialiseAsync(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio, IPrefabFetcher prefabFetcher)
         {
-            Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, backgroundStatsList, background);
+            Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, backgroundStatsProviderInitialiser, background, prefabFetcher);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
             skyStatsGroup.Initialise();
             ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
-            backgroundStatsList.Initialise();
-            IBackgroundImageStats backgroudStats = await backgroundStatsList.GetStatsAsync(levelNum);
+            IBackgroundStatsProvider backgroundStatsProvider = backgroundStatsProviderInitialiser.CreateProvider(prefabFetcher);
+            IBackgroundImageStats backgroudStats = await backgroundStatsProvider.GetStatsAsync(levelNum);
             background.Initialise(backgroudStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);
@@ -54,19 +54,6 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             mist.Initialise(skyStats);
             moon.Initialise(skyStats.MoonStats);
             fog.Initialise(skyStats.FogColour);
-        }
-
-        /// <summary>
-        /// For a level we only need the stats once, to set the sky and the background.
-        /// Afterwards, they can be safely destroyed.
-        /// 
-        /// For test scenes, we want to keep the stats, as we want to by able to change
-        /// the sky/backrgound.
-        /// </summary>
-        public void DestroyStats()
-        {
-            Destroy(skyStatsGroup.gameObject);
-            Destroy(backgroundStatsList.gameObject);
         }
     }
 }
