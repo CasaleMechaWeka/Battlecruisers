@@ -5,6 +5,7 @@ using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
@@ -30,9 +31,8 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         [Range(1, 25)]
         public int startingLevelNum = 1;
 
-        protected override void Setup(Helper helper)
+        protected async override Task SetupAsync(Helper helper)
         {
-            base.Setup(helper);
             BCUtils.Helper.AssertIsNotNull(skyStatsGroup, skyButtonGroup, levelButtonList, backgroundStatsList, skybox, clouds, mist, moon, fog, backgroundImage, mainCamera);
 
             IList<ICloud> cloudList
@@ -53,10 +53,10 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
             CloudInitialiser cloudInitialiser = GetComponentInChildren<CloudInitialiser>();
             Assert.IsNotNull(cloudInitialiser);
-            cloudInitialiser.Initialise(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum, mainCamera.aspect);
+            await cloudInitialiser.InitialiseAsync(skybox.material.name, _updaterProvider.SlowerUpdater, startingLevelNum, mainCamera.aspect);
 
             IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
-            levelButtonList.Initialise(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData, startingLevelNum);
+            await levelButtonList.InitialiseAsync(skyStatsGroup, skySetter, backgroundStatsList, backgroundImage, staticData, startingLevelNum);
         }
     }
 }

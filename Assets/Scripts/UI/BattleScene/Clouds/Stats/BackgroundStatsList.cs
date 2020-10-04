@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Static;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,13 +15,13 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, _stats.Length);
         }
 
-        public IBackgroundImageStats GetStats(int levelNum)
+        public Task<IBackgroundImageStats> GetStatsAsync(int levelNum)
         {
             int index = levelNum - 1;
             Assert.IsTrue(index >= 0);
             Assert.IsTrue(index < _stats.Length);
 
-            return _stats[index];
+            return Task.FromResult((IBackgroundImageStats)_stats[index]);
         }
     }
 }

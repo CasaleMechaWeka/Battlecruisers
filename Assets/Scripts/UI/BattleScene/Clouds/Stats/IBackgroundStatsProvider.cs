@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.UI.BattleScene.Clouds.Stats
+﻿using System.Threading.Tasks;
+
+namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public interface IBackgroundStatsProvider
     {
-        IBackgroundImageStats GetStats(int levelNum);
+        Task<IBackgroundImageStats> GetStatsAsync(int levelNum);
     }
 }

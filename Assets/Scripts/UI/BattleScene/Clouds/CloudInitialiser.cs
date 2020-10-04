@@ -3,6 +3,7 @@ using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         // FELIX  Remove.  Replace with async version :P
         public BackgroundStatsList backgroundStatsList;
 
-        public void Initialise(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio)
+        public async Task InitialiseAsync(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio)
         {
             Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, backgroundStatsList, background);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
@@ -31,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
             backgroundStatsList.Initialise();
-            IBackgroundImageStats backgroudStats = backgroundStatsList.GetStats(levelNum);
+            IBackgroundImageStats backgroudStats = await backgroundStatsList.GetStatsAsync(levelNum);
             background.Initialise(backgroudStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);
