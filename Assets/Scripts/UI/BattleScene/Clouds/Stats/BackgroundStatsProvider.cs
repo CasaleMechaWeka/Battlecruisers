@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    // FELIX  Use
     public class BackgroundStatsProvider : IBackgroundStatsProvider
     {
         private readonly IPrefabFetcher _prefabFetcher;
