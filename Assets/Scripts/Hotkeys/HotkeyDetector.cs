@@ -10,6 +10,7 @@ namespace BattleCruisers.Hotkeys
     {
         private readonly IHotkeyList _hotkeyList;
         private readonly IInput _input;
+        private readonly IUpdater _updater;
 
         public event EventHandler PlayerCruiser;
         public event EventHandler Overview;
@@ -21,10 +22,12 @@ namespace BattleCruisers.Hotkeys
 
             _hotkeyList = hotkeyList;
             _input = input;
-            updater.Updated += Updater_Updated;
+            _updater = updater;
+
+            _updater.Updated += _updater_Updated;
         }
 
-        private void Updater_Updated(object sender, EventArgs e)
+        private void _updater_Updated(object sender, EventArgs e)
         {
             // Navigation
             if (_input.GetKeyUp(_hotkeyList.PlayerCruiser))
@@ -39,6 +42,11 @@ namespace BattleCruisers.Hotkeys
             {
                 EnemyCruiser?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        public void DisposeManagedState()
+        {
+            _updater.Updated -= _updater_Updated;
         }
     }
 }
