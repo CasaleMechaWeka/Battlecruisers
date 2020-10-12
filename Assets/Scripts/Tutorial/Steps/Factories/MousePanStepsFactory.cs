@@ -6,6 +6,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class MousePanStepsFactory : SwipeStepsFactoryBase
     {
+        private const string STEP_EXPLANATION = 
+@"You can click drag to pan.
+Give it a try :)";
         private readonly IPermitter _scrollWheelPermitter;
 
         public MousePanStepsFactory(
@@ -19,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                   featurePermitterStepFactory,
                   swipePermitter,
                   explanationDismissableStepFactory,
-                  "You can click drag to pan.  Give it a try :)")
+                  STEP_EXPLANATION)
         {
             Assert.IsNotNull(scrollWheelPermitter);
             _scrollWheelPermitter = scrollWheelPermitter;
