@@ -9,5 +9,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		int TouchCount { get; }
 
 		Vector2 GetTouchPosition(int touchIndex);
+		bool GetKeyUp(KeyCode key);
 	}
 }

@@ -8,9 +8,14 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		public Vector2 MouseScrollDelta => Input.mouseScrollDelta;
 		public int TouchCount => Input.touchCount;
 
-		public Vector2 GetTouchPosition(int touchIndex)
+        public Vector2 GetTouchPosition(int touchIndex)
 		{
 			return Input.touches[touchIndex].position;
 		}
+
+        public bool GetKeyUp(KeyCode key)
+        {
+			return Input.GetKeyUp(key);
+        }
 	}
 }
