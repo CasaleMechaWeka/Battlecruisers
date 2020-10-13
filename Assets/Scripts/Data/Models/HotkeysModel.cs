@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Data.Models
 {
-    // FELIX  Adde to GameModel/Serializer test :D
     [Serializable]
     public class HotkeysModel : IHotkeyList
     {

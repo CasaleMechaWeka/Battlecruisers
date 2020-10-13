@@ -43,6 +43,10 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private int _selectedLevel;
 
+        [SerializeField]
+        private HotkeysModel _hotkeys;
+        public HotkeysModel Hotkeys => _hotkeys;
+
         public int NumOfLevelsCompleted => _completedLevels.Count;
 
         public bool HasAttemptedTutorial
@@ -92,7 +96,7 @@ namespace BattleCruisers.Data.Models
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
-        
+
         public const int UNSET_SELECTED_LEVEL = -1;
 
         public GameModel()
@@ -114,6 +118,7 @@ namespace BattleCruisers.Data.Models
             NewUnits = new NewItems<UnitKey>();
 
             Settings = new SettingsModel();
+            _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
         }
 
@@ -231,6 +236,7 @@ namespace BattleCruisers.Data.Models
                 && PlayerLoadout.SmartEquals(other.PlayerLoadout)
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
                 && Settings.SmartEquals(other.Settings)
+                && Hotkeys.SmartEquals(other.Hotkeys)
                 && NewHulls.SmartEquals(other.NewHulls)
                 && NewBuildings.SmartEquals(other.NewBuildings)
                 && NewUnits.SmartEquals(other.NewUnits)
@@ -249,6 +255,7 @@ namespace BattleCruisers.Data.Models
                 PlayerLoadout, 
                 LastBattleResult, 
                 Settings,
+                Hotkeys,
                 _unlockedHulls, 
                 _unlockedUnits, 
                 _unlockedBuildings, 

@@ -55,6 +55,10 @@ namespace BattleCruisers.Tests.Data
 			_originalGameModel.Settings.ScrollSpeedLevel = 7;
 			_originalGameModel.Settings.ZoomSpeedLevel = 3;
 			_originalGameModel.Settings.ShowInGameHints = false;
+
+			_originalGameModel.Hotkeys.EnemyCruiser = KeyCode.A;
+			_originalGameModel.Hotkeys.Overview = KeyCode.B;
+			_originalGameModel.Hotkeys.PlayerCruiser = KeyCode.C;
 		}
 
 		private Loadout CreateLoadout()
