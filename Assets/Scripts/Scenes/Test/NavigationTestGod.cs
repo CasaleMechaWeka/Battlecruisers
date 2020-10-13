@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test
 
             IUserInputCameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(
-                    new InputBC(),
+                    InputBC.Instance,
                     _updaterProvider.PerFrameUpdater,
                     new ZoomCalculator(
                         _camera,

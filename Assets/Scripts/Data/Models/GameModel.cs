@@ -223,6 +223,10 @@ namespace BattleCruisers.Data.Models
             {
                 _selectedLevel = UNSET_SELECTED_LEVEL;
             }
+            if (_hotkeys == null)
+            {
+                _hotkeys = new HotkeysModel();
+            }
         }
 
         public override bool Equals(object obj)

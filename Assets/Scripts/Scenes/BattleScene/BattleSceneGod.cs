@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
@@ -26,6 +27,7 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -52,6 +54,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
         private PausableAudioListener _pausableAudioListener;
+        private HotkeyInitialiser _hotkeyInitialiser;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -238,6 +241,12 @@ namespace BattleCruisers.Scenes.BattleScene
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             await components.CloudInitialiser.InitialiseAsync(currentLevel.SkyMaterialName, components.UpdaterProvider.SlowerUpdater, currentLevel.Num, cameraComponents.MainCamera.Aspect, prefabFetcher);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
+            _hotkeyInitialiser
+                = new HotkeyInitialiser(
+                    dataProvider.GameModel.Hotkeys,
+                    InputBC.Instance,
+                    components.UpdaterProvider.SwitchableUpdater,
+                    cameraComponents.CameraFocuser);
             _gameEndMonitor 
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(

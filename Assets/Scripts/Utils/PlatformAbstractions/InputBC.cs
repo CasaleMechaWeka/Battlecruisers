@@ -8,6 +8,21 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 		public Vector2 MouseScrollDelta => Input.mouseScrollDelta;
 		public int TouchCount => Input.touchCount;
 
+		private static IInput _instance;
+		public static IInput Instance
+        {
+			get
+            {
+				if (_instance == null)
+                {
+					_instance = new InputBC();
+                }
+				return _instance;
+            }
+        }
+
+		private InputBC() { }
+
         public Vector2 GetTouchPosition(int touchIndex)
 		{
 			return Input.touches[touchIndex].position;

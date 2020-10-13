@@ -170,7 +170,7 @@ namespace BattleCruisers.UI.Cameras
                     cameraCalculator,
                     settings.ValidOrthographicSizes);
 
-            IInput input = new InputBC();
+            IInput input = InputBC.Instance;
             IPinchTracker pinchTracker = new PinchTracker(input, updater);
 
             bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
