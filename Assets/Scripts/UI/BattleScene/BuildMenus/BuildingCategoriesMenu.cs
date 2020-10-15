@@ -21,9 +21,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildingGroup> buildingGroups)
         {
-            base.Initialise(soundPlayer);
+            base.Initialise();
 
-            Helper.AssertIsNotNull(uiManager, buttonVisibilityFilters, buildingGroups);
+            Helper.AssertIsNotNull(soundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
 
             _categoryToCategoryButtons = new Dictionary<BuildingCategory, IBuildingCategoryButton>();
 

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public abstract class BuildableButtonController : PresentableController, IBuildableButton, IBroadcastingFilter
+    public abstract class BuildableButtonController : ClickablePresentableController, IBuildableButton, IBroadcastingFilter
 	{
         private IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
         private FilterToggler _isEnabledToggler;

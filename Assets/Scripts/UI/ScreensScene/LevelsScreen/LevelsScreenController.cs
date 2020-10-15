@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             ITrashTalkProvider trashDataList,
             INextLevelHelper nextLevelHelper)
         {
-            base.Initialise(soundPlayer, screensSceneGod);
+            base.Initialise();
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
             Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList, nextLevelHelper);
@@ -62,18 +62,19 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _numOfLevelsUnlocked = numOfLevelsUnlocked;
             _nextLevelHelper = nextLevelHelper;
 
-            await InitialiseLevelSetsAsync(screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
+            await InitialiseLevelSetsAsync(soundPlayer, screensSceneGod, levels, numOfLevelsUnlocked, difficultySpritesProvider, trashDataList);
 
             _nextSetCommand = new Command(NextSetCommandExecute, CanNextSetCommandExecute);
-            nextSetButton.Initialise(_soundPlayer, _nextSetCommand);
+            nextSetButton.Initialise(soundPlayer, _nextSetCommand);
 
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
-            previousSetButton.Initialise(_soundPlayer, _previousSetCommand);
+            previousSetButton.Initialise(soundPlayer, _previousSetCommand);
 
-            cancelButton.Initialise(_soundPlayer, Cancel);
+            cancelButton.Initialise(soundPlayer, Cancel);
         }
 
         private async Task InitialiseLevelSetsAsync(
+            ISingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod, 
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
@@ -87,7 +88,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             for (int j = 0; j < levelSets.Length; j++)
             {
                 LevelsSetController levelsSet = levelSets[j];
-                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, _soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j);
+                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }

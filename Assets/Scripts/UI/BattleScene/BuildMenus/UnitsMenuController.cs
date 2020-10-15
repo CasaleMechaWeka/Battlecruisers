@@ -9,12 +9,12 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class UnitsMenuController : BuildablesMenuController<UnitButtonController, IUnit>
 	{
+		private ISingleSoundPlayer _soundPlayer;
         private IUnitClickHandler _unitClickHandler;
         private IFactory _factory;
 
@@ -26,10 +26,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUnitClickHandler clickHandler)
 		{
             // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
-            Assert.IsNotNull(clickHandler);
+            Helper.AssertIsNotNull(soundPlayer, clickHandler);
+			_soundPlayer = soundPlayer;
             _unitClickHandler = clickHandler;
 
-            base.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, units);
+            base.Initialise(uiManager, buttonVisibilityFilters, units);
 		}
 
         protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildableWrapper)

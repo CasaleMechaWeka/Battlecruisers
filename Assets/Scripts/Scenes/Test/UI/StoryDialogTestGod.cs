@@ -28,7 +28,6 @@ namespace BattleCruisers.Scenes.Test.UI
             trashScreen
                 .Initialise(
                     Substitute.For<ISingleSoundPlayer>(),
-                    Substitute.For<IScreensSceneGod>(),
                     ApplicationModelProvider.ApplicationModel,
                     helper.PrefabFactory,
                     new SpriteFetcher(),

@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
@@ -16,11 +15,10 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer, 
-            IScreensSceneGod screensSceneGod, 
             IDataProvider dataProvider,
             INextLevelHelper nextLevelHelper)
 		{
-			base.Initialise(soundPlayer, screensSceneGod);
+			base.Initialise();
 
             Helper.AssertIsNotNull(dataProvider, nextLevelHelper);
 

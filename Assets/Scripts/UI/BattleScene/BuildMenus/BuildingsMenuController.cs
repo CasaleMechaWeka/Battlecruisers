@@ -8,11 +8,13 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildingsMenuController : BuildablesMenuController<BuildingButtonController, IBuilding>
 	{
+        private ISingleSoundPlayer _soundPlayer;
         private ISpriteProvider _spriteProvider;
         private IBuildingClickHandler _clickHandler;
 
@@ -27,12 +29,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
-            Helper.AssertIsNotNull(buildingCategoryButton, spriteProvider, clickHandler);
+            Helper.AssertIsNotNull(soundPlayer, buildingCategoryButton, spriteProvider, clickHandler);
 
+            _soundPlayer = soundPlayer;
             _spriteProvider = spriteProvider;
             _clickHandler = clickHandler;
 
-            base.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildings);
+            base.Initialise(uiManager, buttonVisibilityFilters, buildings);
             buildingCategoryButton.IsActiveFeedbackVisible = false;
         }
 

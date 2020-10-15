@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISettingsManager settingsManager,
             IMusicPlayer musicPlayer)
 		{
-			base.Initialise(soundPlayer, screensSceneGod);
+			base.Initialise();
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, cancelButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     showInGameHintsToggle.IsChecked,
                     this);
 
-            cancelButton.Initialise(_soundPlayer, this);
+            cancelButton.Initialise(soundPlayer, this);
 
             gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
             hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);

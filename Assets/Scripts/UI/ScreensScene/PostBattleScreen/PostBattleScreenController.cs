@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
@@ -57,14 +56,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public async Task InitialiseAsync(
             ISingleSoundPlayer soundPlayer,
-            ScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashTalkList)
 		{
-			base.Initialise(soundPlayer, screensSceneGod);
+			base.Initialise();
 
             Helper.AssertIsNotNull(
                 title,
@@ -135,7 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-                postBattleButtonsPanel.Initialise(this, nextCommand, _soundPlayer, BattleResult.WasVictory);
+                postBattleButtonsPanel.Initialise(this, nextCommand, soundPlayer, BattleResult.WasVictory);
             }
         }
 

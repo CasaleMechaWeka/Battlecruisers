@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -30,14 +29,13 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer, 
-            IScreensSceneGod screensSceneGod,
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
             ISpriteFetcher spriteFetcher,
             ITrashTalkProvider trashDataList,
             IMusicPlayer musicPlayer)
 		{
-			base.Initialise(soundPlayer, screensSceneGod);
+			base.Initialise();
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList, homeButton);
             Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, trashDataList, musicPlayer);

@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
@@ -26,13 +25,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IScreensSceneGod screensSceneGod,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
         {
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            base.Initialise(soundPlayer, screensSceneGod);
+            base.Initialise();
 
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 

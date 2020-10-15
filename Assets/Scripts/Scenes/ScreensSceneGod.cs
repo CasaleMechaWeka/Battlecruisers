@@ -96,9 +96,9 @@ namespace BattleCruisers.Scenes
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
-            homeScreen.Initialise(_soundPlayer, this, _dataProvider, nextLevelHelper);
+            homeScreen.Initialise(_soundPlayer, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(_soundPlayer, this, _dataProvider.SettingsManager, _musicPlayer);
-            trashScreen.Initialise(_soundPlayer, this, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
+            trashScreen.Initialise(_soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -113,7 +113,7 @@ namespace BattleCruisers.Scenes
 
             // After potentially initialising post battle screen, because that can modify the data model.
             await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
-            loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
+            loadoutScreen.Initialise(_soundPlayer, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
             //GoToLoadoutScreen();
@@ -135,7 +135,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(_soundPlayer, this, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList);
+            await postBattleScreen.InitialiseAsync(_soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
