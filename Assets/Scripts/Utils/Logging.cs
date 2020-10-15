@@ -187,7 +187,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.TUTORIAL_EXPLANATION_PANEL, false);
             tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
-            tagsToActiveness.Add(Tags.UI, false);
+            // FELIX  TEMP
+            tagsToActiveness.Add(Tags.UI, true);
+            //tagsToActiveness.Add(Tags.UI, false);
 
             // AI
             tagsToActiveness.Add(Tags.AI, false);

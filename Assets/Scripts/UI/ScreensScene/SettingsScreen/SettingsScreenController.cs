@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -16,6 +17,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ToggleController muteMusicToggle, muteVoicesToggle, showInGameHintsToggle;
         public CancelButton cancelButton;
 
+        public Panel gameSettingsPanel, hotkeysPanel;
+        public SettingsTabButton gameSettingsButton, hotkeysButton;
+
+        // FELIX  TEMP
+        public ActionButton tempButton;
+
         public void Initialise(
             ISingleSoundPlayer soundPlayer, 
             IScreensSceneGod screensSceneGod, 
@@ -25,6 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 			base.Initialise(soundPlayer, screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, cancelButton);
+            Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
             Helper.AssertIsNotNull(settingsManager, musicPlayer);
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
@@ -64,11 +72,28 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     this);
 
             cancelButton.Initialise(_soundPlayer, this);
+
+            gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
+            hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);
+
+            tempButton.Initialise(soundPlayer, this, ShowGameSettings);
 		}
 
         public override void Cancel()
         {
             _screensSceneGod.GoToHomeScreen();
+        }
+
+        public void ShowGameSettings()
+        {
+            hotkeysPanel.Hide();
+            gameSettingsPanel.Show();
+        }
+
+        public void ShowHotkeys()
+        {
+            gameSettingsPanel.Hide();
+            hotkeysPanel.Show();
         }
     }
 }

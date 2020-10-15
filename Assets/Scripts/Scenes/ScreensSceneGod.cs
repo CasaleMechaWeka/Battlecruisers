@@ -54,6 +54,8 @@ namespace BattleCruisers.Scenes
         public bool testLevelsScreen = false;
         [Range(1, 25)]
         public int numOfLevelsUnlocked = 1;
+        [Header("For testing the settings screen")]
+        public bool testSettingsScreen = false;
 
         async void Start()
 		{
@@ -114,10 +116,13 @@ namespace BattleCruisers.Scenes
             loadoutScreen.Initialise(_soundPlayer, this, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
-            //GoToSettingsScreen();
             //GoToLoadoutScreen();
             //GoToTrashScreen(levelNum: 1);
 
+            if (testSettingsScreen)
+            {
+                GoToSettingsScreen();
+            }
             if (testLevelsScreen)
             {
                 GoToLevelsScreen();
