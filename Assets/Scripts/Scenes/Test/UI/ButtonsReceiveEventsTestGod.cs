@@ -8,14 +8,16 @@ namespace BattleCruisers.Scenes.Test.UI
 {
     public class ButtonsReceiveEventsTestGod : MonoBehaviour
     {
-        public ActionButton actionButton;
-
         void Start()
         {
-            Assert.IsNotNull(actionButton);
-
             ISingleSoundPlayer soundPlayer = Substitute.For<ISingleSoundPlayer>();
-            actionButton.Initialise(soundPlayer, SweetAction);
+
+            ActionButton[] buttons = FindObjectsOfType<ActionButton>();
+
+            foreach (ActionButton button in buttons)
+            {
+                button.Initialise(soundPlayer, SweetAction);
+            }
         }
 
         private void SweetAction()
