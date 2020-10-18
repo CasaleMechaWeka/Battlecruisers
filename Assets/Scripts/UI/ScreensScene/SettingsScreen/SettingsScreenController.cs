@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public SettingsTabButton gameSettingsButton, hotkeysButton;
 
         // FELIX  TEMP
-        public ActionButton tempButton;
+        public ActionButton tempActionButton;
         public TextButton tempButton2;
 
         public void Initialise(
@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
             hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);
 
-            tempButton?.Initialise(soundPlayer, this, ShowGameSettings);
+            tempActionButton?.Initialise(soundPlayer, this, ShowGameSettings);
             tempButton2?.Initialise(soundPlayer, this);
 		}
 
