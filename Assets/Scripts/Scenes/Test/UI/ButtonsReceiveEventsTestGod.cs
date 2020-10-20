@@ -2,7 +2,6 @@
 using BattleCruisers.UI.Sound;
 using NSubstitute;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.UI
 {
