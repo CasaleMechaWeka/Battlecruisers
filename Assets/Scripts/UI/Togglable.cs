@@ -95,5 +95,9 @@ namespace BattleCruisers.UI
         {
             return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform, highlightSizeMultiplier);
         }
+
+        // Need this for script enabled checkbox in editor.  Otherwise when adding script,
+        // it is disabled by default, and none of my pointer events (OnPointerClick etc) are hit.
+        void Update() { }
     }
 }
