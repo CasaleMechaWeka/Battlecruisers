@@ -28,9 +28,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             }
         }
 
-        public void Initialise()
+        public void Initialise(string initialValue)
         {
             Helper.AssertIsNotNull(text, background);
+            text.text = initialValue;
+            IsSelected = false;
         }
     }
 }
