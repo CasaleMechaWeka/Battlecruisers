@@ -17,7 +17,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ToggleController muteMusicToggle, muteVoicesToggle, showInGameHintsToggle;
         public CancelButton cancelButton;
 
-        public Panel gameSettingsPanel, hotkeysPanel;
+        public Panel gameSettingsPanel;
+        public HotkeysPanel hotkeysPanel;
         public SettingsTabButton gameSettingsButton, hotkeysButton;
 
         public void Initialise(
@@ -72,6 +73,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
             hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);
+
+            hotkeysPanel.Initialise();
 		}
 
         public override void Cancel()
