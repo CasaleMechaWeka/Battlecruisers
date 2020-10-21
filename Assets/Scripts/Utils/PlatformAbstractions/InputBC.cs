@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.PlatformAbstractions
 {
@@ -32,5 +33,18 @@ namespace BattleCruisers.Utils.PlatformAbstractions
         {
 			return Input.GetKeyUp(key);
         }
-	}
+
+        public KeyCode GetFirstKeyDown()
+        {
+            foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(key))
+                {
+                    return key;
+                }
+            }
+
+            return KeyCode.None;
+        }
+    }
 }
