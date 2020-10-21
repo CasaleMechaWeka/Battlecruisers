@@ -2,15 +2,17 @@
 using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class HotkeyRow : MonoBehaviour
+    public class HotkeyRow : MonoBehaviour, IPointerClickHandler
     {
         public InputField input;
 
-        // FELIX  For SaveButton
+        // FELIX  Implement, for SaveButton
         public IBroadcastingProperty<bool> HasChanged { get; private set; }
 
         public void Initialise()
@@ -22,6 +24,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             // FELIX  TEMP
             input.text = KeyCode.DownArrow.ToString();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            // FELIX  NEXT
+            // 1. Show feedback that this row is being edited
+            // 2. Enable HotkeyValue script
+            throw new System.NotImplementedException();
         }
 
         private void OnValueChanged(string inputString)
