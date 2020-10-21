@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void Key_ValueChanged(object sender, EventArgs e)
         {
-            feedback.Value = value.Key.ToString();
+            feedback.Value = value.Key.Value.ToString();
         }
 
         public void OnPointerClick(PointerEventData eventData)

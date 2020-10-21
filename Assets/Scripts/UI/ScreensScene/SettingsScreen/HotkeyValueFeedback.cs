@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     public class HotkeyValueFeedback : MonoBehaviour
     {
         public Text text;
-        public Image background;
+        public Image selectedFeedback;
 
         private bool _isSelected;
         public bool IsSelected
@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             set
             {
                 _isSelected = value;
-                background.color = _isSelected ? Color.gray : Color.clear;
+                selectedFeedback.enabled = value;
             }
         }
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public void Initialise(string initialValue)
         {
-            Helper.AssertIsNotNull(text, background);
+            Helper.AssertIsNotNull(text, selectedFeedback);
             text.text = initialValue;
             IsSelected = false;
         }
