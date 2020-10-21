@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Panels;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -9,11 +10,18 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         public InputField input;
 
+        // FELIX  For SaveButton
+        public IBroadcastingProperty<bool> HasChanged { get; private set; }
+
         public void Initialise()
         {
             Assert.IsNotNull(input);
 
-            input.onValueChanged.AddListener(OnValueChanged);
+            //  FELIX  TEMP
+            //input.onValueChanged.AddListener(OnValueChanged);
+
+            // FELIX  TEMP
+            input.text = KeyCode.DownArrow.ToString();
         }
 
         private void OnValueChanged(string inputString)
@@ -25,6 +33,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 input.text = input.text[input.text.Length - 1].ToString();
             }
+
+            // FELIX  Will have to work with keycodes, not strings, so that non text keys (eg: arrows) can be used for hotkeys
+            KeyCode t;
         }
     }
 }
