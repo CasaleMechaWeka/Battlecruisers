@@ -27,13 +27,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IScreensSceneGod screensSceneGod, 
             ISettingsManager settingsManager,
             IMusicPlayer musicPlayer,
-            IHotkeyList hotkeyList)
+            IHotkeysModel hotkeysModel)
 		{
 			base.Initialise();
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, cancelButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
-            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeyList);
+            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
             if (settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
@@ -76,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
             hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);
 
-            hotkeysPanel.Initialise(hotkeyList);
+            hotkeysPanel.Initialise(hotkeysModel);
 		}
 
         public override void Cancel()

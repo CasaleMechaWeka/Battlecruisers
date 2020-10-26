@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
-using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -11,10 +10,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     public class HotkeyRow : MonoBehaviour, IPointerClickHandler
     {
         public HotkeyValueFeedback feedback;
-        public HotkeyValue value;
 
-        // FELIX  Implement, for SaveButton
-        public IBroadcastingProperty<bool> HasChanged { get; private set; }
+        public HotkeyValue value;
+        public HotkeyValue Value => value;
 
         public event EventHandler Enabled;
 

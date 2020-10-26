@@ -6,7 +6,7 @@ using UnityEngine;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class HotkeysModel : IHotkeyList
+    public class HotkeysModel : IHotkeysModel, IHotkeyList
     {
         [SerializeField]
         private KeyCode _playerCruiser;

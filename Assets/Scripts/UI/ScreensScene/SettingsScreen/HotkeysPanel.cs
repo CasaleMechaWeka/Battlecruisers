@@ -6,6 +6,8 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -24,29 +26,40 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
     public class HotkeysPanel : Panel
     {
+        private IHotkeysModel _hotkeysModel;
+
         public HotkeyRow playerCruiserRow, overviewRow, enemyCruiserRow;
+
+        private ISettableBroadcastingProperty<bool> _isDirty;
+        public IBroadcastingProperty<bool> IsDirty { get; private set; }
 
         public event EventHandler<HotkeyRowEnabledEventArgs> RowEnabled;
 
-        public void Initialise(IHotkeyList hotkeyList)
+        public void Initialise(IHotkeysModel hotkeysModel)
         {
             Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
-            Assert.IsNotNull(hotkeyList);
+            Assert.IsNotNull(hotkeysModel);
+
+            _hotkeysModel = hotkeysModel;
+
+            _isDirty = new SettableBroadcastingProperty<bool>(initialValue: false);
+            IsDirty = new BroadcastingProperty<bool>(_isDirty);
 
             IList<HotkeyRow> rows = new List<HotkeyRow>();
 
             rows.Add(playerCruiserRow);
-            playerCruiserRow.Initialise(InputBC.Instance, hotkeyList.PlayerCruiser, this);
+            playerCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.PlayerCruiser, this);
 
             rows.Add(overviewRow);
-            overviewRow.Initialise(InputBC.Instance, hotkeyList.Overview, this);
+            overviewRow.Initialise(InputBC.Instance, _hotkeysModel.Overview, this);
 
             rows.Add(enemyCruiserRow);
-            enemyCruiserRow.Initialise(InputBC.Instance, hotkeyList.EnemyCruiser, this);
+            enemyCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.EnemyCruiser, this);
 
             foreach (HotkeyRow row in rows)
             {
                 row.Enabled += Row_Enabled;
+                row.Value.Key.ValueChanged += Key_ValueChanged;
             }
         }
 
@@ -54,6 +67,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             HotkeyRow row = sender.Parse<HotkeyRow>();
             RowEnabled?.Invoke(this, new HotkeyRowEnabledEventArgs(row));
+        }
+
+        private void Key_ValueChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
