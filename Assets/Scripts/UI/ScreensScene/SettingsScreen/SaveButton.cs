@@ -17,12 +17,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<bool> _muteMusic, _muteVoices, _showInGameHints;
+        private IHotkeysPanel _hotkeysPanel;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
+            IDismissableEmitter parent,
             IScreensSceneGod screensSceneGod,
             ISettingsManager settingsManager, 
             IMusicPlayer musicPlayer,
@@ -32,11 +34,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<bool> muteMusic,
             IBroadcastingProperty<bool> muteVoices,
             IBroadcastingProperty<bool> showInGameHints,
-            IDismissableEmitter parent)
+            IHotkeysPanel hotkeysPanel)
         {
             base.Initialise(soundPlayer, parent);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic, muteVoices, showInGameHints);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic, muteVoices, showInGameHints, hotkeysPanel);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
@@ -47,6 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _muteMusic = muteMusic;
             _muteVoices = muteVoices;
             _showInGameHints = showInGameHints;
+            _hotkeysPanel = hotkeysPanel;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -57,6 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _muteMusic.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _muteVoices.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
 
             UpdateEnabledStatus();
         }
@@ -66,6 +70,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             base.OnClicked();
 
             Assert.IsTrue(ShouldBeEnabled());
+
+            _hotkeysPanel.UpdateHokeysModel();
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
@@ -102,7 +108,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
                 || _muteMusic.Value != _settingsManager.MuteMusic
                 || _muteVoices.Value != _settingsManager.MuteVoices
-                || _showInGameHints.Value != _settingsManager.ShowInGameHints;
+                || _showInGameHints.Value != _settingsManager.ShowInGameHints
+                || _hotkeysPanel.IsDirty.Value;
         }
     }
 }

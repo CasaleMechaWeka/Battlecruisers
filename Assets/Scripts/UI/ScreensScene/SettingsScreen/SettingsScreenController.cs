@@ -23,13 +23,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public SettingsTabButton gameSettingsButton, hotkeysButton;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer, 
             IScreensSceneGod screensSceneGod, 
+            ISingleSoundPlayer soundPlayer, 
             ISettingsManager settingsManager,
             IMusicPlayer musicPlayer,
             IHotkeysModel hotkeysModel)
 		{
-			base.Initialise();
+			base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, cancelButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
@@ -55,11 +55,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             muteVoicesToggle.Initialise(settingsManager.MuteVoices);
             showInGameHintsToggle.Initialise(settingsManager.ShowInGameHints);
 
+            hotkeysPanel.Initialise(hotkeysModel);
+
             SaveButton saveButton = GetComponentInChildren<SaveButton>();
             Assert.IsNotNull(saveButton);
             saveButton
                 .Initialise(
                     soundPlayer,
+                    this,
                     screensSceneGod,
                     settingsManager,
                     musicPlayer,
@@ -69,14 +72,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     muteMusicToggle.IsChecked,
                     muteVoicesToggle.IsChecked,
                     showInGameHintsToggle.IsChecked,
-                    this);
+                    hotkeysPanel);
 
             cancelButton.Initialise(soundPlayer, this);
 
             gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
             hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);
-
-            hotkeysPanel.Initialise(hotkeysModel);
 		}
 
         public override void Cancel()

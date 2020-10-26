@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -28,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private const string SPRITES_FILE_EXTENSION = ".png";
 
         public void Initialise(
+            IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer, 
             IApplicationModel appModel,
             IPrefabFactory prefabFactory,
@@ -35,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ITrashTalkProvider trashDataList,
             IMusicPlayer musicPlayer)
 		{
-			base.Initialise();
+			base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyCharacter, startBattleButton, trashDataList, homeButton);
             Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, trashDataList, musicPlayer);

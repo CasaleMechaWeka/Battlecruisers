@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
@@ -55,6 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
 		public async Task InitialiseAsync(
+            IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IApplicationModel applicationModel,
             IPrefabFactory prefabFactory,
@@ -62,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashTalkList)
 		{
-			base.Initialise();
+			base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(
                 title,

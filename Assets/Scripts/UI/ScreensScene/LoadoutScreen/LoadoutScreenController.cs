@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
@@ -24,13 +25,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private CategoryButtonsPanel _categoryButtonsPanel;
 
         public void Initialise(
+            IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
             IPrefabFactory prefabFactory)
         {
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            base.Initialise();
+            base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 

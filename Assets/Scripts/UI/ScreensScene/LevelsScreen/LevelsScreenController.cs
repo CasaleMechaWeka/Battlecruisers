@@ -46,15 +46,15 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public event EventHandler VisibleSetChanged;
 
 		public async Task InitialiseAsync(
-            ISingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
+            ISingleSoundPlayer soundPlayer,
             IList<LevelInfo> levels, 
             int numOfLevelsUnlocked, 
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashDataList,
             INextLevelHelper nextLevelHelper)
         {
-            base.Initialise();
+            base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
             Helper.AssertIsNotNull(levels, difficultySpritesProvider, trashDataList, nextLevelHelper);
