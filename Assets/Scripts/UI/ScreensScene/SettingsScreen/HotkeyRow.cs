@@ -52,6 +52,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             }
         }
 
+        public void Reset()
+        {
+            SetEnabled(false);
+        }
+
         private void SetEnabled(bool isEnabled)
         {
             value.enabled = isEnabled;

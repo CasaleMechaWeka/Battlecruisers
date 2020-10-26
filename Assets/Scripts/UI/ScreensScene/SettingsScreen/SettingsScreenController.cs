@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Hotkeys;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
@@ -95,6 +94,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             gameSettingsPanel.Hide();
             hotkeysPanel.Show();
+        }
+
+        public override void OnDismissing()
+        {
+            base.OnDismissing();
+            hotkeysPanel.Reset();
         }
     }
 }

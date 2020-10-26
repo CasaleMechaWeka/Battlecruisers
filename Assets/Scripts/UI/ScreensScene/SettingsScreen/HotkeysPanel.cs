@@ -84,5 +84,18 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Overview = overviewRow.Value.Key.Value;
             _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
         }
+
+        public override void Hide()
+        {
+            base.Hide();
+            Reset();
+        }
+
+        public void Reset()
+        {
+            playerCruiserRow.Reset();
+            overviewRow.Reset();
+            enemyCruiserRow.Reset();
+        }
     }
 }
