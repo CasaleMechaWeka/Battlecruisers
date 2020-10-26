@@ -1,4 +1,6 @@
-﻿using BattleCruisers.UI.Panels;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Hotkeys;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -22,18 +24,22 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
     public class HotkeysPanel : Panel
     {
-        public HotkeyRow playerCruiserRow;
+        public HotkeyRow playerCruiserRow, overviewRow;
 
         public event EventHandler<HotkeyRowEnabledEventArgs> RowEnabled;
 
-        public void Initialise()
+        public void Initialise(IHotkeyList hotkeyList)
         {
-            Assert.IsNotNull(playerCruiserRow);
+            Helper.AssertIsNotNull(playerCruiserRow, overviewRow);
+            Assert.IsNotNull(hotkeyList);
 
             IList<HotkeyRow> rows = new List<HotkeyRow>();
 
             rows.Add(playerCruiserRow);
-            playerCruiserRow.Initialise(InputBC.Instance, KeyCode.LeftArrow, this);
+            playerCruiserRow.Initialise(InputBC.Instance, hotkeyList.PlayerCruiser, this);
+
+            rows.Add(overviewRow);
+            overviewRow.Initialise(InputBC.Instance, hotkeyList.Overview, this);
 
             foreach (HotkeyRow row in rows)
             {
