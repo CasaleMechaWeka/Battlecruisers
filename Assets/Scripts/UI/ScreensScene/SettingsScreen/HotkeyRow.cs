@@ -16,14 +16,18 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         // FELIX  Implement, for SaveButton
         public IBroadcastingProperty<bool> HasChanged { get; private set; }
 
-        public void Initialise(IInput input, KeyCode initialValue)
+        public event EventHandler Enabled;
+
+        public void Initialise(IInput input, KeyCode initialValue, HotkeysPanel hotkeysPanel)
         {
-            Helper.AssertIsNotNull(feedback, value);
+            Helper.AssertIsNotNull(feedback, value, hotkeysPanel);
             Assert.IsNotNull(input);
 
             feedback.Initialise(initialValue.ToString());
             value.Initialise(input, initialValue);
             value.Key.ValueChanged += Key_ValueChanged;
+
+            hotkeysPanel.RowEnabled += HotkeysPanel_RowEnabled;
         }
 
         private void Key_ValueChanged(object sender, EventArgs e)
@@ -31,14 +35,29 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             feedback.Value = value.Key.Value.ToString();
         }
 
+        private void HotkeysPanel_RowEnabled(object sender, HotkeyRowEnabledEventArgs e)
+        {
+            if (!ReferenceEquals(e.RowEnabled, this))
+            {
+                SetEnabled(false);
+            }
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
-            // FELIX  NEXT
-            // 1.5  Need to deselect other hotkey
-
             bool toggleValue = !value.enabled;
-            value.enabled = toggleValue;
-            feedback.IsSelected = toggleValue;
+            SetEnabled(toggleValue);
+
+            if (toggleValue)
+            {
+                Enabled?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void SetEnabled(bool isEnabled)
+        {
+            value.enabled = isEnabled;
+            feedback.IsSelected = isEnabled;
         }
     }
 }
