@@ -1,14 +1,10 @@
 ﻿using BattleCruisers.Data.Models;
-using BattleCruisers.Hotkeys;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityCommon.Properties;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -24,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         }
     }
 
-    public class HotkeysPanel : Panel
+    public class HotkeysPanel : Panel, IHotkeysPanel
     {
         private IHotkeysModel _hotkeysModel;
 
@@ -71,7 +67,22 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void Key_ValueChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _isDirty.Value = FindIsDirty();
+        }
+
+        private bool FindIsDirty()
+        {
+            return
+                playerCruiserRow.Value.Key.Value != _hotkeysModel.PlayerCruiser
+                || overviewRow.Value.Key.Value != _hotkeysModel.Overview
+                || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser;
+        }
+
+        public void UpdateHokeysModel()
+        {
+            _hotkeysModel.PlayerCruiser = playerCruiserRow.Value.Key.Value;
+            _hotkeysModel.Overview = overviewRow.Value.Key.Value;
+            _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
         }
     }
 }
