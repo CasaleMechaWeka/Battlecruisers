@@ -24,7 +24,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             _key = new SettableBroadcastingProperty<KeyCode>(key);
             Key = new BroadcastingProperty<KeyCode>(_key);
-            enabled = false;
         }
 
         void Update()
