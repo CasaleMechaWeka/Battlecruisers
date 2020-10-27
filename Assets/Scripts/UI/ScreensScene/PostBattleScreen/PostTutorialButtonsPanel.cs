@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             base.Initialise(postBattleScreen, soundPlayer);
 
-            ActionButton nextButton = transform.FindNamedComponent<ActionButton>("NextButton");
+            CanvasGroupButton nextButton = transform.FindNamedComponent<CanvasGroupButton>("NextButton");
             nextButton.Initialise(soundPlayer, postBattleScreen.StartLevel1);
         }
     }

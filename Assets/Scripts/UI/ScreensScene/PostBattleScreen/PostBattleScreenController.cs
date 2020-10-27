@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public GameObject completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
-        public ActionButton demoHomeButton;
+        public CanvasGroupButton demoHomeButton;
         public PostTutorialButtonsPanel postTutorialButtonsPanel;
         public PostBattleButtonsPanel postBattleButtonsPanel;
         public AppraisalSectionController appraisalSection;

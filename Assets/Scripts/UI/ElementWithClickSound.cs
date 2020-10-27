@@ -13,8 +13,8 @@ namespace BattleCruisers.UI
 
         public virtual void Initialise(
             ISingleSoundPlayer soundPlayer, 
-            IDismissableEmitter parent = null,
-            Action clickAction = null)
+            Action clickAction = null,
+            IDismissableEmitter parent = null)
         {
             base.Initialise();
 

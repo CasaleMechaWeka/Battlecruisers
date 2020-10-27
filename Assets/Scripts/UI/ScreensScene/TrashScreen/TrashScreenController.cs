@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
         public Image sky, enemyCharacter;
-        public ActionButton startBattleButton, homeButton;
+        public CanvasGroupButton startBattleButton, homeButton;
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";

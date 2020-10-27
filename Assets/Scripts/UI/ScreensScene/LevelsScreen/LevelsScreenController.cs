@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private INextLevelHelper _nextLevelHelper;
 
         public ButtonController nextSetButton, previousSetButton;
-        public ActionButton cancelButton;
+        public CanvasGroupButton cancelButton;
 
         private LevelsSetController VisibleLevelsSet => _levelSets[VisibleSetIndex];
 

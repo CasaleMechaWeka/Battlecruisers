@@ -11,9 +11,9 @@ namespace BattleCruisers.Scenes.Test.UI
         {
             ISingleSoundPlayer soundPlayer = Substitute.For<ISingleSoundPlayer>();
 
-            ActionButton[] buttons = FindObjectsOfType<ActionButton>();
+            CanvasGroupButton[] buttons = FindObjectsOfType<CanvasGroupButton>();
 
-            foreach (ActionButton button in buttons)
+            foreach (CanvasGroupButton button in buttons)
             {
                 button.Initialise(soundPlayer, SweetAction);
             }

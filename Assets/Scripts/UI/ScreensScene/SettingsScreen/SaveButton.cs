@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<bool> showInGameHints,
             IHotkeysPanel hotkeysPanel)
         {
-            base.Initialise(soundPlayer, parent);
+            base.Initialise(soundPlayer, parent: parent);
 
             Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic, muteVoices, showInGameHints, hotkeysPanel);
 

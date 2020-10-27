@@ -12,10 +12,10 @@ namespace BattleCruisers.UI
 
         public override void Initialise(
             ISingleSoundPlayer soundPlayer, 
-            IDismissableEmitter parent = null,
-            Action clickAction = null)
+            Action clickAction = null,
+            IDismissableEmitter parent = null)
         {
-            base.Initialise(soundPlayer, parent, clickAction);
+            base.Initialise(soundPlayer, clickAction, parent);
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);

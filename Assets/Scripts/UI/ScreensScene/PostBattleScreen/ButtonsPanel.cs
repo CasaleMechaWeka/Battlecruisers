@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class ButtonsPanel : MonoBehaviour
     {
-        public ActionButton homeButton;
+        public CanvasGroupButton homeButton;
 
         public virtual void Initialise(IPostBattleScreen postBattleScreen, ISingleSoundPlayer soundPlayer)
         {

@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     public class AppraisalSectionController : MonoBehaviour
     {
         public Text appraisalDroneText;
-        public ActionButton lootButton;
+        public CanvasGroupButton lootButton;
 
         public void Initialise(string appraisalText, ISingleSoundPlayer soundPlayer, Action lootButtonAction = null)
         {

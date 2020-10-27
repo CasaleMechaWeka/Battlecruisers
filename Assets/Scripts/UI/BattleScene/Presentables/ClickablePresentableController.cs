@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 
         public void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
 		{
-            base.Initialise(soundPlayer, parent);
+            base.Initialise(soundPlayer, parent: parent);
 
             _presentableComponent = new PresentableComponent();
 		}

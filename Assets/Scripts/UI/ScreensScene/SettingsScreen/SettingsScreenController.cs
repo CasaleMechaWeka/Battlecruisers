@@ -75,8 +75,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             cancelButton.Initialise(soundPlayer, this);
 
-            gameSettingsButton.Initialise(soundPlayer, this, ShowGameSettings);
-            hotkeysButton.Initialise(soundPlayer, this, ShowHotkeys);
+            gameSettingsButton.Initialise(soundPlayer, ShowGameSettings, this);
+            hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
 		}
 
         public override void Cancel()

@@ -4,16 +4,14 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene
 {
-    // FELIX  TEMP
-    public class TextButton : ElementWithClickSound
-    //public abstract class TextButton : ElementWithClickSound
+    public abstract class TextButton : ElementWithClickSound
     {
         private MaskableGraphic _text;
         protected override MaskableGraphic Graphic => _text;
 
         public void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
         {
-            base.Initialise(soundPlayer, parent);
+            base.Initialise(soundPlayer, parent: parent);
 
             _text = GetComponentInChildren<Text>();
             Assert.IsNotNull(_text);

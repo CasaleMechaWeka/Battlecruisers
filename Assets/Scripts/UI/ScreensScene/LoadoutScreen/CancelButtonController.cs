@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(ISingleSoundPlayer soundPlayer, ILoadoutScreenController loadoutScreen)
         {
-            base.Initialise(soundPlayer, loadoutScreen);
+            base.Initialise(soundPlayer, parent: loadoutScreen);
 
             Assert.IsNotNull(loadoutScreen);
             _loadoutScreen = loadoutScreen;
