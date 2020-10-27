@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Helpers;
-using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data.Helpers;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
@@ -11,7 +9,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
