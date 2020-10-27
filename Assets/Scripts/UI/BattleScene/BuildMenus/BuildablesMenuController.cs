@@ -4,7 +4,6 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleCruisers.Utils.PlatformAbstractions
 {
-	public class InputBC : IInput
+    public class InputBC : IInput
     {
         private static IList<KeyCode> ValidHotkeys = new List<KeyCode>()
         {
