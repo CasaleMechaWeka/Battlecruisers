@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Utils;
 using System;
-using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.Presentables
 {
@@ -10,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 
         public event EventHandler Dismissed;
 
-        protected bool IsPresented => _presentableComponent.IsPresented;
+        public bool IsPresented => _presentableComponent.IsPresented;
 
         public void Initialise()
         {
