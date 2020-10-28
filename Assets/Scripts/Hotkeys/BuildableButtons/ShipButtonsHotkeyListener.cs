@@ -4,7 +4,7 @@ using System;
 
 // FELIX  Test
 // FELIX  Create class for single hotkey to avoid duplicate code?  Takes event and button?
-namespace BattleCruisers.Hotkeys
+namespace BattleCruisers.Hotkeys.BuildableButtons
 {
     public class ShipButtonsHotkeyListener : IManagedDisposable
     {
