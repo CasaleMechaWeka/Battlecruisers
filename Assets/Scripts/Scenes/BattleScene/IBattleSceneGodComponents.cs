@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI;
+﻿using BattleCruisers.Hotkeys;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Wind;
@@ -21,5 +22,6 @@ namespace BattleCruisers.Scenes.BattleScene
         IClickableEmitter BackgroundClickableEmitter { get; }
         ITargetIndicator TargetIndicator { get; }
         WindInitialiser WindInitialiser { get; }
+        HotkeyInitialiser HotkeyInitialiser { get; }
     }
 }

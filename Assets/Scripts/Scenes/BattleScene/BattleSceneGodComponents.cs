@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI;
+﻿using BattleCruisers.Hotkeys;
+using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
@@ -46,6 +47,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public TargetIndicatorController targetIndicator;
         public ITargetIndicator TargetIndicator => targetIndicator;
 
+        public HotkeyInitialiser hotkeyInitialiser;
+        public HotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
+
         public void Initialise()
         {
             Helper.AssertIsNotNull(
@@ -55,7 +59,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 uiSoundsAudioSource, 
                 musicPlayerInitialiser, 
                 windInitialiser,
-                cloudInitialiser);
+                cloudInitialiser,
+                hotkeyInitialiser);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);

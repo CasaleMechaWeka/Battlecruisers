@@ -54,7 +54,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
         private PausableAudioListener _pausableAudioListener;
-        private HotkeyInitialiser _hotkeyInitialiser;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -241,12 +240,11 @@ namespace BattleCruisers.Scenes.BattleScene
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
             await components.CloudInitialiser.InitialiseAsync(currentLevel.SkyMaterialName, components.UpdaterProvider.SlowerUpdater, currentLevel.Num, cameraComponents.MainCamera.Aspect, prefabFetcher);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
-            _hotkeyInitialiser
-                = new HotkeyInitialiser(
-                    dataProvider.GameModel.Hotkeys,
-                    InputBC.Instance,
-                    components.UpdaterProvider.SwitchableUpdater,
-                    cameraComponents.CameraFocuser);
+            components.HotkeyInitialiser.Initialise(
+                dataProvider.GameModel.Hotkeys,
+                InputBC.Instance,
+                components.UpdaterProvider.SwitchableUpdater,
+                cameraComponents.CameraFocuser);
             _gameEndMonitor 
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(
