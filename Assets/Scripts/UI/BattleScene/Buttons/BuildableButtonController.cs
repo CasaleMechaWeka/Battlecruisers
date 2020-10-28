@@ -83,5 +83,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         }
 
         protected abstract void HandleClick(bool isButtonEnabled);
+
+        public void TriggerClick()
+        {
+            OnClicked();
+        }
     }
 }

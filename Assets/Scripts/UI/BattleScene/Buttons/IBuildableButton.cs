@@ -7,5 +7,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     {
         IBuildable Buildable { get; }
         Color Color { set; }
+
+        /// <summary>
+        /// For hotkeys.
+        /// </summary>
+        void TriggerClick();
     }
 }
