@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Hotkeys
 {
@@ -14,6 +13,7 @@ namespace BattleCruisers.Hotkeys
         private NavigationHotkeyListener _navigationHotkeyListener;
 
         public BuildableButtonsHotkeyInitialiser buildableButtonsHotkeyInitialiser;
+        public BuildingCategoryButtonsHotkeyInitialiser buildingCategoryButtonsHotkeyInitialiser;
 
         public void Initialise(
             IHotkeyList hotkeyList,
@@ -21,12 +21,14 @@ namespace BattleCruisers.Hotkeys
             IUpdater updater,
             ICameraFocuser cameraFocuser)
         {
-            Assert.IsNotNull(buildableButtonsHotkeyInitialiser);
+            Helper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
             Helper.AssertIsNotNull(hotkeyList, input, updater, cameraFocuser);
 
             IHotkeyDetector hotkeyDetector = new HotkeyDetector(hotkeyList, input, updater);
+            
             _navigationHotkeyListener = new NavigationHotkeyListener(hotkeyDetector, cameraFocuser);
             buildableButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
+            buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
         }
     }
 }
