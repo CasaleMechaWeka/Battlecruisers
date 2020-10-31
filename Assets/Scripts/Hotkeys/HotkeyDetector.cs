@@ -15,6 +15,9 @@ namespace BattleCruisers.Hotkeys
         // Navigation
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
 
+        // Buliding categories
+        public event EventHandler Factories, Defensives, Offensives, Tacticals, Ultras;
+
         // Buildable buttons
         public event EventHandler AttackBoat, Frigate, Destroyer, Archon;
 
@@ -46,6 +49,33 @@ namespace BattleCruisers.Hotkeys
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.EnemyCruiser: {_hotkeyList.EnemyCruiser}");
                 EnemyCruiser?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Building categories
+            if (_input.GetKeyUp(_hotkeyList.Factories))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Factories: {_hotkeyList.Factories}");
+                Factories?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Defensives))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Defensives: {_hotkeyList.Defensives}");
+                Defensives?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Offensives))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Offensives: {_hotkeyList.Offensives}");
+                Offensives?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Tacticals))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Tacticals: {_hotkeyList.Tacticals}");
+                Tacticals?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Ultras))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Ultras: {_hotkeyList.Ultras}");
+                Ultras?.Invoke(this, EventArgs.Empty);
             }
 
             // Boats
