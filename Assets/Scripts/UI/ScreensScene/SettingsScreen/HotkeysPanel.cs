@@ -24,7 +24,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IHotkeysModel _hotkeysModel;
 
+        // FELIX  Split up class?
         public HotkeyRow playerCruiserRow, overviewRow, enemyCruiserRow;
+        public HotkeyRow attackBoatRow, frigateRow, destroyerRow, archonRow;
 
         private ISettableBroadcastingProperty<bool> _isDirty;
         public IBroadcastingProperty<bool> IsDirty { get; private set; }
@@ -34,6 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(IHotkeysModel hotkeysModel)
         {
             Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
+            Helper.AssertIsNotNull(attackBoatRow, frigateRow, destroyerRow, archonRow);
             Assert.IsNotNull(hotkeysModel);
 
             _hotkeysModel = hotkeysModel;
@@ -43,6 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             IList<HotkeyRow> rows = new List<HotkeyRow>();
 
+            // Navigation
             rows.Add(playerCruiserRow);
             playerCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.PlayerCruiser, this);
 
@@ -51,6 +55,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(enemyCruiserRow);
             enemyCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.EnemyCruiser, this);
+
+            // Ships
+            rows.Add(attackBoatRow);
+            attackBoatRow.Initialise(InputBC.Instance, _hotkeysModel.AttackBoat, this);
+
+            rows.Add(frigateRow);
+            frigateRow.Initialise(InputBC.Instance, _hotkeysModel.Frigate, this);
+
+            rows.Add(destroyerRow);
+            destroyerRow.Initialise(InputBC.Instance, _hotkeysModel.Destroyer, this);
+
+            rows.Add(archonRow);
+            archonRow.Initialise(InputBC.Instance, _hotkeysModel.Archon, this);
 
             foreach (HotkeyRow row in rows)
             {
@@ -73,16 +90,29 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private bool FindIsDirty()
         {
             return
+                // Navigation
                 playerCruiserRow.Value.Key.Value != _hotkeysModel.PlayerCruiser
                 || overviewRow.Value.Key.Value != _hotkeysModel.Overview
-                || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser;
+                || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
+                // Ships
+                || attackBoatRow.Value.Key.Value != _hotkeysModel.AttackBoat
+                || frigateRow.Value.Key.Value != _hotkeysModel.Frigate
+                || destroyerRow.Value.Key.Value != _hotkeysModel.Destroyer
+                || archonRow.Value.Key.Value != _hotkeysModel.Archon;
         }
 
         public void UpdateHokeysModel()
         {
+            // Navigation
             _hotkeysModel.PlayerCruiser = playerCruiserRow.Value.Key.Value;
             _hotkeysModel.Overview = overviewRow.Value.Key.Value;
             _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
+
+            // Ships
+            _hotkeysModel.AttackBoat = attackBoatRow.Value.Key.Value;
+            _hotkeysModel.Frigate = frigateRow.Value.Key.Value;
+            _hotkeysModel.Destroyer= destroyerRow.Value.Key.Value;
+            _hotkeysModel.Archon = archonRow.Value.Key.Value;
         }
 
         public override void Hide()
@@ -93,9 +123,16 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public void Reset()
         {
+            // Navigation
             playerCruiserRow.Reset();
             overviewRow.Reset();
             enemyCruiserRow.Reset();
+
+            // Ships
+            attackBoatRow.Reset();
+            frigateRow.Reset();
+            destroyerRow.Reset();
+            archonRow.Reset();
         }
     }
 }
