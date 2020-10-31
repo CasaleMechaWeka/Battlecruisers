@@ -49,6 +49,7 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
         {
             ClickIfPresented(_archonButton);
         }
+
         public void DisposeManagedState()
         {
             _hotkeyDetector.AttackBoat -= _hotkeyDetector_AttackBoat;
