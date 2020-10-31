@@ -6,5 +6,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     {
         bool IsActiveFeedbackVisible { set; }
         BuildingCategory Category { get; }
+
+        /// <summary>
+        /// For hotkeys.
+        /// </summary>
+        void TriggerClick();
     }
 }

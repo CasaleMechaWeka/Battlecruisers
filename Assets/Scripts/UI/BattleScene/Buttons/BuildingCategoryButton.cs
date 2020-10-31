@@ -60,6 +60,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Destroy(activeFeedback);
         }
 
+        public void TriggerClick()
+        {
+            OnClicked();
+        }
+
         protected override void OnClicked()
         {
             base.OnClicked();
