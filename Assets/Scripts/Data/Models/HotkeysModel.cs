@@ -64,12 +64,59 @@ namespace BattleCruisers.Data.Models
             set => _archon = value;
         }
 
+        [SerializeField]
+        private KeyCode _factories;
+        public KeyCode Factories
+        {
+            get => _factories;
+            set => _factories = value;
+        }
+
+        [SerializeField]
+        private KeyCode _defensives;
+        public KeyCode Defensives
+        {
+            get => _defensives;
+            set => _defensives = value;
+        }
+
+        [SerializeField]
+        private KeyCode _offensives;
+        public KeyCode Offensives
+        {
+            get => _offensives;
+            set => _offensives = value;
+        }
+
+        [SerializeField]
+        private KeyCode _tacticals;
+        public KeyCode Tacticals
+        {
+            get => _tacticals;
+            set => _tacticals = value;
+        }
+
+        [SerializeField]
+        private KeyCode _ultras;
+        public KeyCode Ultras
+        {
+            get => _ultras;
+            set => _ultras = value;
+        }
+
         public HotkeysModel()
         {
             // Navigation
             PlayerCruiser = KeyCode.LeftArrow;
             Overview = KeyCode.UpArrow;
             EnemyCruiser = KeyCode.RightArrow;
+
+            // Building categories
+            Factories = KeyCode.A;
+            Defensives = KeyCode.S;
+            Offensives = KeyCode.D;
+            Tacticals = KeyCode.F;
+            Ultras = KeyCode.G;
 
             // Boats
             AttackBoat = KeyCode.Q;
@@ -88,6 +135,12 @@ namespace BattleCruisers.Data.Models
                 && PlayerCruiser == other.PlayerCruiser
                 && Overview == other.Overview
                 && EnemyCruiser == other.EnemyCruiser
+                // Building categories
+                && Factories == other.Factories
+                && Defensives == other.Defensives
+                && Offensives == other.Offensives
+                && Tacticals == other.Tacticals
+                && Ultras == other.Ultras
                 // Boats
                 && AttackBoat == other.AttackBoat
                 && Frigate == other.Frigate
@@ -101,6 +154,7 @@ namespace BattleCruisers.Data.Models
             return 
                 this.GetHashCode(
                     PlayerCruiser, Overview, EnemyCruiser,
+                    Factories, Defensives, Offensives, Tacticals, Ultras,
                     AttackBoat, Frigate, Destroyer, Archon);
         }
     }
