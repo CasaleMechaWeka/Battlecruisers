@@ -5,6 +5,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using UnityCommon.Properties;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -24,9 +25,15 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IHotkeysModel _hotkeysModel;
 
-        // FELIX  Split up class?
-        public HotkeyRow playerCruiserRow, overviewRow, enemyCruiserRow;
-        public HotkeyRow attackBoatRow, frigateRow, destroyerRow, archonRow;
+        [Header("Navigation")]
+        public HotkeyRow playerCruiserRow;
+        public HotkeyRow overviewRow, enemyCruiserRow;
+        [Header("Building categories")]
+        public HotkeyRow factoriesRow;
+        public HotkeyRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
+        [Header("Ships")]
+        public HotkeyRow attackBoatRow;
+        public HotkeyRow frigateRow, destroyerRow, archonRow;
 
         private ISettableBroadcastingProperty<bool> _isDirty;
         public IBroadcastingProperty<bool> IsDirty { get; private set; }
@@ -46,7 +53,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             IList<HotkeyRow> rows = new List<HotkeyRow>();
 
-            // Navigation
+            SetupNavigationRows(rows);
+            SetupBulidingCategoryRows(rows);
+            SetupShipRows(rows);
+
+            foreach (HotkeyRow row in rows)
+            {
+                row.Enabled += Row_Enabled;
+                row.Value.Key.ValueChanged += Key_ValueChanged;
+            }
+        }
+
+        private void SetupNavigationRows(IList<HotkeyRow> rows)
+        {
             rows.Add(playerCruiserRow);
             playerCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.PlayerCruiser, this);
 
@@ -55,8 +74,28 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(enemyCruiserRow);
             enemyCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.EnemyCruiser, this);
+        }
 
-            // Ships
+        private void SetupBulidingCategoryRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(factoriesRow);
+            factoriesRow.Initialise(InputBC.Instance, _hotkeysModel.Factories, this);
+
+            rows.Add(defensivesRow);
+            defensivesRow.Initialise(InputBC.Instance, _hotkeysModel.Defensives, this);
+
+            rows.Add(offensivesRow);
+            offensivesRow.Initialise(InputBC.Instance, _hotkeysModel.Offensives, this);
+
+            rows.Add(tacticalsRow);
+            tacticalsRow.Initialise(InputBC.Instance, _hotkeysModel.Tacticals, this);
+
+            rows.Add(ultrasRow);
+            ultrasRow.Initialise(InputBC.Instance, _hotkeysModel.Ultras, this);
+        }
+
+        private void SetupShipRows(IList<HotkeyRow> rows)
+        {
             rows.Add(attackBoatRow);
             attackBoatRow.Initialise(InputBC.Instance, _hotkeysModel.AttackBoat, this);
 
@@ -68,12 +107,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(archonRow);
             archonRow.Initialise(InputBC.Instance, _hotkeysModel.Archon, this);
-
-            foreach (HotkeyRow row in rows)
-            {
-                row.Enabled += Row_Enabled;
-                row.Value.Key.ValueChanged += Key_ValueChanged;
-            }
         }
 
         private void Row_Enabled(object sender, EventArgs e)
@@ -94,6 +127,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 playerCruiserRow.Value.Key.Value != _hotkeysModel.PlayerCruiser
                 || overviewRow.Value.Key.Value != _hotkeysModel.Overview
                 || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
+                // Building categories
+                || factoriesRow.Value.Key.Value != _hotkeysModel.Factories
+                || defensivesRow.Value.Key.Value != _hotkeysModel.Defensives
+                || offensivesRow.Value.Key.Value != _hotkeysModel.Offensives
+                || tacticalsRow.Value.Key.Value != _hotkeysModel.Tacticals
+                || ultrasRow.Value.Key.Value != _hotkeysModel.Ultras
                 // Ships
                 || attackBoatRow.Value.Key.Value != _hotkeysModel.AttackBoat
                 || frigateRow.Value.Key.Value != _hotkeysModel.Frigate
@@ -107,6 +146,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.PlayerCruiser = playerCruiserRow.Value.Key.Value;
             _hotkeysModel.Overview = overviewRow.Value.Key.Value;
             _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
+
+            // Building categories
+            _hotkeysModel.Factories = factoriesRow.Value.Key.Value;
+            _hotkeysModel.Defensives= defensivesRow.Value.Key.Value;
+            _hotkeysModel.Offensives = offensivesRow.Value.Key.Value;
+            _hotkeysModel.Tacticals = tacticalsRow.Value.Key.Value;
+            _hotkeysModel.Ultras = ultrasRow.Value.Key.Value;
 
             // Ships
             _hotkeysModel.AttackBoat = attackBoatRow.Value.Key.Value;
@@ -127,6 +173,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             playerCruiserRow.Reset();
             overviewRow.Reset();
             enemyCruiserRow.Reset();
+
+            // Building categories
+            factoriesRow.Reset();
+            defensivesRow.Reset();
+            offensivesRow.Reset();
+            tacticalsRow.Reset();
+            ultrasRow.Reset();
 
             // Ships
             attackBoatRow.Reset();
