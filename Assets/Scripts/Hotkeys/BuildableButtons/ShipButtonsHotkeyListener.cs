@@ -3,12 +3,10 @@ using BattleCruisers.Utils;
 using System;
 
 // FELIX  Test
-// FELIX  Create class for single hotkey to avoid duplicate code?  Takes event and button?
 namespace BattleCruisers.Hotkeys.BuildableButtons
 {
-    public class ShipButtonsHotkeyListener : IManagedDisposable
+    public class ShipButtonsHotkeyListener : BuildableButtonHotkeyListener, IManagedDisposable
     {
-        private readonly IHotkeyDetector _hotkeyDetector;
         private readonly IBuildableButton _attackBoatButton, _frigateButton, _destroyerButton, _archonButton;
 
         public ShipButtonsHotkeyListener(
@@ -17,10 +15,9 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             IBuildableButton frigateButton,
             IBuildableButton destroyerButton,
             IBuildableButton archonButton)
+            : base(hotkeyDetector)
         {
-            Helper.AssertIsNotNull(hotkeyDetector, attackBoatButton, frigateButton, destroyerButton, archonButton);
-
-            _hotkeyDetector = hotkeyDetector;
+            Helper.AssertIsNotNull(attackBoatButton, frigateButton, destroyerButton, archonButton);
 
             _attackBoatButton = attackBoatButton;
             _frigateButton = frigateButton;
@@ -52,15 +49,6 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
         {
             ClickIfPresented(_archonButton);
         }
-
-        private void ClickIfPresented(IBuildableButton button)
-        {
-            if (button.IsPresented)
-            {
-                button.TriggerClick();
-            }
-        }
-
         public void DisposeManagedState()
         {
             _hotkeyDetector.AttackBoat -= _hotkeyDetector_AttackBoat;
