@@ -34,31 +34,39 @@ namespace BattleCruisers.Hotkeys
             // Navigation
             if (_input.GetKeyUp(_hotkeyList.PlayerCruiser))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.PlayerCruiser: {_hotkeyList.PlayerCruiser}");
                 PlayerCruiser?.Invoke(this, EventArgs.Empty);
             }
             if (_input.GetKeyUp(_hotkeyList.Overview))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Overview: {_hotkeyList.Overview}");
                 Overview?.Invoke(this, EventArgs.Empty);
             }
             if (_input.GetKeyUp(_hotkeyList.EnemyCruiser))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.EnemyCruiser: {_hotkeyList.EnemyCruiser}");
                 EnemyCruiser?.Invoke(this, EventArgs.Empty);
             }
+
             // Boats
             if (_input.GetKeyUp(_hotkeyList.AttackBoat))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.AttackBoat: {_hotkeyList.AttackBoat}");
                 AttackBoat?.Invoke(this, EventArgs.Empty);
             }
             if (_input.GetKeyUp(_hotkeyList.Frigate))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Frigate: {_hotkeyList.Frigate}");
                 Frigate?.Invoke(this, EventArgs.Empty);
             }
             if (_input.GetKeyUp(_hotkeyList.Destroyer))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Destroyer: {_hotkeyList.Destroyer}");
                 Destroyer?.Invoke(this, EventArgs.Empty);
             }
             if (_input.GetKeyUp(_hotkeyList.Archon))
             {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Archon: {_hotkeyList.Archon}");
                 Archon?.Invoke(this, EventArgs.Empty);
             }
         }
