@@ -27,7 +27,8 @@ namespace BattleCruisers.Utils.Debugging
 
         void Update()
         {
-            if (Input.touchCount == numOfContactPoints)
+            if (Input.touchCount == numOfContactPoints
+                || Input.GetKeyUp(KeyCode.F3))
             {
                 _debouncer.Debounce(ToggleCheatersUI);
             }
