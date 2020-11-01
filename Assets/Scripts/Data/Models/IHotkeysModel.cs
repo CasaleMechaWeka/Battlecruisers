@@ -21,6 +21,30 @@ namespace BattleCruisers.Data.Models
         KeyCode AirFactory { get; set; }
         KeyCode NavalFactory { get; set; }
 
+        // Offensives
+        KeyCode Artillery { get; set; }
+        KeyCode Railgun { get; set; }
+        KeyCode RocketLauncher { get; set; }
+
+        // Tacticals
+        KeyCode Shield { get; set; }
+        KeyCode Booster { get; set; }
+        KeyCode StealthGenerator { get; set; }
+        KeyCode SpySatellite { get; set; }
+        KeyCode ControlTower { get; set; }
+
+        // Ultras
+        KeyCode Deathstar { get; set; }
+        KeyCode NukeLauncher { get; set; }
+        KeyCode Ultralisk { get; set; }
+        KeyCode KamikazeSignal { get; set; }
+        KeyCode Broadsides { get; set; }
+
+        // Aircraft
+        KeyCode Bomber { get; set; }
+        KeyCode Gunship { get; set; }
+        KeyCode Fighter { get; set; }
+
         // Defensives
         KeyCode ShipTurret { get; set; }
         KeyCode AirTurret { get; set; }

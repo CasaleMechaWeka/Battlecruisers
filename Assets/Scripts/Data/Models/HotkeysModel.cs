@@ -144,6 +144,142 @@ namespace BattleCruisers.Data.Models
         }
         #endregion Defensives
 
+        #region Offensives
+        [SerializeField]
+        private KeyCode _artillery;
+        public KeyCode Artillery
+        {
+            get => _artillery;
+            set => _artillery = value;
+        }
+
+        [SerializeField]
+        private KeyCode _railgun;
+        public KeyCode Railgun
+        {
+            get => _railgun;
+            set => _railgun = value;
+        }
+
+        [SerializeField]
+        private KeyCode _rocketLauncher;
+        public KeyCode RocketLauncher
+        {
+            get => _rocketLauncher;
+            set => _rocketLauncher = value;
+        }
+        #endregion Offensives
+
+        #region Tacticals
+        [SerializeField]
+        private KeyCode _shield;
+        public KeyCode Shield
+        {
+            get => _shield;
+            set => _shield = value;
+        }
+
+        [SerializeField]
+        private KeyCode _booster;
+        public KeyCode Booster
+        {
+            get => _booster;
+            set => _booster = value;
+        }
+
+        [SerializeField]
+        private KeyCode _stealthGenerator;
+        public KeyCode StealthGenerator
+        {
+            get => _stealthGenerator;
+            set => _stealthGenerator = value;
+        }
+
+        [SerializeField]
+        private KeyCode _spySatellite;
+        public KeyCode SpySatellite
+        {
+            get => _spySatellite;
+            set => _spySatellite = value;
+        }
+
+        [SerializeField]
+        private KeyCode _controlTower;
+        public KeyCode ControlTower
+        {
+            get => _controlTower;
+            set => _controlTower = value;
+        }
+        #endregion Tacticals
+
+        #region Ultras
+        [SerializeField]
+        private KeyCode _deathStar;
+        public KeyCode Deathstar
+        {
+            get => _deathStar;
+            set => _deathStar = value;
+        }
+
+        [SerializeField]
+        private KeyCode _nukeLauncher;
+        public KeyCode NukeLauncher
+        {
+            get => _nukeLauncher;
+            set => _nukeLauncher = value;
+        }
+
+        [SerializeField]
+        private KeyCode _ultralisk;
+        public KeyCode Ultralisk
+        {
+            get => _ultralisk;
+            set => _ultralisk = value;
+        }
+
+        [SerializeField]
+        private KeyCode _kamikazeSignal;
+        public KeyCode KamikazeSignal
+        {
+            get => _kamikazeSignal;
+            set => _kamikazeSignal = value;
+        }
+
+        [SerializeField]
+        private KeyCode _broadsides;
+        public KeyCode Broadsides
+        {
+            get => _broadsides;
+            set => _broadsides = value;
+        }
+        #endregion Ultras
+
+        #region Aircraft
+        [SerializeField]
+        private KeyCode _bomber;
+        public KeyCode Bomber
+        {
+            get => _bomber;
+            set => _bomber = value;
+        }
+
+        [SerializeField]
+        private KeyCode _gunship;
+        public KeyCode Gunship
+        {
+            get => _gunship;
+            set => _gunship = value;
+        }
+
+        [SerializeField]
+        private KeyCode _fighter;
+        public KeyCode Fighter
+        {
+            get => _fighter;
+            set => _fighter = value;
+        }
+        #endregion Aircraft
+
         #region Ships
         [SerializeField]
         private KeyCode _attackBoat;
@@ -204,7 +340,31 @@ namespace BattleCruisers.Data.Models
             SamSite = KeyCode.R;
             TeslaCoil = KeyCode.T;
 
-            // Boats
+            // Offensives
+            Artillery = KeyCode.Q;
+            Railgun = KeyCode.W;
+            RocketLauncher = KeyCode.E;
+
+            // Tacticals
+            Shield = KeyCode.Q;
+            Booster = KeyCode.W;
+            StealthGenerator = KeyCode.E;
+            SpySatellite = KeyCode.R;
+            ControlTower = KeyCode.T;
+
+            // Ultras
+            Deathstar = KeyCode.Q;
+            NukeLauncher = KeyCode.W;
+            Ultralisk = KeyCode.E;
+            KamikazeSignal = KeyCode.R;
+            Broadsides = KeyCode.T;
+
+            // Aircraft
+            Bomber = KeyCode.Q;
+            Gunship = KeyCode.W;
+            Fighter = KeyCode.E;
+
+            // Ships
             AttackBoat = KeyCode.Q;
             Frigate = KeyCode.W;
             Destroyer = KeyCode.E;
@@ -237,12 +397,31 @@ namespace BattleCruisers.Data.Models
                 && Mortar == other.Mortar
                 && SamSite == other.SamSite
                 && TeslaCoil == other.TeslaCoil
+                // Offensives
+                && Artillery == other.Artillery
+                && Railgun == other.Railgun
+                && RocketLauncher == other.RocketLauncher
+                // Tacticals
+                && Shield == other.Shield
+                && Booster == other.Booster
+                && StealthGenerator == other.StealthGenerator
+                && SpySatellite == other.SpySatellite
+                && ControlTower == other.ControlTower
+                // Ultras
+                && Deathstar == other.Deathstar
+                && NukeLauncher == other.NukeLauncher
+                && Ultralisk == other.Ultralisk
+                && KamikazeSignal == other.KamikazeSignal
+                && Broadsides == other.Broadsides
+                // Aircraft
+                && Bomber == other.Bomber
+                && Gunship == other.Gunship
+                && Fighter == other.Fighter
                 // Boats
                 && AttackBoat == other.AttackBoat
                 && Frigate == other.Frigate
                 && Destroyer == other.Destroyer
                 && Archon == other.Archon;
-
         }
 
         public override int GetHashCode()
@@ -253,6 +432,10 @@ namespace BattleCruisers.Data.Models
                     Factories, Defensives, Offensives, Tacticals, Ultras,
                     DroneStation, AirTurret, NavalFactory,
                     ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil,
+                    Artillery, Railgun, RocketLauncher,
+                    Shield, Booster, StealthGenerator, SpySatellite, ControlTower,
+                    Deathstar, NukeLauncher, Ultralisk, KamikazeSignal, Railgun,
+                    Bomber, Gunship, Fighter,
                     AttackBoat, Frigate, Destroyer, Archon);
         }
     }

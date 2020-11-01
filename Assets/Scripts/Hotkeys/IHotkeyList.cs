@@ -28,6 +28,30 @@ namespace BattleCruisers.Hotkeys
         KeyCode SamSite { get; }
         KeyCode TeslaCoil { get; }
 
+        // Offensives
+        KeyCode Artillery { get; }
+        KeyCode Railgun { get; }
+        KeyCode RocketLauncher { get; }
+
+        // Tacticals
+        KeyCode Shield { get; }
+        KeyCode Booster { get; }
+        KeyCode StealthGenerator { get; }
+        KeyCode SpySatellite { get; }
+        KeyCode ControlTower { get; }
+
+        // Ultras
+        KeyCode Deathstar { get; }
+        KeyCode NukeLauncher { get; }
+        KeyCode Ultralisk { get; }
+        KeyCode KamikazeSignal { get; }
+        KeyCode Broadsides { get; }
+
+        // Aircraft
+        KeyCode Bomber { get; }
+        KeyCode Gunship { get; }
+        KeyCode Fighter { get; }
+
         // Boats
         KeyCode AttackBoat { get; }
         KeyCode Frigate { get; }
