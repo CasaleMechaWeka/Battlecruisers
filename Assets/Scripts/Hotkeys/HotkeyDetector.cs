@@ -18,7 +18,13 @@ namespace BattleCruisers.Hotkeys
         // Buliding categories
         public event EventHandler Factories, Defensives, Offensives, Tacticals, Ultras;
 
-        // Buildable buttons
+        // Factories
+        public event EventHandler DroneStation, AirFactory, NavalFactory;
+
+        // Defensives
+        public event EventHandler ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil;
+
+        // Ships
         public event EventHandler AttackBoat, Frigate, Destroyer, Archon;
 
         public HotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater)
@@ -76,6 +82,50 @@ namespace BattleCruisers.Hotkeys
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Ultras: {_hotkeyList.Ultras}");
                 Ultras?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Factories
+            if (_input.GetKeyUp(_hotkeyList.DroneStation))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.DroneStation: {_hotkeyList.DroneStation}");
+                DroneStation?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.AirFactory))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.AirFactory: {_hotkeyList.AirFactory}");
+                AirFactory?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.NavalFactory))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.NavalFactory: {_hotkeyList.NavalFactory}");
+                NavalFactory?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Defensives
+            if (_input.GetKeyUp(_hotkeyList.ShipTurret))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.ShipTurret: {_hotkeyList.ShipTurret}");
+                ShipTurret?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.AirTurret))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.AirTurret: {_hotkeyList.AirTurret}");
+                AirTurret?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Mortar))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Mortar: {_hotkeyList.Mortar}");
+                Mortar?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.SamSite))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SamSite: {_hotkeyList.SamSite}");
+                SamSite?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.TeslaCoil))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.TeslaCoil: {_hotkeyList.TeslaCoil}");
+                TeslaCoil?.Invoke(this, EventArgs.Empty);
             }
 
             // Boats
