@@ -16,6 +16,18 @@ namespace BattleCruisers.Data.Models
         KeyCode Tacticals { get; set; }
         KeyCode Ultras { get; set; }
 
+        // Factories
+        KeyCode DroneStation { get; set; }
+        KeyCode AirFactory { get; set; }
+        KeyCode NavalFactory { get; set; }
+
+        // Defensives
+        KeyCode ShipTurret { get; set; }
+        KeyCode AirTurret { get; set; }
+        KeyCode Mortar { get; set; }
+        KeyCode SamSite { get; set; }
+        KeyCode TeslaCoil { get; set; }
+
         // Boats
         KeyCode AttackBoat { get; set; }
         KeyCode Frigate { get; set; }

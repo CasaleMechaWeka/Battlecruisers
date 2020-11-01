@@ -8,6 +8,7 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class HotkeysModel : IHotkeysModel, IHotkeyList
     {
+        #region Navigation
         [SerializeField]
         private KeyCode _playerCruiser;
         public KeyCode PlayerCruiser
@@ -31,39 +32,9 @@ namespace BattleCruisers.Data.Models
             get => _enemyCruiser;
             set => _enemyCruiser = value;
         }
+        #endregion Navigation
 
-        [SerializeField]
-        private KeyCode _attackBoat;
-        public KeyCode AttackBoat
-        {
-            get => _attackBoat;
-            set => _attackBoat = value;
-        }
-
-        [SerializeField]
-        private KeyCode _frigate;
-        public KeyCode Frigate
-        {
-            get => _frigate;
-            set => _frigate = value;
-        }
-
-        [SerializeField]
-        private KeyCode _destroyer;
-        public KeyCode Destroyer
-        {
-            get => _destroyer;
-            set => _destroyer = value;
-        }
-
-        [SerializeField]
-        private KeyCode _archon;
-        public KeyCode Archon
-        {
-            get => _archon;
-            set => _archon = value;
-        }
-
+        #region Building categories
         [SerializeField]
         private KeyCode _factories;
         public KeyCode Factories
@@ -103,6 +74,109 @@ namespace BattleCruisers.Data.Models
             get => _ultras;
             set => _ultras = value;
         }
+        #endregion Building categories
+
+        #region Factories
+        [SerializeField]
+        private KeyCode _droneStation;
+        public KeyCode DroneStation
+        {
+            get => _droneStation;
+            set => _droneStation = value;
+        }
+
+        [SerializeField]
+        private KeyCode _airFactory;
+        public KeyCode AirFactory
+        {
+            get => _airFactory;
+            set => _airFactory = value;
+        }
+
+        [SerializeField]
+        private KeyCode _navalFactory;
+        public KeyCode NavalFactory
+        {
+            get => _navalFactory;
+            set => _navalFactory = value;
+        }
+        #endregion Factories
+
+        #region Defensives
+        [SerializeField]
+        private KeyCode _shipTurret;
+        public KeyCode ShipTurret
+        {
+            get => _shipTurret;
+            set => _shipTurret = value;
+        }
+
+        [SerializeField]
+        private KeyCode _airTurret;
+        public KeyCode AirTurret
+        {
+            get => _airTurret;
+            set => _airTurret = value;
+        }
+
+        [SerializeField]
+        private KeyCode _mortar;
+        public KeyCode Mortar
+        {
+            get => _mortar;
+            set => _mortar = value;
+        }
+
+        [SerializeField]
+        private KeyCode _samSite;
+        public KeyCode SamSite
+        {
+            get => _samSite;
+            set => _samSite = value;
+        }
+
+        [SerializeField]
+        private KeyCode _teslaCoil;
+        public KeyCode TeslaCoil
+        {
+            get => _teslaCoil;
+            set => _teslaCoil = value;
+        }
+        #endregion Defensives
+
+        #region Ships
+        [SerializeField]
+        private KeyCode _attackBoat;
+        public KeyCode AttackBoat
+        {
+            get => _attackBoat;
+            set => _attackBoat = value;
+        }
+
+        [SerializeField]
+        private KeyCode _frigate;
+        public KeyCode Frigate
+        {
+            get => _frigate;
+            set => _frigate = value;
+        }
+
+        [SerializeField]
+        private KeyCode _destroyer;
+        public KeyCode Destroyer
+        {
+            get => _destroyer;
+            set => _destroyer = value;
+        }
+
+        [SerializeField]
+        private KeyCode _archon;
+        public KeyCode Archon
+        {
+            get => _archon;
+            set => _archon = value;
+        }
+        #endregion Ships
 
         public HotkeysModel()
         {
@@ -117,6 +191,18 @@ namespace BattleCruisers.Data.Models
             Offensives = KeyCode.D;
             Tacticals = KeyCode.F;
             Ultras = KeyCode.G;
+
+            // Factories
+            DroneStation = KeyCode.Q;
+            AirFactory = KeyCode.W;
+            NavalFactory = KeyCode.E;
+
+            // Defensives
+            ShipTurret = KeyCode.Q;
+            AirFactory = KeyCode.W;
+            Mortar = KeyCode.E;
+            SamSite = KeyCode.R;
+            TeslaCoil = KeyCode.T;
 
             // Boats
             AttackBoat = KeyCode.Q;
@@ -141,6 +227,16 @@ namespace BattleCruisers.Data.Models
                 && Offensives == other.Offensives
                 && Tacticals == other.Tacticals
                 && Ultras == other.Ultras
+                // Factories
+                && DroneStation == other.DroneStation
+                && AirFactory == other.AirFactory
+                && NavalFactory == other.NavalFactory
+                // Defensives
+                && ShipTurret == other.ShipTurret
+                && AirTurret == other.AirTurret
+                && Mortar == other.Mortar
+                && SamSite == other.SamSite
+                && TeslaCoil == other.TeslaCoil
                 // Boats
                 && AttackBoat == other.AttackBoat
                 && Frigate == other.Frigate
@@ -155,6 +251,8 @@ namespace BattleCruisers.Data.Models
                 this.GetHashCode(
                     PlayerCruiser, Overview, EnemyCruiser,
                     Factories, Defensives, Offensives, Tacticals, Ultras,
+                    DroneStation, AirTurret, NavalFactory,
+                    ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil,
                     AttackBoat, Frigate, Destroyer, Archon);
         }
     }

@@ -16,6 +16,18 @@ namespace BattleCruisers.Hotkeys
         KeyCode Tacticals { get; }
         KeyCode Ultras { get; }
 
+        // Factories
+        KeyCode DroneStation { get; }
+        KeyCode AirFactory { get; }
+        KeyCode NavalFactory { get; }
+
+        // Defensives
+        KeyCode ShipTurret { get; }
+        KeyCode AirTurret { get; }
+        KeyCode Mortar { get; }
+        KeyCode SamSite { get; }
+        KeyCode TeslaCoil { get; }
+
         // Boats
         KeyCode AttackBoat { get; }
         KeyCode Frigate { get; }
