@@ -233,9 +233,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.ALWAYS, true);
             tagsToActiveness.Add(Tags.BOOST, false);
             tagsToActiveness.Add(Tags.BATTLE_SCENE, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.HOTKEYS, true);
-            //tagsToActiveness.Add(Tags.HOTKEYS, false);
+            tagsToActiveness.Add(Tags.HOTKEYS, false);
             tagsToActiveness.Add(Tags.GENERIC, true);
             tagsToActiveness.Add(Tags.LIFETIME_EVENTS, false);
             tagsToActiveness.Add(Tags.LOCAL_BOOSTER, false);
