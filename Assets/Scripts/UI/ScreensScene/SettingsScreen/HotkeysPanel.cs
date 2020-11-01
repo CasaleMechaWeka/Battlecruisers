@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data.Models;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -29,15 +28,35 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         [Header("Navigation")]
         public HotkeyRow playerCruiserRow;
         public HotkeyRow overviewRow, enemyCruiserRow;
+        
         [Header("Building categories")]
         public HotkeyRow factoriesRow;
         public HotkeyRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
+        
         [Header("Factories")]
         public HotkeyRow droneStationRow;
         public HotkeyRow airFactoryRow, navalFactoryRow;
+        
         [Header("Defensives")]
         public HotkeyRow shipTurretRow;
         public HotkeyRow airTurretRow, mortarRow, samSiteRow, teslaCoilRow;
+
+        [Header("Offensives")]
+        public HotkeyRow artilleryRow;
+        public HotkeyRow railgunRow, rocketLauncherRow;
+
+        [Header("Tacticals")]
+        public HotkeyRow shieldRow;
+        public HotkeyRow boosterRow, stealthGeneratorRow, spySatelliteRow, controlTowerRow;
+
+        [Header("Ultras")]
+        public HotkeyRow deathstarRow;
+        public HotkeyRow nukeLauncherRow, ultraliskRow, kamikazeSignalRow, broadsidesRow;
+
+        [Header("Aircraft")]
+        public HotkeyRow bomberRow;
+        public HotkeyRow gunshipRow, fighterRow;
+
         [Header("Ships")]
         public HotkeyRow attackBoatRow;
         public HotkeyRow frigateRow, destroyerRow, archonRow;
@@ -52,6 +71,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
             Helper.AssertIsNotNull(droneStationRow, airFactoryRow, navalFactoryRow);
             Helper.AssertIsNotNull(shipTurretRow, airTurretRow, mortarRow, samSiteRow, teslaCoilRow);
+            Helper.AssertIsNotNull(artilleryRow, broadsidesRow, rocketLauncherRow);
+            Helper.AssertIsNotNull(shieldRow, boosterRow, stealthGeneratorRow, spySatelliteRow, controlTowerRow);
+            Helper.AssertIsNotNull(deathstarRow, nukeLauncherRow, ultraliskRow, kamikazeSignalRow, broadsidesRow);
+            Helper.AssertIsNotNull(bomberRow, gunshipRow, fighterRow);
             Helper.AssertIsNotNull(attackBoatRow, frigateRow, destroyerRow, archonRow);
             Assert.IsNotNull(hotkeysModel);
 
@@ -66,6 +89,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             SetupBulidingCategoryRows(rows);
             SetupFactoryRows(rows);
             SetupDefensiveRows(rows);
+            SetupOffensivesRows(rows);
+            SetupTacticalsRows(rows);
+            SetupUltrasRows(rows);
+            SetupAircraftRows(rows);
             SetupShipRows(rows);
 
             foreach (HotkeyRow row in rows)
@@ -135,6 +162,66 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             teslaCoilRow.Initialise(InputBC.Instance, _hotkeysModel.TeslaCoil, this);
         }
 
+        private void SetupOffensivesRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(artilleryRow);
+            artilleryRow.Initialise(InputBC.Instance, _hotkeysModel.Artillery, this);
+
+            rows.Add(railgunRow);
+            railgunRow.Initialise(InputBC.Instance, _hotkeysModel.Railgun, this);
+
+            rows.Add(rocketLauncherRow);
+            rocketLauncherRow.Initialise(InputBC.Instance, _hotkeysModel.RocketLauncher, this);
+        }
+
+        private void SetupTacticalsRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(shieldRow);
+            shieldRow.Initialise(InputBC.Instance, _hotkeysModel.Shield, this);
+
+            rows.Add(boosterRow);
+            boosterRow.Initialise(InputBC.Instance, _hotkeysModel.Booster, this);
+
+            rows.Add(stealthGeneratorRow);
+            stealthGeneratorRow.Initialise(InputBC.Instance, _hotkeysModel.StealthGenerator, this);
+
+            rows.Add(spySatelliteRow);
+            spySatelliteRow.Initialise(InputBC.Instance, _hotkeysModel.SpySatellite, this);
+
+            rows.Add(controlTowerRow);
+            controlTowerRow.Initialise(InputBC.Instance, _hotkeysModel.ControlTower, this);
+        }
+
+        private void SetupUltrasRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(deathstarRow);
+            deathstarRow.Initialise(InputBC.Instance, _hotkeysModel.Deathstar, this);
+
+            rows.Add(nukeLauncherRow);
+            nukeLauncherRow.Initialise(InputBC.Instance, _hotkeysModel.NukeLauncher, this);
+
+            rows.Add(ultraliskRow);
+            ultraliskRow.Initialise(InputBC.Instance, _hotkeysModel.Ultralisk, this);
+
+            rows.Add(kamikazeSignalRow);
+            kamikazeSignalRow.Initialise(InputBC.Instance, _hotkeysModel.KamikazeSignal, this);
+
+            rows.Add(broadsidesRow);
+            broadsidesRow.Initialise(InputBC.Instance, _hotkeysModel.Broadsides, this);
+        }
+
+        private void SetupAircraftRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(bomberRow);
+            bomberRow.Initialise(InputBC.Instance, _hotkeysModel.Bomber, this);
+
+            rows.Add(gunshipRow);
+            gunshipRow.Initialise(InputBC.Instance, _hotkeysModel.Gunship, this);
+
+            rows.Add(fighterRow);
+            fighterRow.Initialise(InputBC.Instance, _hotkeysModel.Fighter, this);
+        }
+
         private void SetupShipRows(IList<HotkeyRow> rows)
         {
             rows.Add(attackBoatRow);
@@ -184,6 +271,26 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || mortarRow.Value.Key.Value != _hotkeysModel.Mortar
                 || samSiteRow.Value.Key.Value != _hotkeysModel.SamSite
                 || teslaCoilRow.Value.Key.Value != _hotkeysModel.TeslaCoil
+                // Offensives
+                || artilleryRow.Value.Key.Value != _hotkeysModel.Artillery
+                || railgunRow.Value.Key.Value != _hotkeysModel.Railgun
+                || rocketLauncherRow.Value.Key.Value != _hotkeysModel.RocketLauncher
+                // Tacticals
+                || shieldRow.Value.Key.Value != _hotkeysModel.Shield
+                || boosterRow.Value.Key.Value != _hotkeysModel.Booster
+                || stealthGeneratorRow.Value.Key.Value != _hotkeysModel.StealthGenerator
+                || spySatelliteRow.Value.Key.Value != _hotkeysModel.SpySatellite
+                || controlTowerRow.Value.Key.Value != _hotkeysModel.ControlTower
+                // Ultras
+                || deathstarRow.Value.Key.Value != _hotkeysModel.Deathstar
+                || nukeLauncherRow.Value.Key.Value != _hotkeysModel.NukeLauncher
+                || ultraliskRow.Value.Key.Value != _hotkeysModel.Ultralisk
+                || kamikazeSignalRow.Value.Key.Value != _hotkeysModel.KamikazeSignal
+                || broadsidesRow.Value.Key.Value != _hotkeysModel.Broadsides
+                // Aircraft
+                || bomberRow.Value.Key.Value != _hotkeysModel.Bomber
+                || gunshipRow.Value.Key.Value != _hotkeysModel.Gunship
+                || fighterRow.Value.Key.Value != _hotkeysModel.Fighter
                 // Ships
                 || attackBoatRow.Value.Key.Value != _hotkeysModel.AttackBoat
                 || frigateRow.Value.Key.Value != _hotkeysModel.Frigate
@@ -216,6 +323,30 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Mortar = mortarRow.Value.Key.Value;
             _hotkeysModel.SamSite = samSiteRow.Value.Key.Value;
             _hotkeysModel.TeslaCoil = teslaCoilRow.Value.Key.Value;
+
+            // Offensives
+            _hotkeysModel.Artillery = artilleryRow.Value.Key.Value;
+            _hotkeysModel.Railgun = railgunRow.Value.Key.Value;
+            _hotkeysModel.RocketLauncher = rocketLauncherRow.Value.Key.Value;
+
+            // Tacticals
+            _hotkeysModel.Shield = shieldRow.Value.Key.Value;
+            _hotkeysModel.Booster= boosterRow.Value.Key.Value;
+            _hotkeysModel.StealthGenerator = stealthGeneratorRow.Value.Key.Value;
+            _hotkeysModel.SpySatellite = spySatelliteRow.Value.Key.Value;
+            _hotkeysModel.ControlTower = controlTowerRow.Value.Key.Value;
+
+            // Ultras
+            _hotkeysModel.Deathstar = deathstarRow.Value.Key.Value;
+            _hotkeysModel.NukeLauncher = nukeLauncherRow.Value.Key.Value;
+            _hotkeysModel.Ultralisk = ultraliskRow.Value.Key.Value;
+            _hotkeysModel.KamikazeSignal = kamikazeSignalRow.Value.Key.Value;
+            _hotkeysModel.Broadsides = broadsidesRow.Value.Key.Value;
+
+            // Aircraft
+            _hotkeysModel.Bomber = bomberRow.Value.Key.Value;
+            _hotkeysModel.Gunship = gunshipRow.Value.Key.Value;
+            _hotkeysModel.Fighter = fighterRow.Value.Key.Value;
 
             // Ships
             _hotkeysModel.AttackBoat = attackBoatRow.Value.Key.Value;
@@ -255,6 +386,30 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             mortarRow.Reset();
             samSiteRow.Reset();
             teslaCoilRow.Reset();
+
+            // Offensives
+            artilleryRow.Reset();
+            railgunRow.Reset();
+            rocketLauncherRow.Reset();
+
+            // Tacticals
+            shieldRow.Reset();
+            boosterRow.Reset();
+            stealthGeneratorRow.Reset();
+            spySatelliteRow.Reset();
+            controlTowerRow.Reset();
+
+            // Ultras
+            deathstarRow.Reset();
+            nukeLauncherRow.Reset();
+            ultraliskRow.Reset();
+            kamikazeSignalRow.Reset();
+            broadsidesRow.Reset();
+
+            // Aircraft
+            bomberRow.Reset();
+            gunshipRow.Reset();
+            fighterRow.Reset();
 
             // Ships
             attackBoatRow.Reset();
