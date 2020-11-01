@@ -17,7 +17,19 @@ namespace BattleCruisers.Hotkeys
         // Defensives
         event EventHandler ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil;
 
-        // Buildable buttons
+        // Offensives
+        event EventHandler Artillery, Railgun, RocketLauncher;
+
+        // Tacticals
+        event EventHandler Shield, Booster, StealthGenerator, SpySatellite, ControlTower;
+
+        // Ultras
+        event EventHandler Deathstar, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides;
+
+        // Aircraft
+        event EventHandler Bomber, Gunship, Fighter;
+
+        // Ships
         event EventHandler AttackBoat, Frigate, Destroyer, Archon;
     }
 }

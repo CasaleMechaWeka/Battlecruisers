@@ -24,6 +24,18 @@ namespace BattleCruisers.Hotkeys
         // Defensives
         public event EventHandler ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil;
 
+        // Offensives
+        public event EventHandler Artillery, Railgun, RocketLauncher;
+
+        // Tacticals
+        public event EventHandler Shield, Booster, StealthGenerator, SpySatellite, ControlTower;
+
+        // Ultras
+        public event EventHandler Deathstar, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides;
+
+        // Aircraft
+        public event EventHandler Bomber, Gunship, Fighter;
+
         // Ships
         public event EventHandler AttackBoat, Frigate, Destroyer, Archon;
 
@@ -126,6 +138,94 @@ namespace BattleCruisers.Hotkeys
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.TeslaCoil: {_hotkeyList.TeslaCoil}");
                 TeslaCoil?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Offensives
+            if (_input.GetKeyUp(_hotkeyList.Artillery))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Artillery: {_hotkeyList.Artillery}");
+                Artillery?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Railgun))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Railgun: {_hotkeyList.Railgun}");
+                Railgun?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.RocketLauncher))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.RocketLauncher: {_hotkeyList.RocketLauncher}");
+                RocketLauncher?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Tacticals
+            if (_input.GetKeyUp(_hotkeyList.Shield))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Shield: {_hotkeyList.Shield}");
+                Shield?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Booster))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Booster: {_hotkeyList.Booster}");
+                Booster?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.StealthGenerator))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.StealthGenerator: {_hotkeyList.StealthGenerator}");
+                StealthGenerator?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.SpySatellite))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SpySatellite: {_hotkeyList.SpySatellite}");
+                SpySatellite?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.ControlTower))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.ControlTower: {_hotkeyList.ControlTower}");
+                ControlTower?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Ultras
+            if (_input.GetKeyUp(_hotkeyList.Deathstar))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Deathstar: {_hotkeyList.Deathstar}");
+                Deathstar?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.NukeLauncher))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.NukeLauncher: {_hotkeyList.NukeLauncher}");
+                NukeLauncher?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Ultralisk))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Ultralisk: {_hotkeyList.Ultralisk}");
+                Ultralisk?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.KamikazeSignal))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.KamikazeSignal: {_hotkeyList.KamikazeSignal}");
+                KamikazeSignal?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Broadsides))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Broadsides: {_hotkeyList.Broadsides}");
+                Broadsides?.Invoke(this, EventArgs.Empty);
+            }
+
+            // Aircraft
+            if (_input.GetKeyUp(_hotkeyList.Bomber))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Bomber: {_hotkeyList.Bomber}");
+                Bomber?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Gunship))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Gunship: {_hotkeyList.Gunship}");
+                Gunship?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.Fighter))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Fighter: {_hotkeyList.Fighter}");
+                Fighter?.Invoke(this, EventArgs.Empty);
             }
 
             // Boats
