@@ -21,6 +21,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public HotkeysPanel hotkeysPanel;
         public SettingsTabButton gameSettingsButton, hotkeysButton;
 
+        public bool showGameSettingsFirst = true;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
             ISingleSoundPlayer soundPlayer, 
@@ -77,6 +79,15 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             gameSettingsButton.Initialise(soundPlayer, ShowGameSettings, this);
             hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
+
+            if (showGameSettingsFirst)
+            {
+                ShowGameSettings();
+            }
+            else
+            {
+                ShowHotkeys();
+            }
 		}
 
         public override void Cancel()
