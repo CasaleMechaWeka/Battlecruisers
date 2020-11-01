@@ -87,13 +87,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void ShowGameSettings()
         {
             hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+
             gameSettingsPanel.Show();
+            gameSettingsButton.IsSelected = true;
         }
 
         public void ShowHotkeys()
         {
             gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+
             hotkeysPanel.Show();
+            hotkeysButton.IsSelected = true;
         }
 
         public override void OnDismissing()
