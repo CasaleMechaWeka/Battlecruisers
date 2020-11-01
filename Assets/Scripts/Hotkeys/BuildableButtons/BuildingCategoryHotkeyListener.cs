@@ -2,7 +2,6 @@
 using BattleCruisers.Utils;
 using System;
 
-// FELIX  Use, test
 namespace BattleCruisers.Hotkeys.BuildableButtons
 {
     public class BuildingCategoryHotkeyListener : IManagedDisposable

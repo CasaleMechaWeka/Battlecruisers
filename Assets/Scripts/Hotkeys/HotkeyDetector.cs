@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.Hotkeys
 {
-    // FELIX  Test
     public class HotkeyDetector : IHotkeyDetector
     {
         private readonly IHotkeyList _hotkeyList;
