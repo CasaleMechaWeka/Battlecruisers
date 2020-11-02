@@ -6,12 +6,14 @@ using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
         private ISettingsManager _settingsManager;
+        private ISystemInfo _systemInfo;
 
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
@@ -32,14 +34,15 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISettingsManager settingsManager,
             IMusicPlayer musicPlayer,
             IHotkeysModel hotkeysModel)
-		{
-			base.Initialise(screensSceneGod);
+        {
+            base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
 
             _settingsManager = settingsManager;
+            _systemInfo = new SystemInfoBC();
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
             if (_settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
@@ -84,6 +87,22 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gameSettingsButton.Initialise(soundPlayer, ShowGameSettings, this);
             hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
 
+            ShowTab();
+        }
+
+        private void ShowTab()
+        {
+            if (_systemInfo.IsHandheld)
+            {
+                // There are no hotkeys for handheld devices
+                ShowGameSettings();
+
+                Destroy(hotkeysPanel.gameObject);
+                gameSettingsButton.IsVisible = false;
+                hotkeysButton.IsVisible = false;
+                return;
+            }
+
             if (showGameSettingsFirst)
             {
                 ShowGameSettings();
@@ -92,7 +111,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 ShowHotkeys();
             }
-		}
+        }
 
         public override void Cancel()
         {
@@ -123,7 +142,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.OnDismissing();
 
-            hotkeysPanel.ResetToSavedState();
+            if (!_systemInfo.IsHandheld)
+            {
+                hotkeysPanel.ResetToSavedState();
+            }
+
             difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
