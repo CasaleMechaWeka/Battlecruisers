@@ -6,7 +6,6 @@ using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -17,7 +16,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
         public ToggleController muteMusicToggle, muteVoicesToggle, showInGameHintsToggle;
+        public SaveButton saveButton;
         public CancelButton cancelButton;
+        public CanvasGroupButton resetHotkeysButton;
 
         public Panel gameSettingsPanel;
         public HotkeysPanel hotkeysPanel;
@@ -34,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 		{
 			base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, cancelButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, muteMusicToggle, muteVoicesToggle, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
 
@@ -62,8 +63,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             hotkeysPanel.Initialise(hotkeysModel);
 
-            SaveButton saveButton = GetComponentInChildren<SaveButton>();
-            Assert.IsNotNull(saveButton);
             saveButton
                 .Initialise(
                     soundPlayer,
@@ -103,6 +102,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             hotkeysPanel.Hide();
             hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
 
             gameSettingsPanel.Show();
             gameSettingsButton.IsSelected = true;
@@ -115,6 +115,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             hotkeysPanel.Show();
             hotkeysButton.IsSelected = true;
+            resetHotkeysButton.IsVisible = true;
         }
 
         public override void OnDismissing()
