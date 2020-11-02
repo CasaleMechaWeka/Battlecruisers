@@ -11,7 +11,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class MasterTutorialStepsFactory : ITutorialStepsFactory
     {
         private readonly TutorialStepsFactoriesProvider _factoriesProvider;
-        private readonly ISystemInfo _systemInfo;
 
         public MasterTutorialStepsFactory(
             IHighlighter highlighter,
@@ -27,7 +26,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     explanationPanel,
                     deferrer,
                     tutorialArgs);
-            _systemInfo = new SystemInfoBC();
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -41,7 +39,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_factoriesProvider.NavigationButtonsStepsFactory.CreateSteps());
 
             // 2.5 Scroll wheel
-            if (!_systemInfo.IsHandheld)
+            if (!SystemInfoBC.Instance.IsHandheld)
             {
                 steps.AddRange(_factoriesProvider.ScrollWheelStepsFactory.CreateSteps());
                 steps.AddRange(_factoriesProvider.MousePanStepsFactory.CreateSteps());

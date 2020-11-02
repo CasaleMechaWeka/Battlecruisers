@@ -163,7 +163,6 @@ namespace BattleCruisers.UI.Cameras
             TogglableUpdater updater,
             IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
-            ISystemInfo systemInfo = new SystemInfoBC();
             IDirectionalZoom directionalZoom
                 = new DirectionalZoom(
                     camera,
@@ -173,7 +172,7 @@ namespace BattleCruisers.UI.Cameras
             IInput input = InputBC.Instance;
             IPinchTracker pinchTracker = new PinchTracker(input, updater);
 
-            float zoomScale = systemInfo.IsHandheld ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
+            float zoomScale = SystemInfoBC.Instance.IsHandheld ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             float zoomSettingsMultiplier = new ZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
 
             ZoomCalculator zoomCalculator
@@ -193,7 +192,7 @@ namespace BattleCruisers.UI.Cameras
             ScrollLevelConverter scrollLevelConverter = new ScrollLevelConverter();
             float swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
 
-            if (systemInfo.IsHandheld)
+            if (SystemInfoBC.Instance.IsHandheld)
             {
                 scrollRecogniser = new ScrollRecogniser();
 

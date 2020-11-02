@@ -13,7 +13,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     public class SettingsScreenController : ScreenController
     {
         private ISettingsManager _settingsManager;
-        private ISystemInfo _systemInfo;
 
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
@@ -42,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
 
             _settingsManager = settingsManager;
-            _systemInfo = new SystemInfoBC();
 
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
             if (_settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
@@ -92,12 +90,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void ShowTab()
         {
-            if (_systemInfo.IsHandheld)
+            if (SystemInfoBC.Instance.IsHandheld)
             {
                 // There are no hotkeys for handheld devices
                 ShowGameSettings();
 
-                Destroy(hotkeysPanel.gameObject);
+                hotkeysPanel.Hide();
                 gameSettingsButton.IsVisible = false;
                 hotkeysButton.IsVisible = false;
                 return;
@@ -142,11 +140,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.OnDismissing();
 
-            if (!_systemInfo.IsHandheld)
-            {
-                hotkeysPanel.ResetToSavedState();
-            }
-
+            hotkeysPanel.ResetToSavedState();
             difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
