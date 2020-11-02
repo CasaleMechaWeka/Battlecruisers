@@ -53,5 +53,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             DifficultyChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        public void ResetToDefaults(Difficulty defaultDifficulty)
+        {
+            int defaultIndex = _difficulties.IndexOf(defaultDifficulty);
+            _difficultyDropdown.value = defaultIndex;
+        }
     }
 }

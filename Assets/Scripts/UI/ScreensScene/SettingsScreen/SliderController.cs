@@ -46,5 +46,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Assert.IsTrue(value >= _validRange.Min);
             Assert.IsTrue(value <= _validRange.Max);
         }
+
+        public void ResetToDefaults(int defaultValue)
+        {
+            _slider.value = defaultValue;
+        }
     }
 }

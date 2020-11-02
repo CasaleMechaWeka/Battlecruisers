@@ -25,5 +25,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             _isChecked.Value = value;
         }
+
+        public void ResetToDefaults(bool isChecked)
+        {
+            _isChecked.Value = isChecked;
+        }
     }
 }

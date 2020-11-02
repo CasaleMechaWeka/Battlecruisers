@@ -12,6 +12,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
+        private ISettingsManager _settingsManager;
+
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
         public ToggleController muteMusicToggle, muteVoicesToggle, showInGameHintsToggle;
@@ -36,25 +38,27 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
 
+            _settingsManager = settingsManager;
+
             // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
-            if (settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
-                || settingsManager.ScrollSpeedLevel > SettingsModel.MAX_SCROLL_SPEED_LEVEL)
+            if (_settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
+                || _settingsManager.ScrollSpeedLevel > SettingsModel.MAX_SCROLL_SPEED_LEVEL)
             {
-                settingsManager.ScrollSpeedLevel = SettingsModel.DEFAULT_SCROLL_SPEED_LEVEL;
-                settingsManager.Save();
+                _settingsManager.ScrollSpeedLevel = SettingsModel.DEFAULT_SCROLL_SPEED_LEVEL;
+                _settingsManager.Save();
             }
 
-            difficultyDropdown.Initialise(settingsManager.AIDifficulty);
+            difficultyDropdown.Initialise(_settingsManager.AIDifficulty);
 
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
-            zoomSlider.Initialise(settingsManager.ZoomSpeedLevel, zoomlLevelRange);
+            zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
             IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
-            scrollSlider.Initialise(settingsManager.ScrollSpeedLevel, scrollLevelRange);
+            scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
-            muteMusicToggle.Initialise(settingsManager.MuteMusic);
-            muteVoicesToggle.Initialise(settingsManager.MuteVoices);
-            showInGameHintsToggle.Initialise(settingsManager.ShowInGameHints);
+            muteMusicToggle.Initialise(_settingsManager.MuteMusic);
+            muteVoicesToggle.Initialise(_settingsManager.MuteVoices);
+            showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -65,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     soundPlayer,
                     this,
                     screensSceneGod,
-                    settingsManager,
+                    _settingsManager,
                     musicPlayer,
                     difficultyDropdown,
                     zoomSlider.SliderValue,
@@ -116,7 +120,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public override void OnDismissing()
         {
             base.OnDismissing();
+
             hotkeysPanel.Reset();
+            difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
+            zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
+            scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
+            muteMusicToggle.ResetToDefaults(_settingsManager.MuteMusic);
+            muteVoicesToggle.ResetToDefaults(_settingsManager.MuteVoices);
+            showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
         }
     }
 }
