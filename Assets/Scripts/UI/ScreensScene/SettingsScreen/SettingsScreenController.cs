@@ -121,7 +121,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.OnDismissing();
 
-            hotkeysPanel.Reset();
+            hotkeysPanel.ResetToDefaults();
             difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);

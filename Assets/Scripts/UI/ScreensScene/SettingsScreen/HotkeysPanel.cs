@@ -358,10 +358,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public override void Hide()
         {
             base.Hide();
-            Reset();
+            ResetToDefaults();
         }
 
-        public void Reset()
+        public void ResetToDefaults()
         {
             // Navigation
             playerCruiserRow.Reset();
