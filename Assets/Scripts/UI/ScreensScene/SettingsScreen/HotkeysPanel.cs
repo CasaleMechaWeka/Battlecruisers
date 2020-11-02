@@ -360,12 +360,17 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             base.Hide();
         }
 
-        public void ResetToDefaults()
+        public void ResetToSavedState()
         {
-            ResetToDefaults(_hotkeysModel);
+            ResetToModel(_hotkeysModel);
         }
 
-        private void ResetToDefaults(IHotkeysModel hotkeysModel)
+        public void ResetToDefaults()
+        {
+            ResetToModel(HotkeysModel.CreateDefault());
+        }
+
+        private void ResetToModel(IHotkeysModel hotkeysModel)
         {
             // Navigation
             playerCruiserRow.ResetToDefaults(hotkeysModel.PlayerCruiser);

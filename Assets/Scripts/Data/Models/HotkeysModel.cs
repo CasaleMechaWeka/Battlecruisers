@@ -371,6 +371,11 @@ namespace BattleCruisers.Data.Models
             Archon = KeyCode.R;
         }
 
+        public static HotkeysModel CreateDefault()
+        {
+            return new HotkeysModel();
+        }
+
         public override bool Equals(object obj)
         {
             HotkeysModel other = obj as HotkeysModel;
