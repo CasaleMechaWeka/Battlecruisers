@@ -358,64 +358,68 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public override void Hide()
         {
             base.Hide();
-            ResetToDefaults();
         }
 
         public void ResetToDefaults()
         {
+            ResetToDefaults(_hotkeysModel);
+        }
+
+        private void ResetToDefaults(IHotkeysModel hotkeysModel)
+        {
             // Navigation
-            playerCruiserRow.ResetToDefaults();
-            overviewRow.ResetToDefaults();
-            enemyCruiserRow.ResetToDefaults();
+            playerCruiserRow.ResetToDefaults(hotkeysModel.PlayerCruiser);
+            overviewRow.ResetToDefaults(hotkeysModel.Overview);
+            enemyCruiserRow.ResetToDefaults(hotkeysModel.EnemyCruiser);
 
             // Building categories
-            factoriesRow.ResetToDefaults();
-            defensivesRow.ResetToDefaults();
-            offensivesRow.ResetToDefaults();
-            tacticalsRow.ResetToDefaults();
-            ultrasRow.ResetToDefaults();
+            factoriesRow.ResetToDefaults(hotkeysModel.Factories);
+            defensivesRow.ResetToDefaults(hotkeysModel.Defensives);
+            offensivesRow.ResetToDefaults(hotkeysModel.Offensives);
+            tacticalsRow.ResetToDefaults(hotkeysModel.Tacticals);
+            ultrasRow.ResetToDefaults(hotkeysModel.Ultras);
 
             // Factories
-            droneStationRow.ResetToDefaults();
-            airFactoryRow.ResetToDefaults();
-            navalFactoryRow.ResetToDefaults();
+            droneStationRow.ResetToDefaults(hotkeysModel.DroneStation);
+            airFactoryRow.ResetToDefaults(hotkeysModel.AirFactory);
+            navalFactoryRow.ResetToDefaults(hotkeysModel.NavalFactory);
 
             // Defensives
-            shipTurretRow.ResetToDefaults();
-            airTurretRow.ResetToDefaults();
-            mortarRow.ResetToDefaults();
-            samSiteRow.ResetToDefaults();
-            teslaCoilRow.ResetToDefaults();
+            shipTurretRow.ResetToDefaults(hotkeysModel.ShipTurret);
+            airTurretRow.ResetToDefaults(hotkeysModel.AirFactory);
+            mortarRow.ResetToDefaults(hotkeysModel.Mortar);
+            samSiteRow.ResetToDefaults(hotkeysModel.SamSite);
+            teslaCoilRow.ResetToDefaults(hotkeysModel.TeslaCoil);
 
             // Offensives
-            artilleryRow.ResetToDefaults();
-            railgunRow.ResetToDefaults();
-            rocketLauncherRow.ResetToDefaults();
+            artilleryRow.ResetToDefaults(hotkeysModel.Artillery);
+            railgunRow.ResetToDefaults(hotkeysModel.Railgun);
+            rocketLauncherRow.ResetToDefaults(hotkeysModel.RocketLauncher);
 
             // Tacticals
-            shieldRow.ResetToDefaults();
-            boosterRow.ResetToDefaults();
-            stealthGeneratorRow.ResetToDefaults();
-            spySatelliteRow.ResetToDefaults();
-            controlTowerRow.ResetToDefaults();
+            shieldRow.ResetToDefaults(hotkeysModel.Shield);
+            boosterRow.ResetToDefaults(hotkeysModel.Booster);
+            stealthGeneratorRow.ResetToDefaults(hotkeysModel.StealthGenerator);
+            spySatelliteRow.ResetToDefaults(hotkeysModel.SpySatellite);
+            controlTowerRow.ResetToDefaults(hotkeysModel.ControlTower);
 
             // Ultras
-            deathstarRow.ResetToDefaults();
-            nukeLauncherRow.ResetToDefaults();
-            ultraliskRow.ResetToDefaults();
-            kamikazeSignalRow.ResetToDefaults();
-            broadsidesRow.ResetToDefaults();
+            deathstarRow.ResetToDefaults(hotkeysModel.Deathstar);
+            nukeLauncherRow.ResetToDefaults(hotkeysModel.NukeLauncher);
+            ultraliskRow.ResetToDefaults(hotkeysModel.Ultralisk);
+            kamikazeSignalRow.ResetToDefaults(hotkeysModel.KamikazeSignal);
+            broadsidesRow.ResetToDefaults(hotkeysModel.Broadsides);
 
             // Aircraft
-            bomberRow.ResetToDefaults();
-            gunshipRow.ResetToDefaults();
-            fighterRow.ResetToDefaults();
+            bomberRow.ResetToDefaults(hotkeysModel.Bomber);
+            gunshipRow.ResetToDefaults(hotkeysModel.Gunship);
+            fighterRow.ResetToDefaults(hotkeysModel.Fighter);
 
             // Ships
-            attackBoatRow.ResetToDefaults();
-            frigateRow.ResetToDefaults();
-            destroyerRow.ResetToDefaults();
-            archonRow.ResetToDefaults();
+            attackBoatRow.ResetToDefaults(hotkeysModel.AttackBoat);
+            frigateRow.ResetToDefaults(hotkeysModel.Frigate);
+            destroyerRow.ResetToDefaults(hotkeysModel.Destroyer);
+            archonRow.ResetToDefaults(hotkeysModel.Archon);
         }
     }
 }

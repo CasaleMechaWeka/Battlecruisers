@@ -26,6 +26,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Key = new BroadcastingProperty<KeyCode>(_key);
         }
 
+        public void ResetToDefaults(KeyCode defaultValue)
+        {
+            _key.Value = defaultValue;
+        }
+
         void Update()
         {
             KeyCode downedKey = _input.GetFirstKeyDown();
