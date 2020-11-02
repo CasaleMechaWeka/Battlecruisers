@@ -79,6 +79,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     hotkeysPanel);
 
             cancelButton.Initialise(soundPlayer, this);
+            resetHotkeysButton.Initialise(soundPlayer, hotkeysPanel.ResetToDefaults);
 
             gameSettingsButton.Initialise(soundPlayer, ShowGameSettings, this);
             hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
