@@ -364,58 +364,58 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void ResetToDefaults()
         {
             // Navigation
-            playerCruiserRow.Reset();
-            overviewRow.Reset();
-            enemyCruiserRow.Reset();
+            playerCruiserRow.ResetToDefaults();
+            overviewRow.ResetToDefaults();
+            enemyCruiserRow.ResetToDefaults();
 
             // Building categories
-            factoriesRow.Reset();
-            defensivesRow.Reset();
-            offensivesRow.Reset();
-            tacticalsRow.Reset();
-            ultrasRow.Reset();
+            factoriesRow.ResetToDefaults();
+            defensivesRow.ResetToDefaults();
+            offensivesRow.ResetToDefaults();
+            tacticalsRow.ResetToDefaults();
+            ultrasRow.ResetToDefaults();
 
             // Factories
-            droneStationRow.Reset();
-            airFactoryRow.Reset();
-            navalFactoryRow.Reset();
+            droneStationRow.ResetToDefaults();
+            airFactoryRow.ResetToDefaults();
+            navalFactoryRow.ResetToDefaults();
 
             // Defensives
-            shipTurretRow.Reset();
-            airTurretRow.Reset();
-            mortarRow.Reset();
-            samSiteRow.Reset();
-            teslaCoilRow.Reset();
+            shipTurretRow.ResetToDefaults();
+            airTurretRow.ResetToDefaults();
+            mortarRow.ResetToDefaults();
+            samSiteRow.ResetToDefaults();
+            teslaCoilRow.ResetToDefaults();
 
             // Offensives
-            artilleryRow.Reset();
-            railgunRow.Reset();
-            rocketLauncherRow.Reset();
+            artilleryRow.ResetToDefaults();
+            railgunRow.ResetToDefaults();
+            rocketLauncherRow.ResetToDefaults();
 
             // Tacticals
-            shieldRow.Reset();
-            boosterRow.Reset();
-            stealthGeneratorRow.Reset();
-            spySatelliteRow.Reset();
-            controlTowerRow.Reset();
+            shieldRow.ResetToDefaults();
+            boosterRow.ResetToDefaults();
+            stealthGeneratorRow.ResetToDefaults();
+            spySatelliteRow.ResetToDefaults();
+            controlTowerRow.ResetToDefaults();
 
             // Ultras
-            deathstarRow.Reset();
-            nukeLauncherRow.Reset();
-            ultraliskRow.Reset();
-            kamikazeSignalRow.Reset();
-            broadsidesRow.Reset();
+            deathstarRow.ResetToDefaults();
+            nukeLauncherRow.ResetToDefaults();
+            ultraliskRow.ResetToDefaults();
+            kamikazeSignalRow.ResetToDefaults();
+            broadsidesRow.ResetToDefaults();
 
             // Aircraft
-            bomberRow.Reset();
-            gunshipRow.Reset();
-            fighterRow.Reset();
+            bomberRow.ResetToDefaults();
+            gunshipRow.ResetToDefaults();
+            fighterRow.ResetToDefaults();
 
             // Ships
-            attackBoatRow.Reset();
-            frigateRow.Reset();
-            destroyerRow.Reset();
-            archonRow.Reset();
+            attackBoatRow.ResetToDefaults();
+            frigateRow.ResetToDefaults();
+            destroyerRow.ResetToDefaults();
+            archonRow.ResetToDefaults();
         }
     }
 }

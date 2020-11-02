@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             }
         }
 
-        public void Reset()
+        public void ResetToDefaults()
         {
             SetEnabled(false);
         }
