@@ -173,9 +173,7 @@ namespace BattleCruisers.UI.Cameras
             IInput input = InputBC.Instance;
             IPinchTracker pinchTracker = new PinchTracker(input, updater);
 
-            bool hasTouch = systemInfo.DeviceType == DeviceType.Handheld;
-
-            float zoomScale = hasTouch ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
+            float zoomScale = systemInfo.IsHandheld ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
             float zoomSettingsMultiplier = new ZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
 
             ZoomCalculator zoomCalculator
@@ -195,7 +193,7 @@ namespace BattleCruisers.UI.Cameras
             ScrollLevelConverter scrollLevelConverter = new ScrollLevelConverter();
             float swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
 
-            if (hasTouch)
+            if (systemInfo.IsHandheld)
             {
                 scrollRecogniser = new ScrollRecogniser();
 

@@ -41,7 +41,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_factoriesProvider.NavigationButtonsStepsFactory.CreateSteps());
 
             // 2.5 Scroll wheel
-            if (_systemInfo.DeviceType != DeviceType.Handheld)
+            if (!_systemInfo.IsHandheld)
             {
                 steps.AddRange(_factoriesProvider.ScrollWheelStepsFactory.CreateSteps());
                 steps.AddRange(_factoriesProvider.MousePanStepsFactory.CreateSteps());
