@@ -23,12 +23,25 @@ namespace BattleCruisers.Hotkeys
         {
             Helper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
             Helper.AssertIsNotNull(hotkeyList, input, updater, cameraFocuser);
-
-            IHotkeyDetector hotkeyDetector = new HotkeyDetector(hotkeyList, input, updater);
             
+            IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater);
+
             _navigationHotkeyListener = new NavigationHotkeyListener(hotkeyDetector, cameraFocuser);
             buildableButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
             buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
+        }
+
+        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater)
+        {
+            if (SystemInfoBC.Instance.IsHandheld)
+            {
+                // Handheld devices have no hotkeys :)
+                return new NullHotkeyDetector();
+            }
+            else
+            {
+                return new HotkeyDetector(hotkeyList, input, updater);
+            }
         }
     }
 }
