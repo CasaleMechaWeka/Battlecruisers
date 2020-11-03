@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.Data.Static
         [Test]
         public void Levels()
         {
-            Assert.AreEqual(28, _staticData.Levels.Count);
+            Assert.AreEqual(25, _staticData.Levels.Count);
         }
 
         [Test]
@@ -68,18 +68,8 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_Unit()
         {
             // Archon
-            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 19);
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 16);
             ILoot expectedLoot = CreateLoot(unitKeys: new UnitKey[] { StaticPrefabKeys.Units.ArchonBattleship });
-
-            Assert.AreEqual(expectedLoot, actualLoot);
-        }
-
-        [Test]
-        public void GetLevelLoot_2Units()
-        {
-            // Fighter, destroyer
-            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 8);
-            ILoot expectedLoot = CreateLoot(unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Fighter, StaticPrefabKeys.Units.Destroyer});
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -98,7 +88,7 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_2Buildings()
         {
             // Stealth generator, spy satellite launcher
-            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 13);
+            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 15);
             ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher});
 
             Assert.AreEqual(expectedLoot, actualLoot);
@@ -123,19 +113,6 @@ namespace BattleCruisers.Tests.Data.Static
                 = CreateLoot(
                     unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Frigate },
                     buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.Mortar});
-
-            Assert.AreEqual(expectedLoot, actualLoot);
-        }
-
-        [Test]
-        public void GetLevelLoot_BuildingAndHull()
-        {
-            // Rockjaw, deathstar
-            ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 7);
-            ILoot expectedLoot
-                = CreateLoot(
-                    hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Rockjaw },
-                    buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.DeathstarLauncher });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
