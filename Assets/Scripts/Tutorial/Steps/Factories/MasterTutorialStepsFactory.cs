@@ -35,6 +35,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // 1. Player cruiser
             steps.AddRange(_factoriesProvider.YourCruiserStepsFactory.CreateSteps());
 
+            // 1.5 Main menu bottn
+            steps.AddRange(_factoriesProvider.MainMenuStepsFactory.CreateSteps());
+
             // 2. Navigation buttons
             steps.AddRange(_factoriesProvider.NavigationButtonsStepsFactory.CreateSteps());
 
