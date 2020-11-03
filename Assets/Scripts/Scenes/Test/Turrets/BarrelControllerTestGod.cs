@@ -6,6 +6,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -25,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
                     .ToList();
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
             ITarget target = CreateTarget(targetGameObject.transform.position);
 
@@ -40,7 +41,7 @@ namespace BattleCruisers.Scenes.Test
                         _updaterProvider.PerFrameUpdater,
                         angleCalculator: CreateAngleCalculator(barrel.ProjectileStats));
 
-                barrel.InitialiseAsync(barrelControllerArgs);
+                await barrel.InitialiseAsync(barrelControllerArgs);
 			}
 		}
 

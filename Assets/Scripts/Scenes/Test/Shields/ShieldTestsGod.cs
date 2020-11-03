@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -29,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Shields
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
             // Setup shield
             helper.InitialiseBuilding(_shield, Faction.Reds);
@@ -48,7 +49,7 @@ namespace BattleCruisers.Scenes.Test.Shields
                     _updaterProvider.PerFrameUpdater,
                     targetFilter);
 
-            _turret.InitialiseAsync(barrelControllerArgs);
+            await _turret.InitialiseAsync(barrelControllerArgs);
 			_turret.Target = _shield;
 		}
 	}

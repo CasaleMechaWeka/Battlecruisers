@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,9 +22,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(_missileSpawner);        
         }
 
-		public void Initialise(IExactMatchTargetFilter targetFilter, IBarrelControllerArgs args)
+		public async Task InitialiseAsync(IExactMatchTargetFilter targetFilter, IBarrelControllerArgs args)
 		{
-            base.InitialiseAsync(args);
+            await base.InitialiseAsync(args);
 
 			_exactMatchTargetFilter = targetFilter;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);

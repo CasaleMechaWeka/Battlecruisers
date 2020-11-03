@@ -146,7 +146,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return args.BarrelFiringAnimation;
         }
 
+
+#pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
         protected virtual async Task InternalInitialiseAsync(IBarrelControllerArgs args) { }
+#pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         private void _updater_Updated(object sender, EventArgs e)
         {

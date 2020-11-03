@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             IExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IExactMatchTargetFilter>();
 			SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
-            samSiteBarrel.Initialise(exatMatchTargetFilter, args);
+            samSiteBarrel.InitialiseAsync(exatMatchTargetFilter, args);
         }
 
         protected override ITargetFilter CreateTargetFilter()

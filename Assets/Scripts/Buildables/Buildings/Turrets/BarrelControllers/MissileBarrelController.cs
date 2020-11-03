@@ -23,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _missileSpawners = new CircularList<MissileSpawner>(missileSpawners);
         }
 
+#pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
         {
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);
@@ -32,6 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 missileSpawner.Initialise(spawnerArgs);
 			}
 		}
+#pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         public override void Fire(float angleInDegrees)
 		{

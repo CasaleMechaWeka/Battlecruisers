@@ -32,6 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _rocketStats;
         }
 
+#pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
@@ -39,6 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 rocketSpawner.Initialise(args.Parent, _rocketStats, TurretStats.BurstSize, args.FactoryProvider);
 			}
 		}
+#pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         public override void Fire(float angleInDegrees)
 		{

@@ -37,7 +37,7 @@ namespace BattleCruisers.Scenes.Test
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
             // Initialise target
             helper.InitialiseBuilding(_target);
@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.Test
                     targetFilter: new ExactMatchTargetFilter() { Target = _target },
                     angleCalculator: new ArtilleryAngleCalculator(new AngleHelper(), new AngleConverter(), _doubleBarrel.ProjectileStats));
 
-            _doubleBarrel.InitialiseAsync(barrelControllerArgs);
+            await _doubleBarrel.InitialiseAsync(barrelControllerArgs);
 		}
 	}
 }

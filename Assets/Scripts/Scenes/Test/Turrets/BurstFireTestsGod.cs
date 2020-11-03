@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -25,14 +26,14 @@ namespace BattleCruisers.Scenes.Test
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
-            InitialisePair(helper, barrel1, target1);
-            InitialisePair(helper, barrel2, target2);
-            InitialisePair(helper, barrel3, target3);
+            await InitialisePairAsync(helper, barrel1, target1);
+            await InitialisePairAsync(helper, barrel2, target2);
+            await InitialisePairAsync(helper, barrel3, target3);
         }
 
-        private void InitialisePair(Helper helper, BarrelController barrel, GameObject targetGameObject)
+        private async Task InitialisePairAsync(Helper helper, BarrelController barrel, GameObject targetGameObject)
 		{
 			barrel.StaticInitialise();
 			
@@ -42,7 +43,7 @@ namespace BattleCruisers.Scenes.Test
 			barrel.Target = target;
 			
             IBarrelControllerArgs barrelControllerArgs = helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
-            barrel.InitialiseAsync(barrelControllerArgs);
+            await barrel.InitialiseAsync(barrelControllerArgs);
 		}
 	}
 }

@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             desiredBehaviour);
                 }
 
-                SetupAppraisalButtons(soundPlayer, trashTalkList);
+                await SetupAppraisalButtonsAsync(soundPlayer, trashTalkList);
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
@@ -176,11 +176,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             background.Initalise(isVictory);
         }
 
-        private void SetupAppraisalButtons(ISingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
+        private async Task SetupAppraisalButtonsAsync(ISingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
         {
             if (showAppraisalButtons)
             {
-                appraisalButtonsPanel.InitialiseAsync(appraisalSection, soundPlayer, trashTalkList);
+                await appraisalButtonsPanel.InitialiseAsync(appraisalSection, soundPlayer, trashTalkList);
                 appraisalButtonsPanel.gameObject.SetActive(true);
             }
             else

@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 
@@ -27,7 +28,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
             // Setup target
             helper.InitialiseBuilding(_airFactory);
@@ -42,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
                     targetFilter: new DummyTargetFilter(isMatchResult: true),
                     rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 
-            _lightningBarrel.InitialiseAsync(barrelControllerArgs);
+            await _lightningBarrel.InitialiseAsync(barrelControllerArgs);
 			_lightningBarrel.Target = _airFactory;
 	    }
 	}
