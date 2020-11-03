@@ -17,26 +17,16 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         private Image _lowHealthFeedback;
         private IHealthStateMonitor _cruiserHealthMonitor;
 
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private FilterToggler _helpLabelsVisibilityToggler;
-#pragma warning restore CS0414  // Variable is assigned but never used
-
         public HelpLabel helpLabel;
 
-        public IHighlightable Initialise(ICruiser cruiser, IBroadcastingFilter helpLabelVisibilityFilter)
+        public IHighlightable Initialise(ICruiser cruiser)
         {
-            Helper.AssertIsNotNull(cruiser, helpLabelVisibilityFilter);
+            Assert.IsNotNull(cruiser);
 
-            SetupHelpLabel(helpLabelVisibilityFilter);
-            return SetupHealthBar(cruiser);
-        }
-
-        private void SetupHelpLabel(IBroadcastingFilter helpLabelVisibilityFilter)
-        {
             Assert.IsNotNull(helpLabel);
             helpLabel.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabelVisibilityFilter, helpLabel);
+
+            return SetupHealthBar(cruiser);
         }
 
         private Highlightable SetupHealthBar(ICruiser cruiser)

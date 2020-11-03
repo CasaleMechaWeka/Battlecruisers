@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -19,20 +18,19 @@ namespace BattleCruisers.UI.BattleScene
         public async Task<TopPanelComponents> InitialiseAsync(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
-            IBroadcastingFilter helpLabelVisibilityFilter,
             int levelNum,
             IPrefabFetcher prefabFetcher)
         {
             Assert.IsNotNull(enemyHealthBarHelpLabel);
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, helpLabelVisibilityFilter, prefabFetcher);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser, prefabFetcher);
 
             CruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
             Assert.IsNotNull(playerHealthInitialiser);
-            IHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser, helpLabelVisibilityFilter);
+            IHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser);
 
             CruiserHealthBarInitialiser aiHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("AICruiserHealth/Foreground");
             Assert.IsNotNull(aiHealthInitialiser);
-            IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser, helpLabelVisibilityFilter);
+            IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser);
 
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(prefabFetcher);
             ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
