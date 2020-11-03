@@ -10,6 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class TutorialStepsFactoriesProvider
     {
         public ITutorialStepsFactory YourCruiserStepsFactory { get; }
+        public ITutorialStepsFactory MainMenuStepsFactory { get; }
         public ITutorialStepsFactory NavigationButtonsStepsFactory { get; }
         public ITutorialStepsFactory ScrollWheelStepsFactory { get; }
         public ITutorialStepsFactory TouchSwipeStepsFactory { get; }
