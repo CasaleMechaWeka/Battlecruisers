@@ -4,6 +4,7 @@ namespace BattleCruisers.Hotkeys
 {
     public class NullHotkeyDetector : IHotkeyDetector
     {
+#pragma warning disable 67  // Unused event
         // Navigation
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
 
@@ -30,6 +31,7 @@ namespace BattleCruisers.Hotkeys
 
         // Ships
         public event EventHandler AttackBoat, Frigate, Destroyer, Archon;
+#pragma warning restore 67  // Unused event
 
         public void DisposeManagedState() { }
     }

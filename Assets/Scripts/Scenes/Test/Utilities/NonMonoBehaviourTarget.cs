@@ -33,9 +33,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public Vector2 DroneAreaSize { get; set; }
         public Vector2 DroneAreaPosition { get; set; }
 
+#pragma warning disable 67  // Unused event
         public event EventHandler<DamagedEventArgs> Damaged;
         public event EventHandler HealthChanged;
         public event EventHandler<DestroyedEventArgs> Destroyed;
+#pragma warning restore 67  // Unused event
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {

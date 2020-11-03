@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
     public class BoostedTurretStatsTests : BoostedTurretStatsTestsBase<ITurretStats>
     {
         private ITurretStats _boostedStats;
-        private ObservableCollection<IBoostProvider> _localBoostProviders, _fireRateGlobalBoostProviders;
+        private ObservableCollection<IBoostProvider> _fireRateGlobalBoostProviders;
 
         [SetUp]
         public override void SetuUp()
@@ -22,7 +22,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
             _baseStats.IsInBurst.Returns(true);
             _baseStats.BurstSize.Returns(7);
 
-            _localBoostProviders = new ObservableCollection<IBoostProvider>();
             _fireRateGlobalBoostProviders = new ObservableCollection<IBoostProvider>();
 
             _boostedStats = new BoostedTurretStats(_baseStats, _boostFactory, _localBoostProviders, _fireRateGlobalBoostProviders, _globalBoostProviders);
