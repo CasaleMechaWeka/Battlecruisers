@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 {
@@ -23,8 +22,6 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _buildingDetails = Substitute.For<IBuildableDetails<IBuilding>>();
             _unitDetails = Substitute.For<IBuildableDetails<IUnit>>();
             _cruiserDetails = Substitute.For<ICruiserDetails>();

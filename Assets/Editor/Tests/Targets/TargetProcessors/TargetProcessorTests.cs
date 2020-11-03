@@ -1,8 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Targets.TargetTrackers.Ranking;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
@@ -27,8 +27,6 @@ namespace BattleCruisers.Tests.Targets.TargetProcessors
             _targetProcessor = new TargetProcessor(_targetTracker);
 
             _targetTracker.HighestPriorityTarget.Returns(_target1);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         #region AddTargetConsumer

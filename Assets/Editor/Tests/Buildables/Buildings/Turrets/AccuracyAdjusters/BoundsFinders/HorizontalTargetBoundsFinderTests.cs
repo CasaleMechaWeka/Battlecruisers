@@ -2,7 +2,6 @@
 using BattleCruisers.Utils.DataStrctures;
 using NUnit.Framework;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters.BoundsFinders
 {
@@ -14,8 +13,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters.Bo
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _boundsFinder = new HorizontalTargetBoundsFinder(targetXMarginInM: 1);
 
             _leftCruiserPosition = new Vector2(-35, 0);

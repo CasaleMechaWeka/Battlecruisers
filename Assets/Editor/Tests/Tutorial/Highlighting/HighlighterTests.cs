@@ -2,7 +2,6 @@
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Highlighting
 {
@@ -17,8 +16,6 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _coreHighlighter = Substitute.For<ICoreHighlighter>();
             _highlightArgsFactory = Substitute.For<IHighlightArgsFactory>();
 

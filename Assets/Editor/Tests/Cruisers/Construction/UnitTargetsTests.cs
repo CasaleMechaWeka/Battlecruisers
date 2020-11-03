@@ -17,8 +17,6 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _cruiserUnitMonitor = Substitute.For<ICruiserUnitMonitor>();
             _unitTargets = new UnitTargets(_cruiserUnitMonitor);
 

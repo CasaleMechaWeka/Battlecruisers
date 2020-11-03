@@ -23,8 +23,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 
             _factory = Substitute.For<IFactory>();
             _unit = Substitute.For<IUnit>();
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

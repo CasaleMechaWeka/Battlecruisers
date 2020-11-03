@@ -9,7 +9,6 @@ using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.Tasks
 {
@@ -30,8 +29,6 @@ namespace BattleCruisers.Tests.AI.Tasks
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _key = Substitute.For<IPrefabKey>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
 			_slotAccessor = Substitute.For<ISlotAccessor>();

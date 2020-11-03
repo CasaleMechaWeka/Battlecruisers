@@ -19,8 +19,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _platformSlot = CreateSlot(index: 2, type: SlotType.Platform, BuildingFunction.Generic);
             _genericDeckSlot = CreateSlot(index: 3, type: SlotType.Deck, BuildingFunction.Generic);
             _antiShipDeckSlot = CreateSlot(index: 4, type: SlotType.Deck, BuildingFunction.AntiShip);

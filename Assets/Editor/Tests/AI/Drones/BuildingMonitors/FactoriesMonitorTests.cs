@@ -33,8 +33,6 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
             _factoryMonitor.Factory.Returns(_factory);
 
             _monitorFactory.CreateMonitor(_factory).Returns(_factoryMonitor);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

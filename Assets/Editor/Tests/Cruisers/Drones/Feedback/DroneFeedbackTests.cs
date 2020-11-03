@@ -24,8 +24,6 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _droneConsumerInfo = Substitute.For<IDroneConsumerInfo>();
             _droneConsumer = Substitute.For<IDroneConsumer>();
             _droneConsumerInfo.DroneConsumer.Returns(_droneConsumer);

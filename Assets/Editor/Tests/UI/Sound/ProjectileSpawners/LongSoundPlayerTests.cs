@@ -23,8 +23,6 @@ namespace BattleCruisers.Tests.UI.Sound.ProjectileSpawners
             _burstEndDelayInS = 99.32f;
 
             _soundPlayer = new LongSoundPlayer(_audioClip, _audioSource, _deferrer, _burstSize, _burstEndDelayInS);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

@@ -7,7 +7,6 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Tests.Utils.Extensions;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.FactoryManagers
 {
@@ -21,8 +20,6 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _friendlyCruiser = Substitute.For<ICruiserController>();
             _unit = Substitute.For<IBuildableWrapper<IUnit>>();
             _unit2 = Substitute.For<IBuildableWrapper<IUnit>>();

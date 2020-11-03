@@ -16,8 +16,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots.Feedback
         {
             _stateFinder = new BoostStateFinder();
             _building = Substitute.For<IBuilding>();
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

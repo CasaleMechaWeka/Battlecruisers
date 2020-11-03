@@ -26,8 +26,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _isInFrontFilter = Substitute.For<ITargetFilter>();
             _target = Substitute.For<ITarget>();
 

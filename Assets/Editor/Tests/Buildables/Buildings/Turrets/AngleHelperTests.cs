@@ -13,8 +13,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _angleHelper = new AngleHelper();
             _targetPosition = new Vector2(0, 0);
         }

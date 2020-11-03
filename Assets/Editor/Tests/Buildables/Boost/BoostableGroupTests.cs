@@ -36,8 +36,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
             _provider2 = Substitute.For<IBoostProvider>();
 			_providers2 = new ObservableCollection<IBoostProvider>();
             _providers2.Add(_provider2);
-
-			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
         #region Boostables

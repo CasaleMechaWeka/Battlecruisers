@@ -19,8 +19,6 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             _droneConsumer = Substitute.For<IDroneConsumer>();
 
             _droneConsumerProvider = new DroneConsumerProvider(_droneManager);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         #region ActivateDroneConsumer

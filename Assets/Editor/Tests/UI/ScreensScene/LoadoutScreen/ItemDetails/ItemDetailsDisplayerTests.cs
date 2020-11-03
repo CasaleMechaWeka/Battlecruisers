@@ -23,8 +23,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 
             _building1 = Substitute.For<IBuilding>();
             _building2 = Substitute.For<IBuilding>();
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

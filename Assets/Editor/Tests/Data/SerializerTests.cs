@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -8,6 +6,8 @@ using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -24,8 +24,6 @@ namespace BattleCruisers.Tests.Data
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
             string fileName = "sweetTestFile" + Random.value;
 			_filePath = Application.persistentDataPath + "/" + fileName + ".bcms";
 

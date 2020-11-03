@@ -43,8 +43,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             };
 
             new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         private IPrioritisedTask SetupBuilding(

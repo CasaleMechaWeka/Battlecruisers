@@ -26,8 +26,6 @@ namespace BattleCruisers.Scenes
         {
             if (!_isInitialised)
             {
-                Assert.raiseExceptions = true;
-
                 IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
                 MusicPlayer = CreateMusicPlayer(dataProvider);
 

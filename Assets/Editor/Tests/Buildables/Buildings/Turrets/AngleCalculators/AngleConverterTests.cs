@@ -12,7 +12,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleCalculators
         public void TestSetup()
         {
             _angleConverter = new AngleConverter();
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         #region ConvertToSigned

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Utils.Fetchers
 {
@@ -22,8 +21,6 @@ namespace BattleCruisers.Tests.Utils.Fetchers
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _fetcher = Substitute.For<ISpriteFetcher>();
             _provider = new SpriteProvider(_fetcher);
 

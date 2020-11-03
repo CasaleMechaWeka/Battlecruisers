@@ -15,8 +15,6 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _calculator = new LinearCalculator(_buildSpeedMultiplier);
 
             _buildable = Substitute.For<IBuildable>();

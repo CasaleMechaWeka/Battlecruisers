@@ -8,7 +8,6 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.TaskProducers
 {
@@ -26,8 +25,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 		{
             base.SetuUp();
 
-			UnityAsserts.Assert.raiseExceptions = true;
-   
             _task = Substitute.For<IPrioritisedTask>();
 			_slotNumCalculator = Substitute.For<ISlotNumCalculator>();
 

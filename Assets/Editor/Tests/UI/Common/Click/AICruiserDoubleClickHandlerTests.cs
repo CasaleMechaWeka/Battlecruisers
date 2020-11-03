@@ -21,8 +21,6 @@ namespace BattleCruisers.Tests.UI.Common.Click
             _handler = new AICruiserDoubleClickHandler(_userChosenTargetHelper);
 
             _clickedCruiser = Substitute.For<ICruiser>();
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

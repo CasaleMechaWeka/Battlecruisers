@@ -5,7 +5,6 @@ using BattleCruisers.Tutorial.Steps;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Tutorial.Steps
 {
@@ -23,8 +22,6 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [SetUp]
         public virtual void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _highlighter = Substitute.For<IHighlighter>();
             _textToDisplay = "Staub";
             _displayer = Substitute.For<ITextDisplayer>();

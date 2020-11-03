@@ -18,8 +18,6 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
             _basicDefenceKey = new BuildingKey(BuildingCategory.Defence, "Kasper");
             _advancedDefenceKey = new BuildingKey(BuildingCategory.Defence, "Seppel");
             _levelInfo = Substitute.For<ILevelInfo>();

@@ -12,7 +12,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
             _rangeFinder = new LinearRangeFinder();
         }
 

@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI.FactoryManagers;
+﻿using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.FactoryManagers
 {
-	public class MostExpensiveUnitChooserTests
+    public class MostExpensiveUnitChooserTests
 	{
         private IUnitChooser _unitChooser;
 		private IDroneManager _droneManager;
@@ -19,8 +19,6 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
             _unit2Drones = CreateUnit(numOfDrones: 2);
             _unit4Drones = CreateUnit(numOfDrones: 4);
             _unit6Drones = CreateUnit(numOfDrones: 6);

@@ -2,7 +2,6 @@
 using BattleCruisers.Targets.TargetProviders;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.TargetProviders
 {
@@ -28,8 +27,6 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _changeCount = 0;
 
             _targetProvider = new DummyTargetProvider();

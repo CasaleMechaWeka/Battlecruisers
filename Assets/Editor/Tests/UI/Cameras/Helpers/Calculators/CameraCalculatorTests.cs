@@ -6,7 +6,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
@@ -32,8 +31,6 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 
             _cruiser = Substitute.For<ICruiser>();
             _cruiser.Size.Returns(new Vector2(123, 123));
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

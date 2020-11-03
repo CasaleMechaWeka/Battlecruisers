@@ -3,7 +3,6 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Music
 {
@@ -17,8 +16,6 @@ namespace BattleCruisers.Tests.UI.Music
         {
             _soundPlayer = Substitute.For<ISingleSoundPlayer>();
             _musicPlayer = new MusicPlayer(_soundPlayer);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

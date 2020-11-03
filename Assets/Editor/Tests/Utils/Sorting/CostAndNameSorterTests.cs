@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Utils.Sorting;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.Utils.Sorting
 {
@@ -17,8 +16,6 @@ namespace BattleCruisers.Tests.Utils.Sorting
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _sorter = new CostAndNameSorter<IBuilding>();
 
             _building1 = CreateBuilding(numOfDronesRequired: 2, buildTimeInS: 20, name: "Archon");

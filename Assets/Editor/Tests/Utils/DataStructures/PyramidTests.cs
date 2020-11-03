@@ -13,8 +13,6 @@ namespace BattleCruisers.Tests.Utils.DataStructures
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _bottomLeftVertex = new Vector2(-2, 0);
             _bottomRightVertex = new Vector2(2, 0);
             _topCenterVertex = new Vector2(0, 4);

@@ -12,8 +12,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AngleLimiters
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             float minAngleInDegrees = -45;
             _minNonNegativeAngle = minAngleInDegrees + 360;
             _maxAngleInDegrees = 45;

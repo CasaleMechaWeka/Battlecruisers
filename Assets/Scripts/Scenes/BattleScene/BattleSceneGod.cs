@@ -4,7 +4,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
-using BattleCruisers.Hotkeys;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
@@ -68,7 +67,6 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
 
-            Assert.raiseExceptions = true;
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser);
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();

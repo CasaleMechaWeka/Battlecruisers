@@ -34,8 +34,6 @@ namespace BattleCruisers.Tests.UI.Common.Click
 
             _repairDroneConsumer = Substitute.For<IDroneConsumer>();
             _repairManager.GetDroneConsumer(_clickedCruiser).Returns(_repairDroneConsumer);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

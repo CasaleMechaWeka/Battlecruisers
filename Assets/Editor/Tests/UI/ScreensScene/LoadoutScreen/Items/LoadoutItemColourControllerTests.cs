@@ -39,8 +39,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.Items
             _itemWithoutButton = Substitute.For<IComparableItem>();
 
             _colourController = new LoadoutItemColourController(_itemDetails, _itemButtons);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

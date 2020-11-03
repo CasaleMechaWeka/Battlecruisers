@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI;
+﻿using BattleCruisers.AI;
 using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.AI.BuildOrders
@@ -19,8 +19,6 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
             _availableBuildings = new List<BuildingKey>();
             _bannedBuildings = new List<BuildingKey>();
             _buildingCategory = BuildingCategory.Ultra;

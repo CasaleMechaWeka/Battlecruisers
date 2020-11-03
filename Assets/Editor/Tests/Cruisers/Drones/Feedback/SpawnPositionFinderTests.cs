@@ -4,7 +4,6 @@ using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
 {
@@ -17,8 +16,6 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _random = Substitute.For<IRandomGenerator>();
             _positionFinder = new SpawnPositionFinder(_random, Constants.WATER_LINE);
 

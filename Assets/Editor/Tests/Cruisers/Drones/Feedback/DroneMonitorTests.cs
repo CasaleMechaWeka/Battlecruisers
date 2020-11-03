@@ -35,8 +35,6 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_redDrone2));
             _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_blueDrone1));
             _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_blueDrone2));
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

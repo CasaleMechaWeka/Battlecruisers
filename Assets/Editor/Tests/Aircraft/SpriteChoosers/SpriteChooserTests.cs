@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+﻿using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityAsserts = UnityEngine.Assertions;
 
@@ -21,8 +21,6 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _assigner = Substitute.For<IAssigner>();
             _assignerFactory = Substitute.For<IAssignerFactory>();
 

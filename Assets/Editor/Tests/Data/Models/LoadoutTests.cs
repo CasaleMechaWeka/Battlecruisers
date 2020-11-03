@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Data.Models
@@ -20,8 +20,6 @@ namespace BattleCruisers.Tests.Data.Models
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _hullKey1 = new HullKey("Raptor");
             _hullKey2 = new HullKey("Longbow");
 

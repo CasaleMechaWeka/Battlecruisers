@@ -22,8 +22,6 @@ namespace BattleCruisers.Tests.Data.Models
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
 			_gameModel = new GameModel();
 
 			_hull = new HullKey("Feuer");

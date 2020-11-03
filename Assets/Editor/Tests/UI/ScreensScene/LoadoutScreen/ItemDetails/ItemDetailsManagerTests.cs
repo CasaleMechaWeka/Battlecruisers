@@ -42,8 +42,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 
             _comparingItemChangeCount = 0;
             _itemDetailsManager.ComparingItem.ValueChanged += (sender, e) => _comparingItemChangeCount++;
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

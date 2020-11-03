@@ -32,8 +32,6 @@ namespace BattleCruisers.Tests.Cruisers.Construction
 
             _destroyedCount = 0;
             _buildingMonitor.BuildingDestroyed += (sender, e) => _destroyedCount++;
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

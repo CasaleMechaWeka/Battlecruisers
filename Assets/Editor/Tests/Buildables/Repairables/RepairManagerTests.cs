@@ -63,8 +63,6 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _building.DroneAreaPosition.Returns(new Vector2(7, 3));
             _building.DroneAreaSize.Returns(new Vector2(8, 2));
             _repairAmount = DELTA_TIME_IN_S * _cruiserDroneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S * BuildSpeedMultipliers.DEFAULT;
-
-            UnityAsserts.Assert.raiseExceptions = true;
 		}
 
         [Test]

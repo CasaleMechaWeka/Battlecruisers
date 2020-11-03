@@ -26,8 +26,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _uiManager = Substitute.For<IUIManager>();
             _eventSoundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();

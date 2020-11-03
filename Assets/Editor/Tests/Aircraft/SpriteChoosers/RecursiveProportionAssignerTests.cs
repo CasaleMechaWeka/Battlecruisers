@@ -13,8 +13,6 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             int numOfOptions = 3;
             float baseCutoff = 0.5f;
 

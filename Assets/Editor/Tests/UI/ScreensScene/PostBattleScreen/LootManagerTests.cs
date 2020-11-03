@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 {
@@ -27,8 +26,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _dataProvider = Substitute.For<IDataProvider>();
             _prefabFactory = Substitute.For<IPrefabFactory>();
             _middleDetailsGroup = Substitute.For<IItemDetailsGroup>();

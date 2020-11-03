@@ -86,8 +86,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             SetupPlayerCruiserBuildables();
             SetupAiCruiserBuildables();
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         private void SetupPlayerCruiserBuildables()

@@ -7,7 +7,6 @@ using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
 {
@@ -33,8 +32,6 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.AccuracyAdjusters
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             CreateAccuracyAdjuster();
             CreateMethodParameters();
         }

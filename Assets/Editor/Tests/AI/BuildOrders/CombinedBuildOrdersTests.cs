@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.AI.BuildOrders;
+﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Tests.AI.BuildOrders
 {
@@ -16,8 +15,6 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
             _key1 = new BuildingKey(BuildingCategory.Tactical, "Raeuber");
             _buildOrder1 = CreateBuildOrder(_key1);
 

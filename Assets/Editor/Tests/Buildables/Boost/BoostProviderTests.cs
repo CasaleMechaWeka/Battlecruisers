@@ -1,11 +1,10 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables.Boost
 {
-	public class BoostProviderTests
+    public class BoostProviderTests
 	{
         private IBoostProvider _provider;
         private IBoostConsumer _consumer1;
@@ -16,8 +15,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
             _provider = new BoostProvider(boostMultiplier: 1.8f);
 
             _consumer1 = Substitute.For<IBoostConsumer>();
-
-			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]

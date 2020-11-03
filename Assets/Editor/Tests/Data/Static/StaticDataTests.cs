@@ -16,8 +16,6 @@ namespace BattleCruisers.Tests.Data.Static
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _staticData = new StaticData();
         }
 

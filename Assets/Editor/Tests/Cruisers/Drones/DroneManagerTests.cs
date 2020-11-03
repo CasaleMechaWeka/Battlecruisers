@@ -22,8 +22,6 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 			_droneConsumer2 = new DroneConsumer(2);
 			_droneConsumer3 = new DroneConsumer(2);
 			_droneConsumer4 = new DroneConsumer(4);
-
-			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]

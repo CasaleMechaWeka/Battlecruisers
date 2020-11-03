@@ -11,7 +11,6 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.BattleScene.Manager
 {
@@ -31,8 +30,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _playerCruiser = CreateMockCruiser();
             _aiCruiser = CreateMockCruiser();
             _buildMenu = Substitute.For<IBuildMenu>();

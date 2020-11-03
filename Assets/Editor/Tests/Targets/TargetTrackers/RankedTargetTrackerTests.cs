@@ -5,7 +5,6 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.TargetTrackers
 {
@@ -39,8 +38,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
 
             _highestPriorityTargetChangedCount = 0;
             _targetTracker.HighestPriorityTargetChanged += (sender, e) => _highestPriorityTargetChangedCount++;
-
-			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]

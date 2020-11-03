@@ -4,7 +4,6 @@ using BattleCruisers.Targets.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Targets.Helpers
 {
@@ -20,8 +19,6 @@ namespace BattleCruisers.Tests.Targets.Helpers
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _ship = Substitute.For<IShip>();
             _ship.Position.Returns(new Vector2(0, 0));
 

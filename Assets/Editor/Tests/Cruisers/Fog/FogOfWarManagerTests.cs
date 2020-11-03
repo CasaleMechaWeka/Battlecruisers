@@ -7,7 +7,6 @@ using BattleCruisers.Tests.Utils.Extensions;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Cruisers.Fog
 {
@@ -23,8 +22,6 @@ namespace BattleCruisers.Tests.Cruisers.Fog
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-   
             _fog = Substitute.For<IGameObject>();
             _visibilityDecider = Substitute.For<IFogVisibilityDecider>();
             _friendlyBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();

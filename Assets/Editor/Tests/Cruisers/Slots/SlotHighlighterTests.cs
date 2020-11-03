@@ -25,8 +25,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _slotAccessor = Substitute.For<ISlotAccessor>();
             _highlightableFilter = Substitute.For<ISlotFilter>();
             _parentCruiserBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();

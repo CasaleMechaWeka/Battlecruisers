@@ -18,8 +18,6 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _calculator = new AsymptoticCalculator();
 
             _buildable = Substitute.For<IBuildable>();

@@ -34,8 +34,6 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 
             _factory = Substitute.For<IFactory>();
             _factory.IsUnitPaused.Value.Returns(true);
-
-            UnityAsserts.Assert.raiseExceptions = true;
         }
 
         [Test]

@@ -19,8 +19,6 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _targetManager = new UserChosenTargetManager();
 
             _target1 = Substitute.For<ITarget>();

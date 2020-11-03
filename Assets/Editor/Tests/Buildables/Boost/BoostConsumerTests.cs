@@ -5,7 +5,7 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Buildables.Boost
 {
-	public class BoostConsumerTests
+    public class BoostConsumerTests
 	{
         private IBoostConsumer _boostConsumer;
         private IBoostProvider _provider1, _provider2;
@@ -24,8 +24,6 @@ namespace BattleCruisers.Tests.Buildables.Boost
 
             _provider2 = Substitute.For<IBoostProvider>();
             _provider2.BoostMultiplier.Returns(1.5f);
-
-			UnityAsserts.Assert.raiseExceptions = true;
 		}
 
 		[Test]

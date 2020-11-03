@@ -12,8 +12,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Cruisers
         [SetUp]
         public void TestSetup()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _firstDigitDisplay = Substitute.For<INumberDisplay>();
             _secondDigitDisplay = Substitute.For<INumberDisplay>();
 

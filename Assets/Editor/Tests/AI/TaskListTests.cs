@@ -16,8 +16,6 @@ namespace BattleCruisers.Tests.AI
 		[SetUp]
 		public void SetuUp()
 		{
-			UnityAsserts.Assert.raiseExceptions = true;
-
             _taskList = new TaskList();
 
             _normalTask1 = CreateMockTask(TaskPriority.Low);

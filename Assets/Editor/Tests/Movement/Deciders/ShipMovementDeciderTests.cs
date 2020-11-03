@@ -8,7 +8,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Movement.Deciders
 {
@@ -25,8 +24,6 @@ namespace BattleCruisers.Tests.Movement.Deciders
         [SetUp]
         public void SetuUp()
         {
-            UnityAsserts.Assert.raiseExceptions = true;
-
             _ship = Substitute.For<IShip>();
             _ship.IsMoving.Returns(false);
             IList<TargetType> attackCapabilities = new List<TargetType>()
