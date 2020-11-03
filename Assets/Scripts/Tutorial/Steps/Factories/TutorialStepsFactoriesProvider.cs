@@ -58,14 +58,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     slidingPanelWaitStepFactory);
 
             YourCruiserStepsFactory
-                = new 
-                YourCruiserStepsFactory(
+                = new YourCruiserStepsFactory(
                     argsFactory,
                     tutorialArgs.PlayerCruiser,
                     cameraAdjustmentWaitStepFactory,
                     explanationDismissableStepFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.NavigationFilter);
+
+            MainMenuStepsFactory
+                = new MainMenuStepsFactory(
+                    argsFactory,
+                    tutorialArgs.RightPanelComponents.MainMenuButton,
+                    explanationDismissableStepFactory);
 
             NavigationButtonsStepsFactory
                 = new NavigationButtonsStepsFactory(
