@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class MainMenuButtonController : CanvasGroupButton
+    public class MainMenuButtonController : CanvasGroupButton, IButton
     {
         private IMainMenuManager _mainMenuManager;
 

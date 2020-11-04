@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Tutorial.Highlighting;
+﻿using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.UI;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -6,12 +7,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class MainMenuStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IHighlightable _mainMenuButton;
+        private readonly IButton _mainMenuButton;
+        // FELIX  Remove :)
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public MainMenuStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            IHighlightable mainMenuButton,
+            IButton mainMenuButton,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory)
         {
@@ -29,7 +31,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is the main menu button",
                     _mainMenuButton);
-            steps.Add(_explanationDismissableStepFactory.CreateStep(args));
+            steps.Add(
+                new ExplanationClickStep(
+                    args,
+                    _mainMenuButton));
 
             return steps;
         }
