@@ -70,8 +70,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new MainMenuStepsFactory(
                     argsFactory,
                     tutorialArgs.ModalMainMenuButton,
-                    tutorialArgs.RightPanelComponents.MainMenu,
-                    explanationDismissableStepFactory);
+                    tutorialArgs.RightPanelComponents.MainMenu);
 
             NavigationButtonsStepsFactory
                 = new NavigationButtonsStepsFactory(
