@@ -7,7 +7,6 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// <summary>
     /// Completed when the menu is dismissed.  Completes
     /// instantly if the menu is already in dismissed.
-    /// FELIX  Test :D
     /// </summary>
     public class MenuDismissedWaitStep : TutorialStep
     {
