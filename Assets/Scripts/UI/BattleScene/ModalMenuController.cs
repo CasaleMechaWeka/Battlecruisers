@@ -1,18 +1,23 @@
 ﻿using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using TMPro;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class ModalMenuController : MonoBehaviour, IModalMenu
-    {
+	public class ModalMenuController : MonoBehaviour, IModalMenu
+	{
 		private Canvas _canvas;
 		private IMainMenuManager _menuManager;
 
 		public CanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton;
 
-		public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial, IMainMenuManager menuManager)
+		private ISettableBroadcastingProperty<bool> _isVisible;
+		public IBroadcastingProperty<bool> IsVisible { get; private set; }
+
+        public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial, IMainMenuManager menuManager)
 		{
 			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton);
 			Helper.AssertIsNotNull(soundPlayer, menuManager);
@@ -37,6 +42,9 @@ namespace BattleCruisers.UI.BattleScene
                 Destroy(skipTutorialButton.gameObject);
             }
 
+			_isVisible = new SettableBroadcastingProperty<bool>(initialValue: false);
+			IsVisible = new BroadcastingProperty<bool>(_isVisible);
+
 			HideMenu();
 		}
 
@@ -59,11 +67,13 @@ namespace BattleCruisers.UI.BattleScene
 		public void ShowMenu()
 		{
 			_canvas.enabled = true;
+			_isVisible.Value = true;
 		}
 
 		public void HideMenu()
 		{
 			_canvas.enabled = false;
+			_isVisible.Value = false;
 		}
 	}
 }
