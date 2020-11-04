@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
-        public event EventHandler Clicked;
         public event EventHandler PotentialMatchChange;
 
         public IBuildable Buildable { get; private set; }
@@ -77,9 +76,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override void OnClicked()
         {
             base.OnClicked();
-
             HandleClick(IsMatch);
-            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         protected abstract void HandleClick(bool isButtonEnabled);

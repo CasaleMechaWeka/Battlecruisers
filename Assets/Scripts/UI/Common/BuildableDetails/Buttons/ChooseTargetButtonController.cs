@@ -32,8 +32,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         private bool ShowButton => _buttonVisibilityFilter.IsMatch(Target);
 
-        public event EventHandler Clicked;
-
         public void Initialise(ISingleSoundPlayer soundPlayer, IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
         {
             base.Initialise(soundPlayer);
@@ -52,10 +50,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         protected override void OnClicked()
         {
             base.OnClicked();
-
             _userChosenTargetHelper.ToggleChosenTarget(_target);
-
-            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdateButtonText()

@@ -37,15 +37,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             } 
         }
 
-        public event EventHandler Clicked;
-
         protected override void OnClicked()
         {
             base.OnClicked();
-
 			_buildable.ToggleDroneConsumerFocusCommand.Execute();
-   
-            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdateVisibility()

@@ -18,8 +18,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public Image activeFeedback;
         protected override MaskableGraphic Graphic => activeFeedback;
 
-        public event EventHandler Clicked;
-
         public event EventHandler PotentialMatchChange
         {
             add { _shouldBeEnabledFilter.PotentialMatchChange += value; }
@@ -68,10 +66,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override void OnClicked()
         {
             base.OnClicked();
-
             _uiManager.SelectBuildingGroup(Category);
-
-            Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -34,8 +34,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public ItemFamily itemFamily;
 
-        public event EventHandler Clicked;
-
         protected virtual void Initialise(ISingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
             base.Initialise(soundPlayer);
@@ -60,12 +58,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Enabled 
                 = _comparingFamiltyTracker.ComparingFamily.Value == null
                     || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
-        }
-
-        protected override void OnClicked()
-        {
-            base.OnClicked();
-            Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
 }

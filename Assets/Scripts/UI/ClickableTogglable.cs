@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils;
+using System;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI
@@ -8,10 +9,13 @@ namespace BattleCruisers.UI
         IPointerDownHandler,
         IPointerUpHandler,
         IPointerEnterHandler,
-        IPointerExitHandler
+        IPointerExitHandler,
+        IClickableEmitter
     {
         private bool _isPressed = false;
         private bool _isHover = false;
+
+        public event EventHandler Clicked;
 
         protected virtual bool ShowPressedFeedback => true;
         protected virtual bool ShowHoverFeedback => true;
@@ -21,6 +25,7 @@ namespace BattleCruisers.UI
             Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
 
             OnClicked();
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         protected abstract void OnClicked();
