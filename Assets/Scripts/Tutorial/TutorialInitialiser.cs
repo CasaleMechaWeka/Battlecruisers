@@ -41,7 +41,7 @@ namespace BattleCruisers.Tutorial
                 baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
                 baseArgs.AppModel.DataProvider.SaveGame();
 
-                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel);
+                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);
                 tutorialManager.StartTutorial();
             }

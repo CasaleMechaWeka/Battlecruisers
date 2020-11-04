@@ -8,7 +8,10 @@ namespace BattleCruisers.UI.BattleScene
     {
         public IInformatorPanel InformatorPanel { get; }
         public IMainMenuManager MainMenuManager { get; }
+
+        // FELIX  Remove :D
         public IButton MainMenuButton { get; }
+
         public SpeedComponents SpeedComponents { get; }
 
         public RightPanelComponents(

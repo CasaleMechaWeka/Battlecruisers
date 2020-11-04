@@ -7,19 +7,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class MainMenuStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IButton _mainMenuButton;
+        private readonly IButton _modalMainMenuButton;
         // FELIX  Remove :)
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public MainMenuStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            IButton mainMenuButton,
+            IButton modalMainMenuButton,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(mainMenuButton, explanationDismissableStepFactory);
+            Helper.AssertIsNotNull(modalMainMenuButton, explanationDismissableStepFactory);
 
-            _mainMenuButton = mainMenuButton;
+            _modalMainMenuButton = modalMainMenuButton;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
@@ -30,11 +30,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is the main menu button",
-                    _mainMenuButton);
+                    _modalMainMenuButton);
             steps.Add(
                 new ExplanationClickStep(
                     args,
-                    _mainMenuButton));
+                    _modalMainMenuButton));
 
             return steps;
         }
