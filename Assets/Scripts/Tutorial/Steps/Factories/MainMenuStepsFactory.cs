@@ -29,7 +29,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is the main menu button",
+                    "This is the main menu button.  Open the menu :D",
                     _modalMainMenuButton);
             steps.Add(
                 new ExplanationClickStep(
