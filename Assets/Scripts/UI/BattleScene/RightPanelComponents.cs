@@ -8,23 +8,20 @@ namespace BattleCruisers.UI.BattleScene
     {
         public IInformatorPanel InformatorPanel { get; }
         public IMainMenuManager MainMenuManager { get; }
-
-        // FELIX  Remove :D
-        public IButton MainMenuButton { get; }
-
+        public IModalMenu MainMenu { get; }
         public SpeedComponents SpeedComponents { get; }
 
         public RightPanelComponents(
             IInformatorPanel informatorPanel, 
             IMainMenuManager mainMenuManager,
-            IButton mainMenuButton,
+            IModalMenu mainMenu,
             SpeedComponents speedComponents)
         {
-            Helper.AssertIsNotNull(informatorPanel, mainMenuManager, mainMenuButton, speedComponents);
+            Helper.AssertIsNotNull(informatorPanel, mainMenuManager, mainMenu, speedComponents);
 
             InformatorPanel = informatorPanel;
             MainMenuManager = mainMenuManager;
-            MainMenuButton = mainMenuButton;
+            MainMenu = mainMenu;
             SpeedComponents = speedComponents;
         }
     }
