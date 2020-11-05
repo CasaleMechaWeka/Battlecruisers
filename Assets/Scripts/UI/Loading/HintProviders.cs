@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -34,7 +35,7 @@ namespace BattleCruisers.UI.Loading
 
         private IList<string> CreateAdvancedHints()
         {
-            return new List<string>()
+            IList<string> hints = new List<string>()
             {
                 "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
                 "The BUILDERS button for one of your building’s makes all your builders try to work on that building.  The shortcut is to double click your building.",
@@ -43,6 +44,13 @@ namespace BattleCruisers.UI.Loading
                 "Construct buildings one at a time instead of all at once, to get their benefits sooner.",
                 "You can pause and resume building units by clicking the factory and selecting the unit you want to pause or resume."
             };
+
+            if (!SystemInfoBC.Instance.IsHandheld)
+            {
+                hints.Add("Want to become more efficient?  Check out the hotkeys in the options screen.");
+            }
+
+            return hints;
         }
     }
 }
