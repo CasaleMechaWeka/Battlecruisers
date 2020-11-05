@@ -335,7 +335,7 @@ namespace BattleCruisers.Data.Models
 
             // Defensives
             ShipTurret = KeyCode.Q;
-            AirFactory = KeyCode.W;
+            AirTurret = KeyCode.W;
             Mortar = KeyCode.E;
             SamSite = KeyCode.R;
             TeslaCoil = KeyCode.T;
