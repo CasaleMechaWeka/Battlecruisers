@@ -97,5 +97,62 @@ namespace BattleCruisers.Utils.Debugging
             ApplicationModelProvider.ApplicationModel.DataProvider.Reset();
             Debug.Log("Everything reset :D  Restart game.");
         }
+
+        public void DvorakHotkeys()
+        {
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            IHotkeysModel hotkeys = dataProvider.GameModel.Hotkeys;
+
+            // Building categories
+            hotkeys.Factories = KeyCode.A;
+            hotkeys.Defensives = KeyCode.O;
+            hotkeys.Offensives = KeyCode.E;
+            hotkeys.Tacticals = KeyCode.U;
+            hotkeys.Ultras = KeyCode.I;
+
+            // Factories
+            hotkeys.DroneStation = KeyCode.Quote;
+            hotkeys.AirFactory = KeyCode.Comma;
+            hotkeys.NavalFactory = KeyCode.Period;
+
+            // Defensives
+            hotkeys.ShipTurret = KeyCode.Quote;
+            hotkeys.AirFactory = KeyCode.Comma;
+            hotkeys.Mortar = KeyCode.Period;
+            hotkeys.SamSite = KeyCode.P;
+            hotkeys.TeslaCoil = KeyCode.Y;
+
+            // Offensives
+            hotkeys.Artillery = KeyCode.Quote;
+            hotkeys.Railgun = KeyCode.Comma;
+            hotkeys.RocketLauncher = KeyCode.Period;
+
+            // Tacticals
+            hotkeys.Shield = KeyCode.Quote;
+            hotkeys.Booster = KeyCode.Comma;
+            hotkeys.StealthGenerator = KeyCode.Period;
+            hotkeys.SpySatellite = KeyCode.P;
+            hotkeys.ControlTower = KeyCode.Y;
+
+            // Ultras
+            hotkeys.Deathstar = KeyCode.Quote;
+            hotkeys.NukeLauncher = KeyCode.Comma;
+            hotkeys.Ultralisk = KeyCode.Period;
+            hotkeys.KamikazeSignal = KeyCode.P;
+            hotkeys.Broadsides = KeyCode.Y;
+
+            // Aircraft
+            hotkeys.Bomber = KeyCode.Quote;
+            hotkeys.Gunship = KeyCode.Comma;
+            hotkeys.Fighter = KeyCode.Period;
+
+            // Ships
+            hotkeys.AttackBoat = KeyCode.Quote;
+            hotkeys.Frigate = KeyCode.Comma;
+            hotkeys.Destroyer = KeyCode.Period;
+            hotkeys.Archon = KeyCode.P;
+
+            dataProvider.SaveGame();
+        }
     }
 }
