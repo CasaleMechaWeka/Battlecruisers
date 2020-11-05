@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -10,6 +11,7 @@ namespace BattleCruisers.Hotkeys
         private readonly IHotkeyList _hotkeyList;
         private readonly IInput _input;
         private readonly IUpdater _updater;
+        private readonly IBroadcastingFilter _filter;
 
         // Navigation
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
@@ -38,19 +40,29 @@ namespace BattleCruisers.Hotkeys
         // Ships
         public event EventHandler AttackBoat, Frigate, Destroyer, Archon;
 
-        public HotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater)
+        public HotkeyDetector(
+            IHotkeyList hotkeyList, 
+            IInput input, 
+            IUpdater updater,
+            IBroadcastingFilter filter)
         {
-            Helper.AssertIsNotNull(hotkeyList, input, updater);
+            Helper.AssertIsNotNull(hotkeyList, input, updater, filter);
 
             _hotkeyList = hotkeyList;
             _input = input;
             _updater = updater;
+            _filter = filter;
 
             _updater.Updated += _updater_Updated;
         }
 
         private void _updater_Updated(object sender, EventArgs e)
         {
+            if (!_filter.IsMatch)
+            {
+                return;
+            }
+
             // Navigation
             if (_input.GetKeyUp(_hotkeyList.PlayerCruiser))
             {

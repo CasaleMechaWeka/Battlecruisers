@@ -242,6 +242,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 dataProvider.GameModel.Hotkeys,
                 InputBC.Instance,
                 components.UpdaterProvider.SwitchableUpdater,
+                navigationPermitters.HotkeyFilter,
                 cameraComponents.CameraFocuser);
             _gameEndMonitor 
                 = new GameEndMonitor(

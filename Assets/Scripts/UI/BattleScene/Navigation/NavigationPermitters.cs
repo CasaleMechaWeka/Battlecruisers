@@ -8,13 +8,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         public BroadcastingFilter NavigationButtonsFilter { get; }
         public BroadcastingFilter ScrollWheelAndPinchZoomFilter { get; }
         public BroadcastingFilter SwipeFilter { get; }
+        public BroadcastingFilter HotkeyFilter { get; }
 
         public NavigationPermitters()
         {
             NavigationButtonsFilter = new BroadcastingFilter(isMatch: true);
             ScrollWheelAndPinchZoomFilter = new BroadcastingFilter(isMatch: true);
             SwipeFilter = new BroadcastingFilter(isMatch: true);
-            NavigationFilter = new CompositeBroadcastingFilter(true, NavigationButtonsFilter, ScrollWheelAndPinchZoomFilter, SwipeFilter);
+            HotkeyFilter = new BroadcastingFilter(isMatch: true);
+            NavigationFilter = new CompositeBroadcastingFilter(true, NavigationButtonsFilter, ScrollWheelAndPinchZoomFilter, SwipeFilter, HotkeyFilter);
         }
     }
 }
