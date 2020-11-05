@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -43,9 +44,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                         _cameraComponents.NavigationButtonsPanel)));
 
             // Encourage user to experiment
+            string text
+                = SystemInfoBC.Instance.IsHandheld ?
+                    "Click them to look around the map.  Give it a try :)" :
+                    "Click them (or use the arrow keys) to look around the map.  Give it a try :)";
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Click them to look around the map.  Give it a try :)")));
+                    _argsFactory.CreateTutorialStepArgs(text)));
 
             // Disable navigation
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: false));
