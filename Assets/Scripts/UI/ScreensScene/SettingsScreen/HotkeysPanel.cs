@@ -353,6 +353,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Frigate = frigateRow.Value.Key.Value;
             _hotkeysModel.Destroyer= destroyerRow.Value.Key.Value;
             _hotkeysModel.Archon = archonRow.Value.Key.Value;
+
+            _isDirty.Value = FindIsDirty();
         }
 
         public override void Hide()
