@@ -10,7 +10,9 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 
         public event EventHandler Dismissed;
 
-        public bool IsPresented => _presentableComponent.IsPresented;
+        public bool IsPresented => 
+            _presentableComponent != null
+                && _presentableComponent.IsPresented;
         protected override ISoundKey ClickSound => null;
 
         public void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
