@@ -9,7 +9,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class NavigationButtonsStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
-        private readonly IPermitter _navigationButtonsPermitter;
+        private readonly IPermitter _navigationButtonsPermitter, _hotkeysPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ICameraComponents _cameraComponents;
 
@@ -17,14 +17,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialStepArgsFactory argsFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationButtonsPermitter,
+            IPermitter hotkeysPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             ICameraComponents cameraComponents) 
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(featurePermitterStepFactory, navigationButtonsPermitter, explanationDismissableStepFactory, cameraComponents);
+            Helper.AssertIsNotNull(featurePermitterStepFactory, navigationButtonsPermitter, hotkeysPermitter, explanationDismissableStepFactory, cameraComponents);
 
             _featurePermitterStepFactory = featurePermitterStepFactory;
             _navigationButtonsPermitter = navigationButtonsPermitter;
+            _hotkeysPermitter = hotkeysPermitter;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
             _cameraComponents = cameraComponents;
         }
@@ -35,6 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Enable navigation buttons
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: true));
+            steps.Add(_featurePermitterStepFactory.CreateStep(_hotkeysPermitter, enableFeature: true));
 
             // Explain navigation buttons
             steps.Add(
@@ -54,6 +57,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Disable navigation
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: false));
+            steps.Add(_featurePermitterStepFactory.CreateStep(_hotkeysPermitter, enableFeature: false));
 
             return steps;
         }

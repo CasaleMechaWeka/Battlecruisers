@@ -77,6 +77,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.NavigationButtonsFilter,
+                    tutorialArgs.TutorialProvider.NavigationPermitters.HotkeyFilter,
                     explanationDismissableStepFactory,
                     tutorialArgs.CameraComponents);
 
