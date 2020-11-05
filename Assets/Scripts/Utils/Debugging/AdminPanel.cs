@@ -117,7 +117,7 @@ namespace BattleCruisers.Utils.Debugging
 
             // Defensives
             hotkeys.ShipTurret = KeyCode.Quote;
-            hotkeys.AirFactory = KeyCode.Comma;
+            hotkeys.AirTurret = KeyCode.Comma;
             hotkeys.Mortar = KeyCode.Period;
             hotkeys.SamSite = KeyCode.P;
             hotkeys.TeslaCoil = KeyCode.Y;
