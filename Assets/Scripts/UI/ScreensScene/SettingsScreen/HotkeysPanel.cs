@@ -28,7 +28,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         [Header("Navigation")]
         public HotkeyRow playerCruiserRow;
         public HotkeyRow overviewRow, enemyCruiserRow;
-        
+
+        [Header("Game speed")]
+        public HotkeyRow slowMotionRow;
+        public HotkeyRow playRow, fastForwardRow;
+
         [Header("Building categories")]
         public HotkeyRow factoriesRow;
         public HotkeyRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
@@ -69,6 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(IHotkeysModel hotkeysModel)
         {
             Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
+            Helper.AssertIsNotNull(slowMotionRow, playerCruiserRow, fastForwardRow);
             Helper.AssertIsNotNull(droneStationRow, airFactoryRow, navalFactoryRow);
             Helper.AssertIsNotNull(shipTurretRow, airTurretRow, mortarRow, samSiteRow, teslaCoilRow);
             Helper.AssertIsNotNull(artilleryRow, broadsidesRow, rocketLauncherRow);
@@ -86,6 +91,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IList<HotkeyRow> rows = new List<HotkeyRow>();
 
             SetupNavigationRows(rows);
+            SetupGameSpeedRows(rows);
             SetupBulidingCategoryRows(rows);
             SetupFactoryRows(rows);
             SetupDefensiveRows(rows);
@@ -112,6 +118,18 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(enemyCruiserRow);
             enemyCruiserRow.Initialise(InputBC.Instance, _hotkeysModel.EnemyCruiser, this);
+        }
+
+        private void SetupGameSpeedRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(slowMotionRow);
+            slowMotionRow.Initialise(InputBC.Instance, _hotkeysModel.SlowMotion, this);
+
+            rows.Add(playRow);
+            playRow.Initialise(InputBC.Instance, _hotkeysModel.Play, this);
+
+            rows.Add(fastForwardRow);
+            fastForwardRow.Initialise(InputBC.Instance, _hotkeysModel.FastForward, this);
         }
 
         private void SetupBulidingCategoryRows(IList<HotkeyRow> rows)
@@ -255,6 +273,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 playerCruiserRow.Value.Key.Value != _hotkeysModel.PlayerCruiser
                 || overviewRow.Value.Key.Value != _hotkeysModel.Overview
                 || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
+                // Game speed
+                || slowMotionRow.Value.Key.Value != _hotkeysModel.SlowMotion
+                || playerCruiserRow.Value.Key.Value != _hotkeysModel.Play
+                || fastForwardRow.Value.Key.Value != _hotkeysModel.FastForward
                 // Building categories
                 || factoriesRow.Value.Key.Value != _hotkeysModel.Factories
                 || defensivesRow.Value.Key.Value != _hotkeysModel.Defensives
@@ -304,6 +326,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.PlayerCruiser = playerCruiserRow.Value.Key.Value;
             _hotkeysModel.Overview = overviewRow.Value.Key.Value;
             _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
+
+            // Game speed
+            _hotkeysModel.SlowMotion = slowMotionRow.Value.Key.Value;
+            _hotkeysModel.Play = playerCruiserRow.Value.Key.Value;
+            _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
 
             // Building categories
             _hotkeysModel.Factories = factoriesRow.Value.Key.Value;
@@ -378,6 +405,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             playerCruiserRow.ResetToDefaults(hotkeysModel.PlayerCruiser);
             overviewRow.ResetToDefaults(hotkeysModel.Overview);
             enemyCruiserRow.ResetToDefaults(hotkeysModel.EnemyCruiser);
+            
+            // Game speed
+            slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);
+            playerCruiserRow.ResetToDefaults(hotkeysModel.Play);
+            fastForwardRow.ResetToDefaults(hotkeysModel.FastForward);
 
             // Building categories
             factoriesRow.ResetToDefaults(hotkeysModel.Factories);
