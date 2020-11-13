@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Hotkeys.BuildableButtons;
+using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
@@ -12,6 +13,7 @@ namespace BattleCruisers.Hotkeys
     {
         // Keep references to avoid garbage collection
         private NavigationHotkeyListener _navigationHotkeyListener;
+        private GameSpeedHotkeyListener _gameSpeedHotkeyListener;
 
         public BuildableButtonsHotkeyInitialiser buildableButtonsHotkeyInitialiser;
         public BuildingCategoryButtonsHotkeyInitialiser buildingCategoryButtonsHotkeyInitialiser;
@@ -21,14 +23,16 @@ namespace BattleCruisers.Hotkeys
             IInput input,
             IUpdater updater,
             IBroadcastingFilter hotkeyFilter,
-            ICameraFocuser cameraFocuser)
+            ICameraFocuser cameraFocuser,
+            ISpeedComponents speedComponents)
         {
             Helper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
-            Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser);
+            Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents);
             
             IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
 
             _navigationHotkeyListener = new NavigationHotkeyListener(hotkeyDetector, cameraFocuser);
+            _gameSpeedHotkeyListener = new GameSpeedHotkeyListener(hotkeyDetector, speedComponents);
             buildableButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
             buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
         }
