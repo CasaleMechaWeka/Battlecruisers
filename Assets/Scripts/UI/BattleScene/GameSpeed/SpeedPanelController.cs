@@ -41,7 +41,10 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             return 
                 new SpeedComponents(
                     speedButtonPanel,
-                    speedButtonGroup);
+                    speedButtonGroup,
+                    slowMotion,
+                    normalSpeed,
+                    fastForward);
         }
     }
 }
