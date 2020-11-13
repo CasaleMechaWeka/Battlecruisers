@@ -34,6 +34,29 @@ namespace BattleCruisers.Data.Models
         }
         #endregion Navigation
 
+        #region Game speed
+        private KeyCode _slowMotion;
+        public KeyCode SlowMotion
+        {
+            get => _slowMotion;
+            set => _slowMotion = value;
+        }
+
+        private KeyCode _play;
+        public KeyCode Play
+        {
+            get => _play;
+            set => _play = value;
+        }
+
+        private KeyCode _fastForward;
+        public KeyCode FastForward
+        {
+            get => _fastForward;
+            set => _fastForward = value;
+        }
+        #endregion Game speed
+
         #region Building categories
         [SerializeField]
         private KeyCode _factories;
@@ -321,6 +344,11 @@ namespace BattleCruisers.Data.Models
             Overview = KeyCode.UpArrow;
             EnemyCruiser = KeyCode.RightArrow;
 
+            // Game speed
+            SlowMotion = KeyCode.Alpha1;
+            Play = KeyCode.Alpha2;
+            FastForward = KeyCode.Alpha3;
+
             // Building categories
             Factories = KeyCode.A;
             Defensives = KeyCode.S;
@@ -386,6 +414,10 @@ namespace BattleCruisers.Data.Models
                 && PlayerCruiser == other.PlayerCruiser
                 && Overview == other.Overview
                 && EnemyCruiser == other.EnemyCruiser
+                // Game speed
+                && SlowMotion == other.SlowMotion
+                && Play == other.Play
+                && FastForward == other.FastForward
                 // Building categories
                 && Factories == other.Factories
                 && Defensives == other.Defensives
@@ -434,6 +466,7 @@ namespace BattleCruisers.Data.Models
             return 
                 this.GetHashCode(
                     PlayerCruiser, Overview, EnemyCruiser,
+                    SlowMotion, Play, FastForward,
                     Factories, Defensives, Offensives, Tacticals, Ultras,
                     DroneStation, AirTurret, NavalFactory,
                     ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil,

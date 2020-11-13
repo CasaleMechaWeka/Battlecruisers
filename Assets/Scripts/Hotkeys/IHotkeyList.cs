@@ -9,6 +9,11 @@ namespace BattleCruisers.Hotkeys
         KeyCode Overview { get; }
         KeyCode EnemyCruiser { get; }
 
+        // Game speed
+        KeyCode SlowMotion { get; }
+        KeyCode Play { get; }
+        KeyCode FastForward { get; }
+
         // Building categories
         KeyCode Factories { get; }
         KeyCode Defensives { get; }

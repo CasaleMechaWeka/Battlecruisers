@@ -9,6 +9,11 @@ namespace BattleCruisers.Data.Models
         KeyCode Overview { get; set; }
         KeyCode EnemyCruiser { get; set; }
 
+        // Game speed
+        KeyCode SlowMotion { get; set; }
+        KeyCode Play { get; set; }
+        KeyCode FastForward { get; set; }
+
         // Building categories
         KeyCode Factories { get; set; }
         KeyCode Defensives { get; set; }
