@@ -1,5 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene.Buttons.Toggles;
-using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityCommon.PlatformAbstractions.Time;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public class GameSpeedButton : CanvasGroupButton, IToggleButton
+    public class GameSpeedButton : CanvasGroupButton, IGameSpeedButton
     {
         private ITime _time;
         private FilterToggler _isEnabledToggler;
@@ -40,6 +39,11 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             _time = time;
             IsSelected = false;
             _isEnabledToggler = new FilterToggler(shouldBeEnabledFilter, this);
+        }
+
+        public void TriggerClick()
+        {
+            OnPointerClick(eventData: null);
         }
     }
 }

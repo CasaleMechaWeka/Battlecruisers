@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers.UI.BattleScene.GameSpeed
+﻿using BattleCruisers.UI.BattleScene.Buttons.Toggles;
+
+namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
-    public interface IGameSpeedButton : IButton
+    public interface IGameSpeedButton : IToggleButton
     {
-        bool IsSelected { set; }
+        void TriggerClick();
     }
 }
