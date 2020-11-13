@@ -89,7 +89,27 @@ namespace BattleCruisers.Utils.PlatformAbstractions
             KeyCode.F12,
             KeyCode.F13,
             KeyCode.F14,
-            KeyCode.F15
+            KeyCode.F15,
+            KeyCode.Alpha0,
+            KeyCode.Alpha1,
+            KeyCode.Alpha2,
+            KeyCode.Alpha3,
+            KeyCode.Alpha4,
+            KeyCode.Alpha5,
+            KeyCode.Alpha6,
+            KeyCode.Alpha7,
+            KeyCode.Alpha8,
+            KeyCode.Alpha9,
+            KeyCode.Keypad0,
+            KeyCode.Keypad1,
+            KeyCode.Keypad2,
+            KeyCode.Keypad3,
+            KeyCode.Keypad4,
+            KeyCode.Keypad5,
+            KeyCode.Keypad6,
+            KeyCode.Keypad7,
+            KeyCode.Keypad8,
+            KeyCode.Keypad9
         };
 
 		public Vector3 MousePosition => Input.mousePosition;
