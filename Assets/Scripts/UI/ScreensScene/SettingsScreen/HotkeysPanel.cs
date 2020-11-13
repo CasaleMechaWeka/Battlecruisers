@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(IHotkeysModel hotkeysModel)
         {
             Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
-            Helper.AssertIsNotNull(slowMotionRow, playerCruiserRow, fastForwardRow);
+            Helper.AssertIsNotNull(slowMotionRow, playRow, fastForwardRow);
             Helper.AssertIsNotNull(droneStationRow, airFactoryRow, navalFactoryRow);
             Helper.AssertIsNotNull(shipTurretRow, airTurretRow, mortarRow, samSiteRow, teslaCoilRow);
             Helper.AssertIsNotNull(artilleryRow, broadsidesRow, rocketLauncherRow);
@@ -275,7 +275,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
                 // Game speed
                 || slowMotionRow.Value.Key.Value != _hotkeysModel.SlowMotion
-                || playerCruiserRow.Value.Key.Value != _hotkeysModel.Play
+                || playRow.Value.Key.Value != _hotkeysModel.Play
                 || fastForwardRow.Value.Key.Value != _hotkeysModel.FastForward
                 // Building categories
                 || factoriesRow.Value.Key.Value != _hotkeysModel.Factories
@@ -329,7 +329,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             // Game speed
             _hotkeysModel.SlowMotion = slowMotionRow.Value.Key.Value;
-            _hotkeysModel.Play = playerCruiserRow.Value.Key.Value;
+            _hotkeysModel.Play = playRow.Value.Key.Value;
             _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
 
             // Building categories
@@ -408,7 +408,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             
             // Game speed
             slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);
-            playerCruiserRow.ResetToDefaults(hotkeysModel.Play);
+            playRow.ResetToDefaults(hotkeysModel.Play);
             fastForwardRow.ResetToDefaults(hotkeysModel.FastForward);
 
             // Building categories
