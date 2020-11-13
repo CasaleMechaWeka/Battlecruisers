@@ -17,7 +17,7 @@ namespace BattleCruisers.Hotkeys
             _speedComponents = speedComponents;
 
             _hotkeyDetector.SlowMotion += _hotkeyDetector_SlowMotion;
-            _hotkeyDetector.Play += _hotkeyDetector_Play;
+            _hotkeyDetector.NormalSpeed += _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward += _hotkeyDetector_FastForward;
         }
 
@@ -26,9 +26,9 @@ namespace BattleCruisers.Hotkeys
             _speedComponents.SlowMotionButton.TriggerClick();
         }
 
-        private void _hotkeyDetector_Play(object sender, EventArgs e)
+        private void _hotkeyDetector_NormalSpeed(object sender, EventArgs e)
         {
-            _speedComponents.PlayButton.TriggerClick();
+            _speedComponents.NormalSpeedButton.TriggerClick();
         }
 
         private void _hotkeyDetector_FastForward(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace BattleCruisers.Hotkeys
         public void DisposeManagedState()
         {
             _hotkeyDetector.SlowMotion -= _hotkeyDetector_SlowMotion;
-            _hotkeyDetector.Play -= _hotkeyDetector_Play;
+            _hotkeyDetector.NormalSpeed -= _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward -= _hotkeyDetector_FastForward;
         }
     }

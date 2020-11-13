@@ -9,22 +9,22 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public IHighlightable SpeedButtonPanel { get; }
         public IToggleButtonGroup SpeedButtonGroup { get; }
         public IGameSpeedButton SlowMotionButton { get; }
-        public IGameSpeedButton PlayButton { get; }
+        public IGameSpeedButton NormalSpeedButton { get; }
         public IGameSpeedButton FastForwardButton { get; }
 
         public SpeedComponents(
             IHighlightable speedButtonPanel,
             IToggleButtonGroup speedButtonGroup,
             IGameSpeedButton slowMotionButton,
-            IGameSpeedButton playButton,
+            IGameSpeedButton normalSpeedButton,
             IGameSpeedButton fastForwardButton)
         {
-            Helper.AssertIsNotNull(speedButtonPanel, speedButtonGroup, slowMotionButton, playButton, fastForwardButton);
+            Helper.AssertIsNotNull(speedButtonPanel, speedButtonGroup, slowMotionButton, normalSpeedButton, fastForwardButton);
 
             SpeedButtonPanel = speedButtonPanel;
             SpeedButtonGroup = speedButtonGroup;
             SlowMotionButton = slowMotionButton;
-            PlayButton = playButton;
+            NormalSpeedButton = normalSpeedButton;
             FastForwardButton = fastForwardButton;
         }
     }

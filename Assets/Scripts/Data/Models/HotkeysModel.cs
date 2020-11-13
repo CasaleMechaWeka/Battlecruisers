@@ -43,7 +43,7 @@ namespace BattleCruisers.Data.Models
         }
 
         private KeyCode _play;
-        public KeyCode Play
+        public KeyCode NormalSpeed
         {
             get => _play;
             set => _play = value;
@@ -346,7 +346,7 @@ namespace BattleCruisers.Data.Models
 
             // Game speed
             SlowMotion = KeyCode.Alpha1;
-            Play = KeyCode.Alpha2;
+            NormalSpeed = KeyCode.Alpha2;
             FastForward = KeyCode.Alpha3;
 
             // Building categories
@@ -416,7 +416,7 @@ namespace BattleCruisers.Data.Models
                 && EnemyCruiser == other.EnemyCruiser
                 // Game speed
                 && SlowMotion == other.SlowMotion
-                && Play == other.Play
+                && NormalSpeed == other.NormalSpeed
                 && FastForward == other.FastForward
                 // Building categories
                 && Factories == other.Factories
@@ -466,7 +466,7 @@ namespace BattleCruisers.Data.Models
             return 
                 this.GetHashCode(
                     PlayerCruiser, Overview, EnemyCruiser,
-                    SlowMotion, Play, FastForward,
+                    SlowMotion, NormalSpeed, FastForward,
                     Factories, Defensives, Offensives, Tacticals, Ultras,
                     DroneStation, AirTurret, NavalFactory,
                     ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil,

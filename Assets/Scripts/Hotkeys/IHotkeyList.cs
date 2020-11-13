@@ -11,7 +11,7 @@ namespace BattleCruisers.Hotkeys
 
         // Game speed
         KeyCode SlowMotion { get; }
-        KeyCode Play { get; }
+        KeyCode NormalSpeed { get; }
         KeyCode FastForward { get; }
 
         // Building categories

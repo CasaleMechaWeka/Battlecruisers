@@ -9,7 +9,7 @@ namespace BattleCruisers.Hotkeys
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
 
         // Game speed
-        public event EventHandler SlowMotion, Play, FastForward;
+        public event EventHandler SlowMotion, NormalSpeed, FastForward;
 
         // Building categories
         public event EventHandler Factories, Defensives, Offensives, Tacticals, Ultras;

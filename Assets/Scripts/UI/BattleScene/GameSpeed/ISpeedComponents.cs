@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         IHighlightable SpeedButtonPanel { get; }
         IToggleButtonGroup SpeedButtonGroup { get; }
         IGameSpeedButton SlowMotionButton { get; }
-        IGameSpeedButton PlayButton { get; }
+        IGameSpeedButton NormalSpeedButton { get; }
         IGameSpeedButton FastForwardButton { get; }
     }
 }

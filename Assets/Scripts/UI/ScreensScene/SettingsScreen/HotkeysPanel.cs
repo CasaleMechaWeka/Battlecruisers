@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         [Header("Game speed")]
         public HotkeyRow slowMotionRow;
-        public HotkeyRow playRow, fastForwardRow;
+        public HotkeyRow normalSpeedRow, fastForwardRow;
 
         [Header("Building categories")]
         public HotkeyRow factoriesRow;
@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(IHotkeysModel hotkeysModel)
         {
             Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
-            Helper.AssertIsNotNull(slowMotionRow, playRow, fastForwardRow);
+            Helper.AssertIsNotNull(slowMotionRow, normalSpeedRow, fastForwardRow);
             Helper.AssertIsNotNull(droneStationRow, airFactoryRow, navalFactoryRow);
             Helper.AssertIsNotNull(shipTurretRow, airTurretRow, mortarRow, samSiteRow, teslaCoilRow);
             Helper.AssertIsNotNull(artilleryRow, broadsidesRow, rocketLauncherRow);
@@ -125,8 +125,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             rows.Add(slowMotionRow);
             slowMotionRow.Initialise(InputBC.Instance, _hotkeysModel.SlowMotion, this);
 
-            rows.Add(playRow);
-            playRow.Initialise(InputBC.Instance, _hotkeysModel.Play, this);
+            rows.Add(normalSpeedRow);
+            normalSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.NormalSpeed, this);
 
             rows.Add(fastForwardRow);
             fastForwardRow.Initialise(InputBC.Instance, _hotkeysModel.FastForward, this);
@@ -275,7 +275,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
                 // Game speed
                 || slowMotionRow.Value.Key.Value != _hotkeysModel.SlowMotion
-                || playRow.Value.Key.Value != _hotkeysModel.Play
+                || normalSpeedRow.Value.Key.Value != _hotkeysModel.NormalSpeed
                 || fastForwardRow.Value.Key.Value != _hotkeysModel.FastForward
                 // Building categories
                 || factoriesRow.Value.Key.Value != _hotkeysModel.Factories
@@ -329,7 +329,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             // Game speed
             _hotkeysModel.SlowMotion = slowMotionRow.Value.Key.Value;
-            _hotkeysModel.Play = playRow.Value.Key.Value;
+            _hotkeysModel.NormalSpeed = normalSpeedRow.Value.Key.Value;
             _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
 
             // Building categories
@@ -408,7 +408,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             
             // Game speed
             slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);
-            playRow.ResetToDefaults(hotkeysModel.Play);
+            normalSpeedRow.ResetToDefaults(hotkeysModel.NormalSpeed);
             fastForwardRow.ResetToDefaults(hotkeysModel.FastForward);
 
             // Building categories

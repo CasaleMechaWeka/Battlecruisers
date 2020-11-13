@@ -11,7 +11,7 @@ namespace BattleCruisers.Data.Models
 
         // Game speed
         KeyCode SlowMotion { get; set; }
-        KeyCode Play { get; set; }
+        KeyCode NormalSpeed { get; set; }
         KeyCode FastForward { get; set; }
 
         // Building categories
