@@ -28,9 +28,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IScreensSceneGod screensSceneGod, 
             IDifficultySpritesProvider difficultySpritesProvider,
             int numOfLevelsUnlocked,
-            ITrashTalkData trashTalkData)
+            ITrashTalkData trashTalkData,
+            IDismissableEmitter parent)
 		{
-            base.Initialise(soundPlayer);
+            base.Initialise(soundPlayer, parent: parent);
 
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
             Helper.AssertIsNotNull(level, screensSceneGod, difficultySpritesProvider, trashTalkData);

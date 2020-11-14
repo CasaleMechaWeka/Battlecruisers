@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelInfo level = allLevels[firstLevelIndex + i];
                 ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(level.Num);
 
-                await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData);
+                await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData, levelsScreen);
             }
 
             // Set up trails
