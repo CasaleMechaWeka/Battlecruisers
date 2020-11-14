@@ -54,6 +54,8 @@ namespace BattleCruisers.Scenes
         public bool testLevelsScreen = false;
         [Range(1, 25)]
         public int numOfLevelsUnlocked = 1;
+        [Header("For testing the trash talk screen")]
+        public bool testTrashTalkScreen = false;
         [Header("For testing the settings screen")]
         public bool testSettingsScreen = false;
 
@@ -117,7 +119,6 @@ namespace BattleCruisers.Scenes
 
             // TEMP  Go to specific screen :)
             //GoToLoadoutScreen();
-            //GoToTrashScreen(levelNum: 1);
 
             if (testSettingsScreen)
             {
@@ -126,6 +127,10 @@ namespace BattleCruisers.Scenes
             if (testLevelsScreen)
             {
                 GoToLevelsScreen();
+            }
+            if (testTrashTalkScreen)
+            {
+                GoToTrashScreen(levelNum: 1);
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
