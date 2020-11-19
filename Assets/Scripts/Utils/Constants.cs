@@ -32,7 +32,7 @@
         public const float DEFAULT = 2;
         public const float ONE_AND_A_QUARTER_DEFAULT = 2.5f;
         public const float ONE_AND_A_HALF_DEFAULT = 3;
-        public const float DEFAULT_TUTORIAL = 8;
+        public const float DEFAULT_TUTORIAL = 3;
         public const float FAST = 50;
 		public const float VERY_FAST = 500;
     }
