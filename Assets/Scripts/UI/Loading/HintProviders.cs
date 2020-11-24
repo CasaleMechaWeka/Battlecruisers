@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.Loading
             IList<string> hints = new List<string>()
             {
                 "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
-                "The BUILDERS button for one of your building’s makes all your builders try to work on that building.  The shortcut is to double click your building.",
+                "Hit a building's BUILDERS button (or double click the building) to summon all your builder drones!",
                 "Each cruiser has a unique benefit and slot arrangement.  Choose your cruiser wisely!",
                 "Local boosters are well worth building.",
                 "Construct buildings one at a time instead of all at once, to get their benefits sooner.",
