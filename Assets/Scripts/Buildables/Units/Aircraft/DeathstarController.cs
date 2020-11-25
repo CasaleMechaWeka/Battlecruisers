@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
-    public class DeathstarController : AircraftController
+    public class DeathstarController : SatelliteController
 	{
 		private IBarrelWrapper _barrelWrapper;
 
