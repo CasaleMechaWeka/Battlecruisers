@@ -340,9 +340,9 @@ namespace BattleCruisers.Data.Models
         public HotkeysModel()
         {
             // Navigation
-            PlayerCruiser = KeyCode.LeftArrow;
-            Overview = KeyCode.UpArrow;
-            EnemyCruiser = KeyCode.RightArrow;
+            PlayerCruiser = KeyCode.Z;
+            Overview = KeyCode.X;
+            EnemyCruiser = KeyCode.C;
 
             // Game speed
             SlowMotion = KeyCode.Alpha1;

@@ -50,7 +50,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             string text
                 = SystemInfoBC.Instance.IsHandheld ?
                     "Click them to look around the map.  Give it a try :)" :
-                    "Click them (or use the arrow keys) to look around the map.  Give it a try :)";
+                    "Click them (or use the Z, X, C keys) to look around the map.  Give it a try :)";
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(text)));

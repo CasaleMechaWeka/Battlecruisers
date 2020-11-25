@@ -103,6 +103,11 @@ namespace BattleCruisers.Utils.Debugging
             IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             IHotkeysModel hotkeys = dataProvider.GameModel.Hotkeys;
 
+            // Navigation
+            hotkeys.PlayerCruiser = KeyCode.Semicolon;
+            hotkeys.Overview = KeyCode.Q;
+            hotkeys.EnemyCruiser = KeyCode.J;
+
             // Building categories
             hotkeys.Factories = KeyCode.A;
             hotkeys.Defensives = KeyCode.O;
