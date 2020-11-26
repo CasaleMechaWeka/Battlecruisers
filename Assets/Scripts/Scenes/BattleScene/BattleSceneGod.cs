@@ -267,7 +267,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         rightPanelComponents.SpeedComponents.SpeedButtonGroup));
 
             // Cheater is only there in debug builds
-            Cheater cheater = GetComponentInChildren<Cheater>();
+            Cheater cheater = GetComponentInChildren<Cheater>(includeInactive: true);
             cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
 
             // Tutorial
