@@ -25,9 +25,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         TutorialCompleted,
         Defeat,
         Victory_LootUnlocked,
-        Victory_NoNewLoot,  // Currently the same behaviour as Victory_LootUnlocked
+        Victory_NoNewLoot,      // Currently the same behaviour as Victory_LootUnlocked
         Victory_DemoCompleted,
-        Victory_GameCompleted
+        Victory_GameCompleted   // Currently doesn't do anything :P
     }
 
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
