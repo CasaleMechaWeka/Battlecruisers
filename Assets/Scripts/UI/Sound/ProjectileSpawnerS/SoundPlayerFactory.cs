@@ -11,12 +11,16 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         private readonly ISoundFetcher _soundFetcher;
         private readonly IDeferrer _deferrer;
 
+        public IProjectileSpawnerSoundPlayer DummyPlayer { get; }
+
         public SoundPlayerFactory(ISoundFetcher soundFetcher, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(soundFetcher, deferrer);
 
             _soundFetcher = soundFetcher;
             _deferrer = deferrer;
+
+            DummyPlayer = new DummyProjectileSpawnerSoundPlayer();
         }
 
         public async Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource)
