@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -7,6 +8,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -30,7 +32,7 @@ namespace BattleCruisers.Scenes.Test
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
             // Setup target
             helper.InitialiseBuilding(_target, Faction.Blues);
@@ -51,7 +53,7 @@ namespace BattleCruisers.Scenes.Test
             int burstSize = 1;
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
-            _rocketSpawner.Initialise(parent, rocketStats, burstSize, args.FactoryProvider);
+            await _rocketSpawner.InitialiseAsync(parent, rocketStats, burstSize, args.FactoryProvider, SoundKeys.Firing.RocketLauncher);
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: fireIntervalInS);
 		}

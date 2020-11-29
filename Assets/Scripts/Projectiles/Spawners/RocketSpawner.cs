@@ -2,8 +2,10 @@
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
@@ -12,9 +14,12 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
         private ICruisingProjectileStats _rocketStats;
 
-        public void Initialise(ITarget parent, ICruisingProjectileStats rocketStats, int burstSize, IFactoryProvider factoryProvider)
+        public async Task InitialiseAsync(ITarget parent, ICruisingProjectileStats rocketStats, int burstSize, IFactoryProvider factoryProvider, ISoundKey firingSound)
 		{
-            base.Initialise(new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider));
+            await 
+                base.InitialiseAsync(
+                    new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider),
+                    firingSound);
 
             _rocketStats = rocketStats;
 		}
@@ -33,7 +38,7 @@ namespace BattleCruisers.Projectiles.Spawners
                     _parent,
                     _impactSound,
                     target);
-            _projectilePool.GetItem(activationArgs);
+            base.SpawnProjectile(activationArgs);
 		}
 	}
 }

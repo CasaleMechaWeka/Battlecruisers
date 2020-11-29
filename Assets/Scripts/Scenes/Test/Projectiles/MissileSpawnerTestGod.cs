@@ -6,6 +6,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -29,7 +30,7 @@ namespace BattleCruisers.Scenes.Test
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override async Task SetupAsync(Helper helper)
         {
 			// Setup target
 			_target.PatrolPoints = targetPatrolPoints;
@@ -50,7 +51,7 @@ namespace BattleCruisers.Scenes.Test
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.FactoryProvider);
 
-            _missileSpawner.Initialise(spawnerArgs);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, firingSound: null);
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}

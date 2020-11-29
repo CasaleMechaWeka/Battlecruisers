@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_exactMatchTargetFilter = targetFilter;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);
 
-            _missileSpawner.Initialise(spawnerArgs);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
 		}
 
         public override void Fire(float angleInDegrees)

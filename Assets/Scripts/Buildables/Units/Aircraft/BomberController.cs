@@ -97,7 +97,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             int burstSize = 1;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider);
 
-            _bombSpawner.Initialise(spawnerArgs, targetFilter);
+            _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
 		}
 		
 		protected async override void OnBuildableCompleted()

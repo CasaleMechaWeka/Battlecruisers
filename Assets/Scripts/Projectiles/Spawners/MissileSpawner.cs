@@ -24,7 +24,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}");
 
-            _projectilePool.GetItem(activationArgs);
+            base.SpawnProjectile(activationArgs);
 		}
 	}
 }

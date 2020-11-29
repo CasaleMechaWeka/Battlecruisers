@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,9 +11,9 @@ namespace BattleCruisers.Projectiles.Spawners
     {
         protected ITargetFilter _targetFilter;
 
-        public void Initialise(IProjectileSpawnerArgs args, ITargetFilter targetFilter)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ITargetFilter targetFilter)
         {
-            base.Initialise(args);
+            await base.InitialiseAsync(args, firingSound: null);
 
             Assert.IsNotNull(targetFilter);
             _targetFilter = targetFilter;
@@ -29,7 +30,8 @@ namespace BattleCruisers.Projectiles.Spawners
                     _targetFilter,
                     _parent,
                     _impactSound);
-            _projectilePool.GetItem(activationArgs);
+
+            base.SpawnProjectile(activationArgs);
 		}
 	}
 }

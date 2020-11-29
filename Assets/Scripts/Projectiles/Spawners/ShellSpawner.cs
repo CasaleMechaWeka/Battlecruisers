@@ -2,30 +2,22 @@
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
     public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         private ITargetFilter _targetFilter;
-        private IProjectileSpawnerSoundPlayer _soundPlayer;
 
-        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ITargetFilter targetFilter, ISoundKey firingSound)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter)
         {
-            base.Initialise(args);
+            await base.InitialiseAsync(args, firingSound);
 
-            Helper.AssertIsNotNull(targetFilter, firingSound);
-
+            Helper.AssertIsNotNull(targetFilter);
             _targetFilter = targetFilter;
-
-            IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
-            Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer = await soundPlayerInitialiser.CreateSoundPlayerAsync(args.FactoryProvider.Sound.SoundPlayerFactory, firingSound, args.BurstSize);
         }
 
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
@@ -39,9 +31,7 @@ namespace BattleCruisers.Projectiles.Spawners
                     _targetFilter,
                     _parent,
                     _impactSound);
-            _projectilePool.GetItem(activationArgs);
-
-            _soundPlayer.OnProjectileFired();
+            base.SpawnProjectile(activationArgs);
 		}
 	}
 }

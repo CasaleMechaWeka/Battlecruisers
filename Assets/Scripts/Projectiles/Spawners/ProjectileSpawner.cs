@@ -2,10 +2,13 @@
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,15 +19,17 @@ namespace BattleCruisers.Projectiles.Spawners
         where TProjectileArgs : ProjectileActivationArgs<TStats>
         where TStats : IProjectileStats
 	{
+        private IProjectileSpawnerSoundPlayer _soundPlayer;
+        private IPool<TProjectile, TProjectileArgs> _projectilePool;
+
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
 		protected IFactoryProvider _factoryProvider;
-        protected IPool<TProjectile, TProjectileArgs> _projectilePool;
 
         protected IAudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
-        public void Initialise(IProjectileSpawnerArgs args)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound)
         {
             Helper.AssertIsNotNull(impactSound, args);
 
@@ -36,6 +41,10 @@ namespace BattleCruisers.Projectiles.Spawners
             IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats>>();
             Assert.IsNotNull(poolChooser);
             _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
+
+            IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
+            Assert.IsNotNull(soundPlayerInitialiser);
+            _soundPlayer = await soundPlayerInitialiser.CreateSoundPlayerAsync(args.FactoryProvider.Sound.SoundPlayerFactory, firingSound, args.BurstSize);
         }
 
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
@@ -51,5 +60,13 @@ namespace BattleCruisers.Projectiles.Spawners
 
 			return new Vector2(velocityX, velocityY);
 		}
-	}
+
+        protected void SpawnProjectile(TProjectileArgs projectileActivationArgs)
+        {
+            Assert.IsNotNull(projectileActivationArgs);
+
+            _projectilePool.GetItem(projectileActivationArgs);
+            _soundPlayer.OnProjectileFired();
+        }
+    }
 }
