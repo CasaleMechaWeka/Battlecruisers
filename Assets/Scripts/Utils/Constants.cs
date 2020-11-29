@@ -13,7 +13,7 @@
 
     public static class ZoomScale
     {
-        public const float SCROLL_WHEEL = 2400;
+        public const float SCROLL_WHEEL = 1200;
         public const float SWIPE = 60;
     }
 
