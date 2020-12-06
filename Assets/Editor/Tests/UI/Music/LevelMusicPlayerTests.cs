@@ -51,6 +51,7 @@ namespace BattleCruisers.Tests.UI.Music
         {
             _battleCompletionHandler.BattleCompleted += Raise.Event();
             _musicPlayer.Received().Stop();
+            _musicPlayer.Received().DisposeManagedState();
         }
     }
 }

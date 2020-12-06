@@ -3,6 +3,7 @@ using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
+using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.UI.Music
 {
@@ -20,6 +21,13 @@ namespace BattleCruisers.Tests.UI.Music
             _secondarySource = Substitute.For<IAudioSource>();
 
             _musicPlayer = new LayeredMusicPlayer(_audioVolumeFade, _primarySource, _secondarySource);
+        }
+
+        [Test]
+        public void Play_WhileDisposed_Throws()
+        {
+            _musicPlayer.DisposeManagedState();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.Play());
         }
 
         [Test]
@@ -44,6 +52,13 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
+        public void PlaySecondary_WhileDisposed_Throws()
+        {
+            _musicPlayer.DisposeManagedState();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.PlaySecondary());
+        }
+
+        [Test]
         public void PlaySecondary()
         {
             _musicPlayer.PlaySecondary();
@@ -51,10 +66,24 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
+        public void StopSecondary_WhileDisposed_Throws()
+        {
+            _musicPlayer.DisposeManagedState();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.StopSecondary());
+        }
+
+        [Test]
         public void StopSecondary()
         {
             _musicPlayer.StopSecondary();
             _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: 0, LayeredMusicPlayer.FADE_TIME_IN_S);
+        }
+
+        [Test]
+        public void Stop_WhileDisposed_Throws()
+        {
+            _musicPlayer.DisposeManagedState();
+            Assert.Throws<UnityAsserts.AssertionException>(() => _musicPlayer.Stop());
         }
 
         [Test]
@@ -73,6 +102,33 @@ namespace BattleCruisers.Tests.UI.Music
 
             _primarySource.Received().Stop();
             _secondarySource.Received().Stop();
+        }
+
+        [Test]
+        public void DisposeManagedState()
+        {
+            _musicPlayer.DisposeManagedState();
+
+            _primarySource.Received().FreeAudioClip();
+            _secondarySource.Received().FreeAudioClip();
+        }
+
+        [Test]
+        public void DoubleDisposeManagedState()
+        {
+            // First dispose
+            _musicPlayer.DisposeManagedState();
+
+            _primarySource.Received().FreeAudioClip();
+            _primarySource.ClearReceivedCalls();
+            _secondarySource.Received().FreeAudioClip();
+            _secondarySource.ClearReceivedCalls();
+
+            // Second dispose
+            _musicPlayer.DisposeManagedState();
+
+            _primarySource.DidNotReceive().FreeAudioClip();
+            _secondarySource.DidNotReceive().FreeAudioClip();
         }
     }
 }

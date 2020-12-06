@@ -25,7 +25,6 @@ namespace BattleCruisers.UI.Music
             _musicPlayer.Play();
         }
 
-        // FELIX  Update tests :)
         private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
         {
             _musicPlayer.Stop();

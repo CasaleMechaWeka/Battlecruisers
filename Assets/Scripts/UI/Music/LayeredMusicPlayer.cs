@@ -67,7 +67,6 @@ namespace BattleCruisers.UI.Music
             _secondarySource.Stop();
         }
 
-        // FELIX  Test :P
         public void DisposeManagedState()
         {
             if (!_isDisposed)
