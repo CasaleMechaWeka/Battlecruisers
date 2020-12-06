@@ -6,5 +6,6 @@
         public void PlaySecondary() { }
         public void StopSecondary() { }
         public void Stop() { }
+        public void DisposeManagedState() { }
     }
 }

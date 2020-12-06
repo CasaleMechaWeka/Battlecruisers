@@ -1,6 +1,8 @@
-﻿namespace BattleCruisers.UI.Music
+﻿using BattleCruisers.Utils;
+
+namespace BattleCruisers.UI.Music
 {
-    public interface ILayeredMusicPlayer
+    public interface ILayeredMusicPlayer : IManagedDisposable
     {
         void Play();
         void PlaySecondary();

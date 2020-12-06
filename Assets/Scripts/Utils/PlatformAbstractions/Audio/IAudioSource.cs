@@ -19,5 +19,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
         void Play(bool isSpatial = true, bool loop = false);
 
         void Stop();
+        void FreeAudioClip();
     }
 }

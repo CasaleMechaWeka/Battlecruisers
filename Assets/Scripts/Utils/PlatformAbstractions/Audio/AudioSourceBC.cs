@@ -66,5 +66,14 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
                 _audioSource.Stop();
             }
         }
+
+        public void FreeAudioClip()
+        {
+            if (_audioSource.clip != null)
+            {
+                Object.Destroy(_audioSource.clip);
+                _audioSource.clip = null;
+            }
+        }
     }
 }

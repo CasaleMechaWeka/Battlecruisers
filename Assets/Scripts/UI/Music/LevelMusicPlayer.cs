@@ -20,9 +20,16 @@ namespace BattleCruisers.UI.Music
             _dangerMonitorSummariser = dangerMonitorSummariser;
 
             _dangerMonitorSummariser.IsInDanger.ValueChanged += IsInDanger_ValueChanged;
-            battleCompletionHandler.BattleCompleted += (sender, e) => _musicPlayer.Stop();
+            battleCompletionHandler.BattleCompleted += BattleCompletionHandler_BattleCompleted;
 
             _musicPlayer.Play();
+        }
+
+        // FELIX  Update tests :)
+        private void BattleCompletionHandler_BattleCompleted(object sender, EventArgs e)
+        {
+            _musicPlayer.Stop();
+            _musicPlayer.DisposeManagedState();
         }
 
         private void IsInDanger_ValueChanged(object sender, EventArgs e)
