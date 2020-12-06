@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.Audio
 {
@@ -6,5 +7,6 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
     {
         AudioClip AudioClip { get; }
         float Length { get; }
+        AsyncOperationHandle<AudioClip> Handle { get; }
     }
 }

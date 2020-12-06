@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.Audio
@@ -10,10 +11,12 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
         private const float MAX_BLEND = 1;
         private const float MIN_BLEND = 0;
 
+        private IAudioClipWrapper _audioClip;
         public IAudioClipWrapper AudioClip
         {
             set
             {
+                _audioClip = value;
                 _audioSource.clip = value?.AudioClip;
             }
         }
@@ -69,10 +72,10 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
 
         public void FreeAudioClip()
         {
-            if (_audioSource.clip != null)
+            if (_audioClip != null)
             {
-                Object.Destroy(_audioSource.clip);
-                _audioSource.clip = null;
+                Addressables.Release(_audioClip.Handle);
+                _audioClip = null;
             }
         }
     }

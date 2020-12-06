@@ -26,7 +26,7 @@ namespace BattleCruisers.Utils.Fetchers
                 throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
             }
 
-            return new AudioClipWrapper(handle.Result);
+            return new AudioClipWrapper(handle.Result, handle);
         }
 
         private string CreateSoundPath(ISoundKey soundKey)
