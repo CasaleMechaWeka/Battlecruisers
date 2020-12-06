@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
         void Start()
         {
-            TempAsync();
+            //TempAsync();
         }
 
         private AsyncOperationHandle<AudioClip> _handle;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
             await handle.Task;
             // Expected ref count: 1  Actual:  7
 
-            //Addressables.Release(handle);
+            Addressables.Release(handle);
             // Expected ref count: 0  Actual:  3
         }
 
