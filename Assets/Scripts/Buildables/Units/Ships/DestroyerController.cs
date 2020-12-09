@@ -66,9 +66,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             _directFireAntiSea.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
             _mortar.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
-            _missileLauncher.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
+            _missileLauncher.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.RocketLauncher);
             _directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.AntiAir);
-            _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
+            _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.Missile);
 		}
  
         protected override List<SpriteRenderer> GetNonTurretRenderers()
