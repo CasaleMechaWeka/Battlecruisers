@@ -91,7 +91,7 @@ namespace BattleCruisers.Scenes
 			
             while (_lastSceneLoaded != sceneName)
             {
-                float waitIntervalInS = 0.1f;
+                float waitIntervalInS = 1;
                 Logging.Verbose(Tags.SCENE_NAVIGATION, $"{sceneName}  waiting another: {waitIntervalInS}s");
                 yield return new WaitForSeconds(waitIntervalInS);
             }
