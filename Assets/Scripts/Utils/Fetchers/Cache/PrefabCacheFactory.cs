@@ -60,9 +60,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Container<AudioSourceInitialiser> audioSourceContainer = new Container<AudioSourceInitialiser>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.AudioSource, audioSourceContainer));
 
-            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre rertieve all prefabs task");
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
-            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After rertieve all prefabs task");
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After retrieve all prefabs task");
 
             return
                 new PrefabCache(
