@@ -17,7 +17,10 @@ namespace BattleCruisers.Utils.Fetchers
             string addressableKey = PREFAB_ROOT_DIR + prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
 
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
+
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, $"Pre await Addressables.LoadAssetAsync: {prefabKey.PrefabPath}");
             await handle.Task;
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, $"After await Addressables.LoadAssetAsync: {prefabKey.PrefabPath}");
 
             if (handle.Status != AsyncOperationStatus.Succeeded
                 || handle.Result == null)
