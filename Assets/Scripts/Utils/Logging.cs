@@ -100,6 +100,7 @@ namespace BattleCruisers.Utils
         public const string EXPLOSIONS = "Explosions";
 
         // Scene Loading
+        public const string PREFAB_CACHE_FACTORY = "PrefabCacheFactory";
         public const string SCENE_NAVIGATION = "SceneNavigation";
         public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
 
@@ -232,6 +233,8 @@ namespace BattleCruisers.Utils
 
             // Scene Loading
             // FELIX
+            tagsToActiveness.Add(Tags.PREFAB_CACHE_FACTORY, true);
+            //tagsToActiveness.Add(Tags.PREFAB_CACHE_FACTORY, false);
             tagsToActiveness.Add(Tags.SCENE_NAVIGATION, true);
             //tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, true);

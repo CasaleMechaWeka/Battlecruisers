@@ -60,7 +60,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Container<AudioSourceInitialiser> audioSourceContainer = new Container<AudioSourceInitialiser>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.AudioSource, audioSourceContainer));
 
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre rertieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After rertieve all prefabs task");
 
             return
                 new PrefabCache(
@@ -91,7 +93,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IPrefabKey prefabKey)
                 where TPrefab : class, IPrefab
         {
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
             TPrefab prefab = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
+
             prefab.StaticInitialise();
             keyToPrefab.Add(prefabKey, prefab);
         }
@@ -102,7 +107,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Container<TPrefab> prefabContainer)
                 where TPrefab : class, IPrefab
         {
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
             prefabContainer.Value = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
+
             prefabContainer.Value.StaticInitialise();
         }
     }
