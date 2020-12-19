@@ -62,9 +62,14 @@ namespace BattleCruisers.Scenes
         async void Start()
 		{
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, trashDataList, _uiAudioSource);
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
+            
             _prefabFactory = new PrefabFactory(prefabCache);
             trashDataList.Initialise();
 
@@ -87,7 +92,6 @@ namespace BattleCruisers.Scenes
                 //_applicationModel.IsTutorial = true;
             }
 
-
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
             {
@@ -105,8 +109,10 @@ namespace BattleCruisers.Scenes
             if (_applicationModel.ShowPostBattleScreen)
             {
 				_applicationModel.ShowPostBattleScreen = false;
-    
+
+                Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider);
+                Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
             else
             {
@@ -114,7 +120,9 @@ namespace BattleCruisers.Scenes
             }
 
             // After potentially initialising post battle screen, because that can modify the data model.
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync(difficultySpritesProvider, nextLevelHelper);
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
             loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
@@ -135,8 +143,10 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
             Common.TimeBC.Instance.TimeScale = 1;
+
+            Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
         }
-        
+
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");

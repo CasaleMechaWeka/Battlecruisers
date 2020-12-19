@@ -55,7 +55,6 @@ namespace BattleCruisers.Utils
         public const string MASKS = "Masks";
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
-        public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
         public const string TUTORIAL_EXPLANATION_PANEL = "TutoraliExplanationPanel";
         public const string TUTORIAL_STEP = "TutorialStep";
         public const string UI = "UI";
@@ -100,6 +99,10 @@ namespace BattleCruisers.Utils
         public const string DEATHS = "Deaths";
         public const string EXPLOSIONS = "Explosions";
 
+        // Scene Loading
+        public const string SCENE_NAVIGATION = "SceneNavigation";
+        public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
+
         // Other
         public const string ALWAYS = "Always";
         public const string BATTLE_SCENE = "BattleScene";
@@ -114,7 +117,6 @@ namespace BattleCruisers.Utils
         public const string PREFAB_FACTORY = "PrefabFactory";
         public const string PYRAMID = "Pyramid";
         public const string REPAIR_MANAGER = "RepairManager";
-        public const string SCENE_NAVIGATION = "SceneNavigation";
         public const string SOUND = "Sound";
         public const string TIME = "Time";
     }
@@ -184,7 +186,6 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
-            tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
             tagsToActiveness.Add(Tags.TUTORIAL_EXPLANATION_PANEL, false);
             tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
@@ -229,6 +230,13 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DEATHS, false);
             tagsToActiveness.Add(Tags.EXPLOSIONS, false);
 
+            // Scene Loading
+            // FELIX
+            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, true);
+            //tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
+            tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, true);
+            //tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
+
             // Other
             tagsToActiveness.Add(Tags.ALWAYS, true);
             tagsToActiveness.Add(Tags.BOOST, false);
@@ -243,7 +251,6 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PREFAB_FACTORY, false);
             tagsToActiveness.Add(Tags.PYRAMID, false);
             tagsToActiveness.Add(Tags.REPAIR_MANAGER, false);
-            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SOUND, false);
             tagsToActiveness.Add(Tags.TIME, false);
 
