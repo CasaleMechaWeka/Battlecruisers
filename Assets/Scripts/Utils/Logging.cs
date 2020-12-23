@@ -232,13 +232,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.EXPLOSIONS, false);
 
             // Scene Loading
-            // FELIX
-            tagsToActiveness.Add(Tags.PREFAB_CACHE_FACTORY, true);
-            //tagsToActiveness.Add(Tags.PREFAB_CACHE_FACTORY, false);
-            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, true);
-            //tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
-            tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, true);
-            //tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
+            tagsToActiveness.Add(Tags.PREFAB_CACHE_FACTORY, false);
+            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
+            tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
 
             // Other
             tagsToActiveness.Add(Tags.ALWAYS, true);
