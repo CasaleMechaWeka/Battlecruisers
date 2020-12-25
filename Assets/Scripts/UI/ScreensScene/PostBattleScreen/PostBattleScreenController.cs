@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -27,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         Victory_LootUnlocked,
         Victory_NoNewLoot,      // Currently the same behaviour as Victory_LootUnlocked
         Victory_DemoCompleted,
-        Victory_GameCompleted   // Currently doesn't do anything :P
+        Victory_GameCompleted
     }
 
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
@@ -38,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
 		public Text title;
 		public SlidingPanel unlockedItemSection;
-        public GameObject completedGameMessage, defeatMessage, victoryNoLootMessage, demoCompletedScreen;
+        public GameObject defeatMessage, victoryNoLootMessage, demoCompletedScreen;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
         public CanvasGroupButton demoHomeButton;
@@ -69,7 +70,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(
                 title,
                 unlockedItemSection,
-                completedGameMessage,
                 defeatMessage,
                 victoryNoLootMessage,
                 demoCompletedScreen,
@@ -135,7 +135,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-                postBattleButtonsPanel.Initialise(this, nextCommand, soundPlayer, BattleResult.WasVictory);
+                ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
+                postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
             }
         }
 
@@ -166,6 +167,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             BattleResult.LevelNum = levelNum;
             BattleResult.WasVictory = wasVicotry;
+
+            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted)
+            {
+                BattleResult.LevelNum = StaticData.NUM_OF_LEVELS;
+            }
         }
 
         private void SetupBackground()
@@ -211,7 +217,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
         }
 
-		public void GoToHomeScreen()
+        private void ClockedGameCommandExecute()
+        {
+            _screensSceneGod.LoadCreditsScene();
+        }
+
+        private bool CanClockedGameCommandExecute()
+        {
+            return
+                BattleResult.WasVictory
+                && BattleResult.LevelNum == StaticData.NUM_OF_LEVELS;
+        }
+
+        public void GoToHomeScreen()
 		{
 			_screensSceneGod.GoToHomeScreen();
 		}

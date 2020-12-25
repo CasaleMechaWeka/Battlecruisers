@@ -55,13 +55,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 postBattleScreen.demoCompletedScreen.SetActive(true);
                 postBattleScreen.demoHomeButton.Initialise(soundPlayer, postBattleScreen.GoToHomeScreen);
             }
-            // Currently have no custom behaviour for completing the game :)
-            //else if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted
-            //    || (desiredBehaviour == PostBattleScreenBehaviour.Default
-            //        && battleResult.LevelNum == dataProvider.Levels.Count))
-            //{
-            //    postBattleScreen.completedGameMessage.SetActive(true);
-            //}
             else
             {
                 if (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked

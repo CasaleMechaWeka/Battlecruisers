@@ -9,6 +9,7 @@
 
         void GoToTrashScreen(int levelNum);
         void LoadBattleScene();
+        void LoadCreditsScene();
     }
 }
 	

@@ -8,14 +8,18 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostBattleButtonsPanel : ButtonsPanel
     {
+        public ButtonController nextButton, clockedGameButton;
+
         public void Initialise(
             IPostBattleScreen postBattleScreen, 
             ICommand nextCommand, 
+            ICommand clockedGameCommand,
             ISingleSoundPlayer soundPlayer,
             bool wasVictory)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 
+            Helper.AssertIsNotNull(nextCommand, clockedGameButton);
             Assert.IsNotNull(nextCommand);
 
             CanvasGroupButton retryButton = transform.FindNamedComponent<CanvasGroupButton>("SmallButtons/RetryButton");
@@ -24,13 +28,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 Destroy(retryButton.gameObject);
             }
-
             CanvasGroupButton loadoutButton = transform.FindNamedComponent<CanvasGroupButton>("SmallButtons/LoadoutButton");
             loadoutButton.Initialise(soundPlayer, postBattleScreen.GoToLoadoutScreen);
 
-            ButtonController nextButton = GetComponentInChildren<ButtonController>();
-            Assert.IsNotNull(nextButton);
+            if (clockedGameCommand.CanExecute)
+            {
+                Destroy(homeButton.gameObject);
+                Destroy(loadoutButton.gameObject);
+            }
+
             nextButton.Initialise(soundPlayer, nextCommand);
+            clockedGameButton.Initialise(soundPlayer, clockedGameCommand);
         }
     }
 }

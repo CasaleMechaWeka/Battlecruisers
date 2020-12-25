@@ -257,6 +257,12 @@ namespace BattleCruisers.Scenes
             CleanUp();
         }
 
+        public void LoadCreditsScene()
+        {
+            _sceneNavigator.GoToScene(SceneNames.CREDITS_SCENE);
+            CleanUp();
+        }
+
         private void CleanUp()
         {
             loadoutScreen.DisposeManagedState();
