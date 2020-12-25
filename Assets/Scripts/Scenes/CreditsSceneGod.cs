@@ -7,21 +7,23 @@ namespace BattleCruisers.Scenes
 {
     public class CreditsSceneGod : MonoBehaviour, IPointerDownHandler
     {
+        private ISceneNavigator _sceneNavigator;
+
         async void Start()
         {
-            ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
+            _sceneNavigator = LandingSceneGod.SceneNavigator;
 
-            if (sceneNavigator == null)
+            if (_sceneNavigator == null)
             {
-                sceneNavigator = Substitute.For<ISceneNavigator>();
+                _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            sceneNavigator.SceneLoaded(SceneNames.CREDITS_SCENE);
+            _sceneNavigator.SceneLoaded(SceneNames.CREDITS_SCENE);
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("Yo");
+            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
         }
     }
 }
