@@ -18,6 +18,9 @@ namespace BattleCruisers.Scenes
         private string _lastSceneLoaded;
         private IHintProvider _hintProvider;
 
+        [Header("For testing")]
+        public bool testCreditsScene = false;
+
 		public static ILoadingScreen LoadingScreen { get; private set; }
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
@@ -44,7 +47,14 @@ namespace BattleCruisers.Scenes
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 
                 // Game starts with the screens scene
-                GoToScene(SceneNames.SCREENS_SCENE);
+                if (testCreditsScene)
+                {
+                    GoToScene(SceneNames.CREDITS_SCENE);
+                }
+                else
+                {
+                    GoToScene(SceneNames.SCREENS_SCENE);
+                }
             }
         }
 
