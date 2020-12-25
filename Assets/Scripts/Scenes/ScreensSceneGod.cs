@@ -142,7 +142,6 @@ namespace BattleCruisers.Scenes
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-            Common.TimeBC.Instance.TimeScale = 1;
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }

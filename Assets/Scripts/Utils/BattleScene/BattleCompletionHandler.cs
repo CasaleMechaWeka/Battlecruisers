@@ -2,6 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
+using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Utils.BattleScene
 {
@@ -44,6 +45,7 @@ namespace BattleCruisers.Utils.BattleScene
             }
 
             _applicationModel.ShowPostBattleScreen = true;
+            TimeBC.Instance.TimeScale = 1;
 
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
         }
