@@ -23,6 +23,21 @@ namespace BattleCruisers.Scenes
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            Exit();
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Escape)
+                || Input.GetKeyUp(KeyCode.Space)
+                || Input.GetKeyUp(KeyCode.Return))
+            {
+                Exit();
+            }
+        }
+
+        private void Exit()
+        {
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
         }
     }
