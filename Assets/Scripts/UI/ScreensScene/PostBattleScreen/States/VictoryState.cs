@@ -54,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             {
                 postBattleScreen.demoCompletedScreen.SetActive(true);
                 postBattleScreen.demoHomeButton.Initialise(soundPlayer, postBattleScreen.GoToHomeScreen);
+                lootManager.UnlockLoot(battleResult.LevelNum);
             }
             else
             {
