@@ -152,9 +152,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SHIPS, false);
 
             // Buildings
-            // FELIX  TEMP
-            tagsToActiveness.Add(Tags.BUILDABLE, true);
-            //tagsToActiveness.Add(Tags.BUILDABLE, false);
+            tagsToActiveness.Add(Tags.BUILDABLE, false);
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
             tagsToActiveness.Add(Tags.FACTORY, false);
