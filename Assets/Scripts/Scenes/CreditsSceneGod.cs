@@ -18,6 +18,8 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
+            LandingSceneGod.MusicPlayer?.Stop();
+
             _sceneNavigator.SceneLoaded(SceneNames.CREDITS_SCENE);
         }
 
