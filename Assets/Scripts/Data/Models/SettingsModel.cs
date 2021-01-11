@@ -79,7 +79,7 @@ namespace BattleCruisers.Data.Models
 
         public SettingsModel()
         {
-            AIDifficulty = Difficulty.Normal;
+            AIDifficulty = Difficulty.Hard;
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
             MuteMusic = false;
