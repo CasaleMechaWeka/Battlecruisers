@@ -23,7 +23,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Common = UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Scenes
 {
@@ -45,6 +44,8 @@ namespace BattleCruisers.Scenes
         public SettingsScreenController settingsScreen;
         public TrashScreenController trashScreen;
         public TrashTalkDataList trashDataList;
+        public ChooseDifficultyScreenController chooseDifficultyScreen;
+
         [SerializeField]
         private AudioSource _uiAudioSource;
 
@@ -58,10 +59,12 @@ namespace BattleCruisers.Scenes
         public bool testTrashTalkScreen = false;
         [Header("For testing the settings screen")]
         public bool testSettingsScreen = false;
+        [Header("For testing the choose difficulty screen")]
+        public bool testDifficultyScreen = false;
 
         async void Start()
 		{
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, trashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
@@ -105,6 +108,7 @@ namespace BattleCruisers.Scenes
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _musicPlayer, _dataProvider.GameModel.Hotkeys);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, _applicationModel);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -132,13 +136,17 @@ namespace BattleCruisers.Scenes
             {
                 GoToSettingsScreen();
             }
-            if (testLevelsScreen)
+            else if (testLevelsScreen)
             {
                 GoToLevelsScreen();
             }
-            if (testTrashTalkScreen)
+            else if (testTrashTalkScreen)
             {
                 GoToTrashScreen(levelNum: 1);
+            }
+            else if (testDifficultyScreen)
+            {
+                GoToChooseDifficultyScreen();
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
@@ -227,7 +235,12 @@ namespace BattleCruisers.Scenes
             }
         }
 
-		private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
+        public void GoToChooseDifficultyScreen()
+        {
+            GoToScreen(chooseDifficultyScreen);
+        }
+
+        private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
