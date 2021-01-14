@@ -22,6 +22,8 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
     public class ChooseDifficultyScreenController : ScreenController
     {
+        public DifficultyButtonController harderButton, hardButton, normalButton, easyButton;
+
         // FELIX  Doesn't have to be async? :P
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -31,8 +33,14 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
         {
             base.Initialise(screensSceneGod);
 
+            Helper.AssertIsNotNull(harderButton, hardButton, normalButton, easyButton);
             Helper.AssertIsNotNull(soundPlayer, applicationModel);
 
+            // FELIX  Add actions :P
+            harderButton.Initialise(soundPlayer, this);
+            hardButton.Initialise(soundPlayer, this);
+            normalButton.Initialise(soundPlayer, this);
+            easyButton.Initialise(soundPlayer, this);
         }
 
         public void StartLevel1()
