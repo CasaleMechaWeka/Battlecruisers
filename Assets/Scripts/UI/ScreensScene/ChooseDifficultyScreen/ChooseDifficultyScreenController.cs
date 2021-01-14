@@ -18,7 +18,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
+namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
     public class ChooseDifficultyScreenController : ScreenController
     {

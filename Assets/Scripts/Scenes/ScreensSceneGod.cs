@@ -5,6 +5,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
+using BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen;
 using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
