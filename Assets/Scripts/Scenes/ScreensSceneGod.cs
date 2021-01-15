@@ -109,7 +109,7 @@ namespace BattleCruisers.Scenes
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _musicPlayer, _dataProvider.GameModel.Hotkeys);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
-            chooseDifficultyScreen.Initialise(this, _soundPlayer, _applicationModel);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
 
             if (_applicationModel.ShowPostBattleScreen)
             {

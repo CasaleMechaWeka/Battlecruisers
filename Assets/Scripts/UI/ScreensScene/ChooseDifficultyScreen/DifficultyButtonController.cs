@@ -1,19 +1,27 @@
-﻿using UnityEngine;
-using System.Collections;
-using BattleCruisers.UI;
+﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
     public class DifficultyButtonController : ElementWithClickSound
     {
+        private IChooseDifficultyScreen _chooseDifficultyScreen;
+
+        public Difficulty difficulty;
+
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IDismissableEmitter parent)
+            IChooseDifficultyScreen chooseDifficultyScreen)
         {
-            base.Initialise(soundPlayer, parent: parent);
+            base.Initialise(soundPlayer, parent: chooseDifficultyScreen);
 
-            // FELIX :D
+            _chooseDifficultyScreen = chooseDifficultyScreen;
+        }
+
+        protected override void OnClicked()
+        {
+            base.OnClicked();
+            _chooseDifficultyScreen.ChooseDifficulty(difficulty);
         }
     }
 }

@@ -1,50 +1,54 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Commands;
-using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Panels;
-using BattleCruisers.UI.ScreensScene.LevelsScreen;
-using BattleCruisers.UI.ScreensScene.PostBattleScreen.States;
-using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
-    public class ChooseDifficultyScreenController : ScreenController
+    public class ChooseDifficultyScreenController : ScreenController, IChooseDifficultyScreen
     {
+        private ISettingsManager _settingsManager;
+        private Difficulty? _selectedDifficulty;
+
         public DifficultyButtonController harderButton, hardButton, normalButton, easyButton;
 
         // FELIX  Doesn't have to be async? :P
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            // FELIX  Remove unused :)
             ISingleSoundPlayer soundPlayer,
-            IApplicationModel applicationModel)
+            ISettingsManager settingsManager)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(harderButton, hardButton, normalButton, easyButton);
-            Helper.AssertIsNotNull(soundPlayer, applicationModel);
+            Helper.AssertIsNotNull(soundPlayer, settingsManager);
 
-            // FELIX  Add actions :P
+            _settingsManager = settingsManager;
+            _selectedDifficulty = null;
+
             harderButton.Initialise(soundPlayer, this);
             hardButton.Initialise(soundPlayer, this);
             normalButton.Initialise(soundPlayer, this);
             easyButton.Initialise(soundPlayer, this);
         }
 
+        public void ChooseDifficulty(Difficulty difficulty)
+        {
+            _selectedDifficulty = difficulty;
+
+            // FELIX  Activate start level button
+        }
+
         public void StartLevel1()
         {
+            // Save difficulty
+            Assert.IsTrue(_selectedDifficulty != null);
+            Difficulty selectedDifficulty = (Difficulty)_selectedDifficulty;
+            _settingsManager.AIDifficulty = selectedDifficulty;
+            _settingsManager.Save();
+
+            // Start level 1
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
     }
