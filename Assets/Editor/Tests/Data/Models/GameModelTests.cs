@@ -190,6 +190,32 @@ namespace BattleCruisers.Tests.Data.Models
 			Assert.AreEqual(GameModel.UNSET_SELECTED_LEVEL, _gameModel.SelectedLevel);
         }
 
+		[Test, Sequential]
+		public void FirstNonTutorialBattle(
+			[Values(false, true, true, true)] bool hasCompletedTutorial,
+			[Values(true, false, true, true)] bool isLasteBattleResultNull,
+			[Values(false, false, true, false)] bool hasCompletedAnyLevel,
+			[Values(false, false, false, true)] bool result)
+		{
+			_gameModel.HasAttemptedTutorial = hasCompletedTutorial;
+
+			if (isLasteBattleResultNull)
+            {
+				_gameModel.LastBattleResult = null;
+            }
+			else
+            {
+				_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
+            }
+
+			if (hasCompletedAnyLevel)
+            {
+				_gameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, Difficulty.Easy));
+            }
+
+			Assert.AreEqual(result, _gameModel.FirstNonTutorialBattle);
+		}
+
 		private int FindCount<TKey>(ICollection<TKey> list, TKey instance)
         {
 			return list.Count(item => ReferenceEquals(item, instance));
