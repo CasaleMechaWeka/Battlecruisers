@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
                 // First time play
                 return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeLayout");
             }
-            else if (gameModel.FirstNonTuturialBattle)
+            else if (gameModel.FirstNonTutorialBattle)
             {
                 // First time playing non-tutorial
                 return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeNonTutorial");
@@ -90,9 +90,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 			Application.Quit();
 		}
 
-        public void StartLevel1()
+        public void GoToChooseDifficultyScreen()
         {
-            _screensSceneGod.GoToTrashScreen(levelNum: 1);
+            _screensSceneGod.GoToChooseDifficultyScreen();
         }
     }
 }

@@ -15,10 +15,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             CanvasGroupButton nextButton = transform.FindNamedComponent<CanvasGroupButton>("NextButton");
 
-            if (gameModel.FirstNonTuturialBattle)
+            if (gameModel.FirstNonTutorialBattle)
             {
                 nextButton.Initialise(soundPlayer, postBattleScreen.GoToChooseDifficultyScreen);
-                Destroy(homeButton);
+                Destroy(homeButton.gameObject);
             }
             else
             {

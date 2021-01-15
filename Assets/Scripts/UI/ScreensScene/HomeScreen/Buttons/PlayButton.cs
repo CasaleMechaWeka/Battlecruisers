@@ -8,7 +8,7 @@
 
             if (_gameModel.HasAttemptedTutorial)
             {
-                _homeScreen.StartLevel1();
+                _homeScreen.GoToChooseDifficultyScreen();
             }
             else
             {

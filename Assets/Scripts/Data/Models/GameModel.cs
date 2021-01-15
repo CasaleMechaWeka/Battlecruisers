@@ -56,7 +56,7 @@ namespace BattleCruisers.Data.Models
         }
 
         // FELIX  Update tests :)
-        public bool FirstNonTuturialBattle
+        public bool FirstNonTutorialBattle
             => HasAttemptedTutorial
                 && LastBattleResult == null
                 && NumOfLevelsCompleted == 0;

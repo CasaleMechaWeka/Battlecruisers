@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
     public interface IHomeScreen : IPresentable
     {
         void Continue();
-        void StartLevel1();
+        void GoToChooseDifficultyScreen();
         void StartTutorial();
         void GoToLevelsScreen();
         void GoToSettingsScreen();
