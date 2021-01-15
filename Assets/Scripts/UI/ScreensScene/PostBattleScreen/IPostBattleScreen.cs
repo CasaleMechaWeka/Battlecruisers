@@ -4,6 +4,7 @@
     {
         void GoToHomeScreen();
         void GoToLoadoutScreen();
+        void GoToChooseDifficultyScreen();
         void Retry();
         void RetryTutorial();
         void StartLevel1();

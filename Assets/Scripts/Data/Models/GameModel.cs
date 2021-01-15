@@ -55,6 +55,12 @@ namespace BattleCruisers.Data.Models
             set { _hasAttemptedTutorial = value; }
         }
 
+        // FELIX  Update tests :)
+        public bool FirstNonTuturialBattle
+            => HasAttemptedTutorial
+                && LastBattleResult == null
+                && NumOfLevelsCompleted == 0;
+
         public Loadout PlayerLoadout
         {
             get { return _playerLoadout; }

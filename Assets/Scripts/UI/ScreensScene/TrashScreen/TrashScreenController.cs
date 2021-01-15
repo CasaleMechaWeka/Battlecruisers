@@ -90,7 +90,14 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public override void Cancel()
         {
-            _screensSceneGod.GoToLevelsScreen();
+            if (_appModel.DataProvider.GameModel.FirstNonTuturialBattle)
+            {
+                _screensSceneGod.GoToChooseDifficultyScreen();
+            }
+            else
+            {
+                _screensSceneGod.GoToLevelsScreen();
+            }
         }
     }
 }

@@ -205,6 +205,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 			_screensSceneGod.GoToLoadoutScreen();
 		}
 
+        public void GoToChooseDifficultyScreen()
+        {
+            _screensSceneGod.GoToChooseDifficultyScreen();
+        }
+
         private void NextCommandExecute()
 		{
 			int nextLevelNum = BattleResult.LevelNum + 1;

@@ -32,7 +32,7 @@ You are now a qualified Battlecruiser Captain, certified by the UAC. On behalf o
             postBattleScreen.levelName.gameObject.SetActive(false);
 
             postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-            postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer);
+            postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, appModel.DataProvider.GameModel);
             postBattleScreen.postTutorialButtonsPanel.gameObject.SetActive(true);
         }
     }

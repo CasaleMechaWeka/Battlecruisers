@@ -44,8 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
                 // First time play
                 return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeLayout");
             }
-            else if (_lastBattleResult == null
-                && gameModel.NumOfLevelsCompleted == 0)
+            else if (gameModel.FirstNonTuturialBattle)
             {
                 // First time playing non-tutorial
                 return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeNonTutorial");

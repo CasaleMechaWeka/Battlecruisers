@@ -1,16 +1,29 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class PostTutorialButtonsPanel : ButtonsPanel
     {
-        public override void Initialise(IPostBattleScreen postBattleScreen, ISingleSoundPlayer soundPlayer)
+        public void Initialise(IPostBattleScreen postBattleScreen, ISingleSoundPlayer soundPlayer, IGameModel gameModel)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 
+            Assert.IsNotNull(gameModel);
+
             CanvasGroupButton nextButton = transform.FindNamedComponent<CanvasGroupButton>("NextButton");
-            nextButton.Initialise(soundPlayer, postBattleScreen.StartLevel1);
+
+            if (gameModel.FirstNonTuturialBattle)
+            {
+                nextButton.Initialise(soundPlayer, postBattleScreen.GoToChooseDifficultyScreen);
+                Destroy(homeButton);
+            }
+            else
+            {
+                nextButton.Initialise(soundPlayer, postBattleScreen.StartLevel1);
+            }
         }
     }
 }
