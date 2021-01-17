@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 
         public Difficulty difficulty;
 
-        public Text title, decription;
+        public Text title, decription, modifications;
         public Image backgroundImage, stars;
         public Sprite defaultBackground, clickedBackground;
         public Color battlecruisersRed;
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
         {
             base.Initialise(soundPlayer, parent: chooseDifficultyScreen);
 
-            Helper.AssertIsNotNull(title, decription, backgroundImage, stars, defaultBackground, clickedBackground);
+            Helper.AssertIsNotNull(title, decription, modifications, backgroundImage, stars, defaultBackground, clickedBackground);
 
             _chooseDifficultyScreen = chooseDifficultyScreen;
         }
@@ -41,6 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
             stars.color = Color.black;
             title.color = Color.white;
             decription.color = Color.white;
+            modifications.color = Color.white;
         }
 
         protected override void ShowClickedState()
@@ -50,6 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
             stars.color = battlecruisersRed;
             title.color = battlecruisersRed;
             decription.color = battlecruisersRed;
+            modifications.color = battlecruisersRed;
         }
 
         protected override void ShowHoverState()
