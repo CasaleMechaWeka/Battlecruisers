@@ -32,5 +32,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             background.flipY = stats.FlipY;
             background.sortingOrder = stats.OrderInLayer;
         }
+
+        void OnDestroy()
+        {
+            Debug.Log("I die :D");
+            // FELIX  Release background image
+        }
     }
 }
