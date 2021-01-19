@@ -18,7 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public async Task<ITrashTalkData> GetTrashTalkAsync(int levelNum)
         {
             IPrefabKey key = new TrashTalkKey(levelNum);
-            return await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+            IPrefabContainer<TrashTalkData> prefabContainer = await _prefabFetcher.GetPrefabAsync<TrashTalkData>(key);
+            return prefabContainer.Prefab;
         }
     }
 }

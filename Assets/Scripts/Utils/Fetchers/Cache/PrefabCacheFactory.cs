@@ -94,11 +94,11 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                 where TPrefab : class, IPrefab
         {
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
-            TPrefab prefab = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            IPrefabContainer<TPrefab> prefabContainer = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
-            prefab.StaticInitialise();
-            keyToPrefab.Add(prefabKey, prefab);
+            prefabContainer.Prefab.StaticInitialise();
+            keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
 
         private async Task GetPrefab<TPrefab>(
@@ -108,7 +108,8 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                 where TPrefab : class, IPrefab
         {
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre GetPrefabAsync");
-            prefabContainer.Value = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            IPrefabContainer<TPrefab> result = await prefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
+            prefabContainer.Value = result.Prefab;
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
             prefabContainer.Value.StaticInitialise();
