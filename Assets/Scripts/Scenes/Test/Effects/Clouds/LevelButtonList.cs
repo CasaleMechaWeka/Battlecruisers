@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
                 ILevel level = staticData.Levels[levelNum - 1];
                 ISkyStats skyStats = skyStatsGroup.GetSkyStats(level.SkyMaterialName);
-                IBackgroundImageStats backgroundStats = await backgroundStatsList.GetStatsAsync(levelNum);
+                IPrefabContainer<BackgroundImageStats> backgroundStats = await backgroundStatsList.GetStatsAsync(levelNum);
                 
                 CloudLevelButtonController button = buttons[i];
                 button.Initialise(levelNum, skyStats, skySetter, backgroundStats, backgroundImage, mainCamera.aspect, calculator);

@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
             IBackgroundStatsProvider backgroundStatsProvider = backgroundStatsProviderInitialiser.CreateProvider(prefabFetcher);
-            IBackgroundImageStats backgroudStats = await backgroundStatsProvider.GetStatsAsync(levelNum);
+            IPrefabContainer<BackgroundImageStats> backgroudStats = await backgroundStatsProvider.GetStatsAsync(levelNum);
             background.Initialise(backgroudStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
     {
         private ISkySetter _skySetter;
         private ISkyStats _skyStats;
-        private IBackgroundImageStats _backgroundStats;
+        private IPrefabContainer<BackgroundImageStats> _backgroundStats;
         private BackgroundImageController _backgroundImage;
         private float _cameraAspectRatio;
         private IBackgroundImageCalculator _calculator;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             int levelNum, 
             ISkyStats skyStats,
             ISkySetter skySetter,
-            IBackgroundImageStats backgroundStats,
+            IPrefabContainer<BackgroundImageStats> backgroundStats,
             BackgroundImageController backgroundImage,
             float cameraAspectRatio,
             IBackgroundImageCalculator calculator)

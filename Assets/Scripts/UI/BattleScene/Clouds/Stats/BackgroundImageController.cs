@@ -1,18 +1,25 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageController : MonoBehaviour
     {
+        private IPrefabContainer<BackgroundImageStats> _statsContainer;
+
         public SpriteRenderer background;
 
-        public void Initialise(IBackgroundImageStats stats, float cameraAspectRatio, IBackgroundImageCalculator calculator)
+        public void Initialise(IPrefabContainer<BackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
         {
-            Helper.AssertIsNotNull(stats, calculator);
+            Helper.AssertIsNotNull(statsContainer, calculator);
             Assert.IsNotNull(background);
             Assert.IsTrue(cameraAspectRatio > 0);
+
+            _statsContainer = statsContainer;
+            IBackgroundImageStats stats = _statsContainer.Prefab;
 
             if (stats.Sprite == null)
             {
@@ -35,8 +42,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 
         void OnDestroy()
         {
-            Debug.Log("I die :D");
-            // FELIX  Release background image
+            if (_statsContainer != null)
+            {
+                Addressables.Release(_statsContainer.Handle);
+                _statsContainer = null;
+            }
         }
     }
 }
