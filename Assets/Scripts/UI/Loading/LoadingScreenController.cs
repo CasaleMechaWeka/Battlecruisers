@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Loading
 {
+    // FELIX  rename to scene god?
     public class LoadingScreenController : MonoBehaviour
     {
         public Canvas root;
@@ -12,12 +13,19 @@ namespace BattleCruisers.UI.Loading
 
         private const string DEFAULT_LOADING_TEXT = "Loading";
 
+        public static LoadingScreenController Instance { get; private set; }
+
         void Start()
         {
             Helper.AssertIsNotNull(root, loadingText);
 
             loadingText.text = LandingSceneGod.LoadingScreenHint ?? DEFAULT_LOADING_TEXT;
-            LandingSceneGod.MusicPlayer.PlayLoadingMusic();
+            Instance = this;
+        }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
         }
     }
 }

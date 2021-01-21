@@ -93,10 +93,8 @@ namespace BattleCruisers.Scenes
             Assert.AreNotEqual(sceneName, _lastSceneLoaded);
 
             // Show loading scene
-            // FELIX  Hopefully this unloads the current scene?
             // FELIX  Extract to avoid duplication with below :)
             Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + SceneNames.LOADING_SCENE);
-
             AsyncOperation showLoadingScene = SceneManager.LoadSceneAsync(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
 
             while (!showLoadingScene.isDone)
@@ -104,24 +102,11 @@ namespace BattleCruisers.Scenes
                 Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {SceneNames.LOADING_SCENE}  progress: {showLoadingScene.progress}");
                 yield return null;
             }
-
-            // FELIX  Remove?
-            //// Unload current scene
-            //if (_lastSceneLoaded != null)
-            //{
-            //    // Unload scene first, to avoid having both scenes in memory!
-            //    AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(_lastSceneLoaded);
-
-            //    while (!unloadOperation.isDone)
-            //    {
-            //        Logging.Verbose(Tags.SCENE_NAVIGATION, $"Unloading {sceneName}  progress: {unloadOperation.progress}");
-            //        yield return null;
-            //    }
-            //}
+            Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + SceneNames.LOADING_SCENE);
 
             // FELIX  Extract
             Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
-            AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
+            AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); 
 
             // Unity loading scene
             while(!loadingOperation.isDone)
@@ -139,8 +124,10 @@ namespace BattleCruisers.Scenes
                 Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  waiting another: {waitIntervalInS}s");
                 yield return new WaitForSeconds(waitIntervalInS);
             }
-
             Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
+
+            // Hide loading scene.  Don't unload, because the destroys all prefabs that have been loaded :P
+            LoadingScreenController.Instance.Destroy();
         }
 
         public void SceneLoaded(string sceneName)
