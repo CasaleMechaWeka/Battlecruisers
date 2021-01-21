@@ -1,41 +1,23 @@
-﻿using BattleCruisers.UI.Music;
+﻿using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Loading
 {
-    public class LoadingScreenController : MonoBehaviour, ILoadingScreen
+    public class LoadingScreenController : MonoBehaviour
     {
-        private IMusicPlayer _musicPlayer;
-
         public Canvas root;
         public Text loadingText;
 
         private const string DEFAULT_LOADING_TEXT = "Loading";
 
-        private bool IsVisible 
+        void Start()
         {
-            set { root.gameObject.SetActive(value); } 
-        }
+            Helper.AssertIsNotNull(root, loadingText);
 
-        public void Initialise(IMusicPlayer musicPlayer)
-        {
-            Helper.AssertIsNotNull(root, loadingText, musicPlayer);
-            _musicPlayer = musicPlayer;
-        }
-
-        public IEnumerator PerformLongOperation(IEnumerator longOperation, string loadingScreenHint = null)
-        {
-            IsVisible = true;
-
-            loadingText.text = loadingScreenHint ?? DEFAULT_LOADING_TEXT;
-            _musicPlayer.PlayLoadingMusic();
-
-            yield return StartCoroutine(longOperation);
-
-            IsVisible = false;
+            loadingText.text = LandingSceneGod.LoadingScreenHint ?? DEFAULT_LOADING_TEXT;
+            LandingSceneGod.MusicPlayer.PlayLoadingMusic();
         }
     }
 }

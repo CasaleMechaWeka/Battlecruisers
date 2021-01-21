@@ -126,8 +126,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -233,7 +233,9 @@ namespace BattleCruisers.Utils
 
             // Scene Loading
             tagsToActiveness.Add(Tags.PREFAB_CACHE_FACTORY, false);
-            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
+            // FEILX
+            tagsToActiveness.Add(Tags.SCENE_NAVIGATION, true);
+            //tagsToActiveness.Add(Tags.SCENE_NAVIGATION, false);
             tagsToActiveness.Add(Tags.SCREENS_SCENE_GOD, false);
 
             // Other

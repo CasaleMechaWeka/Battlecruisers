@@ -39,6 +39,8 @@
 
 	public static class SceneNames
 	{
+		public const string LANDING_SCENE = "LandingScene";
+		public const string LOADING_SCENE = "LoadingScene";
 		public const string BATTLE_SCENE = "BattleScene";
 		public const string SCREENS_SCENE = "ScreensScene";
 		public const string CREDITS_SCENE = "LonelyCreditsScene";

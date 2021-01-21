@@ -21,25 +21,23 @@ namespace BattleCruisers.Scenes
         [Header("For testing")]
         public bool testCreditsScene = false;
 
-		public static ILoadingScreen LoadingScreen { get; private set; }
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
+        public static string LoadingScreenHint { get; private set; }
 
         void Start()
         {
+            Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
+
             if (!_isInitialised)
             {
                 IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
                 MusicPlayer = CreateMusicPlayer(dataProvider);
 
-                LoadingScreenController loadingScreen = GetComponent<LoadingScreenController>();
-                Assert.IsNotNull(loadingScreen);
-                loadingScreen.Initialise(MusicPlayer);
-                LoadingScreen = loadingScreen;
-
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
+                _lastSceneLoaded = null;
 
                 SceneNavigator = this;
 
@@ -83,26 +81,62 @@ namespace BattleCruisers.Scenes
             {
                 hint = _hintProvider.GetHint();
             }
-            IEnumerator loadScene = LoadScene(sceneName);
-            StartCoroutine(LoadingScreen.PerformLongOperation(loadScene, hint));
+            LoadingScreenHint = hint;
+
+            StartCoroutine(LoadScene(sceneName));
         }
 
         private IEnumerator LoadScene(string sceneName)
         {
-            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
+            Logging.LogMethod(Tags.SCENE_NAVIGATION);
+            Assert.IsNotNull(sceneName);
+            Assert.AreNotEqual(sceneName, _lastSceneLoaded);
 
-            AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
+            // Show loading scene
+            // FELIX  Hopefully this unloads the current scene?
+            // FELIX  Extract to avoid duplication with below :)
+            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + SceneNames.LOADING_SCENE);
 
-            while(!loadingScene.isDone)
+            AsyncOperation showLoadingScene = SceneManager.LoadSceneAsync(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+
+            while (!showLoadingScene.isDone)
             {
-                Logging.Verbose(Tags.SCENE_NAVIGATION, $"{sceneName}  progress: {loadingScene.progress}");
+                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {SceneNames.LOADING_SCENE}  progress: {showLoadingScene.progress}");
                 yield return null;
             }
-			
+
+            // FELIX  Remove?
+            //// Unload current scene
+            //if (_lastSceneLoaded != null)
+            //{
+            //    // Unload scene first, to avoid having both scenes in memory!
+            //    AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(_lastSceneLoaded);
+
+            //    while (!unloadOperation.isDone)
+            //    {
+            //        Logging.Verbose(Tags.SCENE_NAVIGATION, $"Unloading {sceneName}  progress: {unloadOperation.progress}");
+            //        yield return null;
+            //    }
+            //}
+
+            // FELIX  Extract
+            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
+            AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single); 
+
+            // Unity loading scene
+            while(!loadingOperation.isDone)
+            {
+                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  progress: {loadingOperation.progress}");
+                yield return null;
+            }
+
+            // My custom setup in the scene's Start() method
+            Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);
+
             while (_lastSceneLoaded != sceneName)
             {
                 float waitIntervalInS = 1;
-                Logging.Verbose(Tags.SCENE_NAVIGATION, $"{sceneName}  waiting another: {waitIntervalInS}s");
+                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  waiting another: {waitIntervalInS}s");
                 yield return new WaitForSeconds(waitIntervalInS);
             }
 
