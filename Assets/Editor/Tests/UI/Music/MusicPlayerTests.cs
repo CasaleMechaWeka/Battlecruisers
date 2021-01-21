@@ -40,13 +40,6 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
-        public void PlayLoadingMusic()
-        {
-            _musicPlayer.PlayLoadingMusic();
-            _soundPlayer.Received().PlaySoundAsync(SoundKeys.Music.Loading, loop: true);
-        }
-
-        [Test]
         public void PlayCurrentlyPlayingMusic_DoesNothing()
         {
             // First time playing music

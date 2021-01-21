@@ -32,11 +32,6 @@ namespace BattleCruisers.UI.Music
             PlayMusic(SoundKeys.Music.Defeat, loop: false);
         }
 
-        public void PlayLoadingMusic()
-        {
-            PlayMusic(SoundKeys.Music.Loading);
-        }
-
         public void PlayTrashMusic()
         {
             PlayMusic(SoundKeys.Music.TrashTalk, loop: false);

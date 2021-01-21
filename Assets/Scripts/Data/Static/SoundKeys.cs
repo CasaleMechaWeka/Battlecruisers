@@ -79,7 +79,6 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey MainTheme { get; } = new SoundKey(SoundType.Music, "main-theme");
             public static ISoundKey Victory { get; } = new SoundKey(SoundType.Music, "victory");
             public static ISoundKey Defeat { get; } = new SoundKey(SoundType.Music, "defeat");
-            public static ISoundKey Loading { get; } = new SoundKey(SoundType.Music, "loading");
             public static ISoundKey TrashTalk { get; } = new SoundKey(SoundType.Music, "TrashTalk");
             
             public static class Background

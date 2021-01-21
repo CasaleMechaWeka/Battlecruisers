@@ -40,14 +40,6 @@ namespace BattleCruisers.UI.Music
             }
         }
 
-        public void PlayLoadingMusic()
-        {
-            if (!_settings.MuteMusic)
-            {
-                _corePlayer.PlayLoadingMusic();
-            }
-        }
-
         public void PlayTrashMusic()
         {
             if (!_settings.MuteMusic)

@@ -68,22 +68,6 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
-        public void PlayLoadingMusic_MusicMuted()
-        {
-            _settings.MuteMusic.Returns(true);
-            _togglablePlayer.PlayLoadingMusic();
-            _corePlayer.DidNotReceive().PlayLoadingMusic();
-        }
-
-        [Test]
-        public void PlayLoadingMusic_MusicNotMuted()
-        {
-            _settings.MuteMusic.Returns(false);
-            _togglablePlayer.PlayLoadingMusic();
-            _corePlayer.Received().PlayLoadingMusic();
-        }
-
-        [Test]
         public void Stop()
         {
             _togglablePlayer.Stop();
