@@ -37,7 +37,6 @@ namespace BattleCruisers.Scenes
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
-                _lastSceneLoaded = null;
 
                 SceneNavigator = this;
 
@@ -89,8 +88,8 @@ namespace BattleCruisers.Scenes
         private IEnumerator LoadScene(string sceneName)
         {
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
-            Assert.IsNotNull(sceneName);
-            Assert.AreNotEqual(sceneName, _lastSceneLoaded);
+
+            _lastSceneLoaded = null;
 
             // Show loading scene
             // FELIX  Extract to avoid duplication with below :)
@@ -106,6 +105,7 @@ namespace BattleCruisers.Scenes
 
             // FELIX  Extract
             Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
+
             AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); 
 
             // Unity loading scene
@@ -132,6 +132,7 @@ namespace BattleCruisers.Scenes
 
         public void SceneLoaded(string sceneName)
         {
+            Logging.Log(Tags.SCENE_NAVIGATION, sceneName);
             _lastSceneLoaded = sceneName;
         }
     }
