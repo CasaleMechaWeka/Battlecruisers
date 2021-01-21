@@ -82,40 +82,18 @@ namespace BattleCruisers.Scenes
             }
             LoadingScreenHint = hint;
 
-            StartCoroutine(LoadScene(sceneName));
+            StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
         }
 
-        private IEnumerator LoadScene(string sceneName)
+        private IEnumerator LoadSceneWithLoadingScreen(string sceneName)
         {
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
 
-            // Show loading scene
-            // FELIX  Extract to avoid duplication with below :)
-            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + SceneNames.LOADING_SCENE);
-            AsyncOperation showLoadingScene = SceneManager.LoadSceneAsync(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+            yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+            yield return LoadScene(sceneName, LoadSceneMode.Additive);
 
-            while (!showLoadingScene.isDone)
-            {
-                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {SceneNames.LOADING_SCENE}  progress: {showLoadingScene.progress}");
-                yield return null;
-            }
-            Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + SceneNames.LOADING_SCENE);
-
-            // FELIX  Extract
-            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
-
-            AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); 
-
-            // Unity loading scene
-            while(!loadingOperation.isDone)
-            {
-                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  progress: {loadingOperation.progress}");
-                yield return null;
-            }
-
-            // My custom setup in the scene's Start() method
             Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);
 
             while (_lastSceneLoaded != sceneName)
@@ -128,6 +106,20 @@ namespace BattleCruisers.Scenes
 
             // Hide loading scene.  Don't unload, because the destroys all prefabs that have been loaded :P
             LoadingScreenController.Instance.Destroy();
+        }
+
+        private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)
+        {
+            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+
+            while (!loadOperation.isDone)
+            {
+                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  progress: {loadOperation.progress}");
+                yield return null;
+            }
+
+            Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
         }
 
         public void SceneLoaded(string sceneName)
