@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Loading
 {
-    // FELIX  rename to scene god?
     public class LoadingScreenController : MonoBehaviour
     {
         public Canvas root;
