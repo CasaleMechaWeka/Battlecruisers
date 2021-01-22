@@ -161,7 +161,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Logging.Verbose(Tags.AIRCRAFT, $"{GetInstanceID()}  Adjusting velocity");
 
-
             Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
 
