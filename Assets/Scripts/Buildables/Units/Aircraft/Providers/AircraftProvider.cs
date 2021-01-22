@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		private const float DEATHSTAR_LAUNCH_HOVER_MARGIN = 1.5f;
         private const float GUNSHIP_PARENT_CRUISER_MARGIN = 5;
         private const float SPY_SATELLITE_PATROL_MARGIN = 5;
-        public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 2;
+        public const float CRUISING_ALTITUDE_ERROR_MARGIN_IN_M = 1;
 
 		// Want the bomber to be lower, so it is below the explanation text
 		public const float CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M = 4;
