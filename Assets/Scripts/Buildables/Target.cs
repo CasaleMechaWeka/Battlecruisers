@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Proxy;
-using BattleCruisers.Buildables.Repairables;
+﻿using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
 using System;

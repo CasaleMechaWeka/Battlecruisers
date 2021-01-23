@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Buildables.Proxy;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.ProgressBars;

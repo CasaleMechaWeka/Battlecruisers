@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Proxy;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;

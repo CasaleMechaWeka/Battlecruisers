@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Proxy
+namespace BattleCruisers.Buildables
 {
     public class TargetProxy : MonoBehaviour, ITargetProxy
     {

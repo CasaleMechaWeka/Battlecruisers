@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Buildables.Proxy
+﻿namespace BattleCruisers.Buildables
 {
     public interface ITargetProxy
     {
