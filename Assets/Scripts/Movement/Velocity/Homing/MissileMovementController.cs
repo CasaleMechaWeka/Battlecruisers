@@ -24,7 +24,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		{
             return 
                 _targetPositionPredictor.PredictTargetPosition(
-                    _rigidBody.transform.position, 
+                    _rigidBody.position, 
                     _targetProvider.Target.Position, 
                     _targetProvider.Target, 
                     _maxVelocityProvider.VelocityInMPerS, 
@@ -35,7 +35,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 		{
             Vector2 targetPosition = FindTargetPosition();
 
-			float distance = Vector2.Distance(_rigidBody.transform.position, targetPosition);
+			float distance = Vector2.Distance(_rigidBody.position, targetPosition);
             float smoothTimeInS = distance / _maxVelocityProvider.VelocityInMPerS;
 			if (smoothTimeInS > MAX_VELOCITY_SMOOTH_TIME)
 			{

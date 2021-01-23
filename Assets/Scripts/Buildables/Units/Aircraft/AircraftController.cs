@@ -285,8 +285,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             rigidBody.velocity = new Vector2(0, 0);
 
             // Move unit below seabed collider, so it does not recollide in subsequent frames.
-            Vector3 currentPosition = rigidBody.transform.position;
-            rigidBody.transform.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
+            Vector3 currentPosition = rigidBody.position;
+            rigidBody.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
             _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
         }

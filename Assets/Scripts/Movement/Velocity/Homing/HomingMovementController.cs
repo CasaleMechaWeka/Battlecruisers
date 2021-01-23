@@ -20,7 +20,7 @@ namespace BattleCruisers.Movement.Velocity.Homing
 
         protected override Vector2 FindDesiredVelocity()
         {
-            Vector2 sourcePosition = _rigidBody.transform.position;
+            Vector2 sourcePosition = _rigidBody.position;
             Vector2 targetPosition = FindTargetPosition();
             Vector2 desiredVelocity = new Vector2(0, 0);
 

@@ -88,10 +88,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     safeZone: _aircraftProvider.FighterSafeZone);
 
             // Reset rotation
-            Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
-            rigidBody.transform.rotation = baseRotation;
-            transform.rotation = baseRotation;
-            Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  After reset rotation: {transform.rotation}");
+            // FELIX
+            //Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
+            rigidBody.rotation = 0;
+            //transform.rotation = baseRotation;
+            Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  After reset rotation: {rigidBody.rotation}");
 
         }
 
@@ -191,9 +192,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             if (Velocity != Vector2.zero)
             {
                 float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
-                Quaternion rotation = rigidBody.transform.rotation;
-                rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
-                rigidBody.transform.rotation = rotation;
+                // FELIX  :P
+                //Quaternion rotation = rigidBody.transform.rotation;
+                //rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
+                rigidBody.rotation = angleInDegrees;
             }
         }
 
