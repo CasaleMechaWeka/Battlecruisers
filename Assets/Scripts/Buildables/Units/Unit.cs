@@ -89,10 +89,17 @@ namespace BattleCruisers.Buildables.Units
 
 		protected virtual void OnDirectionChange()
 		{
+            // FELIX
+            //return;
+            //float zRotation = rigidBody.rotation;
+
 			int yRotation = FindYRotation(FacingDirection);
 			Quaternion rotation = gameObject.transform.rotation;
 			rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, yRotation, rotation.eulerAngles.z);
 			gameObject.transform.rotation = rotation;
+
+            // FELIX
+            //rigidBody.rotation = zRotation;
 		}
 
 		private int FindYRotation(Direction facingDirection)
