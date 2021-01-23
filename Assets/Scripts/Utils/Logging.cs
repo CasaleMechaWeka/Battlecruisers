@@ -126,8 +126,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -159,7 +159,9 @@ namespace BattleCruisers.Utils
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
-			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
+            // FELIX
+			tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, true);
+            //tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
             tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
             tagsToActiveness.Add(Tags.BEAM, false);
@@ -255,7 +257,7 @@ namespace BattleCruisers.Utils
 
             return tagsToActiveness;
 		}
-
+        
         [Conditional("ENABLE_LOGS")]
         public static void LogMethod(
             string tag,
