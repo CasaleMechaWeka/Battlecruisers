@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Proxy;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement.Velocity;

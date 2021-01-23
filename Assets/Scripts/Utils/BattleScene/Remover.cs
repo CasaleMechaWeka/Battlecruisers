@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Proxy;
 using UnityEngine;
 
 namespace BattleCruisers.Utils.BattleScene

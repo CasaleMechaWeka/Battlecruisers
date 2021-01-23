@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables.Proxy;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Utils;
 using UnityEngine;
 
