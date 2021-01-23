@@ -32,7 +32,6 @@ namespace BattleCruisers.Cruisers
 		private IUIManager _uiManager;
         private ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
-        private PolygonCollider2D _collider;
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
@@ -50,11 +49,12 @@ namespace BattleCruisers.Cruisers
         [TextAreaAttribute(minLines: 3, maxLines: 10)]
         public string description;
         public string cruiserName;
+        public Collider2D mainCollider;
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
-        public override Vector2 Size => _collider.bounds.size;
+        public override Vector2 Size => mainCollider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
         
         private Vector2 _droneAreaSize;
@@ -106,13 +106,17 @@ namespace BattleCruisers.Cruisers
         {
             base.StaticInitialise();
 
+            Helper.AssertIsNotNull(deathPrefab, mainCollider);
             Assert.IsNotNull(deathPrefab);
 
             _renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-            _collider = GetComponent<PolygonCollider2D>();
-            Assert.IsNotNull(_collider);
+            TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>(includeInactive: true);
+            foreach (TargetProxy targetProxy in colliderTargetProxies)
+            {
+                targetProxy.Initialise(this);
+            }
 
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
