@@ -60,7 +60,6 @@ namespace BattleCruisers.Cruisers
         private Vector2 _droneAreaSize;
         public override Vector2 DroneAreaSize => _droneAreaSize;
 
-
         // IComparableItem
         public string Description => description;
         public string Name => cruiserName;
