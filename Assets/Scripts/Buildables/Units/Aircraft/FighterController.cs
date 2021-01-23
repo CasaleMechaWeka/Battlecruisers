@@ -88,12 +88,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     safeZone: _aircraftProvider.FighterSafeZone);
 
             // Reset rotation
-            // FELIX
             Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
             transform.rotation = baseRotation;
             rigidBody.rotation = 0;
             Logging.Verbose(Tags.FIGHTER, $"Id: {GameObject.GetInstanceID()}  After reset rotation: {rigidBody.rotation}");
-
         }
 
         protected async override void OnBuildableCompleted()
@@ -191,22 +189,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             if (Velocity != Vector2.zero)
             {
-                // FELIX  TEMP
-                float zRotationInDegrees = _angleHelper.FindAngle(sourcePosition: Vector2.zero, targetPosition: Velocity, isSourceMirrored: transform.IsMirrored());
-
+                float zRotationInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
                 Quaternion rotation = rigidBody.transform.rotation;
                 rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, zRotationInDegrees);
                 transform.rotation = rotation;
-
-                ////float zRotationInDegrees = _angleHelper.FindAngle(Velocity);
-                //if (transform.IsMirrored())
-                //{
-                //    zRotationInDegrees = -zRotationInDegrees;
-                //}
-                //rigidBody.rotation = zRotationInDegrees;
-
-                //rigidBody.rotation = _angleHelper.FindAngle(Velocity);
-                //rigidBody.rotation = _angleHelper.FindAngle(sourcePosition: Vector2.zero, targetPosition: Velocity, isSourceMirrored: transform.IsMirrored());
             }
         }
 

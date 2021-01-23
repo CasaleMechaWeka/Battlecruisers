@@ -30,7 +30,6 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
         protected override void Setup(Helper helper)
         {
-            // FELIX  TEMP
             SetupPair(helper, fighter1, targetAircraft1, patrolPoints1);
 			SetupPair(helper, fighter2, targetAircraft2, patrolPoints2);
 			SetupPair(helper, fighter3, targetAircraft3, patrolPoints3);

@@ -6,12 +6,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 {
     public class AngleHelper : IAngleHelper
     {
-        public float FindAngle(Vector2 velocity)
+        public float FindAngle(Vector2 velocity, bool isSourceMirrored)
         {
             Vector2 source = Vector2.zero;
             Vector2 target = velocity;
 
-            return FindAngle(source, target, isSourceMirrored: false);
+            return FindAngle(source, target, isSourceMirrored);
         }
 
         public float FindAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)
