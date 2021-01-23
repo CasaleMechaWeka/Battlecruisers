@@ -191,11 +191,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             if (Velocity != Vector2.zero)
             {
-                float angleInDegrees = _angleHelper.FindAngle(Velocity, transform.IsMirrored());
-                // FELIX  :P
-                //Quaternion rotation = rigidBody.transform.rotation;
-                //rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, rotation.eulerAngles.y, angleInDegrees);
-                rigidBody.rotation = angleInDegrees;
+                rigidBody.rotation = _angleHelper.FindAngle(Velocity);
             }
         }
 
