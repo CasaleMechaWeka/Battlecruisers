@@ -1,6 +1,10 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
+using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.UI.Music
 {
@@ -8,6 +12,7 @@ namespace BattleCruisers.UI.Music
     {
         private readonly ISingleSoundPlayer _soundPlayer;
         private ISoundKey _currentlyPlaying;
+        private AsyncOperationHandle<AudioClip> _currentlyPlayingHandle;
 
         public MusicPlayer(ISingleSoundPlayer soundPlayer)
         {
@@ -37,18 +42,27 @@ namespace BattleCruisers.UI.Music
             PlayMusic(SoundKeys.Music.TrashTalk, loop: false);
         }
 
-        private void PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)
+        private async Task PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)
         {
             if (!soundKeyToPlay.Equals(_currentlyPlaying))
             {
-                _soundPlayer.PlaySoundAsync(soundKeyToPlay, loop);
+                Stop();
+
                 _currentlyPlaying = soundKeyToPlay;
+                 _currentlyPlayingHandle = await _soundPlayer.PlaySoundAsync(soundKeyToPlay, loop);
             }
         }
 
         public void Stop()
         {
             _soundPlayer.Stop();
+
+            if (_currentlyPlaying != null)
+            {
+                // Free previously playing music.  Music files are large.
+                Addressables.Release(_currentlyPlayingHandle);
+            }
+
             _currentlyPlaying = null;
         }
     }

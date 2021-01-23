@@ -2,6 +2,8 @@
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.UI.Sound
 {
@@ -26,12 +28,13 @@ namespace BattleCruisers.UI.Sound
             _audioSource = audioSource;
         }
 
-        public async Task PlaySoundAsync(ISoundKey soundKey, bool loop = false)
+        public async Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false)
         {
             Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");
 
             IAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
             PlaySound(soundToPlay, loop);
+            return soundToPlay.Handle;
         }
 
         public void PlaySound(IAudioClipWrapper sound, bool loop = false)

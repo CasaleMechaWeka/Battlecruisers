@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.UI.Sound
 {
@@ -7,7 +9,7 @@ namespace BattleCruisers.UI.Sound
     {
         bool IsPlayingSound { get; }
 
-        Task PlaySoundAsync(ISoundKey soundKey, bool loop = false);
+        Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false);
         void PlaySound(IAudioClipWrapper sound, bool loop = false);
 
         void Stop();
