@@ -81,6 +81,7 @@ namespace BattleCruisers.Scenes
                 hint = _hintProvider.GetHint();
             }
             LoadingScreenHint = hint;
+            MusicPlayer.Stop();
 
             StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
         }
