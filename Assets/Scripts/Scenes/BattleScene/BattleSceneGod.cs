@@ -207,7 +207,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager.MuteMusic);
-            LandingSceneGod.MusicPlayer?.Stop();
             ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);
             _audioInitialiser
                 = new AudioInitialiser(
