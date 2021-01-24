@@ -40,6 +40,8 @@ namespace BattleCruisers.Projectiles
 
 		protected Rigidbody2D _rigidBody;
 
+        public bool faceVelocityDirection = true;
+
         public event EventHandler Destroyed;
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
@@ -172,7 +174,8 @@ namespace BattleCruisers.Projectiles
         {
             Logging.Verbose(Tags.SHELLS, $"_rigidBody.velocity: {_rigidBody.velocity}");
 
-            if (_rigidBody.velocity != Vector2.zero)
+            if (faceVelocityDirection
+                && _rigidBody.velocity != Vector2.zero)
             {
                 transform.right = _rigidBody.velocity;
             }
