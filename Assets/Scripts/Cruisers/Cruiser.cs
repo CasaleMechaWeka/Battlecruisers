@@ -49,12 +49,12 @@ namespace BattleCruisers.Cruisers
         [TextAreaAttribute(minLines: 3, maxLines: 10)]
         public string description;
         public string cruiserName;
-        public Collider2D mainCollider;
 
         // ITarget
+        public Vector2 size;
+        public override Vector2 Size => size;
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
-        public override Vector2 Size => mainCollider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
         
         private Vector2 _droneAreaSize;
@@ -105,7 +105,6 @@ namespace BattleCruisers.Cruisers
         {
             base.StaticInitialise();
 
-            Helper.AssertIsNotNull(deathPrefab, mainCollider);
             Assert.IsNotNull(deathPrefab);
 
             _renderer = GetComponent<SpriteRenderer>();
