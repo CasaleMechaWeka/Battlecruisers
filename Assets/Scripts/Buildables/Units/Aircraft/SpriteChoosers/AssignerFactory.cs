@@ -4,9 +4,12 @@
     {
         public IAssigner CreateRecursiveProportionAssigner(
             int numOfOptions,
+            // FELIX  Remove?  Propagate :)
             float baseCutoff = RecursiveProportionAssigner.DEFAULT_BASE_CUTOFF)
         {
-            return new RecursiveProportionAssigner(numOfOptions, baseCutoff);
+            //  FELIX
+            return new LinearProportionAssigner(numOfOptions);
+            //return new RecursiveProportionAssigner(numOfOptions, baseCutoff);
         }
     }
 }

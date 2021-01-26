@@ -19,6 +19,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
     /// > 0.25      1
     /// rest        2
     /// </summary>
+    /// FELIX  Remove :)
     public class RecursiveProportionAssigner : IAssigner
     {
         private readonly IList<float> _cutoffs;
