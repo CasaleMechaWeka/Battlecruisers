@@ -14,11 +14,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class ShellTurretBarrelController : BarrelController
 	{
         private ShellSpawner[] _shellSpawners;
+        private ShellSpawner _middleSpawner;
 
         protected override int NumOfBarrels => _shellSpawners.Length;
 
-        // PERF  Cache middle spawner, so don't need to run method each time
-        public override Vector3 ProjectileSpawnerPosition => _shellSpawners.Middle().transform.position;
+        public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => true;
 
         public override void StaticInitialise()
@@ -28,7 +28,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 			_shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
 			Assert.IsNotNull(_shellSpawners);
             Assert.IsTrue(_shellSpawners.Length != 0);
-		}
+
+            _middleSpawner = _shellSpawners.Middle();
+        }
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{

@@ -10,8 +10,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class MissileBarrelController : BarrelController
 	{
         private ICircularList<MissileSpawner> _missileSpawners;
+        private MissileSpawner _middleSpawner;
 
-        public override Vector3 ProjectileSpawnerPosition => _missileSpawners.Items.Middle().transform.position;
+        public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
@@ -21,6 +22,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             MissileSpawner[] missileSpawners = gameObject.GetComponentsInChildren<MissileSpawner>();
             Assert.IsTrue(missileSpawners.Length != 0);
             _missileSpawners = new CircularList<MissileSpawner>(missileSpawners);
+
+            _middleSpawner = missileSpawners.Middle();
         }
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)

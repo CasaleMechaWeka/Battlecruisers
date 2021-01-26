@@ -11,9 +11,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     public class RocketBarrelController : BarrelController
 	{
 		private ICircularList<RocketSpawner> _rocketSpawners;
+        private RocketSpawner _middleSpawner;
         private ICruisingProjectileStats _rocketStats;
 
-        public override Vector3 ProjectileSpawnerPosition => _rocketSpawners.Items.Middle().transform.position;
+        public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
@@ -23,6 +24,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             RocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<RocketSpawner>();
             Assert.IsTrue(rocketSpawners.Length != 0);
             _rocketSpawners = new CircularList<RocketSpawner>(rocketSpawners);
+
+            _middleSpawner = rocketSpawners.Middle();
         }
 
         protected override IProjectileStats GetProjectileStats()
