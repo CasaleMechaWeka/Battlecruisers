@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Movement.Velocity.Providers;
+﻿using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,8 +16,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
         public SpriteChooser(
             IAssignerFactory assignerFactory,
             IList<ISpriteWrapper> sprites,
-            IVelocityProvider maxVelocityProvider,
-            float assignerBaseCutoff)
+            IVelocityProvider maxVelocityProvider)
         {
             Helper.AssertIsNotNull(assignerFactory, sprites, maxVelocityProvider);
             Assert.IsTrue(sprites.Count > 0);
@@ -25,7 +24,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             _sprites = sprites;
             _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = assignerFactory.CreateRecursiveProportionAssigner(sprites.Count, assignerBaseCutoff);
+            _assigner = assignerFactory.CreateAssigner(sprites.Count);
         }
 
         public ISpriteWrapper ChooseSprite(Vector2 velocity)

@@ -30,14 +30,13 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 				_sprite
 			};
    
-			float assignerBaseCutoff = 0.5f;
-            _assignerFactory.CreateRecursiveProportionAssigner(_sprites.Count, assignerBaseCutoff).Returns(_assigner);
+            _assignerFactory.CreateAssigner(_sprites.Count).Returns(_assigner);
 
             _maxVelocityProvider = Substitute.For<IVelocityProvider>();
             _maxVelocityProvider.VelocityInMPerS.Returns(5);
 
-            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider, assignerBaseCutoff);
-            _assignerFactory.Received().CreateRecursiveProportionAssigner(_sprites.Count, assignerBaseCutoff);
+            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider);
+            _assignerFactory.Received().CreateAssigner(_sprites.Count);
         }
 
         [Test]

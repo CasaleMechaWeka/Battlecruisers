@@ -2,7 +2,6 @@
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
-    // FELIX  Test :D
     public class LinearProportionAssigner : IAssigner
     {
         private readonly int _numOfOptions;
