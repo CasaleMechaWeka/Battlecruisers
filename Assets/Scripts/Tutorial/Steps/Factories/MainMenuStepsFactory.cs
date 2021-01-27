@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Get user to open main menu
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is the main menu button.  Open the menu :D",
+                    "This is the Main Menu.",
                     _modalMainMenuButton);
             steps.Add(
                 new ExplanationClickStep(

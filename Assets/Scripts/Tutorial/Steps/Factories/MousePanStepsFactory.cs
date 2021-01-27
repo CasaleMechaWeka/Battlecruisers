@@ -6,9 +6,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class MousePanStepsFactory : SwipeStepsFactoryBase
     {
-        private const string STEP_EXPLANATION = 
-@"You can click drag to pan.
-Give it a try :)";
+        private const string STEP_EXPLANATION = "Click drag to pan.";
         private readonly IPermitter _scrollWheelPermitter;
 
         public MousePanStepsFactory(

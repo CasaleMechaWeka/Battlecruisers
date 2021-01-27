@@ -37,7 +37,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Explain pinch zoom, encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("You can also pinch zoom.  Give it a try :)")));
+                    _argsFactory.CreateTutorialStepArgs("You can also pinch zoom.")));
 
             // Disable pinch zoom & swiping
             steps.Add(_featurePermitterStepFactory.CreateStep(_pinchZoomPermitter, enableFeature: false));

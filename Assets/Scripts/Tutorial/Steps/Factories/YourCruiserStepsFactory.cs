@@ -40,7 +40,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is your awesome cruiser :D",
+                    "This is your awesome Cruiser :D",
                     _playerCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));

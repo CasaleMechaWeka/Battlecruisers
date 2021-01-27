@@ -33,8 +33,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             Helper.AssertIsNotNull(unitBuiltProvider);
 
             _unitBuiltProvider = unitBuiltProvider;
-            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "attack boat");
-            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "ship turret");
+            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "Attack Boat");
+            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "Ship Turret");
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true);
         }
     }

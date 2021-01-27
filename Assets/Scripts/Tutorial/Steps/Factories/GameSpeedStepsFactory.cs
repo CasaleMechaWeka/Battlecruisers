@@ -59,13 +59,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "These buttons control the game speed.",
+                        "Almost done!  This is your Game Speed.",
                         _rightPanelComponents.SpeedComponents.SpeedButtonPanel)));
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Try all three speeds:  Slow motion, fast forward, and normal.")));
+                    _argsFactory.CreateTutorialStepArgs("Try all three speeds.")));
 
             return steps;
         }

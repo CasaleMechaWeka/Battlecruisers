@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                   featurePermitterStepFactory,
                   swipePermitter,
                   explanationDismissableStepFactory,
-                  "You can also swipe your finger to look around.  Swipe horizontally to scroll.  Swipe vertically to zoom.  Give it a try :)")
+                  "Swipe horizontally to scroll. Swipe vertically to zoom.")
         {
         }
    }

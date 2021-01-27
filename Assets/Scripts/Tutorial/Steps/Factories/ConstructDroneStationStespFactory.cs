@@ -30,13 +30,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "Builder Bay"),
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: true),
-                    "To get more builders construct a builder bay."));
+                    "Construct a Builder Bay to make more Builders."));
 
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Nice!  You have gained two builders :D")));
+                    _argsFactory.CreateTutorialStepArgs("Nice!  You have gained two Builders :D")));
 
             return steps;
         }

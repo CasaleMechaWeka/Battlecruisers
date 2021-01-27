@@ -6,9 +6,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ScrollWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private const string STEP_EXPLANATION = 
-@"You can also use your mouse scroll wheel to look around.
-Give it a try :)";
+        private const string STEP_EXPLANATION = "Use your mouse scroll wheel to look around.";
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _scrollWheelPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;

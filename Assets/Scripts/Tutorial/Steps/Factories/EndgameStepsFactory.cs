@@ -51,7 +51,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Wait for artillery to complete
             steps.Add(
                 new BuildableCompletedWaitStep(
-                    _argsFactory.CreateTutorialStepArgs("Now we wait until your artillery is finished.  Patience :)"),
+                    _argsFactory.CreateTutorialStepArgs("Wait for your artillery to complete.  Patience :)"),
                     _tutorialProvider.SingleOffensiveProvider));
 
             // Boost artillery accuracy and fire rate, so that enemy cruiser is destroyed more quickly :)
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Wait for enemy cruiser to be destroyed
             steps.Add(
                 new TargetDestroyedWaitStep(
-                    _argsFactory.CreateTutorialStepArgs("Nice!  Your artillery will now bombard the enemy cruiser.  Feel free to look around!"),
+                    _argsFactory.CreateTutorialStepArgs("Done!  Your Artillery will bombard the enemy on auto-pilot.  Feel free to look around!"),
                     new StaticProvider<ITarget>(_aiCruiser)));
 
             return steps;

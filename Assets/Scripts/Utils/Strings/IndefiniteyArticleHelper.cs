@@ -6,13 +6,13 @@ namespace BattleCruisers.Utils.Strings
     {
         public static string FindIndefiniteArticle(string noun)
         {
-            switch (noun.FirstOrDefault())
+            switch (noun.ToUpper().FirstOrDefault())
             {
-                case 'a':
-                case 'e':
-                case 'i':
-                case 'o':
-                case 'u':
+                case 'A':
+                case 'E':
+                case 'I':
+                case 'O':
+                case 'U':
                     return "an";
                 default:
                     return "a";

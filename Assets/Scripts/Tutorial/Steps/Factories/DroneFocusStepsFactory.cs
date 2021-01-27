@@ -65,7 +65,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                    "Managing your builders is vital.  Let's start two buildings, so we can see how this works :)")));
+                    "It's vital to manage your Builders.  Let's see how that works...")));
 
             // Infinitely slow build speed
             steps.Add(
@@ -77,9 +77,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "builder bay"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "Builder Bay"),
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
-                    "First, another builder bay.",
+                    "First, contruct another Builder Bay.",
                     waitForBuildingToComplete: false));
 
             steps.Add(_slidingPanelWaitStepFactory.CreateSelectorHiddenWaitStep());
@@ -87,15 +87,15 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Offence,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "artillery"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "Artillery"),
                     new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false),
-                    "And an artillery.",
+                    "Now construct an Artillery.",
                     waitForBuildingToComplete: false));
 
             // Slow build speed explanation
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Note the build speed has been slowed down, so you can play around with managing your builders without the buildings completing.")));
+                    _argsFactory.CreateTutorialStepArgs("The build speed has been slowed down for this step...")));
 
             // Show informator
             steps.Add(
@@ -116,13 +116,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "This is the \"BUILDERS\" button.  You can change how many builders a building uses via this button (or by double clicking the building).",
+                        "Click \"BUILDERS\" to toggle the construction speed.  You can also double click the building itself.",
                         _rightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButton)));
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Play around with the \"BUILDERS\" button for these two buildings, and see how the builders move between buildings.")));
+                    _argsFactory.CreateTutorialStepArgs("Switch priority between your Artillery and Builder Bay to get a feel for this.")));
 
             return steps;
         }

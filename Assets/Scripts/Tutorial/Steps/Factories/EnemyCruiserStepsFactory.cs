@@ -32,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is the enemy cruiser.  You win if you destroy their cruiser before it destroys you.",
+                    "This is the enemy Cruiser.",
                     _aiCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));
