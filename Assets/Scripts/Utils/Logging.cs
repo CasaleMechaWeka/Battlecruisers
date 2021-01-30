@@ -223,7 +223,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SWIPE_NAVIGATION, false);
 
             // Cruiser
-            tagsToActiveness.Add(Tags.CRUISER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.CRUISER, true);
+            //tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.UNIT_MONITOR, false);
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);

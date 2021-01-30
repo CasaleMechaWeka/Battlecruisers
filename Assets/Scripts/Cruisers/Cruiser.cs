@@ -51,6 +51,7 @@ namespace BattleCruisers.Cruisers
         public string cruiserName;
 
         // ITarget
+        // FELIX  Can probably use collider size again :D
         public Vector2 size;
         public override Vector2 Size => size;
         public override TargetType TargetType => TargetType.Cruiser;
@@ -110,11 +111,12 @@ namespace BattleCruisers.Cruisers
             _renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-            TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>(includeInactive: true);
-            foreach (TargetProxy targetProxy in colliderTargetProxies)
-            {
-                targetProxy.Initialise(this);
-            }
+            // FELIX
+            //TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>(includeInactive: true);
+            //foreach (TargetProxy targetProxy in colliderTargetProxies)
+            //{
+            //    targetProxy.Initialise(this);
+            //}
 
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
