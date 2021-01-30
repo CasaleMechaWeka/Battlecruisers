@@ -171,7 +171,9 @@ namespace BattleCruisers.Utils
 
             // Targets
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
-            tagsToActiveness.Add(Tags.TARGET, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.TARGET, true);
+            //tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);

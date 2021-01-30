@@ -129,6 +129,8 @@ namespace BattleCruisers.Buildables
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
 		{
+            Logging.Log(Tags.TARGET, $"damageAmount: {damageAmount}  damageSource: {damageSource}");
+
             LastDamagedSource = damageSource;
             bool wasFullHealth = IsFullHealth;
 
