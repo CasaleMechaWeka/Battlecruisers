@@ -32,6 +32,7 @@ namespace BattleCruisers.Cruisers
 		private IUIManager _uiManager;
         private ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
+        private PolygonCollider2D _collider;
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
@@ -51,15 +52,14 @@ namespace BattleCruisers.Cruisers
         public string cruiserName;
 
         // ITarget
-        // FELIX  Can probably use collider size again :D
-        public Vector2 size;
-        public override Vector2 Size => size;
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
+        public override Vector2 Size => _collider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
         
         private Vector2 _droneAreaSize;
         public override Vector2 DroneAreaSize => _droneAreaSize;
+
 
         // IComparableItem
         public string Description => description;
@@ -111,12 +111,8 @@ namespace BattleCruisers.Cruisers
             _renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-            // FELIX
-            //TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>(includeInactive: true);
-            //foreach (TargetProxy targetProxy in colliderTargetProxies)
-            //{
-            //    targetProxy.Initialise(this);
-            //}
+            _collider = GetComponent<PolygonCollider2D>();
+            Assert.IsNotNull(_collider);
 
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
