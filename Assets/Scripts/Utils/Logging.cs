@@ -171,9 +171,7 @@ namespace BattleCruisers.Utils
 
             // Targets
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.TARGET, true);
-            //tagsToActiveness.Add(Tags.TARGET, false);
+            tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
@@ -223,9 +221,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SWIPE_NAVIGATION, false);
 
             // Cruiser
-            // FELIX
-            tagsToActiveness.Add(Tags.CRUISER, true);
-            //tagsToActiveness.Add(Tags.CRUISER, false);
+            tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.UNIT_MONITOR, false);
             tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
