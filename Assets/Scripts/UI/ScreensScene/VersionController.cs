@@ -20,6 +20,18 @@ namespace BattleCruisers.UI.ScreensScene
                 value += " - DEMO";
             }
 
+#if ENABLE_CHEATS
+            value += " - Cheats";
+#endif
+
+#if ENABLE_LOGS
+            value += " - Logs";
+#endif
+
+#if UNITY_ASSERTIONS
+            value += " - Asserts";
+#endif
+
             versionText.text = value;
         }
     }
