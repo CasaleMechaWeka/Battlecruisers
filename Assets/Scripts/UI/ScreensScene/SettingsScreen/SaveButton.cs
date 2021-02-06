@@ -85,7 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             UpdateEnabledStatus();
 
             _musicPlayer.Volume = _settingsManager.MusicVolume;
-            // FELIX  Update effect volume
+            _soundPlayer.Volume = _settingsManager.EffectVolume;
 
             _screensSceneGod.GoToHomeScreen();
         }
