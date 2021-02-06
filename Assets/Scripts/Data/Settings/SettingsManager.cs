@@ -41,12 +41,6 @@ namespace BattleCruisers.Data.Settings
             set => _settings.EffectVolume = value;
         }
 
-        public bool MuteVoices
-        {
-            get => _settings.MuteVoices;
-            set => _settings.MuteVoices = value;
-        }
-
         public bool ShowInGameHints
         {
             get => _settings.ShowInGameHints;

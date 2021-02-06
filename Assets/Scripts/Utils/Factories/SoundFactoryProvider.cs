@@ -3,11 +3,15 @@ using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
+using System;
 
 namespace BattleCruisers.Utils.Factories
 {
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
+        private readonly ISettingsManager _settingsManager;
+        private readonly ISingleSoundPlayer _prioritisedSoundPlayerCore;
+
         public ISoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
@@ -19,14 +23,24 @@ namespace BattleCruisers.Utils.Factories
 		{
             Helper.AssertIsNotNull(components, poolProviders, settingsManager);
 
+            _settingsManager = settingsManager;
+
             SoundFetcher = new SoundFetcher();
             SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
             UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
-            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer, settingsManager);
+            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer, _settingsManager);
             DummySoundPlayer = new DummySoundPlayer();
 
-            ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
-            PrioritisedSoundPlayer = settingsManager.MuteVoices ? DummySoundPlayer : new PrioritisedSoundPlayer(singleSoundPlayer);
+            _prioritisedSoundPlayerCore = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
+            PrioritisedSoundPlayer = new PrioritisedSoundPlayer(_prioritisedSoundPlayerCore);
+
+            _settingsManager.SettingsSaved += SettingsManager_SettingsSaved;
         }
-	}
+
+        private void SettingsManager_SettingsSaved(object sender, EventArgs e)
+        {
+            UISoundPlayer.Volume = _settingsManager.EffectVolume;
+            _prioritisedSoundPlayerCore.Volume = _settingsManager.EffectVolume;
+        }
+    }
 }
