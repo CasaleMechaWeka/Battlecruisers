@@ -21,10 +21,11 @@ namespace BattleCruisers.Utils.Factories
 
             SoundFetcher = new SoundFetcher();
             SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
-            ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
             UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();
+
+            ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
             PrioritisedSoundPlayer = settingsManager.MuteVoices ? DummySoundPlayer : new PrioritisedSoundPlayer(singleSoundPlayer);
         }
 	}
