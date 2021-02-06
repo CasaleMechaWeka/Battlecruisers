@@ -65,7 +65,8 @@ namespace BattleCruisers.Scenes
                 new MusicPlayer(
                     new SingleSoundPlayer(
                         new SoundFetcher(),
-                        audioSource));
+                        audioSource,
+                        dataProvider.SettingsManager.MusicVolume));
         }
 
         public void GoToScene(string sceneName)

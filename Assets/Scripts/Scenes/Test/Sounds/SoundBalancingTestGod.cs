@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Scenes.Test.Utilities;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Scenes.Test.Utilities.Sound;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -50,7 +51,8 @@ namespace BattleCruisers.Scenes.Test.Sounds
             ISingleSoundPlayer singleSoundPlayer
                 = new SingleSoundPlayer(
                     soundFetcher,
-                    new AudioSourceBC(singleSoundPlayerSource));
+                    new AudioSourceBC(singleSoundPlayerSource),
+                    initialVolume: SettingsModel.MAX_VOLUME);
 
             SoundGroupController[] soundGroups = FindObjectsOfType<SoundGroupController>();
 

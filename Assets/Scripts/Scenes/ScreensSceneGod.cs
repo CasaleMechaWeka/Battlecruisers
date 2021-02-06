@@ -82,7 +82,8 @@ namespace BattleCruisers.Scenes
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
-                    new AudioSourceBC(_uiAudioSource));
+                    new AudioSourceBC(_uiAudioSource),
+                    _dataProvider.SettingsManager.EffectVolume);
             
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
             trashDataList.Initialise();
