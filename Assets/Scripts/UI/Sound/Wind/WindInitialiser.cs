@@ -27,7 +27,8 @@ namespace BattleCruisers.UI.Sound.Wind
                     new VolumeCalculator(
                         new ProportionCalculator(),
                         cameraCalculatorSettings.ValidOrthographicSizes,
-                        settingsManager));
+                        settingsManager),
+                    settingsManager);
         }
     }
 }
