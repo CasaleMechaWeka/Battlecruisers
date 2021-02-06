@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             musicVolumeSlider.Initialise(_settingsManager.MusicVolume, musicVolumeRange);
 
             IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
-            effectVolumeSlider.Initialise(_settingsManager.MusicVolume, effectVolumeRange);
+            effectVolumeSlider.Initialise(_settingsManager.EffectVolume, effectVolumeRange);
 
             showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
 
