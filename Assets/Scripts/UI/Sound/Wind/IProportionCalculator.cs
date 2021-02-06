@@ -4,6 +4,6 @@ namespace BattleCruisers.UI.Sound.Wind
 {
     public interface IProportionCalculator
     {
-        float FindProprtion(float value, IRange<float> range);
+        float FindProportion(float value, IRange<float> range);
     }
 }

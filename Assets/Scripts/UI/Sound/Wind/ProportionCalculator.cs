@@ -4,10 +4,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Wind
 {
-    // FELIX  Interface, test (steal VolumeCalculatorTests?)
     public class ProportionCalculator : IProportionCalculator
     {
-        public float FindProprtion(float value, IRange<float> range)
+        public float FindProportion(float value, IRange<float> range)
         {
             Assert.IsNotNull(range);
 
