@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Music
         private readonly IMusicPlayer _corePlayer;
         private readonly ISettingsManager _settings;
 
-        public float Volume { set => throw new System.NotImplementedException(); }
+        public float Volume { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public TogglableMusicPlayer(IMusicPlayer corePlayer, ISettingsManager settings)
         {

@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.Music
 
         public float Volume
         {
+            get => _soundPlayer.Volume;
             set => _soundPlayer.Volume = value;
         }
 

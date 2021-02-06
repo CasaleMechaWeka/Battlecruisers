@@ -2,7 +2,7 @@
 {
     public interface IMusicPlayer
     {
-        float Volume { set; }
+        float Volume { get; set; }
 
         void PlayScreensSceneMusic();
         void PlayVictoryMusic();

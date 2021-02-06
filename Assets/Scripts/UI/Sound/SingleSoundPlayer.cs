@@ -20,7 +20,8 @@ namespace BattleCruisers.UI.Sound
 
         public bool IsPlayingSound => _audioSource.IsPlaying;
         public float Volume
-        { 
+        {
+            get => _audioSource.Volume;
             set => _audioSource.Volume = value; 
         }
 
