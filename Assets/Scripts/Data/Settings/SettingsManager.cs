@@ -21,11 +21,18 @@ namespace BattleCruisers.Data.Settings
         }
 
         public int ScrollSpeedLevel
-		{
+        {
             get => _settings.ScrollSpeedLevel;
             set => _settings.ScrollSpeedLevel = value;
-		}
+        }
 
+        public float MusicVolume
+        {
+            get => _settings.MusicVolume;
+            set => _settings.MusicVolume = value;
+        }
+
+        // FELIX  Remove :)
         public bool MuteMusic
         {
             get => _settings.MuteMusic;

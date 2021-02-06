@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using System;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,6 +19,19 @@ namespace BattleCruisers.Data.Models
         public const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
         public const int MIN_SCROLL_SPEED_LEVEL = 1;
         public const int MAX_SCROLL_SPEED_LEVEL = 9;
+
+        public const float DEFAULT_VOLUME = 0.5f;
+        public const float MIN_VOLUME = 0;
+        public const float MAX_VOLUME = 1;
+
+        [SerializeField]
+        private int _version;
+
+        private class Version
+        {
+            public const int PreMusicVolume = 0;
+            public const int WithMusicVolume = 1;
+        }
 
         [SerializeField]
         private Difficulty _aiDifficulty;
@@ -54,6 +68,19 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private float _musicVolume;
+        public float MusicVolume
+        {
+            get => _musicVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _musicVolume = value;
+            }
+        }
+
+        // Unused, but keep for backwards compatibility
+        [SerializeField]
         private bool _muteMusic;
         public bool MuteMusic
         {
@@ -82,9 +109,27 @@ namespace BattleCruisers.Data.Models
             AIDifficulty = Difficulty.Hard;
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
+            MusicVolume = DEFAULT_VOLUME;
             MuteMusic = false;
             MuteVoices = false;
             ShowInGameHints = true;
+        }
+
+        private void CheckVolumeValue(float volume)
+        {
+            Assert.IsTrue(volume >= MIN_VOLUME);
+            Assert.IsTrue(volume <= MAX_VOLUME);
+        }
+
+        [OnDeserialized()]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            // For backwards compatability, when this class did not have these fields
+            if (_version == Version.PreMusicVolume)
+            {
+                _musicVolume = DEFAULT_VOLUME;
+                _version = Version.WithMusicVolume;
+            }
         }
 
         public override bool Equals(object obj)
@@ -94,16 +139,16 @@ namespace BattleCruisers.Data.Models
             return
                 other != null
                 && AIDifficulty == other.AIDifficulty
-                && MuteMusic == other.MuteMusic
                 && MuteVoices == other.MuteVoices
                 && ScrollSpeedLevel == other.ScrollSpeedLevel
                 && ShowInGameHints == other.ShowInGameHints
-                && ZoomSpeedLevel == other.ZoomSpeedLevel;
+                && ZoomSpeedLevel == other.ZoomSpeedLevel
+                && MusicVolume == other.MusicVolume;
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(AIDifficulty, MuteMusic, MuteVoices, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel);
+            return this.GetHashCode(AIDifficulty, MuteVoices, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel, MusicVolume);
         }
     }
 }

@@ -16,7 +16,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private IMusicPlayer _musicPlayer;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
-        private IBroadcastingProperty<bool> _muteMusic, _muteVoices, _showInGameHints;
+        private IBroadcastingProperty<float> _musicVolume;
+        private IBroadcastingProperty<bool> _muteVoices, _showInGameHints;
         private IHotkeysPanel _hotkeysPanel;
 
         private CanvasGroup _canvasGroup;
@@ -31,14 +32,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
-            IBroadcastingProperty<bool> muteMusic,
+            IBroadcastingProperty<float> musicVolume,
             IBroadcastingProperty<bool> muteVoices,
             IBroadcastingProperty<bool> showInGameHints,
             IHotkeysPanel hotkeysPanel)
         {
             base.Initialise(soundPlayer, parent: parent);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, muteMusic, muteVoices, showInGameHints, hotkeysPanel);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, musicVolume, muteVoices, showInGameHints, hotkeysPanel);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
@@ -46,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _difficultyDropdown = difficultyDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
-            _muteMusic = muteMusic;
+            _musicVolume = musicVolume;
             _muteVoices = muteVoices;
             _showInGameHints = showInGameHints;
             _hotkeysPanel = hotkeysPanel;
@@ -57,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _difficultyDropdown.DifficultyChanged += (sender, e) => UpdateEnabledStatus();
             _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
-            _muteMusic.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _muteVoices.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
@@ -76,13 +77,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
-            _settingsManager.MuteMusic = _muteMusic.Value;
+            _settingsManager.MusicVolume = _musicVolume.Value;
             _settingsManager.MuteVoices = _muteVoices.Value;
             _settingsManager.ShowInGameHints = _showInGameHints.Value;
             _settingsManager.Save();
 
             UpdateEnabledStatus();
 
+            // FELIX  Remove :)
             if (_settingsManager.MuteMusic)
             {
                 _musicPlayer.Stop();
@@ -106,7 +108,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
                 || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
                 || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
-                || _muteMusic.Value != _settingsManager.MuteMusic
+                || _musicVolume.Value != _settingsManager.MusicVolume
                 || _muteVoices.Value != _settingsManager.MuteVoices
                 || _showInGameHints.Value != _settingsManager.ShowInGameHints
                 || _hotkeysPanel.IsDirty.Value;
