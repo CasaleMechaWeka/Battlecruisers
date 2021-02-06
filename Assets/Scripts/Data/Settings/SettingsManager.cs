@@ -32,6 +32,12 @@ namespace BattleCruisers.Data.Settings
             set => _settings.MusicVolume = value;
         }
 
+        public float EffectVolume
+        {
+            get => _settings.EffectVolume;
+            set => _settings.EffectVolume = value;
+        }
+
         public bool MuteVoices
         {
             get => _settings.MuteVoices;

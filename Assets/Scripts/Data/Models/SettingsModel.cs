@@ -79,6 +79,19 @@ namespace BattleCruisers.Data.Models
             }
         }
 
+        [SerializeField]
+        private float _effectVolume;
+        public float EffectVolume
+        {
+            get => _effectVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _effectVolume = value;
+            }
+        }
+
+        // FELIX  Check what happens when removed and old model has it?
         // Unused, but keep for backwards compatibility
         [SerializeField]
         private bool _muteMusic;
@@ -88,6 +101,7 @@ namespace BattleCruisers.Data.Models
             set => _muteMusic = value;
         }
 
+        // Unused, but keep for backwards compatibility
         [SerializeField]
         private bool _muteVoices;
         public bool MuteVoices
@@ -110,6 +124,7 @@ namespace BattleCruisers.Data.Models
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
             MusicVolume = DEFAULT_VOLUME;
+            EffectVolume = DEFAULT_VOLUME;
             MuteMusic = false;
             MuteVoices = false;
             ShowInGameHints = true;
@@ -128,6 +143,8 @@ namespace BattleCruisers.Data.Models
             if (_version == Version.PreMusicVolume)
             {
                 _musicVolume = DEFAULT_VOLUME;
+                _effectVolume = DEFAULT_VOLUME;
+
                 _version = Version.WithMusicVolume;
             }
         }
@@ -139,16 +156,16 @@ namespace BattleCruisers.Data.Models
             return
                 other != null
                 && AIDifficulty == other.AIDifficulty
-                && MuteVoices == other.MuteVoices
                 && ScrollSpeedLevel == other.ScrollSpeedLevel
                 && ShowInGameHints == other.ShowInGameHints
                 && ZoomSpeedLevel == other.ZoomSpeedLevel
-                && MusicVolume == other.MusicVolume;
+                && MusicVolume == other.MusicVolume
+                && EffectVolume == other.EffectVolume;
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(AIDifficulty, MuteVoices, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel, MusicVolume);
+            return this.GetHashCode(AIDifficulty, ScrollSpeedLevel, ShowInGameHints, ZoomSpeedLevel, MusicVolume, EffectVolume);
         }
     }
 }

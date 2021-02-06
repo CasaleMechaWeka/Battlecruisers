@@ -12,6 +12,7 @@
         int ScrollSpeedLevel { get; set; }
 
         float MusicVolume { get; set; }
+        float EffectVolume { get; set; }
 
         // FELIX  Replace with volume :)
         bool MuteVoices { get; set; }
