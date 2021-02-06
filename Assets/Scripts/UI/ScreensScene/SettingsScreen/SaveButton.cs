@@ -84,15 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             UpdateEnabledStatus();
 
-            // FELIX  Remove :)
-            if (_settingsManager.MuteMusic)
-            {
-                _musicPlayer.Stop();
-            }
-            else
-            {
-                _musicPlayer.PlayScreensSceneMusic();
-            }
+            _musicPlayer.Volume = _settingsManager.MusicVolume;
 
             _screensSceneGod.GoToHomeScreen();
         }

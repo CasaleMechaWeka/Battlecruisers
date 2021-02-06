@@ -5,8 +5,6 @@ namespace BattleCruisers.Data.Models
     public interface ISettingsModel
     {
         Difficulty AIDifficulty { get; set; }
-        // FELIX  Remove
-        bool MuteMusic { get; set; }
         bool MuteVoices { get; set; }
         int ScrollSpeedLevel { get; set; }
         bool ShowInGameHints { get; set; }

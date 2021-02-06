@@ -61,15 +61,11 @@ namespace BattleCruisers.Scenes
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
 
-            IMusicPlayer corePlayer
-                = new MusicPlayer(
+            return
+                new MusicPlayer(
                     new SingleSoundPlayer(
                         new SoundFetcher(),
                         audioSource));
-            return
-                new TogglableMusicPlayer(
-                    corePlayer,
-                    dataProvider.SettingsManager);
         }
 
         public void GoToScene(string sceneName)

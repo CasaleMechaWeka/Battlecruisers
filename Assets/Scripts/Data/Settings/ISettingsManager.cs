@@ -11,10 +11,9 @@
         int ZoomSpeedLevel { get; set; }
         int ScrollSpeedLevel { get; set; }
 
-        // FELIX  Remove
-        bool MuteMusic { get; set; }
         float MusicVolume { get; set; }
 
+        // FELIX  Replace with volume :)
         bool MuteVoices { get; set; }
         bool ShowInGameHints { get; set; }
 

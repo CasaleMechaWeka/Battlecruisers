@@ -13,17 +13,9 @@ namespace BattleCruisers.UI.Music
 {
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
-        public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
-            ISoundFetcher soundFetcher,
-            SoundKeyPair soundKeys,
-            bool muteMusic)
+        public async Task<ILayeredMusicPlayer> CreatePlayerAsync(ISoundFetcher soundFetcher, SoundKeyPair soundKeys)
         {
             Helper.AssertIsNotNull(soundFetcher, soundKeys);
-
-            if (muteMusic)
-            {
-                return new DummyLayeredMusicPlayer();
-            }
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
             IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);

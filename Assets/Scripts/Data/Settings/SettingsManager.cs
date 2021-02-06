@@ -32,13 +32,6 @@ namespace BattleCruisers.Data.Settings
             set => _settings.MusicVolume = value;
         }
 
-        // FELIX  Remove :)
-        public bool MuteMusic
-        {
-            get => _settings.MuteMusic;
-            set => _settings.MuteMusic = value;
-        }
-
         public bool MuteVoices
         {
             get => _settings.MuteVoices;

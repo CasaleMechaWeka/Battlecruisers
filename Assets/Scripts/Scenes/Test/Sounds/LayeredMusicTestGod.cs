@@ -15,13 +15,13 @@ namespace BattleCruisers.Scenes.Test.Sounds
             _musicPlayer
                 = await initialiser.CreatePlayerAsync(
                     new SoundFetcher(),
-                    //SoundKeys.Music.Background.Sleeper,
-                    //SoundKeys.Music.Background.Nothing,
-                    //SoundKeys.Music.Background.Experimental,
-                    SoundKeys.Music.Background.Confusion,
-                    //SoundKeys.Music.Background.Bobby,
-                    //SoundKeys.Music.Background.Juggernaut,
-                    muteMusic: false);
+                    //SoundKeys.Music.Background.Sleeper
+                    //SoundKeys.Music.Background.Nothing
+                    //SoundKeys.Music.Background.Experimental
+                    SoundKeys.Music.Background.Confusion
+                    //SoundKeys.Music.Background.Bobby
+                    //SoundKeys.Music.Background.Juggernaut
+                    );
             _musicPlayer.Play();
         }
 
