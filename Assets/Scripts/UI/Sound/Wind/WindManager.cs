@@ -11,6 +11,8 @@ namespace BattleCruisers.UI.Sound.Wind
         private readonly ICamera _camera;
         private readonly IVolumeCalculator _volumeCalculator;
 
+        // FELIX  Update volume when setting changes
+
         public WindManager(IAudioSource audioSource, ICamera camera, IVolumeCalculator volumeCalculator)
         {
             Helper.AssertIsNotNull(audioSource, camera, volumeCalculator);

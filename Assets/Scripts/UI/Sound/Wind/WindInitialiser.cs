@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Cameras.Helpers.Calculators;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
@@ -11,16 +12,22 @@ namespace BattleCruisers.UI.Sound.Wind
     {
         public AudioSource audioSource;
 
-        public IWindManager Initialise(ICamera camera, ICameraCalculatorSettings cameraCalculatorSettings)
+        public IWindManager Initialise(
+            ICamera camera, 
+            ICameraCalculatorSettings cameraCalculatorSettings,
+            ISettingsManager settingsManager)
         {
             Assert.IsNotNull(audioSource);
-            Helper.AssertIsNotNull(camera, cameraCalculatorSettings);
+            Helper.AssertIsNotNull(camera, cameraCalculatorSettings, settingsManager);
 
             return
                 new WindManager(
                     new AudioSourceBC(audioSource),
                     camera,
-                    new VolumeCalculator(cameraCalculatorSettings.ValidOrthographicSizes));
+                    new VolumeCalculator(
+                        new ProportionCalculator(),
+                        cameraCalculatorSettings.ValidOrthographicSizes,
+                        settingsManager));
         }
     }
 }

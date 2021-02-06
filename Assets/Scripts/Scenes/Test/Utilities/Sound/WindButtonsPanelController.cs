@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Cameras.Helpers.Calculators;
+﻿using BattleCruisers.Data;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
@@ -17,7 +18,11 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
             BCUtils.Helper.AssertIsNotNull(camera, cameraCalculatorSettings);
 
             Assert.IsNotNull(windInitialiser);
-            _windManager = windInitialiser.Initialise(camera, cameraCalculatorSettings);
+            _windManager 
+                = windInitialiser.Initialise(
+                    camera, 
+                    cameraCalculatorSettings,
+                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
         }
 
         public void StartWind()

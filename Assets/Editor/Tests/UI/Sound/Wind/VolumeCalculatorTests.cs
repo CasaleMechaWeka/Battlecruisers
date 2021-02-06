@@ -13,7 +13,8 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
         public void TestSetup()
         {
             _validOrthographicSizes = new Range<float>(2, 10);
-            _calculator = new VolumeCalculator(_validOrthographicSizes);
+            // FELIX  Fix :)
+            //_calculator = new VolumeCalculator(_validOrthographicSizes);
         }
 
         [Test]

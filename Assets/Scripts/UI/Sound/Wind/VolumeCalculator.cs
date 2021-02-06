@@ -1,31 +1,31 @@
-﻿using BattleCruisers.Utils.DataStrctures;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
 
 namespace BattleCruisers.UI.Sound.Wind
 {
     public class VolumeCalculator : IVolumeCalculator
     {
+        private readonly IProportionCalculator _proportionCalculator;
         private readonly IRange<float> _validOrthographicSizes;
+        private readonly ISettingsManager _settingsManager;
 
-        public VolumeCalculator(IRange<float> validOrthographicSizes)
+        public VolumeCalculator(
+            IProportionCalculator proportionCalculator, 
+            IRange<float> validOrthographicSizes,
+            ISettingsManager settingsManager)
         {
-            Assert.IsNotNull(validOrthographicSizes);
+            Helper.AssertIsNotNull(proportionCalculator, validOrthographicSizes, settingsManager);
+
+            _proportionCalculator = proportionCalculator;
             _validOrthographicSizes = validOrthographicSizes;
+            _settingsManager = settingsManager;
         }
 
         public float FindVolume(float cameraOrthographicSize)
         {
-            cameraOrthographicSize = Mathf.Clamp(cameraOrthographicSize, _validOrthographicSizes.Min, _validOrthographicSizes.Max);
-
-            float sizeAboveMin = cameraOrthographicSize - _validOrthographicSizes.Min;
-            float range = _validOrthographicSizes.Max - _validOrthographicSizes.Min;
-
-            // OS proportion    Wind volume
-            // 0                0
-            // 0.5              0.5
-            // 1                1
-            return sizeAboveMin / range;
+            float rawProportion = _proportionCalculator.FindProprtion(cameraOrthographicSize, _validOrthographicSizes);
+            return rawProportion * _settingsManager.EffectVolume;
         }
     }
 }

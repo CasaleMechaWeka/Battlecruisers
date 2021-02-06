@@ -222,7 +222,8 @@ namespace BattleCruisers.Scenes.BattleScene
             IWindManager windManager
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
-                    cameraComponents.Settings);
+                    cameraComponents.Settings,
+                    dataProvider.SettingsManager);
             windManager.Play();
 
             _pausableAudioListener
