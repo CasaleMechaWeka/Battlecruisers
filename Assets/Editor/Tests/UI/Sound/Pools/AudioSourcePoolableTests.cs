@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Sound.Pools;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -13,6 +14,7 @@ namespace BattleCruisers.Tests.UI.Sound.Pools
         private IAudioSourcePoolable _poolable;
         private IAudioSource _source;
         private IDeferrer _realTimeDeferrer;
+        private ISettingsManager _settingsManager;
         private int _deactivatedCount;
         private float _soundLengthInS = 3.14f;
         private Action _deferredAction;
@@ -23,8 +25,10 @@ namespace BattleCruisers.Tests.UI.Sound.Pools
         {
             _source = Substitute.For<IAudioSource>();
             _realTimeDeferrer = Substitute.For<IDeferrer>();
+            // FELIX  Update tests :P
+            _settingsManager = Substitute.For<ISettingsManager>();
 
-            _poolable = new AudioSourcePoolable(_source, _realTimeDeferrer);
+            _poolable = new AudioSourcePoolable(_source, _realTimeDeferrer, _settingsManager);
 
             _sound = Substitute.For<IAudioClipWrapper>();
             _sound.Length.Returns(_soundLengthInS);

@@ -100,7 +100,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache);
+            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager);
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             NavigationPermitters navigationPermitters = new NavigationPermitters();
 

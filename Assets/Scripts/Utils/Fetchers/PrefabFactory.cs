@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
@@ -23,13 +24,16 @@ namespace BattleCruisers.Utils.Fetchers
     public class PrefabFactory : IPrefabFactory
 	{
 		private readonly IPrefabCache _prefabCache;
+        private readonly ISettingsManager _settingsManager;
+        // FELIX  Remove, unused :P
         private readonly IRandomGenerator _randomGenerator;
 
-		public PrefabFactory(IPrefabCache prefabCache)
+		public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager)
 		{
-            Assert.IsNotNull(prefabCache);
+            Helper.AssertIsNotNull(prefabCache, settingsManager);
 
 			_prefabCache = prefabCache;
+            _settingsManager = settingsManager;
             _randomGenerator = RandomGenerator.Instance;
         }
 
@@ -134,7 +138,7 @@ namespace BattleCruisers.Utils.Fetchers
             Assert.IsNotNull(realTimeDeferrer);
 
             AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise(realTimeDeferrer);
+            return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
         }
     }
 }

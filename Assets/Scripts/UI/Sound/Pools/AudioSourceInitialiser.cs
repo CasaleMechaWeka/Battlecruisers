@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.Audio;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,15 +12,16 @@ namespace BattleCruisers.UI.Sound.Pools
         [SerializeField]
         private AudioSource _audioSource;
 
-        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer)
+        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, ISettingsManager settingsManager)
         {
             Assert.IsNotNull(_audioSource);
-            Assert.IsNotNull(realTimeDeferrer);
+            Helper.AssertIsNotNull(realTimeDeferrer, settingsManager);
 
             return 
                 new AudioSourcePoolable(
                     new AudioSourceBC(_audioSource), 
-                    realTimeDeferrer);
+                    realTimeDeferrer,
+                    settingsManager);
         }
     }
 }

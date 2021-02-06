@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache);
+            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
 
             return
                 new Helper(

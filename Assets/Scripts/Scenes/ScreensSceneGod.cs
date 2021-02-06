@@ -74,7 +74,7 @@ namespace BattleCruisers.Scenes
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
             
-            _prefabFactory = new PrefabFactory(prefabCache);
+            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
             trashDataList.Initialise();
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
