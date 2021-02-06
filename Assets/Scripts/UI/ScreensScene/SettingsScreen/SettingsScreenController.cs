@@ -16,8 +16,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
-        public FloatSliderController musicVolumeSlider;
-        public ToggleController muteVoicesToggle, showInGameHintsToggle;
+        public FloatSliderController musicVolumeSlider, effectVolumeSlider;
+        public ToggleController showInGameHintsToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, muteVoicesToggle, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
             Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
 
@@ -59,10 +59,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
             scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
-            IRange<float> musicVolumeRange = new Range<float>(0, 1);
+            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             musicVolumeSlider.Initialise(_settingsManager.MusicVolume, musicVolumeRange);
 
-            muteVoicesToggle.Initialise(_settingsManager.MuteVoices);
+            IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            effectVolumeSlider.Initialise(_settingsManager.MusicVolume, effectVolumeRange);
+
             showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
 
             hotkeysPanel.Initialise(hotkeysModel);
@@ -78,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
                     musicVolumeSlider.SliderValue,
-                    muteVoicesToggle.IsChecked,
+                    effectVolumeSlider.SliderValue,
                     showInGameHintsToggle.IsChecked,
                     hotkeysPanel);
 
@@ -148,7 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
             musicVolumeSlider.ResetToDefaults(_settingsManager.MusicVolume);
-            muteVoicesToggle.ResetToDefaults(_settingsManager.MuteVoices);
+            effectVolumeSlider.ResetToDefaults(_settingsManager.EffectVolume);
             showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
         }
     }
