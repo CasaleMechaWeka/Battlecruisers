@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.Sound.ProjectileSpawners
         {
             base.TestSetup();
 
-            _soundPlayer = new ShortSoundPlayer(_audioClip, _audioSource);
+            _soundPlayer = new ShortSoundPlayer(_audioClip, _audioSource, _settingsManager);
         }
 
         [Test]

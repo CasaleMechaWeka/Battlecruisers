@@ -13,6 +13,7 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Data;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -107,7 +108,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                         new SpriteChooserFactory(
                             new AssignerFactory(),
                             new SpriteProvider(new SpriteFetcher())),
-                    new SoundPlayerFactory(soundFetcher, deferrer),
+                    new SoundPlayerFactory(soundFetcher, deferrer, ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
                     new DeferrerProvider(deferrer, realTimeDeferrer),

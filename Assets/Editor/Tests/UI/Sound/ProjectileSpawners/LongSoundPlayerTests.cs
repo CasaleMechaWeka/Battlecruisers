@@ -22,14 +22,14 @@ namespace BattleCruisers.Tests.UI.Sound.ProjectileSpawners
             _burstSize = 3;
             _burstEndDelayInS = 99.32f;
 
-            _soundPlayer = new LongSoundPlayer(_audioClip, _audioSource, _deferrer, _burstSize, _burstEndDelayInS);
+            _soundPlayer = new LongSoundPlayer(_audioClip, _audioSource, _settingsManager, _deferrer, _burstSize, _burstEndDelayInS);
         }
 
         [Test]
         public void Constructor_InvalidBurstSize()
         {
             int invalidBurstSize = 1;
-            Assert.Throws<UnityAsserts.AssertionException>(() => new LongSoundPlayer(_audioClip, _audioSource, _deferrer, invalidBurstSize, _burstEndDelayInS));
+            Assert.Throws<UnityAsserts.AssertionException>(() => new LongSoundPlayer(_audioClip, _audioSource, _settingsManager, _deferrer, invalidBurstSize, _burstEndDelayInS));
         }
 
         [Test]

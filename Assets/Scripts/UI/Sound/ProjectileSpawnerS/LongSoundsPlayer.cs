@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -19,8 +20,14 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 
         private const int MIN_BURST_SIZE = 2;
 
-        public LongSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource, IDeferrer deferrer, int burstSize, float burstEndDelayInS)
-            : base(audioClip, audioSource)
+        public LongSoundPlayer(
+            IAudioClipWrapper audioClip, 
+            IAudioSource audioSource,
+            ISettingsManager settingsManager,
+            IDeferrer deferrer, 
+            int burstSize, 
+            float burstEndDelayInS)
+            : base(audioClip, audioSource, settingsManager)
         {
             Helper.AssertIsNotNull(deferrer);
             Assert.IsTrue(burstSize >= MIN_BURST_SIZE, $"burstSize: {burstSize}  MIN_BURST_SIZE: {MIN_BURST_SIZE}");

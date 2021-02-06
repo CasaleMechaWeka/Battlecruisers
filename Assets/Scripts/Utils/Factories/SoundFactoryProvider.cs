@@ -22,7 +22,7 @@ namespace BattleCruisers.Utils.Factories
             SoundFetcher = new SoundFetcher();
             SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
             UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
-            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
+            SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer, settingsManager);
             DummySoundPlayer = new DummySoundPlayer();
 
             ISingleSoundPlayer singleSoundPlayer = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource);
