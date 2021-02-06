@@ -73,9 +73,6 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
-            
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
-            trashDataList.Initialise();
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
 			_dataProvider = _applicationModel.DataProvider;
@@ -86,6 +83,9 @@ namespace BattleCruisers.Scenes
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
                     new AudioSourceBC(_uiAudioSource));
+            
+            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
+            trashDataList.Initialise();
 
             // TEMP  For showing PostBattleScreen :)
             if (goToPostBattleScreen)
