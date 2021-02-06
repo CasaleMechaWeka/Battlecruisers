@@ -19,6 +19,10 @@ namespace BattleCruisers.UI.Sound
         private readonly IAudioSource _audioSource;
 
         public bool IsPlayingSound => _audioSource.IsPlaying;
+        public float Volume
+        { 
+            set => _audioSource.Volume = value; 
+        }
 
         public SingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource)
         {

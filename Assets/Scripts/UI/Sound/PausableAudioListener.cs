@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Sound
             
             _audioListener = audioListener;
 
-            pauseGameManager.GamePaused += PauseGameManager_GamePaused; ;
+            pauseGameManager.GamePaused += PauseGameManager_GamePaused;
             pauseGameManager.GameResumed += PauseGameManager_GameResumed;
         }
 

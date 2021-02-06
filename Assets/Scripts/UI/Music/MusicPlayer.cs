@@ -14,6 +14,11 @@ namespace BattleCruisers.UI.Music
         private ISoundKey _currentlyPlaying;
         private AsyncOperationHandle<AudioClip> _currentlyPlayingHandle;
 
+        public float Volume
+        {
+            set => _soundPlayer.Volume = value;
+        }
+
         public MusicPlayer(ISingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(soundPlayer);
@@ -49,7 +54,7 @@ namespace BattleCruisers.UI.Music
                 Stop();
 
                 _currentlyPlaying = soundKeyToPlay;
-                 _currentlyPlayingHandle = await _soundPlayer.PlaySoundAsync(soundKeyToPlay, loop);
+                _currentlyPlayingHandle = await _soundPlayer.PlaySoundAsync(soundKeyToPlay, loop);
             }
         }
 
