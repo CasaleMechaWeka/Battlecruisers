@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Data.Settings
+﻿using System;
+
+namespace BattleCruisers.Data.Settings
 {
     public enum Difficulty
     {
@@ -7,6 +9,8 @@
 
     public interface ISettingsManager
     {
+        event EventHandler SettingsSaved;
+
         Difficulty AIDifficulty { get; set; }
         int ZoomSpeedLevel { get; set; }
         int ScrollSpeedLevel { get; set; }

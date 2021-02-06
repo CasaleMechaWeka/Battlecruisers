@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Models;
+using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Settings
@@ -7,6 +8,8 @@ namespace BattleCruisers.Data.Settings
     {
         private readonly ISettingsModel _settings;
         private readonly IDataProvider _dataProvider;
+
+        public event EventHandler SettingsSaved;
 
         public Difficulty AIDifficulty
         {
@@ -61,6 +64,7 @@ namespace BattleCruisers.Data.Settings
         public void Save()
         {
             _dataProvider.SaveGame();
+            SettingsSaved?.Invoke(this, EventArgs.Empty);
         }
     }
 }
