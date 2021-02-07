@@ -1,15 +1,15 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction
 {
     public class UnitReadySignalInitialiser : MonoBehaviour
     {
-        public IManagedDisposable CreateSignal(ICruiser parentCruiser, ISettingsManager settingsManager)
+        public IManagedDisposable CreateSignal(ICruiser parentCruiser)
         {
-            Helper.AssertIsNotNull(parentCruiser, settingsManager);
+            Assert.IsNotNull(parentCruiser);
 
             if (!parentCruiser.IsPlayerCruiser)
             {
@@ -24,8 +24,7 @@ namespace BattleCruisers.Cruisers.Construction
                 new UnitReadySignal(
                     parentCruiser.UnitMonitor,
                     new AudioSourceBC(navalAudioSource),
-                    new AudioSourceBC(aircraftAudioSource),
-                    settingsManager);
+                    new AudioSourceBC(aircraftAudioSource));
         }
     }
 }
