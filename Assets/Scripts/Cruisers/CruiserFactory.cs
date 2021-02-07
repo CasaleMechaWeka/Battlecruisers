@@ -191,7 +191,8 @@ namespace BattleCruisers.Cruisers
                     buildingDoubleClickHandler,
                     cruiserDoubleClickHandler,
                     fogOfWarManager,
-                    parentCruiserHasActiveDrones);
+                    parentCruiserHasActiveDrones,
+                    _applicationModel.DataProvider.SettingsManager);
 
             cruiser.Initialise(cruiserArgs);
         }

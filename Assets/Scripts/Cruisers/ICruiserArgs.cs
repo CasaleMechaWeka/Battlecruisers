@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
@@ -35,5 +36,6 @@ namespace BattleCruisers.Cruisers
         IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
         IManagedDisposable FogOfWarManager { get; }
         IBroadcastingProperty<bool> HasActiveDrones { get; }
+        ISettingsManager SettingsManager { get; }
     }
 }

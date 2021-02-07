@@ -7,6 +7,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
@@ -36,6 +37,7 @@ namespace BattleCruisers.Cruisers
         public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
         public IManagedDisposable FogOfWarManager { get; }
         public IBroadcastingProperty<bool> HasActiveDrones { get; }
+        public ISettingsManager SettingsManager { get; }
 
         public CruiserArgs(
             Faction faction, 
@@ -55,7 +57,8 @@ namespace BattleCruisers.Cruisers
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,
             IManagedDisposable fogOfWarManager,
-            IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
+            ISettingsManager settingsManager)
         {
             BCUtils.Helper.AssertIsNotNull(
                 enemyCruiser, 
@@ -72,7 +75,8 @@ namespace BattleCruisers.Cruisers
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
                 fogOfWarManager,
-                parentCruiserHasActiveDrones);
+                parentCruiserHasActiveDrones,
+                settingsManager);
 
             Faction = faction;
             EnemyCruiser = enemyCruiser;
@@ -92,6 +96,7 @@ namespace BattleCruisers.Cruisers
             CruiserDoubleClickHandler = cruiserDoubleClickHandler;
             FogOfWarManager = fogOfWarManager;
             HasActiveDrones = parentCruiserHasActiveDrones;
+            SettingsManager = settingsManager;
         }
     }
 }

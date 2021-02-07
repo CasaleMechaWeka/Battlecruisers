@@ -20,6 +20,7 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
@@ -553,7 +554,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     buildingDoubleClickHandler: Substitute.For<IDoubleClickHandler<IBuilding>>(),
                     cruiserDoubleClickHandler: Substitute.For<IDoubleClickHandler<ICruiser>>(),
                     fogOfWarManager: Substitute.For<IManagedDisposable>(),
-                    parentCruiserHasActiveDrones: Substitute.For<IBroadcastingProperty<bool>>());
+                    parentCruiserHasActiveDrones: Substitute.For<IBroadcastingProperty<bool>>(),
+                    settingsManager: ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
 
             cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);

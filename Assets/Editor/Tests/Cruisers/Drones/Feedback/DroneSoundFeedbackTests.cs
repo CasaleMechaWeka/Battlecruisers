@@ -18,7 +18,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _parentCruiserHasActiveDrones = Substitute.For<IBroadcastingProperty<bool>>();
             _audioSource = Substitute.For<IAudioSource>();
-            _feedback = new DroneSoundFeedback(_parentCruiserHasActiveDrones, _audioSource);
+            // FELIX  Fix :)
+            _feedback = new DroneSoundFeedback(_parentCruiserHasActiveDrones, _audioSource, null);
         }
 
         [Test]
