@@ -4,9 +4,12 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,9 +21,11 @@ namespace BattleCruisers.Buildables.Units.Ships
     public class ArchonBattleshipController : ShipController
     {
         private IBroadcastingAnimation _unfurlAnimation;
+        private AudioSourceGroup _unfurlAudioGroup;
 
         public BarrelWrapper laser;
         public GameObject bones;
+        public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
 
         public override bool IsUltra => true;
         public override Vector2 Size => base.Size * 2;
@@ -34,7 +39,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise(parent, healthBar);
 
-            Helper.AssertIsNotNull(bones, laser);
+            Helper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 
             _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
             Assert.IsNotNull(_unfurlAnimation);
@@ -45,6 +50,19 @@ namespace BattleCruisers.Buildables.Units.Ships
             {
                 targetProxy.Initialise(this);
             }
+        }
+
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        {
+            base.Initialise(uiManager, factoryProvider);
+
+            _unfurlAudioGroup
+                = new AudioSourceGroup(
+                    factoryProvider.SettingsManager,
+                    new AudioSourceBC(bellowAudioSource),
+                    new AudioSourceBC(crankAudioSource),
+                    new AudioSourceBC(chainAudioSource),
+                    new AudioSourceBC(dieselAudioSource));
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)

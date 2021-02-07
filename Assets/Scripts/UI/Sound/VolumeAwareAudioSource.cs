@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Sound
 {
-    // FELIX  Use everywhere!  Can undo a lot of the changes I've been making? :P
     public class VolumeAwareAudioSource : IManagedDisposable, IAudioSource
     {
         private readonly IAudioSource _audioSource;
