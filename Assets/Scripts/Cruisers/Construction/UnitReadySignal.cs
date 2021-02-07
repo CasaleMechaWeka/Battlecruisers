@@ -6,6 +6,7 @@ using System;
 
 namespace BattleCruisers.Cruisers.Construction
 {
+    // FELIX  Update tests
     public class UnitReadySignal : IManagedDisposable
     {
         private readonly ICruiserUnitMonitor _unitMonitor;
@@ -62,7 +63,6 @@ namespace BattleCruisers.Cruisers.Construction
         public void DisposeManagedState()
         {
             _unitMonitor.UnitCompleted -= _unitMonitor_UnitCompleted;
-            _settingsManager.SettingsSaved -= _settingsManager_SettingsSaved;
         }
     }
 }
