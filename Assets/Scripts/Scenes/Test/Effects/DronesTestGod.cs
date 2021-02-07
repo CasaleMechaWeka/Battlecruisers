@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Data;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
 using NSubstitute;
@@ -40,10 +39,7 @@ namespace BattleCruisers.Scenes.Test.Effects
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones = Substitute.For<IBroadcastingProperty<bool>>();
             parentCruiserHasActiveDrones.Value.Returns(true);
 
-            droneSoundFeedbackInitialiser
-                .Initialise(
-                    parentCruiserHasActiveDrones, 
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+            droneSoundFeedbackInitialiser.Initialise(parentCruiserHasActiveDrones);
             parentCruiserHasActiveDrones.ValueChanged += Raise.Event();
         }
 
