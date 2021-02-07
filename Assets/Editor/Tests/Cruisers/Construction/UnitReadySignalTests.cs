@@ -23,7 +23,8 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _navalAudioSource = Substitute.For<IAudioSource>();
             _aircraftAudioSource = Substitute.For<IAudioSource>();
 
-            _signal = new UnitReadySignal(_unitMonitor, _navalAudioSource, _aircraftAudioSource);
+            // FELIX  Fix :)
+            _signal = new UnitReadySignal(_unitMonitor, _navalAudioSource, _aircraftAudioSource, null);
 
             _completedUnit = Substitute.For<IUnit>();
         }

@@ -168,7 +168,7 @@ namespace BattleCruisers.Cruisers
 
             UnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<UnitReadySignalInitialiser>();
             Assert.IsNotNull(unitReadySignalInitialiser);
-            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
+            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this, args.SettingsManager);
 
             DroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<DroneSoundFeedbackInitialiser>();
             Assert.IsNotNull(droneSoundFeedbackInitialiser);
