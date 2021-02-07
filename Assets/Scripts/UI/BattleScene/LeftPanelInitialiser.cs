@@ -14,7 +14,7 @@ using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;

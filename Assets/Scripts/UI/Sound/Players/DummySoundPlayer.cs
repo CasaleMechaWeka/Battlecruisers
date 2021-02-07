@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI.Sound
+﻿namespace BattleCruisers.UI.Sound.Players
 {
     public class DummySoundPlayer : IPrioritisedSoundPlayer
     {

@@ -8,7 +8,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using NSubstitute;
 using NUnit.Framework;
 

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityCommon.Properties;

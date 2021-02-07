@@ -1,13 +1,12 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using TMPro;
 using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
-	public class ModalMenuController : MonoBehaviour, IModalMenu
+    public class ModalMenuController : MonoBehaviour, IModalMenu
 	{
 		private Canvas _canvas;
 		private IMainMenuManager _menuManager;

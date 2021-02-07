@@ -2,7 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;

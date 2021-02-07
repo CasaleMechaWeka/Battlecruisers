@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen

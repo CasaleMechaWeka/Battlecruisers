@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;

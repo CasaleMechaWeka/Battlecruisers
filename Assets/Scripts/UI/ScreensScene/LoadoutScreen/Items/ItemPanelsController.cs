@@ -2,14 +2,14 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Fetchers;
 using System;
 using System.Collections.Generic;
+using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {

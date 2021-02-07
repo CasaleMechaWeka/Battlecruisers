@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Targets.Factories;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Utils.Factories
 {

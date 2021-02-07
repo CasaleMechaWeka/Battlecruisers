@@ -12,7 +12,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;

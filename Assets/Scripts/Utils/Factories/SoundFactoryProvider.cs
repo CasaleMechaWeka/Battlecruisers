@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes.BattleScene;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
 using System;

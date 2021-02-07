@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.Players
 {
     public interface ISoundPlayer
     {

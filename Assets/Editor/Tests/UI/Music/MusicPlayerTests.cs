@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using NSubstitute;
 using NUnit.Framework;
 

@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;

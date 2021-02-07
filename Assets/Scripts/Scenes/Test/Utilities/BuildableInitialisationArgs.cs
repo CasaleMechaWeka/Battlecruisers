@@ -21,7 +21,7 @@ using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;

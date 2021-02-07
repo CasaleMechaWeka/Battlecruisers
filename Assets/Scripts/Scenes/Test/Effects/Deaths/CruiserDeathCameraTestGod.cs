@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Factories;
 using NSubstitute;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;

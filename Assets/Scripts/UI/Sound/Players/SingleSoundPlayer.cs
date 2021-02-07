@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.Players
 {
     /// <summary>
     /// Plays a single sound at a time.

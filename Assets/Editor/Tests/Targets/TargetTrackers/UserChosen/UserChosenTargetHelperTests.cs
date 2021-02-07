@@ -3,7 +3,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using NSubstitute;
 using NUnit.Framework;
 

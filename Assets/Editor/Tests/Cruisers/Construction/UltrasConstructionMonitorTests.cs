@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tests.Utils.Extensions;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using UnityCommon.PlatformAbstractions.Time;

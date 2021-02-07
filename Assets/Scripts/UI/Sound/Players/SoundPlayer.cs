@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.Players
 {
     public class SoundPlayer : ISoundPlayer
     {

@@ -4,7 +4,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;

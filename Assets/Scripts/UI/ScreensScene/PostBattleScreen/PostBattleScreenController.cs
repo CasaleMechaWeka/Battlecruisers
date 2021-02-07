@@ -9,7 +9,7 @@ using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen.States;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;

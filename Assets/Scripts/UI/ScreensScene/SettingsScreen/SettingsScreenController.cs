@@ -3,7 +3,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;

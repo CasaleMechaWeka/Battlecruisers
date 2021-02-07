@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Manager

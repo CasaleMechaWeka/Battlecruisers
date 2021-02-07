@@ -4,7 +4,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Threading.Tasks;

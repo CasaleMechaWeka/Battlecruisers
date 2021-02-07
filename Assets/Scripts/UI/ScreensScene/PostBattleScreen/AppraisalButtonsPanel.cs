@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;

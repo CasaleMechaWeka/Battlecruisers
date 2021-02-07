@@ -9,7 +9,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;

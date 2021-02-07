@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen

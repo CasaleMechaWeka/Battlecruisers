@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Timers;
 using NSubstitute;

@@ -2,7 +2,7 @@
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.Players
 {
     public class AudioClipPlayer : IAudioClipPlayer
     {

@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using NSubstitute;
 using NUnit.Framework;
 

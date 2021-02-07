@@ -7,7 +7,7 @@ using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Clamping;

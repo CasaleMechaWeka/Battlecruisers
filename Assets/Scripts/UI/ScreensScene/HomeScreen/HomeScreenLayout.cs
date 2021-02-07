@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.HomeScreen.Buttons;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen

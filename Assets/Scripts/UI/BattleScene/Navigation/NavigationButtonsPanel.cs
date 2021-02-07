@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
