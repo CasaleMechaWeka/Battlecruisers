@@ -113,7 +113,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            FactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider);
+            FactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager, dataProvider.SettingsManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 

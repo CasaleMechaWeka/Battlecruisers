@@ -37,6 +37,7 @@ namespace BattleCruisers.Cruisers
         public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
         public IManagedDisposable FogOfWarManager { get; }
         public IBroadcastingProperty<bool> HasActiveDrones { get; }
+        // FELIX  Remove, use IFactoryProvider instead :P
         public ISettingsManager SettingsManager { get; }
 
         public CruiserArgs(

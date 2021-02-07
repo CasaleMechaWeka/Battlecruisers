@@ -176,6 +176,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.TargetPositionPredictorFactory.Returns(targetPositionControllerFactory);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
+            factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
 
             // Turrets
             ITurretFactoryProvider turretFactoryProvider = Substitute.For<ITurretFactoryProvider>();

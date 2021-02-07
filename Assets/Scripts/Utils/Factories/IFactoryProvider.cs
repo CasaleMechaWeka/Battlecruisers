@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -33,5 +34,7 @@ namespace BattleCruisers.Utils.Factories
         ITargetFactoriesProvider Targets { get; }
         ITurretFactoryProvider Turrets { get; }
         IUpdaterProvider UpdaterProvider { get; }
+        ISettingsManager SettingsManager { get; }
+
     }
 }

@@ -34,6 +34,7 @@ namespace BattleCruisers.Utils.Factories
         public ITargetFactoriesProvider Targets { get; }
         public ITurretFactoryProvider Turrets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
+        public ISettingsManager SettingsManager { get; }
 
         // Circular dependencies :/
         public IPoolProviders PoolProviders { get; private set; }
@@ -42,12 +43,14 @@ namespace BattleCruisers.Utils.Factories
         public FactoryProvider(
             IBattleSceneGodComponents components,
             IPrefabFactory prefabFactory, 
-            ISpriteProvider spriteProvider)
+            ISpriteProvider spriteProvider,
+            ISettingsManager settingsManager)
 		{
-            Helper.AssertIsNotNull(components, prefabFactory, spriteProvider);
+            Helper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);
 
             _components = components;
 			PrefabFactory = prefabFactory;
+            SettingsManager = settingsManager;
             Targets = new TargetFactoriesProvider();
 			TargetPositionPredictorFactory = new TargetPositionPredictorFactory();
 			MovementControllerFactory = new MovementControllerFactory();

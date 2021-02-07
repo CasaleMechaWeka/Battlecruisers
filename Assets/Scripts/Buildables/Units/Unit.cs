@@ -1,9 +1,12 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.ObjectModel;
@@ -14,7 +17,8 @@ namespace BattleCruisers.Buildables.Units
 {
     public abstract class Unit : Buildable<BuildableActivationArgs>, IUnit
     {
-        private IAudioSource _engineAudioSource;
+        private IAudioSource _coreEngineAudioSource;
+        private VolumeAwareAudioSource _engineAudioSource;
 
         [Header("Other")]
         public UnitCategory category;
@@ -50,7 +54,14 @@ namespace BattleCruisers.Buildables.Units
             AudioSource engineAudioSource = transform.FindNamedComponent<AudioSource>("EngineAudioSource");
             Assert.IsNotNull(engineAudioSource);
             Assert.IsNotNull(engineAudioSource.clip);
-            _engineAudioSource = new AudioSourceBC(engineAudioSource);
+            _coreEngineAudioSource = new AudioSourceBC(engineAudioSource);
+        }
+
+        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        {
+            base.Initialise(uiManager, factoryProvider);
+
+            _engineAudioSource = new VolumeAwareAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -69,7 +80,7 @@ namespace BattleCruisers.Buildables.Units
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
-            _engineAudioSource.Play(isSpatial: true, loop: true);
+            _coreEngineAudioSource.Play(isSpatial: true, loop: true);
         }
 
         void FixedUpdate()
@@ -119,7 +130,7 @@ namespace BattleCruisers.Buildables.Units
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-            _engineAudioSource.Stop();
+            _coreEngineAudioSource.Stop();
         }
 
         protected override void InternalDestroy()
