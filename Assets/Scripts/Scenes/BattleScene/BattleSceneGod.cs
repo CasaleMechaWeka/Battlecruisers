@@ -62,12 +62,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public LeftPanelInitialiser leftPanelInitialiser;
         public RightPanelInitialiser rightPanelInitialiser;
         public TutorialInitialiser tutorialInitialiser;
+        public WaterSplashVolumeController waterSplashVolumeController;
 
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
 
-            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser);
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
 
             BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
@@ -95,6 +96,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             IDataProvider dataProvider = applicationModel.DataProvider;
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
