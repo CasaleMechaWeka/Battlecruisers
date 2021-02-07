@@ -9,7 +9,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     /// <summary>
     /// When drones go from idle to active, play a drones sound.
     /// </summary>
-    /// FELIX  Update tests
     public class DroneSoundFeedback : IManagedDisposable
     {
         private readonly IBroadcastingProperty<bool> _parentCruiserHasActiveDrones;
