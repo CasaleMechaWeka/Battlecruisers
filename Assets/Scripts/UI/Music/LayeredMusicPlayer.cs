@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
-    // FELIX  Update tests
     public class LayeredMusicPlayer : ILayeredMusicPlayer
     {
         private readonly IAudioVolumeFade _audioVolumeFade;
@@ -93,6 +92,7 @@ namespace BattleCruisers.UI.Music
             {
                 _primarySource.FreeAudioClip();
                 _secondarySource.FreeAudioClip();
+                _settingsManager.SettingsSaved -= _settingsManager_SettingsSaved;
                 _isDisposed = true;
             }
         }

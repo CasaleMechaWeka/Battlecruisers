@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Music;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
@@ -12,6 +13,7 @@ namespace BattleCruisers.Tests.UI.Music
         private ILayeredMusicPlayer _musicPlayer;
         private IAudioVolumeFade _audioVolumeFade;
         private IAudioSource _primarySource, _secondarySource;
+        private ISettingsManager _settingsManager;
 
         [SetUp]
         public void TestSetup()
@@ -19,9 +21,11 @@ namespace BattleCruisers.Tests.UI.Music
             _audioVolumeFade = Substitute.For<IAudioVolumeFade>();
             _primarySource = Substitute.For<IAudioSource>();
             _secondarySource = Substitute.For<IAudioSource>();
+            _settingsManager = Substitute.For<ISettingsManager>();
 
-            // FELIX  Update tests
-            _musicPlayer = new LayeredMusicPlayer(_audioVolumeFade, _primarySource, _secondarySource, null);
+            _musicPlayer = new LayeredMusicPlayer(_audioVolumeFade, _primarySource, _secondarySource, _settingsManager);
+
+            _settingsManager.MusicVolume.Returns(1.25f);
         }
 
         [Test]
@@ -37,8 +41,7 @@ namespace BattleCruisers.Tests.UI.Music
             _primarySource.IsPlaying.Returns(false);
             _musicPlayer.Play();
 
-            // FELIX  Fix :)
-            //_primarySource.Received().Volume = LayeredMusicPlayer.MAX_VOLUME;
+            _primarySource.Received().Volume = _settingsManager.MusicVolume;
             _primarySource.Received().Play(isSpatial: false, loop: true);
 
             _secondarySource.Received().Volume = 0;
@@ -64,8 +67,7 @@ namespace BattleCruisers.Tests.UI.Music
         public void PlaySecondary()
         {
             _musicPlayer.PlaySecondary();
-            // FELIX  Fix :)
-            //_audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: LayeredMusicPlayer.MAX_VOLUME, LayeredMusicPlayer.FADE_TIME_IN_S);
+            _audioVolumeFade.Received().FadeToVolume(_secondarySource, targetVolume: _settingsManager.MusicVolume, LayeredMusicPlayer.FADE_TIME_IN_S);
         }
 
         [Test]
@@ -108,12 +110,37 @@ namespace BattleCruisers.Tests.UI.Music
         }
 
         [Test]
+        public void _settingsManager_SettingsSaved_WhilePlayingSecondary()
+        {
+            _musicPlayer.PlaySecondary();
+
+            _settingsManager.SettingsSaved += Raise.Event();
+
+            _audioVolumeFade.Received().Stop();
+            _primarySource.Received().Volume = _settingsManager.MusicVolume;
+            _secondarySource.Received().Volume = _settingsManager.MusicVolume;
+        }
+
+        [Test]
+        public void _settingsManager_SettingsSaved_WhileNotPlayingSecondary()
+        {
+            _settingsManager.SettingsSaved += Raise.Event();
+
+            _audioVolumeFade.Received().Stop();
+            _primarySource.Received().Volume = _settingsManager.MusicVolume;
+            _secondarySource.Received().Volume = 0;
+        }
+
+        [Test]
         public void DisposeManagedState()
         {
             _musicPlayer.DisposeManagedState();
 
             _primarySource.Received().FreeAudioClip();
             _secondarySource.Received().FreeAudioClip();
+
+            _settingsManager.SettingsSaved += Raise.Event();
+            _audioVolumeFade.DidNotReceive().Stop();
         }
 
         [Test]
