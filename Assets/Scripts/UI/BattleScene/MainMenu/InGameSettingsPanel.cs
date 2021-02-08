@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -18,11 +17,10 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
-            ISettingsManager settingsManager,
-            IMusicPlayer musicPlayer)
+            ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(saveButton, cancelButton, musicVolumeSlider, effectVolumeSlider);
-            Helper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager, musicPlayer);
+            Helper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager);
 
             // FELIX  Avoid duplicate code with SettingsScreenController?
             IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
@@ -36,7 +34,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
                     soundPlayer,
                     mainMenuManager,
                     settingsManager,
-                    musicPlayer,
                     musicVolumeSlider.SliderValue,
                     effectVolumeSlider.SliderValue);
 

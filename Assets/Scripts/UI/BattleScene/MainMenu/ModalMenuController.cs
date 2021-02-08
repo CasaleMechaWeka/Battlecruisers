@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -25,19 +24,18 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			ISingleSoundPlayer soundPlayer, 
 			bool isTutorial, 
 			IMainMenuManager menuManager,
-			ISettingsManager settingsManager,
-			IMusicPlayer musicPlayer)
+			ISettingsManager settingsManager)
 		{
 			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton);
 			Helper.AssertIsNotNull(buttonsPanel, settingsPanel);
-			Helper.AssertIsNotNull(soundPlayer, menuManager, settingsManager, musicPlayer);
+			Helper.AssertIsNotNull(soundPlayer, menuManager, settingsManager);
 
 			_menuManager = menuManager;
 
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
-			settingsPanel.Initialise(soundPlayer, menuManager, settingsManager, musicPlayer);
+			settingsPanel.Initialise(soundPlayer, menuManager, settingsManager);
 
 			// FELIX  Abstract to ButtonInitialiser :D
             endGameButton.Initialise(soundPlayer, _menuManager.QuitGame);

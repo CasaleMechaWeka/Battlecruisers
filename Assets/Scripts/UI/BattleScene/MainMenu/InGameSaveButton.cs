@@ -1,6 +1,4 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.BattleScene.MainMenu;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityCommon.Properties;
@@ -14,7 +12,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
     {
         private IMainMenuManager _mainMenuManager;
         private ISettingsManager _settingsManager;
-        private IMusicPlayer _musicPlayer;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume;
 
         private CanvasGroup _canvasGroup;
@@ -24,17 +21,15 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
             ISettingsManager settingsManager, 
-            IMusicPlayer musicPlayer,
             IBroadcastingProperty<float> musicVolume,
             IBroadcastingProperty<float> effectVolume)
         {
             base.Initialise(soundPlayer, parent: mainMenuManager);
 
-            Helper.AssertIsNotNull(mainMenuManager, settingsManager, musicPlayer, musicVolume, effectVolume);
+            Helper.AssertIsNotNull(mainMenuManager, settingsManager, musicVolume, effectVolume);
 
             _mainMenuManager = mainMenuManager;
             _settingsManager = settingsManager;
-            _musicPlayer = musicPlayer;
             _musicVolume = musicVolume;
             _effectVolume = effectVolume;
 
@@ -58,8 +53,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _settingsManager.Save();
 
             UpdateEnabledStatus();
-
-            _musicPlayer.Volume = _settingsManager.MusicVolume;
 
             _mainMenuManager.DismissMenu();
         }

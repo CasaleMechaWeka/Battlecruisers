@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Static;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -54,7 +55,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return
                 await _musicInitialiser.CreatePlayerAsync(
                     _soundFetcher,
-                    _songs.Current());
+                    _songs.Current(),
+                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
         }
 
         public void PlayBackground()

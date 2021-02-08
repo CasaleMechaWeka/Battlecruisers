@@ -182,9 +182,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     battleCompletionHandler,
                     factoryProvider.Sound.UISoundPlayer,
                     sceneNavigator,
-                    new NavigationPermitterManager(navigationPermitters),
-                    // FELIX  Use layered music player :P
-                    null);
+                    new NavigationPermitterManager(navigationPermitters));
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
@@ -208,7 +206,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     factoryProvider.Sound.SoundFetcher,
-                    currentLevel.MusicKeys);
+                    currentLevel.MusicKeys,
+                    dataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);
             _audioInitialiser
                 = new AudioInitialiser(

@@ -11,6 +11,7 @@ namespace BattleCruisers.Utils.Audio
     {
         private readonly ICoroutineStarter _coroutineStarter;
         private readonly ITime _time;
+        private bool _shouldFade;
 
         public AudioVolumeFade(ICoroutineStarter coroutineStarter, ITime time)
         {
@@ -18,6 +19,7 @@ namespace BattleCruisers.Utils.Audio
 
             _coroutineStarter = coroutineStarter;
             _time = time;
+            _shouldFade = false;
         }
 
         public void FadeToVolume(IAudioSource audioSource, float targetVolume, float durationInS)
@@ -29,10 +31,13 @@ namespace BattleCruisers.Utils.Audio
 
         private IEnumerator FadeToVolumeCoroutine(IAudioSource audioSource, float targetVolume, float durationInS)
         {
+            _shouldFade = true;
+
             float currentTime = 0;
             float startVolume = audioSource.Volume;
 
-            while (currentTime < durationInS)
+            while (currentTime < durationInS
+                && _shouldFade)
             {
                 currentTime += _time.DeltaTime;
                 audioSource.Volume = Mathf.Lerp(startVolume, targetVolume, currentTime / durationInS);
@@ -40,6 +45,12 @@ namespace BattleCruisers.Utils.Audio
             }
 
             yield break;
+        }
+
+        // FELIX  Test this in game???
+        public void Stop()
+        {
+            _shouldFade = false;
         }
     }
 }

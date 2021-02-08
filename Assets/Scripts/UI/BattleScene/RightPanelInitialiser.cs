@@ -10,7 +10,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Filters;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -47,8 +46,7 @@ namespace BattleCruisers.UI.BattleScene
             IBattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
             ISceneNavigator sceneNavigator,
-            INavigationPermitterManager navigationPermitterManager,
-            IMusicPlayer musicPlayer)
+            INavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels);
             Helper.AssertIsNotNull(
@@ -61,13 +59,12 @@ namespace BattleCruisers.UI.BattleScene
                 battleCompletionHandler,
                 soundPlayer,
                 sceneNavigator,
-                navigationPermitterManager,
-                musicPlayer);
+                navigationPermitterManager);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator, navigationPermitterManager);
-            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager, musicPlayer);
+            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);

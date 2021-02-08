@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Audio;
 using BattleCruisers.Utils.Fetchers;
@@ -13,9 +14,12 @@ namespace BattleCruisers.UI.Music
 {
     public class LayeredMusicPlayerInitialiser : MonoBehaviour
     {
-        public async Task<ILayeredMusicPlayer> CreatePlayerAsync(ISoundFetcher soundFetcher, SoundKeyPair soundKeys)
+        public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
+            ISoundFetcher soundFetcher, 
+            SoundKeyPair soundKeys,
+            ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(soundFetcher, soundKeys);
+            Helper.AssertIsNotNull(soundFetcher, soundKeys, settingsManager);
 
             AudioSource primarySource = transform.FindNamedComponent<AudioSource>("PrimaryAudioSource");
             IAudioClipWrapper primaryClip = await soundFetcher.GetSoundAsync(soundKeys.PrimaryKey);
@@ -39,7 +43,8 @@ namespace BattleCruisers.UI.Music
                 new LayeredMusicPlayer(
                     new AudioVolumeFade(coroutineStarter, TimeBC.Instance),
                     primary,
-                    secondary);
+                    secondary,
+                    settingsManager);
         }
     }
 }
