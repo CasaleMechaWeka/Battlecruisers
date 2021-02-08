@@ -47,7 +47,6 @@ namespace BattleCruisers.Utils.Audio
             yield break;
         }
 
-        // FELIX  Test this in game???
         public void Stop()
         {
             _shouldFade = false;
