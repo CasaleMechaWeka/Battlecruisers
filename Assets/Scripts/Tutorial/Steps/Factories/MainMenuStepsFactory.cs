@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 

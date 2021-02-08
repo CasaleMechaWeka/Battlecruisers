@@ -1,0 +1,46 @@
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Panels;
+using BattleCruisers.UI.ScreensScene.SettingsScreen;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+
+namespace BattleCruisers.UI.BattleScene.MainMenu
+{
+    public class InGameSettingsPanel : Panel
+    {
+        public InGameSaveButton saveButton;
+        public CanvasGroupButton cancelButton;
+        public FloatSliderController musicVolumeSlider, effectVolumeSlider;
+
+        public void Initialise(
+            ISingleSoundPlayer soundPlayer,
+            IMainMenuManager mainMenuManager,
+            ISettingsManager settingsManager,
+            IMusicPlayer musicPlayer)
+        {
+            Helper.AssertIsNotNull(saveButton, cancelButton, musicVolumeSlider, effectVolumeSlider);
+            Helper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager, musicPlayer);
+
+            // FELIX  Avoid duplicate code with SettingsScreenController?
+            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            musicVolumeSlider.Initialise(settingsManager.MusicVolume, musicVolumeRange);
+
+            IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            effectVolumeSlider.Initialise(settingsManager.EffectVolume, effectVolumeRange);
+
+            saveButton
+                .Initialise(
+                    soundPlayer,
+                    mainMenuManager,
+                    settingsManager,
+                    musicPlayer,
+                    musicVolumeSlider.SliderValue,
+                    effectVolumeSlider.SliderValue);
+
+            cancelButton.Initialise(soundPlayer, mainMenuManager.DismissMenu);
+        }
+    }
+}

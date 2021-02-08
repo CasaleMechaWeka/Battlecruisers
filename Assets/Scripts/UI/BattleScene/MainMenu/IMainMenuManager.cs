@@ -1,6 +1,6 @@
-﻿namespace BattleCruisers.UI.BattleScene
+﻿namespace BattleCruisers.UI.BattleScene.MainMenu
 {
-    public interface IMainMenuManager
+    public interface IMainMenuManager : IDismissableEmitter
     {
         void ShowMenu();
         void DismissMenu();

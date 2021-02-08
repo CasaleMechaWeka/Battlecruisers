@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.BattleScene.GameSpeed;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
 

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene;
+﻿using BattleCruisers.UI.BattleScene.MainMenu;
 using System;
 
 namespace BattleCruisers.Utils.BattleScene.Lifetime

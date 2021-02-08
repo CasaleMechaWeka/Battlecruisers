@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Scenes;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;

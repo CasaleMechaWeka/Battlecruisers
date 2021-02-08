@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.BattleScene;
+﻿using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.Utils.BattleScene.Lifetime;
 using NSubstitute;
 using NUnit.Framework;

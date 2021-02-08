@@ -2,9 +2,9 @@
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using UnityEngine;
+using System;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.MainMenu
 {
     public class MainMenuManager : IMainMenuManager
     {
@@ -15,6 +15,9 @@ namespace BattleCruisers.UI.BattleScene
         private readonly INavigationPermitterManager _navigationPermitterManager;
 
         private NavigationPermittersState _stateOnShowMenu;
+
+        // FELIX  Update tests
+        public event EventHandler Dismissed;
 
         public MainMenuManager(
             IPauseGameManager pauseGameManager,
@@ -51,6 +54,7 @@ namespace BattleCruisers.UI.BattleScene
             }
             _pauseGameManager.ResumeGame();
             _modalMenu.HideMenu();
+            Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
         public void QuitGame()
@@ -59,6 +63,7 @@ namespace BattleCruisers.UI.BattleScene
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false);
             _modalMenu.HideMenu();
+            Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
         public void RetryLevel()
@@ -66,11 +71,12 @@ namespace BattleCruisers.UI.BattleScene
             // Need to resume game to get music back
             _pauseGameManager.ResumeGame();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+            Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
         public void ShowSettings()
         {
-            Debug.Log("SHow settings :D");
+            _modalMenu.ShowSettings();
         }
     }
 }

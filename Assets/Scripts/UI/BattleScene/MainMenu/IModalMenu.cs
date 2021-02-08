@@ -1,6 +1,6 @@
 ﻿using UnityCommon.Properties;
 
-namespace BattleCruisers.UI.BattleScene
+namespace BattleCruisers.UI.BattleScene.MainMenu
 {
     public interface IModalMenu
     {
@@ -8,5 +8,6 @@ namespace BattleCruisers.UI.BattleScene
 
         void ShowMenu();
         void HideMenu();
+        void ShowSettings();
     }
 }

@@ -172,8 +172,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     dataProvider.StaticData);
 
             RightPanelComponents rightPanelComponents
-                = rightPanelInitialiser.
-                Initialise(
+                = rightPanelInitialiser.Initialise(
                     applicationModel,
                     uiManager,
                     playerCruiser,
@@ -183,7 +182,9 @@ namespace BattleCruisers.Scenes.BattleScene
                     battleCompletionHandler,
                     factoryProvider.Sound.UISoundPlayer,
                     sceneNavigator,
-                    new NavigationPermitterManager(navigationPermitters));
+                    new NavigationPermitterManager(navigationPermitters),
+                    // FELIX  Use layered music player :P
+                    null);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
