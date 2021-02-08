@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.MainMenu
 {
-    // FELIX  Avoid duplicate code with SaveButton :)
     public class InGameSaveButton : ElementWithClickSound
     {
         private IMainMenuManager _mainMenuManager;

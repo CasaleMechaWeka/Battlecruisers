@@ -27,7 +27,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
             _settingsManager = settingsManager;
 
-            // FELIX  Avoid duplicate code with SettingsScreenController?
             IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             musicVolumeSlider.Initialise(settingsManager.MusicVolume, musicVolumeRange);
 
