@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.Laser;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -45,10 +46,11 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
+            ISettingsManager settingsManager,
             IDeltaTimeProvider deltaTimeProvider,
             IDeferrer timeScaleDeferrer)
         {
-            base.Initialise(targetFilter, parent);
+            base.Initialise(targetFilter, parent, settingsManager);
             Assert.IsNotNull(deltaTimeProvider);
             Assert.IsTrue(damagePerS > 0);
 

@@ -61,6 +61,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                     args.TargetFilter, 
                     _laserTurretStats.damagePerS, 
                     args.Parent, 
+                    args.FactoryProvider.SettingsManager,
                     args.Updater,
                     args.FactoryProvider.DeferrerProvider.Deferrer);
 

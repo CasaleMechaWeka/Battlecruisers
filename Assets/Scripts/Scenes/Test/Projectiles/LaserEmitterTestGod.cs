@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -146,6 +147,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
                     targetFilter, 
                     damagePerS: 100, 
                     parent: parent, 
+                    settingsManager: ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager,
                     deltaTimeProvider: _updaterProvider.BarrelControllerUpdater,
                     timeScaleDeferrer: timeScaleDeferrer);
         }
