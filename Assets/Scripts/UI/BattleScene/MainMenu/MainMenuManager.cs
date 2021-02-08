@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
         private NavigationPermittersState _stateOnShowMenu;
 
-        // FELIX  Update tests
         public event EventHandler Dismissed;
 
         public MainMenuManager(

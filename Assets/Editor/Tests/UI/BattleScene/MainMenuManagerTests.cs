@@ -17,6 +17,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private ISceneNavigator _sceneNavigator;
         private INavigationPermitterManager _navigationPermitterManager;
         private NavigationPermittersState _preMenuState;
+        private int _dismissedCount;
 
         [SetUp]
         public void TestSetup()
@@ -31,6 +32,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _preMenuState = new NavigationPermittersState(default, default, default, default);
             _navigationPermitterManager.PauseNavigation().Returns(_preMenuState);
+
+            _dismissedCount = 0;
+            _mainMenuManager.Dismissed += (sender, e) => _dismissedCount++;
         }
 
         [Test]
@@ -66,6 +70,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _navigationPermitterManager.DidNotReceiveWithAnyArgs().RestoreNavigation(default);
             _pauseGameManager.Received().ResumeGame();
             _modalMenu.Received().HideMenu();
+            Assert.AreEqual(1, _dismissedCount);
         }
 
         [Test]
@@ -78,6 +83,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _navigationPermitterManager.RestoreNavigation(_preMenuState);
             _pauseGameManager.Received().ResumeGame();
             _modalMenu.Received().HideMenu();
+            Assert.AreEqual(1, _dismissedCount);
         }
 
         [Test]
@@ -88,6 +94,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _pauseGameManager.Received().ResumeGame();
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
             _modalMenu.Received().HideMenu();
+            Assert.AreEqual(1, _dismissedCount);
         }
 
         [Test]
@@ -97,6 +104,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _pauseGameManager.Received().ResumeGame();
             _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE);
+            Assert.AreEqual(1, _dismissedCount);
         }
     }
 }
