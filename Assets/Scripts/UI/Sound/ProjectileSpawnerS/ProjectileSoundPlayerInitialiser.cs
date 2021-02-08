@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -8,13 +9,20 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     public abstract class ProjectileSoundPlayerInitialiser : MonoBehaviour, IProjectileSoundPlayerInitialiser
     {
-        public async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(ISoundPlayerFactory soundPlayerFactory, ISoundKey firingSound, int burstSize)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
+            ISoundPlayerFactory soundPlayerFactory, 
+            ISoundKey firingSound, 
+            int burstSize,
+            ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(soundPlayerFactory, firingSound);
+            Helper.AssertIsNotNull(soundPlayerFactory, firingSound, settingsManager);
 
             AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
-            IAudioSource audioSourceWrapper = new AudioSourceBC(audioSource);
+            IAudioSource audioSourceWrapper 
+                = new VolumeAwareAudioSource(
+                    new AudioSourceBC(audioSource),
+                    settingsManager);
 
             return await CreateSoundPlayerAsync(soundPlayerFactory, firingSound, burstSize, audioSourceWrapper);
         }

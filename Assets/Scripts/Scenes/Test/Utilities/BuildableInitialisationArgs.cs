@@ -108,7 +108,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                         new SpriteChooserFactory(
                             new AssignerFactory(),
                             new SpriteProvider(new SpriteFetcher())),
-                    new SoundPlayerFactory(soundFetcher, deferrer, ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager),
+                    new SoundPlayerFactory(soundFetcher, deferrer),
                     new TurretStatsFactory(boostFactory, globalBoostProviders),
                     new AttackablePositionFinderFactory(),
                     new DeferrerProvider(deferrer, realTimeDeferrer),

@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
@@ -9,8 +8,8 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     /// </summary>
     public class ShortSoundPlayer : ProjectileSpawnerSoundPlayer
     {
-        public ShortSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource, ISettingsManager settingsManager)
-            : base(audioClip, audioSource, settingsManager)
+        public ShortSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource)
+            : base(audioClip, audioSource)
         {
             Helper.AssertIsNotNull(audioClip, audioSource);
         }

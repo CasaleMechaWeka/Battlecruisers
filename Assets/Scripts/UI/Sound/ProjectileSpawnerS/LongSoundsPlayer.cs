@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -23,11 +22,10 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         public LongSoundPlayer(
             IAudioClipWrapper audioClip, 
             IAudioSource audioSource,
-            ISettingsManager settingsManager,
             IDeferrer deferrer, 
             int burstSize, 
             float burstEndDelayInS)
-            : base(audioClip, audioSource, settingsManager)
+            : base(audioClip, audioSource)
         {
             Helper.AssertIsNotNull(deferrer);
             Assert.IsTrue(burstSize >= MIN_BURST_SIZE, $"burstSize: {burstSize}  MIN_BURST_SIZE: {MIN_BURST_SIZE}");

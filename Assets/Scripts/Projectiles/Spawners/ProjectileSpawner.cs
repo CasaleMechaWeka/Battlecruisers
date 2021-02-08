@@ -44,7 +44,12 @@ namespace BattleCruisers.Projectiles.Spawners
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer = await soundPlayerInitialiser.CreateSoundPlayerAsync(args.FactoryProvider.Sound.SoundPlayerFactory, firingSound, args.BurstSize);
+            _soundPlayer 
+                = await soundPlayerInitialiser.CreateSoundPlayerAsync(
+                    args.FactoryProvider.Sound.SoundPlayerFactory, 
+                    firingSound, 
+                    args.BurstSize,
+                    args.FactoryProvider.SettingsManager);
         }
 
 		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
