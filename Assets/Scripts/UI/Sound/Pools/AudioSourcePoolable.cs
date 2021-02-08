@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -11,17 +10,15 @@ namespace BattleCruisers.UI.Sound.Pools
     {
         private readonly IAudioSource _source;
         private readonly IDeferrer _realTimeDeferrer;
-        private readonly ISettingsManager _settingsManager;
 
         public event EventHandler Deactivated;
 
-        public AudioSourcePoolable(IAudioSource source, IDeferrer realTimeDeferrer, ISettingsManager settingsManager)
+        public AudioSourcePoolable(IAudioSource source, IDeferrer realTimeDeferrer)
         {
-            Helper.AssertIsNotNull(source, realTimeDeferrer, settingsManager);
+            Helper.AssertIsNotNull(source, realTimeDeferrer);
 
             _source = source;
             _realTimeDeferrer = realTimeDeferrer;
-            _settingsManager = settingsManager;
 
             // Do not activate until we are ready to play
             _source.IsActive = false;
@@ -34,23 +31,15 @@ namespace BattleCruisers.UI.Sound.Pools
             _source.IsActive = true;
             _source.AudioClip = activationArgs.Sound;
             _source.Position = activationArgs.Position;
-            _source.Volume = _settingsManager.EffectVolume;
             _source.Play();
 
-            _settingsManager.SettingsSaved += _settingsManager_SettingsSaved;
             _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.Length);
         }
 
         private void CleanUp()
         {
-            _settingsManager.SettingsSaved -= _settingsManager_SettingsSaved;
             _source.IsActive = false;
             Deactivated?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void _settingsManager_SettingsSaved(object sender, EventArgs e)
-        {
-            _settingsManager.EffectVolume = _settingsManager.EffectVolume;
         }
     }
 }
