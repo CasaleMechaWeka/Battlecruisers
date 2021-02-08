@@ -96,25 +96,6 @@ namespace BattleCruisers.Data.Models
             }
         }
 
-        // FELIX  Check what happens when removed and old model has it?
-        // Unused, but keep for backwards compatibility
-        [SerializeField]
-        private bool _muteMusic;
-        public bool MuteMusic
-        {
-            get => _muteMusic;
-            set => _muteMusic = value;
-        }
-
-        // Unused, but keep for backwards compatibility
-        [SerializeField]
-        private bool _muteVoices;
-        public bool MuteVoices
-        {
-            get => _muteVoices;
-            set => _muteVoices = value;
-        }
-
         [SerializeField]
         private bool _showInGameHints;
         public bool ShowInGameHints
@@ -130,8 +111,6 @@ namespace BattleCruisers.Data.Models
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
             MusicVolume = DEFAULT_VOLUME;
             EffectVolume = DEFAULT_VOLUME;
-            MuteMusic = false;
-            MuteVoices = false;
             ShowInGameHints = true;
         }
 
