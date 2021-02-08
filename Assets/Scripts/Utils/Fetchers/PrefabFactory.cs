@@ -25,8 +25,6 @@ namespace BattleCruisers.Utils.Fetchers
 	{
 		private readonly IPrefabCache _prefabCache;
         private readonly ISettingsManager _settingsManager;
-        // FELIX  Remove, unused :P
-        private readonly IRandomGenerator _randomGenerator;
 
 		public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager)
 		{
@@ -34,7 +32,6 @@ namespace BattleCruisers.Utils.Fetchers
 
 			_prefabCache = prefabCache;
             _settingsManager = settingsManager;
-            _randomGenerator = RandomGenerator.Instance;
         }
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
