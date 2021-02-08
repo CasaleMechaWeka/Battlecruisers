@@ -26,8 +26,13 @@ namespace BattleCruisers.Data.Models
 
         [SerializeField]
         private int _version;
+        public int Version
+        {
+            get => _version;
+            set => _version = value;
+        }
 
-        private class Version
+        public class ModelVersion
         {
             public const int PreMusicVolume = 0;
             public const int WithMusicVolume = 1;
@@ -140,12 +145,12 @@ namespace BattleCruisers.Data.Models
         internal void OnDeserializedMethod(StreamingContext context)
         {
             // For backwards compatability, when this class did not have these fields
-            if (_version == Version.PreMusicVolume)
+            if (_version == ModelVersion.PreMusicVolume)
             {
                 _musicVolume = DEFAULT_VOLUME;
                 _effectVolume = DEFAULT_VOLUME;
 
-                _version = Version.WithMusicVolume;
+                _version = ModelVersion.WithMusicVolume;
             }
         }
 

@@ -47,10 +47,10 @@ namespace BattleCruisers.Tests.Data
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy));
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Harder));
 
+			_originalGameModel.Settings.Version = SettingsModel.ModelVersion.WithMusicVolume;
 			_originalGameModel.Settings.AIDifficulty = Difficulty.Harder;
-			// FELIX  Update for new volume settings :)
-			_originalGameModel.Settings.MuteMusic = true;
-			_originalGameModel.Settings.MuteVoices = false;
+			_originalGameModel.Settings.MusicVolume = 0.25f;
+			_originalGameModel.Settings.EffectVolume = 0.75f;
 			_originalGameModel.Settings.ScrollSpeedLevel = 7;
 			_originalGameModel.Settings.ZoomSpeedLevel = 3;
 			_originalGameModel.Settings.ShowInGameHints = false;
