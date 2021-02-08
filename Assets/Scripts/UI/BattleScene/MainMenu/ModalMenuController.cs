@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityCommon.Properties;
@@ -13,8 +12,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 		private Canvas _canvas;
 		private IMainMenuManager _menuManager;
 
-		public Panel buttonsPanel;
-		public CanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton;
+		public MainMenuButtonsPanel buttonsPanel;
 		public InGameSettingsPanel settingsPanel;
 
 		private ISettableBroadcastingProperty<bool> _isVisible;
@@ -26,7 +24,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			IMainMenuManager menuManager,
 			ISettingsManager settingsManager)
 		{
-			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton);
 			Helper.AssertIsNotNull(buttonsPanel, settingsPanel);
 			Helper.AssertIsNotNull(soundPlayer, menuManager, settingsManager);
 
@@ -35,24 +32,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
+			buttonsPanel.Initialise(soundPlayer, isTutorial, menuManager);
 			settingsPanel.Initialise(soundPlayer, menuManager, settingsManager);
-
-			// FELIX  Abstract to ButtonInitialiser :D
-            endGameButton.Initialise(soundPlayer, _menuManager.QuitGame);
-            skipTutorialButton.Initialise(soundPlayer, _menuManager.QuitGame);
-            resumeButton.Initialise(soundPlayer, _menuManager.DismissMenu);
-			retryButton.Initialise(soundPlayer, _menuManager.RetryLevel);
-			settingsButton.Initialise(soundPlayer, _menuManager.ShowSettings);
-
-            if (isTutorial)
-            {
-                Destroy(endGameButton.gameObject);
-                Destroy(retryButton.gameObject);
-			}
-            else
-            {
-                Destroy(skipTutorialButton.gameObject);
-            }
 
 			_isVisible = new SettableBroadcastingProperty<bool>(initialValue: false);
 			IsVisible = new BroadcastingProperty<bool>(_isVisible);
