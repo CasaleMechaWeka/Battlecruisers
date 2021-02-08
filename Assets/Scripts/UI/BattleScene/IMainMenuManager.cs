@@ -6,5 +6,6 @@
         void DismissMenu();
         void QuitGame();
         void RetryLevel();
+        void ShowSettings();
     }
 }

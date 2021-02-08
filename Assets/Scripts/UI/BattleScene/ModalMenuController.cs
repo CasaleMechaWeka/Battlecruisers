@@ -11,14 +11,14 @@ namespace BattleCruisers.UI.BattleScene
 		private Canvas _canvas;
 		private IMainMenuManager _menuManager;
 
-		public CanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton;
+		public CanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton;
 
 		private ISettableBroadcastingProperty<bool> _isVisible;
 		public IBroadcastingProperty<bool> IsVisible { get; private set; }
 
         public void Initialise(ISingleSoundPlayer soundPlayer, bool isTutorial, IMainMenuManager menuManager)
 		{
-			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton);
+			Helper.AssertIsNotNull(endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton);
 			Helper.AssertIsNotNull(soundPlayer, menuManager);
 
 			_menuManager = menuManager;
@@ -30,6 +30,7 @@ namespace BattleCruisers.UI.BattleScene
             skipTutorialButton.Initialise(soundPlayer, _menuManager.QuitGame);
             resumeButton.Initialise(soundPlayer, _menuManager.DismissMenu);
 			retryButton.Initialise(soundPlayer, _menuManager.RetryLevel);
+			settingsButton.Initialise(soundPlayer, _menuManager.ShowSettings);
 
             if (isTutorial)
             {

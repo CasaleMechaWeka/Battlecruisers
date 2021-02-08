@@ -2,6 +2,7 @@
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene
 {
@@ -65,6 +66,11 @@ namespace BattleCruisers.UI.BattleScene
             // Need to resume game to get music back
             _pauseGameManager.ResumeGame();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+        }
+
+        public void ShowSettings()
+        {
+            Debug.Log("SHow settings :D");
         }
     }
 }
