@@ -52,21 +52,27 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			_target.BuildableProgress += Raise.EventWith(_target, new BuildProgressEventArgs(_target));
 
 			Assert.AreEqual(2, _targetFoundEmittedCount);
+
+			// Further bulid progress does not trigger another target found event
+			_target.BuildProgress.Returns(0.7f);
+			_target.BuildableProgress += Raise.EventWith(_target, new BuildProgressEventArgs(_target));
+			Assert.AreEqual(2, _targetFoundEmittedCount);
 		}
 
 		[Test]
 		public void BuildableThatWasFound_Destroyed_EmitsTargetLost()
-		{
-			BuildableReachesHalfway_EmitsTargetFound();
+        {
+            BuildableReachesHalfway_EmitsTargetFound();
 
             _expectedTargetLost = _target;
 
-			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
+            _target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
 
             Assert.AreEqual(1, _targetLostEmittedCount);
-		}
+            CheckUnsubscribed();
+        }
 
-		[Test]
+        [Test]
 		public void BuildableThatWasNotFound_Destroyed_DoesNotEmitsTargetLost()
 		{
             EmitCruiserAsGlobalTarget();
@@ -77,6 +83,7 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
 
             Assert.AreEqual(0, _targetLostEmittedCount);
+			CheckUnsubscribed();
 		}
 
         [Test]
@@ -103,6 +110,16 @@ namespace BattleCruisers.Tests.Targets.TargetFinders
 			_targetFoundEmittedCount++;
 			Assert.AreSame(_targetFinder, sender);
 			Assert.AreSame(_expectedTargetFound, e.Target);
+		}
+
+		private void CheckUnsubscribed()
+		{
+			_targetFoundEmittedCount = 0;
+			_target.BuildableProgress += Raise.EventWith(_target, new BuildProgressEventArgs(_target));
+			Assert.AreEqual(0, _targetFoundEmittedCount);
+			_targetLostEmittedCount = 0;
+			_target.Destroyed += Raise.EventWith(_target, new DestroyedEventArgs(_target));
+			Assert.AreEqual(0, _targetLostEmittedCount);
 		}
 	}
 }
