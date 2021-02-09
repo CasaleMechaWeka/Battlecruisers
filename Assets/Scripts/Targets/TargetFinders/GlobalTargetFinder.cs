@@ -63,6 +63,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void Building_Destroyed(object sender, DestroyedEventArgs e)
 		{
+			e.DestroyedTarget.Parse<IBuildable>().BuildableProgress -= Buildable_BuildableProgress;
 			e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
 			IBuilding building = e.DestroyedTarget.Parse<IBuilding>();
