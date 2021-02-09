@@ -24,9 +24,10 @@ namespace BattleCruisers.Utils
 		public const string BUILDING = "Building";
 		public const string DEFENSIVE_TURRET = "DefensiveTurret";
 		public const string FACTORY = "Factory";
+        public const string SPAWN_DECIDER = "SpawnDecider";
 
-		// Projectiles
-		public const string ACCURACY_ADJUSTERS = "AccuraryAdjusters";
+        // Projectiles
+        public const string ACCURACY_ADJUSTERS = "AccuraryAdjusters";
         public const string ANGLE_CALCULATORS = "AngleCalculators";
         public const string BARREL_CONTROLLER = "BarrelController";
         public const string BARREL_WRAPPER = "BarrelWrapper";
@@ -156,6 +157,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.BUILDING, false);
             tagsToActiveness.Add(Tags.DEFENSIVE_TURRET, false);
             tagsToActiveness.Add(Tags.FACTORY, false);
+            tagsToActiveness.Add(Tags.SPAWN_DECIDER, false);
 
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);

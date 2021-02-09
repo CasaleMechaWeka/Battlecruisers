@@ -37,7 +37,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
                 IUnit blockingUnit = collider.GetComponent<ITargetProxy>()?.Target as IUnit;
 
                 if (blockingUnit != null
-                    && blockingUnit.TargetType == unitToSpawn.TargetType)
+                    && blockingUnit.TargetType == unitToSpawn.TargetType
+                    && blockingUnit.BuildableState == BuildableState.Completed)
                 {
                     return false;
                 }

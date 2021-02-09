@@ -24,19 +24,19 @@ namespace BattleCruisers.Buildables.Buildings.Factories.Spawning
 
         public bool CanSpawnUnit(IUnit unitToSpawn)
         {
-            Logging.Verbose(Tags.FACTORY, 
+            Logging.Verbose(Tags.SPAWN_DECIDER, 
                 $"Time since chosen: {_unitSpawnTimer.TimeSinceUnitWasChosenInS}  " +
                 $"Time since clear:  {_unitSpawnTimer.TimeSinceFactoryWasClearInS}");
 
             if (_unitSpawnTimer.TimeSinceUnitWasChosenInS >= MIN_BUILD_BREAK_IN_S
                 && _unitSpawnTimer.TimeSinceFactoryWasClearInS <= MIN_BUILD_BREAK_IN_S)
             {
-                Logging.Verbose(Tags.FACTORY, "Times mean false :)");
-
+                Logging.Verbose(Tags.SPAWN_DECIDER, "Times mean false, cannot spawn unit  :(!");
                 return false;
             }
             else
             {
+                Logging.Verbose(Tags.SPAWN_DECIDER, "Times mean true, can spawn unit!  :)");
                 return true;
             }
         }

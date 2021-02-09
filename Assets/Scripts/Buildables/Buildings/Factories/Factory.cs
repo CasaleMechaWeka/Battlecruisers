@@ -121,7 +121,13 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         // PERF  Don't need to do this every update :)
 		protected override void OnUpdate()
 		{
-			if (UnitWrapper != null 
+            Logging.Verbose(Tags.FACTORY, $"UnitWrapper: {UnitWrapper}  _isUnitPaused.Value: {_isUnitPaused.Value}  UnitUnderConstruction: {UnitUnderConstruction}");
+            if (UnitWrapper != null)
+            {
+                Logging.Verbose(Tags.FACTORY, $"Can spawn: {_unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable)}");
+            }
+
+            if (UnitWrapper != null 
                 && !_isUnitPaused.Value
 				&& (UnitUnderConstruction == null || UnitUnderConstruction.BuildableState == BuildableState.Completed)
 				&& _unitSpawnDecider.CanSpawnUnit(UnitWrapper.Buildable))
@@ -129,7 +135,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 				StartBuildingUnit();
 			}
 		}
-		
+
 		private void StartBuildingUnit()
 		{
             Logging.LogMethod(Tags.FACTORY);
