@@ -155,6 +155,8 @@ namespace BattleCruisers.Utils.BattleScene
             {
                 _ai.DisposeManagedState();
             }
+
+            _windManager.DisposeManagedState();
         }
     }
 }

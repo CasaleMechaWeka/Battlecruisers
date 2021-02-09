@@ -56,5 +56,11 @@ namespace BattleCruisers.UI.Sound.Wind
         {
             _audioSource.Stop();
         }
+
+        public void DisposeManagedState()
+        {
+            _camera.OrthographicSizeChanged -= _camera_OrthographicSizeChanged;
+            _settingsManager.SettingsSaved -= _settingsManager_SettingsSaved;
+        }
     }
 }

@@ -26,7 +26,14 @@ namespace BattleCruisers.Utils.PlatformAbstractions.Audio
         public float Volume
         {
             get => _audioSource.volume;
-            set => _audioSource.volume = value;
+            set
+            {
+                // Check audio source has not been destroyed
+                if (_audioSource != null)
+                {
+                    _audioSource.volume = value;
+                }
+            }
         }
 
         public Vector2 Position
