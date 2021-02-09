@@ -85,11 +85,13 @@ namespace BattleCruisers.Targets.TargetFinders
 
 		private void InvokeTargetFoundEvent(ITarget targetFound)
 		{
+			Logging.Log(Tags.GLOBAL_TARGET_FINDER, $"Found target: {targetFound}  Target faction: {targetFound.Faction}  Enemy cruiser faction: {_enemyCruiser.Faction}");
 			TargetFound?.Invoke(this, new TargetEventArgs(targetFound));
 		}
 
         private void InvokeTargetLostEvent(ITarget targetLost)
         {
+			Logging.Log(Tags.GLOBAL_TARGET_FINDER, $"Lost target: {targetLost}  Target faction: {targetLost.Faction}  Enemy cruiser faction: {_enemyCruiser.Faction}");
             TargetLost?.Invoke(this, new TargetEventArgs(targetLost));
         }
 
