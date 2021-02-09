@@ -173,9 +173,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
-            // FELIX
-            tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, true);
-            //tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
+            tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
             tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
