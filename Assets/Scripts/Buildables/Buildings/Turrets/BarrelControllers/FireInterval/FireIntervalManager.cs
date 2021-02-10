@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
+using BattleCruisers.Utils;
 using UnityCommon.Properties;
 using UnityEngine.Assertions;
 
@@ -33,11 +34,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
         public void OnFired()
 		{
 			CurrentState = CurrentState.OnFired();
-		}
+            Logging.Log(Tags.FIRE_INTERVAL_MANAGER, $"{CurrentState}  CurrentState.ShouldFire: {CurrentState.ShouldFire}");
+        }
 
 		public void ProcessTimeInterval(float deltaTime)
 		{
 			CurrentState = CurrentState.ProcessTimeInterval(deltaTime);
+            Logging.Verbose(Tags.FIRE_INTERVAL_MANAGER, $"{CurrentState}  deltaTime: {deltaTime}  CurrentState.ShouldFire: {CurrentState.ShouldFire}");
 		}
 	}
 }

@@ -163,11 +163,16 @@ namespace BattleCruisers.Utils
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
             tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
-            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
-            tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
+            // FELIX  Offensive stops firing bug
+            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
+            //tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.BARREL_WRAPPER, true);
+            //tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
             tagsToActiveness.Add(Tags.BEAM, false);
             tagsToActiveness.Add(Tags.CLOSEST_POSITION_FINDER, false);
-            tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
+            // FELIX  Offensive stops firing bug
+            tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, true);
+            //tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
             tagsToActiveness.Add(Tags.LASER, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);

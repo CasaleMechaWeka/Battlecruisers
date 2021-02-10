@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override void Fire(float angleInDegrees)
 		{
-            Logging.Log(Tags.BARREL_CONTROLLER, "angleInDegrees: " + angleInDegrees);
+            Logging.Log(Tags.BARREL_CONTROLLER, $"{this}  angleInDegrees: " + angleInDegrees);
 
             _missileSpawners.Next().SpawnMissile(
                 angleInDegrees,

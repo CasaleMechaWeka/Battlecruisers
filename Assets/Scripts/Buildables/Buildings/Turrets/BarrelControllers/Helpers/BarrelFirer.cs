@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public void Fire(float fireAngleInDegrees)
         {
-            Logging.Verbose(Tags.BARREL_CONTROLLER, $"fireAngleInDegrees: {fireAngleInDegrees}");
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelController.Fire(fireAngleInDegrees);
             _barrelFiringAnimation.Play();

@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
         private IParticleSystemGroup _muzzleFlash;
+        private ITarget _parent;
         protected ITargetFilter _targetFilter;
         protected IFireIntervalManager _fireIntervalManager;
 
@@ -102,6 +103,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         {
             Assert.IsNotNull(args);
 
+            _parent = args.Parent;
             _targetFilter = args.TargetFilter;
             _turretStatsWrapper.TurretStats
                 = args.CruiserSpecificFactories.TurretStatsFactory.CreateBoostedTurretStats(
@@ -177,6 +179,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             {
                 _updater.Updated -= _updater_Updated;
             }
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $" Parent: {_parent}";
         }
     }
 }

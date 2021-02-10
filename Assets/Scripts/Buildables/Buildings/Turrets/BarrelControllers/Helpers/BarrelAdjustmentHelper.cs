@@ -43,11 +43,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         {
             if (_barrelController.CurrentTarget == null || _barrelController.CurrentTarget.IsDestroyed)
             {
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "No alive target, cannot be on target");
+                Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  No alive target, cannot be on target");
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
-            Logging.Verbose(Tags.BARREL_CONTROLLER, $"Target: {_barrelController.CurrentTarget}  Position: {_barrelController.CurrentTarget.Position}");
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target: {_barrelController.CurrentTarget}  Position: {_barrelController.CurrentTarget.Position}");
 
             Vector2 targetPositionToAttack = _attackablePositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
@@ -62,7 +62,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
             if (!_targetPositionValidator.IsValid(predictedTargetPosition, _barrelController.ProjectileSpawnerPosition, _barrelController.IsSourceMirrored))
             {
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "Target position is invalid, cannot be on target");
+                Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target position is invalid, cannot be on target.  predictedTargetPosition: {predictedTargetPosition}  _barrelController.ProjectileSpawnerPosition: {_barrelController.ProjectileSpawnerPosition}  _barrelController.IsSourceMirrored: {_barrelController.IsSourceMirrored}");
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
 
@@ -77,12 +77,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
             if (isOnTarget)
             {
-                Logging.Verbose(Tags.BARREL_CONTROLLER, "Huzzah, on target!");
+                Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  On target!");
                 return new BarrelAdjustmentResult(isOnTarget, limitedDesiredAngle, predictedTargetPosition);
             }
 
             _rotationMovementController.AdjustRotation(limitedDesiredAngle);
-            Logging.Verbose(Tags.BARREL_CONTROLLER, "Not on target, but adjusted barrel rotation :)");
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Not on target, but adjusted barrel rotation :)");
             return new BarrelAdjustmentResult(isOnTarget: false);
         }
     }

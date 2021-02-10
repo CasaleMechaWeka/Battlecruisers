@@ -27,12 +27,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public bool TryFire(BarrelAdjustmentResult barrelAdjustmentResult)
         {
-            Logging.Verbose(Tags.BARREL_CONTROLLER, $"_fireIntervalManager.ShouldFire: {_fireIntervalManager.ShouldFire.Value}");
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  _fireIntervalManager.ShouldFire: {_fireIntervalManager.ShouldFire.Value}");
 
             if (_fireIntervalManager.ShouldFire.Value)
             {
-                Logging.Verbose(Tags.BARREL_CONTROLLER, $"InBurst: {_barrelController.TurretStats.IsInBurst}  Current target: {_barrelController.CurrentTarget}  Can fire with no target: {_barrelController.CanFireWithoutTarget}");
-                
+                Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  InBurst: {_barrelController.TurretStats.IsInBurst}  Current target: {_barrelController.CurrentTarget}  Can fire with no target: {_barrelController.CanFireWithoutTarget}  barrelAdjustmentResult.IsOnTarget: {barrelAdjustmentResult.IsOnTarget}");
+
+
                 if (_barrelController.TurretStats.IsInBurst
                     && (_barrelController.CurrentTarget != null
                         || _barrelController.CanFireWithoutTarget))
@@ -62,7 +63,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         private void Fire(float fireAngleInDegrees)
         {
-            Logging.Verbose(Tags.BARREL_CONTROLLER, $"fireAngleInDegrees: {fireAngleInDegrees}");
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelFirer.Fire(fireAngleInDegrees);
             _fireIntervalManager.OnFired();
