@@ -80,8 +80,8 @@ namespace BattleCruisers.Cruisers
         public int NumOfDrones => numOfDrones;
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
-        public ExplosionController deathPrefab;
-        public ExplosionController DeathPrefab => deathPrefab;
+        public CruiserDeathExplosion deathPrefab;
+        public CruiserDeathExplosion DeathPrefab => deathPrefab;
 
 
         // ICruiserController

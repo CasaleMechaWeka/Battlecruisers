@@ -28,7 +28,7 @@ namespace BattleCruisers.Cruisers
         IFactoryProvider FactoryProvider { get; }
         ICruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
-        ExplosionController DeathPrefab { get; }
+        CruiserDeathExplosion DeathPrefab { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
         void MakeInvincible();
