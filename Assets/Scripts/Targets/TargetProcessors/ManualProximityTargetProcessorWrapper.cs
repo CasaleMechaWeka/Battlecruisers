@@ -26,11 +26,8 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             base.DisposeManagedState();
 
-            if (_manualDetectorProvider != null)
-            {
-                _manualDetectorProvider.DisposeManagedState();
-                _manualDetectorProvider = null;
-            }
+            _manualDetectorProvider?.DisposeManagedState();
+            _manualDetectorProvider = null;
         }
     }
 }

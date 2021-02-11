@@ -158,6 +158,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     OptimalArmamentRangeInM,
                     parentTarget: this);
 
+            // FELIX  Have wrapper => dispose wrapper instead of returned target processor :D
 			return _targetProcessorWrapper.CreateTargetProcessor(args);
         }
 
@@ -244,7 +245,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                 _movementDecider.DisposeManagedState();
                 _movementDecider = null;
 
-                _movementTargetProcessor.DisposeManagedState();
+                _targetProcessorWrapper.DisposeManagedState();
                 _movementTargetProcessor = null;
 
                 _enemyDetectorProvider.DisposeManagedState();

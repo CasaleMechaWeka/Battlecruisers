@@ -269,7 +269,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             Target = null;
 
-            _targetProcessor?.DisposeManagedState();
+            _targetProcessor?.RemoveTargetConsumer(this);
             _targetProcessorWrapper?.DisposeManagedState();
 
             foreach (BarrelController barrel in _barrels)

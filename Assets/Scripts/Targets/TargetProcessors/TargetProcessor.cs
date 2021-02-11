@@ -65,6 +65,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
 		public void DisposeManagedState()
 		{
+            Logging.LogMethod(Tags.TARGET_PROCESSORS);
             _rankedTargetTracker.HighestPriorityTargetChanged -= _rankedTargetTracker_HighestPriorityTargetChanged;
 		}
     }
