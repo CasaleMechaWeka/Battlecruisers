@@ -164,37 +164,25 @@ namespace BattleCruisers.Utils
             // Projectiles
             tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
             tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
-            // FELIX  Offensive stops firing bug
-            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, true);
-            //tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
-            tagsToActiveness.Add(Tags.BARREL_WRAPPER, true);
-            //tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
+            tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
+            tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
             tagsToActiveness.Add(Tags.BEAM, false);
             tagsToActiveness.Add(Tags.CLOSEST_POSITION_FINDER, false);
-            // FELIX  Offensive stops firing bug
-            tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, true);
-            //tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
+            tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
             tagsToActiveness.Add(Tags.LASER, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
-            // FELIX  Offensive stops firing bug
-            tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, true);
-            //tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, false);
-            tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, true);
-            //tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
-            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, true);
-            //tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
-            tagsToActiveness.Add(Tags.TARGET, true);
-            //tagsToActiveness.Add(Tags.TARGET, false);
+            tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, false);
+            tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
+            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
+            tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.TARGET_FILTER, false);
-            // FELIX  Offensive stops firing bug
-            tagsToActiveness.Add(Tags.TARGET_PROCESSORS, true);
-            //tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
+            tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
             tagsToActiveness.Add(Tags.TARGET_PROVIDERS, false);
             tagsToActiveness.Add(Tags.TARGET_RANGE_HELPER, false);
             tagsToActiveness.Add(Tags.TARGET_TRACKER, false);

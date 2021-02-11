@@ -158,7 +158,6 @@ namespace BattleCruisers.Buildables.Units.Ships
                     OptimalArmamentRangeInM,
                     parentTarget: this);
 
-            // FELIX  Have wrapper => dispose wrapper instead of returned target processor :D
 			return _targetProcessorWrapper.CreateTargetProcessor(args);
         }
 
