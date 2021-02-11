@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public BarrelAdjustmentResult AdjustTurretBarrel()
         {
-            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target: {_barrelController.CurrentTarget}  Target.IsDestroyed: {_barrelController.CurrentTarget.IsDestroyed}  Position: {_barrelController.CurrentTarget?.Position}");
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target: {_barrelController.CurrentTarget}  Target.IsDestroyed: {_barrelController.CurrentTarget?.IsDestroyed}  Position: {_barrelController.CurrentTarget?.Position}");
 
             if (_barrelController.CurrentTarget == null || _barrelController.CurrentTarget.IsDestroyed)
             {
