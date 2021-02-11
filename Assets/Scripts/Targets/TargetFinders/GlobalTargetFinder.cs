@@ -96,7 +96,12 @@ namespace BattleCruisers.Targets.TargetFinders
             TargetLost?.Invoke(this, new TargetEventArgs(targetLost));
         }
 
-		public void DisposeManagedState()
+        public override string ToString()
+        {
+			return base.ToString() + $"  Faction: {Helper.GetOppositeFaction(_enemyCruiser.Faction)}";
+        }
+
+        public void DisposeManagedState()
 		{
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;

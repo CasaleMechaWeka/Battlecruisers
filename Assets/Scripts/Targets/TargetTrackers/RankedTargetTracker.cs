@@ -44,13 +44,13 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetFinder_TargetFound(object sender, TargetEventArgs e)
         {
-            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, e.Target.ToString());
+            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Target found: {e.Target}");
 
             if (AreTrackingTarget(e.Target))
             {
                 // Should never be the case but defensive programming because rarely it IS
                 // the case :/
-                Logging.Warn(Tags.RANKED_TARGET_TRACKER, "Received TargetFound event for a target that has already been found");
+                Logging.Warn(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Received TargetFound event for a target that has already been found");
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace BattleCruisers.Targets.TargetTrackers
                 // is called **before** OnTriggerEnter2D().  Hence ignore the
                 // TargetFound events for already destroyed objects, as they have
                 // already had their corresponding TargetLost event.
-                Logging.Warn(Tags.RANKED_TARGET_TRACKER, "Received TargetFound event for a destroyed target");
+                Logging.Warn(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Received TargetFound event for a destroyed target");
                 return;
             }
 
@@ -93,14 +93,14 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void TargetFinder_TargetLost(object sender, TargetEventArgs e)
         {
-            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, e.Target.ToString());
+            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Target lost: {e.Target}");
 
             if (!AreTrackingTarget(e.Target))
             {
                 // Edge case, where collider object is destroyed and OnTriggerExit2D() 
                 // is called **before** OnTriggerEnter2D().  Hence ignore this
                 // TargetLost event.
-                Logging.Warn(Tags.RANKED_TARGET_TRACKER, "Received TargetLost event without a preceeding TargetFound event");
+                Logging.Warn(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}  Received TargetLost event without a preceeding TargetFound event");
                 return;
             }
 
@@ -121,6 +121,7 @@ namespace BattleCruisers.Targets.TargetTrackers
 
         private void InvokeHighestPriorityTargetChanged()
         {
+            Logging.Verbose(Tags.RANKED_TARGET_TRACKER, $"_targetFinder: {_targetFinder}");
             HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
         }
 

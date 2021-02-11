@@ -33,5 +33,10 @@ namespace BattleCruisers.Targets.TargetTrackers.Ranking
         {
             return this.GetHashCode(Target, Rank);
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"Target: {Target}";
+        }
     }
 }

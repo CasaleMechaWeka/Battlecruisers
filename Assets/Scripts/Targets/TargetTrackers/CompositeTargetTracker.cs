@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
 
@@ -32,8 +33,11 @@ namespace BattleCruisers.Targets.TargetTrackers
             RankedTarget currentHighestRankedTarget = HighestPriorityTarget;
             HighestPriorityTarget = FindHighestRankedTarget();
 
+            Logging.Verbose(Tags.COMPOSITE_TARGET_TRACKER, $"Current highest: {currentHighestRankedTarget}  New highest: {HighestPriorityTarget}");
+
             if (!ReferenceEquals(currentHighestRankedTarget, HighestPriorityTarget))
             {
+                Logging.Verbose(Tags.COMPOSITE_TARGET_TRACKER, $"About to invoke HighestPriorityTargetChanged event :D");
                 HighestPriorityTargetChanged?.Invoke(this, EventArgs.Empty);
             }
         }

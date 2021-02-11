@@ -39,6 +39,7 @@ namespace BattleCruisers.Utils
         public const string SHELLS = "Shells";
 
 		// Targets
+		public const string COMPOSITE_TARGET_TRACKER = "CompositeTargetTracker";
 		public const string GLOBAL_TARGET_FINDER = "GlobalTargetFinder";
 		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
 		public const string TARGET = "Target";
@@ -179,16 +180,21 @@ namespace BattleCruisers.Utils
 
             // Targets
             // FELIX  Offensive stops firing bug
+            tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, true);
+            //tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, false);
             tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, true);
             //tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
-            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
+            tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, true);
+            //tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
             tagsToActiveness.Add(Tags.TARGET, true);
             //tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.TARGET_FILTER, false);
-            tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
+            // FELIX  Offensive stops firing bug
+            tagsToActiveness.Add(Tags.TARGET_PROCESSORS, true);
+            //tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
             tagsToActiveness.Add(Tags.TARGET_PROVIDERS, false);
             tagsToActiveness.Add(Tags.TARGET_RANGE_HELPER, false);
             tagsToActiveness.Add(Tags.TARGET_TRACKER, false);
