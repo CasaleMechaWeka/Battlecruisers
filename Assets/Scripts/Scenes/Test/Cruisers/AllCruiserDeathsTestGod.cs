@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects.Explosions;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Effects.Explosions;
 using UnityEngine;
 
 namespace Assets.Scripts.Scenes.Test.Cruisers
@@ -7,11 +8,11 @@ namespace Assets.Scripts.Scenes.Test.Cruisers
     {
         void Start()
         {
-            ExplosionController[] cruiserDeaths = FindObjectsOfType<ExplosionController>();
+            CruiserDeathExplosion[] cruiserDeaths = FindObjectsOfType<CruiserDeathExplosion>();
 
-            foreach (ExplosionController death in cruiserDeaths)
+            foreach (CruiserDeathExplosion death in cruiserDeaths)
             {
-                IExplosion deathExplosion = death.Initialise();
+                IExplosion deathExplosion = death.Initialise(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
                 deathExplosion.Activate(death.Position);
             }
         }

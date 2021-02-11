@@ -16,9 +16,9 @@ namespace BattleCruisers.Cruisers
 
         private void SetupCruiserDeath(ICruiser cruiser)
         {
-            ExplosionController cruiserDeath = Object.Instantiate(cruiser.DeathPrefab);
+            CruiserDeathExplosion cruiserDeath = Object.Instantiate(cruiser.DeathPrefab);
             cruiserDeath.transform.rotation = cruiser.Transform.Rotation;
-            IExplosion deathExplosion = cruiserDeath.Initialise();
+            IExplosion deathExplosion = cruiserDeath.Initialise(cruiser.FactoryProvider.SettingsManager);
 
             cruiser.Destroyed += (sender, e) => deathExplosion.Activate(cruiser.Transform.Position);
         }

@@ -1,19 +1,24 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using UnityEngine.Assertions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleCruisers.UI.Sound
 {
     public class AudioSourceGroup : IManagedDisposable
     {
         private readonly ISettingsManager _settingsManager;
-        private readonly IAudioSource[] _audioSources;
+        private readonly IList<IAudioSource> _audioSources;
 
         public AudioSourceGroup(ISettingsManager settingsManager, params IAudioSource[] audioSources)
+            : this(settingsManager, audioSources.ToList())
+        {
+        }
+
+        public AudioSourceGroup(ISettingsManager settingsManager, IList<IAudioSource> audioSources)
         {
             Helper.AssertIsNotNull(settingsManager, audioSources);
-            Assert.IsTrue(audioSources.Length != 0);
 
             _settingsManager = settingsManager;
             _audioSources = audioSources;
