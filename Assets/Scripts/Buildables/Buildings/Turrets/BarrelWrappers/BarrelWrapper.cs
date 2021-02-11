@@ -34,6 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected ICruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
+        private ITarget _parent;
 
         public Vector2 Position => transform.position;
         public IDamageCapability DamageCapability { get; private set; }
@@ -49,7 +50,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             set
             {
                 // When Unity game object is destroyed need to null check it, even though it is not truly null.
-                Logging.Log(Tags.BARREL_WRAPPER, $"_target: {_target} > {value?.ToString()}");
+                Logging.Log(Tags.BARREL_WRAPPER, $"Parent: {_parent}  _target: {_target} > {value?.ToString() ?? "null"}");
                 _target = value;
 
                 foreach (IBarrelController barrel in _barrels)
@@ -117,6 +118,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             Helper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
 
+            _parent = parent;
             _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;
             _enemyFaction = enemyFaction;
