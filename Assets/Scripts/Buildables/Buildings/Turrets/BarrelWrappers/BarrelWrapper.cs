@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             set
             {
                 // When Unity game object is destroyed need to null check it, even though it is not truly null.
-                Logging.Log(Tags.BARREL_WRAPPER, $"Parent: {_parent}  _target: {_target} > {value?.ToString() ?? "null"}");
+                Logging.Log(Tags.BARREL_WRAPPER, $"Parent: {_parent}  _target: {PrintTarget(_target)} > {PrintTarget(value)}");
                 _target = value;
 
                 foreach (IBarrelController barrel in _barrels)
@@ -258,6 +258,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             IAnimationInitialiser animationInitialiser = GetComponent<IAnimationInitialiser>();
             return animationInitialiser?.CreateAnimation();
+        }
+
+        private string PrintTarget(ITarget target)
+        {
+            return target?.ToString() ?? "null";
         }
 
         public void DisposeManagedState()
