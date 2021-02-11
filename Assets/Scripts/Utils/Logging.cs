@@ -178,9 +178,12 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
-            tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
+            // FELIX  Offensive stops firing bug
+            tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, true);
+            //tagsToActiveness.Add(Tags.GLOBAL_TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
-            tagsToActiveness.Add(Tags.TARGET, false);
+            tagsToActiveness.Add(Tags.TARGET, true);
+            //tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);

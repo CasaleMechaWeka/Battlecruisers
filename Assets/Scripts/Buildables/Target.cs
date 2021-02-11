@@ -122,14 +122,14 @@ namespace BattleCruisers.Buildables
 
 		protected void InvokeDestroyedEvent()
 		{
-            Logging.Log(Tags.TARGET, this + " destroyed :/");
+            Logging.Log(Tags.TARGET, $"{this} destroyed :/");
 
 			Destroyed?.Invoke(this, new DestroyedEventArgs(this));
 		}
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
 		{
-            Logging.Log(Tags.TARGET, $"damageAmount: {damageAmount}  damageSource: {damageSource}");
+            Logging.Log(Tags.TARGET, $"{this}  damageAmount: {damageAmount}  damageSource: {damageSource}");
 
             LastDamagedSource = damageSource;
             bool wasFullHealth = IsFullHealth;

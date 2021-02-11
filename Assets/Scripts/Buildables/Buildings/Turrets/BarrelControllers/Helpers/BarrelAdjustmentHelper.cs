@@ -41,13 +41,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         public BarrelAdjustmentResult AdjustTurretBarrel()
         {
+            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target: {_barrelController.CurrentTarget}  Target.IsDestroyed: {_barrelController.CurrentTarget.IsDestroyed}  Position: {_barrelController.CurrentTarget?.Position}");
+
             if (_barrelController.CurrentTarget == null || _barrelController.CurrentTarget.IsDestroyed)
             {
                 Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  No alive target, cannot be on target");
                 return new BarrelAdjustmentResult(isOnTarget: false);
             }
-
-            Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  Target: {_barrelController.CurrentTarget}  Position: {_barrelController.CurrentTarget.Position}");
 
             Vector2 targetPositionToAttack = _attackablePositionFinder.FindClosestAttackablePosition(_barrelController.ProjectileSpawnerPosition, _barrelController.CurrentTarget);
             float currentAngleInRadians = _barrelController.BarrelAngleInDegrees * Mathf.Deg2Rad;
