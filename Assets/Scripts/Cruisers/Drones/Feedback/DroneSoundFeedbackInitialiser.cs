@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityCommon.Properties;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             return
                 new DroneSoundFeedback(
                     parentCruiserHasActiveDrones,
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(audioSource),
                         settingsManager));
         }

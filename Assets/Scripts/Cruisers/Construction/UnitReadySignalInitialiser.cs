@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Sound;
+﻿using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
@@ -24,10 +24,10 @@ namespace BattleCruisers.Cruisers.Construction
             return
                 new UnitReadySignal(
                     parentCruiser.UnitMonitor,
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(navalAudioSource),
                         parentCruiser.FactoryProvider.SettingsManager),
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(aircraftAudioSource),
                         parentCruiser.FactoryProvider.SettingsManager));
         }

@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;

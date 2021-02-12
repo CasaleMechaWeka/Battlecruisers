@@ -3,9 +3,9 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.AudioSources
 {
-    public class VolumeAwareAudioSource : IManagedDisposable, IAudioSource
+    public abstract class VolumeAwareAudioSource : IManagedDisposable, IAudioSource
     {
         private readonly IAudioSource _audioSource;
         private readonly ISettingsManager _settingsManager;
@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Sound
         public Vector2 Position { get => _audioSource.Position; set => _audioSource.Position = value; }
         public bool IsActive { get => _audioSource.IsActive; set => _audioSource.IsActive = value; }
 
-        public VolumeAwareAudioSource(IAudioSource audioSource, ISettingsManager settingsManager)
+        protected VolumeAwareAudioSource(IAudioSource audioSource, ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(audioSource, settingsManager);
 
@@ -35,8 +35,10 @@ namespace BattleCruisers.UI.Sound
 
         private void SetVolume()
         {
-            _audioSource.Volume = _settingsManager.EffectVolume;
+            _audioSource.Volume = GetVolume(_settingsManager);
         }
+
+        protected abstract float GetVolume(ISettingsManager settingsManager);
 
         public void DisposeManagedState()
         {

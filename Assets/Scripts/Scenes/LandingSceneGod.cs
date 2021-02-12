@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -59,14 +60,16 @@ namespace BattleCruisers.Scenes
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
-            IAudioSource audioSource = new AudioSourceBC(platformAudioSource);
+            IAudioSource audioSource
+                = new MusicVolumeAudioSource(
+                    new AudioSourceBC(platformAudioSource),
+                    dataProvider.SettingsManager);
 
             return
                 new MusicPlayer(
                     new SingleSoundPlayer(
                         new SoundFetcher(),
-                        audioSource,
-                        dataProvider.SettingsManager.MusicVolume));
+                        audioSource));
         }
 
         public void GoToScene(string sceneName)

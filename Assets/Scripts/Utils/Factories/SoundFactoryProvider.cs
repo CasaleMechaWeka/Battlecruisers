@@ -1,17 +1,12 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Scenes.BattleScene;
+﻿using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.Fetchers;
-using System;
 
 namespace BattleCruisers.Utils.Factories
 {
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
-        private readonly ISettingsManager _settingsManager;
-        private readonly ISingleSoundPlayer _prioritisedSoundPlayerCore;
-
         public ISoundFetcher SoundFetcher { get; }
         public ISoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
@@ -19,28 +14,21 @@ namespace BattleCruisers.Utils.Factories
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 
-        public SoundFactoryProvider(IBattleSceneGodComponents components, IPoolProviders poolProviders, ISettingsManager settingsManager)
+        public SoundFactoryProvider(IBattleSceneGodComponents components, IPoolProviders poolProviders)
 		{
-            Helper.AssertIsNotNull(components, poolProviders, settingsManager);
-
-            _settingsManager = settingsManager;
+            Helper.AssertIsNotNull(components, poolProviders);
 
             SoundFetcher = new SoundFetcher();
             SoundPlayer = new SoundPlayer(SoundFetcher, poolProviders.AudioSourcePool);
-            UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource, _settingsManager.EffectVolume);
+            UISoundPlayer = new SingleSoundPlayer(SoundFetcher, components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(SoundFetcher, components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();
 
-            _prioritisedSoundPlayerCore = new SingleSoundPlayer(SoundFetcher, components.PrioritisedSoundPlayerAudioSource, _settingsManager.EffectVolume);
-            PrioritisedSoundPlayer = new PrioritisedSoundPlayer(_prioritisedSoundPlayerCore);
-
-            _settingsManager.SettingsSaved += SettingsManager_SettingsSaved;
-        }
-
-        private void SettingsManager_SettingsSaved(object sender, EventArgs e)
-        {
-            UISoundPlayer.Volume = _settingsManager.EffectVolume;
-            _prioritisedSoundPlayerCore.Volume = _settingsManager.EffectVolume;
+            PrioritisedSoundPlayer 
+                = new PrioritisedSoundPlayer(
+                    new SingleSoundPlayer(
+                        SoundFetcher, 
+                        components.PrioritisedSoundPlayerAudioSource));
         }
     }
 }

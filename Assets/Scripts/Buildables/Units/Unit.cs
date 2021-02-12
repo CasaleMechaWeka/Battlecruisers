@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
@@ -61,7 +61,7 @@ namespace BattleCruisers.Buildables.Units
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _engineAudioSource = new VolumeAwareAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager);
+            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)

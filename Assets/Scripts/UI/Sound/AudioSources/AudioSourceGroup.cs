@@ -4,7 +4,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.AudioSources
 {
     public class AudioSourceGroup : IManagedDisposable
     {

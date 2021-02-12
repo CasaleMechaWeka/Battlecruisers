@@ -1,14 +1,29 @@
 ﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.Sound
 {
+    public class DummyAudioSource : VolumeAwareAudioSource
+    {
+        public float StaticVolume = 0.33f;
+
+        public DummyAudioSource(IAudioSource audioSource, ISettingsManager settingsManager) 
+            : base(audioSource, settingsManager)
+        {
+        }
+
+        protected override float GetVolume(ISettingsManager settingsManager)
+        {
+            return StaticVolume;
+        }
+    }
+
     public class VolumeAwareAudioSourceTests
     {
-        private VolumeAwareAudioSource _volumeAwareAudioSource;
+        private DummyAudioSource _volumeAwareAudioSource;
         private IAudioSource _audioSource;
         private ISettingsManager _settingsManager;
 
@@ -17,11 +32,10 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             _audioSource = Substitute.For<IAudioSource>();
             _settingsManager = Substitute.For<ISettingsManager>();
-            _settingsManager.EffectVolume.Returns(0.33f);
 
-            _volumeAwareAudioSource = new VolumeAwareAudioSource(_audioSource, _settingsManager);
+            _volumeAwareAudioSource = new DummyAudioSource(_audioSource, _settingsManager);
 
-            _audioSource.Received().Volume = _settingsManager.EffectVolume;
+            _audioSource.Received().Volume = _volumeAwareAudioSource.StaticVolume;
         }
 
         [Test]
@@ -31,7 +45,7 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _settingsManager.SettingsSaved += Raise.Event();
 
-            _audioSource.Received().Volume = _settingsManager.EffectVolume;
+            _audioSource.Received().Volume = _volumeAwareAudioSource.StaticVolume;
         }
 
         [Test]

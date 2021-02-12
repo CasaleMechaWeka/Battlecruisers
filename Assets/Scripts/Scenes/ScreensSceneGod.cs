@@ -12,6 +12,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -82,8 +83,9 @@ namespace BattleCruisers.Scenes
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
-                    new AudioSourceBC(_uiAudioSource),
-                    _dataProvider.SettingsManager.EffectVolume);
+                    new EffectVolumeAudioSource(
+                        new AudioSourceBC(_uiAudioSource),
+                        _dataProvider.SettingsManager));
             
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
             trashDataList.Initialise();
@@ -108,7 +110,7 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _musicPlayer, _dataProvider.GameModel.Hotkeys);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
 

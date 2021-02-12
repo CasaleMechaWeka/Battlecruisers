@@ -70,11 +70,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
 
-            BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
-            Assert.IsNotNull(components);
-            components.Initialise();
-            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
@@ -86,6 +81,11 @@ namespace BattleCruisers.Scenes.BattleScene
 
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
+
+            BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
+            Assert.IsNotNull(components);
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             // TEMP  Force  tutorial
             if (isTutorial)
@@ -116,7 +116,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
             FactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
-            factoryProvider.Initialise(uiManager, dataProvider.SettingsManager);
+            factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();

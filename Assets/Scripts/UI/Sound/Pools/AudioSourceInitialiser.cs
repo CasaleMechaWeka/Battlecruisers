@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.Sound.Pools
 
             return 
                 new AudioSourcePoolable(
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(_audioSource),
                         settingsManager), 
                     realTimeDeferrer);

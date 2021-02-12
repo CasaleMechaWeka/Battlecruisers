@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
             AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
             IAudioSource audioSourceWrapper 
-                = new VolumeAwareAudioSource(
+                = new EffectVolumeAudioSource(
                     new AudioSourceBC(audioSource),
                     settingsManager);
 
