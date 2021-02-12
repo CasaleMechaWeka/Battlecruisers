@@ -3,9 +3,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.AudioSources
 {
-    // FELIX  CReate AudiouSources namescape :P
     public abstract class VolumeAwareAudioSource : IManagedDisposable, IAudioSource
     {
         private readonly IAudioSource _audioSource;

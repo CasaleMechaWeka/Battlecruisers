@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 
-namespace BattleCruisers.UI.Sound
+namespace BattleCruisers.UI.Sound.AudioSources
 {
     public class EffectVolumeAudioSource : VolumeAwareAudioSource
     {

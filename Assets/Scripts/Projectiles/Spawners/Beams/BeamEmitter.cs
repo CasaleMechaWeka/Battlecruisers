@@ -2,7 +2,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
