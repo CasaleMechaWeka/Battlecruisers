@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityCommon.Properties;
@@ -13,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IScreensSceneGod _screensSceneGod;
         private ISettingsManager _settingsManager;
-        private IMusicPlayer _musicPlayer;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume;
@@ -28,7 +26,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IDismissableEmitter parent,
             IScreensSceneGod screensSceneGod,
             ISettingsManager settingsManager, 
-            IMusicPlayer musicPlayer,
             IDifficultyDropdown difficultyDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
@@ -39,11 +36,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(soundPlayer, parent: parent);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, musicPlayer, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, musicVolume, effectVolume, showInGameHints, hotkeysPanel);
+            Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, musicVolume, effectVolume, showInGameHints, hotkeysPanel);
 
             _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
-            _musicPlayer = musicPlayer;
             _difficultyDropdown = difficultyDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
@@ -83,10 +79,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.Save();
 
             UpdateEnabledStatus();
-
-            // FELIX  Remove
-            _musicPlayer.Volume = _settingsManager.MusicVolume;
-            _soundPlayer.Volume = _settingsManager.EffectVolume;
 
             _screensSceneGod.GoToHomeScreen();
         }

@@ -15,13 +15,6 @@ namespace BattleCruisers.UI.Music
         private ISoundKey _currentlyPlaying;
         private AsyncOperationHandle<AudioClip> _currentlyPlayingHandle;
 
-        // FELIX  Remove
-        public float Volume
-        {
-            get => _soundPlayer.Volume;
-            set => _soundPlayer.Volume = value;
-        }
-
         public MusicPlayer(ISingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(soundPlayer);

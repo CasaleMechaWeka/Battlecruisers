@@ -110,7 +110,7 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _musicPlayer, _dataProvider.GameModel.Hotkeys);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
 

@@ -8,11 +8,9 @@ namespace BattleCruisers.UI.Sound.Players
     public interface ISingleSoundPlayer
     {
         bool IsPlayingSound { get; }
-        float Volume { get; set; }
 
         Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false);
         void PlaySound(IAudioClipWrapper sound, bool loop = false);
-
         void Stop();
     }
 }

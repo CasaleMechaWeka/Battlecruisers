@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -32,14 +31,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IScreensSceneGod screensSceneGod, 
             ISingleSoundPlayer soundPlayer, 
             ISettingsManager settingsManager,
-            IMusicPlayer musicPlayer,
             IHotkeysModel hotkeysModel)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
-            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, musicPlayer, hotkeysModel);
+            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel);
 
             _settingsManager = settingsManager;
 
@@ -75,7 +73,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     this,
                     screensSceneGod,
                     _settingsManager,
-                    musicPlayer,
                     difficultyDropdown,
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
