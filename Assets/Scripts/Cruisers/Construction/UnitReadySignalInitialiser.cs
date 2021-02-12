@@ -24,10 +24,10 @@ namespace BattleCruisers.Cruisers.Construction
             return
                 new UnitReadySignal(
                     parentCruiser.UnitMonitor,
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(navalAudioSource),
                         parentCruiser.FactoryProvider.SettingsManager),
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(aircraftAudioSource),
                         parentCruiser.FactoryProvider.SettingsManager));
         }

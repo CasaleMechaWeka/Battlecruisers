@@ -1,9 +1,11 @@
-﻿using BattleCruisers.Hotkeys;
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Hotkeys;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Lifetime;
@@ -50,7 +52,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public HotkeyInitialiser hotkeyInitialiser;
         public HotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
-        public void Initialise()
+        public void Initialise(ISettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(
                 backgroundClickableEmitter, 
@@ -61,6 +63,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 windInitialiser,
                 cloudInitialiser,
                 hotkeyInitialiser);
+            Assert.IsNotNull(settingsManager);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
@@ -68,8 +71,14 @@ namespace BattleCruisers.Scenes.BattleScene
             RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
             Assert.IsNotNull(RealTimeDeferrer);
 
-            PrioritisedSoundPlayerAudioSource = new AudioSourceBC(prioritisedSoundPlayerAudioSource);
-            UISoundsAudioSource = new AudioSourceBC(uiSoundsAudioSource);
+            PrioritisedSoundPlayerAudioSource
+                = new EffectVolumeAudioSource(
+                    new AudioSourceBC(prioritisedSoundPlayerAudioSource),
+                    settingsManager);
+            UISoundsAudioSource
+                = new EffectVolumeAudioSource(
+                    new AudioSourceBC(uiSoundsAudioSource),
+                    settingsManager);
 
             SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);

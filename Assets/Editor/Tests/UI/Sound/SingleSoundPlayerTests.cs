@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             _soundFetcher = Substitute.For<ISoundFetcher>();
             _audioSource = Substitute.For<IAudioSource>();
-            _soundPlayer = new SingleSoundPlayer(_soundFetcher, _audioSource, initialVolume: 0.25f);
+            _soundPlayer = new SingleSoundPlayer(_soundFetcher, _audioSource);
 
             _soundKey = Substitute.For<ISoundKey>();
             _soundToPlay = Substitute.For<IAudioClipWrapper>();

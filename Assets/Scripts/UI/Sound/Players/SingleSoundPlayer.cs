@@ -1,10 +1,8 @@
-﻿using BattleCruisers.Data.Models;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.UI.Sound.Players
@@ -27,15 +25,12 @@ namespace BattleCruisers.UI.Sound.Players
             set => _audioSource.Volume = value; 
         }
 
-        public SingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource, float initialVolume)
+        public SingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource)
         {
             Helper.AssertIsNotNull(soundFetcher, audioSource);
-            Assert.IsTrue(initialVolume >= SettingsModel.MIN_VOLUME);
-            Assert.IsTrue(initialVolume <= SettingsModel.MAX_VOLUME);
 
             _soundFetcher = soundFetcher;
             _audioSource = audioSource;
-            _audioSource.Volume = initialVolume;
         }
 
         public async Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false)

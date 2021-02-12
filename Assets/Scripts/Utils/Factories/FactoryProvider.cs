@@ -14,6 +14,7 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -69,9 +70,9 @@ namespace BattleCruisers.Utils.Factories
         }
 
         // Not in constructor because of circular dependency
-        public void Initialise(IUIManager uiManager, ISettingsManager settingsManager)
+        public void Initialise(IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(uiManager, settingsManager);
+            Assert.IsNotNull(uiManager);
 
             IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
             DroneMonitor = new DroneMonitor(droneFactory);
@@ -80,7 +81,7 @@ namespace BattleCruisers.Utils.Factories
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
 
-            Sound = new SoundFactoryProvider(_components, poolProviders, settingsManager);
+            Sound = new SoundFactoryProvider(_components, poolProviders);
         }
 	}
 }

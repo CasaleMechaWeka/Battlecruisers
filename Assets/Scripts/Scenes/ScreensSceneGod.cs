@@ -12,6 +12,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -82,8 +83,9 @@ namespace BattleCruisers.Scenes
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
-                    new AudioSourceBC(_uiAudioSource),
-                    _dataProvider.SettingsManager.EffectVolume);
+                    new EffectVolumeAudioSource(
+                        new AudioSourceBC(_uiAudioSource),
+                        _dataProvider.SettingsManager));
             
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
             trashDataList.Initialise();

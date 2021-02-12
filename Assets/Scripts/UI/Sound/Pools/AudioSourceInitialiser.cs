@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Sound.Pools
 
             return 
                 new AudioSourcePoolable(
-                    new VolumeAwareAudioSource(
+                    new EffectVolumeAudioSource(
                         new AudioSourceBC(_audioSource),
                         settingsManager), 
                     realTimeDeferrer);

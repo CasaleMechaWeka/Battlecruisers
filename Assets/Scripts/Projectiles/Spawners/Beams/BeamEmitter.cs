@@ -37,7 +37,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
 
             _parent = parent;
             _audioSource
-                = new VolumeAwareAudioSource(
+                = new EffectVolumeAudioSource(
                     new AudioSourceBC(_platformAudioSource),
                     settingsManager);
 

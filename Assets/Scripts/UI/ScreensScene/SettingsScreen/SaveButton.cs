@@ -84,6 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             UpdateEnabledStatus();
 
+            // FELIX  Remove
             _musicPlayer.Volume = _settingsManager.MusicVolume;
             _soundPlayer.Volume = _settingsManager.EffectVolume;
 
