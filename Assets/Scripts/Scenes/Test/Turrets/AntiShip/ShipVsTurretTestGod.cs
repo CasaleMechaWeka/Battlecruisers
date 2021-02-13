@@ -4,33 +4,33 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class AntiShipTurretTestsGod : TestGodBase
+    public class ShipVsTurretTestGod : TestGodBase
 	{
-        private AttackBoatController _boat;
-        private TurretController _turret;
+        public AttackBoatController ship;
+        public TurretController turret;
 
         protected override List<GameObject> GetGameObjects()
         {
-            _boat = FindObjectOfType<AttackBoatController>();
-            _turret = FindObjectOfType<TurretController>();
+            BCUtils.Helper.AssertIsNotNull(ship, turret);
 
             return new List<GameObject>()
             {
-                _boat.GameObject,
-                _turret.GameObject
+                ship.GameObject,
+                turret.GameObject
             };
         }
 
         protected override void Setup(Helper helper)
         {
-            helper.InitialiseUnit(_boat, Faction.Blues);
-			_boat.StartConstruction();
+            helper.InitialiseUnit(ship, Faction.Blues);
+			ship.StartConstruction();
 
-            helper.InitialiseBuilding(_turret, Faction.Reds);
-			_turret.StartConstruction();
+            helper.InitialiseBuilding(turret, Faction.Reds);
+			turret.StartConstruction();
 		}
 	}
 }
