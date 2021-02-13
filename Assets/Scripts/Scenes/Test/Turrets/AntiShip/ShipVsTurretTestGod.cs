@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
     public class ShipVsTurretTestGod : TestGodBase
 	{
-        public AttackBoatController ship;
+        public ShipController ship;
         public TurretController turret;
 
         protected override List<GameObject> GetGameObjects()
