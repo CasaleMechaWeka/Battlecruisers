@@ -13,7 +13,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test.Effects
+namespace BattleCruisers.Scenes.Test.Effects.Splash
 {
     /// <summary>
     /// NOTE:
