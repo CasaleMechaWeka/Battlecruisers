@@ -14,11 +14,10 @@ namespace BattleCruisers.Targets.TargetProcessors
 	{
 		private ITargetFinder _targetFinder;
         private IRankedTargetTracker _targetTracker;
-        private ITargetProcessor _targetProcessor;
 
         public bool considerUserChosenTarget;
 
-        public override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
 		{
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
@@ -32,8 +31,7 @@ namespace BattleCruisers.Targets.TargetProcessors
                 _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateCompositeTracker(inRangeSingleTargetTracker, userChosenInRangeTargetTracker);
             }
 
-            _targetProcessor = args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);
-            return _targetProcessor;
+            return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);
         }
 
         protected ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
@@ -56,14 +54,13 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public override void DisposeManagedState()
         {
+            base.DisposeManagedState();
+
             _targetFinder?.DisposeManagedState();
             _targetFinder = null;
 
             _targetTracker?.DisposeManagedState();
             _targetTracker = null;
-
-            _targetProcessor?.DisposeManagedState();
-            _targetProcessor = null;
         }
     }
 }

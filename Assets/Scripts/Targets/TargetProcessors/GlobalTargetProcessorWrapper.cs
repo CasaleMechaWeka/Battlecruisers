@@ -2,7 +2,7 @@
 {
     public class GlobalTargetProcessorWrapper : TargetProcessorWrapper
     {
-        public override ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
         {
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.OffensiveBuildableTargetProcessor;
         }

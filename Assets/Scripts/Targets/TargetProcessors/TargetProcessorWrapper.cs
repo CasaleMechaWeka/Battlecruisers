@@ -11,8 +11,20 @@ namespace BattleCruisers.Targets.TargetProcessors
     /// </summary>
     public abstract class TargetProcessorWrapper : MonoBehaviour, IManagedDisposable
     {
-        public abstract ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args);
+        private ITargetProcessor _targetProcessor;
 
-        public virtual void DisposeManagedState() { }
+        public ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        {
+            _targetProcessor = CreateTargetProcessorInternal(args);
+            return _targetProcessor;
+        }
+
+        protected abstract ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args);
+
+        public virtual void DisposeManagedState() 
+        {
+            _targetProcessor?.DisposeManagedState();
+            _targetProcessor = null;
+        }
     }
 }
