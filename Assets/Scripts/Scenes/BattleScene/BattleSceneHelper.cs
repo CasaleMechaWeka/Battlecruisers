@@ -19,6 +19,7 @@ namespace BattleCruisers.Scenes.BattleScene
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
         protected readonly IApplicationModel _appModel;
+        protected IDataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }

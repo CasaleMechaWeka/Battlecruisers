@@ -22,18 +22,17 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
-    public class TutorialHelper : IBattleSceneHelper, ITutorialProvider
+    public class TutorialHelper : BattleSceneHelper, ITutorialProvider
     {
-        private readonly IDataProvider _dataProvider;
         private readonly SpecificSlotsFilter _slotFilter;
         private readonly BuildingNameFilter _buildingNameFilter;
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         private readonly BroadcastingFilter _backButtonPermitter;
         private LimitableUIManager _uiManager;
 
-        public bool ShowInGameHints { get; }
+        public override bool ShowInGameHints { get; }
         public ISlotPermitter SlotPermitter => _slotFilter;
-        public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
         public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
         public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
@@ -46,17 +45,17 @@ namespace BattleCruisers.Scenes.BattleScene
         public ISingleBuildableProvider SingleShipProvider { get; }
         public ISingleBuildableProvider SingleOffensiveProvider { get; }
 
-        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
+        public override IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
 		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
-        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
+        public override IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, NavigationPermitters navigationPermitters)
+            : base(appModel)
         {
-            Helper.AssertIsNotNull(appModel, prefabFactory);
+            Assert.IsNotNull(prefabFactory);
 
-            _dataProvider = appModel.DataProvider;
             NavigationPermitters = navigationPermitters;
 
             ShowInGameHints = false;
@@ -82,18 +81,18 @@ namespace BattleCruisers.Scenes.BattleScene
             AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
         
-        public ILoadout GetPlayerLoadout()
+        public override ILoadout GetPlayerLoadout()
         {
-            return _dataProvider.StaticData.InitialGameModel.PlayerLoadout;
+            return DataProvider.StaticData.InitialGameModel.PlayerLoadout;
         }
 		
-        public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             // There is no AI for the tutorial :)
             return new DummyArtificialIntelligence();
 		}
 		
-		public ISlotFilter CreateHighlightableSlotFilter()
+		public override ISlotFilter CreateHighlightableSlotFilter()
 		{
             return _slotFilter;
 		}
@@ -108,7 +107,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new StaticFilter<ITarget>(isMatch: false);
         }
 
-        public IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
+        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
         {
             return
                 new ButtonVisibilityFilters(
@@ -121,24 +120,24 @@ namespace BattleCruisers.Scenes.BattleScene
                     new BroadcastingFilter(isMatch: ShowInGameHints));
         }
 
-        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
+        public override IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
         {
             return new DummyManagedDisposable();
         }
 
-        public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
+        public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
         {
             return new DummySoundPlayer();
         }
 
-        public IUIManager CreateUIManager()
+        public override IUIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "CreateUIManager() should only be called once");
             _uiManager = new LimitableUIManager();
             return _uiManager;
         }
 
-        public void InitialiseUIManager(ManagerArgs args)
+        public override void InitialiseUIManager(ManagerArgs args)
         {
             Assert.IsNotNull(_uiManager, "InitialiseUIManager() should only be called after CreaetUIManager()");
 
@@ -152,7 +151,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _uiManager.Initialise(args, uiManagerPermissions);
         }
 
-        public IUserChosenTargetHelper CreateUserChosenTargetHelper(
+        public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator)

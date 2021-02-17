@@ -22,27 +22,26 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Scenes.BattleScene
 {
     // FELIX  CReate SkirmishHelper subclass?
-    public class NormalHelper : IBattleSceneHelper
+    public class NormalHelper : BattleSceneHelper
     {
-        private readonly IDataProvider _dataProvider;
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
         private const int IN_GAME_HINTS_CUTOFF = 3;
 
-        public bool ShowInGameHints { get; }
-        public IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
-        public IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
+        public override bool ShowInGameHints { get; }
+        public override IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
+        public override IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
-        public IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public NormalHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, IDeferrer deferrer)
+            : base(appModel)
         {
-            Helper.AssertIsNotNull(appModel, prefabFactory, deferrer);
+            Helper.AssertIsNotNull(prefabFactory, deferrer);
 
-            _dataProvider = appModel.DataProvider;
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
@@ -50,7 +49,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 appModel.DataProvider.SettingsManager.ShowInGameHints
                 && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
-            IBuildProgressCalculatorFactory calculatorFactory = new BuildProgressCalculatorFactory(_dataProvider.SettingsManager);
+            IBuildProgressCalculatorFactory calculatorFactory = new BuildProgressCalculatorFactory(DataProvider.SettingsManager);
             PlayerCruiserBuildProgressCalculator = calculatorFactory.CreatePlayerCruiserCalculator(); ;
             AICruiserBuildProgressCalculator = calculatorFactory.CreateAICruiserCalculator();
             
@@ -59,25 +58,25 @@ namespace BattleCruisers.Scenes.BattleScene
             _buildingCategoryFilter.AllowAllCategories();
         }
 
-        public ILoadout GetPlayerLoadout()
+        public override ILoadout GetPlayerLoadout()
         {
-            return _dataProvider.GameModel.PlayerLoadout;
+            return DataProvider.GameModel.PlayerLoadout;
         }
 		
         // FELIX  Skirmish helper, create different AI :)
-        public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
-            ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.GameModel, _prefabFactory, currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, _dataProvider, _deferrer, playerCruiser);
+            ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory, currentLevelNum);
+            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser);
             return aiManager.CreateAI(levelInfo);
 		}
 		
-		public ISlotFilter CreateHighlightableSlotFilter()
+		public override ISlotFilter CreateHighlightableSlotFilter()
 		{
             return new FreeSlotFilter();
 		}
 
-        public IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
+        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
         {
             return
                 new ButtonVisibilityFilters(
@@ -90,7 +89,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new BroadcastingFilter(isMatch: ShowInGameHints));
         }
 
-        public IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
+        public override IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
         {
             return
                 new DroneEventSoundPlayer(
@@ -99,25 +98,25 @@ namespace BattleCruisers.Scenes.BattleScene
                     new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
 
-        public IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
+        public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
         {
             return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
 
-        public IUIManager CreateUIManager()
+        public override IUIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");
             _uiManager = new UIManager();
             return _uiManager;
         }
 
-        public void InitialiseUIManager(ManagerArgs args)
+        public override void InitialiseUIManager(ManagerArgs args)
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
             _uiManager.Initialise(args);
         }
 
-        public IUserChosenTargetHelper CreateUserChosenTargetHelper(
+        public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator)
