@@ -32,6 +32,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
             IBackgroundStatsProvider backgroundStatsProvider = backgroundStatsProviderInitialiser.CreateProvider(prefabFetcher);
+            // FELIX  Abstract, different for skirmish :)
             IPrefabContainer<BackgroundImageStats> backgroudStats = await backgroundStatsProvider.GetStatsAsync(levelNum);
             background.Initialise(backgroudStats, cameraAspectRatio, new BackgroundImageCalculator());
 
