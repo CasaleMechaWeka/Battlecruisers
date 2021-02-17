@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static
 {
+    // FELIX  Move to correct namespace
     public class LevelStrategies : ILevelStrategies
     {
         private IList<IStrategy> _adaptiveStrategies;
