@@ -8,6 +8,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -57,6 +58,12 @@ namespace BattleCruisers.Scenes.BattleScene
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher);
             ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
             return levelTrashTalkData.EnemyName.ToUpper();
+        }
+
+        public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        {
+            IBackgroundStatsProvider backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
+            return await backgroundStatsProvider.GetStatsAsync(levelNum);
         }
     }
 }

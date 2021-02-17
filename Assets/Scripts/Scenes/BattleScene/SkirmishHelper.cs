@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -38,6 +39,12 @@ namespace BattleCruisers.Scenes.BattleScene
         public override Task<string> GetEnemyNameAsync(int levelNum)
         {
             return Task.FromResult("SKIRMISH");
+        }
+
+        public override Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        {
+            // FELIX :D
+            throw new NotImplementedException();
         }
     }
 }
