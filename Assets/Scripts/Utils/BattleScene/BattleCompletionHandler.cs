@@ -36,7 +36,7 @@ namespace BattleCruisers.Utils.BattleScene
 
             BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
 
-            // FELIX  Don't save battle result if was skirmish :P
+            // FELIX  Save battle result in different place for skirmish :)  IApplicationModel?
             if (!_applicationModel.IsTutorial)
             {
                 // Completing the tutorial does not count as a real level, so 

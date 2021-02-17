@@ -90,7 +90,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // TEMP  Force  tutorial
             if (isTutorial)
             {
-                applicationModel.IsTutorial = true;
+                applicationModel.Mode = GameMode.Tutorial;
                 applicationModel.SelectedLevel = 1;
             }
 
@@ -301,6 +301,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters)
         {
+            // FELIX  Create SkirmishHelper :P
             if (applicationModel.IsTutorial)
             {
                 TutorialHelper helper = new TutorialHelper(applicationModel, prefabFactory, navigationPermitters);

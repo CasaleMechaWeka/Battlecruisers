@@ -54,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public int levelNum = 2;
         public bool showAppraisalButtons = false;
 
+        // FELIX  Need different result for skirmish :)
         private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
 
 		public async Task InitialiseAsync(
@@ -242,7 +243,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void RetryTutorial()
         {
-            ApplicationModelProvider.ApplicationModel.IsTutorial = true;
+            ApplicationModelProvider.ApplicationModel.Mode = GameMode.Tutorial;
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
 

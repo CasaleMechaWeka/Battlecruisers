@@ -81,7 +81,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void StartTutorial()
         {
-            ApplicationModelProvider.ApplicationModel.IsTutorial = true;
+            ApplicationModelProvider.ApplicationModel.Mode = GameMode.Tutorial;
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
 

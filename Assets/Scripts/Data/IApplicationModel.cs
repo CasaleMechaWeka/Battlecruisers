@@ -11,9 +11,8 @@
     {
         int SelectedLevel { get; set; }
         bool ShowPostBattleScreen { get; set; }
-        // FELIX  Remove :)
-        bool IsTutorial { get; set; }
         GameMode Mode { get; set; }
+        bool IsTutorial { get; }
         IDataProvider DataProvider { get; }
     }
 }

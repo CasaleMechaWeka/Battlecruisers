@@ -67,6 +67,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
         public void RetryLevel()
         {
+            // FELIX  Check this works for skirmish :)
             // Need to resume game to get music back
             _pauseGameManager.ResumeGame();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);

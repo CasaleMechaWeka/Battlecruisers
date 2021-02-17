@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_IsTutorial_DoesNotSaveResult()
         {
-            _applicationModel.IsTutorial = true;
+            _applicationModel.Mode = GameMode.Tutorial;
 
             _battleCompletionHandler.CompleteBattle(wasVictory: true);
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_IsNotTutorial_SavesResult()
         {
-            _applicationModel.IsTutorial = false;
+            _applicationModel.Mode = GameMode.Campaign;
             _applicationModel.SelectedLevel = 77;
 
             _battleCompletionHandler.CompleteBattle(wasVictory: true);

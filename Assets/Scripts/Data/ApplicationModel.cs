@@ -15,9 +15,8 @@ namespace BattleCruisers.Data
         }
 
         public bool ShowPostBattleScreen { get; set; }
-        // FELIX  Remove :)
-        public bool IsTutorial { get; set; }
         public GameMode Mode { get; set; }
+        public bool IsTutorial => Mode == GameMode.Tutorial;
         public IDataProvider DataProvider { get; }
 
         public ApplicationModel(IDataProvider dataProvider)
@@ -26,7 +25,6 @@ namespace BattleCruisers.Data
 
             DataProvider = dataProvider;
             ShowPostBattleScreen = false;
-            IsTutorial = false;
             Mode = GameMode.Campaign;
         }
     }

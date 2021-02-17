@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         {
             Helper.AssertIsNotNull(postBattleScreen, appModel, soundPlayer, musicPlayer);
 
-            appModel.IsTutorial = false;
+            appModel.Mode = GameMode.Campaign;
             postBattleScreen.title.text = TUTORIAL_TITLE;
 
             postBattleScreen.title.color = Color.black;
