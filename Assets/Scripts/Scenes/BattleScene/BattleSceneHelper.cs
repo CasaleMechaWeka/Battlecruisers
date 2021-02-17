@@ -44,7 +44,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual ILevel GetLevel()
         {
-            // FELIX  Different for skirmish :)
             return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
         }
     }

@@ -21,7 +21,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
-    // FELIX  CReate SkirmishHelper subclass?
     public class NormalHelper : BattleSceneHelper
     {
         private readonly IPrefabFactory _prefabFactory;
