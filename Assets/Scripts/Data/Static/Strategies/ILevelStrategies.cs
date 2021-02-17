@@ -1,7 +1,4 @@
-﻿using BattleCruisers.Data.Static.Strategies;
-
-// FELIX  fix namespace :)
-namespace BattleCruisers.Data.Static
+﻿namespace BattleCruisers.Data.Static.Strategies
 {
     public interface ILevelStrategies
     {

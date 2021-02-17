@@ -1,11 +1,9 @@
-﻿﻿﻿﻿using System.Collections.Generic;
-using BattleCruisers.Data.Static.Strategies;
-using BattleCruisers.Data.Static.Strategies.Requests;
+﻿using BattleCruisers.Data.Static.Strategies.Requests;
+using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data.Static
+namespace BattleCruisers.Data.Static.Strategies
 {
-    // FELIX  Move to correct namespace
     public class LevelStrategies : ILevelStrategies
     {
         private IList<IStrategy> _adaptiveStrategies;

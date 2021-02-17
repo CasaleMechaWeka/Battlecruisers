@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
+using BattleCruisers.Data.Static.Strategies;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Data.Static
