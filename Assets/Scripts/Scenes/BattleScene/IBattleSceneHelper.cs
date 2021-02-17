@@ -12,6 +12,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -37,5 +38,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator);
+        Task<string> GetEnemyNameAsync(ILevel level);
     }
 }

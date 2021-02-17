@@ -5,6 +5,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -12,8 +13,12 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private readonly IRandomGenerator _random;
 
-        public SkirmishHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, IDeferrer deferrer) 
-            : base(appModel, prefabFactory, deferrer)
+        public SkirmishHelper(
+            IApplicationModel appModel,
+            IPrefabFetcher prefabFetcher,
+            IPrefabFactory prefabFactory, 
+            IDeferrer deferrer) 
+            : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
             _random = RandomGenerator.Instance;
         }
@@ -28,6 +33,11 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             // FELIX
             throw new NotImplementedException();
+        }
+
+        public override Task<string> GetEnemyNameAsync(ILevel level)
+        {
+            return Task.FromResult("SKIRMISH");
         }
     }
 }

@@ -36,8 +36,12 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
-        public NormalHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, IDeferrer deferrer)
-            : base(appModel)
+        public NormalHelper(
+            IApplicationModel appModel,
+            IPrefabFetcher prefabFetcher,
+            IPrefabFactory prefabFactory, 
+            IDeferrer deferrer)
+            : base(appModel, prefabFetcher)
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 

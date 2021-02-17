@@ -106,7 +106,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             NavigationPermitters navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -295,7 +295,8 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         private IBattleSceneHelper CreateHelper(
-            IApplicationModel applicationModel, 
+            IApplicationModel applicationModel,
+            IPrefabFetcher prefabFetcher,
             IPrefabFactory prefabFactory, 
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters)
@@ -303,13 +304,13 @@ namespace BattleCruisers.Scenes.BattleScene
             // FELIX  Create SkirmishHelper :P
             if (applicationModel.IsTutorial)
             {
-                TutorialHelper helper = new TutorialHelper(applicationModel, prefabFactory, navigationPermitters);
+                TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, prefabFactory, navigationPermitters);
                 _tutorialProvider = helper;
                 return helper;
             }
             else
             {
-                return new NormalHelper(applicationModel, prefabFactory, deferrer);
+                return new NormalHelper(applicationModel, prefabFetcher, prefabFactory, deferrer);
             }
         }
    }

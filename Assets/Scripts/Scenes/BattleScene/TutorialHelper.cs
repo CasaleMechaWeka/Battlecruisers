@@ -51,8 +51,12 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
-        public TutorialHelper(IApplicationModel appModel, IPrefabFactory prefabFactory, NavigationPermitters navigationPermitters)
-            : base(appModel)
+        public TutorialHelper(
+            IApplicationModel appModel, 
+            IPrefabFetcher prefabFetcher,
+            IPrefabFactory prefabFactory, 
+            NavigationPermitters navigationPermitters)
+            : base(appModel, prefabFetcher)
         {
             Assert.IsNotNull(prefabFactory);
 

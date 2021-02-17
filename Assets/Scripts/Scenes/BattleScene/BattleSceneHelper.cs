@@ -9,22 +9,33 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
         protected readonly IApplicationModel _appModel;
+        protected readonly IPrefabFetcher _prefabFetcher;
         protected IDataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
         public abstract IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+
+        protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher)
+        {
+            Helper.AssertIsNotNull(appModel, prefabFetcher);
+
+            _appModel = appModel;
+            _prefabFetcher = prefabFetcher;
+        }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         public abstract IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
@@ -36,15 +47,16 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract ILoadout GetPlayerLoadout();
         public abstract void InitialiseUIManager(ManagerArgs args);
 
-        protected BattleSceneHelper(IApplicationModel appModel)
-        {
-            Assert.IsNotNull(appModel);
-            _appModel = appModel;
-        }
-
         public virtual ILevel GetLevel()
         {
             return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
+        }
+
+        public virtual async Task<string> GetEnemyNameAsync(ILevel level)
+        {
+            ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher);
+            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(level.Num);
+            return levelTrashTalkData.EnemyName.ToUpper();
         }
     }
 }
