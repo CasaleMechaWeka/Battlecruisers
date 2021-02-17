@@ -35,7 +35,7 @@ namespace BattleCruisers.Scenes.BattleScene
             throw new NotImplementedException();
         }
 
-        public override Task<string> GetEnemyNameAsync(ILevel level)
+        public override Task<string> GetEnemyNameAsync(int levelNum)
         {
             return Task.FromResult("SKIRMISH");
         }

@@ -52,10 +52,10 @@ namespace BattleCruisers.Scenes.BattleScene
             return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
         }
 
-        public virtual async Task<string> GetEnemyNameAsync(ILevel level)
+        public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher);
-            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(level.Num);
+            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
             return levelTrashTalkData.EnemyName.ToUpper();
         }
     }

@@ -38,6 +38,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager playerCruiserUserChosenTargetManager, 
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator);
-        Task<string> GetEnemyNameAsync(ILevel level);
+        Task<string> GetEnemyNameAsync(int levelNum);
     }
 }
