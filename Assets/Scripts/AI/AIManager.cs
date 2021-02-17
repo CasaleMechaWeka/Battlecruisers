@@ -11,7 +11,6 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
-using System;
 using UnityCommon.PlatformAbstractions.Time;
 
 namespace BattleCruisers.AI
@@ -63,20 +62,19 @@ namespace BattleCruisers.AI
                     _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
 
-            // FELIX  Avoid duplicate logic of Difficulty => Is adaptive ai
-            switch (_dataProvider.SettingsManager.AIDifficulty)
+            if (IsAdaptiveAI(_dataProvider.SettingsManager.AIDifficulty))
             {
-                case Difficulty.Easy:
-                    return aiFactory.CreateBasicAI(levelInfo);
-
-                case Difficulty.Normal:
-                case Difficulty.Hard:
-                case Difficulty.Harder:
-                    return aiFactory.CreateAdaptiveAI(levelInfo);
-
-                default:
-                    throw new ArgumentException("Unkonwn difficulty: " + _dataProvider.SettingsManager.AIDifficulty);
+                return aiFactory.CreateAdaptiveAI(levelInfo);
             }
+            else
+            {
+                return aiFactory.CreateBasicAI(levelInfo);
+            }
+        }
+
+        public static bool IsAdaptiveAI(Difficulty difficulty)
+        {
+            return difficulty != Difficulty.Easy;
         }
     }
 }
