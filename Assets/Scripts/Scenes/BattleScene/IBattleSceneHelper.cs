@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
@@ -25,6 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IUIManager CreateUIManager();
         void InitialiseUIManager(ManagerArgs args);
 
+        ILevel GetLevel();
         ILoadout GetPlayerLoadout();
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         ISlotFilter CreateHighlightableSlotFilter();
