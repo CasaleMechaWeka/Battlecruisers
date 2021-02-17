@@ -63,6 +63,7 @@ namespace BattleCruisers.AI
                     _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
 
+            // FELIX  Avoid duplicate logic of Difficulty => Is adaptive ai
             switch (_dataProvider.SettingsManager.AIDifficulty)
             {
                 case Difficulty.Easy:
