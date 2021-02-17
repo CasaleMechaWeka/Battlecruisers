@@ -153,8 +153,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
-            // FELIX  Skirmish.  Generate?  Enemy name, music keys, sky
-            ILevel currentLevel = applicationModel.DataProvider.GetLevel(applicationModel.SelectedLevel);
+            ILevel currentLevel = helper.GetLevel();
 
             TopPanelComponents topPanelComponents = await topPanelInitialiser.InitialiseAsync(playerCruiser, aiCruiser, currentLevel.Num, prefabFetcher);
             LeftPanelComponents leftPanelComponents 
