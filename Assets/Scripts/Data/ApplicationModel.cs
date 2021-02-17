@@ -15,8 +15,9 @@ namespace BattleCruisers.Data
         }
 
         public bool ShowPostBattleScreen { get; set; }
-        // FELIX  Replace with enum:  Campaign, Tut, Skirmish
+        // FELIX  Remove :)
         public bool IsTutorial { get; set; }
+        public GameMode Mode { get; set; }
         public IDataProvider DataProvider { get; }
 
         public ApplicationModel(IDataProvider dataProvider)
@@ -26,6 +27,7 @@ namespace BattleCruisers.Data
             DataProvider = dataProvider;
             ShowPostBattleScreen = false;
             IsTutorial = false;
+            Mode = GameMode.Campaign;
         }
     }
 }
