@@ -10,6 +10,7 @@ using BattleCruisers.Tutorial;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -238,7 +239,8 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
-            await components.CloudInitialiser.InitialiseAsync(currentLevel.SkyMaterialName, components.UpdaterProvider.SlowerUpdater, currentLevel.Num, cameraComponents.MainCamera.Aspect, prefabFetcher);
+            IPrefabContainer<BackgroundImageStats> backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
+            components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.SlowerUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
             components.HotkeyInitialiser.Initialise(
                 dataProvider.GameModel.Hotkeys,

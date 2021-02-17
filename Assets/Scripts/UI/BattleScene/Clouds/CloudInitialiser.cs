@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,21 +19,21 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public FogController fog;
         public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
-        public BackgroundStatsProviderInitialiserBase backgroundStatsProviderInitialiser;
 
-        public async Task InitialiseAsync(string skyMaterialName, IUpdater updater, int levelNum, float cameraAspectRatio, IPrefabFetcher prefabFetcher)
+        public void Initialise(
+            string skyMaterialName, 
+            IUpdater updater, 
+            float cameraAspectRatio,
+            IPrefabContainer<BackgroundImageStats> backgroundStats)
         {
-            Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, backgroundStatsProviderInitialiser, background, prefabFetcher);
-            Helper.AssertIsNotNull(leftCloud, rightCloud, mist);
+            Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, background);
+            Helper.AssertIsNotNull(leftCloud, rightCloud, mist, backgroundStats);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
             skyStatsGroup.Initialise();
             ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
-            IBackgroundStatsProvider backgroundStatsProvider = backgroundStatsProviderInitialiser.CreateProvider(prefabFetcher);
-            // FELIX  Abstract, different for skirmish :)
-            IPrefabContainer<BackgroundImageStats> backgroudStats = await backgroundStatsProvider.GetStatsAsync(levelNum);
-            background.Initialise(backgroudStats, cameraAspectRatio, new BackgroundImageCalculator());
+            background.Initialise(backgroundStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);
