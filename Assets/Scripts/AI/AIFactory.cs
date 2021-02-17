@@ -3,6 +3,7 @@ using BattleCruisers.AI.Drones;
 using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.TaskProducers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -45,7 +46,7 @@ namespace BattleCruisers.AI
 
             taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
 
-            return CreateAI(levelInfo, tasks, taskProducers);
+            return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
 		/// <summary>
@@ -86,36 +87,36 @@ namespace BattleCruisers.AI
 
             taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
 
-            return CreateAI(levelInfo, tasks, taskProducers);
+            return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
-        private IArtificialIntelligence CreateAI(ILevelInfo levelInfo, ITaskList tasks, IList<ITaskProducer> taskProducers)
+        private IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ITaskList tasks, IList<ITaskProducer> taskProducers)
         {
             TaskConsumer taskConsumer = new TaskConsumer(tasks);
-            DroneConsumerFocusManager focusManager = CreateDroneFocusManager(levelInfo);
+            DroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);
 
             return new ArtificialIntelligence(taskConsumer, taskProducers, focusManager);
         }
 
-        private DroneConsumerFocusManager CreateDroneFocusManager(ILevelInfo levelInfo)
+        private DroneConsumerFocusManager CreateDroneFocusManager(ICruiserController aiCruiser)
         {
             IFactoryAnalyzer factoryAnalyzer
                 = new FactoryAnalyzer(
-                    new FactoriesMonitor(levelInfo.AICruiser.BuildingMonitor, _factoryMonitorFactory),
+                    new FactoriesMonitor(aiCruiser.BuildingMonitor, _factoryMonitorFactory),
                     new FactoryWastingDronesFilter());
 
-            IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(levelInfo.AICruiser);
+            IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(aiCruiser);
 
             IDroneConsumerFocusHelper focusHelper
                 = new DroneConsumerFocusHelper(
-                    levelInfo.AICruiser.DroneManager,
+                    aiCruiser.DroneManager,
                     factoryAnalyzer,
-                    new AffordableInProgressNonFocusedProvider(levelInfo.AICruiser.DroneManager, inProgressBuildingMonitor));
+                    new AffordableInProgressNonFocusedProvider(aiCruiser.DroneManager, inProgressBuildingMonitor));
 
             return
                 new DroneConsumerFocusManager(
                     new ResponsiveStrategy(),
-                    levelInfo.AICruiser,
+                    aiCruiser,
                     focusHelper);
         }
     }
