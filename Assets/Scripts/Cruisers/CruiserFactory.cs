@@ -62,6 +62,7 @@ namespace BattleCruisers.Cruisers
 
         public Cruiser CreateAICruiser()
         {
+            // FELIX  Skirmish, choose correct enemy hull => Take hull key as parameter?
             ILevel currentLevel = _applicationModel.DataProvider.GetLevel(_applicationModel.SelectedLevel);
             Cruiser aiCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(currentLevel.Hull);
             Cruiser aiCruiser = _factoryProvider.PrefabFactory.CreateCruiser(aiCruiserPrefab);

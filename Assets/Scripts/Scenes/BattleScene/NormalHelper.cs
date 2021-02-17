@@ -21,6 +21,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
+    // FELIX  CReate SkirmishHelper subclass?
     public class NormalHelper : IBattleSceneHelper
     {
         private readonly IDataProvider _dataProvider;
@@ -63,6 +64,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return _dataProvider.GameModel.PlayerLoadout;
         }
 		
+        // FELIX  Skirmish helper, create different AI :)
         public IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _dataProvider.GameModel, _prefabFactory, currentLevelNum);

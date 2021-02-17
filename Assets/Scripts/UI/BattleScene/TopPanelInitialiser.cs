@@ -33,6 +33,7 @@ namespace BattleCruisers.UI.BattleScene
             IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser);
 
             ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(prefabFetcher);
+            // FELIX  Inject name instead of level num?
             ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
             enemyHealthBarHelpLabel.text = levelTrashTalkData.EnemyName.ToUpper();
 

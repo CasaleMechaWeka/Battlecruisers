@@ -97,6 +97,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || _applicationModel.IsTutorial)
             {
+                // FELIX  Add SkirmishVictory and SkirmishDefeat states :)
                 new TutorialCompletedState()
                     .Initialise(
                     this, 

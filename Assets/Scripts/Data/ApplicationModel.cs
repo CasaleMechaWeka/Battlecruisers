@@ -15,6 +15,7 @@ namespace BattleCruisers.Data
         }
 
         public bool ShowPostBattleScreen { get; set; }
+        // FELIX  Replace with enum:  Campaign, Tut, Skirmish
         public bool IsTutorial { get; set; }
         public IDataProvider DataProvider { get; }
 
