@@ -1,10 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -15,14 +12,13 @@ namespace BattleCruisers.UI.BattleScene
     {
         public Text enemyHealthBarHelpLabel;
 
-        public async Task<TopPanelComponents> InitialiseAsync(
+        public TopPanelComponents Initialise(
             ICruiser playerCruiser, 
             ICruiser aiCruiser, 
-            int levelNum,
-            IPrefabFetcher prefabFetcher)
+            string enemyName)
         {
             Assert.IsNotNull(enemyHealthBarHelpLabel);
-            Helper.AssertIsNotNull(playerCruiser, aiCruiser, prefabFetcher);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser);
 
             CruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
             Assert.IsNotNull(playerHealthInitialiser);
@@ -32,10 +28,7 @@ namespace BattleCruisers.UI.BattleScene
             Assert.IsNotNull(aiHealthInitialiser);
             IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser);
 
-            ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(prefabFetcher);
-            // FELIX  Inject name instead of level num?
-            ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
-            enemyHealthBarHelpLabel.text = levelTrashTalkData.EnemyName.ToUpper();
+            enemyHealthBarHelpLabel.text = enemyName;
 
             return new TopPanelComponents(playerCruiserHealthBar, aiCruiserHealthBar);
         }

@@ -154,8 +154,9 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
             ILevel currentLevel = helper.GetLevel();
+            string enemyName = await helper.GetEnemyNameAsync(currentLevel);
 
-            TopPanelComponents topPanelComponents = await topPanelInitialiser.InitialiseAsync(playerCruiser, aiCruiser, currentLevel.Num, prefabFetcher);
+            TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
             LeftPanelComponents leftPanelComponents 
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
