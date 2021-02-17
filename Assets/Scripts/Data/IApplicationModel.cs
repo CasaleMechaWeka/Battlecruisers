@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Data
+﻿using BattleCruisers.Data.Skirmishes;
+
+namespace BattleCruisers.Data
 {
     public enum GameMode
     {
@@ -11,6 +13,9 @@
     {
         int SelectedLevel { get; set; }
         bool ShowPostBattleScreen { get; set; }
+        //  FELIX  Use :)
+        ISkirmish Skirmish { get; set; }
+        bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }
         bool IsTutorial { get; }
         IDataProvider DataProvider { get; }
