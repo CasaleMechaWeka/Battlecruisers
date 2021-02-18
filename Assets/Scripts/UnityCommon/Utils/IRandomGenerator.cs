@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityCommon.DataStrctures;
 
+// FELIX  Remove :D
 namespace UnityCommon.Utils
 {
     public enum ChangeDirection
@@ -20,6 +21,6 @@ namespace UnityCommon.Utils
         int Range(int minInclusive, int maxInclusive);
 
         float Randomise(float baseValue, float maxChangeByProportionOfBaseValue, ChangeDirection changeDirection);
-        TItem RandomItem<TItem>(IEnumerable<TItem> items, int numOfItems);
+        TItem RandomItem<TItem>(IList<TItem> items);
     }
 }

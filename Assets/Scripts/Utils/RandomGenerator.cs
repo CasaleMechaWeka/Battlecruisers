@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -61,6 +62,12 @@ namespace BattleCruisers.Utils
         public bool NextBool()
         {
             return Random.value > 0.5f;
+        }
+
+        public TItem RandomItem<TItem>(IList<TItem> items)
+        {
+            int index = Range(0, items.Count - 1);
+            return items[index];
         }
     }
 }

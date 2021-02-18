@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -26,8 +27,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override ILevel GetLevel()
         {
-            // FELIX
-            throw new NotImplementedException();
+            // FELIX  Make level background have same sky as in campaign?  Check with Pete :)
+            int levelNum = -99;  // Unused for skirmish
+            IPrefabKey hull = _random.RandomItem(_appModel.DataProvider.StaticData.HullKeys);
+            return null;
         }
 
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)

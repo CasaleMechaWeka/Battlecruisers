@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Utils.DataStrctures;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Utils
 {
@@ -18,5 +19,6 @@ namespace BattleCruisers.Utils
         float Range(float minInclusive, float maxInclusive);
         int Range(int minInclusive, int maxInclusive);
         float Randomise(float baseValue, float maxChangeByProportionOfBaseValue, ChangeDirection changeDirection);
+        TItem RandomItem<TItem>(IList<TItem> items);
     }
 }

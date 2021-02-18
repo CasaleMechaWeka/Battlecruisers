@@ -55,9 +55,9 @@ namespace UnityCommon.Utils
             return Random.value > 0.5f;
         }
 
-        public TItem RandomItem<TItem>(IEnumerable<TItem> items, int numOfItems)
+        public TItem RandomItem<TItem>(IList<TItem> items)
         {
-            int index = Range(0, numOfItems - 1);
+            int index = Range(0, items.Count - 1);
             return items.ElementAt(index);
         }
     }
