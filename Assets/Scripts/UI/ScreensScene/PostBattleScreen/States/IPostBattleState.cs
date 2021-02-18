@@ -1,7 +1,11 @@
-﻿namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
+﻿using BattleCruisers.Data.Settings;
+
+namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
     public interface IPostBattleState
     {
-        bool ShowVictoryBackground();
+        bool ShowDifficultySymbol { get; }
+        Difficulty Difficulty { get; }
+        bool ShowVictoryBackground { get; }
     }
 }

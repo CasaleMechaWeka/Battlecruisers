@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
@@ -11,11 +12,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
     // FELIX  Handle both victory and defeat
     // FELIX  Avoid duplicate code with other states
-    public class PostSkirmishState : IPostBattleState
+    public class PostSkirmishState : PostBattleState
     {
-        private IPostBattleScreen _postBattleScreen;
         private ISkirmish _skirmish;
         private bool _userWonSkirmish;
+
+        public PostSkirmishState(PostBattleScreenController postBattleScreen, IApplicationModel appModel, IMusicPlayer musicPlayer)
+            : base(postBattleScreen, appModel, musicPlayer)
+        {
+            // FELIX  Merge with Initialise() below :)
+        }
 
         // FELIX  Remove async, convert to constructor
         public async Task InitialiseAsync(
@@ -29,7 +35,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             Assert.IsNotNull(appModel.Skirmish);
             Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
 
-            _postBattleScreen = postBattleScreen;
+            // FELIX
+            //_postBattleScreen = postBattleScreen;
             _skirmish = appModel.Skirmish;
             _userWonSkirmish = appModel.UserWonSkirmish;
 
@@ -68,9 +75,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             _postBattleScreen.RetrySkirmish(_skirmish);
         }
 
-        public bool ShowVictoryBackground()
-        {
-            return _userWonSkirmish;
-        }
+        public override bool ShowVictoryBackground => _userWonSkirmish;
+        public override bool ShowDifficultySymbol => _userWonSkirmish;
+        public override Difficulty Difficulty => _skirmish.Difficulty;
     }
 }

@@ -1,23 +1,24 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class TutorialCompletedState : IPostBattleState
+    public class TutorialCompletedState : PostBattleState
     {
-		private const string TUTORIAL_TITLE = "Tutorial Completed :D";
-		private const string TUTORIAL_APPRAISAL_DRONE_TEXT = "You are now a qualified Battlecruiser Captain, certified by the UAC. On behalf of us crew of builder drones, I’d like to thank you for choosing to steal a Trident-class Battlecruiser! We hope your joyride is comfortable.";
+        private const string TUTORIAL_TITLE = "Tutorial Completed :D";
+        private const string TUTORIAL_APPRAISAL_DRONE_TEXT = "You are now a qualified Battlecruiser Captain, certified by the UAC. On behalf of us crew of builder drones, I’d like to thank you for choosing to steal a Trident-class Battlecruiser! We hope your joyride is comfortable.";
 
         public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
             IApplicationModel appModel,
-            ISingleSoundPlayer soundPlayer,
-            IMusicPlayer musicPlayer)
+            IMusicPlayer musicPlayer,
+            ISingleSoundPlayer soundPlayer)
+            : base(postBattleScreen, appModel, musicPlayer)
         {
-            Helper.AssertIsNotNull(postBattleScreen, appModel, soundPlayer, musicPlayer);
+            Assert.IsNotNull(soundPlayer);
 
             appModel.Mode = GameMode.Campaign;
             postBattleScreen.title.text = TUTORIAL_TITLE;
@@ -30,11 +31,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.levelName.gameObject.SetActive(false);
 
             postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, appModel.DataProvider.GameModel);
-        }
-
-        public bool ShowVictoryBackground()
-        {
-            return true;
         }
     }
 }

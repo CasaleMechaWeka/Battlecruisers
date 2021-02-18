@@ -1,15 +1,18 @@
-﻿using BattleCruisers.UI.Music;
+﻿using BattleCruisers.Data;
+using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class DefeatState : IPostBattleState
+    public class DefeatState : PostBattleState
     {
 		public const string LOSS_TITLE = "Bad luck!";
 
         public DefeatState(
             PostBattleScreenController postBattleScreen,
+            IApplicationModel appModel,
             IMusicPlayer musicPlayer)
+            : base (postBattleScreen, appModel, musicPlayer)
         {
             Helper.AssertIsNotNull(postBattleScreen, musicPlayer);
 
@@ -19,9 +22,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
         }
 
-        public bool ShowVictoryBackground()
-        {
-            return false;
-        }
+        public override bool ShowVictoryBackground => false;
     }
 }

@@ -107,14 +107,18 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 postBattleState
                     = new TutorialCompletedState(
-                        this, 
+                        this,
                         _applicationModel,
-                        soundPlayer, 
-                        musicPlayer);
+                        musicPlayer,
+                        soundPlayer); 
             }
             else if (_applicationModel.Mode == GameMode.Skirmish)
             {
-                PostSkirmishState state = new PostSkirmishState();
+                PostSkirmishState state
+                    = new PostSkirmishState(
+                        this,
+                        _applicationModel,
+                        musicPlayer);
                 await state
                     .InitialiseAsync(
                         this, 
@@ -135,11 +139,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
                     || !BattleResult.WasVictory)
                 {
-                    postBattleState = new DefeatState(this, musicPlayer);
+                    postBattleState = new DefeatState(this, _applicationModel, musicPlayer);
                 }
                 else
                 {
-                    VictoryState state = new VictoryState();
+                    VictoryState state = new VictoryState(this, _applicationModel, musicPlayer);
                     await state.InitialiseAsync(
                         this,
                         soundPlayer,
@@ -160,7 +164,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
             }
 
-            SetupBackground(postBattleState.ShowVictoryBackground());
+            SetupBackground(postBattleState.ShowVictoryBackground);
         }
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory)

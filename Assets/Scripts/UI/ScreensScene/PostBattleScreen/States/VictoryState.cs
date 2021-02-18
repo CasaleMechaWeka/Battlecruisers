@@ -13,9 +13,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class VictoryState : IPostBattleState
+    public class VictoryState : PostBattleState
     {
-        private PostBattleScreenController _postBattleScreen;
         private ILootManager _lootManager;
         private ILoot _unlockedLoot;
 
@@ -23,7 +22,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         private const string VICTORY_TITLE_LOOT = "Found some Schematics!";
         private const int VICTORY_TITLE_LOOT_FONT_SIZE = 125;
 
-        // FELIX  Remove async, convert to constructor
+        public VictoryState(PostBattleScreenController postBattleScreen, IApplicationModel appModel, IMusicPlayer musicPlayer) 
+            : base(postBattleScreen, appModel, musicPlayer)
+        {
+            // FELIX  Merge with Initialise() :)
+        }
+
+        // NEXT FELIX  Remove async, convert to constructor
         public async Task InitialiseAsync(
             PostBattleScreenController postBattleScreen,
             ISingleSoundPlayer soundPlayer,
@@ -36,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         {
             Helper.AssertIsNotNull(postBattleScreen, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager, levelTrashTalkData);
 
-            _postBattleScreen = postBattleScreen;
             _lootManager = lootManager;
 
             BattleResult battleResult = dataProvider.GameModel.LastBattleResult;
@@ -91,9 +95,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             _lootManager.ShowLoot(_unlockedLoot);
         }
 
-        public bool ShowVictoryBackground()
-        {
-            return true;
-        }
+        public override bool ShowDifficultySymbol => true;
     }
 }
