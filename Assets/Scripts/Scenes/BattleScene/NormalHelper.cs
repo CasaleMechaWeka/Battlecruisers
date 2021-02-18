@@ -67,7 +67,6 @@ namespace BattleCruisers.Scenes.BattleScene
             return DataProvider.GameModel.PlayerLoadout;
         }
 		
-        // FELIX  Skirmish helper, create different AI :)
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
