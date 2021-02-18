@@ -7,6 +7,7 @@
         void GoToLoadoutScreen();
         void GoToSettingsScreen();
         void GoToChooseDifficultyScreen();
+        void GoToSkirmishScreen();
 
         void GoToTrashScreen(int levelNum);
         void LoadBattleScene();

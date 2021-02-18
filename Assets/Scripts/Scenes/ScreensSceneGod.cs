@@ -11,6 +11,7 @@ using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
+using BattleCruisers.UI.ScreensScene.SkirmishScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
@@ -47,6 +48,7 @@ namespace BattleCruisers.Scenes
         public TrashScreenController trashScreen;
         public TrashTalkDataList trashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
+        public SkirmishScreenController skirmishScreen;
 
         [SerializeField]
         private AudioSource _uiAudioSource;
@@ -63,10 +65,12 @@ namespace BattleCruisers.Scenes
         public bool testSettingsScreen = false;
         [Header("For testing the choose difficulty screen")]
         public bool testDifficultyScreen = false;
+        [Header("For testing the skirmish screen")]
+        public bool testSkirmishScreen = false;
 
         async void Start()
 		{
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
@@ -113,6 +117,7 @@ namespace BattleCruisers.Scenes
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -151,6 +156,10 @@ namespace BattleCruisers.Scenes
             else if (testDifficultyScreen)
             {
                 GoToChooseDifficultyScreen();
+            }
+            else if (testSkirmishScreen)
+            {
+                GoToSkirmishScreen();
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
@@ -243,6 +252,11 @@ namespace BattleCruisers.Scenes
         public void GoToChooseDifficultyScreen()
         {
             GoToScreen(chooseDifficultyScreen);
+        }
+
+        public void GoToSkirmishScreen()
+        {
+            GoToScreen(skirmishScreen);
         }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)

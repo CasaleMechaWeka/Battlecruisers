@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Skirmishes
 {
+    // FELIX  Preserve sky & background for retry => Have here?
     public class Skirmish : ISkirmish
     {
         public Difficulty Difficulty { get; }
