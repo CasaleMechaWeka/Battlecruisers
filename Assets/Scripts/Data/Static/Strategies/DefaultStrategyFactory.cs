@@ -2,12 +2,12 @@
 
 namespace BattleCruisers.Data.Static.Strategies
 {
-    public class DefaultStrategyProvider : IStrategyProvider
+    public class DefaultStrategyFactory : IStrategyFactory
     {
         private readonly ILevelStrategies _levelStrategies;
         private readonly int _levelNum;
 
-        public DefaultStrategyProvider(ILevelStrategies levelStrategies, int levelNum)
+        public DefaultStrategyFactory(ILevelStrategies levelStrategies, int levelNum)
         {
             Assert.IsNotNull(levelStrategies);
 

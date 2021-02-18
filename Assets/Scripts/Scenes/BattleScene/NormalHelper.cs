@@ -71,14 +71,14 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
-            IStrategyProvider strategyProvider = CreateStrategyProvider(currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyProvider);
+            IStrategyFactory strategyFactory = CreateStrategyProvider(currentLevelNum);
+            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo);
 		}
 
-        protected virtual IStrategyProvider CreateStrategyProvider(int currentLevelNum)
+        protected virtual IStrategyFactory CreateStrategyProvider(int currentLevelNum)
         {
-            return new DefaultStrategyProvider(DataProvider.StaticData.Strategies, currentLevelNum);
+            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, currentLevelNum);
         }
 		
 		public override ISlotFilter CreateHighlightableSlotFilter()

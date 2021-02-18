@@ -7,12 +7,12 @@ namespace BattleCruisers.Data.Static.Strategies
         Balanced, Rush, Boom
     }
 
-    public class SkirmishStrategyProvider : IStrategyProvider
+    public class SkirmishStrategyFactory : IStrategyFactory
     {
         private readonly StrategyType _strategyType;
         private readonly IOffensiveRequest[] _offensiveRequests;
 
-        public SkirmishStrategyProvider(StrategyType strategyType)
+        public SkirmishStrategyFactory(StrategyType strategyType)
         {
             _strategyType = strategyType;
             

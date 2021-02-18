@@ -32,9 +32,9 @@ namespace BattleCruisers.AI
             IDataProvider dataProvider, 
             IDeferrer deferrer, 
             ICruiserController playerCruiser, 
-            IStrategyProvider strategyProvider)
+            IStrategyFactory strategyFactory)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyProvider);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyFactory);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
@@ -45,7 +45,7 @@ namespace BattleCruisers.AI
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.GameModel, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
-            _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData, _dataProvider.GameModel, strategyProvider);
+            _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData, _dataProvider.GameModel, strategyFactory);
 
             _factoryMonitorFactory = new FactoryMonitorFactory(RandomGenerator.Instance);
         }

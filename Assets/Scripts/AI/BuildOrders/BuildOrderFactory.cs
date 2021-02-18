@@ -18,20 +18,20 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly ISlotAssigner _slotAssigner;
         private readonly IStaticData _staticData;
         private readonly IGameModel _gameModel;
-        private readonly IStrategyProvider _strategyProvider;
+        private readonly IStrategyFactory _strategyFactory;
 
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IStrategyProvider strategyProvider)
+		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IStrategyFactory strategyFactory)
 		{
-            Helper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyProvider);
+            Helper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyFactory);
 
             _slotAssigner = slotAssigner;
             _staticData = staticData;
             _gameModel = gameModel;
-            _strategyProvider = strategyProvider;
+            _strategyFactory = strategyFactory;
 		}
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace BattleCruisers.AI.BuildOrders
 		/// </summary>
         public IDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
 		{
-            IStrategy strategy = _strategyProvider.GetBasicStrategy();
+            IStrategy strategy = _strategyFactory.GetBasicStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
 		}
 
@@ -49,7 +49,7 @@ namespace BattleCruisers.AI.BuildOrders
 		/// </summary>
         public IDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
 		{
-            IStrategy strategy = _strategyProvider.GetAdaptiveStrategy();
+            IStrategy strategy = _strategyFactory.GetAdaptiveStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
 		}
 
