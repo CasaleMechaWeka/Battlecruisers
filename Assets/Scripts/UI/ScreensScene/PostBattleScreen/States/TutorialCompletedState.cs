@@ -29,7 +29,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);
 
-            postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
             postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, appModel.DataProvider.GameModel);
             postBattleScreen.postTutorialButtonsPanel.gameObject.SetActive(true);
         }
