@@ -3,11 +3,11 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    // FELIX  Handle both victory and defeat
     // FELIX  Avoid duplicate code with other states
     public class PostSkirmishState : PostBattleState
     {
@@ -33,18 +33,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             if (appModel.UserWonSkirmish)
             {
                 postBattleScreen.title.text = VictoryState.VICTORY_TITLE_NO_LOOT;
+                postBattleScreen.title.color = Color.black;
+                postBattleScreen.victoryNoLootMessage.SetActive(true);
+                musicPlayer.PlayVictoryMusic();
             }
             else
             {
+                // FELIX  Avoid duplicate code with DefeatState?
                 postBattleScreen.title.text = DefeatState.LOSS_TITLE;
+                postBattleScreen.defeatMessage.SetActive(true);
+                musicPlayer.PlayDefeatMusic();
             }
-            // FELIX  Choose colour based on victory/defeat
-            //postBattleScreen.title.color = Color.black;
-            //postBattleScreen.levelName.levelName.color = Color.black;
-
-            // FELIX  Choose text based on victory/defeat
-            ////postBattleScreen.appraisalSection.Initialise(TUTORIAL_APPRAISAL_DRONE_TEXT, soundPlayer);
-            //musicPlayer.PlayVictoryMusic();
 
             postBattleScreen.postSkirmishButtonsPanel.Initialise(postBattleScreen, soundPlayer, this, _userWonSkirmish);
 
