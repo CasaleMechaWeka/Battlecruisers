@@ -139,7 +139,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
                 ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
                 postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
-                postBattleButtonsPanel.gameObject.SetActive(true);
             }
         }
 

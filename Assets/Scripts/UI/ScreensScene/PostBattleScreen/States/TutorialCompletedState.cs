@@ -30,7 +30,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.levelName.gameObject.SetActive(false);
 
             postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, appModel.DataProvider.GameModel);
-            postBattleScreen.postTutorialButtonsPanel.gameObject.SetActive(true);
         }
     }
 }
