@@ -3,11 +3,11 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class DefeatState
+    public class DefeatState : IPostBattleState
     {
-		private const string LOSS_TITLE = "Bad luck!";
+		public const string LOSS_TITLE = "Bad luck!";
 
-        public void Initialise(
+        public DefeatState(
             PostBattleScreenController postBattleScreen,
             IMusicPlayer musicPlayer)
         {
@@ -17,6 +17,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.defeatMessage.SetActive(true);
             musicPlayer.PlayDefeatMusic();
             postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
+        }
+
+        public bool ShowVictoryBackground()
+        {
+            return false;
         }
     }
 }

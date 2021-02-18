@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class TutorialCompletedState
+    public class TutorialCompletedState : IPostBattleState
     {
 		private const string TUTORIAL_TITLE = "Tutorial Completed :D";
 		private const string TUTORIAL_APPRAISAL_DRONE_TEXT = "You are now a qualified Battlecruiser Captain, certified by the UAC. On behalf of us crew of builder drones, I’d like to thank you for choosing to steal a Trident-class Battlecruiser! We hope your joyride is comfortable.";
 
-        public void Initialise(
+        public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
             IApplicationModel appModel,
             ISingleSoundPlayer soundPlayer,
@@ -30,6 +30,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.levelName.gameObject.SetActive(false);
 
             postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, appModel.DataProvider.GameModel);
+        }
+
+        public bool ShowVictoryBackground()
+        {
+            return true;
         }
     }
 }

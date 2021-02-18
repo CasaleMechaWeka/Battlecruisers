@@ -100,21 +100,29 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 SetupBattleResult();
             }
 
-            SetupBackground();
+            IPostBattleState postBattleState = null;
 
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || _applicationModel.IsTutorial)
             {
-                new TutorialCompletedState()
-                    .Initialise(
-                    this, 
-                    _applicationModel,
-                    soundPlayer, 
-                    musicPlayer);
+                postBattleState
+                    = new TutorialCompletedState(
+                        this, 
+                        _applicationModel,
+                        soundPlayer, 
+                        musicPlayer);
             }
             else if (_applicationModel.Mode == GameMode.Skirmish)
             {
-                new PostSkirmishState().Initialise(this, _applicationModel, soundPlayer, musicPlayer);
+                PostSkirmishState state = new PostSkirmishState();
+                await state
+                    .InitialiseAsync(
+                        this, 
+                        _applicationModel, 
+                        soundPlayer, 
+                        musicPlayer,
+                        difficultySpritesProvider);
+                postBattleState = state;
             }
             else
             {
@@ -127,20 +135,21 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
                     || !BattleResult.WasVictory)
                 {
-                    new DefeatState().Initialise(this, musicPlayer);
+                    postBattleState = new DefeatState(this, musicPlayer);
                 }
                 else
                 {
-                    await new VictoryState()
-                        .InitialiseAsync(
-                            this,
-                            soundPlayer,
-                            musicPlayer,
-                            _dataProvider,
-                            difficultySpritesProvider,
-                            _lootManager,
-                            levelTrashTalkData,
-                            desiredBehaviour);
+                    VictoryState state = new VictoryState();
+                    await state.InitialiseAsync(
+                        this,
+                        soundPlayer,
+                        musicPlayer,
+                        _dataProvider,
+                        difficultySpritesProvider,
+                        _lootManager,
+                        levelTrashTalkData,
+                        desiredBehaviour);
+                    postBattleState = state;
                 }
 
                 await SetupAppraisalButtonsAsync(soundPlayer, trashTalkList);
@@ -150,6 +159,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
                 postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
             }
+
+            SetupBackground(postBattleState.ShowVictoryBackground());
         }
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory)
@@ -205,11 +216,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     StrategyType.Boom);
         }
 
-        private void SetupBackground()
+        private void SetupBackground(bool isVictory)
         {
             PostBattleBackgroundController background = GetComponentInChildren<PostBattleBackgroundController>(includeInactive: true);
             Assert.IsNotNull(background);
-            bool isVictory = _applicationModel.IsTutorial || BattleResult.WasVictory;
             background.Initalise(isVictory);
         }
 

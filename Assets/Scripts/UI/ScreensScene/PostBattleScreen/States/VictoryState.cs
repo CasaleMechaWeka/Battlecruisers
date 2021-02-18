@@ -13,16 +13,17 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public class VictoryState
+    public class VictoryState : IPostBattleState
     {
         private PostBattleScreenController _postBattleScreen;
         private ILootManager _lootManager;
         private ILoot _unlockedLoot;
 
-        private const string VICTORY_TITLE_NO_LOOT = "Sweet as!";
+        public const string VICTORY_TITLE_NO_LOOT = "Sweet as!";
         private const string VICTORY_TITLE_LOOT = "Found some Schematics!";
         private const int VICTORY_TITLE_LOOT_FONT_SIZE = 125;
 
+        // FELIX  Remove async, convert to constructor
         public async Task InitialiseAsync(
             PostBattleScreenController postBattleScreen,
             ISingleSoundPlayer soundPlayer,
@@ -88,6 +89,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
             _postBattleScreen.unlockedItemSection.Show();
             _lootManager.ShowLoot(_unlockedLoot);
+        }
+
+        public bool ShowVictoryBackground()
+        {
+            return true;
         }
     }
 }
