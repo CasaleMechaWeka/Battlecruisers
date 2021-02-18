@@ -9,6 +9,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
@@ -31,7 +32,7 @@ namespace BattleCruisers.AI.FactoryManagers
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IFactoryManager CreateNavalFactoryManager(ILevelInfo levelInfo)
+        public IFactoryManager CreateNavalFactoryManager(ICruiserController aiCruiser)
         {
             IList<UnitKey> availableShipKeys = _gameModel.GetUnlockedUnits(UnitCategory.Naval);
             IList<IBuildableWrapper<IUnit>> availableShips =
@@ -41,13 +42,13 @@ namespace BattleCruisers.AI.FactoryManagers
             IUnitChooser unitChooser 
                 = new MostExpensiveUnitChooser(
                     availableShips, 
-                    levelInfo.AICruiser.DroneManager, 
+                    aiCruiser.DroneManager, 
                     new AffordableUnitFilter());
 
-            return new FactoryManager(UnitCategory.Naval, levelInfo.AICruiser, unitChooser);
+            return new FactoryManager(UnitCategory.Naval, aiCruiser, unitChooser);
         }
 
-        public IFactoryManager CreateAirfactoryManager(ILevelInfo levelInfo)
+        public IFactoryManager CreateAirfactoryManager(ICruiserController aiCruiser)
         {
             Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY),"Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
@@ -70,12 +71,12 @@ namespace BattleCruisers.AI.FactoryManagers
                     defaultPlane,
                     antiAirPlane,
                     antiNavalPlane,
-                    levelInfo.AICruiser.DroneManager,
+                    aiCruiser.DroneManager,
                     airThreatMonitor,
                     navalThreatMonitor,
                     threatLevelThreshold: ThreatLevel.High);
 
-            return new FactoryManager(UnitCategory.Aircraft, levelInfo.AICruiser, unitchooser);
+            return new FactoryManager(UnitCategory.Aircraft, aiCruiser, unitchooser);
         }
     }
 }

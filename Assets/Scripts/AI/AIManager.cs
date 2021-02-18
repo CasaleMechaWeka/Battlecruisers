@@ -48,8 +48,8 @@ namespace BattleCruisers.AI
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
-            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo);
-            _factoryManagerFactory.CreateAirfactoryManager(levelInfo);
+            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
+            _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
             ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory 

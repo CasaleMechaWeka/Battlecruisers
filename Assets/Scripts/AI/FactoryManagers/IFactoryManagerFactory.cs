@@ -1,8 +1,10 @@
-﻿namespace BattleCruisers.AI.FactoryManagers
+﻿using BattleCruisers.Cruisers;
+
+namespace BattleCruisers.AI.FactoryManagers
 {
     public interface IFactoryManagerFactory
     {
-        IFactoryManager CreateNavalFactoryManager(ILevelInfo levelInfo);
-        IFactoryManager CreateAirfactoryManager(ILevelInfo levelInfo);
+        IFactoryManager CreateNavalFactoryManager(ICruiserController aiCruiser);
+        IFactoryManager CreateAirfactoryManager(ICruiserController aiCruiser);
 	}
 }
