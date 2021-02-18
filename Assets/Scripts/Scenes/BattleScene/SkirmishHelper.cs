@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     skyMaterialName);
         }
 
-        protected override IStrategyFactory CreateStrategyProvider(int currentLevelNum)
+        protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
             return new SkirmishStrategyFactory(_strategyType);
         }
