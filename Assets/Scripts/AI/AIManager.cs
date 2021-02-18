@@ -78,7 +78,7 @@ namespace BattleCruisers.AI
             }
         }
 
-        public static bool IsAdaptiveAI(Difficulty difficulty)
+        private bool IsAdaptiveAI(Difficulty difficulty)
         {
             return difficulty != Difficulty.Easy;
         }
