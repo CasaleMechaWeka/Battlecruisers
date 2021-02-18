@@ -4,8 +4,8 @@ using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Targets.Factories
 {

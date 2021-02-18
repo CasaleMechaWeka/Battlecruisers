@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
-using UnityCommon.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Targets.Factories
 {

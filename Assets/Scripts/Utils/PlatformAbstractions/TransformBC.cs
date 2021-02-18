@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace UnityCommon.PlatformAbstractions
+namespace BattleCruisers.Utils.PlatformAbstractions
 {
     public class TransformBC : ITransform
     {

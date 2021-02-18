@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Utils;
-using UnityCommon.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityCommon.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Movement.Rotation
 {
-	public class RotationMovementController : IRotationMovementController
+    public class RotationMovementController : IRotationMovementController
 	{
 		private readonly IRotationHelper _rotationHelper;
         private readonly ITransform _transform;

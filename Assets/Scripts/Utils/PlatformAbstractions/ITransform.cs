@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityCommon.PlatformAbstractions
+namespace BattleCruisers.Utils.PlatformAbstractions
 {
 	public interface ITransform
 	{

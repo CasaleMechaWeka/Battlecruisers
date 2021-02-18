@@ -1,9 +1,9 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {

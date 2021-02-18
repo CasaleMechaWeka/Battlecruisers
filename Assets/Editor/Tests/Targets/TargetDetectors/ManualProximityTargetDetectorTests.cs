@@ -1,10 +1,10 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions;
 
 namespace BattleCruisers.Tests.Targets.TargetDetectors
 {
