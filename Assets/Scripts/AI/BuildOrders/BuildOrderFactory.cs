@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Data.Static.Strategies;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
@@ -18,18 +19,20 @@ namespace BattleCruisers.AI.BuildOrders
         private readonly ISlotAssigner _slotAssigner;
         private readonly IStaticData _staticData;
         private readonly IGameModel _gameModel;
-		
+        private readonly IStrategyProvider _strategyProvider;
+
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel)
+		public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IStrategyProvider strategyProvider)
 		{
-            Helper.AssertIsNotNull(slotAssigner, staticData, gameModel);
+            Helper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyProvider);
 
             _slotAssigner = slotAssigner;
             _staticData = staticData;
             _gameModel = gameModel;
+            _strategyProvider = strategyProvider;
 		}
 
 		/// <summary>
@@ -37,7 +40,7 @@ namespace BattleCruisers.AI.BuildOrders
 		/// </summary>
         public IDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
 		{
-            IStrategy strategy = _staticData.Strategies.GetBasicStrategy(levelInfo.LevelNum);
+            IStrategy strategy = _strategyProvider.GetBasicStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
 		}
 
@@ -47,7 +50,7 @@ namespace BattleCruisers.AI.BuildOrders
 		/// </summary>
         public IDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
 		{
-            IStrategy strategy = _staticData.Strategies.GetAdaptiveStrategy(levelInfo.LevelNum);
+            IStrategy strategy = _strategyProvider.GetAdaptiveStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
 		}
 

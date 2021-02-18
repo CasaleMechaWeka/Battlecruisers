@@ -70,7 +70,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory, currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser);
+            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, currentLevelNum);
             return aiManager.CreateAI(levelInfo);
 		}
 		
