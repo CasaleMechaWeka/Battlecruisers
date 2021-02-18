@@ -27,9 +27,14 @@ namespace BattleCruisers.AI
         private readonly IBuildOrderFactory _buildOrderFactory;
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIManager(IPrefabFactory prefabFactory, IDataProvider dataProvider, IDeferrer deferrer, ICruiserController playerCruiser, int levelNum)  // FELIX  Remove levelNum :D
+        public AIManager(
+            IPrefabFactory prefabFactory, 
+            IDataProvider dataProvider, 
+            IDeferrer deferrer, 
+            ICruiserController playerCruiser, 
+            IStrategyProvider strategyProvider)
         {
-            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser);
+            Helper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyProvider);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
@@ -40,8 +45,6 @@ namespace BattleCruisers.AI
             _factoryManagerFactory = new FactoryManagerFactory(_dataProvider.GameModel, _prefabFactory, _threatMonitorFactory);
 
             ISlotAssigner slotAssigner = new SlotAssigner();
-            // FELIX  Inject :)
-            IStrategyProvider strategyProvider = new DefaultStrategyProvider(_dataProvider.StaticData.Strategies, levelNum);
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, _dataProvider.StaticData, _dataProvider.GameModel, strategyProvider);
 
             _factoryMonitorFactory = new FactoryMonitorFactory(RandomGenerator.Instance);

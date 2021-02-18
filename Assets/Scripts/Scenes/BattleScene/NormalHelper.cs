@@ -18,6 +18,7 @@ using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
+using Assets.Scripts.Data.Static.Strategies;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -70,9 +71,15 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
 		{
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
-            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, currentLevelNum);
+            IStrategyProvider strategyProvider = CreateStrategyProvider(currentLevelNum);
+            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyProvider);
             return aiManager.CreateAI(levelInfo);
 		}
+
+        protected virtual IStrategyProvider CreateStrategyProvider(int currentLevelNum)
+        {
+            return new DefaultStrategyProvider(DataProvider.StaticData.Strategies, currentLevelNum);
+        }
 		
 		public override ISlotFilter CreateHighlightableSlotFilter()
 		{
