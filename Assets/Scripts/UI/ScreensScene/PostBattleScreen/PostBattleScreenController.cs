@@ -165,6 +165,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             SetupBackground(postBattleState.ShowVictoryBackground);
+            await ShowDifficultySymbolIfNeeded(postBattleState, difficultySpritesProvider);
         }
 
         private ILootManager CreateLootManager(IPrefabFactory prefabFactory)
@@ -225,6 +226,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             PostBattleBackgroundController background = GetComponentInChildren<PostBattleBackgroundController>(includeInactive: true);
             Assert.IsNotNull(background);
             background.Initalise(isVictory);
+        }
+
+        private async Task ShowDifficultySymbolIfNeeded(IPostBattleState postBattleState, IDifficultySpritesProvider difficultySpritesProvider)
+        {
+            if (postBattleState.ShowDifficultySymbol)
+            {
+                await completedDifficultySymbol.InitialiseAsync(postBattleState.Difficulty, difficultySpritesProvider);
+                completedDifficultySymbol.gameObject.SetActive(true);
+            }
         }
 
         private async Task SetupAppraisalButtonsAsync(ISingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
