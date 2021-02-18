@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    // FELIX  Avoid duplicate code with other states
     public class PostSkirmishState : PostBattleState
     {
         private ISkirmish _skirmish;
@@ -39,7 +38,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
             else
             {
-                // FELIX  Avoid duplicate code with DefeatState?
                 postBattleScreen.title.text = DefeatState.LOSS_TITLE;
                 postBattleScreen.defeatMessage.SetActive(true);
                 musicPlayer.PlayDefeatMusic();
