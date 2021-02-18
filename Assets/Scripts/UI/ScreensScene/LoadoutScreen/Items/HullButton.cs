@@ -5,7 +5,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items

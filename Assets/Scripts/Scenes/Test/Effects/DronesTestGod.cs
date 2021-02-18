@@ -4,7 +4,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
 using NSubstitute;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 

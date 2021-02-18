@@ -1,4 +1,4 @@
-﻿using UnityCommon.Properties;
+﻿using BattleCruisers.Utils.Properties;
 using NUnit.Framework;
 
 namespace BattleCruisers.Tests.Utils.Properties

@@ -18,7 +18,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Cruisers

@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using NUnit.Framework;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
 {

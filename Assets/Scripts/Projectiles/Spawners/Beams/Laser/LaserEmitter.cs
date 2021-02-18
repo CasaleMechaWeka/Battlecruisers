@@ -7,7 +7,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 

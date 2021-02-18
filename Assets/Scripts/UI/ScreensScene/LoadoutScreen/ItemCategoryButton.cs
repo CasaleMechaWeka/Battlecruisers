@@ -4,7 +4,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;

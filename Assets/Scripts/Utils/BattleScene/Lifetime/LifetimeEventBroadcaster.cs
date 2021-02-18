@@ -1,4 +1,4 @@
-﻿using UnityCommon.Properties;
+﻿using BattleCruisers.Utils.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Utils.BattleScene.Lifetime

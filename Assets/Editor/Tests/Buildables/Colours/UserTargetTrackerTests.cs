@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Colours;
 using NSubstitute;
 using NUnit.Framework;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Tests.Buildables.Colours
 {

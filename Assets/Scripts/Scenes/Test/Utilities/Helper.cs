@@ -47,7 +47,7 @@ using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 

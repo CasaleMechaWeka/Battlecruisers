@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {

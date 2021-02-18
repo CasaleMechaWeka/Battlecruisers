@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityCommon.Properties
+namespace BattleCruisers.Utils.Properties
 {
     public interface IBroadcastingProperty<T>
     {

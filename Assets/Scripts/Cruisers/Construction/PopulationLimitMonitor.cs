@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Utils;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Construction

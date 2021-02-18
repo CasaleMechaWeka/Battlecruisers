@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UnityCommon.Properties
+namespace BattleCruisers.Utils.Properties
 {
     public class SettableBroadcastingProperty<T> : ISettableBroadcastingProperty<T>
     {

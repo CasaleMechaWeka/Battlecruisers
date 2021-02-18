@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.UI.Panels;
 using System;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {

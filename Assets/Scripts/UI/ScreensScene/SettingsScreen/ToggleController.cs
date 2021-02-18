@@ -1,4 +1,4 @@
-﻿using UnityCommon.Properties;
+﻿using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;

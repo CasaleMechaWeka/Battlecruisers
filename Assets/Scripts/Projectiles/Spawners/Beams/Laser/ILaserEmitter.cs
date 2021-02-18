@@ -1,4 +1,4 @@
-﻿using UnityCommon.Properties;
+﻿using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
 {

@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

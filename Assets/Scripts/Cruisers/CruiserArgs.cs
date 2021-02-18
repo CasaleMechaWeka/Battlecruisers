@@ -11,7 +11,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers

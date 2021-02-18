@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Tests.Effects.Laser
 {

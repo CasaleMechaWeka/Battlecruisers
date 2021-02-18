@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using System;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Buildables.Colours
 {

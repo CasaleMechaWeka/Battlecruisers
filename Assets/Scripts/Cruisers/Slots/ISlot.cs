@@ -6,7 +6,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.ObjectModel;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots

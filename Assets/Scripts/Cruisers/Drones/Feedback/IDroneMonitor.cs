@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using System.Collections.Generic;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {

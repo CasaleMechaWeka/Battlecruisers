@@ -2,7 +2,7 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Timers;
 using System;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Effects.Laser
 {

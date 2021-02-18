@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.Buttons;
-using UnityCommon.Properties;
+using BattleCruisers.Utils.Properties;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;

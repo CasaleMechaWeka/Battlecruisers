@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Assertions;
 
-namespace UnityCommon.Properties
+namespace BattleCruisers.Utils.Properties
 {
     public class BroadcastingProperty<T> : IBroadcastingProperty<T>
     {
