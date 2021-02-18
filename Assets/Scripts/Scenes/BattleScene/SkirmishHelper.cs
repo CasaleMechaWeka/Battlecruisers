@@ -1,8 +1,7 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -16,15 +15,18 @@ namespace BattleCruisers.Scenes.BattleScene
     public class SkirmishHelper : NormalHelper
     {
         private readonly IRandomGenerator _random;
+        private readonly StrategyType _strategyType;
 
         public SkirmishHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             IPrefabFactory prefabFactory, 
-            IDeferrer deferrer) 
+            IDeferrer deferrer,
+            StrategyType strategyType) 
             : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
             _random = RandomGenerator.Instance;
+            _strategyType = strategyType;
         }
 
         public override ILevel GetLevel()
@@ -43,10 +45,9 @@ namespace BattleCruisers.Scenes.BattleScene
                     skyMaterialName);
         }
 
-        public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        protected override IStrategyFactory CreateStrategyProvider(int currentLevelNum)
         {
-            // FELIX
-            throw new NotImplementedException();
+            return new SkirmishStrategyFactory(_strategyType);
         }
 
         public override Task<string> GetEnemyNameAsync(int levelNum)
