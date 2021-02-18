@@ -11,7 +11,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.AI
 {

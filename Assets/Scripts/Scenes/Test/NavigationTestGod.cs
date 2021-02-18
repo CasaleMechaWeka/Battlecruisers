@@ -8,7 +8,7 @@ using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
 

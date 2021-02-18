@@ -6,7 +6,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;

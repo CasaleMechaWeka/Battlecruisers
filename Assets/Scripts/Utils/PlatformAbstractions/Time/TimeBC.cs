@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils;
 using PlatformTime = UnityEngine.Time;
 
-namespace UnityCommon.PlatformAbstractions.Time
+namespace BattleCruisers.Utils.PlatformAbstractions.Time
 {
     public class TimeBC : ITime
     {

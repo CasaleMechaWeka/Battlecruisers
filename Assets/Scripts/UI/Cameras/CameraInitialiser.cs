@@ -14,7 +14,7 @@ using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 

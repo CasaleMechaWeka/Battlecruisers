@@ -7,7 +7,7 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Scenes.BattleScene
 {

@@ -1,4 +1,4 @@
-﻿namespace UnityCommon.PlatformAbstractions.Time
+﻿namespace BattleCruisers.Utils.PlatformAbstractions.Time
 {
     public class RealTimeSinceGameStartProvider : ITimeSinceGameStartProvider
     {

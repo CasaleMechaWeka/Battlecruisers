@@ -4,7 +4,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Tests.AI.ThreatMonitors
 {

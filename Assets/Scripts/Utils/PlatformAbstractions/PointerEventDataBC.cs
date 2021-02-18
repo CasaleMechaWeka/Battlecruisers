@@ -2,7 +2,7 @@
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace UnityCommon.PlatformAbstractions
+namespace BattleCruisers.Utils.PlatformAbstractions
 {
     public class PointerEventDataBC : IPointerEventData
     {

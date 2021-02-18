@@ -1,4 +1,4 @@
-﻿using UnityCommon.PlatformAbstractions.Time;
+﻿using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Rotation

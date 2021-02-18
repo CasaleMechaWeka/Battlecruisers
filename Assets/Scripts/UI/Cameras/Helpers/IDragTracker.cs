@@ -1,5 +1,5 @@
 ﻿using System;
-using UnityCommon.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers

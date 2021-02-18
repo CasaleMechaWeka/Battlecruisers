@@ -2,7 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Utils.BattleScene
 {

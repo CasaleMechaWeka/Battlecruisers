@@ -3,7 +3,7 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
 using NUnit.Framework;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators

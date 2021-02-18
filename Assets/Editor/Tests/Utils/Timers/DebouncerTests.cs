@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using NUnit.Framework;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Tests.Utils.Timers
 {

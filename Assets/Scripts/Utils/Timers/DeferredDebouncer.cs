@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils.Threading;
 using System;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Timers

@@ -5,7 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using NSubstitute;
 using NUnit.Framework;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Tests.Buildables.Buildings.Factories.Spawning
 {

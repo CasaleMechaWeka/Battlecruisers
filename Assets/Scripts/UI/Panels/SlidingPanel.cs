@@ -1,4 +1,4 @@
-﻿using UnityCommon.PlatformAbstractions.Time;
+﻿using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityCommon.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;

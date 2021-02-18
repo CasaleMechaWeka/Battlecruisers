@@ -6,7 +6,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
-using UnityCommon.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 
