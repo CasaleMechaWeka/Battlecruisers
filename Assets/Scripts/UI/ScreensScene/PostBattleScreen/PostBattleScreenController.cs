@@ -1,6 +1,9 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;
@@ -28,7 +31,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         Victory_LootUnlocked,
         Victory_NoNewLoot,      // Currently the same behaviour as Victory_LootUnlocked
         Victory_DemoCompleted,
-        Victory_GameCompleted
+        Victory_GameCompleted,
+        Victory_Skirmish,
+        Defeat_Skirmish
     }
 
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
@@ -45,6 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public CanvasGroupButton demoHomeButton;
         public PostTutorialButtonsPanel postTutorialButtonsPanel;
         public PostBattleButtonsPanel postBattleButtonsPanel;
+        public PostSkirmishButtonsPanel postSkirmishButtonsPanel;
         public AppraisalSectionController appraisalSection;
         public AppraisalButtonsPanel appraisalButtonsPanel;
 
@@ -80,6 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 trashTalkList,
                 postTutorialButtonsPanel,
                 postBattleButtonsPanel,
+                postSkirmishButtonsPanel,
                 appraisalSection,
                 appraisalButtonsPanel);
             Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
@@ -98,13 +105,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || _applicationModel.IsTutorial)
             {
-                // FELIX  Add SkirmishVictory and SkirmishDefeat states :)
                 new TutorialCompletedState()
                     .Initialise(
                     this, 
                     _applicationModel,
                     soundPlayer, 
                     musicPlayer);
+            }
+            else if (_applicationModel.Mode == GameMode.Skirmish)
+            {
+                new PostSkirmishState().Initialise(this, _applicationModel, soundPlayer, musicPlayer);
             }
             else
             {
@@ -160,20 +170,39 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private void SetupBattleResult()
         {
-            bool wasVicotry = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
-
-            if (BattleResult == null)
+            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_Skirmish
+                || desiredBehaviour == PostBattleScreenBehaviour.Defeat_Skirmish)
             {
-                _dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
+                _applicationModel.Skirmish = CreateSkirmish();
+                _applicationModel.Mode = GameMode.Skirmish;
+                _applicationModel.UserWonSkirmish = desiredBehaviour == PostBattleScreenBehaviour.Victory_Skirmish;
             }
-
-            BattleResult.LevelNum = levelNum;
-            BattleResult.WasVictory = wasVicotry;
-
-            if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted)
+            else
             {
-                BattleResult.LevelNum = StaticData.NUM_OF_LEVELS;
+                bool wasVicotry = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
+
+                if (BattleResult == null)
+                {
+                    _dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
+                }
+
+                BattleResult.LevelNum = levelNum;
+                BattleResult.WasVictory = wasVicotry;
+
+                if (desiredBehaviour == PostBattleScreenBehaviour.Victory_GameCompleted)
+                {
+                    BattleResult.LevelNum = StaticData.NUM_OF_LEVELS;
+                }
             }
+        }
+
+        private ISkirmish CreateSkirmish()
+        {
+            return
+                new Skirmish(
+                    Difficulty.Harder,
+                    StaticPrefabKeys.Hulls.Eagle,
+                    StrategyType.Boom);
         }
 
         private void SetupBackground()
@@ -243,8 +272,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void RetryTutorial()
         {
-            ApplicationModelProvider.ApplicationModel.Mode = GameMode.Tutorial;
+            _applicationModel.Mode = GameMode.Tutorial;
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
+        }
+
+        public void RetrySkirmish(ISkirmish skirmish)
+        {
+            Assert.IsNotNull(skirmish);
+
+            _applicationModel.Mode = GameMode.Skirmish;
+            _applicationModel.Skirmish = skirmish;
+            _screensSceneGod.LoadBattleScene();
         }
 
         public void StartLevel1()

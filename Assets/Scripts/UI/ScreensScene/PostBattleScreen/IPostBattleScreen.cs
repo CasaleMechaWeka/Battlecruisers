@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
+﻿using BattleCruisers.Data.Skirmishes;
+
+namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public interface IPostBattleScreen
     {
@@ -7,6 +9,7 @@
         void GoToChooseDifficultyScreen();
         void Retry();
         void RetryTutorial();
+        void RetrySkirmish(ISkirmish skirmish);
         void StartLevel1();
     }
 }
