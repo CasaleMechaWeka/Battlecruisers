@@ -13,6 +13,7 @@ namespace BattleCruisers.AI
 		private readonly IGameModel _gameModel;
 		private readonly IPrefabFactory _prefabFactory;
         
+        // FELIX  Remove :D
         public int LevelNum { get; }
 		public ICruiserController AICruiser { get; }
 		public ICruiserController PlayerCruiser { get; }
