@@ -40,7 +40,6 @@ namespace BattleCruisers.AI
 
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
-            // FELIX  Abstract for skirmish.  User chooses BO!
             IDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
             taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
 
@@ -61,7 +60,6 @@ namespace BattleCruisers.AI
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             // Base build order, main strategy
-            // FELIX  Abstract for skirmish.  User chooses BO!
             IDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
             taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder));
 
