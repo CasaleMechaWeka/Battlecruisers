@@ -13,8 +13,6 @@ namespace BattleCruisers.AI
 		private readonly IGameModel _gameModel;
 		private readonly IPrefabFactory _prefabFactory;
         
-        // FELIX  Remove :D
-        public int LevelNum { get; }
 		public ICruiserController AICruiser { get; }
 		public ICruiserController PlayerCruiser { get; }
 
@@ -22,8 +20,7 @@ namespace BattleCruisers.AI
             ICruiserController aiCruiser,
             ICruiserController playerCruiser,
             IGameModel gameModel,
-            IPrefabFactory prefabFactory,
-            int levelNum)
+            IPrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, playerCruiser, gameModel, prefabFactory);
 
@@ -31,7 +28,6 @@ namespace BattleCruisers.AI
             PlayerCruiser = playerCruiser;
             _gameModel = gameModel;
             _prefabFactory = prefabFactory;
-            LevelNum = levelNum;
         }
 
         public bool CanConstructBuilding(BuildingKey buildingKey)
