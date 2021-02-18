@@ -7,7 +7,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
-using System;
 using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -56,10 +55,11 @@ namespace BattleCruisers.Scenes.BattleScene
             return Task.FromResult("SKIRMISH");
         }
 
-        public override Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            // FELIX :D
-            throw new NotImplementedException();
+            // FELIX  Disable skirmish in demo
+            int randomLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
+            return await _backgroundStatsProvider.GetStatsAsync(randomLevelNum);
         }
     }
 }

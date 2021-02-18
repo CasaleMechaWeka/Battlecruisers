@@ -21,8 +21,10 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
+        private readonly IPrefabFetcher _prefabFetcher;
+        protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
+
         protected readonly IApplicationModel _appModel;
-        protected readonly IPrefabFetcher _prefabFetcher;
         protected IDataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
@@ -36,6 +38,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             _appModel = appModel;
             _prefabFetcher = prefabFetcher;
+            _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
         }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
@@ -62,8 +65,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            IBackgroundStatsProvider backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
-            return await backgroundStatsProvider.GetStatsAsync(levelNum);
+            return await _backgroundStatsProvider.GetStatsAsync(levelNum);
         }
     }
 }
