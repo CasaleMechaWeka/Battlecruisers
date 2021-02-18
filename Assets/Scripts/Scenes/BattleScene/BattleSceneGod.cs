@@ -35,6 +35,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Data.Models.PrefabKeys;
+using System;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -306,16 +307,21 @@ namespace BattleCruisers.Scenes.BattleScene
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters)
         {
-            // FELIX  Create SkirmishHelper :P
-            if (applicationModel.IsTutorial)
+            switch (applicationModel.Mode)
             {
-                TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, prefabFactory, navigationPermitters);
-                _tutorialProvider = helper;
-                return helper;
-            }
-            else
-            {
-                return new NormalHelper(applicationModel, prefabFetcher, prefabFactory, deferrer);
+                case GameMode.Tutorial:
+                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, prefabFactory, navigationPermitters);
+                    _tutorialProvider = helper;
+                    return helper;
+
+                case GameMode.Campaign:
+                    return new NormalHelper(applicationModel, prefabFetcher, prefabFactory, deferrer);
+
+                case GameMode.Skirmish:
+                    return new SkirmishHelper(applicationModel, prefabFetcher, prefabFactory, deferrer, applicationModel.Skirmish);
+
+                default:
+                    throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
             }
         }
    }

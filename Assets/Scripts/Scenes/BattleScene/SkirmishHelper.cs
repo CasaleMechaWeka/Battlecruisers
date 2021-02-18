@@ -9,6 +9,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -25,6 +26,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ISkirmish skirmish) 
             : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
+            Assert.IsNotNull(skirmish);
+
             _random = RandomGenerator.Instance;
             _skirmish = skirmish;
         }
