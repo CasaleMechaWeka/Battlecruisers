@@ -223,19 +223,20 @@ namespace BattleCruisers.Scenes
 
 		public void GoToTrashScreen(int levelNum)
 		{
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
 			_applicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.IsTutorial)
+            if (_applicationModel.Mode == GameMode.Campaign)
             {
-                LoadBattleScene();
+                GoToScreen(trashScreen, playDefaultMusic: false);
             }
             else
             {
-                GoToScreen(trashScreen, playDefaultMusic: false);
+                LoadBattleScene();
             }
         }
 
