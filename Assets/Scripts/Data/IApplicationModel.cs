@@ -13,7 +13,6 @@ namespace BattleCruisers.Data
     {
         int SelectedLevel { get; set; }
         bool ShowPostBattleScreen { get; set; }
-        //  FELIX  Use :)
         ISkirmish Skirmish { get; set; }
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }

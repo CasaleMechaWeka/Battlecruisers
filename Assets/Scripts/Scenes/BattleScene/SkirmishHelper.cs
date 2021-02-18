@@ -61,7 +61,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            // FELIX  Disable skirmish in demo
+            // FELIX  Disable skirmish in Steam DEMO
             int randomLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
             return await _backgroundStatsProvider.GetStatsAsync(randomLevelNum);
         }
