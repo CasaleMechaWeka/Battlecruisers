@@ -11,12 +11,12 @@ namespace BattleCruisers.Data.Skirmishes
         public IPrefabKey AICruiser { get; }
         public StrategyType AIStrategy { get; }
 
-        public Skirmish(Difficulty difficulty, IPrefabKey aICruiser, StrategyType aIStrategy)
+        public Skirmish(Difficulty difficulty, IPrefabKey aiCruiser, StrategyType aIStrategy)
         {
-            Assert.IsNotNull(AICruiser);
+            Assert.IsNotNull(aiCruiser);
 
             Difficulty = difficulty;
-            AICruiser = aICruiser;
+            AICruiser = aiCruiser;
             AIStrategy = aIStrategy;
         }
     }
