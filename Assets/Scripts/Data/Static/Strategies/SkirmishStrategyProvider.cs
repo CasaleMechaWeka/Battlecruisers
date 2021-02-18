@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Data.Static.Strategies;
-using BattleCruisers.Data.Static.Strategies.Requests;
+﻿using BattleCruisers.Data.Static.Strategies.Requests;
 
 namespace BattleCruisers.Data.Static.Strategies
 {

@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -14,11 +15,10 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine.Assertions;
-using Assets.Scripts.Data.Static.Strategies;
 
 namespace BattleCruisers.Scenes.BattleScene
 {

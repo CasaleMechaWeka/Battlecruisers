@@ -1,7 +1,6 @@
-﻿using BattleCruisers.Data.Static.Strategies;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
-namespace Assets.Scripts.Data.Static.Strategies
+namespace BattleCruisers.Data.Static.Strategies
 {
     public class DefaultStrategyProvider : IStrategyProvider
     {

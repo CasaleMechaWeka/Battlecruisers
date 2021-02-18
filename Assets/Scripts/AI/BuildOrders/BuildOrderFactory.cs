@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.Data.Static.Strategies;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -11,6 +7,9 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleCruisers.AI.BuildOrders
 {

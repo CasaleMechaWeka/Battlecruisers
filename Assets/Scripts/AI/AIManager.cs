@@ -8,11 +8,11 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
-using Assets.Scripts.Data.Static.Strategies;
+using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.AI
 {
