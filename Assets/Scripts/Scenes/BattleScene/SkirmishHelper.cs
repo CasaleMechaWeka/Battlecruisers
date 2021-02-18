@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
@@ -14,18 +15,18 @@ namespace BattleCruisers.Scenes.BattleScene
     public class SkirmishHelper : NormalHelper
     {
         private readonly IRandomGenerator _random;
-        private readonly StrategyType _strategyType;
+        private readonly ISkirmish _skirmish;
 
         public SkirmishHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             IPrefabFactory prefabFactory, 
             IDeferrer deferrer,
-            StrategyType strategyType) 
+            ISkirmish skirmish) 
             : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
             _random = RandomGenerator.Instance;
-            _strategyType = strategyType;
+            _skirmish = skirmish;
         }
 
         public override ILevel GetLevel()
@@ -46,7 +47,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new SkirmishStrategyFactory(_strategyType);
+            return new SkirmishStrategyFactory(_skirmish.AIStrategy);
         }
 
         public override Task<string> GetEnemyNameAsync(int levelNum)
@@ -60,6 +61,11 @@ namespace BattleCruisers.Scenes.BattleScene
             // FELIX  Disable skirmish in demo
             int randomLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
             return await _backgroundStatsProvider.GetStatsAsync(randomLevelNum);
+        }
+
+        public override IPrefabKey GetAiCruiserKey()
+        {
+            return _skirmish.AICruiser;
         }
     }
 }

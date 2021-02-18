@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -66,6 +67,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsync(levelNum);
+        }
+
+        public virtual IPrefabKey GetAiCruiserKey()
+        {
+            return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
         }
     }
 }

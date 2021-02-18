@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -42,6 +43,6 @@ namespace BattleCruisers.Scenes.BattleScene
             ITargetIndicator targetIndicator);
         Task<string> GetEnemyNameAsync(int levelNum);
         Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
-
+        IPrefabKey GetAiCruiserKey();
     }
 }

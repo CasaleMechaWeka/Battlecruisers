@@ -34,6 +34,7 @@ using NSubstitute;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -121,7 +122,8 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
             Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
-            Cruiser aiCruiser = cruiserFactory.CreateAICruiser();
+            IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
+            Cruiser aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
 
             // Camera
             ICameraComponents cameraComponents

@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -20,6 +21,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
 {
@@ -60,11 +62,11 @@ namespace BattleCruisers.Cruisers
             return playerCruiser;
         }
 
-        public Cruiser CreateAICruiser()
+        public Cruiser CreateAICruiser(IPrefabKey aiCruiserKey)
         {
-            // FELIX  Skirmish, choose correct enemy hull => Take hull key as parameter?
-            ILevel currentLevel = _applicationModel.DataProvider.GetLevel(_applicationModel.SelectedLevel);
-            Cruiser aiCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(currentLevel.Hull);
+            Assert.IsNotNull(aiCruiserKey);
+
+            Cruiser aiCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(aiCruiserKey);
             Cruiser aiCruiser = _factoryProvider.PrefabFactory.CreateCruiser(aiCruiserPrefab);
 
             aiCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
