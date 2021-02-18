@@ -51,6 +51,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override Task<string> GetEnemyNameAsync(int levelNum)
         {
+            // FELIX  Do we want an enemy name?
             return Task.FromResult("SKIRMISH");
         }
 
