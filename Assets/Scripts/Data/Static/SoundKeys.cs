@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Sound;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Data.Static
 {
@@ -112,6 +113,16 @@ namespace BattleCruisers.Data.Static
                     = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "sleeper-base"),
                         new SoundKey(SoundType.Music, "sleeper-danger"));
+
+                public static IList<SoundKeyPair> All = new List<SoundKeyPair>()
+                {
+                    Bobby,
+                    Confusion,
+                    Experimental,
+                    Juggernaut,
+                    Nothing,
+                    Sleeper
+                };
             }
         }
 

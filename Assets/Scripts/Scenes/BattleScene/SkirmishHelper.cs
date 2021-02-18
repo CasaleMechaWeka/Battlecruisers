@@ -2,7 +2,9 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -30,7 +32,15 @@ namespace BattleCruisers.Scenes.BattleScene
             // FELIX  Make level background have same sky as in campaign?  Check with Pete :)
             int levelNum = -99;  // Unused for skirmish
             IPrefabKey hull = _random.RandomItem(_appModel.DataProvider.StaticData.HullKeys);
-            return null;
+            SoundKeyPair musicKeys = _random.RandomItem(SoundKeys.Music.Background.All);
+            string skyMaterialName = _random.RandomItem(SkyMaterials.All);
+
+            return
+                new Level(
+                    levelNum,
+                    hull,
+                    musicKeys,
+                    skyMaterialName);
         }
 
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
