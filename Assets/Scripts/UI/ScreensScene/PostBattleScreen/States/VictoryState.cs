@@ -6,8 +6,6 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,39 +20,30 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         private const string VICTORY_TITLE_LOOT = "Found some Schematics!";
         private const int VICTORY_TITLE_LOOT_FONT_SIZE = 125;
 
-        public VictoryState(PostBattleScreenController postBattleScreen, IApplicationModel appModel, IMusicPlayer musicPlayer) 
-            : base(postBattleScreen, appModel, musicPlayer)
-        {
-            // FELIX  Merge with Initialise() :)
-        }
-
-        // NEXT FELIX  Remove async, convert to constructor
-        public async Task InitialiseAsync(
-            PostBattleScreenController postBattleScreen,
-            ISingleSoundPlayer soundPlayer,
+        public VictoryState(
+            PostBattleScreenController postBattleScreen, 
+            IApplicationModel appModel, 
             IMusicPlayer musicPlayer,
-            IDataProvider dataProvider,
-            IDifficultySpritesProvider difficultySpritesProvider,
+            ISingleSoundPlayer soundPlayer,
             ILootManager lootManager,
             ITrashTalkData levelTrashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)
+            : base(postBattleScreen, appModel, musicPlayer)
         {
-            Helper.AssertIsNotNull(postBattleScreen, soundPlayer, musicPlayer, dataProvider, difficultySpritesProvider, lootManager, levelTrashTalkData);
+            Helper.AssertIsNotNull(soundPlayer, lootManager, levelTrashTalkData);
 
             _lootManager = lootManager;
 
-            BattleResult battleResult = dataProvider.GameModel.LastBattleResult;
+            BattleResult battleResult = _appModel.DataProvider.GameModel.LastBattleResult;
 
             postBattleScreen.title.text = VICTORY_TITLE_NO_LOOT;
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
             musicPlayer.PlayVictoryMusic();
-            await postBattleScreen.completedDifficultySymbol.InitialiseAsync(dataProvider.SettingsManager.AIDifficulty, difficultySpritesProvider);
-            postBattleScreen.completedDifficultySymbol.gameObject.SetActive(true);
 
             if (desiredBehaviour == PostBattleScreenBehaviour.Victory_DemoCompleted
                 || (desiredBehaviour == PostBattleScreenBehaviour.Default
-                    && dataProvider.StaticData.IsDemo
+                    && _appModel.DataProvider.StaticData.IsDemo
                     && battleResult.LevelNum == StaticData.NUM_OF_LEVELS_IN_DEMO))
             {
                 postBattleScreen.demoCompletedScreen.SetActive(true);
@@ -80,9 +69,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 }
             }
 
-            CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: dataProvider.SettingsManager.AIDifficulty);
-            dataProvider.GameModel.AddCompletedLevel(level);
-            dataProvider.SaveGame();
+            CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: _appModel.DataProvider.SettingsManager.AIDifficulty);
+            _appModel.DataProvider.GameModel.AddCompletedLevel(level);
+            _appModel.DataProvider.SaveGame();
         }
 
         public void ShowLoot()

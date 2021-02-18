@@ -114,19 +114,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else if (_applicationModel.Mode == GameMode.Skirmish)
             {
-                PostSkirmishState state
+                postBattleState
                     = new PostSkirmishState(
                         this,
                         _applicationModel,
-                        musicPlayer);
-                await state
-                    .InitialiseAsync(
-                        this, 
-                        _applicationModel, 
-                        soundPlayer, 
                         musicPlayer,
-                        difficultySpritesProvider);
-                postBattleState = state;
+                        soundPlayer);
             }
             else
             {
@@ -143,17 +136,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 }
                 else
                 {
-                    VictoryState state = new VictoryState(this, _applicationModel, musicPlayer);
-                    await state.InitialiseAsync(
-                        this,
-                        soundPlayer,
-                        musicPlayer,
-                        _dataProvider,
-                        difficultySpritesProvider,
-                        _lootManager,
-                        levelTrashTalkData,
-                        desiredBehaviour);
-                    postBattleState = state;
+                    postBattleState 
+                        = new VictoryState(
+                            this, 
+                            _applicationModel, 
+                            musicPlayer,
+                            soundPlayer,
+                            _lootManager,
+                            levelTrashTalkData,
+                            desiredBehaviour);
                 }
 
                 await SetupAppraisalButtonsAsync(soundPlayer, trashTalkList);

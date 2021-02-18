@@ -3,9 +3,6 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
@@ -17,26 +14,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         private ISkirmish _skirmish;
         private bool _userWonSkirmish;
 
-        public PostSkirmishState(PostBattleScreenController postBattleScreen, IApplicationModel appModel, IMusicPlayer musicPlayer)
+        public PostSkirmishState(
+            PostBattleScreenController postBattleScreen, 
+            IApplicationModel appModel, 
+            IMusicPlayer musicPlayer,
+            ISingleSoundPlayer soundPlayer)
             : base(postBattleScreen, appModel, musicPlayer)
         {
-            // FELIX  Merge with Initialise() below :)
-        }
-
-        // FELIX  Remove async, convert to constructor
-        public async Task InitialiseAsync(
-            PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
-            ISingleSoundPlayer soundPlayer,
-            IMusicPlayer musicPlayer,
-            IDifficultySpritesProvider difficultySpritesProvider)
-        {
-            Helper.AssertIsNotNull(postBattleScreen, appModel, soundPlayer, musicPlayer, difficultySpritesProvider);
+            Assert.IsNotNull(soundPlayer);
             Assert.IsNotNull(appModel.Skirmish);
             Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
 
-            // FELIX
-            //_postBattleScreen = postBattleScreen;
             _skirmish = appModel.Skirmish;
             _userWonSkirmish = appModel.UserWonSkirmish;
 
@@ -45,20 +33,16 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             if (appModel.UserWonSkirmish)
             {
                 postBattleScreen.title.text = VictoryState.VICTORY_TITLE_NO_LOOT;
-
-                // FELIX  Avoid duplicate code with VictoryState?
-                await postBattleScreen.completedDifficultySymbol.InitialiseAsync(_skirmish.Difficulty, difficultySpritesProvider);
-                postBattleScreen.completedDifficultySymbol.gameObject.SetActive(true);
             }
             else
             {
                 postBattleScreen.title.text = DefeatState.LOSS_TITLE;
             }
-            // FELIX
-
+            // FELIX  Choose colour based on victory/defeat
             //postBattleScreen.title.color = Color.black;
             //postBattleScreen.levelName.levelName.color = Color.black;
 
+            // FELIX  Choose text based on victory/defeat
             ////postBattleScreen.appraisalSection.Initialise(TUTORIAL_APPRAISAL_DRONE_TEXT, soundPlayer);
             //musicPlayer.PlayVictoryMusic();
 
