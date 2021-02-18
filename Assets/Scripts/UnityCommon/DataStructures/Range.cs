@@ -1,4 +1,4 @@
-﻿using UnityCommon.Utils;
+﻿using BattleCruisers.Utils;
 
 namespace UnityCommon.DataStrctures
 {
