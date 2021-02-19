@@ -17,6 +17,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
     public class SkirmishScreenController : ScreenController
     {
         private IApplicationModel _applicationModel;
+        private StrategyType[] _strategies;
+
+        private const string RANDOM = "Random";
 
         public CanvasGroupButton battleButton, homeButton;
         public DifficultyDropdown difficultyDropdown;
@@ -43,12 +46,13 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private void InitialiseStrategyDropdown()
         {
-            StrategyType[] strategies = (StrategyType[])Enum.GetValues(typeof(StrategyType));
-            IList<string> startegyStrings
-                = strategies
+            _strategies = (StrategyType[])Enum.GetValues(typeof(StrategyType));
+            IList<string> strategyStrings
+                = _strategies
                     .Select(strategy => strategy.ToString())
                     .ToList();
-            strategyDropdown.Initialise(startegyStrings, StrategyType.Balanced.ToString());
+            strategyStrings.Insert(0, RANDOM);
+            strategyDropdown.Initialise(strategyStrings, RANDOM);
         }
 
         private void InitialiseCruiserDropdown()
@@ -57,8 +61,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 = StaticPrefabKeys.Hulls.AllKeys
                     .Select(key => key.PrefabName)
                     .ToList();
+            hullNames.Insert(0, RANDOM);
             // FELIX  Want to use last used skirmish settings => Don't wipe skirmish settings in post battle!
-            cruiserDropdown.Initialise(hullNames, StaticPrefabKeys.Hulls.AllKeys[0].PrefabName);
+            cruiserDropdown.Initialise(hullNames, RANDOM);
         }
 
         public void Battle()
@@ -75,15 +80,31 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private StrategyType GetSelectedStrategy()
         {
             string strategyString = strategyDropdown.SelectedValue;
-            Enum.TryParse(strategyString, out StrategyType strategy);
-            return strategy;
+            bool result = Enum.TryParse(strategyString, out StrategyType strategy);
+
+            if (result)
+            {
+                return strategy;
+            }
+            else
+            {
+                return RandomGenerator.Instance.RandomItem(_strategies);
+            }
         }
 
         private IPrefabKey GetSelectedCruiser()
         {
             string cruiserString = cruiserDropdown.SelectedValue;
             IPrefabKey cruiserKey = StaticPrefabKeys.Hulls.AllKeys.FirstOrDefault(key => key.PrefabName == cruiserString);
-            return cruiserKey ?? StaticPrefabKeys.Hulls.Bullshark;
+            
+            if (cruiserKey != null)
+            {
+                return cruiserKey;
+            }
+            else
+            {
+                return RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeys);
+            }
         }
 
         public void Home()
