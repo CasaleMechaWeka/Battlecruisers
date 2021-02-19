@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
@@ -72,8 +73,13 @@ namespace BattleCruisers.Scenes.BattleScene
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
             IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyFactory);
-            return aiManager.CreateAI(levelInfo);
+            return aiManager.CreateAI(levelInfo, FindDifficulty());
 		}
+
+        protected virtual Difficulty FindDifficulty()
+        {
+            return DataProvider.SettingsManager.AIDifficulty;
+        }
 
         protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {

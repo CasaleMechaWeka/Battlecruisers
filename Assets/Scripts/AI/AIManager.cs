@@ -50,7 +50,7 @@ namespace BattleCruisers.AI
             _factoryMonitorFactory = new FactoryMonitorFactory(RandomGenerator.Instance);
         }
 
-        public IArtificialIntelligence CreateAI(ILevelInfo levelInfo)
+        public IArtificialIntelligence CreateAI(ILevelInfo levelInfo, Difficulty difficulty)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
@@ -68,7 +68,7 @@ namespace BattleCruisers.AI
                     _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
 
-            if (IsAdaptiveAI(_dataProvider.SettingsManager.AIDifficulty))
+            if (IsAdaptiveAI(difficulty))
             {
                 return aiFactory.CreateAdaptiveAI(levelInfo);
             }

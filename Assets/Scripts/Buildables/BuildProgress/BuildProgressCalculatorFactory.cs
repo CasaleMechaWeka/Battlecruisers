@@ -40,6 +40,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         private float FindBuildSpeedMultiplier(ISettingsManager settingsManager)
         {
+            // FELIX  Diffirent for skirmish :P
             switch (settingsManager.AIDifficulty)
             {
                 case Difficulty.Easy:
