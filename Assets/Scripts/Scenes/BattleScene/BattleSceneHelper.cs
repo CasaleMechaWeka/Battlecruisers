@@ -29,8 +29,6 @@ namespace BattleCruisers.Scenes.BattleScene
         protected IDataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
-        public abstract IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
-        public abstract IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
 
         protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher)
@@ -51,6 +49,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         public abstract ILoadout GetPlayerLoadout();
         public abstract void InitialiseUIManager(ManagerArgs args);
+        public abstract IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
+        public abstract IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
+
 
         public virtual ILevel GetLevel()
         {

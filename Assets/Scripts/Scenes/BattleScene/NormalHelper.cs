@@ -27,13 +27,12 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
+        private readonly IBuildProgressCalculatorFactory _calculatorFactory;
 
         private UIManager _uiManager;
         private const int IN_GAME_HINTS_CUTOFF = 3;
 
         public override bool ShowInGameHints { get; }
-        public override IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
-        public override IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
@@ -54,9 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 appModel.DataProvider.SettingsManager.ShowInGameHints
                 && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
-            IBuildProgressCalculatorFactory calculatorFactory = new BuildProgressCalculatorFactory(DataProvider.SettingsManager);
-            PlayerCruiserBuildProgressCalculator = calculatorFactory.CreatePlayerCruiserCalculator(); ;
-            AICruiserBuildProgressCalculator = calculatorFactory.CreateAICruiserCalculator();
+            _calculatorFactory = new BuildProgressCalculatorFactory(DataProvider.SettingsManager);
             
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();
@@ -75,6 +72,16 @@ namespace BattleCruisers.Scenes.BattleScene
             IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo, FindDifficulty());
 		}
+
+        public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
+        {
+            return _calculatorFactory.CreatePlayerCruiserCalculator();
+        }
+
+        public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
+        {
+            return _calculatorFactory.CreateAICruiserCalculator(FindDifficulty());
+        }
 
         protected virtual Difficulty FindDifficulty()
         {

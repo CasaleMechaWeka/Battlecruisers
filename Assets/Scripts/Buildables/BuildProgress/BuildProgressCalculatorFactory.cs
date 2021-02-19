@@ -7,6 +7,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 {
     public class BuildProgressCalculatorFactory : IBuildProgressCalculatorFactory
     {
+        // FELIX  Remove :)
         private readonly ISettingsManager _settingsManager;
 
         // For cheating :)
@@ -28,20 +29,19 @@ namespace BattleCruisers.Buildables.BuildProgress
             return new LinearCalculator(BuildSpeedMultipliers.DEFAULT);
         }
 
-        public IBuildProgressCalculator CreateAICruiserCalculator()
+        public IBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty)
         {
 #if ENABLE_CHEATS
-            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(_settingsManager));
+            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(difficulty));
             aiBuildSpeed = calculator;
             return calculator;
 #endif
-            return new LinearCalculator(FindBuildSpeedMultiplier(_settingsManager));
+            return new LinearCalculator(FindBuildSpeedMultiplier(difficulty));
         }
 
-        private float FindBuildSpeedMultiplier(ISettingsManager settingsManager)
+        private float FindBuildSpeedMultiplier(Difficulty difficulty)
         {
-            // FELIX  Diffirent for skirmish :P
-            switch (settingsManager.AIDifficulty)
+            switch (difficulty)
             {
                 case Difficulty.Easy:
                     return BuildSpeedMultipliers.HALF_DEFAULT;
@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.BuildProgress
                     return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
 
                 default:
-                    throw new ArgumentException($"Unkown difficulty: {settingsManager.AIDifficulty}");
+                    throw new ArgumentException($"Unkown difficulty: {difficulty}");
             }
         }
 

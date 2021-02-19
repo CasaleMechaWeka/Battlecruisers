@@ -22,14 +22,14 @@ namespace BattleCruisers.Scenes.BattleScene
     public interface IBattleSceneHelper
     {
         bool ShowInGameHints { get; }
-        IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
-        IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
 
         // Separate methods because of circular dependency between UIManager and everything else :/
         IUIManager CreateUIManager();
         void InitialiseUIManager(ManagerArgs args);
 
+        IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
+        IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         ILevel GetLevel();
         ILoadout GetPlayerLoadout();
         IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);

@@ -1,8 +1,10 @@
-﻿namespace BattleCruisers.Buildables.BuildProgress
+﻿using BattleCruisers.Data.Settings;
+
+namespace BattleCruisers.Buildables.BuildProgress
 {
     public interface IBuildProgressCalculatorFactory
     {
         IBuildProgressCalculator CreatePlayerCruiserCalculator();
-        IBuildProgressCalculator CreateAICruiserCalculator();
+        IBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty);
     }
 }

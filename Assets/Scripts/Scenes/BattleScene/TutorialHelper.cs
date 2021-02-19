@@ -29,6 +29,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         private readonly BroadcastingFilter _backButtonPermitter;
         private LimitableUIManager _uiManager;
+        private IBuildProgressCalculator _playerBuildProgressCalculator, _aiBuildProgressCalculator;
 
         public override bool ShowInGameHints { get; }
         public ISlotPermitter SlotPermitter => _slotFilter;
@@ -45,9 +46,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public ISingleBuildableProvider SingleShipProvider { get; }
         public ISingleBuildableProvider SingleOffensiveProvider { get; }
 
-        public override IBuildProgressCalculator PlayerCruiserBuildProgressCalculator { get; }
 		public IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
-        public override IBuildProgressCalculator AICruiserBuildProgressCalculator { get; }
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
@@ -77,11 +76,11 @@ namespace BattleCruisers.Scenes.BattleScene
             IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST);
 
             CompositeCalculator playerCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
-            PlayerCruiserBuildProgressCalculator = playerCruiserBuildSpeedCalculator;
+            _playerBuildProgressCalculator = playerCruiserBuildSpeedCalculator;
             PlayerCruiserBuildSpeedController = playerCruiserBuildSpeedCalculator;
 
             CompositeCalculator aiCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
-            AICruiserBuildProgressCalculator = aiCruiserBuildSpeedCalculator;
+            _aiBuildProgressCalculator = aiCruiserBuildSpeedCalculator;
             AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
         
@@ -169,6 +168,16 @@ namespace BattleCruisers.Scenes.BattleScene
                 new TogglableUserChosenTargetHelper(
                     new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator),
                     permissions);
+        }
+
+        public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
+        {
+            return _playerBuildProgressCalculator;
+        }
+
+        public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
+        {
+            return _aiBuildProgressCalculator;
         }
     }
 }
