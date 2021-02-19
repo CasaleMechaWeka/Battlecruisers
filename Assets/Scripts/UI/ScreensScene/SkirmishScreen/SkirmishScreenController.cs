@@ -54,9 +54,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private void InitialiseCruiserDropdown()
         {
             IList<string> hullNames
-                            = StaticPrefabKeys.Hulls.AllKeys
-                                .Select(key => key.PrefabName)
-                                .ToList();
+                = StaticPrefabKeys.Hulls.AllKeys
+                    .Select(key => key.PrefabName)
+                    .ToList();
             // FELIX  Want to use last used skirmish settings => Don't wipe skirmish settings in post battle!
             cruiserDropdown.Initialise(hullNames, StaticPrefabKeys.Hulls.AllKeys[0].PrefabName);
         }
