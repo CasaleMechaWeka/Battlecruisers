@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data.Static.Strategies
+namespace BattleCruisers.Data.Static.Strategies.Helper
 {
     public class LevelStrategies : ILevelStrategies
     {

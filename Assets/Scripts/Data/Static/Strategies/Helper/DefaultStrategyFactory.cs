@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data.Static.Strategies
+namespace BattleCruisers.Data.Static.Strategies.Helper
 {
     public class DefaultStrategyFactory : IStrategyFactory
     {

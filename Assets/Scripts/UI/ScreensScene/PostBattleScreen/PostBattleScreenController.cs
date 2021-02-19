@@ -3,7 +3,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Data.Static.Strategies;
+using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.BuildableDetails;

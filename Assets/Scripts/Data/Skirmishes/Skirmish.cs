@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Static.Strategies;
+using BattleCruisers.Data.Static.Strategies.Helper;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Skirmishes

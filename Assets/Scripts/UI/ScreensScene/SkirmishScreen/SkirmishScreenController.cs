@@ -1,9 +1,8 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Data.Static.Strategies;
+using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;

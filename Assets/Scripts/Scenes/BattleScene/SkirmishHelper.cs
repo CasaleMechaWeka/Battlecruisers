@@ -3,7 +3,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Data.Static.Strategies;
+using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;

@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.Data.Static.Strategies
+﻿namespace BattleCruisers.Data.Static.Strategies.Helper
 {
     public interface ILevelStrategies
     {
