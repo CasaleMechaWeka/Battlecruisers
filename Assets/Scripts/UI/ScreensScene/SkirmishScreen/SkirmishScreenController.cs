@@ -74,6 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                     difficultyDropdown.Difficulty,
                     GetSelectedCruiser(),
                     GetSelectedStrategy());
+            Logging.Log(Tags.SKIRMISH_SCREEN, _applicationModel.Skirmish);
             _screensSceneGod.LoadBattleScene();
         }
 
@@ -88,6 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
             else
             {
+                Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random strategy!");
                 return RandomGenerator.Instance.RandomItem(_strategies);
             }
         }
@@ -103,6 +105,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
             else
             {
+                Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
                 return RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeys);
             }
         }

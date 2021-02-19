@@ -58,6 +58,7 @@ namespace BattleCruisers.Utils
         public const string MASKS = "Masks";
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
+        public const string SKIRMISH_SCREEN = "SkirmishScreen";
         public const string TUTORIAL_EXPLANATION_PANEL = "TutoraliExplanationPanel";
         public const string TUTORIAL_STEP = "TutorialStep";
         public const string UI = "UI";
@@ -193,6 +194,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
+            // FEILX
+            tagsToActiveness.Add(Tags.SKIRMISH_SCREEN, true);
+            //tagsToActiveness.Add(Tags.SKIRMISH_SCREEN, false);
             tagsToActiveness.Add(Tags.TUTORIAL_EXPLANATION_PANEL, false);
             tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);

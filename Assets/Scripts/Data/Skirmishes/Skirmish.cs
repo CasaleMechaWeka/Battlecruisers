@@ -20,5 +20,10 @@ namespace BattleCruisers.Data.Skirmishes
             AICruiser = aiCruiser;
             AIStrategy = aIStrategy;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"Difficulty: {Difficulty}  AICruiser: {AICruiser}  AIStrategy: {AIStrategy}";
+        }
     }
 }
