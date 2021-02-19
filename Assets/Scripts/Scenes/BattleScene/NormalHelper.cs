@@ -50,10 +50,10 @@ namespace BattleCruisers.Scenes.BattleScene
             _deferrer = deferrer;
 
             ShowInGameHints =
-                appModel.DataProvider.SettingsManager.ShowInGameHints
-                && appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
+                DataProvider.SettingsManager.ShowInGameHints
+                && _appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
-            _calculatorFactory = new BuildProgressCalculatorFactory(DataProvider.SettingsManager);
+            _calculatorFactory = new BuildProgressCalculatorFactory();
             
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();

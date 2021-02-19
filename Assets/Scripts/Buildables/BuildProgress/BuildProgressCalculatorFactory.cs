@@ -1,23 +1,13 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using System;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
     public class BuildProgressCalculatorFactory : IBuildProgressCalculatorFactory
     {
-        // FELIX  Remove :)
-        private readonly ISettingsManager _settingsManager;
-
         // For cheating :)
         public static IBuildSpeedController playerBuildSpeed, aiBuildSpeed;
-
-        public BuildProgressCalculatorFactory(ISettingsManager settingsManager)
-        {
-            Assert.IsNotNull(settingsManager);
-            _settingsManager = settingsManager;
-        }
 
         public IBuildProgressCalculator CreatePlayerCruiserCalculator()
         {
