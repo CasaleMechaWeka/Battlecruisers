@@ -36,14 +36,13 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             // FELIX  Make level background have same sky as in campaign?  Check with Pete :)
             int levelNum = -99;  // Unused for skirmish
-            IPrefabKey hull = _random.RandomItem(_appModel.DataProvider.StaticData.HullKeys);
             SoundKeyPair musicKeys = _random.RandomItem(SoundKeys.Music.Background.All);
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
 
             return
                 new Level(
                     levelNum,
-                    hull,
+                    _skirmish.AICruiser,
                     musicKeys,
                     skyMaterialName);
         }
