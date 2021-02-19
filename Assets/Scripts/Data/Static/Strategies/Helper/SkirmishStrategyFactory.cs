@@ -36,6 +36,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         // FELIX  Implement properly :P
         public IStrategy GetBasicStrategy()
         {
+            // FELIX  For boom, randomly choose between defensive and aggressive
             return
                 new Strategy(
                     new BasicBalancedStrategy(),
