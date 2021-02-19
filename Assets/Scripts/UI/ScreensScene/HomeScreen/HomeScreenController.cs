@@ -95,5 +95,10 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         {
             _screensSceneGod.GoToChooseDifficultyScreen();
         }
+
+        public void GoToSkirmishScreen()
+        {
+            _screensSceneGod.GoToSkirmishScreen();
+        }
     }
 }

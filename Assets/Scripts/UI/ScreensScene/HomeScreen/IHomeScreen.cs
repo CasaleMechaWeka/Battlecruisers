@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         void GoToLevelsScreen();
         void GoToSettingsScreen();
         void GoToLoadoutScreen();
+        void GoToSkirmishScreen();
         void Quit();
     }
 }
