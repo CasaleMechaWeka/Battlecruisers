@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -38,9 +39,21 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
-            difficultyDropdown.Initialise(applicationModel.DataProvider.GameModel.Settings.AIDifficulty);
+            difficultyDropdown.Initialise(FindDefaultDifficulty());
             InitialiseStrategyDropdown();
             InitialiseCruiserDropdown();
+        }
+
+        private Difficulty FindDefaultDifficulty()
+        {
+            if (_applicationModel.Skirmish != null)
+            {
+                return _applicationModel.Skirmish.Difficulty;
+            }
+            else
+            {
+                return _applicationModel.DataProvider.SettingsManager.AIDifficulty;
+            }
         }
 
         private void InitialiseStrategyDropdown()
@@ -51,7 +64,19 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                     .Select(strategy => strategy.ToString())
                     .ToList();
             strategyStrings.Insert(0, RANDOM);
-            strategyDropdown.Initialise(strategyStrings, RANDOM);
+            strategyDropdown.Initialise(strategyStrings, FindDefaultStrategy());
+        }
+
+        private string FindDefaultStrategy()
+        {
+            if (_applicationModel.Skirmish != null)
+            {
+                return _applicationModel.Skirmish.AIStrategy.ToString();
+            }
+            else
+            {
+                return RANDOM;
+            }
         }
 
         private void InitialiseCruiserDropdown()
@@ -61,18 +86,25 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                     .Select(key => key.PrefabName)
                     .ToList();
             hullNames.Insert(0, RANDOM);
-            // FELIX  Want to use last used skirmish settings => Don't wipe skirmish settings in post battle!
-            cruiserDropdown.Initialise(hullNames, RANDOM);
+            cruiserDropdown.Initialise(hullNames, FindDefaultCruiser());
+        }
+
+        private string FindDefaultCruiser()
+        {
+            if (_applicationModel.Skirmish != null)
+            {
+                return _applicationModel.Skirmish.AICruiser.PrefabName;
+            }
+            else
+            {
+                return RANDOM;
+            }
         }
 
         public void Battle()
         {
             _applicationModel.Mode = GameMode.Skirmish;
-            _applicationModel.Skirmish
-                = new Skirmish(
-                    difficultyDropdown.Difficulty,
-                    GetSelectedCruiser(),
-                    GetSelectedStrategy());
+            SaveSkirmishSettings();
             Logging.Log(Tags.SKIRMISH_SCREEN, _applicationModel.Skirmish);
             _screensSceneGod.LoadBattleScene();
         }
@@ -109,14 +141,25 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        public void Home()
-        {
-            _screensSceneGod.GoToHomeScreen();
-        }
-
         public override void Cancel()
         {
             Home();
+        }
+
+        public void Home()
+        {
+            SaveSkirmishSettings();
+            _screensSceneGod.GoToHomeScreen();
+        }
+
+
+        private void SaveSkirmishSettings()
+        {
+            _applicationModel.Skirmish
+                = new Skirmish(
+                    difficultyDropdown.Difficulty,
+                    GetSelectedCruiser(),
+                    GetSelectedStrategy());
         }
     }
 }
