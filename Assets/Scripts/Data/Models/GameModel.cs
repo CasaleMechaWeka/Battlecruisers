@@ -44,6 +44,9 @@ namespace BattleCruisers.Data.Models
         private int _selectedLevel;
 
         [SerializeField]
+        private SkirmishModel _skirmish;
+
+        [SerializeField]
         private HotkeysModel _hotkeys;
         public HotkeysModel Hotkeys => _hotkeys;
 
@@ -69,8 +72,8 @@ namespace BattleCruisers.Data.Models
         public BattleResult LastBattleResult
         {
             get { return _lastBattleResult; }
-            set 
-            { 
+            set
+            {
                 _lastBattleResult = value;
                 _selectedLevel = UNSET_SELECTED_LEVEL;
             }
@@ -85,12 +88,18 @@ namespace BattleCruisers.Data.Models
         public int SelectedLevel
         {
             get { return _selectedLevel; }
-            set 
+            set
             {
                 Assert.IsTrue(value > 0);
                 Assert.IsTrue(value <= StaticData.NUM_OF_LEVELS);
-                _selectedLevel = value; 
+                _selectedLevel = value;
             }
+        }
+
+        public SkirmishModel Skirmish
+        {
+            get { return _skirmish; }
+            set { _skirmish = value; }
         }
 
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
@@ -125,6 +134,7 @@ namespace BattleCruisers.Data.Models
             Settings = new SettingsModel();
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
+            _skirmish = null;
         }
 
         public GameModel(
@@ -234,6 +244,7 @@ namespace BattleCruisers.Data.Models
             }
         }
 
+        // FELIX  Update test :)  SerializerTest/GameModelTest?
         public override bool Equals(object obj)
         {
             GameModel other = obj as GameModel;
@@ -246,6 +257,7 @@ namespace BattleCruisers.Data.Models
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
                 && Settings.SmartEquals(other.Settings)
                 && Hotkeys.SmartEquals(other.Hotkeys)
+                && Skirmish.SmartEquals(other.Skirmish)
                 && NewHulls.SmartEquals(other.NewHulls)
                 && NewBuildings.SmartEquals(other.NewBuildings)
                 && NewUnits.SmartEquals(other.NewUnits)
@@ -265,6 +277,7 @@ namespace BattleCruisers.Data.Models
                 LastBattleResult, 
                 Settings,
                 Hotkeys,
+                Skirmish,
                 _unlockedHulls, 
                 _unlockedUnits, 
                 _unlockedBuildings, 

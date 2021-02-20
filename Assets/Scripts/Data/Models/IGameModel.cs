@@ -16,6 +16,7 @@ namespace BattleCruisers.Data.Models
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
         HotkeysModel Hotkeys { get; }
+        SkirmishModel Skirmish { get; }
 
         ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
