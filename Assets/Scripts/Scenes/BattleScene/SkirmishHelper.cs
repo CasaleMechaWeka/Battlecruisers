@@ -23,14 +23,13 @@ namespace BattleCruisers.Scenes.BattleScene
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             IPrefabFactory prefabFactory, 
-            IDeferrer deferrer,
-            ISkirmishModel skirmish) 
+            IDeferrer deferrer) 
             : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
-            Assert.IsNotNull(skirmish);
-
             _random = RandomGenerator.Instance;
-            _skirmish = skirmish;
+
+            Assert.IsNotNull(_appModel.Skirmish);
+            _skirmish = _appModel.Skirmish;
         }
 
         public override ILevel GetLevel()

@@ -318,7 +318,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     return new NormalHelper(applicationModel, prefabFetcher, prefabFactory, deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(applicationModel, prefabFetcher, prefabFactory, deferrer, applicationModel.Skirmish);
+                    return new SkirmishHelper(applicationModel, prefabFetcher, prefabFactory, deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
