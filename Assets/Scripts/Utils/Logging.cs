@@ -194,9 +194,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
-            // FEILX
-            tagsToActiveness.Add(Tags.SKIRMISH_SCREEN, true);
-            //tagsToActiveness.Add(Tags.SKIRMISH_SCREEN, false);
+            tagsToActiveness.Add(Tags.SKIRMISH_SCREEN, false);
             tagsToActiveness.Add(Tags.TUTORIAL_EXPLANATION_PANEL, false);
             tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);
