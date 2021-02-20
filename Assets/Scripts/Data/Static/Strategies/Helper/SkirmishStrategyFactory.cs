@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Data.Static.Strategies.Helper
 {
+    // FELIX  Move to interface
     public enum StrategyType
     {
         Balanced, Rush, Boom
@@ -14,42 +15,71 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
     {
         private readonly StrategyType _strategyType;
         private readonly IRandomGenerator _random;
-        private readonly IOffensiveRequest[] _offensiveRequests;
 
         public SkirmishStrategyFactory(StrategyType strategyType)
         {
             _strategyType = strategyType;
             _random = RandomGenerator.Instance;
-            
-            // FELIX  Implement properly :P
-            _offensiveRequests
-                = new IOffensiveRequest[]
-                {
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
-                };
         }
 
-        // FELIX  Implement properly :P
         public IStrategy GetAdaptiveStrategy()
         {
             return
                 new Strategy(
-                    new BalancedStrategy(),
-                    _offensiveRequests);
+                    GetAdaptiveBaseStrategy(_strategyType),
+                    GetOffensiveRequests(_strategyType));
         }
 
-        // FELIX  Implement properly :P
+        private IBaseStrategy GetAdaptiveBaseStrategy(StrategyType strategyType)
+        {
+            switch (strategyType)
+            {
+                case StrategyType.Rush:
+                    return new RushStrategy();
+
+                case StrategyType.Balanced:
+                    return new BalancedStrategy();
+
+                case StrategyType.Boom:
+                    return new BoomStrategy();
+
+                default:
+                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
+            }
+        }
+
         public IStrategy GetBasicStrategy()
         {
-            // FELIX  For boom, randomly choose between defensive and aggressive
             return
                 new Strategy(
-                    new BasicBalancedStrategy(),
-                    _offensiveRequests);
+                    GetBasicBaseStrategy(_strategyType),
+                    GetOffensiveRequests(_strategyType));
         }
 
-        // FELIX
-        //private IBaseStrategy GetBaseStrategy(StrategyType strategyType)
+        private IBaseStrategy GetBasicBaseStrategy(StrategyType strategyType)
+        {
+            switch (strategyType)
+            {
+                case StrategyType.Rush:
+                    return new BasicRushStrategy();
+
+                case StrategyType.Balanced:
+                    return new BasicBalancedStrategy();
+
+                case StrategyType.Boom:
+                    if (_random.NextBool())
+                    {
+                        return new BasicBoomAggressiveStrategy();
+                    }
+                    else
+                    {
+                        return new BasicBoomDefensiveStrategy();
+                    }
+
+                default:
+                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
+            }
+        }
 
         private IOffensiveRequest[] GetOffensiveRequests(StrategyType strategyType)
         {
