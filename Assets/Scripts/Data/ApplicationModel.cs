@@ -19,6 +19,7 @@ namespace BattleCruisers.Data
         public GameMode Mode { get; set; }
         public bool IsTutorial => Mode == GameMode.Tutorial;
         public IDataProvider DataProvider { get; }
+        // FELIX  Remove :D
         public ISkirmishModel Skirmish { get; set; }
         public bool UserWonSkirmish { get; set; }
 
