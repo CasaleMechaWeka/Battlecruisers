@@ -158,7 +158,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private void SaveSkirmishSettings()
         {
-            // FELIX  Avoid levels without backgrounds :)
             int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
 
