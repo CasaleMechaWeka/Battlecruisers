@@ -109,7 +109,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 };
             public static IList<IOffensiveRequest[]> All;
 
-            public Balanced()
+            static Balanced()
             {
                 List<IOffensiveRequest[]> all = new List<IOffensiveRequest[]>()
                 {
@@ -160,7 +160,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 };
             public static IList<IOffensiveRequest[]> All;
 
-            public Boom()
+            static Boom()
             {
                 List<IOffensiveRequest[]> all = new List<IOffensiveRequest[]>()
                 {
