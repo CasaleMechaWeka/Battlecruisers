@@ -4,6 +4,8 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.Strategies.Helper;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -43,6 +45,7 @@ namespace BattleCruisers.Tests.Data
             _originalGameModel.NewBuildings.AddItem(new BuildingKey(BuildingCategory.Ultra, "brah"));
             _originalGameModel.NewUnits.AddItem(new UnitKey(UnitCategory.Naval, "seeeendii"));
 			_originalGameModel.SelectedLevel = 17;
+			_originalGameModel.Skirmish = new SkirmishModel(Difficulty.Normal, StaticPrefabKeys.Hulls.Megalodon, StrategyType.Rush);
 
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy));
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Harder));

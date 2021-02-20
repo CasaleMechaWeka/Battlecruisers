@@ -244,7 +244,6 @@ namespace BattleCruisers.Data.Models
             }
         }
 
-        // FELIX  Update test :)  SerializerTest/GameModelTest?
         public override bool Equals(object obj)
         {
             GameModel other = obj as GameModel;

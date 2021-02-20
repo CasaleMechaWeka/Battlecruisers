@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models
 {
-    // FELIX  Add to GameModel :)
     // FELIX  Preserve sky & background for retry => Have here?
     [Serializable]
     public class SkirmishModel : ISkirmishModel
