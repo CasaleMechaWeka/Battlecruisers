@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Skirmishes;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
@@ -17,14 +17,14 @@ namespace BattleCruisers.Scenes.BattleScene
     public class SkirmishHelper : NormalHelper
     {
         private readonly IRandomGenerator _random;
-        private readonly ISkirmish _skirmish;
+        private readonly ISkirmishModel _skirmish;
 
         public SkirmishHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
             IPrefabFactory prefabFactory, 
             IDeferrer deferrer,
-            ISkirmish skirmish) 
+            ISkirmishModel skirmish) 
             : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
             Assert.IsNotNull(skirmish);

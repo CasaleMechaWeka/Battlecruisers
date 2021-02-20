@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Skirmishes;
+﻿using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {

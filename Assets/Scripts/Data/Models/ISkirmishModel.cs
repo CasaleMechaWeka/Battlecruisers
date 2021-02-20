@@ -2,9 +2,9 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static.Strategies.Helper;
 
-namespace BattleCruisers.Data.Skirmishes
+namespace BattleCruisers.Data.Models
 {
-    public interface ISkirmish
+    public interface ISkirmishModel
     {
         IPrefabKey AICruiser { get; }
         StrategyType AIStrategy { get; }

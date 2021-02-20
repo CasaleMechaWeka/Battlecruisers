@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Skirmishes;
+﻿using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
@@ -19,7 +19,7 @@ namespace BattleCruisers.Data
         public GameMode Mode { get; set; }
         public bool IsTutorial => Mode == GameMode.Tutorial;
         public IDataProvider DataProvider { get; }
-        public ISkirmish Skirmish { get; set; }
+        public ISkirmishModel Skirmish { get; set; }
         public bool UserWonSkirmish { get; set; }
 
         public ApplicationModel(IDataProvider dataProvider)

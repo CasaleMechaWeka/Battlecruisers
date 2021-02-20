@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Skirmishes;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
@@ -202,10 +202,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
         }
 
-        private ISkirmish CreateSkirmish()
+        private ISkirmishModel CreateSkirmish()
         {
             return
-                new Skirmish(
+                new SkirmishModel(
                     Difficulty.Harder,
                     StaticPrefabKeys.Hulls.Eagle,
                     StrategyType.Boom);

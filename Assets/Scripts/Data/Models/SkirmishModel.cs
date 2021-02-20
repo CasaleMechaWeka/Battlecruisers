@@ -3,16 +3,16 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Data.Skirmishes
+namespace BattleCruisers.Data.Models
 {
     // FELIX  Preserve sky & background for retry => Have here?
-    public class Skirmish : ISkirmish
+    public class SkirmishModel : ISkirmishModel
     {
         public Difficulty Difficulty { get; }
         public IPrefabKey AICruiser { get; }
         public StrategyType AIStrategy { get; }
 
-        public Skirmish(Difficulty difficulty, IPrefabKey aiCruiser, StrategyType aIStrategy)
+        public SkirmishModel(Difficulty difficulty, IPrefabKey aiCruiser, StrategyType aIStrategy)
         {
             Assert.IsNotNull(aiCruiser);
 

@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Skirmishes;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
@@ -156,7 +156,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private void SaveSkirmishSettings()
         {
             _applicationModel.Skirmish
-                = new Skirmish(
+                = new SkirmishModel(
                     difficultyDropdown.Difficulty,
                     GetSelectedCruiser(),
                     GetSelectedStrategy());

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Skirmishes;
+﻿using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.Data
 {
@@ -13,7 +13,7 @@ namespace BattleCruisers.Data
     {
         int SelectedLevel { get; set; }
         bool ShowPostBattleScreen { get; set; }
-        ISkirmish Skirmish { get; set; }
+        ISkirmishModel Skirmish { get; set; }
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }
         bool IsTutorial { get; }
