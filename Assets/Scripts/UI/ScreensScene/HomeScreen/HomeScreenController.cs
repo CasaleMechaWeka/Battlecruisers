@@ -9,7 +9,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
-    // FELIX  Only show skirmish button if game is clocked
     public class HomeScreenController : ScreenController, IHomeScreen
 	{
 		private BattleResult _lastBattleResult;
