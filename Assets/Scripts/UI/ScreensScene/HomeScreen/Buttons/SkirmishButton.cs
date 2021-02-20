@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
             // Only enable skirmish screen once user has completed campaign
             if (gameModel.NumOfLevelsCompleted != StaticData.NUM_OF_LEVELS)
             {
-                Destroy(gameObject);
+                DestroySelf();
             }
         }
 

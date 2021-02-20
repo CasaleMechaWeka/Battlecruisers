@@ -9,6 +9,7 @@ namespace BattleCruisers.UI
     public class ElementWithClickSound : ClickableTogglable
     {
         private Action _clickAction;
+        private IDismissableEmitter _parent;
         protected ISingleSoundPlayer _soundPlayer;
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
@@ -23,10 +24,11 @@ namespace BattleCruisers.UI
 
             _soundPlayer = soundPlayer;
             _clickAction = clickAction;
+            _parent = parent;
 
-            if (parent != null)
+            if (_parent != null)
             {
-                parent.Dismissed += Parent_Dismissed;
+                _parent.Dismissed += Parent_Dismissed;
             }
         }
 
@@ -43,6 +45,15 @@ namespace BattleCruisers.UI
             }
 
             _clickAction?.Invoke();
+        }
+
+        protected virtual void DestroySelf()
+        {
+            if (_parent != null)
+            {
+                _parent.Dismissed -= Parent_Dismissed;
+            }
+            Destroy(gameObject);
         }
     }
 }
