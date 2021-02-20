@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         void GoToChooseDifficultyScreen();
         void Retry();
         void RetryTutorial();
-        void RetrySkirmish(ISkirmish skirmish);
+        void RetrySkirmish();
         void StartLevel1();
     }
 }

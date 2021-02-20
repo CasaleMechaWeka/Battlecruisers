@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Skirmishes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
@@ -10,7 +9,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
     public class PostSkirmishState : PostBattleState
     {
-        private ISkirmish _skirmish;
         private bool _userWonSkirmish;
 
         public PostSkirmishState(
@@ -24,7 +22,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             Assert.IsNotNull(appModel.Skirmish);
             Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
 
-            _skirmish = appModel.Skirmish;
             _userWonSkirmish = appModel.UserWonSkirmish;
 
             postBattleScreen.levelName.gameObject.SetActive(false);
@@ -43,21 +40,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 musicPlayer.PlayDefeatMusic();
             }
 
-            postBattleScreen.postSkirmishButtonsPanel.Initialise(postBattleScreen, soundPlayer, this, _userWonSkirmish);
+            postBattleScreen.postSkirmishButtonsPanel.Initialise(postBattleScreen, soundPlayer, _userWonSkirmish);
 
             // Reset to default
             appModel.Mode = GameMode.Campaign;
-            appModel.Skirmish = null;
             appModel.UserWonSkirmish = false;
-        }
-
-        public void RetrySkirmish()
-        {
-            _postBattleScreen.RetrySkirmish(_skirmish);
         }
 
         public override bool ShowVictoryBackground => _userWonSkirmish;
         public override bool ShowDifficultySymbol => _userWonSkirmish;
-        public override Difficulty Difficulty => _skirmish.Difficulty;
+        public override Difficulty Difficulty => _appModel.Skirmish.Difficulty;
     }
 }

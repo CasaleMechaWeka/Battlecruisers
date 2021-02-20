@@ -1,7 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.PostBattleScreen.States;
-using BattleCruisers.UI.Sound.Players;
+﻿using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
@@ -12,17 +10,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public void Initialise(
             IPostBattleScreen postBattleScreen,
             ISingleSoundPlayer soundPlayer,
-            PostSkirmishState postSkirmishState,
             bool wasVictory)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 
             Helper.AssertIsNotNull(loadoutButton, retryButton);
-            Assert.IsNotNull(postSkirmishState);
 
             loadoutButton.Initialise(soundPlayer, postBattleScreen.GoToLoadoutScreen);
             
-            retryButton.Initialise(soundPlayer, postSkirmishState.RetrySkirmish);
+            retryButton.Initialise(soundPlayer, postBattleScreen.RetrySkirmish);
             if (wasVictory)
             {
                 Destroy(retryButton.gameObject);

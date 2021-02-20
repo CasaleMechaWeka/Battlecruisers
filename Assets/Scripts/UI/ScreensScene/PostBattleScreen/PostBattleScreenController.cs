@@ -290,12 +290,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
 
-        public void RetrySkirmish(ISkirmish skirmish)
+        public void RetrySkirmish()
         {
-            Assert.IsNotNull(skirmish);
-
             _applicationModel.Mode = GameMode.Skirmish;
-            _applicationModel.Skirmish = skirmish;
             _screensSceneGod.LoadBattleScene();
         }
 
