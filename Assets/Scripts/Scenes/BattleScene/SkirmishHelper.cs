@@ -35,7 +35,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override ILevel GetLevel()
         {
-            // FELIX  Make level background have same sky as in campaign?  Check with Pete :)
             int levelNum = -99;  // Unused for skirmish
             SoundKeyPair musicKeys = _random.RandomItem(SoundKeys.Music.Background.All);
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
@@ -55,7 +54,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override Task<string> GetEnemyNameAsync(int levelNum)
         {
-            // FELIX  Do we want an enemy name?
             return Task.FromResult("SKIRMISH");
         }
 
