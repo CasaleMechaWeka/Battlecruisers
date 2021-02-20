@@ -125,10 +125,10 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private IPrefabKey GetSelectedCruiser()
+        private HullKey GetSelectedCruiser()
         {
             string cruiserString = cruiserDropdown.SelectedValue;
-            IPrefabKey cruiserKey = StaticPrefabKeys.Hulls.AllKeys.FirstOrDefault(key => key.PrefabName == cruiserString);
+            HullKey cruiserKey = StaticPrefabKeys.Hulls.AllKeysExplicit.FirstOrDefault(key => key.PrefabName == cruiserString);
             
             if (cruiserKey != null)
             {
@@ -137,7 +137,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             else
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
-                return RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeys);
+                return RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeysExplicit);
             }
         }
 

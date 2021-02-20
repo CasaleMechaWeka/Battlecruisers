@@ -9,10 +9,10 @@ namespace BattleCruisers.Data.Models
     public class SkirmishModel : ISkirmishModel
     {
         public Difficulty Difficulty { get; }
-        public IPrefabKey AICruiser { get; }
+        public HullKey AICruiser { get; }
         public StrategyType AIStrategy { get; }
 
-        public SkirmishModel(Difficulty difficulty, IPrefabKey aiCruiser, StrategyType aIStrategy)
+        public SkirmishModel(Difficulty difficulty, HullKey aiCruiser, StrategyType aIStrategy)
         {
             Assert.IsNotNull(aiCruiser);
 

@@ -112,7 +112,18 @@ namespace BattleCruisers.Data.Static
                     };
                 }
             }
-		}
+
+            public static IList<HullKey> AllKeysExplicit
+            {
+                get
+                {
+                    return new List<HullKey>()
+                    {
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident
+                    };
+                }
+            }
+        }
 
         public static class UI
         {

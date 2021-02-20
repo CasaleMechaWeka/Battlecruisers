@@ -6,7 +6,7 @@ namespace BattleCruisers.Data.Models
 {
     public interface ISkirmishModel
     {
-        IPrefabKey AICruiser { get; }
+        HullKey AICruiser { get; }
         StrategyType AIStrategy { get; }
         Difficulty Difficulty { get; }
     }
