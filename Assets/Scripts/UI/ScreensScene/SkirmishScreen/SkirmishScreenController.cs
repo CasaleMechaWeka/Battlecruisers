@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
     public class SkirmishScreenController : ScreenController
     {
         private IApplicationModel _applicationModel;
+        private IRandomGenerator _random;
         private StrategyType[] _strategies;
 
         private ISkirmishModel Skirmish => _applicationModel.DataProvider.GameModel.Skirmish;
@@ -38,6 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             Helper.AssertIsNotNull(applicationModel, soundPlayer);
 
             _applicationModel = applicationModel;
+            _random = RandomGenerator.Instance;
 
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
@@ -154,14 +156,20 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             _screensSceneGod.GoToHomeScreen();
         }
 
-
         private void SaveSkirmishSettings()
         {
+            // FELIX  Avoid levels without backgrounds :)
+            int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
+            string skyMaterialName = _random.RandomItem(SkyMaterials.All);
+
+
             _applicationModel.DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
                     difficultyDropdown.Difficulty,
                     GetSelectedCruiser(),
-                    GetSelectedStrategy());
+                    GetSelectedStrategy(),
+                    backgroundLevelNum,
+                    skyMaterialName);
             _applicationModel.DataProvider.SaveGame();
         }
     }

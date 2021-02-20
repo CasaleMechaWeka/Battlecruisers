@@ -9,5 +9,7 @@ namespace BattleCruisers.Data.Models
         HullKey AICruiser { get; }
         StrategyType AIStrategy { get; }
         Difficulty Difficulty { get; }
+        int BackgroundLevelNum { get; }
+        string SkyMaterialName { get; }
     }
 }

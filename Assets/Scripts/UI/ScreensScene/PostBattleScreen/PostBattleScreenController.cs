@@ -208,7 +208,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 new SkirmishModel(
                     Difficulty.Harder,
                     StaticPrefabKeys.Hulls.Eagle,
-                    StrategyType.Boom);
+                    StrategyType.Boom,
+                    backgroundLevelNum: 1,
+                    skyMaterialName: "sweet sky");
         }
 
         private void SetupBackground(bool isVictory)
