@@ -28,8 +28,8 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             _random = RandomGenerator.Instance;
 
-            Assert.IsNotNull(_appModel.Skirmish);
-            _skirmish = _appModel.Skirmish;
+            _skirmish = DataProvider.GameModel.Skirmish;
+            Assert.IsNotNull(_skirmish);
         }
 
         public override ILevel GetLevel()

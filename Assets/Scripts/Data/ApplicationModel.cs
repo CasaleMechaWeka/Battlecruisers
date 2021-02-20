@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Models;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
@@ -19,8 +18,6 @@ namespace BattleCruisers.Data
         public GameMode Mode { get; set; }
         public bool IsTutorial => Mode == GameMode.Tutorial;
         public IDataProvider DataProvider { get; }
-        // FELIX  Remove :D
-        public ISkirmishModel Skirmish { get; set; }
         public bool UserWonSkirmish { get; set; }
 
         public ApplicationModel(IDataProvider dataProvider)
@@ -30,7 +27,6 @@ namespace BattleCruisers.Data
             DataProvider = dataProvider;
             ShowPostBattleScreen = false;
             Mode = GameMode.Campaign;
-            Skirmish = null;
             UserWonSkirmish = false;
         }
     }

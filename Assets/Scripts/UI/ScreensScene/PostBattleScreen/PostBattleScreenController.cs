@@ -179,7 +179,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour == PostBattleScreenBehaviour.Victory_Skirmish
                 || desiredBehaviour == PostBattleScreenBehaviour.Defeat_Skirmish)
             {
-                _applicationModel.Skirmish = CreateSkirmish();
+                _applicationModel.DataProvider.GameModel.Skirmish = CreateSkirmish();
                 _applicationModel.Mode = GameMode.Skirmish;
                 _applicationModel.UserWonSkirmish = desiredBehaviour == PostBattleScreenBehaviour.Victory_Skirmish;
             }
@@ -202,7 +202,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
         }
 
-        private ISkirmishModel CreateSkirmish()
+        private SkirmishModel CreateSkirmish()
         {
             return
                 new SkirmishModel(

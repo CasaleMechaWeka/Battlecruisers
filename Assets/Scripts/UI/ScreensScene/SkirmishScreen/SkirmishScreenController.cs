@@ -19,6 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private IApplicationModel _applicationModel;
         private StrategyType[] _strategies;
 
+        private ISkirmishModel Skirmish => _applicationModel.DataProvider.GameModel.Skirmish;
+
         private const string RANDOM = "Random";
 
         public CanvasGroupButton battleButton, homeButton;
@@ -46,9 +48,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private Difficulty FindDefaultDifficulty()
         {
-            if (_applicationModel.Skirmish != null)
+            if (Skirmish != null)
             {
-                return _applicationModel.Skirmish.Difficulty;
+                return Skirmish.Difficulty;
             }
             else
             {
@@ -69,9 +71,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private string FindDefaultStrategy()
         {
-            if (_applicationModel.Skirmish != null)
+            if (Skirmish != null)
             {
-                return _applicationModel.Skirmish.AIStrategy.ToString();
+                return Skirmish.AIStrategy.ToString();
             }
             else
             {
@@ -91,9 +93,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private string FindDefaultCruiser()
         {
-            if (_applicationModel.Skirmish != null)
+            if (Skirmish != null)
             {
-                return _applicationModel.Skirmish.AICruiser.PrefabName;
+                return Skirmish.AICruiser.PrefabName;
             }
             else
             {
@@ -105,7 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         {
             _applicationModel.Mode = GameMode.Skirmish;
             SaveSkirmishSettings();
-            Logging.Log(Tags.SKIRMISH_SCREEN, _applicationModel.Skirmish);
+            Logging.Log(Tags.SKIRMISH_SCREEN, Skirmish);
             _screensSceneGod.LoadBattleScene();
         }
 
@@ -155,11 +157,12 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private void SaveSkirmishSettings()
         {
-            _applicationModel.Skirmish
+            _applicationModel.DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
                     difficultyDropdown.Difficulty,
                     GetSelectedCruiser(),
                     GetSelectedStrategy());
+            _applicationModel.DataProvider.SaveGame();
         }
     }
 }

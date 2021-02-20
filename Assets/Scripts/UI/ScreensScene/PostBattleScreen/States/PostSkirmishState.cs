@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             : base(postBattleScreen, appModel, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);
-            Assert.IsNotNull(appModel.Skirmish);
+            Assert.IsNotNull(appModel.DataProvider.GameModel.Skirmish);
             Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
 
             _userWonSkirmish = appModel.UserWonSkirmish;
@@ -49,6 +49,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public override bool ShowVictoryBackground => _userWonSkirmish;
         public override bool ShowDifficultySymbol => _userWonSkirmish;
-        public override Difficulty Difficulty => _appModel.Skirmish.Difficulty;
+        public override Difficulty Difficulty => _appModel.DataProvider.GameModel.Skirmish.Difficulty;
     }
 }

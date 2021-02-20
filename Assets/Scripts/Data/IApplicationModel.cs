@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Data.Models;
-
-namespace BattleCruisers.Data
+﻿namespace BattleCruisers.Data
 {
     public enum GameMode
     {
@@ -13,7 +11,6 @@ namespace BattleCruisers.Data
     {
         int SelectedLevel { get; set; }
         bool ShowPostBattleScreen { get; set; }
-        ISkirmishModel Skirmish { get; set; }
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }
         bool IsTutorial { get; }
