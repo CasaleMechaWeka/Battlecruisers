@@ -5,12 +5,6 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Data.Static.Strategies.Helper
 {
-    // FELIX  Move to interface
-    public enum StrategyType
-    {
-        Balanced, Rush, Boom
-    }
-
     public class SkirmishStrategyFactory : IStrategyFactory
     {
         private readonly StrategyType _strategyType;
