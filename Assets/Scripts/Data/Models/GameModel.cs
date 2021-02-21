@@ -115,7 +115,6 @@ namespace BattleCruisers.Data.Models
             set { _skirmish = value; }
         }
 
-        // FELIX  Update serializel test
         public bool ShowHelpLabels
         {
             get { return _showHelpLabels; }
