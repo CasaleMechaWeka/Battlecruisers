@@ -1,7 +1,5 @@
-﻿using BattleCruisers.Scenes;
-using BattleCruisers.UI.BattleScene.MainMenu;
+﻿using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Navigation;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
 using NUnit.Framework;
@@ -14,7 +12,6 @@ namespace BattleCruisers.Tests.UI.BattleScene
         private IPauseGameManager _pauseGameManager;
         private IModalMenu _modalMenu;
         private IBattleCompletionHandler _battleCompletionHandler;
-        private ISceneNavigator _sceneNavigator;
         private INavigationPermitterManager _navigationPermitterManager;
         private NavigationPermittersState _preMenuState;
         private int _dismissedCount;
@@ -25,10 +22,9 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _pauseGameManager = Substitute.For<IPauseGameManager>();
             _modalMenu = Substitute.For<IModalMenu>();
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
-            _sceneNavigator = Substitute.For<ISceneNavigator>();
             _navigationPermitterManager = Substitute.For<INavigationPermitterManager>();
 
-            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _sceneNavigator, _navigationPermitterManager);
+            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _navigationPermitterManager);
 
             _preMenuState = new NavigationPermittersState(default, default, default, default);
             _navigationPermitterManager.PauseNavigation().Returns(_preMenuState);
@@ -93,7 +89,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
 
             _pauseGameManager.Received().ResumeGame();
             _battleCompletionHandler.Received().CompleteBattle(wasVictory: false, retryLevel: false);
-            _modalMenu.Received().HideMenu();
+            _modalMenu.DidNotReceive().HideMenu();
             Assert.AreEqual(1, _dismissedCount);
         }
 
@@ -103,7 +99,8 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.RetryLevel();
 
             _pauseGameManager.Received().ResumeGame();
-            _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE);
+            _battleCompletionHandler.Received().CompleteBattle(wasVictory: false, retryLevel: true);
+            _modalMenu.DidNotReceive().HideMenu();
             Assert.AreEqual(1, _dismissedCount);
         }
     }

@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Scenes;
-using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using System;
@@ -11,7 +10,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         private readonly IPauseGameManager _pauseGameManager;
         private readonly IModalMenu _modalMenu;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
-        private readonly ISceneNavigator _sceneNavigator;
         private readonly INavigationPermitterManager _navigationPermitterManager;
 
         private NavigationPermittersState _stateOnShowMenu;
@@ -22,15 +20,13 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             IPauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IBattleCompletionHandler battleCompletionHandler,
-            ISceneNavigator sceneNavigator,
             INavigationPermitterManager navigationPermitterManager)
         {
-            Helper.AssertIsNotNull(pauseGameManager, modalMenu, battleCompletionHandler, sceneNavigator, navigationPermitterManager);
+            Helper.AssertIsNotNull(pauseGameManager, modalMenu, battleCompletionHandler, navigationPermitterManager);
 
             _pauseGameManager = pauseGameManager;
             _modalMenu = modalMenu;
             _battleCompletionHandler = battleCompletionHandler;
-            _sceneNavigator = sceneNavigator;
             _navigationPermitterManager = navigationPermitterManager;
         }
 
@@ -60,7 +56,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         {
             // Need to resume game to get music back
             _pauseGameManager.ResumeGame();
-            // FELIX  Update tests :)
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
         }
