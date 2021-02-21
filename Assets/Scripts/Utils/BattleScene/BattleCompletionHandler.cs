@@ -41,13 +41,12 @@ namespace BattleCruisers.Utils.BattleScene
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
 
-            BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-
             switch (_applicationModel.Mode)
             {
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
+                    BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
                     _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
                     break;
 
