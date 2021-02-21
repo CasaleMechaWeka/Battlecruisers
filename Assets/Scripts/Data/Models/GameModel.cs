@@ -263,7 +263,6 @@ namespace BattleCruisers.Data.Models
                 _hotkeys = new HotkeysModel();
             }
 
-            // FELIX  Test this is the case :)
             // Ensure help label doesn't suddenly appear by default for existing users
             if (_version == ModelVersion.PreShowHelpLabel)
             {
