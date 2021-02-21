@@ -182,12 +182,12 @@ namespace BattleCruisers.Tests.Data.Models
 		}
 
 		[Test]
-		public void LastBattleResult_ResetsSelectedLevel()
+		public void LastBattleResult_DoesNotResetSelectedLevel()
         {
 			_gameModel.SelectedLevel = 3;
 			_gameModel.LastBattleResult = null;
 
-			Assert.AreEqual(GameModel.UNSET_SELECTED_LEVEL, _gameModel.SelectedLevel);
+			Assert.AreEqual(3, _gameModel.SelectedLevel);
         }
 
 		[Test, Sequential]
