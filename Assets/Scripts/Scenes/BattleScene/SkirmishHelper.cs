@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override Task<string> GetEnemyNameAsync(int levelNum)
         {
-            return Task.FromResult("SKIRMISH");
+            return Task.FromResult("SIMULATRON");
         }
 
         public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
