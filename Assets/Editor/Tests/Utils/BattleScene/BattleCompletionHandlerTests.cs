@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         {
             _applicationModel.Mode = GameMode.Tutorial;
 
-            _battleCompletionHandler.CompleteBattle(wasVictory: true);
+            _battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
 
             ReceivedCommonCompletion();
         }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _applicationModel.Mode = GameMode.Campaign;
             _applicationModel.SelectedLevel = 77;
 
-            _battleCompletionHandler.CompleteBattle(wasVictory: true);
+            _battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
 
             BattleResult expectedResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory: true);
             Assert.AreEqual(expectedResult, _applicationModel.DataProvider.GameModel.LastBattleResult);
@@ -56,11 +56,11 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_SecondTime_DoesNothing()
         {
-            _battleCompletionHandler.CompleteBattle(default);
+            _battleCompletionHandler.CompleteBattle(default, default);
             Assert.AreEqual(1, _battleCompletedCount);
 
             _sceneNavigator.ClearReceivedCalls();
-            _battleCompletionHandler.CompleteBattle(default);
+            _battleCompletionHandler.CompleteBattle(default, default);
             Assert.AreEqual(1, _battleCompletedCount);
             _sceneNavigator.DidNotReceiveWithAnyArgs().GoToScene(default);
         }

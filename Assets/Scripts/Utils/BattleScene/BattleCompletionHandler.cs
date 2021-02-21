@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.BattleScene
             _isCompleted = false;
         }
 
-        public void CompleteBattle(bool wasVictory)
+        public void CompleteBattle(bool wasVictory, bool retryLevel)
         {
             if (_isCompleted)
             {
@@ -62,7 +62,14 @@ namespace BattleCruisers.Utils.BattleScene
             _applicationModel.ShowPostBattleScreen = true;
             TimeBC.Instance.TimeScale = 1;
 
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+            if (retryLevel)
+            {
+                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+            }
+            else
+            {
+                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+            }
         }
     }
 }

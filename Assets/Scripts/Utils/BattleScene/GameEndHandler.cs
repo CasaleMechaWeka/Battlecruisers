@@ -107,7 +107,7 @@ namespace BattleCruisers.Utils.BattleScene
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _speedButtonGroup.SelectDefaultButton();
 
-            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory), POST_GAME_WAIT_TIME_IN_S);
+            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
         private void DestroyCruiserBuildables(ICruiser cruiser)

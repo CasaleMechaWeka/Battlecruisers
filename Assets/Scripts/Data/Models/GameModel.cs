@@ -86,13 +86,15 @@ namespace BattleCruisers.Data.Models
             set { _playerLoadout = value; }
         }
 
+        // FELIX  Update tests
         public BattleResult LastBattleResult
         {
             get { return _lastBattleResult; }
             set
             {
                 _lastBattleResult = value;
-                _selectedLevel = UNSET_SELECTED_LEVEL;
+                // FELIX  Remove
+                //_selectedLevel = UNSET_SELECTED_LEVEL;
             }
         }
 

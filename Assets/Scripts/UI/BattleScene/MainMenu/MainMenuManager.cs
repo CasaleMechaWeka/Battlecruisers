@@ -60,8 +60,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         {
             // Need to resume game to get music back
             _pauseGameManager.ResumeGame();
-            _battleCompletionHandler.CompleteBattle(wasVictory: false);
-            _modalMenu.HideMenu();
+            // FELIX  Update tests :)
+            _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
         }
 
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         {
             // Need to resume game to get music back
             _pauseGameManager.ResumeGame();
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+            _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: true);
             Dismissed?.Invoke(this, EventArgs.Empty);
         }
 

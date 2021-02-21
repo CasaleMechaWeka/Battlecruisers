@@ -147,7 +147,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _playerShip.Received().StopMoving();
 
             _deferrer.Received().Defer(Arg.Any<Action>(), Arg.Any<float>());
-            _battleCompletionHandler.Received().CompleteBattle(wasVictory: true);
+            _battleCompletionHandler.Received().CompleteBattle(wasVictory: true, retryLevel: false);
             _uiManager.Received().HideItemDetails();
             _uiManager.Received().HideCurrentlyShownMenu();
             _targetIndicator.Received().Hide();
@@ -181,7 +181,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _aiShip.Received().StopMoving();
 
             _deferrer.Received().Defer(Arg.Any<Action>(), Arg.Any<float>());
-            _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
+            _battleCompletionHandler.Received().CompleteBattle(wasVictory: false, retryLevel: false);
             _uiManager.Received().HideItemDetails();
             _uiManager.Received().HideCurrentlyShownMenu();
             _targetIndicator.Received().Hide();

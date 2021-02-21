@@ -92,7 +92,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _mainMenuManager.QuitGame();
 
             _pauseGameManager.Received().ResumeGame();
-            _battleCompletionHandler.Received().CompleteBattle(wasVictory: false);
+            _battleCompletionHandler.Received().CompleteBattle(wasVictory: false, retryLevel: false);
             _modalMenu.Received().HideMenu();
             Assert.AreEqual(1, _dismissedCount);
         }
