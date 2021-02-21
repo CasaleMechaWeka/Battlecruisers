@@ -21,7 +21,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _applicationModel = Substitute.For<IApplicationModel>();
             _sceneNavigator = Substitute.For<ISceneNavigator>();
 
-            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
+            // FELIX  Update tests
+            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator, null);
 
             _battleCompletedCount = 0;
             _battleCompletionHandler.BattleCompleted += (sender, e) => _battleCompletedCount++;

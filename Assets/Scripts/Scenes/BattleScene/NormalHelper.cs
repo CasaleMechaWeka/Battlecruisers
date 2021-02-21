@@ -108,8 +108,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     new DeleteButtonVisibilityFilter(),
                     new BroadcastingFilter(isMatch: true),
                     new StaticBroadcastingFilter(isMatch: true),
-                    // FELIX  Use last setting player had instead of ShowInGameHints :)
-                    new BroadcastingFilter(isMatch: ShowInGameHints));
+                    new BroadcastingFilter(_appModel.DataProvider.GameModel.ShowHelpLabels));
         }
 
         public override IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)

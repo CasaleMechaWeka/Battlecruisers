@@ -2,6 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Utils.BattleScene
@@ -10,16 +11,22 @@ namespace BattleCruisers.Utils.BattleScene
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
+        private readonly IBroadcastingFilter _helpLabelsVisibilityFilter;
         private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
-        public BattleCompletionHandler(IApplicationModel applicationModel, ISceneNavigator sceneNavigator)
+        public BattleCompletionHandler(
+            IApplicationModel applicationModel, 
+            ISceneNavigator sceneNavigator,
+            IBroadcastingFilter helpLabelsVisibilityFilter)
         {
-            Helper.AssertIsNotNull(applicationModel, sceneNavigator);
+            Helper.AssertIsNotNull(applicationModel, sceneNavigator, helpLabelsVisibilityFilter);
 
             _applicationModel = applicationModel;
             _sceneNavigator = sceneNavigator;
+            _helpLabelsVisibilityFilter = helpLabelsVisibilityFilter;
+
             _isCompleted = false;
         }
 
@@ -42,13 +49,15 @@ namespace BattleCruisers.Utils.BattleScene
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
                     _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
-                    _applicationModel.DataProvider.SaveGame();
                     break;
 
                 case GameMode.Skirmish:
                     _applicationModel.UserWonSkirmish = wasVictory;
                     break;
             }
+
+            _applicationModel.DataProvider.GameModel.ShowHelpLabels = _helpLabelsVisibilityFilter.IsMatch;
+            _applicationModel.DataProvider.SaveGame();
 
             _applicationModel.ShowPostBattleScreen = true;
             TimeBC.Instance.TimeScale = 1;
