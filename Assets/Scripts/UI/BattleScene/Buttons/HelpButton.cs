@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _leverOff = transform.FindNamedComponent<Image>("LeverOff");
             _leverOn = transform.FindNamedComponent<Image>("LeverOn");
 
-            UpdateLeverVisibility(_helpLabelsVisibilityFilter.IsMatch);
+            UpdateLeverVisibility();
         }
 
         protected override void OnClicked()
@@ -29,10 +29,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             base.OnClicked();
 
             _helpLabelsVisibilityFilter.IsMatch = !_helpLabelsVisibilityFilter.IsMatch;
-            UpdateLeverVisibility(_helpLabelsVisibilityFilter.IsMatch);
+            UpdateLeverVisibility();
         }
 
-        private void UpdateLeverVisibility(bool areHelpLabelsVisible)
+        private void UpdateLeverVisibility()
         {
             _leverOff.enabled = !_helpLabelsVisibilityFilter.IsMatch;
             _leverOn.enabled = _helpLabelsVisibilityFilter.IsMatch;
