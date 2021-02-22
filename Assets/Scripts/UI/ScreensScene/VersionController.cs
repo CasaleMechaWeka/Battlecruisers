@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -15,7 +16,9 @@ namespace BattleCruisers.UI.ScreensScene
 
             string value = "v" + Application.version;
 
-            if (ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.IsDemo)
+            IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
+
+            if (staticData.IsDemo)
             {
                 value += " - DEMO";
             }
@@ -28,9 +31,10 @@ namespace BattleCruisers.UI.ScreensScene
             value += " - Logs";
 #endif
 
-#if UNITY_ASSERTIONS
-            value += " - Asserts";
-#endif
+            if (staticData.HasAsserts)
+            {
+                value += " - Asserts";
+            }
 
             versionText.text = value;
         }

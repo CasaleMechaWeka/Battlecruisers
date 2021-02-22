@@ -15,6 +15,7 @@ namespace BattleCruisers.Data.Static
     public interface IStaticData
     {
         bool IsDemo { get; }
+        bool HasAsserts { get; }
         GameModel InitialGameModel { get; }
         ReadOnlyCollection<ILevel> Levels { get; }
 		ReadOnlyCollection<HullKey> HullKeys { get; }

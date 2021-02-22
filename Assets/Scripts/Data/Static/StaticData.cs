@@ -28,6 +28,12 @@ namespace BattleCruisers.Data.Static
         public bool IsDemo => false;
 #endif
 
+#if UNITY_ASSERTIONS
+        public bool HasAsserts => true;
+#else
+        public bool HasAsserts => false;
+#endif
+
         public GameModel InitialGameModel { get; }
         public ReadOnlyCollection<ILevel> Levels { get; }
 		public ReadOnlyCollection<HullKey> HullKeys { get; }
