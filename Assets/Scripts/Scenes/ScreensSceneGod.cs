@@ -19,19 +19,13 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.Tables;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Scenes
 {
@@ -169,30 +163,6 @@ namespace BattleCruisers.Scenes
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-
-
-            // FELIX  TEMP
-            //LocTable loc = new LocTable();
-            //await loc.LoadTable("ScreensScene");
-            //string value = await loc.GetString("UI/HomeScreen/ContinueButton");
-            //var v2 = value;
-
-            //AsyncOperationHandle<StringTable> handle = default;
-            //bool b = handle.IsValid();
-            
-            //handle = LocalizationSettings.StringDatabase.GetTableAsync("ScreensScene");
-            //await handle.Task;
-            //var a = handle.Result.GetEntry("UI/HomeScreen/ContinueButton").GetLocalizedString();
-
-            //b = handle.IsValid();
-            //Addressables.Release(handle);
-            //b = handle.IsValid();
-            //Addressables.Release(handle);
-            //a = handle.Result.GetEntry("UI/HomeScreen/ContinueButton").GetLocalizedString();
-
-
-            //var c = a;
-
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
