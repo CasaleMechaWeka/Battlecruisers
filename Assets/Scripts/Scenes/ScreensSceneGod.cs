@@ -169,6 +169,7 @@ namespace BattleCruisers.Scenes
 
             // FELIX  TEMP
             Loc loc = new Loc();
+            await loc.LoadTable("ScreensScene");
             string value = await loc.GetScreensSceneStringAsync("UI/HomeScreen/ContinueButton");
             var v2 = value;
 
