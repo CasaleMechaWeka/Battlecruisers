@@ -19,6 +19,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Localization;
 
 namespace BattleCruisers.Scenes
 {
@@ -163,6 +165,12 @@ namespace BattleCruisers.Scenes
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+
+
+            // FELIX  TEMP
+            Loc loc = new Loc();
+            string value = await loc.GetScreensSceneStringAsync("UI/HomeScreen/ContinueButton");
+            var v2 = value;
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
