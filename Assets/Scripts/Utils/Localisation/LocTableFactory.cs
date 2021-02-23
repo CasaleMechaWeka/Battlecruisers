@@ -7,14 +7,27 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
-    public class LocTableFactory
+    public class LocTableFactory : ILocTableFactory
     {
         public class TableName
         {
+            public const string BATTLE_SCENE = "BattleScene";
+            public const string COMMON = "Common";
             public const string SCREENS_SCENE = "ScreensScene";
         }
 
-        private ILocTable _screensSceneTable, _battleSceneTable, _commonTable;
+        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable;
+
+        public async Task<ILocTable> LoadBattleSceneTable()
+        {
+            if (_battleSceneTable == null)
+            {
+                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.BATTLE_SCENE);
+                _battleSceneTable = new LocTable(tableHandle);
+            }
+
+            return _battleSceneTable;
+        }
 
         public async Task<ILocTable> LoadScreensSceneTable()
         {
@@ -25,19 +38,20 @@ namespace BattleCruisers.Utils.Localisation
             }
 
             return _screensSceneTable;
-
         }
 
-        public void ReleaseScreensSceneTable()
+        public async Task<ILocTable> LoadCommonTable()
         {
-            if (_screensSceneTable != null)
+            if (_commonTable == null)
             {
-                Addressables.Release(_screensSceneTable.Handle);
-                _screensSceneTable = null;
+                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.COMMON);
+                _commonTable = new LocTable(tableHandle);
             }
+
+            return _commonTable;
         }
-        
-        public async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
+
+        private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
             AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName);
 
@@ -48,6 +62,33 @@ namespace BattleCruisers.Utils.Localisation
             Assert.IsNotNull(handle.Result);
 
             return handle;
+        }
+
+        public void ReleaseBattleSceneTable()
+        {
+            if (_battleSceneTable != null)
+            {
+                Addressables.Release(_battleSceneTable.Handle);
+                _battleSceneTable = null;
+            }
+        }
+
+        public void ReleaseScreensSceneTable()
+        {
+            if (_screensSceneTable != null)
+            {
+                Addressables.Release(_screensSceneTable.Handle);
+                _screensSceneTable = null;
+            }
+        }
+
+        public void ReleaseCommonTable()
+        {
+            if (_commonTable != null)
+            {
+                Addressables.Release(_commonTable.Handle);
+                _commonTable = null;
+            }
         }
     }
 }
