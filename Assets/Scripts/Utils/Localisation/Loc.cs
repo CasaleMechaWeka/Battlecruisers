@@ -1,14 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Threading.Tasks;
-using UnityEngine.Localization.Settings;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using System;
 using UnityEngine.Assertions;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
 {
+    // FELIX  Update for different tables
+    // FELIX  CReate interface
     public class Loc
     {
         public class TableName
@@ -28,9 +28,7 @@ namespace BattleCruisers.Utils.Localisation
             return await GetStringAsync(TableName.SCREENS_SCENE, key);
         }
 
-        // FELIX  How to force string table to load programmatically?  don't want to preload all tables :/  Only want to load that scene's table
-        //  FELIX  Make static?
-        // FELIX  Don't make async.  Will preload all strings :)
+        // FELIX  Don't make async.  Should load table beforehand :)
         private async Task<string> GetStringAsync(string tableName, string key)
         {
             Assert.IsFalse(string.IsNullOrEmpty(key));
