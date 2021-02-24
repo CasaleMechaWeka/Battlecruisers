@@ -59,9 +59,12 @@ namespace BattleCruisers.Buildables
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected BuildableProgressController _buildableProgress;
 
+        // FELIX  Remove :D
         public string buildableName;
         [TextAreaAttribute(minLines: 3, maxLines: 10)]
         public string description;
+
+        public string stringKeyName;
         public int numOfDronesRequired;
         public float buildTimeInS;
 
