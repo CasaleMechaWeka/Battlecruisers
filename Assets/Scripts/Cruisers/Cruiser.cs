@@ -45,12 +45,10 @@ namespace BattleCruisers.Cruisers
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
+        public string stringKeyBase;
         public int numOfDrones;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
-        [TextAreaAttribute(minLines: 3, maxLines: 10)]
-        public string description;
-        public string cruiserName;
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
@@ -63,9 +61,9 @@ namespace BattleCruisers.Cruisers
 
 
         // IComparableItem
-        public string Description => description;
-        public string Name => cruiserName;
-		public Sprite Sprite => _renderer.sprite;
+        public string Description { get; private set; }
+        public string Name { get; private set; }
+        public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
@@ -133,6 +131,9 @@ namespace BattleCruisers.Cruisers
             UnitTargets = new UnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
+
+            Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
         }
 
         public async virtual void Initialise(ICruiserArgs args)
