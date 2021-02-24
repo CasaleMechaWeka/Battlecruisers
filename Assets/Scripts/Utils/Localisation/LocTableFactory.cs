@@ -22,8 +22,6 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        // FELIX  Make constructor private
-        
         public class TableName
         {
             public const string BATTLE_SCENE = "BattleScene";
@@ -32,6 +30,8 @@ namespace BattleCruisers.Utils.Localisation
         }
 
         private ILocTable _battleSceneTable, _commonTable, _screensSceneTable;
+
+        private LocTableFactory() { }
 
         public async Task<ILocTable> LoadBattleSceneTable()
         {
