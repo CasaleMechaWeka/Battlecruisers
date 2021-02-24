@@ -49,6 +49,9 @@ namespace BattleCruisers.Buildables.Buildings
 
             Assert.IsNotNull(placementSound);
             _placementSound = new AudioClipWrapper(placementSound);
+
+            Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
+            Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)

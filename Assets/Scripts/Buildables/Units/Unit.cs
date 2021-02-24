@@ -56,6 +56,9 @@ namespace BattleCruisers.Buildables.Units
             Assert.IsNotNull(engineAudioSource);
             Assert.IsNotNull(engineAudioSource.clip);
             _coreEngineAudioSource = new AudioSourceBC(engineAudioSource);
+
+            Name = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Name");
+            Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)

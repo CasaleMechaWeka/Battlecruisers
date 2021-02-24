@@ -59,11 +59,6 @@ namespace BattleCruisers.Buildables
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected BuildableProgressController _buildableProgress;
 
-        // FELIX  Remove :D
-        public string buildableName;
-        [TextAreaAttribute(minLines: 3, maxLines: 10)]
-        public string description;
-
         public string stringKeyName;
         public int numOfDronesRequired;
         public float buildTimeInS;
@@ -188,8 +183,8 @@ namespace BattleCruisers.Buildables
         public Sprite uiFriendlySprite;
         public Sprite Sprite => uiFriendlySprite != null ? uiFriendlySprite : _buildableProgress.FillableImage.sprite;
 
-        string IComparableItem.Description => description;
-        string IComparableItem.Name => buildableName;
+        public string Description { get; protected set; }
+        public string Name { get; protected set; }
         #endregion IComparableItem
         #endregion Properties
 
@@ -507,7 +502,7 @@ namespace BattleCruisers.Buildables
                     _cruiserSpecificFactories.DroneFeedbackFactory.CreateDummyFeedback();
             _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
 
-            Logging.Log(Tags.BUILDABLE, $"{buildableName}   Want: {numOfDrones}  Got: {DroneConsumer.NumOfDrones}");
+            Logging.Log(Tags.BUILDABLE, $"{Name}   Want: {numOfDrones}  Got: {DroneConsumer.NumOfDrones}");
         }
 
         protected void CleanUpDroneConsumer()
