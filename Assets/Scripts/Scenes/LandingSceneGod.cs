@@ -5,6 +5,7 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace BattleCruisers.Scenes
 
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
+        public static ILocTableFactory LocTableFactory { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
         void Start()
@@ -34,6 +36,7 @@ namespace BattleCruisers.Scenes
             {
                 IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
                 MusicPlayer = CreateMusicPlayer(dataProvider);
+                LocTableFactory = new LocTableFactory();
 
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);

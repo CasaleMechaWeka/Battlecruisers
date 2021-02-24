@@ -19,7 +19,10 @@ namespace BattleCruisers.Utils.Localisation
             Assert.IsFalse(string.IsNullOrEmpty(key));
             Assert.IsTrue(Handle.IsValid(), $"Handle has been released :/");
 
-            return Handle.Result.GetEntry(key).GetLocalizedString();
+            StringTableEntry entry = Handle.Result.GetEntry(key);
+            Assert.IsNotNull(entry, $"No string entry for key: {key}");
+
+            return entry.GetLocalizedString();
         }
     }
 }

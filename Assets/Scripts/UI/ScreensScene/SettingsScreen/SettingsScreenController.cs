@@ -5,6 +5,7 @@ using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
@@ -31,13 +32,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IScreensSceneGod screensSceneGod, 
             ISingleSoundPlayer soundPlayer, 
             ISettingsManager settingsManager,
-            IHotkeysModel hotkeysModel)
+            IHotkeysModel hotkeysModel,
+            ILocTable commonLocTable)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton);
-            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel);
+            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel, commonLocTable);
 
             _settingsManager = settingsManager;
 
@@ -49,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 _settingsManager.Save();
             }
 
-            difficultyDropdown.Initialise(_settingsManager.AIDifficulty);
+            difficultyDropdown.Initialise(_settingsManager.AIDifficulty, commonLocTable);
 
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);

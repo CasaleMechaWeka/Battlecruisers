@@ -11,6 +11,7 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 {
@@ -31,19 +32,20 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            ILocTable commonLocTable)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, cruiserDropdown);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer);
+            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonLocTable);
 
             _applicationModel = applicationModel;
             _random = RandomGenerator.Instance;
 
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
-            difficultyDropdown.Initialise(FindDefaultDifficulty());
+            difficultyDropdown.Initialise(FindDefaultDifficulty(), commonLocTable);
             InitialiseStrategyDropdown();
             InitialiseCruiserDropdown();
         }

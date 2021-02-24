@@ -7,9 +7,7 @@
         public static string CreateKey<TEnum>(TEnum enumValue)
         {
             string enumType = typeof(TEnum).Name;
-            string enumValueString = enumValue.ToString();
-
-            return $"{ENUM_KEY_PREFIX}/{enumType}/{enumValueString}";
+            return $"{ENUM_KEY_PREFIX}/{enumType}/{enumValue}";
         }
     }
 }

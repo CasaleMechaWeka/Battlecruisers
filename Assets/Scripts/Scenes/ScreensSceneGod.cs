@@ -19,6 +19,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace BattleCruisers.Scenes
 		private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
+        private ILocTableFactory _locTableFactory;
         private ISingleSoundPlayer _soundPlayer;
 
         public HomeScreenController homeScreen;
@@ -84,6 +86,7 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
+            _locTableFactory = LandingSceneGod.LocTableFactory;
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
@@ -108,16 +111,19 @@ namespace BattleCruisers.Scenes
             {
                 _musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
+                _locTableFactory = new LocTableFactory();
             }
+
+            ILocTable commonLocTable = await _locTableFactory.LoadCommonTable();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonLocTable);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonLocTable);
 
             if (_applicationModel.ShowPostBattleScreen)
             {

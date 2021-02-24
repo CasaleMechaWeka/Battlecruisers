@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +18,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public event EventHandler DifficultyChanged;
 
-        public void Initialise(Difficulty selectedDifficulty)
+        public void Initialise(Difficulty selectedDifficulty, ILocTable loc)
         {
+            Assert.IsNotNull(loc);
+
             _difficultyDropdown = GetComponent<Dropdown>();
             Assert.IsNotNull(_difficultyDropdown);
 
@@ -33,7 +36,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             {
                 Difficulty difficulty = difficulties[i];
 
-                options.Add(new Dropdown.OptionData(difficulty.ToString(), difficultySymbols[i]));
+                string enumStringKey = EnumKeyCreator.CreateKey(difficulty);
+                string localisedDifficulty = loc.GetString(enumStringKey);
+
+                options.Add(new Dropdown.OptionData(localisedDifficulty, difficultySymbols[i]));
                 _difficulties.Add(difficulty);
 
                 if (difficulty == selectedDifficulty)
