@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,11 +18,11 @@ namespace BattleCruisers.Projectiles
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        public void Initialise(Faction faction, Rigidbody2D rigidBody, IRemovable parentProjectile)
+        public void Initialise(ILocTable commonStrings, Faction faction, Rigidbody2D rigidBody, IRemovable parentProjectile)
 		{
             Helper.AssertIsNotNull(rigidBody, parentProjectile);
 
-			StaticInitialise();
+			StaticInitialise(commonStrings);
 
 			Faction = faction;
 			_rigidBody = rigidBody;

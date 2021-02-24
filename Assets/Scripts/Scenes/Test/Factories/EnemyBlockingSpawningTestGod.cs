@@ -24,8 +24,8 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override void Setup(Helper helper)
         {
-			archonPrefab.StaticInitialise();
-            attackBoatPrefab.StaticInitialise();
+			archonPrefab.StaticInitialise(helper.CommonStrings);
+            attackBoatPrefab.StaticInitialise(helper.CommonStrings);
 
             // Factory building archon
             helper.InitialiseBuilding(leftFactory, Faction.Reds, parentCruiserDirection: Direction.Right);

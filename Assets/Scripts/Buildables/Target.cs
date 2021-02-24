@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables
 {
@@ -79,8 +80,10 @@ namespace BattleCruisers.Buildables
 			}
         }
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(ILocTable commonStrings)
 		{
+            base.StaticInitialise(commonStrings);
+
             _healthTracker = new HealthTracker(maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
 

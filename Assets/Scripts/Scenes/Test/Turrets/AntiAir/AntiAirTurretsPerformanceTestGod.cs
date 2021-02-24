@@ -29,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.Performance
             TestUtils.Helper helper = new TestUtils.Helper(baseHelper, deferrer: timeScaleDeferrer);
    
             // Initialise prefab
-			unitPrefab.StaticInitialise();
+			unitPrefab.StaticInitialise(helper.CommonStrings);
 
             // Initialise air factory
             IAircraftProvider aircraftProvider = Substitute.For<IAircraftProvider>();

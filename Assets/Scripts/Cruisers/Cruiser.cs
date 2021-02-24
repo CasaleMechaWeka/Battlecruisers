@@ -19,6 +19,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -102,9 +103,9 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(ILocTable commonStrings)
         {
-            base.StaticInitialise();
+            base.StaticInitialise(commonStrings);
 
             Assert.IsNotNull(deathPrefab);
 

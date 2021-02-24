@@ -13,6 +13,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,9 +53,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			}
 		}
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 

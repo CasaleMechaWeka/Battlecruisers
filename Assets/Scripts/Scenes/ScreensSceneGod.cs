@@ -39,7 +39,6 @@ namespace BattleCruisers.Scenes
 		private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
-        private ILocTableFactory _locTableFactory;
         private ISingleSoundPlayer _soundPlayer;
 
         public HomeScreenController homeScreen;
@@ -75,7 +74,8 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            ILocTable commonLocTable = await LocTableFactory.Instance.LoadCommonTable();
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonLocTable);
             
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
@@ -86,7 +86,6 @@ namespace BattleCruisers.Scenes
 			_gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
-            _locTableFactory = LandingSceneGod.LocTableFactory;
             _soundPlayer
                 = new SingleSoundPlayer(
                     new SoundFetcher(),
@@ -94,7 +93,7 @@ namespace BattleCruisers.Scenes
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager));
             
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonLocTable);
             trashDataList.Initialise();
 
             // TEMP  For showing PostBattleScreen :)
@@ -111,10 +110,7 @@ namespace BattleCruisers.Scenes
             {
                 _musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
-                _locTableFactory = new LocTableFactory();
             }
-
-            ILocTable commonLocTable = await _locTableFactory.LoadCommonTable();
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -24,12 +25,12 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             // Need satellite to be initialised to be able to access damage capabilities.
-            satellitePrefab.StaticInitialise();
+            satellitePrefab.StaticInitialise(commonStrings);
 
             foreach (IDamageCapability damageCapability in satellitePrefab.Buildable.DamageCapabilities)
             {

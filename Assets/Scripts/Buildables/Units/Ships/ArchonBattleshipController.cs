@@ -10,6 +10,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             Helper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 

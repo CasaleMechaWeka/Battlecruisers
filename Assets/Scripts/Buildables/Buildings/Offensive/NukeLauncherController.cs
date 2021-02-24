@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -47,9 +48,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
@@ -100,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			_launchedNuke = Instantiate(nukeMissilePrefab);
 
 			ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(_enemyCruiser);
-            _launchedNuke.Initialise(_factoryProvider);
+            _launchedNuke.Initialise(_commonStrings, _factoryProvider);
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,

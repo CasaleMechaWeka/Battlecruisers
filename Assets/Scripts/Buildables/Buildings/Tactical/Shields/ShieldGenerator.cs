@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -27,13 +28,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             _shieldController = GetComponentInChildren<ShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);
-            _shieldController.StaticInitialise();
+            _shieldController.StaticInitialise(commonStrings);
         }
 
         public override void Activate(BuildingActivationArgs activationArgs)

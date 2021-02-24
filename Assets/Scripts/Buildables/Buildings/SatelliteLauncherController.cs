@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,9 +15,9 @@ namespace BattleCruisers.Buildables.Buildings
 
         protected abstract Vector3 SpawnPositionAdjustment { get; }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 			Assert.IsNotNull(satellitePrefab);
 		}
 

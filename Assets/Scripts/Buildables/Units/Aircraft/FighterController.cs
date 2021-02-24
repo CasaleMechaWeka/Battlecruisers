@@ -19,6 +19,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -60,9 +61,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		protected override float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS / PATROLLING_VELOCITY_DIVISOR;
         protected override float PositionEqualityMarginInM => 2;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             _barrelController = gameObject.GetComponentInChildren<BarrelController>();
 			Assert.IsNotNull(_barrelController);

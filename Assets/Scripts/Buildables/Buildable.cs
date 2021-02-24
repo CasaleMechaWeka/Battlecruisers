@@ -19,6 +19,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Timers;
 using System;
@@ -196,9 +197,9 @@ namespace BattleCruisers.Buildables
         public event EventHandler Clicked;
         public event EventHandler Deactivated;
 
-        public virtual void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public virtual void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise();
+            base.StaticInitialise(commonStrings);
 
             Helper.AssertIsNotNull(parent, healthBar);
 

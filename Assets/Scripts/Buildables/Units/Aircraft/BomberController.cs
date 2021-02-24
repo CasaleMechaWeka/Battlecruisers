@@ -13,6 +13,7 @@ using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -60,9 +61,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
 			_bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
 			Assert.IsNotNull(_bombSpawner);

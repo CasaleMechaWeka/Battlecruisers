@@ -16,6 +16,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Seabed;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -79,9 +80,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             _kamikazeController = GetComponentInChildren<KamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);

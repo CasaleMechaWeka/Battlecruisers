@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -34,9 +35,9 @@ namespace BattleCruisers.Buildables.Buildings
 
         public virtual bool IsBoostable => false;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
 
             _collider = GetComponent<BoxCollider2D>();
             Assert.IsNotNull(_collider);

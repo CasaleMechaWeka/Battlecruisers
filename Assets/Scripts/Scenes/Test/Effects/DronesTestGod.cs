@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Effects
             for (int i = 0; i < numOfDrones; ++i)
             {
                 DroneController newDrone = Instantiate(dronePrefab);
-                newDrone.StaticInitialise();
+                newDrone.StaticInitialise(helper.CommonStrings);
                 newDrone.Activate(
                     new DroneActivationArgs(
                         position: RandomisePosition(parentObject.transform.position),

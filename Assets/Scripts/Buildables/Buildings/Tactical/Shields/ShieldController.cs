@@ -6,6 +6,7 @@ using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -30,9 +31,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(ILocTable commonStrings)
         {
-            base.StaticInitialise();
+            base.StaticInitialise(commonStrings);
 
             Helper.AssertIsNotNull(visuals, circleCollider, healthBar);
 

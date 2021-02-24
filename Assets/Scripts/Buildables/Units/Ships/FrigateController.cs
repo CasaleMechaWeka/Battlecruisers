@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +15,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 		

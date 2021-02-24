@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
 
             foreach (ProjectileController projectile in _projectiles)
             {
-                projectile.Initialise(factoryProvider);
+                projectile.Initialise(helper.CommonStrings, factoryProvider);
                 projectile.Activate(
                     new ProjectileActivationArgs<IProjectileStats>(
                         projectile.Position,

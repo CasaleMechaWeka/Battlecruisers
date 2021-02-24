@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         {
             BuildableWrapper<IBuilding> buildingWrapper = Instantiate(targetPrefab);
             buildingWrapper.gameObject.SetActive(true);
-            buildingWrapper.StaticInitialise();
+            buildingWrapper.StaticInitialise(_helper.CommonStrings);
 
             IBuilding building = buildingWrapper.Buildable;
             building.Position = position;

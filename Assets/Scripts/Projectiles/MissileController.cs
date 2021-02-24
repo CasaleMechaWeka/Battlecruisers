@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,9 +26,9 @@ namespace BattleCruisers.Projectiles
         protected override float TrailLifetimeInS => 3;
         public  ITarget Target { get; private set; }
 
-        public override void Initialise(IFactoryProvider factoryProvider)
+        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
         {
-            base.Initialise(factoryProvider);
+            base.Initialise(commonStrings, factoryProvider);
             Assert.IsNotNull(missile);
         }
 

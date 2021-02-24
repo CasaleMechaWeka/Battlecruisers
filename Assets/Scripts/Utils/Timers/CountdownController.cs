@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,8 +17,10 @@ namespace BattleCruisers.Utils.Timers
 
         public bool IsInProgress => gameObject.activeSelf;
 
-        public override void StaticInitialise()
+        public override void StaticInitialise(ILocTable commonStrings)
         {
+            base.StaticInitialise(commonStrings);
+
             _countdownText = GetComponent<TextMesh>();
             Assert.IsNotNull(_countdownText);
 

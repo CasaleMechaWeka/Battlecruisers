@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
         protected override void Setup(Helper helper)
         {
-            unitPrefab.StaticInitialise();
+            unitPrefab.StaticInitialise(helper.CommonStrings);
 
             // Factory
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);

@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override void Setup(Helper helper)
         {
-            unitPrefab.StaticInitialise();
+            unitPrefab.StaticInitialise(helper.CommonStrings);
 
             // Factory
             helper.InitialiseBuilding(_factory, Faction.Blues, parentCruiserDirection: Direction.Right);

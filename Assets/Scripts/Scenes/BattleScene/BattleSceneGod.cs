@@ -36,6 +36,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System;
+using BattleCruisers.Utils.Localisation;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -101,10 +102,11 @@ namespace BattleCruisers.Scenes.BattleScene
             waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTable();
+            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
             IPrefabFetcher prefabFetcher = new PrefabFetcher();
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager);
+            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             NavigationPermitters navigationPermitters = new NavigationPermitters();
 

@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override void Setup(Helper helper)
         {
-			unitPrefab.StaticInitialise();
+			unitPrefab.StaticInitialise(helper.CommonStrings);
 
             ICruiser leftCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 

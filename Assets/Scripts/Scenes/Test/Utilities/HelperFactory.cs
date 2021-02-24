@@ -3,6 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
@@ -19,9 +20,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer realTimeDeferrer = null,
             IUpdaterProvider updaterProvider = null)
         {
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTable();
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+            IPrefabFactory prefabFactory 
+                = new PrefabFactory(
+                    prefabCache, 
+                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 
+                    commonStrings);
 
             return
                 new Helper(
@@ -30,7 +36,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     deferrer,
                     realTimeDeferrer,
                     updaterProvider,
-                    prefabFactory);
+                    prefabFactory,
+                    commonStrings);
         }
     }
 }

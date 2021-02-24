@@ -54,7 +54,7 @@ namespace BattleCruisers.Scenes.Test
             ITarget parent = Substitute.For<ITarget>();
             parent.Faction.Returns(Faction.Blues);
 
-            _rocket.Initialise(args.FactoryProvider);
+            _rocket.Initialise(helper.CommonStrings, args.FactoryProvider);
             _rocket.Activate(
                 new TargetProviderActivationArgs<ICruisingProjectileStats>(
                     _rocket.Position,

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Effects.Movement;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,9 +11,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IMovementEffect _movementEffects;
         public MovementEffectInitialiser movementEffectInitialiser;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
-            base.StaticInitialise(parent, healthBar);
+            base.StaticInitialise(parent, healthBar, commonStrings);
             
             Assert.IsNotNull(movementEffectInitialiser);
             _movementEffects = movementEffectInitialiser.CreateMovementEffects();

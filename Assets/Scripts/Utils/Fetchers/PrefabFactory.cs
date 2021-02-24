@@ -14,6 +14,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using UnityEngine;
@@ -25,13 +26,15 @@ namespace BattleCruisers.Utils.Fetchers
 	{
 		private readonly IPrefabCache _prefabCache;
         private readonly ISettingsManager _settingsManager;
+        private readonly ILocTable _commonStrings;
 
-		public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager)
+        public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager, ILocTable commonStrings)
 		{
-            Helper.AssertIsNotNull(prefabCache, settingsManager);
+            Helper.AssertIsNotNull(prefabCache, settingsManager, commonStrings);
 
 			_prefabCache = prefabCache;
             _settingsManager = settingsManager;
+            _commonStrings = commonStrings;
         }
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
@@ -69,7 +72,7 @@ namespace BattleCruisers.Utils.Fetchers
 
 			BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
 			buildableWrapper.gameObject.SetActive(true);
-			buildableWrapper.StaticInitialise();
+			buildableWrapper.StaticInitialise(_commonStrings);
             buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
 
             Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
@@ -84,7 +87,7 @@ namespace BattleCruisers.Utils.Fetchers
         public Cruiser CreateCruiser(Cruiser cruiserPrefab)
         {
             Cruiser cruiser = Object.Instantiate(cruiserPrefab);
-            cruiser.StaticInitialise();
+            cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }
 
@@ -92,7 +95,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             CountdownController newCountdown = Object.Instantiate(_prefabCache.Countdown);
             newCountdown.transform.SetParent(parent, worldPositionStays: false);
-            newCountdown.StaticInitialise();
+            newCountdown.StaticInitialise(_commonStrings);
             return newCountdown;
         }
 
@@ -119,14 +122,14 @@ namespace BattleCruisers.Utils.Fetchers
 
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
             TProjectile projectile = Object.Instantiate(prefab);
-            projectile.Initialise(factoryProvider);
+            projectile.Initialise(_commonStrings, factoryProvider);
             return projectile;
         }
 
         public IDroneController CreateDrone()
         {
             DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
-            newDrone.StaticInitialise();
+            newDrone.StaticInitialise(_commonStrings);
             return newDrone;
         }
 

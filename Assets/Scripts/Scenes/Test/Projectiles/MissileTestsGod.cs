@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test
 
             foreach (MissileController missile in _missiles)
 			{
-                missile.Initialise(args.FactoryProvider);
+                missile.Initialise(helper.CommonStrings, args.FactoryProvider);
                 missile.Activate(
                     new TargetProviderActivationArgs<IProjectileStats>(
                         missile.Position,

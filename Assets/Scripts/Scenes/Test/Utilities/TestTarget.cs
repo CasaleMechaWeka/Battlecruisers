@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,9 +13,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private Vector2 _size;
         public override Vector2 Size => _size;
 
-        public void Initialise(Faction faction)
+        public void Initialise(ILocTable commonStrings, Faction faction)
         {
-            StaticInitialise();
+            StaticInitialise(commonStrings);
 
             Faction = faction;
 

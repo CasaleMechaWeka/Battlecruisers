@@ -1,7 +1,9 @@
-﻿namespace BattleCruisers
+﻿using BattleCruisers.Utils.Localisation;
+
+namespace BattleCruisers
 {
     public interface IPrefab
     {
-        void StaticInitialise();
+        void StaticInitialise(ILocTable commonStrings);
     }
 }

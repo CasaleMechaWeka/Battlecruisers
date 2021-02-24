@@ -10,6 +10,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace BattleCruisers.Projectiles
         private IPool<IExplosion, Vector3> _explosionPool;
         
         private bool _isActiveAndAlive;
+        protected ILocTable _commonStrings;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -69,11 +71,12 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public virtual void Initialise(IFactoryProvider factoryProvider)
+        public virtual void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
 		{
             Logging.LogMethod(Tags.SHELLS);
+            Helper.AssertIsNotNull(commonStrings, factoryProvider);
 
-            Assert.IsNotNull(factoryProvider);
+            _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
 			_rigidBody = GetComponent<Rigidbody2D>();

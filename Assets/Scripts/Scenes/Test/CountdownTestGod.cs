@@ -1,14 +1,17 @@
-﻿using BattleCruisers.Utils.Timers;
+﻿using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Timers;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
     public class CountdownTestGod : MonoBehaviour
     {
-        void Start()
+        async void Start()
         {
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTable();
+
             CountdownController countdown = FindObjectOfType<CountdownController>();
-            countdown.StaticInitialise();
+            countdown.StaticInitialise(commonStrings);
             countdown.Begin(() => { });
         }
     }
