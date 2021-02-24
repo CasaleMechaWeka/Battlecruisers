@@ -25,7 +25,10 @@ namespace BattleCruisers.Scenes
 
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
+
+        // FELIX  Remove?
         public static ILocTableFactory LocTableFactory { get; private set; }
+
         public static string LoadingScreenHint { get; private set; }
 
         void Start()

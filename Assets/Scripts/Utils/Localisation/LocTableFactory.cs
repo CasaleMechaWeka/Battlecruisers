@@ -9,6 +9,21 @@ namespace BattleCruisers.Utils.Localisation
 {
     public class LocTableFactory : ILocTableFactory
     {
+        private static ILocTableFactory _instance;
+        public static ILocTableFactory Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new LocTableFactory();
+                }
+                return _instance;
+            }
+        }
+
+        // FELIX  Make constructor private
+        
         public class TableName
         {
             public const string BATTLE_SCENE = "BattleScene";
