@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.UI
         {
             Helper.AssertIsNotNull(trashScreen, trashDataList, levelButtonsPanel);
 
-            trashDataList.Initialise();
+            trashDataList.Initialise(helper.StoryStrings);
 
             trashScreen
                 .Initialise(

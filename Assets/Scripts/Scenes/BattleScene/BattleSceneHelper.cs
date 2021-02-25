@@ -15,6 +15,7 @@ using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +24,7 @@ namespace BattleCruisers.Scenes.BattleScene
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
         private readonly IPrefabFetcher _prefabFetcher;
+        private readonly ILocTable _storyStrings;
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
 
         protected readonly IApplicationModel _appModel;
@@ -31,12 +33,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
 
-        protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher)
+        protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher, ILocTable storyStrings)
         {
-            Helper.AssertIsNotNull(appModel, prefabFetcher);
+            Helper.AssertIsNotNull(appModel, prefabFetcher, storyStrings);
 
             _appModel = appModel;
             _prefabFetcher = prefabFetcher;
+            _storyStrings = storyStrings;
             _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
         }
 
@@ -60,7 +63,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
-            ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher);
+            ITrashTalkProvider trashTalkProvider = new TrashTalkProvider(_prefabFetcher, _storyStrings);
             ITrashTalkData levelTrashTalkData = await trashTalkProvider.GetTrashTalkAsync(levelNum);
             return levelTrashTalkData.EnemyName.ToUpper();
         }

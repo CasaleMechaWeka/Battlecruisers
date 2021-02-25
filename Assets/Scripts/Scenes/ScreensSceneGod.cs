@@ -75,6 +75,7 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             ILocTable commonLocTable = await LocTableFactory.Instance.LoadCommonTable();
+            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTable();
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonLocTable);
             
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
@@ -94,7 +95,7 @@ namespace BattleCruisers.Scenes
                         _dataProvider.SettingsManager));
             
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonLocTable);
-            trashDataList.Initialise();
+            trashDataList.Initialise(storyStrings);
 
             // TEMP  For showing PostBattleScreen :)
             if (goToPostBattleScreen)

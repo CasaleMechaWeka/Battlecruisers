@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -9,10 +10,17 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     {
         private ITrashTalkData[] _trashDataList;
 
-        public void Initialise()
+        public void Initialise(ILocTable storyStrings)
         {
-            _trashDataList = GetComponentsInChildren<ITrashTalkData>();
+            Assert.IsNotNull(storyStrings);
+
+            _trashDataList = GetComponentsInChildren<TrashTalkData>();
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, _trashDataList.Length);
+
+            foreach (TrashTalkData trashTalk in _trashDataList)
+            {
+                trashTalk.Initialise(storyStrings);
+            }
         }
 
         public Task<ITrashTalkData> GetTrashTalkAsync(int levelNum)

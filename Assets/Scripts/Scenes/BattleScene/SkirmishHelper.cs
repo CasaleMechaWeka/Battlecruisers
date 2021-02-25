@@ -11,6 +11,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -22,9 +23,10 @@ namespace BattleCruisers.Scenes.BattleScene
         public SkirmishHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
+            ILocTable storyStrings,
             IPrefabFactory prefabFactory, 
             IDeferrer deferrer) 
-            : base(appModel, prefabFetcher, prefabFactory, deferrer)
+            : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
         {
             _random = RandomGenerator.Instance;
 

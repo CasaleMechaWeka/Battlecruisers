@@ -16,6 +16,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
@@ -40,9 +41,10 @@ namespace BattleCruisers.Scenes.BattleScene
         public NormalHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
+            ILocTable storyStrings,
             IPrefabFactory prefabFactory, 
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher)
+            : base(appModel, prefabFetcher, storyStrings)
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 

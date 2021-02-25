@@ -60,6 +60,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private readonly float _buildSpeedMultiplier;
 
         public ILocTable CommonStrings { get; }
+        public ILocTable StoryStrings { get; }
         public IDeferrer Deferrer { get; }
         public IDeferrer RealTimeDeferrer { get; }
 
@@ -82,7 +83,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer realTimeDeferrer,
             IUpdaterProvider updaterProvider,
             IPrefabFactory prefabFactory,
-            ILocTable commonStrings)
+            ILocTable commonStrings,
+            ILocTable storyStrings)
 		{
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
@@ -91,6 +93,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UpdaterProvider = updaterProvider;
             _prefabFactory = prefabFactory;
             CommonStrings = commonStrings;
+            StoryStrings = storyStrings;
 		}
 
         public Helper(
@@ -107,6 +110,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UpdaterProvider = updaterProvider ?? helper.UpdaterProvider;
             _prefabFactory = prefabFactory ?? helper._prefabFactory;
             CommonStrings = helper.CommonStrings;
+            StoryStrings = helper.StoryStrings;
         }
 
         public void InitialiseBuilding(
