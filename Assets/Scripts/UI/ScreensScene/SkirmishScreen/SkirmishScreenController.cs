@@ -91,7 +91,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private void InitialiseCruiserDropdown(IPrefabFactory prefabFactory)
         {
-            // FELIX  Remove IPrefabKey.PrefabName
             string initialValue = _randomDropdownEntry;
             IList<string> hullNames = new List<string>();
 
