@@ -21,17 +21,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public bool playerTalksFirst;
         public bool PlayerTalksFirst => playerTalksFirst;
 
-        [TextAreaAttribute(minLines: 3, maxLines: 10)]
-        public string playerText = "Sup";
-        public string PlayerText => playerText;
-
-        [TextAreaAttribute(minLines: 3, maxLines: 10)]
-        public string enemyText = "Kia Ora";
-        public string EnemyText => enemyText;
-
-        [TextAreaAttribute(minLines: 3, maxLines: 10)]
-        public string appraisalDroneText = "Chummy Chinese chums chosen challenge";
-        public string AppraisalDroneText => appraisalDroneText;
+        public string PlayerText { get; private set; }
+        public string EnemyText { get; private set; }
+        public string AppraisalDroneText { get; private set; }
 
         public string stringKeyBase;
 
@@ -39,7 +31,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         {
             Assert.IsNotNull(storyStrings);
 
-            // FELIX  get strings :D
+            PlayerText = storyStrings.GetString($"{stringKeyBase}/PlayerText");
+            EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
+            AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");
         }
     }
 }
