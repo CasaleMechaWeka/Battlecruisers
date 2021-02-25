@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Utils.Localisation;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
-    public class TrashTalkData : MonoBehaviour, ITrashTalkData
+    public class TrashTalkData : Prefab, ITrashTalkData
     {
         public Sprite enemyImage;
         public Sprite EnemyImage => enemyImage;
@@ -30,5 +32,14 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         [TextAreaAttribute(minLines: 3, maxLines: 10)]
         public string appraisalDroneText = "Chummy Chinese chums chosen challenge";
         public string AppraisalDroneText => appraisalDroneText;
+
+        public string stringKeyBase;
+
+        public void Initialise(ILocTable storyStrings)
+        {
+            Assert.IsNotNull(storyStrings);
+
+            // FELIX  get strings :D
+        }
     }
 }
