@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleCruisers.Utils.Localisation;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 {
@@ -48,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
             difficultyDropdown.Initialise(FindDefaultDifficulty(), commonStrings);
-            InitialiseStrategyDropdown();
+            InitialiseStrategyDropdown(commonStrings);
             InitialiseCruiserDropdown();
         }
 
@@ -64,13 +65,17 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private void InitialiseStrategyDropdown()
+        private void InitialiseStrategyDropdown(ILocTable commonStrings)
         {
             _strategies = (StrategyType[])Enum.GetValues(typeof(StrategyType));
-            IList<string> strategyStrings
-                = _strategies
-                    .Select(strategy => strategy.ToString())
-                    .ToList();
+            IList<string> strategyStrings = new List<string>();
+
+            for (int i = 0; i < _strategies.Length; ++i)
+            {
+                string key = EnumKeyCreator.CreateKey(_strategies[i]);
+                strategyStrings.Add(commonStrings.GetString(key));
+            }
+
             strategyStrings.Insert(0, _randomDropdownEntry);
             strategyDropdown.Initialise(strategyStrings, FindDefaultStrategy());
         }
@@ -121,12 +126,13 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private StrategyType GetSelectedStrategy()
         {
-            string strategyString = strategyDropdown.SelectedValue;
-            bool result = Enum.TryParse(strategyString, out StrategyType strategy);
+            // First entry is "Random"
+            int adjustedIndex = strategyDropdown.SelectedIndex - 1;
 
-            if (result)
+            if (adjustedIndex >= 0)
             {
-                return strategy;
+                Assert.IsTrue(adjustedIndex < _strategies.Length);
+                return _strategies[adjustedIndex];
             }
             else
             {

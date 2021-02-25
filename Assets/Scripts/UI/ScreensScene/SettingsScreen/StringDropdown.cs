@@ -10,7 +10,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private Dropdown _dropdown;
         private IList<string> _values;
 
+        // FELIX  Remove?  Use index instead?
         public string SelectedValue => _values[_dropdown.value];
+        public int SelectedIndex => _dropdown.value;
 
         public void Initialise(IList<string> values, string initialValue)
         {

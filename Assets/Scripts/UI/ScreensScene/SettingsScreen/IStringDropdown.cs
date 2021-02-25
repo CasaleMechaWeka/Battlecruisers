@@ -3,5 +3,6 @@
     public interface IStringDropdown
     {
         string SelectedValue { get; }
+        int SelectedIndex { get; }
     }
 }
