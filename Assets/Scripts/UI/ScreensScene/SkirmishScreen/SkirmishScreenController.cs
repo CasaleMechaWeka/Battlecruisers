@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private ISkirmishModel Skirmish => _applicationModel.DataProvider.GameModel.Skirmish;
 
-        private const string RANDOM = "Random";
+        private string _randomDropdownEntry;
 
         public CanvasGroupButton battleButton, homeButton;
         public DifficultyDropdown difficultyDropdown;
@@ -33,19 +33,21 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             IScreensSceneGod screensSceneGod, 
             IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
-            ILocTable commonLocTable)
+            ILocTable commonStrings,
+            ILocTable screensSceneStrings)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, cruiserDropdown);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonLocTable);
+            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonStrings, screensSceneStrings);
 
             _applicationModel = applicationModel;
             _random = RandomGenerator.Instance;
+            _randomDropdownEntry = screensSceneStrings.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
-            difficultyDropdown.Initialise(FindDefaultDifficulty(), commonLocTable);
+            difficultyDropdown.Initialise(FindDefaultDifficulty(), commonStrings);
             InitialiseStrategyDropdown();
             InitialiseCruiserDropdown();
         }
@@ -69,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 = _strategies
                     .Select(strategy => strategy.ToString())
                     .ToList();
-            strategyStrings.Insert(0, RANDOM);
+            strategyStrings.Insert(0, _randomDropdownEntry);
             strategyDropdown.Initialise(strategyStrings, FindDefaultStrategy());
         }
 
@@ -81,17 +83,19 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
             else
             {
-                return RANDOM;
+                return _randomDropdownEntry;
             }
         }
 
         private void InitialiseCruiserDropdown()
         {
+            // FELIX  Initialise prefab, to get localised name
+            // FELIX  Remove IPrefabKey.PrefabName
             IList<string> hullNames
                 = StaticPrefabKeys.Hulls.AllKeys
                     .Select(key => key.PrefabName)
                     .ToList();
-            hullNames.Insert(0, RANDOM);
+            hullNames.Insert(0, _randomDropdownEntry);
             cruiserDropdown.Initialise(hullNames, FindDefaultCruiser());
         }
 
@@ -103,7 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
             else
             {
-                return RANDOM;
+                return _randomDropdownEntry;
             }
         }
 
