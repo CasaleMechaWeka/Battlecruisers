@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
@@ -16,6 +15,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -69,7 +69,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IPrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
             IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkProvider trashTalkList)
+            ITrashTalkProvider trashTalkList,
+            ILocTable screensSceneStrings)
 		{
 			base.Initialise(screensSceneGod);
 
@@ -88,7 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postSkirmishButtonsPanel,
                 appraisalSection,
                 appraisalButtonsPanel);
-            Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider);
+            Helper.AssertIsNotNull(applicationModel, prefabFactory, musicPlayer, difficultySpritesProvider, screensSceneStrings);
 
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
@@ -109,6 +110,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         this,
                         _applicationModel,
                         musicPlayer,
+                        screensSceneStrings,
                         soundPlayer); 
             }
             else if (_applicationModel.Mode == GameMode.Skirmish)
@@ -118,6 +120,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         this,
                         _applicationModel,
                         musicPlayer,
+                        screensSceneStrings,
                         soundPlayer);
             }
             else
@@ -131,7 +134,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat
                     || !BattleResult.WasVictory)
                 {
-                    postBattleState = new DefeatState(this, _applicationModel, musicPlayer);
+                    postBattleState = new DefeatState(this, _applicationModel, musicPlayer, screensSceneStrings);
                 }
                 else
                 {
@@ -140,6 +143,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                             this, 
                             _applicationModel, 
                             musicPlayer,
+                            screensSceneStrings,
                             soundPlayer,
                             _lootManager,
                             levelTrashTalkData,

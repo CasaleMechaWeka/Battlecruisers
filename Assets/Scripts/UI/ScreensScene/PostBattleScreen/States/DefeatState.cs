@@ -1,22 +1,24 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Music;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
     public class DefeatState : PostBattleState
     {
-		public const string LOSS_TITLE = "Bad luck!";
+		public const string LOSS_TITLE_KEY = "UI/PostBattleScreen/Title/Defeat";
 
         public DefeatState(
             PostBattleScreenController postBattleScreen,
             IApplicationModel appModel,
-            IMusicPlayer musicPlayer)
-            : base (postBattleScreen, appModel, musicPlayer)
+            IMusicPlayer musicPlayer,
+            ILocTable screensSceneStrings)
+            : base (postBattleScreen, appModel, musicPlayer, screensSceneStrings)
         {
             Helper.AssertIsNotNull(postBattleScreen, musicPlayer);
 
-            postBattleScreen.title.text = LOSS_TITLE;
+            postBattleScreen.title.text = _screensSceneStrings.GetString(LOSS_TITLE_KEY);
             postBattleScreen.defeatMessage.SetActive(true);
             musicPlayer.PlayDefeatMusic();
             postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);

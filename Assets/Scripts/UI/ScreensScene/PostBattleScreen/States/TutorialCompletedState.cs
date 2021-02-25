@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,25 +9,27 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
     public class TutorialCompletedState : PostBattleState
     {
-        private const string TUTORIAL_TITLE = "Tutorial Completed :D";
-        private const string TUTORIAL_APPRAISAL_DRONE_TEXT = "You are now a qualified Battlecruiser Captain, certified by the UAC. On behalf of us crew of builder drones, I’d like to thank you for choosing to steal a Trident-class Battlecruiser! We hope your joyride is comfortable.";
+        private const string TUTORIAL_TITLE_KEY = "UI/PostBattleScreen/Title/Tutorial";
+        private const string TUTORIAL_APPRAISAL_DRONE_TEXT = "UI/PostBattleScreen/TutorialDroneText";
 
         public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
             IApplicationModel appModel,
             IMusicPlayer musicPlayer,
+            ILocTable screensSceneStrings,
             ISingleSoundPlayer soundPlayer)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, appModel, musicPlayer, screensSceneStrings)
         {
             Assert.IsNotNull(soundPlayer);
 
             appModel.Mode = GameMode.Campaign;
-            postBattleScreen.title.text = TUTORIAL_TITLE;
+            postBattleScreen.title.text = _screensSceneStrings.GetString(TUTORIAL_TITLE_KEY);
 
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
 
-            postBattleScreen.appraisalSection.Initialise(TUTORIAL_APPRAISAL_DRONE_TEXT, soundPlayer);
+            string droneText = _screensSceneStrings.GetString(TUTORIAL_APPRAISAL_DRONE_TEXT);
+            postBattleScreen.appraisalSection.Initialise(droneText, soundPlayer);
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);
 

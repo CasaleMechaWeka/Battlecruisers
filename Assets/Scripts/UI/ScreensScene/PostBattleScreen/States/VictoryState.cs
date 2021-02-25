@@ -6,6 +6,7 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,19 +17,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         private ILootManager _lootManager;
         private ILoot _unlockedLoot;
 
-        public const string VICTORY_TITLE_NO_LOOT = "Sweet as!";
-        private const string VICTORY_TITLE_LOOT = "Found some Schematics!";
+        public const string VICTORY_TITLE_NO_LOOT_KEY = "UI/PostBattleScreen/Title/VictoryNoLoot";
+        private const string VICTORY_TITLE_LOOT_KEY = "UI/PostBattleScreen/Title/VictoryLoot";
         private const int VICTORY_TITLE_LOOT_FONT_SIZE = 125;
 
         public VictoryState(
             PostBattleScreenController postBattleScreen, 
             IApplicationModel appModel, 
             IMusicPlayer musicPlayer,
+            ILocTable screensSceneStrings,
             ISingleSoundPlayer soundPlayer,
             ILootManager lootManager,
             ITrashTalkData levelTrashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, appModel, musicPlayer, screensSceneStrings)
         {
             Helper.AssertIsNotNull(soundPlayer, lootManager, levelTrashTalkData);
 
@@ -36,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             BattleResult battleResult = _appModel.DataProvider.GameModel.LastBattleResult;
 
-            postBattleScreen.title.text = VICTORY_TITLE_NO_LOOT;
+            postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_NO_LOOT_KEY);
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
             musicPlayer.PlayVictoryMusic();
@@ -56,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     || (desiredBehaviour == PostBattleScreenBehaviour.Default
                     && _lootManager.ShouldShowLoot(battleResult.LevelNum)))
                 {
-                    postBattleScreen.title.text = VICTORY_TITLE_LOOT;
+                    postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_LOOT_KEY);
                     postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                     _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);

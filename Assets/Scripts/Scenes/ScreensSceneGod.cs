@@ -76,6 +76,7 @@ namespace BattleCruisers.Scenes
 
             ILocTable commonLocTable = await LocTableFactory.Instance.LoadCommonTable();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTable();
+            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTable();
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonLocTable);
             
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
@@ -127,7 +128,7 @@ namespace BattleCruisers.Scenes
 				_applicationModel.ShowPostBattleScreen = false;
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
-                await GoToPostBattleScreenAsync(difficultySpritesProvider);
+                await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
             else
@@ -170,10 +171,10 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
-        private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider)
+        private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultySpritesProvider, trashDataList, screensSceneStrings);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
