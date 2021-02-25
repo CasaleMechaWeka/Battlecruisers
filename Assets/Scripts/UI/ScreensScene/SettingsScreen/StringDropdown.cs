@@ -8,10 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     public class StringDropdown : MonoBehaviour, IStringDropdown
     {
         private Dropdown _dropdown;
-        private IList<string> _values;
 
-        // FELIX  Remove?  Use index instead?
-        public string SelectedValue => _values[_dropdown.value];
         public int SelectedIndex => _dropdown.value;
 
         public void Initialise(IList<string> values, string initialValue)
@@ -22,14 +19,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _dropdown = GetComponent<Dropdown>();
             Assert.IsNotNull(_dropdown);
 
-            _values = values;
-
             List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
             int currentIndex = 0;
 
-            for (int i = 0; i < _values.Count; ++i)
+            for (int i = 0; i < values.Count; ++i)
             {
-                string value = _values[i];
+                string value = values[i];
 
                 options.Add(new Dropdown.OptionData(value));
 
