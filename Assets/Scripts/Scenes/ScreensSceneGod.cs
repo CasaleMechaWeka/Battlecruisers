@@ -121,7 +121,7 @@ namespace BattleCruisers.Scenes
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonLocTable);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonLocTable, screensSceneStrings);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonLocTable, screensSceneStrings, _prefabFactory);
 
             if (_applicationModel.ShowPostBattleScreen)
             {

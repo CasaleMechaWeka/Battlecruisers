@@ -1,17 +1,18 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
@@ -35,12 +36,13 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
             ILocTable commonStrings,
-            ILocTable screensSceneStrings)
+            ILocTable screensSceneStrings,
+            IPrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, cruiserDropdown);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonStrings, screensSceneStrings);
+            Helper.AssertIsNotNull(applicationModel, soundPlayer, commonStrings, screensSceneStrings, prefabFactory);
 
             _applicationModel = applicationModel;
             _random = RandomGenerator.Instance;
@@ -50,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             homeButton.Initialise(soundPlayer, Home, this);
             difficultyDropdown.Initialise(FindDefaultDifficulty(), commonStrings);
             InitialiseStrategyDropdown(commonStrings);
-            InitialiseCruiserDropdown();
+            InitialiseCruiserDropdown(prefabFactory);
         }
 
         private Difficulty FindDefaultDifficulty()
@@ -70,9 +72,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             _strategies = (StrategyType[])Enum.GetValues(typeof(StrategyType));
             IList<string> strategyStrings = new List<string>();
 
-            for (int i = 0; i < _strategies.Length; ++i)
+            foreach (StrategyType strategy in _strategies)
             {
-                string key = EnumKeyCreator.CreateKey(_strategies[i]);
+                string key = EnumKeyCreator.CreateKey(strategy);
                 strategyStrings.Add(commonStrings.GetString(key));
             }
 
@@ -92,14 +94,18 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private void InitialiseCruiserDropdown()
+        private void InitialiseCruiserDropdown(IPrefabFactory prefabFactory)
         {
-            // FELIX  Initialise prefab, to get localised name
             // FELIX  Remove IPrefabKey.PrefabName
-            IList<string> hullNames
-                = StaticPrefabKeys.Hulls.AllKeys
-                    .Select(key => key.PrefabName)
-                    .ToList();
+            IList<string> hullNames = new List<string>();
+
+            foreach (HullKey hull in StaticPrefabKeys.Hulls.AllKeysExplicit)
+            {
+                // Use cruiser prefab name, as this has been localised
+                ICruiser cruiser = prefabFactory.GetCruiserPrefab(hull);
+                hullNames.Add(cruiser.Name);
+            }
+
             hullNames.Insert(0, _randomDropdownEntry);
             cruiserDropdown.Initialise(hullNames, FindDefaultCruiser());
         }
@@ -143,12 +149,13 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private HullKey GetSelectedCruiser()
         {
-            string cruiserString = cruiserDropdown.SelectedValue;
-            HullKey cruiserKey = StaticPrefabKeys.Hulls.AllKeysExplicit.FirstOrDefault(key => key.PrefabName == cruiserString);
-            
-            if (cruiserKey != null)
+            // First entry is "Random"
+            int adjustedIndex = strategyDropdown.SelectedIndex - 1;
+
+            if (adjustedIndex >= 0)
             {
-                return cruiserKey;
+                Assert.IsTrue(adjustedIndex < StaticPrefabKeys.Hulls.AllKeysExplicit.Count);
+                return StaticPrefabKeys.Hulls.AllKeysExplicit[adjustedIndex];
             }
             else
             {
@@ -172,7 +179,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         {
             int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
-
 
             _applicationModel.DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
