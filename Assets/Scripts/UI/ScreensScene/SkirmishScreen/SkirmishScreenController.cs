@@ -70,33 +70,29 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private void InitialiseStrategyDropdown(ILocTable commonStrings)
         {
             _strategies = (StrategyType[])Enum.GetValues(typeof(StrategyType));
+            string initialValue = _randomDropdownEntry;
             IList<string> strategyStrings = new List<string>();
 
             foreach (StrategyType strategy in _strategies)
             {
                 string key = EnumKeyCreator.CreateKey(strategy);
-                strategyStrings.Add(commonStrings.GetString(key));
+                string strategyString = commonStrings.GetString(key);
+                strategyStrings.Add(strategyString);
+
+                if (Skirmish?.AIStrategy == strategy)
+                {
+                    initialValue = strategyString;
+                }
             }
 
             strategyStrings.Insert(0, _randomDropdownEntry);
-            strategyDropdown.Initialise(strategyStrings, FindDefaultStrategy());
-        }
-
-        private string FindDefaultStrategy()
-        {
-            if (Skirmish != null)
-            {
-                return Skirmish.AIStrategy.ToString();
-            }
-            else
-            {
-                return _randomDropdownEntry;
-            }
+            strategyDropdown.Initialise(strategyStrings, initialValue);
         }
 
         private void InitialiseCruiserDropdown(IPrefabFactory prefabFactory)
         {
             // FELIX  Remove IPrefabKey.PrefabName
+            string initialValue = _randomDropdownEntry;
             IList<string> hullNames = new List<string>();
 
             foreach (HullKey hull in StaticPrefabKeys.Hulls.AllKeysExplicit)
@@ -104,22 +100,15 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 // Use cruiser prefab name, as this has been localised
                 ICruiser cruiser = prefabFactory.GetCruiserPrefab(hull);
                 hullNames.Add(cruiser.Name);
+
+                if (hull.Equals(Skirmish?.AICruiser))
+                {
+                    initialValue = cruiser.Name;
+                }
             }
 
             hullNames.Insert(0, _randomDropdownEntry);
-            cruiserDropdown.Initialise(hullNames, FindDefaultCruiser());
-        }
-
-        private string FindDefaultCruiser()
-        {
-            if (Skirmish != null)
-            {
-                return Skirmish.AICruiser.PrefabName;
-            }
-            else
-            {
-                return _randomDropdownEntry;
-            }
+            cruiserDropdown.Initialise(hullNames, initialValue);
         }
 
         public void Battle()
