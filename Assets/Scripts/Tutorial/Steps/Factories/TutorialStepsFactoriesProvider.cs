@@ -138,7 +138,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     explanationDismissableStepFactory);
 
             ConstructDroneStationStepsFactory
-                = new ConstructDroneStationStespFactory(
+                = new ConstructDroneStationStepsFactory(
                     argsFactory,
                     tutorialArgs.TutorialStrings,
                     constructBuildingStepsFactory,

@@ -8,14 +8,13 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    // FELIX  Fix typo in name :P
-    public class ConstructDroneStationStespFactory : TutorialFactoryBase, ITutorialStepsFactory
+    public class ConstructDroneStationStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly IPrefabFactory _prefabFactory;
 
-        public ConstructDroneStationStespFactory(
+        public ConstructDroneStationStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
             IConstructBuildingStepsFactory constructBuildingStepsFactory,
