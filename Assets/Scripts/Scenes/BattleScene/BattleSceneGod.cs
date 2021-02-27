@@ -294,7 +294,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     rightPanelComponents, 
                     uiManager,
                     _gameEndMonitor);
-            await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor);
+            await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;

@@ -10,19 +10,22 @@ namespace BattleCruisers.Tutorial
         public ExplanationPanel ExplanationPanel { get; }
         public IButton ModalMainMenuButton { get; }
         public ILocTable TutorialStrings { get; }
+        public ILocTable CommonStrings { get; }
 
         public TutorialArgs(
             ITutorialArgsBase baseArgs, 
             ExplanationPanel explanationPanel,
             IButton modalMainMenuButton,
-            ILocTable tutorialStrings)
+            ILocTable tutorialStrings,
+            ILocTable commonStrings)
             : base(baseArgs)
         {
-            Helper.AssertIsNotNull(explanationPanel, modalMainMenuButton, tutorialStrings);
+            Helper.AssertIsNotNull(explanationPanel, modalMainMenuButton, tutorialStrings, commonStrings);
 
             ExplanationPanel = explanationPanel;
             ModalMainMenuButton = modalMainMenuButton;
             TutorialStrings = tutorialStrings;
+            CommonStrings = commonStrings;
         }
     }
 }

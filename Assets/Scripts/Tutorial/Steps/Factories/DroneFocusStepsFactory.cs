@@ -7,6 +7,7 @@ using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
@@ -22,6 +23,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
+        private readonly IPrefabFactory _prefabFactory;
+        private readonly ILocTable _commonStrings;
 
         public DroneFocusStepsFactory(
             ITutorialStepArgsFactory argsFactory,
@@ -33,7 +36,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialProvider tutorialProvider, 
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider, 
             RightPanelComponents rightPanelComponents,
-            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
+            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory,
+            IPrefabFactory prefabFactory,
+            ILocTable commonStrings)
             : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(
@@ -44,7 +49,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 tutorialProvider,
                 lastPlayerIncompleteBuildingStartedProvider,
                 rightPanelComponents,
-                slidingPanelWaitStepFactory);
+                slidingPanelWaitStepFactory,
+                prefabFactory,
+                commonStrings);
 
             _autoNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
@@ -54,6 +61,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _lastPlayerIncompleteBuildingStartedProvider = lastPlayerIncompleteBuildingStartedProvider;
             _rightPanelComponents = rightPanelComponents;
             _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
+            _prefabFactory = prefabFactory;
+            _commonStrings = commonStrings;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -63,12 +72,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Navigate to player cruiser
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
-            // FELIX  Loc
             // Explanation
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                    "It's vital to manage your Builders.  Let's see how that works...")));
+                        _tutorialStrings.GetString("Steps/DroneFocus/IntroMessage"))));
 
             // Infinitely slow build speed
             steps.Add(
@@ -77,28 +85,33 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     BuildSpeed.InfinitelySlow));
 
             // Start 2 buildings
+            string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
+            string constructBuilderBayBase = _tutorialStrings.GetString("Steps/DroneFocus/ConstructBuilderBay");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "Builder Bay"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, builderBayName),
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: false),
-                    "First, contruct another Builder Bay.",
+                    string.Format(constructBuilderBayBase, builderBayName),
                     waitForBuildingToComplete: false));
 
             steps.Add(_slidingPanelWaitStepFactory.CreateSelectorHiddenWaitStep());
 
+            string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
+            string constructArtilleryBase = _tutorialStrings.GetString("Steps/DroneFocus/ConstructArtillery");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Offence,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, "Artillery"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.Artillery, artilleryName),
                     new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: false),
-                    "Now construct an Artillery.",
+                    string.Format(constructArtilleryBase, artilleryName),
                     waitForBuildingToComplete: false));
 
             // Slow build speed explanation
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("The build speed has been slowed down for this step...")));
+                    _argsFactory.CreateTutorialStepArgs(
+                        _tutorialStrings.GetString("Steps/DroneFocus/BuildSpeedExplanation"))));
 
             // Show informator
             steps.Add(
@@ -110,22 +123,26 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.Add(
                 new ExplanationClickStep(
-                    _argsFactory.CreateTutorialStepArgs("Click on a building", _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
+                    _argsFactory.CreateTutorialStepArgs(_tutorialStrings.GetString("Steps/DroneFocus/ClickBuilding"), _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
                     _lastPlayerIncompleteBuildingStartedProvider));
 
             steps.Add(_slidingPanelWaitStepFactory.CreateInformatorShownWaitStep());
 
             // Explain drone focus buttons
+            string buttonText = _commonStrings.GetString("UI/Informator/DronesButton");
+            string clickBuildersButtonBase = _tutorialStrings.GetString("Steps/DroneFocus/ClickBuildersButton");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "Click \"BUILDERS\" to toggle the construction speed.  You can also double click the building itself.",
+                        string.Format(clickBuildersButtonBase, buttonText),
                         _rightPanelComponents.InformatorPanel.BuildingDetails.DroneFocusButton)));
 
             // Encourage user to experiment
+            string switchBuildFocusBase = _tutorialStrings.GetString("Steps/DroneFocus/SwitchBuilderFocus");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Switch priority between your Artillery and Builder Bay to get a feel for this.")));
+                    _argsFactory.CreateTutorialStepArgs(
+                        string.Format(switchBuildFocusBase, artilleryName, builderBayName))));
 
             return steps;
         }

@@ -20,10 +20,14 @@ namespace BattleCruisers.Tutorial
         public HighlighterInitialiser highlighterInitialiser;
         public MainMenuButtonController modalMainMenuButton;
 
-        public async Task InitialiseAsync(ITutorialArgsBase baseArgs, bool showInGameHints, ICruiserDamageMonitor playerCruiserDamageMonitor)
+        public async Task InitialiseAsync(
+            ITutorialArgsBase baseArgs, 
+            bool showInGameHints, 
+            ICruiserDamageMonitor playerCruiserDamageMonitor,
+            ILocTable commonStrings)
         {
             Helper.AssertIsNotNull(tutorialManager, explanationPanel, highlighterInitialiser, modalMainMenuButton);
-            Helper.AssertIsNotNull(baseArgs, playerCruiserDamageMonitor);
+            Helper.AssertIsNotNull(baseArgs, playerCruiserDamageMonitor, commonStrings);
 
             if (!baseArgs.AppModel.IsTutorial
                 && !showInGameHints)
@@ -45,7 +49,7 @@ namespace BattleCruisers.Tutorial
 
                 ILocTable tutorialStrings = await LocTableFactory.Instance.LoadTutorialTable();
 
-                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton, tutorialStrings);
+                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton, tutorialStrings, commonStrings);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);
                 tutorialManager.StartTutorial();
             }

@@ -9,5 +9,6 @@ namespace BattleCruisers.Tutorial
         ExplanationPanel ExplanationPanel { get; }
         IButton ModalMainMenuButton { get; }
         ILocTable TutorialStrings { get; }
+        ILocTable CommonStrings { get; }
     }
 }
