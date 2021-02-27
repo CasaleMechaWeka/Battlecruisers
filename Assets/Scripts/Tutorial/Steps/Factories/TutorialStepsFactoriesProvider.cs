@@ -170,7 +170,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     enemyUnitArgs,
                     tutorialArgs.AICruiser,
                     deferrer,
-                    tutorialArgs.TutorialProvider.SingleAircraftProvider);
+                    tutorialArgs.TutorialProvider.SingleAircraftProvider,
+                    tutorialArgs.PrefabFactory);
 
             EnemyShipStepsFactory
                 = new EnemyShipStepsFactory(

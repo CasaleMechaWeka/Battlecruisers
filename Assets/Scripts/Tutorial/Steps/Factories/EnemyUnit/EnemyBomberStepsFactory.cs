@@ -9,6 +9,7 @@ using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 
@@ -40,17 +41,22 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             EnemyUnitArgs enemyUnitArgs,
             ICruiser aiCruiser,
             IDeferrer deferrer,
-            ISingleBuildableProvider unitBuiltProvider)
+            ISingleBuildableProvider unitBuiltProvider,
+            IPrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings , enemyUnitArgs)
         {
-            Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider);
+            Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider, prefabFactory);
 
             _aiCruiser = aiCruiser;
             _deferrer = deferrer;
             _unitBuiltProvider = unitBuiltProvider;
-            // FELIX  Loc
-            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.Bomber, "Bomber");
-            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "Air Turret");
+
+            string bomberName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Units.Bomber).Buildable.Name;
+            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.Bomber, bomberName);
+
+            string airTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiAirTurret).Buildable.Name;
+            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, airTurretName);
+            
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);
         }
 
