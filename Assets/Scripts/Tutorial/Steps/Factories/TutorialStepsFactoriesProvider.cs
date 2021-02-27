@@ -213,7 +213,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     autoNavigationStepFactory,
                     tutorialArgs.TutorialProvider,
                     tutorialArgs.PlayerCruiser,
-                    tutorialArgs.AICruiser);
+                    tutorialArgs.AICruiser,
+                    tutorialArgs.PrefabFactory);
         }
     }
 }

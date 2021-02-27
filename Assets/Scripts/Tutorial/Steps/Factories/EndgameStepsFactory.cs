@@ -2,10 +2,12 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
@@ -17,6 +19,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
+        private readonly IPrefabFactory _prefabFactory;
 
         public EndgameStepsFactory(
             ITutorialStepArgsFactory argsFactory,
@@ -25,16 +28,18 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IAutoNavigationStepFactory autoNavigationStepFactory,
             ITutorialProvider tutorialProvider, 
             ICruiser playerCruiser, 
-            ICruiser aiCruiser)
+            ICruiser aiCruiser,
+            IPrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings)
         {
-            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser);
+            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser, prefabFactory);
 
             _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
             _autoNavigationStepFactory = autoNavigationStepFactory;
             _tutorialProvider = tutorialProvider;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
+            _prefabFactory = prefabFactory;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -50,11 +55,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Navigate to player cruiser
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
-            // FELIX  Loc
             // Wait for artillery to complete
+            string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
+            string waitForArtilleryBase = _tutorialStrings.GetString("Steps/Endgame/WaitForArtillery");
             steps.Add(
                 new BuildableCompletedWaitStep(
-                    _argsFactory.CreateTutorialStepArgs("Wait for your artillery to complete.  Patience :)"),
+                    _argsFactory.CreateTutorialStepArgs(
+                        string.Format(waitForArtilleryBase, artilleryName)),
                     _tutorialProvider.SingleOffensiveProvider));
 
             // Boost artillery accuracy and fire rate, so that enemy cruiser is destroyed more quickly :)
@@ -64,9 +71,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.Overview));
 
             // Wait for enemy cruiser to be destroyed
+            string waitForVictoryBase = _tutorialStrings.GetString("Steps/Endgame/WaitForVictory");
             steps.Add(
                 new TargetDestroyedWaitStep(
-                    _argsFactory.CreateTutorialStepArgs("Done!  Your Artillery will bombard the enemy on auto-pilot.  Feel free to look around!"),
+                    _argsFactory.CreateTutorialStepArgs(
+                        string.Format(waitForVictoryBase, artilleryName)),
                     new StaticProvider<ITarget>(_aiCruiser)));
 
             return steps;
