@@ -142,7 +142,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     tutorialArgs.TutorialStrings,
                     constructBuildingStepsFactory,
-                    explanationDismissableStepFactory);
+                    explanationDismissableStepFactory,
+                    tutorialArgs.PrefabFactory);
 
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory = new ChangeCruiserBuildSpeedStepFactory(argsFactory, tutorialArgs.TutorialStrings);
             ICreateProducingFactoryStepsFactory createProducingFactoryStepsFactory

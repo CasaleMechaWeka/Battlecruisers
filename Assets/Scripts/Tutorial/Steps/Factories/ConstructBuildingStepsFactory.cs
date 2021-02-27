@@ -86,8 +86,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             if (waitForBuildingToComplete)
             {
                 // Wait for building to complete construction
-                // FELIX  Loc
-                string waitText = "Wait for the " + buildingToConstruct.Name + " to complete.  Patience :)";
+                string waitTextBase = _tutorialStrings.GetString("Steps/ConstructBuliding/WaitStep");
+                string waitText = string.Format(waitTextBase, buildingToConstruct.Name);
                 constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
             }
 

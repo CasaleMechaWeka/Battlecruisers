@@ -2,44 +2,52 @@
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
+    // FELIX  Fix typo in name :P
     public class ConstructDroneStationStespFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly IPrefabFactory _prefabFactory;
 
         public ConstructDroneStationStespFactory(
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
             IConstructBuildingStepsFactory constructBuildingStepsFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            IPrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings)
         {
-            Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory);
+            Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory, prefabFactory);
 
             _constructBuildingStepsFactory = constructBuildingStepsFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
+            _prefabFactory = prefabFactory;
         }
 
         public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // FELIX  Loc
+            string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
+            string promptBase = _tutorialStrings.GetString("Steps/ConstructDroneStation/Prompt");
+
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
-                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, "Builder Bay"),
+                    new BuildableInfo(StaticPrefabKeys.Buildings.DroneStation, builderBayName),
                     new SlotSpecification(SlotType.Utility, BuildingFunction.Generic, preferCruiserFront: true),
-                    "Construct a Builder Bay to make more Builders."));
+                    string.Format(promptBase, builderBayName)));
 
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Nice!  You have gained two Builders :D")));
+                    _argsFactory.CreateTutorialStepArgs(
+                        _tutorialStrings.GetString("Steps/ConstructDroneStation/CompletionMessage"))));
 
             return steps;
         }
