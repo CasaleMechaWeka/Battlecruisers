@@ -32,10 +32,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.AddRange(_autNavigationStepFactory.CreateSteps(CameraFocuserTarget.AICruiser));
 
-            // FELIX  Loc
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is the enemy Cruiser.",
+                    _tutorialStrings.GetString("Steps/EnemyCruiser"),
                     _aiCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));
