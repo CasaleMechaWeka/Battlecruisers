@@ -4,6 +4,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
@@ -29,15 +30,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs,
-            ISingleBuildableProvider unitBuiltProvider)
+            ISingleBuildableProvider unitBuiltProvider,
+            IPrefabFactory prefabFactory)
             : base(argsFactory, tutorialStrings, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(unitBuiltProvider);
 
             _unitBuiltProvider = unitBuiltProvider;
-            // FELIX  Loc
-            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "Attack Boat");
-            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "Ship Turret");
+
+            string attackBoatName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Units.AttackBoat).Buildable.Name;
+            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, attackBoatName);
+
+            string shipTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiShipTurret).Buildable.Name;
+            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, shipTurretName);
+
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true);
         }
     }

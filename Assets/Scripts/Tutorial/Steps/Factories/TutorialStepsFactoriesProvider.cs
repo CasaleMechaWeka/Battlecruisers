@@ -178,7 +178,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     tutorialArgs.TutorialStrings,
                     enemyUnitArgs,
-                    tutorialArgs.TutorialProvider.SingleShipProvider);
+                    tutorialArgs.TutorialProvider.SingleShipProvider,
+                    tutorialArgs.PrefabFactory);
 
             DroneFocusStepsFactory
                 = new DroneFocusStepsFactory(
