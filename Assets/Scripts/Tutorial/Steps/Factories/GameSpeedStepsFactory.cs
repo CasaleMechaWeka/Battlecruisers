@@ -2,6 +2,7 @@
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -16,13 +17,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public GameSpeedStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IExplanationDismissableStepFactory explanationDismissableStepFactory, 
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter gameSpeedPermitter, 
             IPermitter navigationPermitter, 
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(
                 explanationDismissableStepFactory, 
@@ -55,6 +57,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_gameSpeedPermitter, enableFeature: true));
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: true));
 
+            // FELIX  Loc
             // Explain game speed buttons
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(

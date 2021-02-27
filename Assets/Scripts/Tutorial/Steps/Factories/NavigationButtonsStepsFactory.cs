@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 
@@ -15,12 +16,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public NavigationButtonsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationButtonsPermitter,
             IPermitter hotkeysPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             ICameraComponents cameraComponents) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, navigationButtonsPermitter, hotkeysPermitter, explanationDismissableStepFactory, cameraComponents);
 
@@ -39,6 +41,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: true));
             steps.Add(_featurePermitterStepFactory.CreateStep(_hotkeysPermitter, enableFeature: true));
 
+            // FELIX  Loc
             // Explain navigation buttons
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(

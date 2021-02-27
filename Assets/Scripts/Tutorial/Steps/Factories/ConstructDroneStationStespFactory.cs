@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -13,9 +14,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ConstructDroneStationStespFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IConstructBuildingStepsFactory constructBuildingStepsFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory)
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory);
 
@@ -27,6 +29,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
+            // FELIX  Loc
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,

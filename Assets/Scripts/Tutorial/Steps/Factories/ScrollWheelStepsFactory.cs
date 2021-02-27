@@ -1,11 +1,13 @@
 ﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ScrollWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
+        // FELIX  Loc
         private const string STEP_EXPLANATION = "Use your mouse scroll wheel to look around.";
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _scrollWheelPermitter;
@@ -13,10 +15,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ScrollWheelStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter scrollWheelPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, scrollWheelPermitter, explanationDismissableStepFactory);
 

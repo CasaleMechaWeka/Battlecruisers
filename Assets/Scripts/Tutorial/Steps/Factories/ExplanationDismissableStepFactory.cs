@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
@@ -9,10 +10,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IExplanationDismissButton _okButton, _doneButton;
 
         public ExplanationDismissableStepFactory(
-            ITutorialStepArgsFactory argsFactory, 
+            ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IExplanationDismissButton okButton,
             IExplanationDismissButton doneButton) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(okButton, doneButton);
 

@@ -9,6 +9,7 @@ using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
@@ -35,17 +36,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyBomberStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs,
             ICruiser aiCruiser,
             IDeferrer deferrer,
             ISingleBuildableProvider unitBuiltProvider)
-            : base(argsFactory, enemyUnitArgs)
+            : base(argsFactory, tutorialStrings , enemyUnitArgs)
         {
             Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider);
 
             _aiCruiser = aiCruiser;
             _deferrer = deferrer;
             _unitBuiltProvider = unitBuiltProvider;
+            // FELIX  Loc
             _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.Bomber, "Bomber");
             _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, "Air Turret");
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);

@@ -5,6 +5,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Strings;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -29,8 +30,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyUnitDefenceStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Assert.IsNotNull(enemyUnitArgs);
 
@@ -53,6 +55,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             // 2. Navigate to enemey cruiser
             enemyUnitDefenceSteps.AddRange(_autoNavigationStepFactory.CreateSteps(UnitCameraFocusTarget));
 
+            // FELIX  Loc
             // 3. Acknowledge the unit
             string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(UnitToBuild.Name);
             string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + UnitToBuild.Name + "!";

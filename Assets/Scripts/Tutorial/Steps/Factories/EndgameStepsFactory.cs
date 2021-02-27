@@ -6,6 +6,7 @@ using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -18,13 +19,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ICruiser _playerCruiser, _aiCruiser;
 
         public EndgameStepsFactory(
-            ITutorialStepArgsFactory argsFactory, 
+            ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
             IAutoNavigationStepFactory autoNavigationStepFactory,
             ITutorialProvider tutorialProvider, 
             ICruiser playerCruiser, 
             ICruiser aiCruiser)
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser);
 
@@ -48,6 +50,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Navigate to player cruiser
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
+            // FELIX  Loc
             // Wait for artillery to complete
             steps.Add(
                 new BuildableCompletedWaitStep(

@@ -7,6 +7,7 @@ using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -23,7 +24,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
 
         public DroneFocusStepsFactory(
-            ITutorialStepArgsFactory argsFactory, 
+            ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IAutoNavigationStepFactory autoNavigationStepFactory, 
             IExplanationDismissableStepFactory explanationDismissableStepFactory, 
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
@@ -32,7 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider, 
             RightPanelComponents rightPanelComponents,
             ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(
                 autoNavigationStepFactory,
@@ -61,6 +63,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Navigate to player cruiser
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
+            // FELIX  Loc
             // Explanation
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(

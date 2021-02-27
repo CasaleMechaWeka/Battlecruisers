@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -13,11 +14,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         protected SwipeStepsFactoryBase(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             string message) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, swipePermitter, explanationDismissableStepFactory);
 

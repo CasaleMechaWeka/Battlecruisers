@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -12,11 +13,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public PinchZoomStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter pinchZoomPermitter,
             IPermitter swipePermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, pinchZoomPermitter, swipePermitter, explanationDismissableStepFactory);
 
@@ -34,6 +36,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_pinchZoomPermitter, enableFeature: true));
             steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: true));
 
+            // FELIX  Loc
             // Explain pinch zoom, encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(

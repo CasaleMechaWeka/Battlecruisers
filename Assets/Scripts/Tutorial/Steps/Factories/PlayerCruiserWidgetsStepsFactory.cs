@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -12,11 +13,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public PlayerCruiserWidgetsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IHighlightable playerCruiserHealthBar,
             IHighlightable numOfDrones,
             IAutoNavigationStepFactory autoNavigationStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory);
 
@@ -32,6 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.AddRange(_autNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
+            // FELIX  Loc
             // Health dial
             ITutorialStepArgs healthDialArgs
                 = _argsFactory.CreateTutorialStepArgs(

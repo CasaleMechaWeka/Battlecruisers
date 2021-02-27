@@ -34,23 +34,25 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
 
             ITutorialStepArgsFactory argsFactory = new TutorialStepArgsFactory(highlighter, explanationPanel.TextDisplayer);
-            ITutorialStepFactory cameraAdjustmentWaitStepFactory = new CameraAdjustmentWaitStepFactory(argsFactory, tutorialArgs.CameraComponents);
+            ITutorialStepFactory cameraAdjustmentWaitStepFactory = new CameraAdjustmentWaitStepFactory(argsFactory, tutorialArgs.TutorialStrings, tutorialArgs.CameraComponents);
             IExplanationDismissableStepFactory explanationDismissableStepFactory 
-                = new ExplanationDismissableStepFactory(argsFactory, explanationPanel.OkButton, explanationPanel.DoneButton);
-            IFeaturePermitterStepFactory featurePermitterStepFactory = new FeaturePermitterStepFactory(argsFactory);
+                = new ExplanationDismissableStepFactory(argsFactory, tutorialArgs.TutorialStrings, explanationPanel.OkButton, explanationPanel.DoneButton);
+            IFeaturePermitterStepFactory featurePermitterStepFactory = new FeaturePermitterStepFactory(argsFactory, tutorialArgs.TutorialStrings);
             IAutoNavigationStepFactory autoNavigationStepFactory 
-                = new AutoNavigationStepFactory(argsFactory, cameraAdjustmentWaitStepFactory, tutorialArgs.CameraComponents);
+                = new AutoNavigationStepFactory(argsFactory, tutorialArgs.TutorialStrings, cameraAdjustmentWaitStepFactory, tutorialArgs.CameraComponents);
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider 
                 = tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(tutorialArgs.PlayerCruiser);
             ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory
                 = new SlidingPanelWaitStepFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     tutorialArgs.LeftPanelComponents.BuildMenu.SelectorPanel,
                     tutorialArgs.RightPanelComponents.InformatorPanel);
 
             IConstructBuildingStepsFactory constructBuildingStepsFactory
                 = new ConstructBuildingStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     tutorialArgs.LeftPanelComponents,
                     tutorialArgs.TutorialProvider,
                     tutorialArgs.PlayerCruiser,
@@ -60,6 +62,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             YourCruiserStepsFactory
                 = new YourCruiserStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     tutorialArgs.PlayerCruiser,
                     cameraAdjustmentWaitStepFactory,
                     explanationDismissableStepFactory,
@@ -69,12 +72,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             MainMenuStepsFactory
                 = new MainMenuStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     tutorialArgs.ModalMainMenuButton,
                     tutorialArgs.RightPanelComponents.MainMenu);
 
             NavigationButtonsStepsFactory
                 = new NavigationButtonsStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.NavigationButtonsFilter,
                     tutorialArgs.TutorialProvider.NavigationPermitters.HotkeyFilter,
@@ -84,6 +89,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ScrollWheelStepsFactory
                 = new ScrollWheelStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
                     explanationDismissableStepFactory);
@@ -91,6 +97,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             TouchSwipeStepsFactory
                 = new TouchSwipeStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
                     explanationDismissableStepFactory);
@@ -98,6 +105,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             MousePanStepsFactory
                 = new MousePanStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
                     tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
@@ -106,6 +114,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             PinchZoomStepsFactory
                 = new PinchZoomStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.NavigationPermitters.ScrollWheelAndPinchZoomFilter,
                     tutorialArgs.TutorialProvider.NavigationPermitters.SwipeFilter,
@@ -114,6 +123,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             EnemyCruiserStepsFactory
                 = new EnemyCruiserStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     tutorialArgs.AICruiser,
                     autoNavigationStepFactory,
                     explanationDismissableStepFactory);
@@ -121,6 +131,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             PlayerCruiserWidgetsStepsFactory
                 = new PlayerCruiserWidgetsStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     tutorialArgs.TopPanelComponents.PlayerCruiserHealthBar,
                     tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable,
                     autoNavigationStepFactory,
@@ -129,14 +140,15 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ConstructDroneStationStepsFactory
                 = new ConstructDroneStationStespFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     constructBuildingStepsFactory,
                     explanationDismissableStepFactory);
 
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory
-                = new ChangeCruiserBuildSpeedStepFactory(argsFactory);
+            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory = new ChangeCruiserBuildSpeedStepFactory(argsFactory, tutorialArgs.TutorialStrings);
             ICreateProducingFactoryStepsFactory createProducingFactoryStepsFactory
                 = new CreateProducingFactoryStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     changeCruiserBuildSpeedStepFactory,
                     tutorialArgs.TutorialProvider,
                     tutorialArgs.PrefabFactory,
@@ -153,6 +165,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             EnemyBomberStepsFactory
                 = new EnemyBomberStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     enemyUnitArgs,
                     tutorialArgs.AICruiser,
                     deferrer,
@@ -161,12 +174,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             EnemyShipStepsFactory
                 = new EnemyShipStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     enemyUnitArgs,
                     tutorialArgs.TutorialProvider.SingleShipProvider);
 
             DroneFocusStepsFactory
                 = new DroneFocusStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     autoNavigationStepFactory,
                     explanationDismissableStepFactory,
                     changeCruiserBuildSpeedStepFactory,
@@ -179,6 +194,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             GameSpeedStepsFactory
                 = new GameSpeedStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     explanationDismissableStepFactory,
                     featurePermitterStepFactory,
                     tutorialArgs.TutorialProvider.SpeedButtonsPermitter,
@@ -189,6 +205,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             EndgameStepsFactory
                 = new EndgameStepsFactory(
                     argsFactory,
+                    tutorialArgs.TutorialStrings,
                     changeCruiserBuildSpeedStepFactory,
                     autoNavigationStepFactory,
                     tutorialArgs.TutorialProvider,

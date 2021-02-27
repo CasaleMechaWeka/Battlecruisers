@@ -3,6 +3,7 @@ using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -14,9 +15,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public MainMenuStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IButton modalMainMenuButton,
             IModalMenu mainMenu) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(mainMenu, modalMainMenuButton);
 
@@ -28,6 +30,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
+            // FELIX  Loc
             // Get user to open main menu
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(

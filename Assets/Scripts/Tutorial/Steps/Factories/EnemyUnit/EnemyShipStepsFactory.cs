@@ -4,6 +4,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
@@ -26,13 +27,15 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyShipStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs,
             ISingleBuildableProvider unitBuiltProvider)
-            : base(argsFactory, enemyUnitArgs)
+            : base(argsFactory, tutorialStrings, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(unitBuiltProvider);
 
             _unitBuiltProvider = unitBuiltProvider;
+            // FELIX  Loc
             _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, "Attack Boat");
             _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, "Ship Turret");
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true);

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Filters;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -6,17 +7,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class MousePanStepsFactory : SwipeStepsFactoryBase
     {
+        // FELIX  Loc, key?
         private const string STEP_EXPLANATION = "Click drag to pan.";
         private readonly IPermitter _scrollWheelPermitter;
 
         public MousePanStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
             IPermitter scrollWheelPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
             : base(
                   argsFactory,
+                  tutorialStrings,
                   featurePermitterStepFactory,
                   swipePermitter,
                   explanationDismissableStepFactory,

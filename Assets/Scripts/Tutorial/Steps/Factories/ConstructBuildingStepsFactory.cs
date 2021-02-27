@@ -8,6 +8,7 @@ using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -25,12 +26,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ConstructBuildingStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             LeftPanelComponents leftPanelComponents,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelWaitStepFactory);
 
@@ -84,6 +86,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             if (waitForBuildingToComplete)
             {
                 // Wait for building to complete construction
+                // FELIX  Loc
                 string waitText = "Wait for the " + buildingToConstruct.Name + " to complete.  Patience :)";
                 constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
             }

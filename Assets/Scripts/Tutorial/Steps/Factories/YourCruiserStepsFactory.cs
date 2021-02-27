@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -15,12 +16,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public YourCruiserStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             ICruiser playerCruiser,
             ITutorialStepFactory cameraAdjustmentWaitStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationPermitter) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(playerCruiser, cameraAdjustmentWaitStepFactory, explanationDismissableStepFactory, featurePermitterStepFactory, navigationPermitter);
 
@@ -38,6 +40,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: false));
             steps.Add(_cameraAdjustmentWaitStepFactory.CreateStep());
 
+            // FELIX  Loc
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is your awesome Cruiser :D",

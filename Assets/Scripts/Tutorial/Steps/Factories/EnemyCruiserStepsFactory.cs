@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -12,10 +13,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public EnemyCruiserStepsFactory(
             ITutorialStepArgsFactory argsFactory,
+            ILocTable tutorialStrings,
             ICruiser aiCruiser,
             IAutoNavigationStepFactory autoNavigationStepFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory)
+            : base(argsFactory, tutorialStrings)
         {
             Helper.AssertIsNotNull(aiCruiser, autoNavigationStepFactory, explanationDismissableStepFactory);
 
@@ -30,6 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.AddRange(_autNavigationStepFactory.CreateSteps(CameraFocuserTarget.AICruiser));
 
+            // FELIX  Loc
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     "This is the enemy Cruiser.",
