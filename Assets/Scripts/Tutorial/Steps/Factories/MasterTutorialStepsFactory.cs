@@ -4,7 +4,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {

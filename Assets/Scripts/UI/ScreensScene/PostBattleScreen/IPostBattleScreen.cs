@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Data.Models;
-
-namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
+﻿namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public interface IPostBattleScreen
     {
