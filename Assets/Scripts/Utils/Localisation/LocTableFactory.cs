@@ -28,9 +28,10 @@ namespace BattleCruisers.Utils.Localisation
             public const string COMMON = "Common";
             public const string SCREENS_SCENE = "ScreensScene";
             public const string STORY = "StoryTable";
+            public const string TUTORIAL = "Tutorial";
         }
 
-        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable;
+        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable;
 
         private LocTableFactory() { }
 
@@ -76,6 +77,17 @@ namespace BattleCruisers.Utils.Localisation
             }
 
             return _storyTable;
+        }
+
+        public async Task<ILocTable> LoadTutorialTable()
+        {
+            if (_tutorialTable == null)
+            {
+                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.TUTORIAL);
+                _tutorialTable = new LocTable(tableHandle);
+            }
+
+            return _tutorialTable;
         }
 
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
@@ -124,6 +136,15 @@ namespace BattleCruisers.Utils.Localisation
             {
                 Addressables.Release(_storyTable.Handle);
                 _storyTable = null;
+            }
+        }
+
+        public void ReleaseTutorialTable()
+        {
+            if (_tutorialTable != null)
+            {
+                Addressables.Release(_tutorialTable.Handle);
+                _tutorialTable = null;
             }
         }
     }
