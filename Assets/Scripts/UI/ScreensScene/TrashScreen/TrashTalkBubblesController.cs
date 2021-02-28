@@ -1,6 +1,6 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
@@ -9,13 +9,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public BubbleController leftTop, rightBottom;
         public BubbleController rightTop, leftBottom;
 
-        // FELIX  Replace with Names/Protagonist
-        public const string PLAYER_NAME = "Charlie";
-
-        public void Initialise(ITrashTalkData trashTalkData)
+        public void Initialise(ITrashTalkData trashTalkData, ILocTable commonStrings)
         {
             Helper.AssertIsNotNull(leftTop, rightBottom, rightTop, leftBottom);
-            Assert.IsNotNull(trashTalkData);
+            Helper.AssertIsNotNull(trashTalkData, commonStrings);
 
             BubbleController playerBubble, enemyBubble;
 
@@ -33,8 +30,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
                 leftTop.gameObject.SetActive(false);
                 rightBottom.gameObject.SetActive(false);
             }
-            
-            playerBubble.Initialise(PLAYER_NAME, trashTalkData.PlayerText);
+
+            string protagonistName = commonStrings.GetString("Names/Protagonist");
+            playerBubble.Initialise(protagonistName, trashTalkData.PlayerText);
             playerBubble.gameObject.SetActive(true);
 
             enemyBubble.Initialise(trashTalkData.EnemyName, trashTalkData.EnemyText);

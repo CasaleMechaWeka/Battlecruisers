@@ -33,7 +33,8 @@ namespace BattleCruisers.Scenes.Test.UI
                     helper.PrefabFactory,
                     new SpriteFetcher(),
                     trashDataList,
-                    Substitute.For<IMusicPlayer>());
+                    Substitute.For<IMusicPlayer>(),
+                    helper.CommonStrings);
 
             levelButtonsPanel
                 .Initialise(
