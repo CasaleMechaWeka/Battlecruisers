@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
@@ -27,17 +28,15 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
-using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Data.Models.PrefabKeys;
-using System;
-using BattleCruisers.Utils.Localisation;
-using UnityEngine.Localization.Settings;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -299,12 +298,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-
-
-            // FELIX  TEMP
-            var l = LocalizationSettings.SelectedLocale;
-            Debug.Log(l);
-
 
             sceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
         }
