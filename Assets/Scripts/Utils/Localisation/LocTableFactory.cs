@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -92,6 +94,8 @@ namespace BattleCruisers.Utils.Localisation
 
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
+            await LoadPseudoLocaleIfNeededAsync();
+
             AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName);
 
             // Load table, so getting any strings will be synchronous
@@ -103,6 +107,17 @@ namespace BattleCruisers.Utils.Localisation
             return handle;
         }
 
+        private async Task LoadPseudoLocaleIfNeededAsync()
+        {
+#if PSEUDO_LOCALE
+            // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
+            await LocalizationSettings.SelectedLocaleAsync.Task;
+
+            Locale pseudoLocale = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Pseudo-Locale(pseudo)");
+            Assert.IsNotNull(pseudoLocale);
+            LocalizationSettings.SelectedLocale = pseudoLocale;
+#endif
+        }
         public void ReleaseBattleSceneTable()
         {
             if (_battleSceneTable != null)
