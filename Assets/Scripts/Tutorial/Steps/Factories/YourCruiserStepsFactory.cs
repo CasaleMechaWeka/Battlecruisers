@@ -40,10 +40,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: false));
             steps.Add(_cameraAdjustmentWaitStepFactory.CreateStep());
 
-            // FELIX  Loc
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is your awesome Cruiser :D",
+                    _tutorialStrings.GetString("Steps/YourCruiser"),
                     _playerCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));
