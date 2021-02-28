@@ -30,11 +30,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             IList<ITutorialStep> steps = new List<ITutorialStep>();
 
-            // FELIX  Loc
             // Get user to open main menu
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is the Main Menu.",
+                    _tutorialStrings.GetString("Steps/MainMenu"),
                     _modalMainMenuButton);
             steps.Add(
                 new ExplanationClickStep(
