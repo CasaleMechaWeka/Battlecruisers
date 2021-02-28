@@ -46,14 +46,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "These are the navigation buttons.",
+                        _tutorialStrings.GetString("Steps/NavigationButtons/Buttons"),
                         _cameraComponents.NavigationButtonsPanel)));
 
             // Encourage user to experiment
             string text
                 = SystemInfoBC.Instance.IsHandheld ?
-                    "Use them to jump around the map." :
-                    "Use them (or the Z, X, C keys) to jump around the map.";
+                    _tutorialStrings.GetString("Steps/NavigationButtons/TouchInstructions") :
+                    _tutorialStrings.GetString("Steps/NavigationButtons/MouseInstructions");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(text)));
