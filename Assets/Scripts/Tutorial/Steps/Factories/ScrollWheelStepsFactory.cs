@@ -7,8 +7,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ScrollWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        // FELIX  Loc
-        private const string STEP_EXPLANATION = "Use your mouse scroll wheel to look around.";
         private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _scrollWheelPermitter;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
@@ -38,7 +36,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Explain scroll wheel and encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs(STEP_EXPLANATION)));
+                    _argsFactory.CreateTutorialStepArgs(
+                        _tutorialStrings.GetString("Steps/ScrollWheel"))));
 
             // Disable scroll wheel
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));
