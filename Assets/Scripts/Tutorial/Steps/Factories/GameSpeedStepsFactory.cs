@@ -57,18 +57,18 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_gameSpeedPermitter, enableFeature: true));
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: true));
 
-            // FELIX  Loc
             // Explain game speed buttons
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        "Almost done!  This is your Game Speed.",
-                        _rightPanelComponents.SpeedComponents.SpeedButtonPanel)));
+                        _tutorialStrings.GetString("Steps/GameSpeed/Buttons"),
+                        _rightPanelComponents.SpeedComponents.SpeedButtonPanel))); ;
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
-                    _argsFactory.CreateTutorialStepArgs("Try all three speeds.")));
+                    _argsFactory.CreateTutorialStepArgs(
+                        _tutorialStrings.GetString("Steps/GameSpeed/TryButtons"))));
 
             return steps;
         }
