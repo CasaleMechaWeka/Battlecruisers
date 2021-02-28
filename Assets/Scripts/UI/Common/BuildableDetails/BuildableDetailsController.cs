@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
-            _deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, buttonVisibilityFilters.HelpLabelsVisibilityFilter, this);
+            _deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, this);
 
             _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
             Assert.IsNotNull(_buttonManager);

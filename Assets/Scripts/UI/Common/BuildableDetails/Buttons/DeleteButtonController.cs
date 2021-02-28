@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -13,10 +11,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private FilterToggler _helpLabelsVisibilityToggler;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
         private Image _buttonImage;
         protected override MaskableGraphic Graphic => _buttonImage;
@@ -36,7 +30,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             ISingleSoundPlayer soundPlayer,
             IUIManager uiManager, 
             IFilter<ITarget> buttonVisibilityFilter,
-            IBroadcastingFilter helpLabelVisibilityFilter,
             IDismissableEmitter parent)
         {
             base.Initialise(soundPlayer, parent: parent);
@@ -48,11 +41,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
             _buttonImage = GetComponent<Image>();
             Assert.IsNotNull(_buttonImage);
-
-            HelpLabel helpLabel = GetComponentInChildren<HelpLabel>();
-            Assert.IsNotNull(helpLabel);
-            helpLabel.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabelVisibilityFilter, helpLabel);
         }
 
         protected override void OnClicked()
