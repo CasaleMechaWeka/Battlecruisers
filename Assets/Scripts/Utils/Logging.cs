@@ -192,9 +192,7 @@ namespace BattleCruisers.Utils
 
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.LOCALISATION, true);
-            //tagsToActiveness.Add(Tags.LOCALISATION, false);
+            tagsToActiveness.Add(Tags.LOCALISATION, false);
             tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
