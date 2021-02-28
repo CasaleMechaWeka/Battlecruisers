@@ -127,6 +127,7 @@ namespace BattleCruisers.Utils.Localisation
             LocalizationSettings.SelectedLocale = pseudoLocale;
             localeToUse = pseudoLocale;
 #endif
+            _locale = localeToUse;
 
             return localeToUse;
         }
