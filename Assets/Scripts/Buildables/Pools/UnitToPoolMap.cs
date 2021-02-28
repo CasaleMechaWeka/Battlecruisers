@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Pools
 
         private IPool<Unit, BuildableActivationArgs> GetAircraftPool(IUnit aircraft)
         {
-            switch (aircraft.Name)
+            switch (aircraft.PrefabName)
             {
                 case "Bomber":
                     return _unitPoolProvider.BomberPool;
@@ -45,19 +45,19 @@ namespace BattleCruisers.Buildables.Pools
                 case "Gunship":
                     return _unitPoolProvider.GunshipPool;
 
-                case "Test Aircraft":
+                case "TestAircraft":
                     return _unitPoolProvider.TestAircraftPool;
 
                 default:
-                    throw new ArgumentException($"Unsupported aircraft: {aircraft.Name}");
+                    throw new ArgumentException($"Unsupported aircraft: {aircraft.PrefabName}");
             }
         }
 
         private IPool<Unit, BuildableActivationArgs> GetShipPool(IUnit ship)
         {
-            switch (ship.Name)
+            switch (ship.PrefabName)
             {
-                case "Attack Boat":
+                case "AttackBoat":
                     return _unitPoolProvider.AttackBoatPool;
 
                 case "Frigate":
@@ -66,11 +66,11 @@ namespace BattleCruisers.Buildables.Pools
                 case "Destroyer":
                     return _unitPoolProvider.DestroyerPool;
 
-                case "Mann o' War":
+                case "ArchonBattleship":
                     return _unitPoolProvider.ArchonPool;
 
                 default:
-                    throw new ArgumentException($"Unsupported ship: {ship.Name}");
+                    throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");
             }
         }
     }
