@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,15 +11,18 @@ namespace BattleCruisers.UI.Loading
         public Canvas root;
         public Text loadingText;
 
-        private const string DEFAULT_LOADING_TEXT = "Loading";
+        private string _defaultLoadingText;
         private const string LEGAL_TEXT = "Any unauthorized exhibition, distribution, or copying of this video game or any part thereof (including soundtrack) may result in civil liability and criminal prosecution. The story, names, characters, and incidents portrayed in this production are fictitious. No identification with actual persons (living or deceased), places, buildings, and products is intended or should be inferred.";
 
         private static bool IsFirstTime = true;
         public static LoadingScreenController Instance { get; private set; }
 
-        void Start()
+        async void Start()
         {
             Helper.AssertIsNotNull(root, loadingText);
+
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            _defaultLoadingText = commonStrings.GetString("UI/LoadingScreen/DefaultLoadingText");
 
             loadingText.text = FindLoadingText();
             Instance = this;
@@ -34,7 +38,7 @@ namespace BattleCruisers.UI.Loading
             }
             else
             {
-                return LandingSceneGod.LoadingScreenHint ?? DEFAULT_LOADING_TEXT;
+                return LandingSceneGod.LoadingScreenHint ?? _defaultLoadingText;
             }
         }
 
