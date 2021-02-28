@@ -23,36 +23,48 @@ namespace BattleCruisers.UI.Loading
         {
             IList<string> keys = new List<string>()
             {
-                "Build factories to produce units.",
-                "Builders automatically repair damaged buildings and your cruiser.",
-                "Buildings can be deleted by clicking them and then selecting the DEMOLISH button.",
-                "Click on a cruiser, unit or building to show more details.",
-                "Too easy or too hard?  Change the difficulty from the options screen.",
-                "Want to change your cruiser?  Head to the loadout screen.",
-                "Frequently check on the enemy cruiser to avoid nasty surprises!",
-                "Use the in game question mark (bottom right) to show help labels."
+                "Hints/Factories",
+                "Hints/BuilderAutomaticRepair",
+                "Hints/ClickItemForDetails",
+                "Hints/DifficultyIsChangeable",
+                "Hints/HowToChangeCruiser",
+                "Hints/CheckEnemyCruiser",
+                "Hints/HelpLabels"
             };
-            return GetStrings(commonStrings, keys);
+            IList<string> hints = GetStrings(commonStrings, keys);
+
+            string buildingsAreDeleteableBase = commonStrings.GetString("Hints/BuildingsAreDeletable");
+            string deleteButtonText = commonStrings.GetString("UI/Informator/DemolishButton");
+            hints.Add(string.Format(buildingsAreDeleteableBase, deleteButtonText));
+
+            return hints;
         }
 
         private IList<string> CreateAdvancedHints(ILocTable commonStrings)
         {
             IList<string> keys = new List<string>()
             {
-                "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
-                "Hit a building's BUILDERS button (or double click the building) to summon all your builder drones!",
-                "Each cruiser has a unique benefit and slot arrangement.  Choose your cruiser wisely!",
-                "Local boosters are well worth building.",
-                "Construct buildings one at a time instead of all at once, to get their benefits sooner.",
-                "You can pause and resume building units by clicking the factory and selecting the unit you want to pause or resume."
+                "Hints/CruisersAreUnique",
+                "Hints/ConstructBuildingsSequentially",
+                "Hints/PauseUnitProduction"
             };
 
             if (!SystemInfoBC.Instance.IsHandheld)
             {
-                keys.Add("Want to become more efficient?  Check out the hotkeys in the options screen.");
+                keys.Add("Hints/Hotkeys");
             }
 
-            return GetStrings(commonStrings, keys);
+            IList<string> hints = GetStrings(commonStrings, keys);
+
+            string targetButtonBase = commonStrings.GetString("Hints/TargetButton");
+            string targetButtonText = commonStrings.GetString("UI/Informator/TargetButton");
+            hints.Add(string.Format(targetButtonBase, targetButtonText));
+
+            string buildersButtonBase = commonStrings.GetString("Hints/BuildersButton");
+            string buildersButtonText = commonStrings.GetString("UI/Informator/DronesButton");
+            hints.Add(string.Format(buildersButtonBase, buildersButtonText));
+
+            return hints;
         }
 
         private IList<string> GetStrings(ILocTable commonStrings, IList<string> keys)
