@@ -7,6 +7,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -24,11 +25,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            ILocTable commonStrings)
         {
             base.Initialise();
 
-            Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters);
+            Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, commonStrings);
 
             _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
             Assert.IsNotNull(_deleteButton);
@@ -36,7 +38,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
             Assert.IsNotNull(_buttonManager);
-            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            _buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings);
         }
 
         public virtual void ShowBuildableDetails(TItem buildable)

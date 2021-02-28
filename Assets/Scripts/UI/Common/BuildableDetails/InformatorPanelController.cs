@@ -9,6 +9,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -31,16 +32,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters visibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            ILocTable commonStrings)
         {
             base.Initialise();
-
-            Helper.AssertIsNotNull(
-                uiManager,
-                playerCruiser,
-                userChosenTargetHelper,
-                visibilityFilters,
-                soundPlayer);
+            Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
 
             // Dismiss button
             _dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
@@ -50,17 +46,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             // Building details
             _buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
             Assert.IsNotNull(_buildingDetails);
-            _buildingDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer);
+            _buildingDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
 
             // Unit details
             _unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
             Assert.IsNotNull(_unitDetails);
-            _unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer);
+            _unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
 
             // Cruiser details
             _cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
             Assert.IsNotNull(_cruiserDetails);
-            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer);
+            _cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
         }
     }
 }

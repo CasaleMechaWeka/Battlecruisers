@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -34,9 +35,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            ILocTable commonStrings)
         {
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings);
 
             _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
             Assert.IsNotNull(_repairButton);
@@ -48,7 +50,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter, commonStrings);
         }
     }
 }

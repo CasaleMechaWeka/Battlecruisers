@@ -189,7 +189,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     pauseGameManager,
                     battleCompletionHandler,
                     factoryProvider.Sound.UISoundPlayer,
-                    new NavigationPermitterManager(navigationPermitters));
+                    new NavigationPermitterManager(navigationPermitters),
+                    commonStrings);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);

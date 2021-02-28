@@ -12,6 +12,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -44,7 +45,8 @@ namespace BattleCruisers.UI.BattleScene
             IPauseGameManager pauseGameManager,
             IBattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
-            INavigationPermitterManager navigationPermitterManager)
+            INavigationPermitterManager navigationPermitterManager,
+            ILocTable commonStrings)
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels);
             Helper.AssertIsNotNull(
@@ -56,9 +58,10 @@ namespace BattleCruisers.UI.BattleScene
                 pauseGameManager,
                 battleCompletionHandler,
                 soundPlayer,
-                navigationPermitterManager);
+                navigationPermitterManager,
+                commonStrings);
 
-            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings);
             SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, navigationPermitterManager);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
@@ -79,7 +82,8 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            ILocTable commonStrings)
         {
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -90,7 +94,8 @@ namespace BattleCruisers.UI.BattleScene
                     playerCruiser,
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
-                    soundPlayer);
+                    soundPlayer,
+                    commonStrings);
 
             return informator;
         }

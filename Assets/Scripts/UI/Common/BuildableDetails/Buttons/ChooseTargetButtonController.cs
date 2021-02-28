@@ -2,6 +2,7 @@
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -31,11 +32,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         private bool ShowButton => _buttonVisibilityFilter.IsMatch(Target);
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IUserChosenTargetHelper userChosenTargetHelper, IFilter<ITarget> buttonVisibilityFilter)
+        public void Initialise(
+            ISingleSoundPlayer soundPlayer, 
+            IUserChosenTargetHelper userChosenTargetHelper, 
+            IFilter<ITarget> buttonVisibilityFilter,
+            // FELIX  Use :)
+            ILocTable commonStrings)
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter);
+            Helper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter, commonStrings);
 
             _userChosenTargetHelper = userChosenTargetHelper;
             _buttonVisibilityFilter = buttonVisibilityFilter;

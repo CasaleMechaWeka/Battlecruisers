@@ -6,6 +6,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -50,9 +51,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneFocuser droneFocuser, 
             IRepairManager repairManager, 
             IUserChosenTargetHelper userChosenTargetHelper,
-            IFilter<ITarget> chooseTargetButtonVisibilityFilter)
+            IFilter<ITarget> chooseTargetButtonVisibilityFilter,
+            ILocTable commonStrings)
         {
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, commonStrings);
 
             RectTransform rectTransform = transform.Parse<RectTransform>();
             Height = rectTransform.sizeDelta.y;
@@ -67,7 +69,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
             Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, chooseTargetButtonVisibilityFilter);
+            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, chooseTargetButtonVisibilityFilter, commonStrings);
 
             _buildProgressController = GetComponentInChildren<BuildableProgressBarController>(includeInactive: true);
             Assert.IsNotNull(_buildProgressController);
