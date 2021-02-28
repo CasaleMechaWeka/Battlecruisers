@@ -55,10 +55,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             // 2. Navigate to enemey cruiser
             enemyUnitDefenceSteps.AddRange(_autoNavigationStepFactory.CreateSteps(UnitCameraFocusTarget));
 
-            // FELIX  Loc
             // 3. Acknowledge the unit
-            string indefiniteArticle = IndefiniteyArticleHelper.FindIndefiniteArticle(UnitToBuild.Name);
-            string textToDisplay = "Uh oh, the enemy is building " + indefiniteArticle + " " + UnitToBuild.Name + "!";
+            string nOrNothing = IndefiniteyArticleHelper.AddN(UnitToBuild.Name) ? "n" : "";
+            string unitName = nOrNothing + " " + UnitToBuild.Name;
+            string textToDisplayBase = _tutorialStrings.GetString("Steps/UnitDefence/BuildingUnit");
+            string textToDisplay = string.Format(textToDisplayBase, unitName);
             ITutorialStepArgs clickUnitArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, UnitBuiltProvider);
             enemyUnitDefenceSteps.Add(_explanationDismissableStepFactory.CreateStep(clickUnitArgs));
 
@@ -66,12 +67,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             enemyUnitDefenceSteps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
             // 5. Build defence turret
+            nOrNothing = IndefiniteyArticleHelper.AddN(DefenceToBuild.Name) ? "n" : "";
+            string defenceName = nOrNothing + " " + DefenceToBuild.Name;
+            textToDisplayBase = _tutorialStrings.GetString("Steps/UnitDefence/BuildingDefence");
+            textToDisplay = string.Format(textToDisplayBase, defenceName);
             IList<ITutorialStep> buildTurretSteps
                 = _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Defence,
                     DefenceToBuild,
                     SlotSpecification,
-                    "Quick, build " + IndefiniteyArticleHelper.FindIndefiniteArticle(DefenceToBuild.Name) + " " + DefenceToBuild.Name + "!");
+                    textToDisplay);
             enemyUnitDefenceSteps.AddRange(buildTurretSteps);
 
             // 6. Navigate to mid left
@@ -93,7 +98,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                     _argsFactory.CreateTutorialStepArgs(),
                     factoryStepsResult.FactoryProvider));
 
-            string unitComingText = "Here comes the " + UnitToBuild.Name + "!";
+            string unitComingText = string.Format(_tutorialStrings.GetString("Steps/UnitDefence/EnemyUnitComing"), UnitToBuild.Name);
 
             // 7.5  Optionally boost unit speed until just before it reaches the user's camera view
             enemyUnitDefenceSteps.AddRange(CreateSpeedBoostSteps(unitComingText));
@@ -107,7 +112,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             // 9. Congrats!
             enemyUnitDefenceSteps.Add(
                 _explanationDismissableStepFactory.CreateStep(
-                    _argsFactory.CreateTutorialStepArgs("Nice!  You just defended your Cruiser.")));
+                    _argsFactory.CreateTutorialStepArgs(
+                        _tutorialStrings.GetString("Steps/UnitDefence/SuccessfulDefense"))));
 
             return enemyUnitDefenceSteps;
         }

@@ -1,10 +1,20 @@
 ﻿using System.Linq;
+using UnityEngine.Localization.Settings;
 
 namespace BattleCruisers.Utils.Strings
 {
     public static class IndefiniteyArticleHelper
     {
-        public static string FindIndefiniteArticle(string noun)
+        public static bool AddN(string noun)
+        {
+            bool isEnglish = LocalizationSettings.SelectedLocale.ToString().ToLower().Contains("english");
+
+            return 
+                isEnglish
+                && StartsWithVowel(noun);
+        }
+
+        private static bool StartsWithVowel(string noun)
         {
             switch (noun.ToUpper().FirstOrDefault())
             {
@@ -13,9 +23,9 @@ namespace BattleCruisers.Utils.Strings
                 case 'I':
                 case 'O':
                 case 'U':
-                    return "an";
+                    return true;
                 default:
-                    return "a";
+                    return false;
             }
         }
     }

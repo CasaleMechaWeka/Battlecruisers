@@ -38,7 +38,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
             _unitBuiltProvider = unitBuiltProvider;
 
-            string attackBoatName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Units.AttackBoat).Buildable.Name;
+            string attackBoatName = prefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.AttackBoat).Buildable.Name;
             _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, attackBoatName);
 
             string shipTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiShipTurret).Buildable.Name;

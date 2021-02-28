@@ -51,7 +51,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _deferrer = deferrer;
             _unitBuiltProvider = unitBuiltProvider;
 
-            string bomberName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Units.Bomber).Buildable.Name;
+            string bomberName = prefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.Bomber).Buildable.Name;
             _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.Bomber, bomberName);
 
             string airTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiAirTurret).Buildable.Name;

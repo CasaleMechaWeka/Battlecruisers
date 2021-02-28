@@ -37,6 +37,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System;
 using BattleCruisers.Utils.Localisation;
+using UnityEngine.Localization.Settings;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -298,6 +299,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+
+
+            // FELIX  TEMP
+            var l = LocalizationSettings.SelectedLocale;
+            Debug.Log(l);
+
 
             sceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
         }
