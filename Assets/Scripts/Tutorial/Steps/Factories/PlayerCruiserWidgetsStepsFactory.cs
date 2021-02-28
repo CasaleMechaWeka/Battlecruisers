@@ -11,6 +11,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
+        private const string PLAYER_NAME = "Charlie";
+
         public PlayerCruiserWidgetsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
             ILocTable tutorialStrings,
@@ -34,25 +36,25 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.AddRange(_autNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
-            // FELIX  Loc
             // Health dial
+            string healthBase = _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/PlayerHealthBar");
             ITutorialStepArgs healthDialArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    "You're Charlie. This is your Cruiser's health.",
+                    string.Format(healthBase, PLAYER_NAME),
                     _playerCruiserHealthBar);
             steps.Add(_explanationDismissableStepFactory.CreateStep(healthDialArgs));
 
             // Drone number
             ITutorialStepArgs droneNumberArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    "This is how many Builders you have. They're the only resource you need.",
+                    _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/Builders"),
                     _numOfDrones);
             steps.Add(_explanationDismissableStepFactory.CreateStep(droneNumberArgs));
 
             // More drones is better
             ITutorialStepArgs moreDronesArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    "Speed up production with more Builders. This also gives you better buildings and units!",
+                    _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/MoreBuilders"),
                     _numOfDrones);
             steps.Add(_explanationDismissableStepFactory.CreateStep(moreDronesArgs));
 
