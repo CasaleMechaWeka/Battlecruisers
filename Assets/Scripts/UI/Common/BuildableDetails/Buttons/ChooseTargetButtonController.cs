@@ -13,9 +13,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private Text _buttonText;
         private IUserChosenTargetHelper _userChosenTargetHelper;
         private IFilter<ITarget> _buttonVisibilityFilter;
-
-        private const string TARGET = "Target";
-        private const string UNTARGET = "Untarget";
+        private string _targetText, _untargetText;
 
         private ITarget _target;
         public ITarget Target
@@ -36,7 +34,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             ISingleSoundPlayer soundPlayer, 
             IUserChosenTargetHelper userChosenTargetHelper, 
             IFilter<ITarget> buttonVisibilityFilter,
-            // FELIX  Use :)
             ILocTable commonStrings)
         {
             base.Initialise(soundPlayer);
@@ -50,6 +47,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
             _buttonText = GetComponentInChildren<Text>();
             Assert.IsNotNull(_buttonText);
+
+            _targetText = commonStrings.GetString("UI/Informator/TargetButton");
+            _untargetText = commonStrings.GetString("UI/Informator/UntargetButton");
         }
 
         protected override void OnClicked()
@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         private void UpdateButtonText()
         {
-            _buttonText.text = ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget) ? UNTARGET : TARGET;
+            _buttonText.text = ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget) ? _untargetText : _targetText;
         }
     }
 }
