@@ -55,6 +55,7 @@ namespace BattleCruisers.Utils
 
         // UI
 		public const string LOADOUT_SCREEN = "LoadoutScreen";
+        public const string LOCALISATION = "Loc";
         public const string MASKS = "Masks";
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
         public const string PROGRESS_BARS = "ProgressBars";
@@ -191,6 +192,9 @@ namespace BattleCruisers.Utils
 
             // UI
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.LOCALISATION, true);
+            //tagsToActiveness.Add(Tags.LOCALISATION, false);
             tagsToActiveness.Add(Tags.MASKS, false);
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);

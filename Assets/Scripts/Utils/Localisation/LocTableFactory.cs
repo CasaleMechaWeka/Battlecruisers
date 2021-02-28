@@ -24,6 +24,8 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
+        private static Locale _locale;
+
         public class TableName
         {
             public const string BATTLE_SCENE = "BattleScene";
@@ -94,9 +96,9 @@ namespace BattleCruisers.Utils.Localisation
 
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
-            await LoadPseudoLocaleIfNeededAsync();
+            Locale localeToUse = await GetLocaleAsync();
 
-            AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName);
+            AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, localeToUse);
 
             // Load table, so getting any strings will be synchronous
             await handle.Task;
@@ -107,17 +109,28 @@ namespace BattleCruisers.Utils.Localisation
             return handle;
         }
 
-        private async Task LoadPseudoLocaleIfNeededAsync()
+        private async Task<Locale> GetLocaleAsync()
         {
-#if PSEUDO_LOCALE
-            // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
-            await LocalizationSettings.SelectedLocaleAsync.Task;
+            if (_locale != null)
+            {
+                Logging.Log(Tags.LOCALISATION, $"Returning stored locale: {_locale}");
+                return _locale;
+            }
 
+            // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
+            Locale localeToUse = await LocalizationSettings.SelectedLocaleAsync.Task;
+
+#if PSEUDO_LOCALE
+            Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
             Locale pseudoLocale = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Pseudo-Locale(pseudo)");
             Assert.IsNotNull(pseudoLocale);
             LocalizationSettings.SelectedLocale = pseudoLocale;
+            localeToUse = pseudoLocale;
 #endif
+
+            return localeToUse;
         }
+
         public void ReleaseBattleSceneTable()
         {
             if (_battleSceneTable != null)
