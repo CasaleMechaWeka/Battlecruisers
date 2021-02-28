@@ -107,7 +107,7 @@ namespace BattleCruisers.Scenes
             }
             Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
 
-            // Hide loading scene.  Don't unload, because the destroys all prefabs that have been loaded :P
+            // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
             LoadingScreenController.Instance.Destroy();
         }
 
