@@ -17,8 +17,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                   featurePermitterStepFactory,
                   swipePermitter,
                   explanationDismissableStepFactory,
-                  // FELIX  Loc, key?
-                  "Swipe horizontally to scroll. Swipe vertically to zoom.")
+                  "Steps/TouchSwipe")
         {
         }
    }
