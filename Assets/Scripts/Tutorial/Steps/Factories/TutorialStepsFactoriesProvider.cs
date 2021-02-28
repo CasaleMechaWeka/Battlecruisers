@@ -135,7 +135,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     tutorialArgs.TopPanelComponents.PlayerCruiserHealthBar,
                     tutorialArgs.LeftPanelComponents.NumberOfDronesHighlightable,
                     autoNavigationStepFactory,
-                    explanationDismissableStepFactory);
+                    explanationDismissableStepFactory,
+                    tutorialArgs.CommonStrings);
 
             ConstructDroneStationStepsFactory
                 = new ConstructDroneStationStepsFactory(

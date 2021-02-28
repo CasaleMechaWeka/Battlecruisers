@@ -10,8 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IHighlightable _playerCruiserHealthBar, _numOfDrones;
         private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-
-        private const string PLAYER_NAME = "Charlie";
+        private readonly ILocTable _commonStrings;
 
         public PlayerCruiserWidgetsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
@@ -19,15 +18,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IHighlightable playerCruiserHealthBar,
             IHighlightable numOfDrones,
             IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
+            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            ILocTable commonStrings) 
             : base(argsFactory, tutorialStrings)
         {
-            Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory);
+            Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory, commonStrings);
 
             _playerCruiserHealthBar = playerCruiserHealthBar;
             _numOfDrones = numOfDrones;
             _autNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
+            _commonStrings = commonStrings;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -38,9 +39,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Health dial
             string healthBase = _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/PlayerHealthBar");
+            string protagonistName = _commonStrings.GetString("Names/Protagonist");
             ITutorialStepArgs healthDialArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    string.Format(healthBase, PLAYER_NAME),
+                    string.Format(healthBase, protagonistName),
                     _playerCruiserHealthBar);
             steps.Add(_explanationDismissableStepFactory.CreateStep(healthDialArgs));
 

@@ -9,6 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public BubbleController leftTop, rightBottom;
         public BubbleController rightTop, leftBottom;
 
+        // FELIX  Replace with Names/Protagonist
         public const string PLAYER_NAME = "Charlie";
 
         public void Initialise(ITrashTalkData trashTalkData)
