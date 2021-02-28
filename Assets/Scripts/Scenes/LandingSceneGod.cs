@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes
 
                 SceneNavigator = this;
 
-                ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTable();
+                ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
                 HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 

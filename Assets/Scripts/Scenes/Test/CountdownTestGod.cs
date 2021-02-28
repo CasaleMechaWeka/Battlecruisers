@@ -8,7 +8,7 @@ namespace BattleCruisers.Scenes.Test
     {
         async void Start()
         {
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTable();
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
 
             CountdownController countdown = FindObjectOfType<CountdownController>();
             countdown.StaticInitialise(commonStrings);

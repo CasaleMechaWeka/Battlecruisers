@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils.Localisation
 
         private LocTableFactory() { }
 
-        public async Task<ILocTable> LoadBattleSceneTable()
+        public async Task<ILocTable> LoadBattleSceneTableAsync()
         {
             if (_battleSceneTable == null)
             {
@@ -48,7 +48,7 @@ namespace BattleCruisers.Utils.Localisation
             return _battleSceneTable;
         }
 
-        public async Task<ILocTable> LoadScreensSceneTable()
+        public async Task<ILocTable> LoadScreensSceneTableAsync()
         {
             if (_screensSceneTable == null)
             {
@@ -59,7 +59,7 @@ namespace BattleCruisers.Utils.Localisation
             return _screensSceneTable;
         }
 
-        public async Task<ILocTable> LoadCommonTable()
+        public async Task<ILocTable> LoadCommonTableAsync()
         {
             if (_commonTable == null)
             {
@@ -70,7 +70,7 @@ namespace BattleCruisers.Utils.Localisation
             return _commonTable;
         }
 
-        public async Task<ILocTable> LoadStoryTable()
+        public async Task<ILocTable> LoadStoryTableAsync()
         {
             if (_storyTable == null)
             {
@@ -81,7 +81,7 @@ namespace BattleCruisers.Utils.Localisation
             return _storyTable;
         }
 
-        public async Task<ILocTable> LoadTutorialTable()
+        public async Task<ILocTable> LoadTutorialTableAsync()
         {
             if (_tutorialTable == null)
             {

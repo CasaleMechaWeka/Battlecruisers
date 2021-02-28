@@ -47,7 +47,7 @@ namespace BattleCruisers.Tutorial
                 baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
                 baseArgs.AppModel.DataProvider.SaveGame();
 
-                ILocTable tutorialStrings = await LocTableFactory.Instance.LoadTutorialTable();
+                ILocTable tutorialStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
 
                 ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton, tutorialStrings, commonStrings);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);

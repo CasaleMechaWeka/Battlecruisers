@@ -74,9 +74,9 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            ILocTable commonLocTable = await LocTableFactory.Instance.LoadCommonTable();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTable();
-            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTable();
+            ILocTable commonLocTable = await LocTableFactory.Instance.LoadCommonTableAsync();
+            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
+            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonLocTable);
             
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
