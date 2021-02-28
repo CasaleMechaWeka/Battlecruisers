@@ -168,12 +168,6 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
-
-            // FELIX  TEMP
-            string hm = commonStrings.GetString("Names/Protagonist");
-            Debug.Log($"Names/Protagonist: {hm}");
-
-
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
