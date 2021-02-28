@@ -1,7 +1,8 @@
 ﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
+using System.Linq;
 
 namespace BattleCruisers.UI.Loading
 {
@@ -10,17 +11,17 @@ namespace BattleCruisers.UI.Loading
         public IHintProvider BasicHints { get; }
         public IHintProvider AdvancedHints { get; }
 
-        public HintProviders(IRandomGenerator random)
+        public HintProviders(IRandomGenerator random, ILocTable commonStrings)
         {
-            Assert.IsNotNull(random);
+            Helper.AssertIsNotNull(random, commonStrings);
 
-            BasicHints = new HintProvider(CreateBasicHints(), random);
-            AdvancedHints = new HintProvider(CreateAdvancedHints(), random);
+            BasicHints = new HintProvider(CreateBasicHints(commonStrings), random);
+            AdvancedHints = new HintProvider(CreateAdvancedHints(commonStrings), random);
         }
 
-        private IList<string> CreateBasicHints()
+        private IList<string> CreateBasicHints(ILocTable commonStrings)
         {
-            return new List<string>()
+            IList<string> keys = new List<string>()
             {
                 "Build factories to produce units.",
                 "Builders automatically repair damaged buildings and your cruiser.",
@@ -31,11 +32,12 @@ namespace BattleCruisers.UI.Loading
                 "Frequently check on the enemy cruiser to avoid nasty surprises!",
                 "Use the in game question mark (bottom right) to show help labels."
             };
+            return GetStrings(commonStrings, keys);
         }
 
-        private IList<string> CreateAdvancedHints()
+        private IList<string> CreateAdvancedHints(ILocTable commonStrings)
         {
-            IList<string> hints = new List<string>()
+            IList<string> keys = new List<string>()
             {
                 "The TARGET button for an enemy building makes everyone attack that building.  The shortcut is to double click the enemy building.",
                 "Hit a building's BUILDERS button (or double click the building) to summon all your builder drones!",
@@ -47,10 +49,18 @@ namespace BattleCruisers.UI.Loading
 
             if (!SystemInfoBC.Instance.IsHandheld)
             {
-                hints.Add("Want to become more efficient?  Check out the hotkeys in the options screen.");
+                keys.Add("Want to become more efficient?  Check out the hotkeys in the options screen.");
             }
 
-            return hints;
+            return GetStrings(commonStrings, keys);
+        }
+
+        private IList<string> GetStrings(ILocTable commonStrings, IList<string> keys)
+        {
+            return
+                keys
+                    .Select(key => commonStrings.GetString(key))
+                    .ToList();
         }
     }
 }

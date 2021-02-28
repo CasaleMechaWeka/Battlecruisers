@@ -5,6 +5,7 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
-        void Start()
+        async void Start()
         {
             Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
 
@@ -41,7 +42,8 @@ namespace BattleCruisers.Scenes
 
                 SceneNavigator = this;
 
-                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
+                ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTable();
+                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 
                 // Game starts with the screens scene

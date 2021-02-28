@@ -4,6 +4,7 @@ namespace BattleCruisers.Utils.Localisation
 {
     public interface ILocTableFactory
     {
+        // FELIX  Add async suffix :D
         Task<ILocTable> LoadBattleSceneTable();
         Task<ILocTable> LoadCommonTable();
         Task<ILocTable> LoadScreensSceneTable();
