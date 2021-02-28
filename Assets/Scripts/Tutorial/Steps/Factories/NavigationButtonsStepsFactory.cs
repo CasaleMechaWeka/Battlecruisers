@@ -41,7 +41,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: true));
             steps.Add(_featurePermitterStepFactory.CreateStep(_hotkeysPermitter, enableFeature: true));
 
-            // FELIX  Loc
             // Explain navigation buttons
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(

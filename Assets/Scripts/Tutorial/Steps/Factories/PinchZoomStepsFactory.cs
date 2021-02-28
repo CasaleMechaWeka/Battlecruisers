@@ -36,7 +36,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_featurePermitterStepFactory.CreateStep(_pinchZoomPermitter, enableFeature: true));
             steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: true));
 
-            // FELIX  Loc
             // Explain pinch zoom, encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
