@@ -62,12 +62,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                     postBattleScreen.title.fontSize = VICTORY_TITLE_LOOT_FONT_SIZE;
 
                     _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
+                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, screensSceneStrings, soundPlayer, ShowLoot);
                     _unlockedLoot = lootManager.UnlockLoot(battleResult.LevelNum);
                 }
                 else
                 {
-                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer);
+                    postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, screensSceneStrings, soundPlayer);
                 }
             }
 

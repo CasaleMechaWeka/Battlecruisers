@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.levelName.levelName.color = Color.black;
 
             string droneText = _screensSceneStrings.GetString(TUTORIAL_APPRAISAL_DRONE_TEXT);
-            postBattleScreen.appraisalSection.Initialise(droneText, soundPlayer);
+            postBattleScreen.appraisalSection.Initialise(droneText, screensSceneStrings, soundPlayer);
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);
 
