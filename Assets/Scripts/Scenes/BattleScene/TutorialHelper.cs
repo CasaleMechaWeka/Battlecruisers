@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private LimitableUIManager _uiManager;
         private IBuildProgressCalculator _playerBuildProgressCalculator, _aiBuildProgressCalculator;
 
-        public override bool ShowInGameHints { get; }
+        public override bool ShowInGameHints => false;
         public ISlotPermitter SlotPermitter => _slotFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
@@ -61,7 +61,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
             NavigationPermitters = navigationPermitters;
 
-            ShowInGameHints = false;
             _slotFilter = new SpecificSlotsFilter();
             _buildingNameFilter = new BuildingNameFilter(prefabFactory);
             _buildingCategoryFilter = new BuildingCategoryFilter();

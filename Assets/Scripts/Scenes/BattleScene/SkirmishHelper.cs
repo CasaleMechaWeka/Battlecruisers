@@ -19,6 +19,8 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IRandomGenerator _random;
         private readonly ISkirmishModel _skirmish;
 
+        public override bool ShowInGameHints => false;
+
         public SkirmishHelper(
             IApplicationModel appModel,
             IPrefabFetcher prefabFetcher,
