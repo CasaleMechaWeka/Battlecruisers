@@ -14,6 +14,18 @@ using System.Linq;
 
 namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 {
+    public class DropdownResult<TItem>
+    {
+        public bool WasRandom { get; }
+        public TItem Result { get; }
+
+        public DropdownResult(bool wasRandom, TItem result)
+        {
+            WasRandom = wasRandom;
+            Result = result;
+        }
+    }
+
     public class SkirmishScreenController : ScreenController
     {
         private IApplicationModel _applicationModel;
@@ -73,7 +85,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private string FindDefaultStrategy()
         {
-            if (Skirmish != null)
+            if (Skirmish != null
+                && !Skirmish.WasRandomStrategy)
             {
                 return Skirmish.AIStrategy.ToString();
             }
@@ -95,7 +108,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private string FindDefaultCruiser()
         {
-            if (Skirmish != null)
+            if (Skirmish != null
+                && !Skirmish.WasRandomCruiser)
             {
                 return Skirmish.AICruiser.PrefabName;
             }
@@ -113,36 +127,33 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             _screensSceneGod.LoadBattleScene();
         }
 
-        private StrategyType GetSelectedStrategy()
+        private DropdownResult<StrategyType> GetSelectedStrategy()
         {
             string strategyString = strategyDropdown.SelectedValue;
-            bool result = Enum.TryParse(strategyString, out StrategyType strategy);
+            bool wasRandom = !Enum.TryParse(strategyString, out StrategyType strategy);
 
-            if (result)
-            {
-                return strategy;
-            }
-            else
+            if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random strategy!");
-                return RandomGenerator.Instance.RandomItem(_strategies);
+                strategy = RandomGenerator.Instance.RandomItem(_strategies);
             }
+
+            return new DropdownResult<StrategyType>(wasRandom, strategy);
         }
 
-        private HullKey GetSelectedCruiser()
+        private DropdownResult<HullKey> GetSelectedCruiser()
         {
             string cruiserString = cruiserDropdown.SelectedValue;
             HullKey cruiserKey = StaticPrefabKeys.Hulls.AllKeysExplicit.FirstOrDefault(key => key.PrefabName == cruiserString);
-            
-            if (cruiserKey != null)
-            {
-                return cruiserKey;
-            }
-            else
+            bool wasRandom = cruiserKey == null;
+
+            if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
-                return RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeysExplicit);
+                cruiserKey = RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeysExplicit);
             }
+
+            return new DropdownResult<HullKey>(wasRandom, cruiserKey);
         }
 
         public override void Cancel()
@@ -161,12 +172,16 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
 
+            DropdownResult<HullKey> cruiserResult = GetSelectedCruiser();
+            DropdownResult<StrategyType> strategyResult = GetSelectedStrategy();
 
             _applicationModel.DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
                     difficultyDropdown.Difficulty,
-                    GetSelectedCruiser(),
-                    GetSelectedStrategy(),
+                    cruiserResult.WasRandom,
+                    cruiserResult.Result,
+                    strategyResult.WasRandom,
+                    strategyResult.Result,
                     backgroundLevelNum,
                     skyMaterialName);
             _applicationModel.DataProvider.SaveGame();
