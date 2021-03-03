@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public CanvasGroupButton battleButton, homeButton;
         public DifficultyDropdown difficultyDropdown;
-        public StringDropdown strategyDropdown, cruiserDropdown;
+        public StringDropdown strategyDropdown, playerCruiserDropdown, aiCruiserDropdown;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod, 
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, cruiserDropdown);
+            Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, playerCruiserDropdown, aiCruiserDropdown);
             Helper.AssertIsNotNull(applicationModel, soundPlayer);
 
             _applicationModel = applicationModel;
@@ -56,8 +56,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             battleButton.Initialise(soundPlayer, Battle, this);
             homeButton.Initialise(soundPlayer, Home, this);
             difficultyDropdown.Initialise(FindDefaultDifficulty());
+            InitialisePlayerCruiserDropdown();
             InitialiseStrategyDropdown();
-            InitialiseCruiserDropdown();
+            InitialiseAICruiserDropdown();
         }
 
         private Difficulty FindDefaultDifficulty()
@@ -96,17 +97,46 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private void InitialiseCruiserDropdown()
+        private void InitialisePlayerCruiserDropdown()
         {
             IList<string> hullNames
                 = StaticPrefabKeys.Hulls.AllKeys
                     .Select(key => key.PrefabName)
                     .ToList();
             hullNames.Insert(0, RANDOM);
-            cruiserDropdown.Initialise(hullNames, FindDefaultCruiser());
+            playerCruiserDropdown.Initialise(hullNames, FindDefaultPlayerCruiser());
         }
 
-        private string FindDefaultCruiser()
+        private string FindDefaultPlayerCruiser()
+        {
+            if (Skirmish != null)
+            {
+                if (Skirmish.WasRandomPlayerCruiser)
+                {
+                    return RANDOM;
+                }
+                else
+                {
+                    return Skirmish.PlayerCruiser.PrefabName;
+                }
+            }
+            else
+            {
+                return _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
+            }
+        }
+
+        private void InitialiseAICruiserDropdown()
+        {
+            IList<string> hullNames
+                = StaticPrefabKeys.Hulls.AllKeys
+                    .Select(key => key.PrefabName)
+                    .ToList();
+            hullNames.Insert(0, RANDOM);
+            aiCruiserDropdown.Initialise(hullNames, FindDefaultAICruiser());
+        }
+
+        private string FindDefaultAICruiser()
         {
             if (Skirmish != null
                 && !Skirmish.WasRandomAICruiser)
@@ -127,35 +157,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             _screensSceneGod.LoadBattleScene();
         }
 
-        private DropdownResult<StrategyType> GetSelectedStrategy()
-        {
-            string strategyString = strategyDropdown.SelectedValue;
-            bool wasRandom = !Enum.TryParse(strategyString, out StrategyType strategy);
-
-            if (wasRandom)
-            {
-                Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random strategy!");
-                strategy = RandomGenerator.Instance.RandomItem(_strategies);
-            }
-
-            return new DropdownResult<StrategyType>(wasRandom, strategy);
-        }
-
-        private DropdownResult<HullKey> GetSelectedCruiser()
-        {
-            string cruiserString = cruiserDropdown.SelectedValue;
-            HullKey cruiserKey = StaticPrefabKeys.Hulls.AllKeysExplicit.FirstOrDefault(key => key.PrefabName == cruiserString);
-            bool wasRandom = cruiserKey == null;
-
-            if (wasRandom)
-            {
-                Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
-                cruiserKey = RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeysExplicit);
-            }
-
-            return new DropdownResult<HullKey>(wasRandom, cruiserKey);
-        }
-
         public override void Cancel()
         {
             Home();
@@ -172,22 +173,51 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
 
-            DropdownResult<HullKey> cruiserResult = GetSelectedCruiser();
+            DropdownResult<HullKey> playerCruiserResult = GetSelectedCruiser(playerCruiserDropdown);
+            DropdownResult<HullKey> aiCruiserResult = GetSelectedCruiser(aiCruiserDropdown);
             DropdownResult<StrategyType> strategyResult = GetSelectedStrategy();
 
             _applicationModel.DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
                     difficultyDropdown.Difficulty,
-                    // FELIX :P
-                    false,
-                    null,
-                    cruiserResult.WasRandom,
-                    cruiserResult.Result,
+                    playerCruiserResult.WasRandom,
+                    playerCruiserResult.Result,
+                    aiCruiserResult.WasRandom,
+                    aiCruiserResult.Result,
                     strategyResult.WasRandom,
                     strategyResult.Result,
                     backgroundLevelNum,
                     skyMaterialName);
             _applicationModel.DataProvider.SaveGame();
+        }
+
+        private DropdownResult<HullKey> GetSelectedCruiser(StringDropdown cruiserDropdown)
+        {
+            string cruiserString = cruiserDropdown.SelectedValue;
+            HullKey cruiserKey = StaticPrefabKeys.Hulls.AllKeysExplicit.FirstOrDefault(key => key.PrefabName == cruiserString);
+            bool wasRandom = cruiserKey == null;
+
+            if (wasRandom)
+            {
+                Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
+                cruiserKey = RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeysExplicit);
+            }
+
+            return new DropdownResult<HullKey>(wasRandom, cruiserKey);
+        }
+
+        private DropdownResult<StrategyType> GetSelectedStrategy()
+        {
+            string strategyString = strategyDropdown.SelectedValue;
+            bool wasRandom = !Enum.TryParse(strategyString, out StrategyType strategy);
+
+            if (wasRandom)
+            {
+                Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random strategy!");
+                strategy = RandomGenerator.Instance.RandomItem(_strategies);
+            }
+
+            return new DropdownResult<StrategyType>(wasRandom, strategy);
         }
     }
 }

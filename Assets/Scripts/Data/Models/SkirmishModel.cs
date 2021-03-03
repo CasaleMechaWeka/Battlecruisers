@@ -53,7 +53,7 @@ namespace BattleCruisers.Data.Models
             Difficulty difficulty, 
             bool wasRandomPlayerCruiser,
             HullKey playerCruiser,
-            bool wasRandomCruiser,
+            bool wasRandomAICruiser,
             HullKey aiCruiser, 
             bool wasRandomStrategy,
             StrategyType aIStrategy,
@@ -68,7 +68,7 @@ namespace BattleCruisers.Data.Models
             _difficulty = difficulty;
             _wasRandomPlayerCruiser = wasRandomPlayerCruiser;
             _playerCruiser = playerCruiser;
-            _wasRandomAICruiser = wasRandomCruiser;
+            _wasRandomAICruiser = wasRandomAICruiser;
             _aiCruiser = aiCruiser;
             _wasRandomStrategy = wasRandomStrategy;
             _aiStrategy = aIStrategy;
