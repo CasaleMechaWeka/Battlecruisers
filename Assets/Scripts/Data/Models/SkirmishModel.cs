@@ -17,8 +17,16 @@ namespace BattleCruisers.Data.Models
         public Difficulty Difficulty => _difficulty;
 
         [SerializeField]
+        private bool _wasRandomCruiser;
+        public bool WasRandomCruiser => _wasRandomCruiser;
+
+        [SerializeField]
         private HullKey _aiCruiser;
         public HullKey AICruiser => _aiCruiser;
+
+        [SerializeField]
+        private bool _wasRandomStrategy;
+        public bool WasRandomStrategy => _wasRandomStrategy;
 
         [SerializeField]
         private StrategyType _aiStrategy;
@@ -32,9 +40,12 @@ namespace BattleCruisers.Data.Models
         private string _skyMaterialName;
         public string SkyMaterialName => _skyMaterialName;
 
+
         public SkirmishModel(
             Difficulty difficulty, 
+            bool wasRandomCruiser,
             HullKey aiCruiser, 
+            bool wasRandomStrategy,
             StrategyType aIStrategy,
             int backgroundLevelNum,
             string skyMaterialName)
@@ -45,7 +56,9 @@ namespace BattleCruisers.Data.Models
             Assert.IsFalse(string.IsNullOrEmpty(skyMaterialName));
 
             _difficulty = difficulty;
+            _wasRandomCruiser = wasRandomCruiser;
             _aiCruiser = aiCruiser;
+            _wasRandomStrategy = wasRandomStrategy;
             _aiStrategy = aIStrategy;
             _backgroundLevelNum = backgroundLevelNum;
             _skyMaterialName = skyMaterialName;
@@ -56,7 +69,9 @@ namespace BattleCruisers.Data.Models
             return
                 obj is SkirmishModel other
                 && Difficulty == other.Difficulty
+                && WasRandomCruiser == other.WasRandomCruiser
                 && AICruiser.SmartEquals(other.AICruiser)
+                && WasRandomStrategy == other.WasRandomStrategy
                 && AIStrategy == other.AIStrategy
                 && BackgroundLevelNum == other.BackgroundLevelNum
                 && SkyMaterialName == other.SkyMaterialName;
@@ -64,7 +79,7 @@ namespace BattleCruisers.Data.Models
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(Difficulty, AICruiser, AIStrategy, BackgroundLevelNum, SkyMaterialName);
+            return this.GetHashCode(Difficulty, WasRandomCruiser, AICruiser, WasRandomStrategy, AIStrategy, BackgroundLevelNum, SkyMaterialName);
         }
 
         public override string ToString()

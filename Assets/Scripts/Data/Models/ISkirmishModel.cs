@@ -6,7 +6,9 @@ namespace BattleCruisers.Data.Models
 {
     public interface ISkirmishModel
     {
+        bool WasRandomCruiser { get; }
         HullKey AICruiser { get; }
+        bool WasRandomStrategy { get; }
         StrategyType AIStrategy { get; }
         Difficulty Difficulty { get; }
         int BackgroundLevelNum { get; }
