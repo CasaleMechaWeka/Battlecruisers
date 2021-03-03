@@ -30,6 +30,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
 
         protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher)
         {

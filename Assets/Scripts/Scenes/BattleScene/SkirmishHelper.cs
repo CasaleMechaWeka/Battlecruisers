@@ -20,6 +20,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly ISkirmishModel _skirmish;
 
         public override bool ShowInGameHints => false;
+        public override IPrefabKey PlayerCruiser => _skirmish.PlayerCruiser;
 
         public SkirmishHelper(
             IApplicationModel appModel,
