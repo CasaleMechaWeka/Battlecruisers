@@ -109,7 +109,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private string FindDefaultCruiser()
         {
             if (Skirmish != null
-                && !Skirmish.WasRandomCruiser)
+                && !Skirmish.WasRandomAICruiser)
             {
                 return Skirmish.AICruiser.PrefabName;
             }
@@ -178,6 +178,9 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             _applicationModel.DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
                     difficultyDropdown.Difficulty,
+                    // FELIX :P
+                    false,
+                    null,
                     cruiserResult.WasRandom,
                     cruiserResult.Result,
                     strategyResult.WasRandom,

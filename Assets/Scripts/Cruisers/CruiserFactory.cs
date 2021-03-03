@@ -55,6 +55,7 @@ namespace BattleCruisers.Cruisers
         public Cruiser CreatePlayerCruiser()
         {
             ILoadout playerLoadout = _helper.GetPlayerLoadout();
+            // FELIX  Could be skirmish :P
             Cruiser playerCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(playerLoadout.Hull);
             Cruiser playerCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerCruiserPrefab);
             playerCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);

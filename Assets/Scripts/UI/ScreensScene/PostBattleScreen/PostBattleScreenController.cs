@@ -208,6 +208,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 new SkirmishModel(
                     Difficulty.Harder,
                     default,
+                    StaticPrefabKeys.Hulls.Trident,
+                    default,
                     StaticPrefabKeys.Hulls.Eagle,
                     default,
                     StrategyType.Boom,
