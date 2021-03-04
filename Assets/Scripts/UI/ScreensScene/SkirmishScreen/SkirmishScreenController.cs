@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Scenes;
@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
     public class SkirmishScreenController : ScreenController
     {
         private IApplicationModel _applicationModel;
+        private IList<HullKey> _unlockedHulls;
         private IRandomGenerator _random;
         private StrategyType[] _strategies;
 
@@ -51,6 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             Helper.AssertIsNotNull(applicationModel, soundPlayer);
 
             _applicationModel = applicationModel;
+            _unlockedHulls = applicationModel.DataProvider.GameModel.UnlockedHulls;
             _random = RandomGenerator.Instance;
 
             battleButton.Initialise(soundPlayer, Battle, this);
@@ -100,7 +102,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private void InitialisePlayerCruiserDropdown()
         {
             IList<string> hullNames
-                = StaticPrefabKeys.Hulls.AllKeys
+                = _unlockedHulls
                     .Select(key => key.PrefabName)
                     .ToList();
             hullNames.Insert(0, RANDOM);
@@ -123,7 +125,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private void InitialiseAICruiserDropdown()
         {
             IList<string> hullNames
-                = StaticPrefabKeys.Hulls.AllKeys
+                = _unlockedHulls
                     .Select(key => key.PrefabName)
                     .ToList();
             hullNames.Insert(0, RANDOM);
@@ -188,13 +190,13 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private DropdownResult<HullKey> GetSelectedCruiser(StringDropdown cruiserDropdown)
         {
             string cruiserString = cruiserDropdown.SelectedValue;
-            HullKey cruiserKey = StaticPrefabKeys.Hulls.AllKeysExplicit.FirstOrDefault(key => key.PrefabName == cruiserString);
+            HullKey cruiserKey = _unlockedHulls.FirstOrDefault(key => key.PrefabName == cruiserString);
             bool wasRandom = cruiserKey == null;
 
             if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
-                cruiserKey = RandomGenerator.Instance.RandomItem(StaticPrefabKeys.Hulls.AllKeysExplicit);
+                cruiserKey = RandomGenerator.Instance.RandomItem(_unlockedHulls);
             }
 
             return new DropdownResult<HullKey>(wasRandom, cruiserKey);
