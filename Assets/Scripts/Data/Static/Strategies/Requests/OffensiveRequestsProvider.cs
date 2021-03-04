@@ -193,7 +193,6 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 all.AddRange(Balanced.All);
                 All = all;
 
-                // FELIX  Test
                 NoUltras = Balanced.NoUltras;
             }
         }
