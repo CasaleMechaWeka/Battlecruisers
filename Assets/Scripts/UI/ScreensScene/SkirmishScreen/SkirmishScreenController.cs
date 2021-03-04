@@ -168,9 +168,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         {
             int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
 
-            // FELIX  Remove :)
-            string skyMaterialName = _random.RandomItem(SkyMaterials.All);
-
             DropdownResult<HullKey> playerCruiserResult = GetSelectedCruiser(playerCruiserDropdown);
             DropdownResult<HullKey> aiCruiserResult = GetSelectedCruiser(aiCruiserDropdown);
             DropdownResult<StrategyType> strategyResult = GetSelectedStrategy();
@@ -184,8 +181,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                     aiCruiserResult.Result,
                     strategyResult.WasRandom,
                     strategyResult.Result,
-                    backgroundLevelNum,
-                    skyMaterialName);
+                    backgroundLevelNum);
             _applicationModel.DataProvider.SaveGame();
         }
 

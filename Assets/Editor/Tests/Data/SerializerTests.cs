@@ -55,8 +55,7 @@ namespace BattleCruisers.Tests.Data
 					StaticPrefabKeys.Hulls.Megalodon, 
 					false, 
 					StrategyType.Rush, 
-					backgroundLevelNum: 1, 
-					skyMaterialName: "sour sky");
+					backgroundLevelNum: 1);
 			_originalGameModel.Version = GameModel.ModelVersion.WithShowHelpLabel;
 
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy));
