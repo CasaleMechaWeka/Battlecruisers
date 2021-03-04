@@ -1,12 +1,9 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
@@ -16,7 +13,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class SkirmishHelper : NormalHelper
     {
-        private readonly IRandomGenerator _random;
         private readonly ISkirmishModel _skirmish;
 
         public override bool ShowInGameHints => false;
@@ -29,8 +25,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IDeferrer deferrer) 
             : base(appModel, prefabFetcher, prefabFactory, deferrer)
         {
-            _random = RandomGenerator.Instance;
-
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);
         }
