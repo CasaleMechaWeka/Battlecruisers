@@ -56,6 +56,13 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 NavalOffensive,
                 AirOffensive
             };
+            public static IList<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
+            {
+                NavalOffensiveAir,
+                AirOffensiveNaval,
+                NavalOffensive,
+                AirOffensive
+            };
         }
 
         /// <summary>
@@ -107,7 +114,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IList<IOffensiveRequest[]> All;
+            public static IList<IOffensiveRequest[]> All, NoUltras;
 
             static Balanced()
             {
@@ -124,6 +131,19 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 };
                 all.AddRange(Rush.All);
                 All = all;
+
+                List<IOffensiveRequest[]> noUltras = new List<IOffensiveRequest[]>()
+                {
+                    Offensive,
+                    OffensiveAirNaval,
+                    OffensiveNavalAir,
+                    OffensiveNaval,
+                    OffensiveAir,
+                    OffensiveNavalOffensive,
+                    OffensiveAirOffensive,
+                };
+                noUltras.AddRange(Rush.NoUltras);
+                NoUltras = noUltras;
             }
         }
 
@@ -158,7 +178,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IList<IOffensiveRequest[]> All;
+            public static IList<IOffensiveRequest[]> All, NoUltras;
 
             static Boom()
             {
@@ -172,6 +192,9 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 };
                 all.AddRange(Balanced.All);
                 All = all;
+
+                // FELIX  Test
+                NoUltras = Balanced.NoUltras;
             }
         }
     }

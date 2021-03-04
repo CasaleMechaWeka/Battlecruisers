@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
@@ -6,6 +7,7 @@ using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
@@ -44,7 +46,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new SkirmishStrategyFactory(_skirmish.AIStrategy);
+            bool canUseUltras = _appModel.DataProvider.GameModel.UnlockedBuildings.Any(building => building.BuildingCategory == BuildingCategory.Ultra);
+            return new SkirmishStrategyFactory(_skirmish.AIStrategy, canUseUltras);
         }
 
         public override Task<string> GetEnemyNameAsync(int levelNum)

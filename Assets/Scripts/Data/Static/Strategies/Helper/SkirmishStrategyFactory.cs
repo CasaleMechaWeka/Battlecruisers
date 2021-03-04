@@ -8,11 +8,13 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
     public class SkirmishStrategyFactory : IStrategyFactory
     {
         private readonly StrategyType _strategyType;
+        private readonly bool _canUseUltras;
         private readonly IRandomGenerator _random;
 
-        public SkirmishStrategyFactory(StrategyType strategyType)
+        public SkirmishStrategyFactory(StrategyType strategyType, bool canUseUltras)
         {
             _strategyType = strategyType;
+            _canUseUltras = canUseUltras;
             _random = RandomGenerator.Instance;
         }
 
@@ -77,7 +79,17 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
         private IOffensiveRequest[] GetOffensiveRequests(StrategyType strategyType)
         {
-            IList<IOffensiveRequest[]> allOptions = GetOffensiveRequestsList(strategyType);
+            IList<IOffensiveRequest[]> allOptions;
+
+            if (_canUseUltras)
+            {
+                allOptions = GetOffensiveRequestsList(strategyType);
+            }
+            else
+            {
+                allOptions = GetOffensiveRequestsListNoUltras(strategyType);
+            }
+
             return _random.RandomItem(allOptions); 
         }
 
@@ -93,6 +105,24 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
                 case StrategyType.Boom:
                     return OffensiveRequestsProvider.Boom.All;
+
+                default:
+                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
+            }
+        }
+
+        private IList<IOffensiveRequest[]> GetOffensiveRequestsListNoUltras(StrategyType strategyType)
+        {
+            switch (strategyType)
+            {
+                case StrategyType.Rush:
+                    return OffensiveRequestsProvider.Rush.NoUltras;
+
+                case StrategyType.Balanced:
+                    return OffensiveRequestsProvider.Balanced.NoUltras;
+
+                case StrategyType.Boom:
+                    return OffensiveRequestsProvider.Boom.NoUltras;
 
                 default:
                     throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
