@@ -38,14 +38,14 @@ namespace BattleCruisers.Scenes.BattleScene
         public override ILevel GetLevel()
         {
             int levelNum = -99;  // Unused for skirmish
-            SoundKeyPair musicKeys = _random.RandomItem(SoundKeys.Music.Background.All);
+            ILevel backgroundLevel = _appModel.DataProvider.GetLevel(_skirmish.BackgroundLevelNum);
 
             return
                 new Level(
                     levelNum,
                     _skirmish.AICruiser,
-                    musicKeys,
-                    _skirmish.SkyMaterialName);
+                    backgroundLevel.MusicKeys,
+                    backgroundLevel.SkyMaterialName);
         }
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)

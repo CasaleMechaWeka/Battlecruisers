@@ -167,6 +167,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         private void SaveSkirmishSettings()
         {
             int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
+
+            // FELIX  Remove :)
             string skyMaterialName = _random.RandomItem(SkyMaterials.All);
 
             DropdownResult<HullKey> playerCruiserResult = GetSelectedCruiser(playerCruiserDropdown);

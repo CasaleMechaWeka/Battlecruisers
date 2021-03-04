@@ -14,6 +14,7 @@ namespace BattleCruisers.Data.Models
         StrategyType AIStrategy { get; }
         Difficulty Difficulty { get; }
         int BackgroundLevelNum { get; }
+        // FELIX  Remove :)
         string SkyMaterialName { get; }
     }
 }
