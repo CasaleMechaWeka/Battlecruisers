@@ -23,6 +23,7 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         bool ShowInGameHints { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        IPrefabKey PlayerCruiser { get; }
 
         // Separate methods because of circular dependency between UIManager and everything else :/
         IUIManager CreateUIManager();

@@ -46,7 +46,16 @@ namespace BattleCruisers.Tests.Data
             _originalGameModel.NewUnits.AddItem(new UnitKey(UnitCategory.Naval, "seeeendii"));
 			_originalGameModel.SelectedLevel = 17;
 			_originalGameModel.ShowHelpLabels = true;
-			_originalGameModel.Skirmish = new SkirmishModel(Difficulty.Normal, true, StaticPrefabKeys.Hulls.Megalodon, false, StrategyType.Rush, backgroundLevelNum: 1, skyMaterialName: "sour sky");
+			_originalGameModel.Skirmish 
+				= new SkirmishModel(
+					Difficulty.Normal, 
+					true, 
+					StaticPrefabKeys.Hulls.Trident, 
+					true, 
+					StaticPrefabKeys.Hulls.Megalodon, 
+					false, 
+					StrategyType.Rush, 
+					backgroundLevelNum: 1);
 			_originalGameModel.Version = GameModel.ModelVersion.WithShowHelpLabel;
 
             _originalGameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy));

@@ -8,7 +8,6 @@ using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
@@ -54,8 +53,7 @@ namespace BattleCruisers.Cruisers
 
         public Cruiser CreatePlayerCruiser()
         {
-            ILoadout playerLoadout = _helper.GetPlayerLoadout();
-            Cruiser playerCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(playerLoadout.Hull);
+            Cruiser playerCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerCruiser);
             Cruiser playerCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerCruiserPrefab);
             playerCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);
 

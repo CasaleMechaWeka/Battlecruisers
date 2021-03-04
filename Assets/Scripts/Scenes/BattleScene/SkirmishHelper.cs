@@ -1,14 +1,13 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
@@ -17,10 +16,10 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class SkirmishHelper : NormalHelper
     {
-        private readonly IRandomGenerator _random;
         private readonly ISkirmishModel _skirmish;
 
         public override bool ShowInGameHints => false;
+        public override IPrefabKey PlayerCruiser => _skirmish.PlayerCruiser;
 
         public SkirmishHelper(
             IApplicationModel appModel,
@@ -30,8 +29,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IDeferrer deferrer) 
             : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
         {
-            _random = RandomGenerator.Instance;
-
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);
         }
@@ -39,19 +36,20 @@ namespace BattleCruisers.Scenes.BattleScene
         public override ILevel GetLevel()
         {
             int levelNum = -99;  // Unused for skirmish
-            SoundKeyPair musicKeys = _random.RandomItem(SoundKeys.Music.Background.All);
+            ILevel backgroundLevel = _appModel.DataProvider.GetLevel(_skirmish.BackgroundLevelNum);
 
             return
                 new Level(
                     levelNum,
                     _skirmish.AICruiser,
-                    musicKeys,
-                    _skirmish.SkyMaterialName);
+                    backgroundLevel.MusicKeys,
+                    backgroundLevel.SkyMaterialName);
         }
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new SkirmishStrategyFactory(_skirmish.AIStrategy);
+            bool canUseUltras = _appModel.DataProvider.GameModel.UnlockedBuildings.Any(building => building.BuildingCategory == BuildingCategory.Ultra);
+            return new SkirmishStrategyFactory(_skirmish.AIStrategy, canUseUltras);
         }
 
         public override Task<string> GetEnemyNameAsync(int levelNum)

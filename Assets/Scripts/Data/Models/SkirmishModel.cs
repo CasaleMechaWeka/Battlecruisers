@@ -17,8 +17,16 @@ namespace BattleCruisers.Data.Models
         public Difficulty Difficulty => _difficulty;
 
         [SerializeField]
-        private bool _wasRandomCruiser;
-        public bool WasRandomCruiser => _wasRandomCruiser;
+        private bool _wasRandomPlayerCruiser;
+        public bool WasRandomPlayerCruiser => _wasRandomPlayerCruiser;
+
+        [SerializeField]
+        private HullKey _playerCruiser;
+        public HullKey PlayerCruiser => _playerCruiser;
+
+        [SerializeField]
+        private bool _wasRandomAICruiser;
+        public bool WasRandomAICruiser => _wasRandomAICruiser;
 
         [SerializeField]
         private HullKey _aiCruiser;
@@ -36,32 +44,28 @@ namespace BattleCruisers.Data.Models
         private int _backgroundLevelNum;
         public int BackgroundLevelNum => _backgroundLevelNum;
 
-        [SerializeField]
-        private string _skyMaterialName;
-        public string SkyMaterialName => _skyMaterialName;
-
-
         public SkirmishModel(
             Difficulty difficulty, 
-            bool wasRandomCruiser,
+            bool wasRandomPlayerCruiser,
+            HullKey playerCruiser,
+            bool wasRandomAICruiser,
             HullKey aiCruiser, 
             bool wasRandomStrategy,
             StrategyType aIStrategy,
-            int backgroundLevelNum,
-            string skyMaterialName)
+            int backgroundLevelNum)
         {
-            Assert.IsNotNull(aiCruiser);
+            Helper.AssertIsNotNull(playerCruiser, aiCruiser);
             Assert.IsTrue(backgroundLevelNum > 0);
             Assert.IsTrue(backgroundLevelNum <= StaticData.NUM_OF_LEVELS);
-            Assert.IsFalse(string.IsNullOrEmpty(skyMaterialName));
 
             _difficulty = difficulty;
-            _wasRandomCruiser = wasRandomCruiser;
+            _wasRandomPlayerCruiser = wasRandomPlayerCruiser;
+            _playerCruiser = playerCruiser;
+            _wasRandomAICruiser = wasRandomAICruiser;
             _aiCruiser = aiCruiser;
             _wasRandomStrategy = wasRandomStrategy;
             _aiStrategy = aIStrategy;
             _backgroundLevelNum = backgroundLevelNum;
-            _skyMaterialName = skyMaterialName;
         }
 
         public override bool Equals(object obj)
@@ -69,22 +73,23 @@ namespace BattleCruisers.Data.Models
             return
                 obj is SkirmishModel other
                 && Difficulty == other.Difficulty
-                && WasRandomCruiser == other.WasRandomCruiser
+                && WasRandomPlayerCruiser == other.WasRandomPlayerCruiser
+                && PlayerCruiser == other.PlayerCruiser
+                && WasRandomAICruiser == other.WasRandomAICruiser
                 && AICruiser.SmartEquals(other.AICruiser)
                 && WasRandomStrategy == other.WasRandomStrategy
                 && AIStrategy == other.AIStrategy
-                && BackgroundLevelNum == other.BackgroundLevelNum
-                && SkyMaterialName == other.SkyMaterialName;
+                && BackgroundLevelNum == other.BackgroundLevelNum;
         }
 
         public override int GetHashCode()
         {
-            return this.GetHashCode(Difficulty, WasRandomCruiser, AICruiser, WasRandomStrategy, AIStrategy, BackgroundLevelNum, SkyMaterialName);
+            return this.GetHashCode(Difficulty, WasRandomPlayerCruiser, PlayerCruiser, WasRandomAICruiser, AICruiser, WasRandomStrategy, AIStrategy, BackgroundLevelNum);
         }
 
         public override string ToString()
         {
-            return base.ToString() + $"Difficulty: {Difficulty}  AICruiser: {AICruiser}  AIStrategy: {AIStrategy}  BackrgoundLevelNum: {BackgroundLevelNum}  SkyMaterialName: {SkyMaterialName}";
+            return base.ToString() + $"Difficulty: {Difficulty}  PlayerCruiser: {PlayerCruiser}  AICruiser: {AICruiser}  AIStrategy: {AIStrategy}  BackrgoundLevelNum: {BackgroundLevelNum}";
         }
     }
 }

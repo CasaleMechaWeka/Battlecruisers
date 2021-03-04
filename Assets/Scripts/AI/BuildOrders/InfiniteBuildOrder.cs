@@ -24,10 +24,10 @@ namespace BattleCruisers.AI.BuildOrders
             _levelInfo = levelInfo;
 
             _availableBuildings = _levelInfo.GetAvailableBuildings(buildingCategory);
-            Assert.IsTrue(_availableBuildings.Count != 0);
+            Assert.IsTrue(_availableBuildings.Count != 0, $"No available buildings for: {buildingCategory}");
 
             RemoveBuildingsToIgnore(bannedBuildings);
-            Assert.IsTrue(_availableBuildings.Count != 0);
+            Assert.IsTrue(_availableBuildings.Count != 0, $"No available buildings for: {buildingCategory}");
 		}
 
         private void RemoveBuildingsToIgnore(IList<BuildingKey> bannedBuildings)
