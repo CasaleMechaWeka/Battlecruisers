@@ -109,20 +109,14 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private string FindDefaultPlayerCruiser()
         {
-            if (Skirmish != null)
+            if (Skirmish != null
+                && !Skirmish.WasRandomPlayerCruiser)
             {
-                if (Skirmish.WasRandomPlayerCruiser)
-                {
-                    return RANDOM;
-                }
-                else
-                {
-                    return Skirmish.PlayerCruiser.PrefabName;
-                }
+                return Skirmish.PlayerCruiser.PrefabName;
             }
             else
             {
-                return _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
+                return RANDOM;
             }
         }
 
