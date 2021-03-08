@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.Loading
             hints.Add(string.Format(targetButtonBase, targetButtonText));
 
             string buildersButtonBase = commonStrings.GetString("Hints/BuildersButton");
-            string buildersButtonText = commonStrings.GetString("UI/Informator/DronesButton");
+            string buildersButtonText = commonStrings.GetString("Common/Builders");
             hints.Add(string.Format(buildersButtonBase, buildersButtonText));
 
             return hints;
