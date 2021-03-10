@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -13,9 +14,11 @@ using UnityEngine;
 namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class OffensiveTurretTestGod : CameraToggleTestGod
-	{
+    {
         private IBuilding _target;
         private TurretController _turret;
+
+        public bool useRealAccuracy = false;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -56,7 +59,13 @@ namespace BattleCruisers.Scenes.Test.Offensive
 				Target = _target
 			};
             ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
-            helper.InitialiseBuilding(_turret, Faction.Reds, targetFactories: targetFactories);
+            IAccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
+
+            helper.InitialiseBuilding(
+                _turret, 
+                Faction.Reds, 
+                targetFactories: targetFactories,
+                accuracyAdjusterFactory: accuracyAdjusterFactory);
 			_turret.StartConstruction();
 		}
 	}
