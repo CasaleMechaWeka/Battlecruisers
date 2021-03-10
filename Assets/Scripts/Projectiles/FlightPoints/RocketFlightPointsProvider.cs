@@ -12,7 +12,7 @@ namespace BattleCruisers.Projectiles.FlightPoints
 		/// <summary>
 		/// Determine rocket ascent and descent points, and set current target point as the ascent point.
 		/// 
-		/// Assumes the target does not move :)
+		/// Assumes the target does not move.
 		/// </summary>
 		public Queue<Vector2> FindFlightPoints(Vector2 sourcePosition, Vector2 targetPosition, float cruisingAltitudeInM)
 		{
@@ -38,6 +38,5 @@ namespace BattleCruisers.Projectiles.FlightPoints
 
 			return flightPoints;
 		}
-
 	}
 }
