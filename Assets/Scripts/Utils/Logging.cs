@@ -164,9 +164,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.SPAWN_DECIDER, false);
 
             // Projectiles
-            // FELIX
-            tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, true);
-            //tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
+            tagsToActiveness.Add(Tags.ACCURACY_ADJUSTERS, false);
             tagsToActiveness.Add(Tags.ANGLE_CALCULATORS, false);
             tagsToActiveness.Add(Tags.BARREL_CONTROLLER, false);
             tagsToActiveness.Add(Tags.BARREL_WRAPPER, false);
