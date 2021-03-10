@@ -10,7 +10,6 @@ namespace BattleCruisers.Utils.Localisation
         Task<ILocTable> LoadStoryTableAsync();
         Task<ILocTable> LoadTutorialTableAsync();
 
-        // FELIX  Check how much memory these take.  If decent, release (the non common ones at least :P)
         void ReleaseBattleSceneTable();
         void ReleaseCommonTable();
         void ReleaseScreensSceneTable();
