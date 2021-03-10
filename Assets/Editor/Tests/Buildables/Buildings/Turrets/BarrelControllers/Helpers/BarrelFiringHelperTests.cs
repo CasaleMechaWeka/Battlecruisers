@@ -44,6 +44,9 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _barrelController.TurretStats.Returns(_turretStats);
 
             _target = Substitute.For<ITarget>();
+
+            Vector3 projectileSpawnerPosition = new Vector3(17, 71, 171);
+            _barrelController.ProjectileSpawnerPosition.Returns(projectileSpawnerPosition);
         }
 
         [Test]
@@ -88,8 +91,18 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             float barrelAngleInDegrees = 120;
             _barrelController.BarrelAngleInDegrees.Returns(barrelAngleInDegrees);
 
+            float fireAngleInDegrees = 135;
+
+            _accuracyAdjuster.
+                FindAngleInDegrees(
+                    barrelAngleInDegrees,
+                    _barrelController.ProjectileSpawnerPosition,
+                    _notOnTargetResult.PredictedTargetPosition,
+                    _barrelController.IsSourceMirrored)
+                .Returns(fireAngleInDegrees);
+
             Assert.IsTrue(_helper.TryFire(_notOnTargetResult));
-            Expect_Fire(barrelAngleInDegrees);
+            Expect_Fire(fireAngleInDegrees);
         }
 
         [Test]
@@ -103,8 +116,18 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             float barrelAngleInDegrees = 120;
             _barrelController.BarrelAngleInDegrees.Returns(barrelAngleInDegrees);
 
+            float fireAngleInDegrees = 145;
+
+            _accuracyAdjuster.
+                FindAngleInDegrees(
+                    barrelAngleInDegrees,
+                    _barrelController.ProjectileSpawnerPosition,
+                    _notOnTargetResult.PredictedTargetPosition,
+                    _barrelController.IsSourceMirrored)
+                .Returns(fireAngleInDegrees);
+
             Assert.IsTrue(_helper.TryFire(_notOnTargetResult));
-            Expect_Fire(barrelAngleInDegrees);
+            Expect_Fire(fireAngleInDegrees);
         }
 
         [Test]
@@ -113,19 +136,16 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             _fireIntervalManager.ShouldFire.Value.Returns(true);
             _turretStats.IsInBurst.Returns(false);
 
-            Vector3 projectileSpawnerPosition = new Vector3(17, 71, 171);
-            _barrelController.ProjectileSpawnerPosition.Returns(projectileSpawnerPosition);
-
             _barrelController.IsSourceMirrored.Returns(true);
 
             float fireAngleInDegrees = 240;
 
             _accuracyAdjuster.
                 FindAngleInDegrees(
-                _onTargetResult.DesiredAngleInDegrees,
-                projectileSpawnerPosition,
-                _onTargetResult.PredictedTargetPosition,
-                _barrelController.IsSourceMirrored)
+                    _onTargetResult.DesiredAngleInDegrees,
+                    _barrelController.ProjectileSpawnerPosition,
+                    _onTargetResult.PredictedTargetPosition,
+                    _barrelController.IsSourceMirrored)
                 .Returns(fireAngleInDegrees);
 
             Assert.IsTrue(_helper.TryFire(_onTargetResult));
