@@ -74,7 +74,7 @@ namespace BattleCruisers.Data.Models
                 obj is SkirmishModel other
                 && Difficulty == other.Difficulty
                 && WasRandomPlayerCruiser == other.WasRandomPlayerCruiser
-                && PlayerCruiser == other.PlayerCruiser
+                && PlayerCruiser.SmartEquals(other.PlayerCruiser)
                 && WasRandomAICruiser == other.WasRandomAICruiser
                 && AICruiser.SmartEquals(other.AICruiser)
                 && WasRandomStrategy == other.WasRandomStrategy
