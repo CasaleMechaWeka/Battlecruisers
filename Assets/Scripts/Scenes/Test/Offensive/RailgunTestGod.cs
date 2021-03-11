@@ -6,7 +6,7 @@ using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class RailgunTestGod : TestGodBase 
 	{
