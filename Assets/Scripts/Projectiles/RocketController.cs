@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;
@@ -40,6 +41,9 @@ namespace BattleCruisers.Projectiles
 
             IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
+            // FELIX
+            //IFlightPointsProvider flightPointsProvider = 
+            //activationArgs.ProjectileStats.
 
             MovementController
                 = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(

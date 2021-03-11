@@ -3,11 +3,18 @@
 	public class FlightPointsProviderFactory : IFlightPointsProviderFactory
 	{
 		public IFlightPointsProvider RocketFlightPointsProvider { get; }
+        public IFlightPointsProvider InaccurateRocketFlightPointsProvider { get; }
 		public IFlightPointsProvider NukeFlightPointsProvider { get; }
 
-		public FlightPointsProviderFactory()
+        public FlightPointsProviderFactory()
 		{
 			RocketFlightPointsProvider = new RocketFlightPointsProvider();
+			InaccurateRocketFlightPointsProvider
+				= new InaccuratyRocketFlightPointsProvider(
+					new FlightPointStats(
+						ascendPointRadiusVariationM: 1,
+						descendPointRadiusVariationM: 2,
+						targetPointXRadiusVariationM: 4));
 			NukeFlightPointsProvider = new NukeFlightPointsProvider();
 		}
 	}
