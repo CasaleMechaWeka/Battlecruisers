@@ -9,6 +9,10 @@ namespace BattleCruisers.Targets.Factories
 {
     public class TargetProcessorFactory : ITargetProcessorFactory
     {
+        public ITargetProcessor BomberTargetProcessor { get; }
+        public ITargetProcessor OffensiveBuildableTargetProcessor { get; }
+        public ITargetProcessor IonCannonTargetProcessor { get; }
+
         public TargetProcessorFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
 		{
             Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
@@ -32,10 +36,9 @@ namespace BattleCruisers.Targets.Factories
                             new OffensiveBuildableTargetRanker())));
 
             globalTargetFinder.EmitCruiserAsGlobalTarget();
-		}
 
-        public ITargetProcessor BomberTargetProcessor { get; }
-        public ITargetProcessor OffensiveBuildableTargetProcessor { get; }
+            IonCannonTargetProcessor = new StaticTargetProcessor(enemyCruiser);
+		}
 
         public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker)
 		{
