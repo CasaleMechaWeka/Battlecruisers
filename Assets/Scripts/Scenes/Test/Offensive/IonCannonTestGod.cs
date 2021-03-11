@@ -1,40 +1,50 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Scenes.Test.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
+using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
     public class IonCannonTestGod : TestGodBase 
 	{
-        private IBuilding _target;
-        private IBuilding _railgun;
+        public TurretController ionCannon;
+        public ShipController enemyShip;
+        public NavalFactory enemyNavalFactory;
+        public TestTarget enemyCruiser;
 
         protected override List<GameObject> GetGameObjects()
         {
-            _target = FindObjectOfType<AirFactory>();
-            _railgun = FindObjectOfType<TurretController>();
+            BCUtils.Helper.AssertIsNotNull(ionCannon, enemyShip, enemyNavalFactory, enemyCruiser);
 
             return new List<GameObject>()
             {
-                _target.GameObject,
-                _railgun.GameObject
+                ionCannon.GameObject,
+                enemyShip.GameObject,
+                enemyNavalFactory.GameObject,
+                enemyCruiser.GameObject
             };
         }
 
         protected override void Setup(Helper helper)
         {
-			// Setup target
-			helper.InitialiseBuilding(_target, Faction.Reds);
-			_target.StartConstruction();
+            // Setup targets
+            helper.InitialiseUnit(enemyShip, Faction.Reds, parentCruiserDirection: Direction.Left);
+            enemyShip.StartConstruction();
 
-			// Setup railgun
-            ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject);
-			helper.InitialiseBuilding(_railgun, Faction.Blues, targetFactories: targetFactories);
-			_railgun.StartConstruction();
+            helper.InitialiseBuilding(enemyNavalFactory, Faction.Reds);
+            enemyNavalFactory.StartConstruction();
+
+            enemyCruiser.Initialise(helper.CommonStrings, Faction.Reds);
+
+			// Setup ion cannon
+            ITargetFactories targetFactories = helper.CreateTargetFactories(enemyCruiser.GameObject);
+			helper.InitialiseBuilding(ionCannon, Faction.Blues, targetFactories: targetFactories);
+			ionCannon.StartConstruction();
 		}
 	}
 }
