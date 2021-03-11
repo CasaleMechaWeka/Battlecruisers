@@ -13,7 +13,6 @@ namespace BattleCruisers.Projectiles.FlightPoints
 		private readonly IRandomGenerator _random;
 
 		// Because may miss target on the x axis, need to aim lower to hit cruiser or water
-		// FELIX Test rocket hitting water :P
 		private const float TARGET_Y_ADJUSTMENT = -5;
 
         public InaccuratyRocketFlightPointsProvider(FlightPointStats stats)
