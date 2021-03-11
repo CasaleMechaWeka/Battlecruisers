@@ -47,6 +47,7 @@ namespace BattleCruisers.Projectiles
                     maxVelocityProvider,
                     targetProvider,
                     activationArgs.ProjectileStats.CruisingAltitudeInM,
+                    // FELIX Choose depending on accuracy
                     _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
 
             _rocketTarget.GameObject.SetActive(true);
