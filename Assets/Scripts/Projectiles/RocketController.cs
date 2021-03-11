@@ -41,9 +41,10 @@ namespace BattleCruisers.Projectiles
 
             IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
-            // FELIX
-            //IFlightPointsProvider flightPointsProvider = 
-            //activationArgs.ProjectileStats.
+            IFlightPointsProvider flightPointsProvider
+                = activationArgs.ProjectileStats.IsAccurate ?
+                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
+                    _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
 
             MovementController
                 = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
@@ -51,8 +52,7 @@ namespace BattleCruisers.Projectiles
                     maxVelocityProvider,
                     targetProvider,
                     activationArgs.ProjectileStats.CruisingAltitudeInM,
-                    // FELIX Choose depending on accuracy
-                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider);
+                    flightPointsProvider);
 
             _rocketTarget.GameObject.SetActive(true);
             _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);

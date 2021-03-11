@@ -3,5 +3,6 @@
     public interface ICruisingProjectileStats : IProjectileStats
     {
         float CruisingAltitudeInM { get; }
+        bool IsAccurate { get; }
     }
 }
