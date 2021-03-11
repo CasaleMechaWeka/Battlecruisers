@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
-    public class MissileLauncherBarrelWrapper : StaticBarrelWrapper
+    public class StationaryBarrelWrapper : StaticBarrelWrapper
     {
         private float _desiredAngleInDegrees;
         protected override float DesiredAngleInDegrees => _desiredAngleInDegrees;
