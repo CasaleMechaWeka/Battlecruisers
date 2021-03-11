@@ -1,12 +1,15 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Targets.TargetProcessors
+﻿namespace BattleCruisers.Targets.TargetProcessors
 {
-    public class IonCannonTargetProcessorWrapper : MonoBehaviour
+    public class IonCannonTargetProcessorWrapper : TargetProcessorWrapper
     {
-        public ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
         {
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.IonCannonTargetProcessor;
+        }
+
+        public override void DisposeManagedState()
+        {
+            // Want no clean up, as this is shared between all ion cannos a user builds
         }
     }
 }
