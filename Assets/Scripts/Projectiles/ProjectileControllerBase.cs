@@ -31,8 +31,6 @@ namespace BattleCruisers.Projectiles
         private IPool<IExplosion, Vector3> _explosionPool;
         
         private bool _isActiveAndAlive;
-        // FELIX  Remove :)
-        protected ILocTable _commonStrings;
         protected IFactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
