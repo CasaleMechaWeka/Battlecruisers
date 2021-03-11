@@ -53,11 +53,22 @@ namespace BattleCruisers.Scenes.Test.Offensive
             helper.InitialiseBuilding(_target, Faction.Blues);
 			_target.StartConstruction();
 
-			// Setup turret
-			ITargetFilter targetFilter = new ExactMatchTargetFilter() 
-			{
-				Target = _target
-			};
+            // Setup cruiser (optional)
+            TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
+            if (fakeCruiser != null)
+            {
+                fakeCruiser.Initialise(helper.CommonStrings, Faction.Blues);
+            }
+
+            // Setup turret
+            ITargetFilter targetFilter
+                = new FactionAndTargetTypeFilter(
+                    factionToDetect: Faction.Blues,
+                    targetTypes: new List<TargetType>()
+                    {
+                        TargetType.Buildings,
+                        TargetType.Cruiser
+                    });
             ITargetFactories targetFactories = helper.CreateTargetFactories(_target.GameObject, targetFilter: targetFilter);
             IAccuracyAdjusterFactory accuracyAdjusterFactory = useRealAccuracy ? new AccuracyAdjusterFactory() : null;
 

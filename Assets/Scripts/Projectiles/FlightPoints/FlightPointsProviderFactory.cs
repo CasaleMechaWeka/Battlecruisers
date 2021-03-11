@@ -13,8 +13,8 @@
 				= new InaccuratyRocketFlightPointsProvider(
 					new FlightPointStats(
 						ascendPointRadiusVariationM: 1,
-						descendPointRadiusVariationM: 2,
-						targetPointXRadiusVariationM: 4));
+						descendPointRadiusVariationM: 4,
+						targetPointXRadiusVariationM: 10));
 			NukeFlightPointsProvider = new NukeFlightPointsProvider();
 		}
 	}
