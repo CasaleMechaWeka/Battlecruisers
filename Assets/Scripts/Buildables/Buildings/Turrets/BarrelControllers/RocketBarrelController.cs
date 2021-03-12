@@ -37,9 +37,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
 		{
-			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _rocketStats, TurretStats.BurstSize);
+
+            foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-                await rocketSpawner.InitialiseAsync(args.Parent, _rocketStats, TurretStats.BurstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser, args.SpawnerSoundKey);
+                await rocketSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, _rocketStats);
 			}
 		}
 

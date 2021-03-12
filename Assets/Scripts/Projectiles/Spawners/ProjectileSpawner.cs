@@ -24,7 +24,6 @@ namespace BattleCruisers.Projectiles.Spawners
         private IPool<TProjectile, TProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
-        // FELIX  Make generic :P
         protected IProjectileStats _projectileStats;
 		protected IFactoryProvider _factoryProvider;
         protected ICruiserSpecificFactories _cruiserSpecificFactories;

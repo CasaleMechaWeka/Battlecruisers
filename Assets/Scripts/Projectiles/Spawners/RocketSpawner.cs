@@ -1,13 +1,12 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
@@ -16,20 +15,14 @@ namespace BattleCruisers.Projectiles.Spawners
         private ICruisingProjectileStats _rocketStats;
 
         public async Task InitialiseAsync(
-            ITarget parent, 
-            ICruisingProjectileStats rocketStats, 
-            int burstSize, 
-            IFactoryProvider factoryProvider, 
-            ICruiserSpecificFactories cruiserSpecificFactories,
-            ICruiser enemyCruiser,
-            ISoundKey firingSound)
+            IProjectileSpawnerArgs args,
+            ISoundKey firingSound,
+            ICruisingProjectileStats rocketStats)
 		{
-            await 
-                base.InitialiseAsync(
-                    new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider, cruiserSpecificFactories, enemyCruiser),
-                    firingSound);
-
+            Assert.IsNotNull(rocketStats);
             _rocketStats = rocketStats;
+
+            await base.InitialiseAsync(args, firingSound);
 		}
 
 		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
