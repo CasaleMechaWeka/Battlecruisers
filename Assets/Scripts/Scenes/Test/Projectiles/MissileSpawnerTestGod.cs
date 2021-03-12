@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
@@ -51,7 +52,7 @@ namespace BattleCruisers.Scenes.Test
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.FactoryProvider);
 
-            await _missileSpawner.InitialiseAsync(spawnerArgs, firingSound: null);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile);
 
 			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
 		}
