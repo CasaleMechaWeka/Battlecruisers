@@ -13,12 +13,17 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly HashSet<ITarget> _aircraft;
         public IReadOnlyCollection<ITarget> Aircraft => _aircraft;
 
+        // FELIX  Update tests :)
+        private readonly HashSet<ITarget> _shipsAndAircraft;
+        public IReadOnlyCollection<ITarget> ShipsAndAircraft => _shipsAndAircraft;
+
         public UnitTargets(ICruiserUnitMonitor cruiserUnitMonitor)
         {
             Assert.IsNotNull(cruiserUnitMonitor);
 
             _ships = new HashSet<ITarget>();
             _aircraft = new HashSet<ITarget>();
+            _shipsAndAircraft = new HashSet<ITarget>();
 
             cruiserUnitMonitor.UnitStarted += CruiserUnitMonitor_UnitStarted;
             cruiserUnitMonitor.UnitDestroyed += CruiserUnitMonitor_UnitDestroyed;
@@ -40,6 +45,9 @@ namespace BattleCruisers.Cruisers.Construction
                     _aircraft.Add(e.StartedUnit);
                     break;
             }
+
+            Assert.IsFalse(_shipsAndAircraft.Contains(e.StartedUnit));
+            _shipsAndAircraft.Add(e.StartedUnit);
         }
 
         private void CruiserUnitMonitor_UnitDestroyed(object sender, UnitDestroyedEventArgs e)
@@ -56,6 +64,8 @@ namespace BattleCruisers.Cruisers.Construction
                     _aircraft.Remove(e.DestroyedUnit);
                     break;
             }
+
+            _shipsAndAircraft.Remove(e.DestroyedUnit);
         }
     }
 }

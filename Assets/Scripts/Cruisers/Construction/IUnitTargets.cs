@@ -14,5 +14,10 @@ namespace BattleCruisers.Cruisers.Construction
         /// All aircraft of a faction that are started and not yet destroyed.
         /// </summary>
         IReadOnlyCollection<ITarget> Aircraft { get; }
+
+        /// <summary>
+        /// All ships and aircraft of a faction that are started and not yet destroyed.
+        /// </summary>
+        IReadOnlyCollection<ITarget> ShipsAndAircraft { get; }
     }
 }
