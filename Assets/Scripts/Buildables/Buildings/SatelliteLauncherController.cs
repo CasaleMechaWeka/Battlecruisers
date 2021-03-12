@@ -31,7 +31,7 @@ namespace BattleCruisers.Buildables.Buildings
             _satellite.Activate(
                 new BuildableActivationArgs(
                     ParentCruiser,
-                    _enemyCruiser,
+                    EnemyCruiser,
                     _cruiserSpecificFactories));
 
             _satellite.StartConstruction();

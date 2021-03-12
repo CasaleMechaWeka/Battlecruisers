@@ -37,7 +37,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
                 if (aircraftController.BuildableState == BuildableState.Completed
                     && !aircraftController.IsDestroyed)
                 {
-                    aircraftController.Kamikaze(_enemyCruiser);
+                    aircraftController.Kamikaze(EnemyCruiser);
 				}
             }
         }

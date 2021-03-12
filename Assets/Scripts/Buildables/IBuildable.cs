@@ -46,6 +46,7 @@ namespace BattleCruisers.Buildables
 		IBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
         ICruiser ParentCruiser { get; }
+        ICruiser EnemyCruiser { get; }
         IHealthBar HealthBar { get; }
         string PrefabName { get; }
 

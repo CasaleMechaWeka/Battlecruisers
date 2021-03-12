@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             await base.InitialiseAsync(args);
 
 			_exactMatchTargetFilter = targetFilter;
-            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args.Parent, _projectileStats, TurretStats.BurstSize, args.FactoryProvider);
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 
             await _missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
 		}

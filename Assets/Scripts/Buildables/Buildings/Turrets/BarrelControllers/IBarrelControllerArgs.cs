@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -33,5 +34,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
         IAnimation BarrelFiringAnimation { get; }
+        ICruiser EnemyCruiser { get; }
     }
 }

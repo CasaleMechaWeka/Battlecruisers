@@ -113,8 +113,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            laser.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction);
+            laser.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

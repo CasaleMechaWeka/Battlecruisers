@@ -45,7 +45,6 @@ namespace BattleCruisers.Buildables
         private IDroneFeedback _droneFeedback;
 
         protected IUIManager _uiManager;
-        protected ICruiser _enemyCruiser;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected ITargetFactoriesProvider _targetFactories;
         protected IMovementControllerFactory _movementControllerFactory;
@@ -78,6 +77,7 @@ namespace BattleCruisers.Buildables
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
         public ICruiser ParentCruiser { get; private set; }
+        public ICruiser EnemyCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
         public string PrefabName => _parent.name;
 
@@ -291,7 +291,7 @@ namespace BattleCruisers.Buildables
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
 
-            _enemyCruiser = activationArgs.EnemyCruiser;
+            EnemyCruiser = activationArgs.EnemyCruiser;
 
             _cruiserSpecificFactories = activationArgs.CruiserSpecificFactories;
             _aircraftProvider = activationArgs.CruiserSpecificFactories.AircraftProvider;

@@ -39,7 +39,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 		{
 			foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
 			{
-                await rocketSpawner.InitialiseAsync(args.Parent, _rocketStats, TurretStats.BurstSize, args.FactoryProvider, args.SpawnerSoundKey);
+                await rocketSpawner.InitialiseAsync(args.Parent, _rocketStats, TurretStats.BurstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser, args.SpawnerSoundKey);
 			}
 		}
 

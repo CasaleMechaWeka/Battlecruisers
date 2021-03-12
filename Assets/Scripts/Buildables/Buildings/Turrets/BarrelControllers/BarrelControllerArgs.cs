@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
@@ -34,6 +35,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
         public ISoundKey SpawnerSoundKey { get; }
         public IAnimation BarrelFiringAnimation { get; }
+        public ICruiser EnemyCruiser { get; }
 
         public BarrelControllerArgs(
             IUpdater updater,
@@ -50,6 +52,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ITarget parent,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
+            ICruiser enemyCruiser,
             ISoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)
         {
@@ -67,7 +70,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 cruiserSpecificFactories,
                 parent,
                 localBoostProviders,
-                globalFireRateBoostProvider);
+                globalFireRateBoostProvider,
+                enemyCruiser);
 
             Updater = updater;
             TargetFilter = targetFilter;
@@ -83,6 +87,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Parent = parent;
             LocalBoostProviders = localBoostProviders;
             GlobalFireRateBoostProviders = globalFireRateBoostProvider;
+            EnemyCruiser = enemyCruiser;
             SpawnerSoundKey = firingSound;
             BarrelFiringAnimation = barrelFiringAnimation ?? new DummyAnimation();
         }

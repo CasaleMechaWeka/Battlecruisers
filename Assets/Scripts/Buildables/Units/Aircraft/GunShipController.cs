@@ -90,7 +90,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Faction enemyFaction = SetupTargetDetection();
 
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, enemyFaction, SoundKeys.Firing.BigCannon);
+            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
 
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
         }
@@ -98,7 +98,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private Faction SetupTargetDetection()
         {
             // Create target processor => For following enemies
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
+            Faction enemyFaction = EnemyCruiser.Faction;
 
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(

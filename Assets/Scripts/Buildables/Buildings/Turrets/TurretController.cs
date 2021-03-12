@@ -39,17 +39,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         {
             base.OnBuildableCompleted();
 
-            Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             _barrelWrapper
                 .Initialise(
-                this, 
-                _factoryProvider, 
-                _cruiserSpecificFactories, 
-                enemyFaction, 
-                FiringSound, 
-                _parentSlot.BoostProviders, 
-                TurretFireRateBoostProviders,
-                _barrelAnimation);
+                    this, 
+                    _factoryProvider, 
+                    _cruiserSpecificFactories, 
+                    FiringSound, 
+                    _parentSlot.BoostProviders, 
+                    TurretFireRateBoostProviders,
+                    _barrelAnimation);
         }
 
         protected override List<SpriteRenderer> GetInGameRenderers()

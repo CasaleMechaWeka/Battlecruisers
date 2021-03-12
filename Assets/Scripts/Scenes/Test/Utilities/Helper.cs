@@ -445,6 +445,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFactoryProvider factoryProvider = null,
             ICruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
+            ICruiser enemyCruiser = null,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             IAttackablePositionFinder attackablePositionFinder = null)
@@ -467,6 +468,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parent ?? Substitute.For<ITarget>(),
                     localBoostProviders ?? new ObservableCollection<IBoostProvider>(),
                     new ObservableCollection<IBoostProvider>(),
+                    enemyCruiser ?? Substitute.For<ICruiser>(),
                     firingSound ?? SoundKeys.Firing.BigCannon);
         }
 

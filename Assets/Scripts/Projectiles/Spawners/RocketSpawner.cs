@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -14,11 +15,18 @@ namespace BattleCruisers.Projectiles.Spawners
 	{
         private ICruisingProjectileStats _rocketStats;
 
-        public async Task InitialiseAsync(ITarget parent, ICruisingProjectileStats rocketStats, int burstSize, IFactoryProvider factoryProvider, ISoundKey firingSound)
+        public async Task InitialiseAsync(
+            ITarget parent, 
+            ICruisingProjectileStats rocketStats, 
+            int burstSize, 
+            IFactoryProvider factoryProvider, 
+            ICruiserSpecificFactories cruiserSpecificFactories,
+            ICruiser enemyCruiser,
+            ISoundKey firingSound)
 		{
             await 
                 base.InitialiseAsync(
-                    new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider),
+                    new ProjectileSpawnerArgs(parent, rocketStats, burstSize, factoryProvider, cruiserSpecificFactories, enemyCruiser),
                     firingSound);
 
             _rocketStats = rocketStats;

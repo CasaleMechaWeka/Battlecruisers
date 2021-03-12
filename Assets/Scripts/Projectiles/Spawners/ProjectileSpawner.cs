@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Stats;
@@ -23,8 +24,11 @@ namespace BattleCruisers.Projectiles.Spawners
         private IPool<TProjectile, TProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
+        // FELIX  Make generic :P
         protected IProjectileStats _projectileStats;
 		protected IFactoryProvider _factoryProvider;
+        protected ICruiserSpecificFactories _cruiserSpecificFactories;
+        protected ICruiser _enemyCruiser;
 
         protected IAudioClipWrapper _impactSound;
         public AudioClip impactSound;
@@ -37,6 +41,8 @@ namespace BattleCruisers.Projectiles.Spawners
             _parent = args.Parent;
             _projectileStats = args.ProjectileStats;
             _factoryProvider = args.FactoryProvider;
+            _cruiserSpecificFactories = args.CruiserSpecificFactories;
+            _enemyCruiser = args.EnempCruiser;
 
             IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats>>();
             Assert.IsNotNull(poolChooser);

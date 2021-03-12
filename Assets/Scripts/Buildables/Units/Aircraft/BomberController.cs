@@ -96,7 +96,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
-            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider);
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
 
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
 		}

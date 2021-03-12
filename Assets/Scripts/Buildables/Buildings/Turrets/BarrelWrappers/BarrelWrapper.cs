@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected ICruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
-        private ITarget _parent;
+        private IBuildable _parent;
 
         public Vector2 Position => transform.position;
         public IDamageCapability DamageCapability { get; private set; }
@@ -107,10 +107,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         }
 
         public void Initialise(
-            ITarget parent, 
+            IBuildable parent, 
             IFactoryProvider factoryProvider,
             ICruiserSpecificFactories cruiserSpecificFactories,
-            Faction enemyFaction,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
@@ -119,9 +118,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             Helper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
 
             _parent = parent;
+            _enemyFaction = _parent.EnemyCruiser.Faction;
             _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;
-            _enemyFaction = enemyFaction;
 
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
@@ -162,7 +161,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         private IBarrelControllerArgs CreateBarrelControllerArgs(
             IBarrelController barrel,
-            ITarget parent, 
+            IBuildable parent, 
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
             IAttackablePositionFinder attackablePositionFinder,
@@ -188,6 +187,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 parent,
                 localBoostProviders,
                 globalFireRateBoostProvider,
+                _parent.EnemyCruiser,
                 firingSound,
                 barrelFiringAnimation);
         }

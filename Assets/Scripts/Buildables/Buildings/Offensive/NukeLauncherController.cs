@@ -100,7 +100,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 		{
 			_launchedNuke = Instantiate(nukeMissilePrefab);
 
-			ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(_enemyCruiser);
+			ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise(_commonStrings, _factoryProvider);
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
                     targetFilter,
                     this,
 					_nukeImpactSound,
-                    _enemyCruiser));
+                    EnemyCruiser));
 
             // Make nuke face upwards (rotation is set in Initialise() above)
             _launchedNuke.transform.eulerAngles = new Vector3(0, 0, 90);

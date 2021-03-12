@@ -142,7 +142,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		{
             Logging.LogMethod(Tags.FACTORY);
 
-            BuildableActivationArgs activationArgs = new BuildableActivationArgs(ParentCruiser, _enemyCruiser, _cruiserSpecificFactories);
+            BuildableActivationArgs activationArgs = new BuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories);
             UnitUnderConstruction = _unitPool.GetItem(activationArgs);
 
             UnitUnderConstruction.DroneConsumerProvider = this;
