@@ -60,7 +60,7 @@ namespace BattleCruisers.Scenes.Test
 
 		private void FireMissile()
 		{
-			_missileSpawner.SpawnMissile(angleInDegrees: 45, isSourceMirrored: false, target: _target, targetFilter: _targetFilter);
+			_missileSpawner.SpawnMissile(angleInDegrees: 90, isSourceMirrored: false, target: _target, targetFilter: _targetFilter);
 		}
 	}
 }
