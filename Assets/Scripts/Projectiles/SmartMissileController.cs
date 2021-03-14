@@ -41,7 +41,7 @@ namespace BattleCruisers.Projectiles
         private IRankedTargetTracker _targetTracker;
         private ITargetProcessor _targetProcessor;
 
-        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 1;
+        private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
 
         public SpriteRenderer missile;
 

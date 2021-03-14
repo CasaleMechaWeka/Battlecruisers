@@ -65,6 +65,8 @@ namespace BattleCruisers.Projectiles
         {
             Logging.LogMethod(Tags.SHELLS);
 
+            // Dummy movement controller doesn't set velocity to 0, so need to set rigid body velocity manually.
+            _rigidBody.velocity = Vector2.zero;
             MovementController.Velocity = Vector2.zero;
             _collider.enabled = false;
             _trail.HideEffects();
