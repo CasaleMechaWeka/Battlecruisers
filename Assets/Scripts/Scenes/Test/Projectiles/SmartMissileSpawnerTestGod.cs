@@ -23,22 +23,22 @@ namespace BattleCruisers.Scenes.Test
 
 		public SmartMissileSpawner missileSpawner;
 		public SmartProjectileStats projectileStats;
-		// FELIX  Hmm..
-		//public TestTarget enemyCruiser;
-		public ShipController enemyShip;
+        public TestTarget enemyCruiserTarget;
+        public ShipController enemyShip;
 		public TestAircraftController enemyAircraft;
 		public Factory enemyFactory;
 		public List<Vector2> aircraftPatrolPoints;
 
         protected override List<GameObject> GetGameObjects()
         {
-			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, enemyFactory, missileSpawner, projectileStats);
+			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, enemyFactory, enemyCruiserTarget, missileSpawner, projectileStats);
 
             return new List<GameObject>()
             {
                 enemyAircraft.GameObject,
 				enemyShip.GameObject,
-				enemyFactory.GameObject
+				enemyFactory.GameObject,
+				enemyCruiserTarget.GameObject
             };
         }
 
@@ -70,6 +70,8 @@ namespace BattleCruisers.Scenes.Test
 
 			helper.InitialiseBuilding(enemyFactory, Faction.Reds);
 			enemyFactory.StartConstruction();
+
+			enemyCruiserTarget.Initialise(helper.CommonStrings, Faction.Reds);
         }
 
 		private void FireMissile()
