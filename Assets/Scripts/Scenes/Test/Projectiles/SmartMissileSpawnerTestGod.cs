@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;

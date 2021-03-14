@@ -174,15 +174,10 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CLOSEST_POSITION_FINDER, false);
             tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
             tagsToActiveness.Add(Tags.LASER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.MISSILE, true);
-            //tagsToActiveness.Add(Tags.MISSILE, false);
+            tagsToActiveness.Add(Tags.MISSILE, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.SMART_MISSILE, true);
-            //tagsToActiveness.Add(Tags.SMART_MISSILE, false);
-            tagsToActiveness.Add(Tags.SHELLS, true);
-            //tagsToActiveness.Add(Tags.SHELLS, false);
+            tagsToActiveness.Add(Tags.SMART_MISSILE, false);
+            tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
             tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, false);
@@ -190,9 +185,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
             tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, true);
-            //tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
+            tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.TARGET_FILTER, false);
             tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
@@ -245,9 +238,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.UNIT_MONITOR, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.UNIT_TARGETS, true);
-            //tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
+            tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
             // Effects
             tagsToActiveness.Add(Tags.CLOUDS, false);
