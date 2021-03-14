@@ -13,7 +13,6 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly HashSet<ITarget> _aircraft;
         public IReadOnlyCollection<ITarget> Aircraft => _aircraft;
 
-        // FELIX  Update tests :)
         private readonly HashSet<ITarget> _shipsAndAircraft;
         public IReadOnlyCollection<ITarget> ShipsAndAircraft => _shipsAndAircraft;
 
@@ -38,14 +37,19 @@ namespace BattleCruisers.Cruisers.Construction
                 case TargetType.Ships:
                     Assert.IsFalse(_ships.Contains(e.StartedUnit));
                     _ships.Add(e.StartedUnit);
+                    AddToShipsAndAircraft(e);
                     break;
 
                 case TargetType.Aircraft:
                     Assert.IsFalse(_aircraft.Contains(e.StartedUnit));
                     _aircraft.Add(e.StartedUnit);
+                    AddToShipsAndAircraft(e);
                     break;
             }
+        }
 
+        private void AddToShipsAndAircraft(UnitStartedEventArgs e)
+        {
             Assert.IsFalse(_shipsAndAircraft.Contains(e.StartedUnit));
             _shipsAndAircraft.Add(e.StartedUnit);
         }

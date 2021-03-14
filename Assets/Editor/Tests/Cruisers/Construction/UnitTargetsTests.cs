@@ -37,8 +37,10 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         {
             Assert.IsNotNull(_unitTargets.Ships);
             Assert.IsNotNull(_unitTargets.Aircraft);
+            Assert.IsNotNull(_unitTargets.ShipsAndAircraft);
             Assert.AreEqual(0, _unitTargets.Ships.Count);
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
 
         [Test]
@@ -47,7 +49,9 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ship));
 
             Assert.AreEqual(1, _unitTargets.Ships.Count);
+            Assert.AreEqual(1, _unitTargets.ShipsAndAircraft.Count);
             Assert.AreSame(_ship, _unitTargets.Ships.First());
+            Assert.AreSame(_ship, _unitTargets.ShipsAndAircraft.First());
         }
 
         [Test]
@@ -56,7 +60,9 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_aircraft));
 
             Assert.AreEqual(1, _unitTargets.Aircraft.Count);
+            Assert.AreEqual(1, _unitTargets.ShipsAndAircraft.Count);
             Assert.AreSame(_aircraft, _unitTargets.Aircraft.First());
+            Assert.AreSame(_aircraft, _unitTargets.ShipsAndAircraft.First());
         }
 
         [Test]
@@ -66,6 +72,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
 
             Assert.AreEqual(0, _unitTargets.Ships.Count);
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
 
         [Test]
@@ -81,6 +88,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_ship));
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_ship));
             Assert.AreEqual(0, _unitTargets.Ships.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
 
         [Test]
@@ -88,6 +96,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         {
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_ship));
             Assert.AreEqual(0, _unitTargets.Ships.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
 
         [Test]
@@ -96,6 +105,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _cruiserUnitMonitor.UnitStarted += Raise.EventWith(new UnitStartedEventArgs(_aircraft));
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_aircraft));
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
 
         [Test]
@@ -103,6 +113,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
         {
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_aircraft));
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
 
         [Test]
@@ -111,6 +122,7 @@ namespace BattleCruisers.Tests.Cruisers.Construction
             _cruiserUnitMonitor.UnitDestroyed += Raise.EventWith(new UnitDestroyedEventArgs(_building));
             Assert.AreEqual(0, _unitTargets.Aircraft.Count);
             Assert.AreEqual(0, _unitTargets.Ships.Count);
+            Assert.AreEqual(0, _unitTargets.ShipsAndAircraft.Count);
         }
     }
 }
