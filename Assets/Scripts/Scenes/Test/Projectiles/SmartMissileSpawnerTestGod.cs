@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
@@ -26,16 +27,18 @@ namespace BattleCruisers.Scenes.Test
 		//public TestTarget enemyCruiser;
 		public ShipController enemyShip;
 		public TestAircraftController enemyAircraft;
+		public Factory enemyFactory;
 		public List<Vector2> aircraftPatrolPoints;
 
         protected override List<GameObject> GetGameObjects()
         {
-			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, missileSpawner, projectileStats);
+			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, enemyFactory, missileSpawner, projectileStats);
 
             return new List<GameObject>()
             {
                 enemyAircraft.GameObject,
-				enemyShip.GameObject
+				enemyShip.GameObject,
+				enemyFactory.GameObject
             };
         }
 
@@ -64,6 +67,9 @@ namespace BattleCruisers.Scenes.Test
             helper.InitialiseUnit(enemyShip, Faction.Reds, parentCruiserDirection: Direction.Left);
             enemyShip.StartConstruction();
             Helper.SetupUnitForUnitMonitor(enemyShip, redCruiser);
+
+			helper.InitialiseBuilding(enemyFactory, Faction.Reds);
+			enemyFactory.StartConstruction();
         }
 
 		private void FireMissile()
