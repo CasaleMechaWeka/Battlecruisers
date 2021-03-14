@@ -11,6 +11,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -54,6 +55,8 @@ namespace BattleCruisers.Projectiles
             get => _target;
             set
             {
+                Logging.Log(Tags.SMART_MISSILE, $"{_target} > {value}");
+
                 bool isInitialTarget = _target == null;
 
                 if (_target != null)
@@ -115,11 +118,11 @@ namespace BattleCruisers.Projectiles
         private void SetupTargetProcessor(SmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             ITargetFilter targetFilter
-                            = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
-                                activationArgs.EnempCruiser.Faction,
-                                activationArgs.ProjectileStats.AttackCapabilities);
+                = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
+                    activationArgs.EnempCruiser.Faction,
+                    activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider
-                = activationArgs.TargetFactories.DetectorFactory.CreateEnemyAircraftTargetDetector(
+                = activationArgs.TargetFactories.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
@@ -133,6 +136,8 @@ namespace BattleCruisers.Projectiles
 
         private void ReleaseMissile()
         {
+            Logging.LogMethod(Tags.SMART_MISSILE);
+
             // Let missile keep current velocity
             MovementController = _dummyMovementController;
 
@@ -164,6 +169,8 @@ namespace BattleCruisers.Projectiles
 
         private void CleanUpTargetProcessor()
         {
+            Logging.LogMethod(Tags.SMART_MISSILE);
+
             if (_targetProcessor != null)
             {
                 _enemyDetectorProvider.DisposeManagedState();

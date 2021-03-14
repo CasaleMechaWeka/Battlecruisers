@@ -36,10 +36,11 @@ namespace BattleCruisers.Utils
         public const string FIRE_INTERVAL_MANAGER = "FireIntervalManager";
         public const string LASER = "Laser";
         public const string PROJECTILE_SPAWNER = "ProjectileSpawner";
+        public const string SMART_MISSILE = "SmartMissileController";
         public const string SHELLS = "Shells";
 
-		// Targets
-		public const string COMPOSITE_TARGET_TRACKER = "CompositeTargetTracker";
+        // Targets
+        public const string COMPOSITE_TARGET_TRACKER = "CompositeTargetTracker";
 		public const string GLOBAL_TARGET_FINDER = "GlobalTargetFinder";
 		public const string RANKED_TARGET_TRACKER = "RankedTargetTracker";
 		public const string TARGET = "Target";
@@ -131,8 +132,8 @@ namespace BattleCruisers.Utils
 	{
         //private const bool LOG_ALL = true;
         private const bool LOG_ALL = false;
-        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
-        private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
+        private const LoggingLevel LOG_LEVEL = LoggingLevel.Normal;
+        //private const LoggingLevel LOG_LEVEL = LoggingLevel.Verbose;
 
         private static Dictionary<string, bool> _tagsToActiveness;
 		private static Dictionary<string, bool> TagsToActiveness
@@ -173,6 +174,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
             tagsToActiveness.Add(Tags.LASER, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.SMART_MISSILE, true);
+            //tagsToActiveness.Add(Tags.SMART_MISSILE, false);
             tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
@@ -181,7 +185,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.RANKED_TARGET_TRACKER, false);
             tagsToActiveness.Add(Tags.TARGET, false);
             tagsToActiveness.Add(Tags.TARGET_DETECTOR, false);
-            tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, true);
+            //tagsToActiveness.Add(Tags.MANUAL_TARGET_DETECTOR, false);
             tagsToActiveness.Add(Tags.TARGET_FINDER, false);
             tagsToActiveness.Add(Tags.TARGET_FILTER, false);
             tagsToActiveness.Add(Tags.TARGET_PROCESSORS, false);
@@ -234,7 +240,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CRUISER, false);
             tagsToActiveness.Add(Tags.SLOTS, false);
             tagsToActiveness.Add(Tags.UNIT_MONITOR, false);
-            tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.UNIT_TARGETS, true);
+            //tagsToActiveness.Add(Tags.UNIT_TARGETS, false);
 
             // Effects
             tagsToActiveness.Add(Tags.CLOUDS, false);

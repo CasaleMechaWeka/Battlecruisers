@@ -35,6 +35,8 @@ namespace BattleCruisers.Targets.TargetDetectors
             _currentInRangeTargets = new HashSet<ITarget>();
             _newInRangeTargets = new HashSet<ITarget>();
             _exitedTargets = new List<ITarget>();
+
+            Logging.Log(Tags.MANUAL_TARGET_DETECTOR, $"_potentialTargets.Count: {_potentialTargets.Count}");
         }
 
         public void Detect()
@@ -56,6 +58,8 @@ namespace BattleCruisers.Targets.TargetDetectors
 
         private ISet<ITarget> FindInRangeTargets()
         {
+            Logging.Verbose(Tags.MANUAL_TARGET_DETECTOR, $"_potentialTargets.Count: {_potentialTargets.Count}");
+
             _newInRangeTargets.Clear();
 
             foreach (ITarget potentialTarget in _potentialTargets)

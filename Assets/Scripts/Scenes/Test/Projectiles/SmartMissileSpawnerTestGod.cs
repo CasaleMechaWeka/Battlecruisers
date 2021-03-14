@@ -43,18 +43,7 @@ namespace BattleCruisers.Scenes.Test
         protected override async Task SetupAsync(Helper helper)
         {
 			ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
-
-			// Setup enemies
-			enemyAircraft.PatrolPoints = aircraftPatrolPoints;
-            helper.InitialiseUnit(enemyAircraft, Faction.Reds);
-            enemyAircraft.StartConstruction();
-			Helper.SetupUnitForUnitMonitor(enemyAircraft, redCruiser);
-
-			helper.InitialiseUnit(enemyShip, Faction.Reds);
-			enemyShip.StartConstruction();
-			Helper.SetupUnitForUnitMonitor(enemyShip, redCruiser);
-
-
+			
 			// Setup missile spawner
 			_targetFilter = new FactionAndTargetTypeFilter(Faction.Reds, projectileStats.AttackCapabilities);
 
@@ -65,7 +54,18 @@ namespace BattleCruisers.Scenes.Test
 
             await missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, projectileStats);
 
-			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 0.5f);
+			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 10);
+
+			// Setup enemies
+			enemyAircraft.PatrolPoints = aircraftPatrolPoints;
+            helper.InitialiseUnit(enemyAircraft, Faction.Reds);
+            enemyAircraft.StartConstruction();
+			Helper.SetupUnitForUnitMonitor(enemyAircraft, redCruiser);
+
+			// FELIX TEMP
+			//helper.InitialiseUnit(enemyShip, Faction.Reds, parentCruiserDirection: Direction.Left);
+			//enemyShip.StartConstruction();
+			//Helper.SetupUnitForUnitMonitor(enemyShip, redCruiser);
 		}
 
 		private void FireMissile()

@@ -88,23 +88,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.OnBuildableCompleted();
 
-            Faction enemyFaction = SetupTargetDetection();
+            SetupTargetDetection();
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
 
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
         }
 
-        private Faction SetupTargetDetection()
+        private void SetupTargetDetection()
         {
             // Create target processor => For following enemies
-            Faction enemyFaction = EnemyCruiser.Faction;
-
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
                     _factoryProvider.Targets,
-                    enemyFaction,
+                    EnemyCruiser.Faction,
                     AttackCapabilities,
                     enemyFollowRangeInM,
                     parentTarget: this);
@@ -118,11 +116,10 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     Transform,
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
             _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
-            return enemyFaction;
         }
 
         private void _hoverRangeTargetTracker_TargetsChanged(object sender, EventArgs e)

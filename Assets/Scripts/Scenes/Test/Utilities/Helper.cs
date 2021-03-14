@@ -594,6 +594,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     this,
                     deferrer: Deferrer,
                     realTimeDeferrer: RealTimeDeferrer,
+                    updaterProvider: UpdaterProvider,
                     enemyCruiser: enemyCruiser);
         }
     }

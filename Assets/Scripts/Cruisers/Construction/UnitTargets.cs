@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers.Construction
 
         private void CruiserUnitMonitor_UnitStarted(object sender, UnitStartedEventArgs e)
         {
-            Logging.Log(Tags.UNIT_TARGETS, $"{e.StartedUnit}  id: {e.StartedUnit?.GameObject?.GetInstanceID()}");
+            Logging.Log(Tags.UNIT_TARGETS, $"{e.StartedUnit}");
 
             switch (e.StartedUnit.TargetType)
             {
