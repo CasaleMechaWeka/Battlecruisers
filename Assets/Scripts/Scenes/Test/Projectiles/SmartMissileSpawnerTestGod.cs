@@ -22,7 +22,6 @@ namespace BattleCruisers.Scenes.Test
 
 		public SmartMissileSpawner missileSpawner;
 		public SmartProjectileStats projectileStats;
-		public MissileController missilePrefab;
 		// FELIX  Hmm..
 		//public TestTarget enemyCruiser;
 		public ShipController enemyShip;
@@ -31,7 +30,7 @@ namespace BattleCruisers.Scenes.Test
 
         protected override List<GameObject> GetGameObjects()
         {
-			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, missileSpawner, projectileStats, missilePrefab);
+			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, missileSpawner, projectileStats);
 
             return new List<GameObject>()
             {
@@ -54,7 +53,7 @@ namespace BattleCruisers.Scenes.Test
 
             await missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, projectileStats);
 
-			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 10);
+			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 2);
 
 			// Setup enemies
 			enemyAircraft.PatrolPoints = aircraftPatrolPoints;
@@ -62,11 +61,10 @@ namespace BattleCruisers.Scenes.Test
             enemyAircraft.StartConstruction();
 			Helper.SetupUnitForUnitMonitor(enemyAircraft, redCruiser);
 
-			// FELIX TEMP
-			//helper.InitialiseUnit(enemyShip, Faction.Reds, parentCruiserDirection: Direction.Left);
-			//enemyShip.StartConstruction();
-			//Helper.SetupUnitForUnitMonitor(enemyShip, redCruiser);
-		}
+            helper.InitialiseUnit(enemyShip, Faction.Reds, parentCruiserDirection: Direction.Left);
+            enemyShip.StartConstruction();
+            Helper.SetupUnitForUnitMonitor(enemyShip, redCruiser);
+        }
 
 		private void FireMissile()
 		{

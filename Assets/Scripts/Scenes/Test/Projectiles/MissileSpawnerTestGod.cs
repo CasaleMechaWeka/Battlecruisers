@@ -19,7 +19,6 @@ namespace BattleCruisers.Scenes.Test
 		private TestAircraftController _target;
 		private IExactMatchTargetFilter _targetFilter;
 
-		public MissileController missilePrefab;
 		public List<Vector2> targetPatrolPoints;
 
         protected override List<GameObject> GetGameObjects()
