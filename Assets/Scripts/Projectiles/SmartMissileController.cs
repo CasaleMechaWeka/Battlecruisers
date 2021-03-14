@@ -26,9 +26,7 @@ namespace BattleCruisers.Projectiles
     /// 
     /// Detects nearby targets, and switches to them.
     /// 
-    /// Once a target has been detected:
-    /// + Turns off target detection
-    /// + Speeds up (FELIX  Need new movement controller :P)
+    /// Once a target has been detected turns off target detection.
     /// </summary>
     public class SmartMissileController :
         ProjectileWithTrail<SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>, 
