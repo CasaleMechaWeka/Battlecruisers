@@ -35,10 +35,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         {
             _lightningEmitter
                 .Initialise(
-                args.TargetFilter, 
-                _projectileStats.Damage, 
-                args.Parent,
-                args.FactoryProvider.SettingsManager);
+                    args.TargetFilter, 
+                    _projectileStats.Damage, 
+                    args.Parent,
+                    args.FactoryProvider.SettingsManager);
         }
 #pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
