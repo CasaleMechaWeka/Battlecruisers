@@ -166,6 +166,7 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey MissileSmall { get; } = new ProjectileKey("MissileSmall");
             public static ProjectileKey MissileMedium { get; } = new ProjectileKey("MissileMedium");
             public static ProjectileKey MissileLarge { get; } = new ProjectileKey("MissileLarge");
+            public static ProjectileKey MissileSmart { get; } = new ProjectileKey("MissileSmart");
 
             public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
             public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
@@ -178,7 +179,7 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         Bullet, ShellSmall, ShellLarge, 
-                        MissileSmall, MissileMedium, MissileLarge, 
+                        MissileSmall, MissileMedium, MissileLarge, MissileSmart,
                         Bomb, Nuke, Rocket
                     };
                 }

@@ -587,13 +587,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return droneConsumerProvider;
         }
 
-        public BuildableInitialisationArgs CreateBuildableInitialisationArgs()
+        public BuildableInitialisationArgs CreateBuildableInitialisationArgs(ICruiser enemyCruiser = null)
         {
             return
                 new BuildableInitialisationArgs(
                     this,
                     deferrer: Deferrer,
-                    realTimeDeferrer: RealTimeDeferrer);
+                    realTimeDeferrer: RealTimeDeferrer,
+                    enemyCruiser: enemyCruiser);
         }
     }
 }
