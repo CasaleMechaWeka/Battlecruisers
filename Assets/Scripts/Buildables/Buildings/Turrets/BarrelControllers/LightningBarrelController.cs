@@ -23,6 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Helper.AssertIsNotNull(_turretStats, _lightningEmitter);
         }
 
+        // FELIX  Just use base class implementation?
         protected override TurretStats SetupTurretStats()
         {
             Assert.IsNotNull(_turretStats);
