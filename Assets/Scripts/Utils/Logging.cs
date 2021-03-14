@@ -35,6 +35,7 @@ namespace BattleCruisers.Utils
         public const string CLOSEST_POSITION_FINDER = "ClosestPositionFinder";
         public const string FIRE_INTERVAL_MANAGER = "FireIntervalManager";
         public const string LASER = "Laser";
+        public const string MISSILE = "MissileController";
         public const string PROJECTILE_SPAWNER = "ProjectileSpawner";
         public const string SMART_MISSILE = "SmartMissileController";
         public const string SHELLS = "Shells";
@@ -173,11 +174,15 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.CLOSEST_POSITION_FINDER, false);
             tagsToActiveness.Add(Tags.FIRE_INTERVAL_MANAGER, false);
             tagsToActiveness.Add(Tags.LASER, false);
+            // FELIX
+            tagsToActiveness.Add(Tags.MISSILE, true);
+            //tagsToActiveness.Add(Tags.MISSILE, false);
             tagsToActiveness.Add(Tags.PROJECTILE_SPAWNER, false);
             // FELIX
             tagsToActiveness.Add(Tags.SMART_MISSILE, true);
             //tagsToActiveness.Add(Tags.SMART_MISSILE, false);
-            tagsToActiveness.Add(Tags.SHELLS, false);
+            tagsToActiveness.Add(Tags.SHELLS, true);
+            //tagsToActiveness.Add(Tags.SHELLS, false);
 
             // Targets
             tagsToActiveness.Add(Tags.COMPOSITE_TARGET_TRACKER, false);

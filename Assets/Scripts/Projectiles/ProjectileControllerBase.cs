@@ -51,16 +51,15 @@ namespace BattleCruisers.Projectiles
             get { return _movementController; }
             set
             {
-                Assert.IsNotNull(value);
-
                 if (ReferenceEquals(value, _movementController))
                 {
                     return;
                 }
 
-                if (_movementController != null)
+                if (_movementController != null
+                    && value != null)
                 {
-                    Logging.Log(Tags.SHELLS, $"Passing along current velocity to movement controller: {_movementController.Velocity}");
+                    Logging.Log(Tags.SHELLS, $"Passing along current velocity to movement controller: {_movementController.Velocity}  {_movementController} > {value}");
                     value.Velocity = _movementController.Velocity;
                 }
 

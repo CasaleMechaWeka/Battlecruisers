@@ -4,6 +4,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
@@ -35,6 +36,8 @@ namespace BattleCruisers.Projectiles
         public override void Activate(TargetProviderActivationArgs<IProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
+
+            Logging.Log(Tags.MISSILE, $"Rotation: {transform.rotation.eulerAngles}");
 
 			Target = activationArgs.Target;
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;

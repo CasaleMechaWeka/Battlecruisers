@@ -111,6 +111,8 @@ namespace BattleCruisers.Projectiles
             SetupTargetProcessor(activationArgs);
 
             missile.enabled = true;
+
+            Logging.Log(Tags.SMART_MISSILE, $"Rotation: {transform.rotation.eulerAngles}  _rigidBody.velocity: {_rigidBody.velocity}  MovementController.Velocity: {MovementController.Velocity}  activationArgs.InitialVelocityInMPerS: {activationArgs.InitialVelocityInMPerS}");
         }
 
         private void SetupTargetProcessor(SmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
