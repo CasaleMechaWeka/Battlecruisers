@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,10 +15,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         private IAnimation _barrelAnimation;
 		protected IBarrelWrapper _barrelWrapper;
 
-        public override bool IsBoostable => true;
-
         // By default have null (no) sound
         protected virtual ISoundKey FiringSound => null;
+        protected virtual bool HasSingleSprite => false;
+
+        public override bool IsBoostable => true;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
 		{
@@ -57,12 +57,19 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             return renderers;
         }
 
-        protected virtual SpriteRenderer[] GetBaseRenderers()
+        protected virtual ICollection<SpriteRenderer> GetBaseRenderers()
         {
-			GameObject turretBase = transform.Find("Base").gameObject;
-            SpriteRenderer[] turretBaseRenderers = turretBase.GetComponentsInChildren<SpriteRenderer>();
-			Assert.IsTrue(turretBaseRenderers.Length > 0);
-            return turretBaseRenderers;
+            if (HasSingleSprite)
+            {
+                return base.GetInGameRenderers();
+            }
+            else
+            {
+			    GameObject turretBase = transform.Find("Base").gameObject;
+                SpriteRenderer[] turretBaseRenderers = turretBase.GetComponentsInChildren<SpriteRenderer>();
+			    Assert.IsTrue(turretBaseRenderers.Length > 0);
+                return turretBaseRenderers;
+            }
         }
 
         protected override void OnDestroyed()
