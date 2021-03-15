@@ -1,64 +1,39 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using System.Collections.Generic;
+using NSubstitute;
 using System.Threading.Tasks;
-using UnityEngine;
-using BCUtils = BattleCruisers.Utils;
+using UnityEngine.Assertions;
 
-namespace BattleCruisers.Scenes.Test
+namespace BattleCruisers.Scenes.Test.Turrets
 {
-    public class SmartMissileSpawnerTestGod : TestGodBase
+    public class SmartMissileSpawnerTestGod : SmartMissileTestGod
 	{
-		public MissileLauncher missileLauncher;
-		public SmartProjectileStats projectileStats;
-        public TestTarget enemyCruiserTarget;
-        public ShipController enemyShip;
-		public TestAircraftController enemyAircraft;
-		public Factory enemyFactory;
-		public List<Vector2> aircraftPatrolPoints;
+		private ITargetFilter _targetFilter;
 
-        protected override List<GameObject> GetGameObjects()
+		public SmartMissileSpawner missileSpawner;
+
+        protected override async Task InitialiseMissileAsync(Helper helper, ICruiser redCruiser)
         {
-			BCUtils.Helper.AssertIsNotNull(enemyAircraft, enemyShip, enemyFactory, enemyCruiserTarget, missileLauncher, projectileStats);
+			Assert.IsNotNull(missileSpawner);
+			_targetFilter = new FactionAndTargetTypeFilter(Faction.Reds, projectileStats.AttackCapabilities);
 
-            return new List<GameObject>()
-            {
-                enemyAircraft.GameObject,
-				enemyShip.GameObject,
-				enemyFactory.GameObject,
-				enemyCruiserTarget.GameObject
-            };
-        }
+			ITarget parent = Substitute.For<ITarget>();
+			int burstSize = 1;
+			BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs(enemyCruiser: redCruiser);
+			IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, projectileStats, burstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser);
 
-        protected override async Task SetupAsync(Helper helper)
-        {
-			ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
+			await missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, projectileStats);
 
-			// Setup missile launcher
-			helper.InitialiseBuilding(missileLauncher, Faction.Blues, enemyCruiser: redCruiser);
-			missileLauncher.StartConstruction();
+			InvokeRepeating("FireMissile", time: 0.5f, repeatRate: 2);
+		}
 
-			// Setup enemies
-			enemyAircraft.PatrolPoints = aircraftPatrolPoints;
-            helper.InitialiseUnit(enemyAircraft, Faction.Reds);
-            enemyAircraft.StartConstruction();
-			Helper.SetupUnitForUnitMonitor(enemyAircraft, redCruiser);
-
-            helper.InitialiseUnit(enemyShip, Faction.Reds, parentCruiserDirection: Direction.Left);
-            enemyShip.StartConstruction();
-            Helper.SetupUnitForUnitMonitor(enemyShip, redCruiser);
-
-			helper.InitialiseBuilding(enemyFactory, Faction.Reds);
-			enemyFactory.StartConstruction();
-
-			enemyCruiserTarget.Initialise(helper.CommonStrings, Faction.Reds);
-        }
+		private void FireMissile()
+		{
+			missileSpawner.SpawnMissile(angleInDegrees: 90, isSourceMirrored: false, _targetFilter);
+		}
 	}
 }
