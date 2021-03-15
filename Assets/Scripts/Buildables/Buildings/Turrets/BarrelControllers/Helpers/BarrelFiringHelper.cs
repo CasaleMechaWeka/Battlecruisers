@@ -33,7 +33,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             {
                 Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  InBurst: {_barrelController.TurretStats.IsInBurst}  Current target: {_barrelController.CurrentTarget}  Can fire with no target: {_barrelController.CanFireWithoutTarget}  barrelAdjustmentResult.IsOnTarget: {barrelAdjustmentResult.IsOnTarget}");
 
-
                 if (_barrelController.TurretStats.IsInBurst
                     && (_barrelController.CurrentTarget != null
                         || _barrelController.CanFireWithoutTarget))
