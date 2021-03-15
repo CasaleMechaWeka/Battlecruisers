@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Projectiles.Spawners.Beams.Lightning;
+﻿using BattleCruisers.Projectiles.Spawners.Beams.Lightning;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -9,32 +8,21 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class LightningBarrelController : BarrelController
 	{
-        [SerializeField]
-        private TurretStats _turretStats;
-        [SerializeField]
-        private LightningEmitter _lightningEmitter;
+        public LightningEmitter lightningEmitter;
 
-        public override Vector3 ProjectileSpawnerPosition => _lightningEmitter.transform.position;
+        public override Vector3 ProjectileSpawnerPosition => lightningEmitter.transform.position;
         public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
 		{
             base.StaticInitialise();
-            Helper.AssertIsNotNull(_turretStats, _lightningEmitter);
-        }
-
-        // FELIX  Just use base class implementation?
-        protected override TurretStats SetupTurretStats()
-        {
-            Assert.IsNotNull(_turretStats);
-            _turretStats.Initialise();
-            return _turretStats;
+            Assert.IsNotNull(lightningEmitter);
         }
 
 #pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
         {
-            _lightningEmitter
+            lightningEmitter
                 .Initialise(
                     args.TargetFilter, 
                     _projectileStats.Damage, 
@@ -45,13 +33,13 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override void Fire(float angleInDegrees)
 		{
-			_lightningEmitter.FireBeam(angleInDegrees, transform.IsMirrored());
+			lightningEmitter.FireBeam(angleInDegrees, transform.IsMirrored());
 		}
 
         public override void CleanUp()
         {
             base.CleanUp();
-            _lightningEmitter.DisposeManagedState();
+            lightningEmitter.DisposeManagedState();
         }
     }
 }
