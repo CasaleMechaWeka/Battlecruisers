@@ -292,7 +292,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactoriesProvider targetFactoriesProvider = Substitute.For<ITargetFactoriesProvider>();
             targetFactories.TargetFactoriesProvider.Returns(targetFactoriesProvider);
             targetFinder.EmitCruiserAsGlobalTarget();
-            ITargetProcessor ionCannonTargetProcessor = new StaticTargetProcessor(dummyEnemyCruiser);
+            ITargetProcessor staticTargetProcessor = new StaticTargetProcessor(dummyEnemyCruiser);
 
             if (exactMatchTargetFilter == null)
             {
@@ -302,7 +302,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             // Processors
             targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
-            targetFactories.TargetProcessorFactory.IonCannonTargetProcessor.Returns(ionCannonTargetProcessor);
+            targetFactories.TargetProcessorFactory.StaticTargetProcessor.Returns(staticTargetProcessor);
             targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
 
             // Finders

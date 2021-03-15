@@ -7,7 +7,7 @@ namespace BattleCruisers.Targets.Factories
     {
         ITargetProcessor BomberTargetProcessor { get; }
         ITargetProcessor OffensiveBuildableTargetProcessor { get; }
-        ITargetProcessor IonCannonTargetProcessor { get; }
+        ITargetProcessor StaticTargetProcessor { get; }
         ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker);
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace BattleCruisers.Targets.TargetProcessors
 {
-    public class IonCannonTargetProcessorWrapper : TargetProcessorWrapper
+    public class StaticTargetProcessorWrapper : TargetProcessorWrapper
     {
         protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
         {
-            return args.CruiserSpecificFactories.Targets.ProcessorFactory.IonCannonTargetProcessor;
+            return args.CruiserSpecificFactories.Targets.ProcessorFactory.StaticTargetProcessor;
         }
 
         public override void DisposeManagedState()
