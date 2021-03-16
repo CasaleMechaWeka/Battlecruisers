@@ -30,7 +30,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// </summary>
         private float FindOptimalArmamentRangeInM()
         {
-            // This is the range at which an enemy mortar will be able to attack :)
             return _mortar.RangeInM + Size.x / 2 + OPTIMAL_RANGE_BUFFER_IN_M;
         }
 
