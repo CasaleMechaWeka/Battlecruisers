@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
 		protected override void OnStart()
 		{
-			TestAircraftController aircraft = (TestAircraftController)unitPrefab.Buildable;
+			TestAircraftController aircraft = (TestAircraftController)facingRightUnit.Buildable;
 			aircraft.patrolPoints = patrolPoints;
 		}
 	}
