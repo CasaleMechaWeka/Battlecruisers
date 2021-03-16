@@ -32,8 +32,8 @@ namespace BattleCruisers.Buildables.Units.Ships
     ///     Either this boat is destroyed, or the enemy, in which case this boat will continue moving.
     /// </summary>
     public abstract class ShipController : Unit, IShip
-	{
-		private int _directionMultiplier;
+    {
+        private int _directionMultiplier;
         private IList<IBarrelWrapper> _turrets;
         private ShipTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _movementTargetProcessor;
@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public abstract float OptimalArmamentRangeInM { get; }
 
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
-		private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
+        private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
@@ -75,7 +75,10 @@ namespace BattleCruisers.Buildables.Units.Ships
             _targetProcessorWrapper = transform.FindNamedComponent<ShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
         }
 
-        protected abstract IList<IBarrelWrapper> GetTurrets();
+        protected virtual IList<IBarrelWrapper> GetTurrets()
+        {
+            return new List<IBarrelWrapper>();
+        }
 
         private void FindDamageStats()
         {
@@ -124,7 +127,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         // Turrets start attacking targets as soon as they are initialised, so
         // only initialise them once the ship has been completed.
-        protected abstract void InitialiseTurrets();
+        protected virtual void InitialiseTurrets() { }
 
         protected void SetupMovement()
         {
