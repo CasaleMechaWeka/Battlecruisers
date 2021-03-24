@@ -12,6 +12,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
+    // FELIX  Add all buttons
+    // + Expand
+    // + Delete
+    // + Target
+    // + Drone focus
+    // + Repair
+
+    // FELIX  Remove buttons from all item detail prefabs :)
     public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
     {
         private RepairButtonController _repairButton;
