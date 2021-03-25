@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     // FELIX  Rename? Just has buttons?
     public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
     {
-        private RepairButtonController _repairButton;
+        public RepairButtonController repairButton;
         public ChooseTargetButtonController chooseTargetButton;
 
         public ToggleDroneButtonController toggleDronesButton;
@@ -36,8 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             set 
             {
                 toggleDronesButton.Buildable = value as IBuildable;
-                // FELIX  Fix :P
-                //_repairButton.Repairable = value;
+                repairButton.Repairable = value;
                 chooseTargetButton.Target = value;
             }
         }
@@ -53,11 +52,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ISlidingPanel informatorPanel)
         {
             Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings, informatorPanel);
-            Helper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton);
+            Helper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairManager);
 
             extendButton.Initialise(soundPlayer, informatorPanel);
             toggleDronesButton.Initialise(soundPlayer);
             chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
 
             // FELIX :D
             //_repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
