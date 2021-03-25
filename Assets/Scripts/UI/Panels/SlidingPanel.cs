@@ -20,10 +20,11 @@ namespace BattleCruisers.UI.Panels
         private float _smoothTimeinS;
         private Vector2 _targetPosition, _targetScale;
         private PanelState _targetState;
-        private PanelState TargetState
+        // FELIX  Update tests for now public getter :)
+        public PanelState TargetState
         {
             get => _targetState;
-            set
+            private set
             {
                 Assert.IsTrue(value != PanelState.Sliding);
 
