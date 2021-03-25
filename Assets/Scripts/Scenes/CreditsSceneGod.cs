@@ -9,7 +9,7 @@ namespace BattleCruisers.Scenes
     {
         private ISceneNavigator _sceneNavigator;
 
-        async void Start()
+        void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
