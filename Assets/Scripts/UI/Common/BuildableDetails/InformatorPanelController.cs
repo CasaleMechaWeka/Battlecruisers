@@ -78,5 +78,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             //Assert.IsNotNull(_cruiserDetails);
             //_cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
         }
+
+        public override void Hide()
+        {
+            base.Hide();
+            informatorPanel.Hide();
+        }
     }
 }
