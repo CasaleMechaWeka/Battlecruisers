@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
@@ -83,6 +84,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Hide();
             informatorPanel.Hide();
+        }
+
+        public void Show(ITarget item)
+        {
+            base.Show();
+
+            Assert.IsNotNull(item);
+            informatorWidgets.SelectedItem = item;
         }
     }
 }

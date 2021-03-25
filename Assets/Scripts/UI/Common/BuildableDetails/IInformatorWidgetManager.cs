@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public interface IInformatorWidgetManager
     {
-        IBuildable Buildable { set; }
+        ITarget SelectedItem { set; }
         IButton ToggleDronesButton { get; }
     }
 }

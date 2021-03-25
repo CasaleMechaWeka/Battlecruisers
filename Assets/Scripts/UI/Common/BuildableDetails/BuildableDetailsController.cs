@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.ShowItemDetails(buildable);
 
-            _buttonManager.Buildable = buildable;
+            _buttonManager.SelectedItem = buildable;
             _deleteButton.Buildable = buildable;
         }
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		{
 			if (_item != null)
 			{
-                _buttonManager.Buildable = null;
+                _buttonManager.SelectedItem = null;
                 _deleteButton.Buildable = null;
 			}
 		}

@@ -43,14 +43,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 			_buildable.ToggleDroneConsumerFocusCommand.Execute();
         }
 
-        private void UpdateVisibility()
-        {
-            gameObject.SetActive(ShowToggleDroneButton);
-        }
-
         private void ToggleDroneConsumerFocusCommand_CanExecuteChanged(object sender, EventArgs e)
         {
             UpdateVisibility();
+        }
+
+        private void UpdateVisibility()
+        {
+            gameObject.SetActive(ShowToggleDroneButton);
         }
     }
 }

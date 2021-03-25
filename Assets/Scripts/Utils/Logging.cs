@@ -202,9 +202,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.PREFAB_KEY_HELPER, false);
             tagsToActiveness.Add(Tags.PROGRESS_BARS, false);
             tagsToActiveness.Add(Tags.SKIRMISH_SCREEN, false);
-            // FELIX
-            tagsToActiveness.Add(Tags.SLIDING_PANEL, true);
-            //tagsToActiveness.Add(Tags.SLIDING_PANEL, false);
+            tagsToActiveness.Add(Tags.SLIDING_PANEL, false);
             tagsToActiveness.Add(Tags.TUTORIAL_EXPLANATION_PANEL, false);
             tagsToActiveness.Add(Tags.TUTORIAL_STEP, false);
             tagsToActiveness.Add(Tags.UI_MANAGER, false);

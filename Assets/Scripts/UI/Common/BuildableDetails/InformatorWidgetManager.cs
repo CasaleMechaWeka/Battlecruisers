@@ -9,7 +9,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
@@ -27,18 +26,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private RepairButtonController _repairButton;
         private ChooseTargetButtonController _chooseTargetButton;
 
-        private ToggleDroneButtonController _toggleDronesButton;
-        public IButton ToggleDronesButton => _toggleDronesButton;
+        public ToggleDroneButtonController toggleDronesButton;
+        public IButton ToggleDronesButton => toggleDronesButton;
 
         public ExtendInformatorButtonController extendButton;
 
-        public IBuildable Buildable
+        public ITarget SelectedItem
         {
             set 
             {
-                _toggleDronesButton.Buildable = value;
-                _repairButton.Repairable = value;
-                _chooseTargetButton.Target = value;
+                toggleDronesButton.Buildable = value as IBuildable;
+                // FELIX  Fix :P
+                //_repairButton.Repairable = value;
+                //_chooseTargetButton.Target = value;
             }
         }
 
@@ -52,9 +52,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ISlidingPanel informatorPanel)
         {
             Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings, informatorPanel);
-            Assert.IsNotNull(extendButton);
+            Helper.AssertIsNotNull(extendButton, toggleDronesButton);
 
             extendButton.Initialise(soundPlayer, informatorPanel);
+            toggleDronesButton.Initialise(soundPlayer);
 
             // FELIX :D
             //_repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);

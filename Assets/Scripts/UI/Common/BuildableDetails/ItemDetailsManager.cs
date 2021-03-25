@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideEverything();
 
-            _informatorPanel.Show();
+            _informatorPanel.Show(building);
             _buildingDetails.ShowBuildableDetails(building);
             _selectedItem.Value = building;
         }
@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideEverything();
 
-            _informatorPanel.Show();
+            _informatorPanel.Show(unit);
             _unitDetails.ShowBuildableDetails(unit);
             _selectedItem.Value = unit;
         }
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             HideEverything();
 
-            _informatorPanel.Show();
+            _informatorPanel.Show(cruiser);
             _cruiserDetails.ShowCruiserDetails(cruiser);
             _selectedItem.Value = cruiser;
         }
