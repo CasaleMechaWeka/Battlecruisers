@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.Time;
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,6 +28,7 @@ namespace BattleCruisers.UI.Panels
             private set
             {
                 Assert.IsTrue(value != PanelState.Sliding);
+                Logging.Log(Tags.SLIDING_PANEL, $"Target state: {_targetState} > {value}");
 
                 _targetState = value;
                 _state.Value = PanelState.Sliding;
@@ -62,9 +64,9 @@ namespace BattleCruisers.UI.Panels
 
         public void Initialise()
         {
-            _hiddenPosition = transform.position;
+            _hiddenPosition = transform.localPosition;
             float yDelta = transform.lossyScale.y * shownPositionYDelta;
-            _shownPosition = new Vector2(transform.position.x, transform.position.y + yDelta);
+            _shownPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + yDelta);
 
             _hiddenScale = transform.localScale;
 
@@ -73,6 +75,8 @@ namespace BattleCruisers.UI.Panels
             TargetState = PanelState.Hidden;
 
             _isInitialised = true;
+
+            Logging.Log(Tags.SLIDING_PANEL, $"{this}  Hidden position: {_hiddenPosition}  Scale: {_hiddenScale}  Shown position: {_shownPosition}  Scale: {shownScale}");
         }
 
         void Update()
@@ -96,14 +100,14 @@ namespace BattleCruisers.UI.Panels
         private bool AdjustPosition()
         {
             if (_positionDone
-                || Vector2.Distance(transform.position, _targetPosition) <= positionEqualityMarginInPixels)
+                || Vector2.Distance(transform.localPosition, _targetPosition) <= positionEqualityMarginInPixels)
             {
                 return true;
             }
 
-            transform.position
+            transform.localPosition
                 = Vector2.SmoothDamp(
-                    transform.position,
+                    transform.localPosition,
                     _targetPosition,
                     ref _slidePositionVelocity,
                     _smoothTimeinS,
@@ -134,11 +138,13 @@ namespace BattleCruisers.UI.Panels
 
         public override void Show()
         {
+            Logging.LogMethod(Tags.SLIDING_PANEL);
             TargetState = PanelState.Shown;
         }
 
         public override void Hide()
         {
+            Logging.LogMethod(Tags.SLIDING_PANEL);
             TargetState = PanelState.Hidden;
         }
     }
