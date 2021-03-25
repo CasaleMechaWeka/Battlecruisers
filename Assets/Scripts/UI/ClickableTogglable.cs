@@ -10,12 +10,15 @@ namespace BattleCruisers.UI
         IPointerUpHandler,
         IPointerEnterHandler,
         IPointerExitHandler,
-        IClickableEmitter
+        IClickableEmitter,
+        IPointerUpDownEmitter
     {
         private bool _isPressed = false;
         private bool _isHover = false;
 
         public event EventHandler Clicked;
+        public event EventHandler PointerDown;
+        public event EventHandler PointerUp;
 
         protected virtual bool ShowPressedFeedback => true;
         protected virtual bool ShowHoverFeedback => true;
@@ -40,6 +43,8 @@ namespace BattleCruisers.UI
             {
                 ShowClickedState();
             }
+
+            PointerDown?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void OnPointerUp(PointerEventData eventData)
@@ -59,6 +64,8 @@ namespace BattleCruisers.UI
                     ShowEnabledState();
                 }
             }
+
+            PointerUp?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void OnPointerEnter(PointerEventData eventData)
