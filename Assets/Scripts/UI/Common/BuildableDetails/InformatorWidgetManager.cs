@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
     {
         private RepairButtonController _repairButton;
-        private ChooseTargetButtonController _chooseTargetButton;
+        public ChooseTargetButtonController chooseTargetButton;
 
         public ToggleDroneButtonController toggleDronesButton;
         public IButton ToggleDronesButton => toggleDronesButton;
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 toggleDronesButton.Buildable = value as IBuildable;
                 // FELIX  Fix :P
                 //_repairButton.Repairable = value;
-                //_chooseTargetButton.Target = value;
+                chooseTargetButton.Target = value;
             }
         }
 
@@ -48,14 +48,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
             ISingleSoundPlayer soundPlayer,
+            // FELIX  Remove?
             ILocTable commonStrings,
             ISlidingPanel informatorPanel)
         {
             Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings, informatorPanel);
-            Helper.AssertIsNotNull(extendButton, toggleDronesButton);
+            Helper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton);
 
             extendButton.Initialise(soundPlayer, informatorPanel);
             toggleDronesButton.Initialise(soundPlayer);
+            chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
 
             // FELIX :D
             //_repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);

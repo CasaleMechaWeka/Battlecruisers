@@ -29,13 +29,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
 
-            _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
-            Assert.IsNotNull(_repairButton);
-            _repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
+            // FELIX  Remove all buttons :)
+            //_repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
+            //Assert.IsNotNull(_repairButton);
+            //_repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
 
-            _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
-            Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter, commonStrings);
+            //_chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
+            //Assert.IsNotNull(_chooseTargetButton);
+            //_chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter, commonStrings);
         }
 
         protected override StatsController<ICruiser> GetStatsController()

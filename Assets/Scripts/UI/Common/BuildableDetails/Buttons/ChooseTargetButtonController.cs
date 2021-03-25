@@ -10,10 +10,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
     public class ChooseTargetButtonController : CanvasGroupButton, IButton
     {
-        private Text _buttonText;
         private IUserChosenTargetHelper _userChosenTargetHelper;
         private IFilter<ITarget> _buttonVisibilityFilter;
-        private string _targetText, _untargetText;
+
+        public Image activeFeedback;
 
         private ITarget _target;
         public ITarget Target
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
                 _target = value;
 
                 gameObject.SetActive(ShowButton);
-                UpdateButtonText();
+                UpdateActiveFeedback();
             }
         }
 
@@ -33,23 +33,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         public void Initialise(
             ISingleSoundPlayer soundPlayer, 
             IUserChosenTargetHelper userChosenTargetHelper, 
-            IFilter<ITarget> buttonVisibilityFilter,
-            ILocTable commonStrings)
+            IFilter<ITarget> buttonVisibilityFilter)
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter, commonStrings);
+            Helper.AssertIsNotNull(userChosenTargetHelper, buttonVisibilityFilter);
+            Assert.IsNotNull(activeFeedback);
 
             _userChosenTargetHelper = userChosenTargetHelper;
             _buttonVisibilityFilter = buttonVisibilityFilter;
 
-            _userChosenTargetHelper.UserChosenTargetChanged += (sender, e) => UpdateButtonText();
-
-            _buttonText = GetComponentInChildren<Text>();
-            Assert.IsNotNull(_buttonText);
-
-            _targetText = commonStrings.GetString("UI/Informator/TargetButton");
-            _untargetText = commonStrings.GetString("UI/Informator/UntargetButton");
+            _userChosenTargetHelper.UserChosenTargetChanged += (sender, e) => UpdateActiveFeedback();
         }
 
         protected override void OnClicked()
@@ -58,9 +52,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             _userChosenTargetHelper.ToggleChosenTarget(_target);
         }
 
-        private void UpdateButtonText()
+        private void UpdateActiveFeedback()
         {
-            _buttonText.text = ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget) ? _untargetText : _targetText;
+            activeFeedback.gameObject.SetActive(IsUserChosenTarget());
+        }
+
+        private bool IsUserChosenTarget()
+        {
+            return ReferenceEquals(_target, _userChosenTargetHelper.UserChosenTarget);
         }
     }
 }
