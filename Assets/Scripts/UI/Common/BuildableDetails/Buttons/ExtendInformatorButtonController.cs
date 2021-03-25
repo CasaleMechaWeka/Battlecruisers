@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 {
     // FELIX  Hide for tutorial?
-    public class ShowDetailsButtonController : CanvasGroupButton, IButton
+    public class ExtendInformatorButtonController : CanvasGroupButton, IButton
     {
         private ISlidingPanel _informatorPanel;
 
