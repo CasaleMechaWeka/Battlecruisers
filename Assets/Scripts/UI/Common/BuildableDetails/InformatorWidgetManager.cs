@@ -4,6 +4,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
+using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -20,6 +21,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     // + Repair
 
     // FELIX  Remove buttons from all item detail prefabs :)
+    // FELIX  Rename? Just has buttons?
     public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
     {
         private RepairButtonController _repairButton;
@@ -27,6 +29,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private ToggleDroneButtonController _toggleDronesButton;
         public IButton ToggleDronesButton => _toggleDronesButton;
+
+        public ExtendInformatorButtonController extendButton;
 
         public IBuildable Buildable
         {
@@ -44,21 +48,26 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
             ISingleSoundPlayer soundPlayer,
-            ILocTable commonStrings)
+            ILocTable commonStrings,
+            ISlidingPanel informatorPanel)
         {
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings, informatorPanel);
+            Assert.IsNotNull(extendButton);
 
-            _repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
-            Assert.IsNotNull(_repairButton);
-            _repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
+            extendButton.Initialise(soundPlayer, informatorPanel);
 
-            _toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
-            Assert.IsNotNull(_toggleDronesButton);
-            _toggleDronesButton.Initialise(soundPlayer);
+            // FELIX :D
+            //_repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
+            //Assert.IsNotNull(_repairButton);
+            //_repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
 
-            _chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
-            Assert.IsNotNull(_chooseTargetButton);
-            _chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter, commonStrings);
+            //_toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
+            //Assert.IsNotNull(_toggleDronesButton);
+            //_toggleDronesButton.Initialise(soundPlayer);
+
+            //_chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
+            //Assert.IsNotNull(_chooseTargetButton);
+            //_chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter, commonStrings);
         }
     }
 }

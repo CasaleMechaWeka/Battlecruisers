@@ -27,13 +27,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         {
             base.OnClicked();
 
-            if (_informatorPanel.TargetState == PanelState.Shown)
+            if (_informatorPanel.TargetState == PanelState.Hidden)
             {
-                _informatorPanel.Hide();
+                _informatorPanel.Show();
+                activeFeedback.gameObject.SetActive(true);
             }
             else
             {
-                _informatorPanel.Show();
+                _informatorPanel.Hide();
+                activeFeedback.gameObject.SetActive(false);
             }
         }
     }

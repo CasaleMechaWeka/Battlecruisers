@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -15,6 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
+    // FELIX  Rename to Parent?
     public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
         private DismissInformatorButtonController _dismissButton;
@@ -32,6 +35,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public ICruiserDetails CruiserDetails { get; private set; }
         //public ICruiserDetails CruiserDetails => _cruiserDetails;
 
+        public SlidingPanel informatorPanel;
+        public InformatorWidgetManager informatorWidgets;
+
         public void Initialise(
             IUIManager uiManager,
             ICruiser playerCruiser,
@@ -42,6 +48,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
             Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
+            Helper.AssertIsNotNull(informatorPanel, informatorWidgets);
+
+            informatorPanel.Initialise();
+            informatorWidgets.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings, informatorPanel);
 
             // FELIX  TEMP :P
             BuildingDetails = Substitute.For<IBuildableDetails<IBuilding>>();
