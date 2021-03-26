@@ -43,6 +43,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             Assert.IsNotNull(_buttonImage);
         }
 
+        // FELIX  If building is not started => Handle click
+        // Otherwise, handle long press
         protected override void OnClicked()
         {
             base.OnClicked();

@@ -1,0 +1,85 @@
+﻿using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System;
+
+// FELIX  use, test
+// FELIX  Tidy up namespace?
+namespace BattleCruisers.UI
+{
+    // FELIX  Move to interface
+    // FELIX  Remove?
+    //public class LongPressEventArgs : EventArgs
+    //{
+    //    public int IntervalNumber { get; }
+    //    public LongPressEventArgs(int intervalNumber)
+    //    {
+    //        IntervalNumber = intervalNumber;
+    //    }
+    //}
+
+    public class LongPressIdentifier : ILongPressIdentifier
+    {
+        private readonly IPointerUpDownEmitter _button;
+        private readonly ITime _time;
+        private readonly IUpdater _updater;
+        private readonly float _intervalLengthS;
+        private float _longPressDurationS;
+
+        public int IntervalNumber { get; private set; }
+
+        public event EventHandler LongPressStart;
+        public event EventHandler LongPressEnd;
+        public event EventHandler LongPressInterval;
+        // FELIX  Remove
+        //event EventHandler<LongPressEventArgs> LongPressInterval;
+
+        public LongPressIdentifier(
+            IPointerUpDownEmitter button,
+            ITime time,
+            IUpdater updater,
+            float intervalLengthMS)
+        {
+            Helper.AssertIsNotNull(button, time, updater);
+
+            _button = button;
+            _time = time;
+            _updater = updater;
+            _intervalLengthS = intervalLengthMS;
+
+            IntervalNumber = 0;
+
+            _button.PointerDown += _button_PointerDown;
+            _button.PointerUp += _button_PointerUp;
+        }
+
+        private void _button_PointerDown(object sender, EventArgs e)
+        {
+            _longPressDurationS = 0;
+            IntervalNumber = 0;
+
+            _updater.Updated += _updater_Updated;
+
+            LongPressStart?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void _button_PointerUp(object sender, EventArgs e)
+        {
+            _updater.Updated -= _updater_Updated;
+            LongPressEnd?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void _updater_Updated(object sender, EventArgs e)
+        {
+            _longPressDurationS += _time.UnscaledDeltaTime;
+
+            int newIntervalNum = (int)(_longPressDurationS / _intervalLengthS);
+
+            if (newIntervalNum != IntervalNumber)
+            {
+                IntervalNumber = newIntervalNum;
+                LongPressInterval?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
+}
