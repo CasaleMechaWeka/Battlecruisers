@@ -3,7 +3,7 @@ using BattleCruisers.UI.Common.BuildableDetails.Stats;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class UnitDetailsController : BuildableDetailsController<IUnit>
+    public class UnitDetailsController : ItemDetails<IUnit>
     {
         protected override StatsController<IUnit> GetStatsController()
         {

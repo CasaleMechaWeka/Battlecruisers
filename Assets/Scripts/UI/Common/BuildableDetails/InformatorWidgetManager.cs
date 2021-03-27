@@ -9,18 +9,10 @@ using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // FELIX  Add all buttons
-    // + Expand
-    // + Delete
-    // + Target
-    // + Drone focus
-    // + Repair
-
     // FELIX  Remove buttons from all item detail prefabs :)
     // FELIX  Rename? Just has buttons?
     public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
@@ -36,7 +28,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public ITarget SelectedItem
         {
-            set 
+            set
             {
                 repairButton.Repairable = value;
                 chooseTargetButton.Target = value;
@@ -49,18 +41,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
 
         public void Initialise(
-            IDroneFocuser droneFocuser, 
-            IRepairManager repairManager, 
+            IDroneFocuser droneFocuser,
+            IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
             ISingleSoundPlayer soundPlayer,
-            // FELIX  Remove?
-            ILocTable commonStrings,
             ISlidingPanel informatorPanel,
             IUpdater updater,
             IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings, informatorPanel, updater, uiManager);
+            Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, informatorPanel, updater, uiManager);
             Helper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);
 
             extendButton.Initialise(soundPlayer, informatorPanel);
@@ -68,19 +58,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
             repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
             deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
-
-            // FELIX :D
-            //_repairButton = GetComponentInChildren<RepairButtonController>(includeInactive: true);
-            //Assert.IsNotNull(_repairButton);
-            //_repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
-
-            //_toggleDronesButton = GetComponentInChildren<ToggleDroneButtonController>(includeInactive: true);
-            //Assert.IsNotNull(_toggleDronesButton);
-            //_toggleDronesButton.Initialise(soundPlayer);
-
-            //_chooseTargetButton = GetComponentInChildren<ChooseTargetButtonController>(includeInactive: true);
-            //Assert.IsNotNull(_chooseTargetButton);
-            //_chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter, commonStrings);
         }
     }
 }

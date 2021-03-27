@@ -10,6 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         IBuildableDetails<IBuilding> BuildingDetails { get; }
         IBuildableDetails<IUnit> UnitDetails { get; }
         ICruiserDetails CruiserDetails { get; }
+        IInformatorWidgetManager Widgets { get; }
 
         void Show(ITarget item);
     }

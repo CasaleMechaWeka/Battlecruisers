@@ -38,7 +38,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         //public ICruiserDetails CruiserDetails => _cruiserDetails;
 
         public SlidingPanel informatorPanel;
+
         public InformatorWidgetManager informatorWidgets;
+        public IInformatorWidgetManager Widgets { get; }
 
         public void Initialise(
             IUIManager uiManager,
@@ -46,6 +48,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters visibilityFilters,
             ISingleSoundPlayer soundPlayer,
+            // FELIX  Remove? (After implementing item details :) )
             ILocTable commonStrings)
         {
             base.Initialise();
@@ -60,7 +63,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     userChosenTargetHelper, 
                     visibilityFilters, 
                     soundPlayer, 
-                    commonStrings, 
                     informatorPanel,
                     playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
                     uiManager);
