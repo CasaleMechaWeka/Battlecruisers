@@ -58,14 +58,24 @@ namespace BattleCruisers.UI.Panels
         public float hideSmoothTimeInS = 0.2f;
         public float positionEqualityMarginInPixels = 2;
 
+        public bool ignoreLocalScale = false;
         public bool changeScale = false;
         public Vector2 shownScale = new Vector2(1, 1);
         public float scaleEqualityMargin = 0.005f;
 
         public void Initialise()
         {
+            if (ignoreLocalScale)
+            {
+                Assert.IsFalse(changeScale);
+            }
+
             _hiddenPosition = transform.localPosition;
-            float yDelta = transform.lossyScale.y * shownPositionYDelta;
+            float yDelta = shownPositionYDelta;
+            if (!ignoreLocalScale)
+            {
+                yDelta *= transform.lossyScale.y;
+            }
             _shownPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + yDelta);
 
             _hiddenScale = transform.localScale;
