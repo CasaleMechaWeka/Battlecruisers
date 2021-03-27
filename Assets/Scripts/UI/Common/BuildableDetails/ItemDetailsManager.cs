@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void ShowDetails(IBuilding building)
         {
-            HideEverything();
+            HideInformatorContent();
 
             _informatorPanel.Show(building);
             _buildingDetails.ShowItemDetails(building);
@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void ShowDetails(IUnit unit)
         {
-            HideEverything();
+            HideInformatorContent();
 
             _informatorPanel.Show(unit);
             _unitDetails.ShowItemDetails(unit);
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void ShowDetails(ICruiser cruiser)
         {
-            HideEverything();
+            HideInformatorContent();
 
             _informatorPanel.Show(cruiser);
             _cruiserDetails.ShowItemDetails(cruiser);
@@ -62,6 +62,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             HideInformator();
         }
 
+        // FELIX  Remove
         private void HideEverything()
         {
             HideInformator();

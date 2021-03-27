@@ -106,7 +106,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
-            HideItemDetails();
             _detailsManager.ShowDetails(building);
             ShownItem = building;
         }
@@ -126,7 +125,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
-            HideItemDetails();
             _detailsManager.ShowDetails(unit);
             ShownItem = unit;
         }
@@ -135,7 +133,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
         {
             Logging.LogMethod(Tags.UI_MANAGER);
 
-            HideItemDetails();
             _detailsManager.ShowDetails(cruiser);
             ShownItem = cruiser;
         }

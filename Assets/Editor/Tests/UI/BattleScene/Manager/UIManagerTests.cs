@@ -130,7 +130,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void SelectBuilding()
         {
             _uiManager.SelectBuilding(_building);
-            Received_HideItemDetails();
             _detailsManager.Received().ShowDetails(_building);
         }
 
@@ -176,8 +175,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void ShowUnitDetails()
         {
             _uiManager.ShowUnitDetails(_unit);
-
-            Received_HideItemDetails();
             _detailsManager.Received().ShowDetails(_unit);
         }
 
@@ -197,8 +194,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void ShowCruiserDetails()
         {
             _uiManager.ShowCruiserDetails(_playerCruiser);
-
-            Received_HideItemDetails();
             _detailsManager.Received().ShowDetails(_playerCruiser);
         }
 
