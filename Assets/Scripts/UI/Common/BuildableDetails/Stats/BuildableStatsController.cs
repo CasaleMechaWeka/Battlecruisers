@@ -5,6 +5,8 @@ using BattleCruisers.Utils.Categorisation;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
+    // FELIX  Avoid duplacite code with compact versions. Handle once we have the 
+    // loadout and loot screen informator designs.
     public abstract class BuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
 	{
         private StatsRowNumberController _dronesRow, _buildTimeRow;
