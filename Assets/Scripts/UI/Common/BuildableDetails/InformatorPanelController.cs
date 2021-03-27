@@ -15,7 +15,6 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
     // FELIX  Rename to Parent?
-    // FELIX  Delete informato button prefabs, only used in one place :)
     public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
         public DismissInformatorButtonController dismissButton;
