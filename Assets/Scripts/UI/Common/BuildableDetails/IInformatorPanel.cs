@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers;
 using BattleCruisers.UI.Panels;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -9,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         IComparableItemDetails<IBuilding> BuildingDetails { get; }
         IComparableItemDetails<IUnit> UnitDetails { get; }
-        ICruiserDetails CruiserDetails { get; }
+        IComparableItemDetails<ICruiser> CruiserDetails { get; }
         IInformatorWidgetManager Widgets { get; }
 
         void Show(ITarget item);

@@ -1,19 +1,15 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
-using NSubstitute;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -22,6 +18,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     // FELIX  Delete informato button prefabs, only used in one place :)
     public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
+        // FELIX
         private DismissInformatorButtonController _dismissButton;
 
         public BuildingDetailsController buildingDetails;
@@ -30,15 +27,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public UnitDetailsController unitDetails;
         public IComparableItemDetails<IUnit> UnitDetails => unitDetails;
 
-        // FELIX
-        private CruiserDetailsController _cruiserDetails;
-        public ICruiserDetails CruiserDetails { get; private set; }
-        //public ICruiserDetails CruiserDetails => _cruiserDetails;
+        public CruiserDetailsController cruiserDetails;
+        public IComparableItemDetails<ICruiser> CruiserDetails => cruiserDetails;
 
         public SlidingPanel informatorPanel;
 
         public InformatorWidgetManager informatorWidgets;
-        public IInformatorWidgetManager Widgets { get; }
+        public IInformatorWidgetManager Widgets => informatorWidgets;
 
         public void Initialise(
             IUIManager uiManager,
@@ -51,7 +46,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
             Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
-            Helper.AssertIsNotNull(informatorPanel, informatorWidgets, buildingDetails, unitDetails);
+            Helper.AssertIsNotNull(informatorPanel, informatorWidgets, buildingDetails, unitDetails, cruiserDetails);
 
             informatorPanel.Initialise();
             informatorWidgets
@@ -67,30 +62,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             buildingDetails.Initialise();
             unitDetails.Initialise();
+            cruiserDetails.Initialise();
 
             // FELIX  TEMP :P
-            CruiserDetails = Substitute.For<ICruiserDetails>();
-
             //// Dismiss button
             //_dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
             //Assert.IsNotNull(_dismissButton);
             //_dismissButton.Initialise(soundPlayer, uiManager, new StaticBroadcastingFilter(isMatch: true), visibilityFilters.HelpLabelsVisibilityFilter);
-
-            //// Building details
-            //_buildingDetails = GetComponentInChildren<BuildingDetailsController>(includeInactive: true);
-            //Assert.IsNotNull(_buildingDetails);
-            //_buildingDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
-
-            //// Unit details
-            //_unitDetails = GetComponentInChildren<UnitDetailsController>(includeInactive: true);
-            //Assert.IsNotNull(_unitDetails);
-            //_unitDetails.Initialise(uiManager, playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
-
-            //// Cruiser details
-            //_cruiserDetails = GetComponentInChildren<CruiserDetailsController>(includeInactive: true);
-            //Assert.IsNotNull(_cruiserDetails);
-            //_cruiserDetails.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
-        }
+       }
 
         public override void Hide()
         {

@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly IInformatorPanel _informatorPanel;
         private readonly IComparableItemDetails<IBuilding> _buildingDetails;
         private readonly IComparableItemDetails<IUnit> _unitDetails;
-        private readonly ICruiserDetails _cruiserDetails;
+        private readonly IComparableItemDetails<ICruiser> _cruiserDetails;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             HideEverything();
 
             _informatorPanel.Show(cruiser);
-            _cruiserDetails.ShowCruiserDetails(cruiser);
+            _cruiserDetails.ShowItemDetails(cruiser);
             _selectedItem.Value = cruiser;
         }
 		

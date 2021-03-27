@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         protected override StatsController<ICruiser> GetStatsController()
         {
-            return GetComponentInChildren<CruiserStatsController>();
+            return GetComponentInChildren<CruiserCompactStatsController>();
         }
     }
 }
