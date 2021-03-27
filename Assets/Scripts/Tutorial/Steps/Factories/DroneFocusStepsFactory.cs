@@ -135,7 +135,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
                         string.Format(clickBuildersButtonBase, buttonText),
-                        _rightPanelComponents.InformatorPanel.Widgets.ToggleDronesButton)));
+                        _rightPanelComponents.InformatorPanel.Buttons.ToggleDronesButton)));
 
             // Encourage user to experiment
             string switchBuildFocusBase = _tutorialStrings.GetString("Steps/DroneFocus/SwitchBuilderFocus");

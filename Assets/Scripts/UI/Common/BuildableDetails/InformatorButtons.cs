@@ -13,8 +13,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // FELIX  Rename? Just has buttons?
-    public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
+    public class InformatorButtons : MonoBehaviour, IInformatorButtons
     {
         public RepairButtonController repairButton;
         public ChooseTargetButtonController chooseTargetButton;

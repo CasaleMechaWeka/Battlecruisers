@@ -29,8 +29,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public SlidingPanel informatorPanelExtended;
 
-        public InformatorWidgetManager informatorWidgets;
-        public IInformatorWidgetManager Widgets => informatorWidgets;
+        public InformatorButtons buttons;
+        public IInformatorButtons Buttons => buttons;
 
         public void Initialise(
             IUIManager uiManager,
@@ -41,10 +41,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
             Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);
-            Helper.AssertIsNotNull(informatorPanelExtended, informatorWidgets, buildingDetails, unitDetails, cruiserDetails);
+            Helper.AssertIsNotNull(informatorPanelExtended, buttons, buildingDetails, unitDetails, cruiserDetails);
 
             informatorPanelExtended.Initialise();
-            informatorWidgets
+            buttons
                 .Initialise(
                     playerCruiser.DroneFocuser, 
                     playerCruiser.RepairManager, 
@@ -72,7 +72,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             base.Show();
 
             Assert.IsNotNull(item);
-            informatorWidgets.SelectedItem = item;
+            buttons.SelectedItem = item;
         }
     }
 }
