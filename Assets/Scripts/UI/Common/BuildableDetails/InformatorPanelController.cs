@@ -24,11 +24,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         private DismissInformatorButtonController _dismissButton;
 
-        // FELIX
-        private BuildingDetailsController _buildingDetails;
-        public IBuildableDetails<IBuilding> BuildingDetails { get; private set; }
-        //public IBuildableDetails<IBuilding> BuildingDetails => _buildingDetails;
+        public BuildingDetailsController buildingDetails;
+        public IComparableItemDetails<IBuilding> BuildingDetails => buildingDetails;
 
+        // FELIX
         private UnitDetailsController _unitDetails;
         public IBuildableDetails<IUnit> UnitDetails { get; private set; }
         //public IBuildableDetails<IUnit> UnitDetails => _unitDetails;
@@ -53,7 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
             Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
-            Helper.AssertIsNotNull(informatorPanel, informatorWidgets);
+            Helper.AssertIsNotNull(informatorPanel, informatorWidgets, buildingDetails);
 
             informatorPanel.Initialise();
             informatorWidgets
@@ -67,8 +66,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
                     uiManager);
 
+            buildingDetails.Initialise();
+
             // FELIX  TEMP :P
-            BuildingDetails = Substitute.For<IBuildableDetails<IBuilding>>();
             UnitDetails = Substitute.For<IBuildableDetails<IUnit>>();
             CruiserDetails = Substitute.For<ICruiserDetails>();
 

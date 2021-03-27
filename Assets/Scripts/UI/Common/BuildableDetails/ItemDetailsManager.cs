@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public class ItemDetailsManager : IItemDetailsManager
     {
         private readonly IInformatorPanel _informatorPanel;
-        private readonly IBuildableDetails<IBuilding> _buildingDetails;
+        private readonly IComparableItemDetails<IBuilding> _buildingDetails;
         private readonly IBuildableDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
 
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             HideEverything();
 
             _informatorPanel.Show(building);
-            _buildingDetails.ShowBuildableDetails(building);
+            _buildingDetails.ShowItemDetails(building);
             _selectedItem.Value = building;
         }
 

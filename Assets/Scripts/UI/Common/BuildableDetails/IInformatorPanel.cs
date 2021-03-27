@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public interface IInformatorPanel : ISlidingPanel
     {
-        IBuildableDetails<IBuilding> BuildingDetails { get; }
+        IComparableItemDetails<IBuilding> BuildingDetails { get; }
         IBuildableDetails<IUnit> UnitDetails { get; }
         ICruiserDetails CruiserDetails { get; }
         IInformatorWidgetManager Widgets { get; }
