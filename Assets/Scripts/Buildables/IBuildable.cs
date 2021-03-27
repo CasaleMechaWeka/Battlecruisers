@@ -16,19 +16,19 @@ using UnityEngine;
 namespace BattleCruisers.Buildables
 {
     public enum BuildableState
-	{
-		NotStarted, InProgress, Paused, Completed
-	}
+    {
+        NotStarted, InProgress, Paused, Completed
+    }
 
-	public class BuildProgressEventArgs : EventArgs
-	{
-		public IBuildable Buildable { get; }
+    public class BuildProgressEventArgs : EventArgs
+    {
+        public IBuildable Buildable { get; }
 
-		public BuildProgressEventArgs(IBuildable buildable)
-		{
-			Buildable = buildable;
-		}
-	}
+        public BuildProgressEventArgs(IBuildable buildable)
+        {
+            Buildable = buildable;
+        }
+    }
 
     public interface IBuildable : ITarget, IComparableItem, IClickableEmitter
     {
@@ -37,13 +37,13 @@ namespace BattleCruisers.Buildables
         /// </summary>
         float BuildProgress { get; }
         BuildableState BuildableState { get; }
-		int NumOfDronesRequired { get; }
-		float BuildTimeInS { get; }
-		IDroneConsumer DroneConsumer { get; }
+        int NumOfDronesRequired { get; }
+        float BuildTimeInS { get; }
+        IDroneConsumer DroneConsumer { get; }
         ICommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
-		IBoostable BuildProgressBoostable { get; }
+        IBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
         ICruiser ParentCruiser { get; }
         ICruiser EnemyCruiser { get; }
@@ -51,16 +51,12 @@ namespace BattleCruisers.Buildables
         string PrefabName { get; }
 
         event EventHandler StartedConstruction;
-		event EventHandler CompletedBuildable;
-		event EventHandler<BuildProgressEventArgs> BuildableProgress;
+        event EventHandler CompletedBuildable;
+        event EventHandler<BuildProgressEventArgs> BuildableProgress;
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings);
         void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider);
         void StartConstruction();
-
-        // FELIX  Remove both?
-        void InitiateDelete();
-        void CancelDelete();
-	}
+    }
 }

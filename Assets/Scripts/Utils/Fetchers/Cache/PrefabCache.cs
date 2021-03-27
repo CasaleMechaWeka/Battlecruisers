@@ -8,7 +8,6 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.UI.Sound.Pools;
-using BattleCruisers.Utils.Timers;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
 {
@@ -21,7 +20,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
-        public CountdownController Countdown { get; }
         public DroneController Drone { get; }
         public AudioSourceInitialiser AudioSource { get; }
 
@@ -32,11 +30,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IMultiCache<ExplosionController> explosions, 
             IMultiCache<ShipDeathInitialiser> shipDeaths, 
             IUntypedMultiCache<Projectile> projectiles, 
-            CountdownController countdown, 
             DroneController drone,
             AudioSourceInitialiser audioSource)
         {
-            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, countdown, drone, audioSource);
+            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource);
 
             _buildings = buildings;
             _units = units;
@@ -44,7 +41,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             _explosions = explosions;
             _shipDeaths = shipDeaths;
             _projectiles = projectiles;
-            Countdown = countdown;
             Drone = drone;
             AudioSource = audioSource;
         }

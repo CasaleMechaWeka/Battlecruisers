@@ -11,7 +11,6 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.Timers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,9 +59,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
 
-            Container<CountdownController> countdownContainer = new Container<CountdownController>();
-            retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.UI.DeleteCountdown, countdownContainer));
-
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
 
@@ -81,7 +77,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<ExplosionController>(keyToExplosion),
                     new MultiCache<ShipDeathInitialiser>(keyToDeath),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
-                    countdownContainer.Value,
                     droneContainer.Value,
                     audioSourceContainer.Value);
         }

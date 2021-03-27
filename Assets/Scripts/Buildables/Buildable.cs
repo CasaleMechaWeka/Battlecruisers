@@ -20,7 +20,6 @@ using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.Timers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -129,26 +128,7 @@ namespace BattleCruisers.Buildables
         }
 
         private bool IsDroneConsumerFocusable => DroneConsumer != null;
-
         public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
-
-        private CountdownController _deleteCountdown;
-        private CountdownController DeleteCountdown
-        {
-            get
-            {
-                if (_deleteCountdown == null)
-                {
-                    _deleteCountdown = _factoryProvider.PrefabFactory.CreateDeleteCountdown(transform);
-
-                    // Position below buildable
-                    float yOffset = -Size.y / 2;
-                    _deleteCountdown.transform.position = transform.position + Transform.Up * yOffset;
-                }
-                return _deleteCountdown;
-            }
-        }
-
         public bool IsInitialised => BuildProgressBoostable != null;
 
         protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
@@ -335,15 +315,7 @@ namespace BattleCruisers.Buildables
         {
             Logging.Log(Tags.BUILDABLE, this);
 
-            if (DeleteCountdown.IsInProgress)
-            {
-                CancelDelete();
-            }
-            else
-            {
-                OnSingleClick();
-            }
-
+            OnSingleClick();
             Clicked?.Invoke(this, EventArgs.Empty);
         }
 
@@ -527,23 +499,6 @@ namespace BattleCruisers.Buildables
         protected virtual void ToggleDroneConsumerFocusCommandExecute()
         {
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
-        }
-
-        public void InitiateDelete()
-        {
-            if (BuildableState == BuildableState.NotStarted)
-            {
-                Destroy();
-            }
-            else
-            {
-                DeleteCountdown.Begin(Destroy);
-            }
-        }
-
-        public void CancelDelete()
-        {
-            DeleteCountdown.Cancel();
         }
     }
 }

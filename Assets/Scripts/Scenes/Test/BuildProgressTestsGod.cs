@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.BattleScene.Update;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
@@ -36,7 +36,6 @@ namespace BattleCruisers.Scenes.Test
             foreach (Building building in _buildings)
             {
                 helper.InitialiseBuilding(building, enemyCruiser: enemyCruiser);
-                building.CompletedBuildable += (sender, e) => building.InitiateDelete();
                 building.StartConstruction();
             }
         }

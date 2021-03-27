@@ -16,7 +16,6 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.Utils.Timers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -89,14 +88,6 @@ namespace BattleCruisers.Utils.Fetchers
             Cruiser cruiser = Object.Instantiate(cruiserPrefab);
             cruiser.StaticInitialise(_commonStrings);
             return cruiser;
-        }
-
-        public CountdownController CreateDeleteCountdown(Transform parent)
-        {
-            CountdownController newCountdown = Object.Instantiate(_prefabCache.Countdown);
-            newCountdown.transform.SetParent(parent, worldPositionStays: false);
-            newCountdown.StaticInitialise(_commonStrings);
-            return newCountdown;
         }
 
         public IExplosion CreateExplosion(ExplosionKey explosionKey)

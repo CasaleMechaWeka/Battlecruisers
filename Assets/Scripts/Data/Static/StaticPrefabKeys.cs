@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Data.Static
 {
-	public static class StaticPrefabKeys
+    public static class StaticPrefabKeys
 	{
 		public static class Buildings
 		{
@@ -123,11 +123,6 @@ namespace BattleCruisers.Data.Static
                     };
                 }
             }
-        }
-
-        public static class UI
-        {
-            public static UIKey DeleteCountdown { get; } = new UIKey("DeleteCountdown");
         }
 
         public static class Effects

@@ -13,8 +13,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.Utils.Timers;
-using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers
 {
@@ -28,8 +26,6 @@ namespace BattleCruisers.Utils.Fetchers
 
 		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
-
-        CountdownController CreateDeleteCountdown(Transform parent);
 
         IExplosion CreateExplosion(ExplosionKey explosionKey);
         IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
