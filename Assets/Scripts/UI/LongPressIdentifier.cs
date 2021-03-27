@@ -3,21 +3,10 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
 
-// FELIX  use, test
+// FELIX  test
 // FELIX  Tidy up namespace?
 namespace BattleCruisers.UI
 {
-    // FELIX  Move to interface
-    // FELIX  Remove?
-    //public class LongPressEventArgs : EventArgs
-    //{
-    //    public int IntervalNumber { get; }
-    //    public LongPressEventArgs(int intervalNumber)
-    //    {
-    //        IntervalNumber = intervalNumber;
-    //    }
-    //}
-
     public class LongPressIdentifier : ILongPressIdentifier
     {
         private readonly IPointerUpDownEmitter _button;
@@ -31,8 +20,6 @@ namespace BattleCruisers.UI
         public event EventHandler LongPressStart;
         public event EventHandler LongPressEnd;
         public event EventHandler LongPressInterval;
-        // FELIX  Remove
-        //event EventHandler<LongPressEventArgs> LongPressInterval;
 
         public LongPressIdentifier(
             IPointerUpDownEmitter button,
