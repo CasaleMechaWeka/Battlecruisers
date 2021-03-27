@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public class StatsCompactStatsController : StatsRow
+    public class StatsCompactStarsController : StatsRow
     {
         public Image activeDiceStars;
         public List<Sprite> diceStars;
