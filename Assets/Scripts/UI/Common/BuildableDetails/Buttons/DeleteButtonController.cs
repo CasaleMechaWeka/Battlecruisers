@@ -60,6 +60,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         {
             activeImage.sprite = activeStateImages[0];
             activeImage.gameObject.SetActive(true);
+
+            if (Buildable.BuildableState == BuildableState.NotStarted)
+            {
+                Buildable.Destroy();
+            }
         }
 
         private void _longPressIdentifier_LongPressEnd(object sender, EventArgs e)
