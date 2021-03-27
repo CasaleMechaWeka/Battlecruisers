@@ -38,14 +38,14 @@ namespace BattleCruisers.UI
             IPointerUpDownEmitter button,
             ITime time,
             IUpdater updater,
-            float intervalLengthMS)
+            float intervalLengthS)
         {
             Helper.AssertIsNotNull(button, time, updater);
 
             _button = button;
             _time = time;
             _updater = updater;
-            _intervalLengthS = intervalLengthMS;
+            _intervalLengthS = intervalLengthS;
 
             IntervalNumber = 0;
 

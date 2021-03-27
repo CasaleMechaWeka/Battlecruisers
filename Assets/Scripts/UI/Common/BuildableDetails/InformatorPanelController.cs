@@ -19,6 +19,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
     // FELIX  Rename to Parent?
+    // FELIX  Delete informato button prefabs, only used in one place :)
     public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
         private DismissInformatorButtonController _dismissButton;
@@ -52,7 +53,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             Helper.AssertIsNotNull(informatorPanel, informatorWidgets);
 
             informatorPanel.Initialise();
-            informatorWidgets.Initialise(playerCruiser.DroneFocuser, playerCruiser.RepairManager, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings, informatorPanel);
+            informatorWidgets
+                .Initialise(
+                    playerCruiser.DroneFocuser, 
+                    playerCruiser.RepairManager, 
+                    userChosenTargetHelper, 
+                    visibilityFilters, 
+                    soundPlayer, 
+                    commonStrings, 
+                    informatorPanel,
+                    playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
+                    uiManager);
 
             // FELIX  TEMP :P
             BuildingDetails = Substitute.For<IBuildableDetails<IBuilding>>();

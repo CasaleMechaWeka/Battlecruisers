@@ -2,6 +2,11 @@
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -11,9 +16,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         private IUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
+        private ILongPressIdentifier _longPressIdentifier;
 
-        private Image _buttonImage;
-        protected override MaskableGraphic Graphic => _buttonImage;
+        public float lightUpIntervalS = 0.25f;
+        public Image activeImage;
+        public List<Sprite> activeStateImages;
+
+        private const int NUMBER_OF_ACTIVE_STATES = 5;
 
         private IBuildable _buildable;
         public IBuildable Buildable
@@ -28,29 +37,54 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IUIManager uiManager, 
+            IUIManager uiManager,
             IFilter<ITarget> buttonVisibilityFilter,
-            IDismissableEmitter parent)
+            // FELIX  Remove?
+            //IDismissableEmitter parent,
+            IUpdater updater)
         {
-            base.Initialise(soundPlayer, parent: parent);
+            base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(uiManager, buttonVisibilityFilter);
+            Helper.AssertIsNotNull(uiManager, buttonVisibilityFilter, updater);
+            Assert.IsNotNull(activeImage);
+            Assert.AreEqual(NUMBER_OF_ACTIVE_STATES, activeStateImages.Count);
 
             _uiManager = uiManager;
             _buttonVisibilityFilter = buttonVisibilityFilter;
+            _longPressIdentifier = new LongPressIdentifier(this, TimeBC.Instance, updater, lightUpIntervalS);
 
-            _buttonImage = GetComponent<Image>();
-            Assert.IsNotNull(_buttonImage);
+            _longPressIdentifier.LongPressStart += _longPressIdentifier_LongPressStart;
+            _longPressIdentifier.LongPressEnd += _longPressIdentifier_LongPressEnd;
+            _longPressIdentifier.LongPressInterval += _longPressIdentifier_LongPressInterval;
         }
 
-        // FELIX  If building is not started => Handle click
-        // Otherwise, handle long press
-        protected override void OnClicked()
+        private void _longPressIdentifier_LongPressStart(object sender, EventArgs e)
         {
-            base.OnClicked();
+            activeImage.sprite = activeStateImages[0];
+            activeImage.gameObject.SetActive(true);
+        }
 
-            Buildable.InitiateDelete();
+        private void _longPressIdentifier_LongPressEnd(object sender, EventArgs e)
+        {
+            activeImage.gameObject.SetActive(false);
+        }
+
+        private void _longPressIdentifier_LongPressInterval(object sender, EventArgs e)
+        {
+            if (_longPressIdentifier.IntervalNumber >= NUMBER_OF_ACTIVE_STATES)
+            {
+                OnLongPressComplete();
+            }
+            else
+            {
+                activeImage.sprite = activeStateImages[_longPressIdentifier.IntervalNumber];
+            }
+        }
+
+        private void OnLongPressComplete()
+        {
             _uiManager.HideItemDetails();
+            Buildable.Destroy();
         }
     }
 }

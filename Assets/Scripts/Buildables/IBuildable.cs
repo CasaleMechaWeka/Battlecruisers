@@ -58,6 +58,8 @@ namespace BattleCruisers.Buildables
         void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings);
         void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider);
         void StartConstruction();
+
+        // FELIX  Remove both?
         void InitiateDelete();
         void CancelDelete();
 	}

@@ -32,13 +32,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             Helper.AssertIsNotNull(uiManager, droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, commonStrings);
 
-            _deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
-            Assert.IsNotNull(_deleteButton);
-            _deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, this);
-
-            _buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
-            Assert.IsNotNull(_buttonManager);
             // FELIX :P
+            //_deleteButton = GetComponentInChildren<DeleteButtonController>(includeInactive: true);
+            //Assert.IsNotNull(_deleteButton);
+            //_deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, this);
+
+            //_buttonManager = GetComponentInChildren<InformatorWidgetManager>(includeInactive: true);
+            //Assert.IsNotNull(_buttonManager);
             //_buttonManager.Initialise(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings);
         }
 
