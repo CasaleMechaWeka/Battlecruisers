@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
+using System;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -20,7 +21,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
             Assert.IsNotNull(activeFeedback);
             Assert.IsNotNull(informatorPanel);
+
             _informatorPanel = informatorPanel;
+            _informatorPanel.State.ValueChanged += State_ValueChanged;
+        }
+
+        private void State_ValueChanged(object sender, EventArgs e)
+        {
+            SetActiveFeedback(_informatorPanel.State.Value == PanelState.Shown);
         }
 
         protected override void OnClicked()
@@ -30,13 +38,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             if (_informatorPanel.TargetState == PanelState.Hidden)
             {
                 _informatorPanel.Show();
-                activeFeedback.gameObject.SetActive(true);
+                SetActiveFeedback(true);
             }
             else
             {
                 _informatorPanel.Hide();
-                activeFeedback.gameObject.SetActive(false);
+                SetActiveFeedback(false);
             }
+        }
+
+        private void SetActiveFeedback(bool isActive)
+        {
+            activeFeedback.gameObject.SetActive(isActive);
         }
     }
 }
