@@ -10,7 +10,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -40,12 +39,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters visibilityFilters,
-            ISingleSoundPlayer soundPlayer,
-            // FELIX  Remove? (After implementing item details :) )
-            ILocTable commonStrings)
+            ISingleSoundPlayer soundPlayer)
         {
             base.Initialise();
-            Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer, commonStrings);
+            Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);
             Helper.AssertIsNotNull(informatorPanel, informatorWidgets, buildingDetails, unitDetails, cruiserDetails);
 
             informatorPanel.Initialise();

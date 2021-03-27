@@ -47,8 +47,7 @@ namespace BattleCruisers.UI.BattleScene
             IPauseGameManager pauseGameManager,
             IBattleCompletionHandler battleCompletionHandler,
             ISingleSoundPlayer soundPlayer,
-            INavigationPermitterManager navigationPermitterManager,
-            ILocTable commonStrings)
+            INavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels);
             Helper.AssertIsNotNull(
@@ -60,10 +59,9 @@ namespace BattleCruisers.UI.BattleScene
                 pauseGameManager,
                 battleCompletionHandler,
                 soundPlayer,
-                navigationPermitterManager,
-                commonStrings);
+                navigationPermitterManager);
 
-            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, commonStrings);
+            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, navigationPermitterManager);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
@@ -84,8 +82,7 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer,
-            ILocTable commonStrings)
+            ISingleSoundPlayer soundPlayer)
         {
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -96,8 +93,7 @@ namespace BattleCruisers.UI.BattleScene
                     playerCruiser,
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
-                    soundPlayer,
-                    commonStrings);
+                    soundPlayer);
 
             return informator;
         }
