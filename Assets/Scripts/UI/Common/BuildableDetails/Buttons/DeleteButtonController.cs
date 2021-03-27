@@ -39,8 +39,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             ISingleSoundPlayer soundPlayer,
             IUIManager uiManager,
             IFilter<ITarget> buttonVisibilityFilter,
-            // FELIX  Remove?
-            //IDismissableEmitter parent,
             IUpdater updater)
         {
             base.Initialise(soundPlayer);
