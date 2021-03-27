@@ -14,8 +14,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // FELIX  Rename to Parent?
-    // FELIX  Delete informato button prefabs, only used in one place :)
     public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
         public DismissInformatorButtonController dismissButton;
@@ -29,7 +27,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public CruiserDetailsController cruiserDetails;
         public IComparableItemDetails<ICruiser> CruiserDetails => cruiserDetails;
 
-        public SlidingPanel informatorPanel;
+        public SlidingPanel informatorPanelExtended;
 
         public InformatorWidgetManager informatorWidgets;
         public IInformatorWidgetManager Widgets => informatorWidgets;
@@ -43,9 +41,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             base.Initialise();
             Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);
-            Helper.AssertIsNotNull(informatorPanel, informatorWidgets, buildingDetails, unitDetails, cruiserDetails);
+            Helper.AssertIsNotNull(informatorPanelExtended, informatorWidgets, buildingDetails, unitDetails, cruiserDetails);
 
-            informatorPanel.Initialise();
+            informatorPanelExtended.Initialise();
             informatorWidgets
                 .Initialise(
                     playerCruiser.DroneFocuser, 
@@ -53,7 +51,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     userChosenTargetHelper, 
                     visibilityFilters, 
                     soundPlayer, 
-                    informatorPanel,
+                    informatorPanelExtended,
                     playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
                     uiManager);
 
@@ -66,7 +64,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public override void Hide()
         {
             base.Hide();
-            informatorPanel.Hide();
+            informatorPanelExtended.Hide();
         }
 
         public void Show(ITarget item)
