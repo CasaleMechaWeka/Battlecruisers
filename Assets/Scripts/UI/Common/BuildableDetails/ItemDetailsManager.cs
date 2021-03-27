@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         private readonly IInformatorPanel _informatorPanel;
         private readonly IComparableItemDetails<IBuilding> _buildingDetails;
-        private readonly IBuildableDetails<IUnit> _unitDetails;
+        private readonly IComparableItemDetails<IUnit> _unitDetails;
         private readonly ICruiserDetails _cruiserDetails;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             HideEverything();
 
             _informatorPanel.Show(unit);
-            _unitDetails.ShowBuildableDetails(unit);
+            _unitDetails.ShowItemDetails(unit);
             _selectedItem.Value = unit;
         }
 
