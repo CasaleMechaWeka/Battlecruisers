@@ -3,8 +3,6 @@ using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
 
-// FELIX  test
-// FELIX  Tidy up namespace?
 namespace BattleCruisers.UI
 {
     public class LongPressIdentifier : ILongPressIdentifier
