@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -18,8 +19,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     // FELIX  Delete informato button prefabs, only used in one place :)
     public class InformatorPanelController : SlidingPanel, IInformatorPanel
     {
-        // FELIX
-        private DismissInformatorButtonController _dismissButton;
+        public DismissInformatorButtonController dismissButton;
 
         public BuildingDetailsController buildingDetails;
         public IComparableItemDetails<IBuilding> BuildingDetails => buildingDetails;
@@ -63,13 +63,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             buildingDetails.Initialise();
             unitDetails.Initialise();
             cruiserDetails.Initialise();
-
-            // FELIX  TEMP :P
-            //// Dismiss button
-            //_dismissButton = GetComponentInChildren<DismissInformatorButtonController>();
-            //Assert.IsNotNull(_dismissButton);
-            //_dismissButton.Initialise(soundPlayer, uiManager, new StaticBroadcastingFilter(isMatch: true), visibilityFilters.HelpLabelsVisibilityFilter);
-       }
+            dismissButton.Initialise(soundPlayer, uiManager, new StaticBroadcastingFilter(isMatch: true), visibilityFilters.HelpLabelsVisibilityFilter);
+        }
 
         public override void Hide()
         {

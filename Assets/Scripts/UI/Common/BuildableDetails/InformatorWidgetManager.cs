@@ -13,18 +13,16 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    // FELIX  Remove buttons from all item detail prefabs :)
     // FELIX  Rename? Just has buttons?
     public class InformatorWidgetManager : MonoBehaviour, IInformatorWidgetManager
     {
         public RepairButtonController repairButton;
         public ChooseTargetButtonController chooseTargetButton;
         public DeleteButtonController deleteButton;
+        public ExtendInformatorButtonController extendButton;
 
         public ToggleDroneButtonController toggleDronesButton;
         public IButton ToggleDronesButton => toggleDronesButton;
-
-        public ExtendInformatorButtonController extendButton;
 
         public ITarget SelectedItem
         {
