@@ -59,18 +59,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 		
         public void HideDetails()
         {
-            HideInformator();
-        }
-
-        // FELIX  Remove
-        private void HideEverything()
-        {
-            HideInformator();
-            HideInformatorContent();
-        }
-
-        private void HideInformator()
-        {
             _informatorPanel.Hide();
             _selectedItem.Value = null;
         }
