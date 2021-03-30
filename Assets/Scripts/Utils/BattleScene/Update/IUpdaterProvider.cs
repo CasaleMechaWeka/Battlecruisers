@@ -5,7 +5,8 @@
         IUpdater PerFrameUpdater { get; }
         IUpdater PhysicsUpdater { get; }
         ISwitchableUpdater SwitchableUpdater { get; }
-        IUpdater SlowerUpdater { get; }
+        IUpdater SlowUpdater { get; }
+        IUpdater VerySlowUpdater { get; }
         IUpdater BarrelControllerUpdater { get; }
     }
 }
