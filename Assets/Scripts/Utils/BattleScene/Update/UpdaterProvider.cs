@@ -10,10 +10,15 @@ namespace BattleCruisers.Utils.BattleScene.Update
         public IUpdater PhysicsUpdater { get; private set; }
         public ISwitchableUpdater SwitchableUpdater { get; private set; }
 
-        private const float SLOWER_UPDATER_INTERVAL_IN_S = 0.2f;
-        public IUpdater SlowerUpdater { get; private set; }
+        // FELIX  TEMP
+        private const float SLOW_UPDATER_INTERVAL_IN_S = 0.1f;
+        public IUpdater SlowUpdater { get; private set; }
+
+        private const float VERY_SLOW_UPDATER_INTERVAL_IN_S = 0.2f;
+        public IUpdater VerySlowUpdater { get; private set; }
 
         public IUpdater BarrelControllerUpdater { get; private set; }
+
 
         public void Initialise()
         {
@@ -26,7 +31,9 @@ namespace BattleCruisers.Utils.BattleScene.Update
             SwitchableUpdater = GetComponent<SwitchableUpdater>();
             Assert.IsNotNull(SwitchableUpdater);
 
-            SlowerUpdater = new MultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, SLOWER_UPDATER_INTERVAL_IN_S);
+            SlowUpdater = new MultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, SLOW_UPDATER_INTERVAL_IN_S);
+            VerySlowUpdater = new MultiFrameUpdater(PhysicsUpdater, TimeBC.Instance, VERY_SLOW_UPDATER_INTERVAL_IN_S);
+
             BarrelControllerUpdater = PhysicsUpdater;
         }
     }
