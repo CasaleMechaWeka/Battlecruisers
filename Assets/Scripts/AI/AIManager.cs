@@ -8,7 +8,6 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -81,7 +80,9 @@ namespace BattleCruisers.AI
 
         private bool IsAdaptiveAI(Difficulty difficulty)
         {
-            return difficulty != Difficulty.Easy;
+            return
+                difficulty == Difficulty.Hard
+                || difficulty == Difficulty.Harder;
         }
     }
 }
