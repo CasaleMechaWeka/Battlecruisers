@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
     {
         private ISettingsManager _settingsManager;
 
-        public DifficultyButtonController harderButton, hardButton, normalButton, easyButton;
+        public DifficultyButtonController harderButton, hardButton, normalButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(harderButton, hardButton, normalButton, easyButton);
+            Helper.AssertIsNotNull(harderButton, hardButton, normalButton);
             Helper.AssertIsNotNull(soundPlayer, settingsManager);
 
             _settingsManager = settingsManager;
@@ -26,7 +26,6 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
             harderButton.Initialise(soundPlayer, this);
             hardButton.Initialise(soundPlayer, this);
             normalButton.Initialise(soundPlayer, this);
-            easyButton.Initialise(soundPlayer, this);
         }
 
         public void ChooseDifficulty(Difficulty difficulty)
