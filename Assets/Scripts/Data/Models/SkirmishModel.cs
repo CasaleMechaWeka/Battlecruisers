@@ -4,6 +4,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils;
 using System;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -66,6 +67,15 @@ namespace BattleCruisers.Data.Models
             _wasRandomStrategy = wasRandomStrategy;
             _aiStrategy = aIStrategy;
             _backgroundLevelNum = backgroundLevelNum;
+        }
+
+        [OnDeserialized()]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            if (_difficulty == Difficulty.Easy)
+            {
+                _difficulty = Difficulty.Normal;
+            }
         }
 
         public override bool Equals(object obj)

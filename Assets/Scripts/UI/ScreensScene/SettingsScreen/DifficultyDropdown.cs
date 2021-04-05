@@ -27,13 +27,16 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             int currentIndex = 0;
 
             Difficulty[] difficulties = (Difficulty[])Enum.GetValues(typeof(Difficulty));
-            Assert.AreEqual(difficultySymbols.Count, difficulties.Length);
+            IList<Difficulty> difficultiesNoEasy = new List<Difficulty>(difficulties);
+            difficultiesNoEasy.RemoveAt(0);
+            Assert.AreEqual(difficultySymbols.Count, difficultiesNoEasy.Count);
 
-            for (int i = 0; i < difficulties.Length; ++i)
+            for (int i = 0; i < difficultiesNoEasy.Count; ++i)
             {
-                Difficulty difficulty = difficulties[i];
+                Difficulty difficulty = difficultiesNoEasy[i];
+                string name = GetDifficultyName(difficulty);
 
-                options.Add(new Dropdown.OptionData(difficulty.ToString(), difficultySymbols[i]));
+                options.Add(new Dropdown.OptionData(name, difficultySymbols[i]));
                 _difficulties.Add(difficulty);
 
                 if (difficulty == selectedDifficulty)
@@ -45,6 +48,21 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _difficultyDropdown.AddOptions(options);
             _difficultyDropdown.value = currentIndex;
             _difficultyDropdown.onValueChanged.AddListener(OnDifficultyChanged);
+        }
+
+        private string GetDifficultyName(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Normal:
+                    return "Easy";
+                case Difficulty.Hard:
+                    return "Normal";
+                case Difficulty.Harder:
+                    return "Hard";
+                default:
+                    throw new ArgumentException($"Unsupported difficulty: {difficulty}");
+            }
         }
 
         private void OnDifficultyChanged(int dropdownIndex)
