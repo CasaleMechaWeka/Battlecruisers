@@ -4,7 +4,10 @@ namespace BattleCruisers.Data.Settings
 {
     public enum Difficulty
     {
-        Easy, Normal, Hard, Harder
+        Easy = 0, 
+        Normal = 1, 
+        Hard = 2, 
+        Harder = 3
     }
 
     public interface ISettingsManager
