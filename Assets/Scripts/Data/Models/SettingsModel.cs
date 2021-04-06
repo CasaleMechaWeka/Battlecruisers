@@ -36,6 +36,7 @@ namespace BattleCruisers.Data.Models
         {
             public const int PreMusicVolume = 0;
             public const int WithMusicVolume = 1;
+            public const int RemovedEasyDifficulty = 2;
         }
 
         [SerializeField]
@@ -130,6 +131,15 @@ namespace BattleCruisers.Data.Models
                 _effectVolume = DEFAULT_VOLUME;
 
                 _version = ModelVersion.WithMusicVolume;
+            }
+            else if (_version == ModelVersion.WithMusicVolume)
+            {
+                if (_aiDifficulty == Difficulty.Easy)
+                {
+                    _aiDifficulty = Difficulty.Normal;
+                }
+
+                _version = ModelVersion.RemovedEasyDifficulty;
             }
         }
 

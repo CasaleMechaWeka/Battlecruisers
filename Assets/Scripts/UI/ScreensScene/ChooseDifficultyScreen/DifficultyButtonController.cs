@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
@@ -14,24 +12,17 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 
         public Difficulty difficulty;
 
-        public Text title, decription, aiDescription, aiBuildSpeed;
+        public Text title, decription;
         public Image backgroundImage, stars;
         public Sprite defaultBackground, clickedBackground;
         public Color battlecruisersRed;
         public int buildSpeedPercentage = 125;
 
-        public void Initialise(
-            ISingleSoundPlayer soundPlayer,
-            IChooseDifficultyScreen chooseDifficultyScreen,
-            ILocTable screensSceneStrings)
+        public void Initialise(ISingleSoundPlayer soundPlayer, IChooseDifficultyScreen chooseDifficultyScreen)
         {
             base.Initialise(soundPlayer, parent: chooseDifficultyScreen);
 
-            Helper.AssertIsNotNull(title, decription, aiDescription, aiBuildSpeed, backgroundImage, stars, defaultBackground, clickedBackground);
-            Assert.IsNotNull(screensSceneStrings);
-
-            string buildSpeedBase = screensSceneStrings.GetString("UI/DifficultyScreen/AIBuildSpeed");
-            aiBuildSpeed.text = string.Format(buildSpeedBase, $"{buildSpeedPercentage}%");
+            Helper.AssertIsNotNull(title, decription, backgroundImage, stars, defaultBackground, clickedBackground);
 
             _chooseDifficultyScreen = chooseDifficultyScreen;
         }
@@ -49,8 +40,6 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
             stars.color = Color.black;
             title.color = Color.white;
             decription.color = Color.white;
-            aiDescription.color = Color.white;
-            aiBuildSpeed.color = Color.white;
         }
 
         protected override void ShowClickedState()
@@ -60,8 +49,6 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
             stars.color = battlecruisersRed;
             title.color = battlecruisersRed;
             decription.color = battlecruisersRed;
-            aiDescription.color = battlecruisersRed;
-            aiBuildSpeed.color = battlecruisersRed;
         }
 
         protected override void ShowHoverState()

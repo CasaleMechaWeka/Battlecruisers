@@ -30,12 +30,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             int currentIndex = 0;
 
             Difficulty[] difficulties = (Difficulty[])Enum.GetValues(typeof(Difficulty));
-            Assert.AreEqual(difficultySymbols.Count, difficulties.Length);
+            IList<Difficulty> difficultiesNoEasy = new List<Difficulty>(difficulties);
+            difficultiesNoEasy.RemoveAt(0);
+            Assert.AreEqual(difficultySymbols.Count, difficultiesNoEasy.Count);
 
-            for (int i = 0; i < difficulties.Length; ++i)
+            for (int i = 0; i < difficultiesNoEasy.Count; ++i)
             {
-                Difficulty difficulty = difficulties[i];
-
+                Difficulty difficulty = difficultiesNoEasy[i];
                 string enumStringKey = EnumKeyCreator.CreateKey(difficulty);
                 string localisedDifficulty = loc.GetString(enumStringKey);
 

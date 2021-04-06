@@ -2,7 +2,6 @@
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
@@ -10,25 +9,23 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
     {
         private ISettingsManager _settingsManager;
 
-        public DifficultyButtonController harderButton, hardButton, normalButton, easyButton;
+        public DifficultyButtonController harderButton, hardButton, normalButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            ISettingsManager settingsManager,
-            ILocTable screensSceneStrings)
+            ISettingsManager settingsManager)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(harderButton, hardButton, normalButton, easyButton);
-            Helper.AssertIsNotNull(soundPlayer, settingsManager, screensSceneStrings);
+            Helper.AssertIsNotNull(harderButton, hardButton, normalButton);
+            Helper.AssertIsNotNull(soundPlayer, settingsManager);
 
             _settingsManager = settingsManager;
 
-            harderButton.Initialise(soundPlayer, this, screensSceneStrings);
-            hardButton.Initialise(soundPlayer, this, screensSceneStrings);
-            normalButton.Initialise(soundPlayer, this, screensSceneStrings);
-            easyButton.Initialise(soundPlayer, this, screensSceneStrings);
+            harderButton.Initialise(soundPlayer, this);
+            hardButton.Initialise(soundPlayer, this);
+            normalButton.Initialise(soundPlayer, this);
         }
 
         public void ChooseDifficulty(Difficulty difficulty)
