@@ -68,6 +68,8 @@ namespace BattleCruisers.Scenes
         public bool testDifficultyScreen = false;
         [Header("For testing the skirmish screen")]
         public bool testSkirmishScreen = false;
+        [Header("For testing the loadout screen")]
+        public bool testLoadoutScreen = false;
 
         async void Start()
 		{
@@ -164,6 +166,10 @@ namespace BattleCruisers.Scenes
             else if (testSkirmishScreen)
             {
                 GoToSkirmishScreen();
+            } 
+            else if (testLoadoutScreen)
+            {
+                GoToLoadoutScreen();
             }
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
