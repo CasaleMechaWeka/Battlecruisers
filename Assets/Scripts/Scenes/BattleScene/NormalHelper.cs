@@ -27,7 +27,6 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private readonly IPrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
-        private readonly IBuildProgressCalculatorFactory _calculatorFactory;
 
         private UIManager _uiManager;
         private const int IN_GAME_HINTS_CUTOFF = 3;
@@ -53,8 +52,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 DataProvider.SettingsManager.ShowInGameHints
                 && _appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
-            _calculatorFactory = new BuildProgressCalculatorFactory();
-            
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();
             _buildingCategoryFilter.AllowAllCategories();
@@ -80,7 +77,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
         {
-            return _calculatorFactory.CreateAICruiserCalculator(FindDifficulty());
+            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel);
         }
 
         protected virtual Difficulty FindDifficulty()

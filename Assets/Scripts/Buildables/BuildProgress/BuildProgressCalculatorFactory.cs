@@ -4,6 +4,7 @@ using System;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
+    // FELIX  Test :)
     public class BuildProgressCalculatorFactory : IBuildProgressCalculatorFactory
     {
         // For cheating :)
@@ -48,6 +49,31 @@ namespace BattleCruisers.Buildables.BuildProgress
                 default:
                     throw new ArgumentException($"Unkown difficulty: {difficulty}");
             }
+        }
+
+        public IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
+        {
+#if ENABLE_CHEATS
+            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(difficulty));
+            aiBuildSpeed = calculator;
+            return calculator;
+#endif
+            float baseBuildSpeed = FindBaseBuildSpeedMultiplier(difficulty);
+            float levelBoost = FindLevelBoost(difficulty, levelNum);
+            float buildSpeedMultiplier = baseBuildSpeed + levelBoost;
+            return new LinearCalculator(buildSpeedMultiplier);
+        }
+
+        private float FindBaseBuildSpeedMultiplier(Difficulty difficulty)
+        {
+            // FELIX
+            return 0;
+        }
+
+        private float FindLevelBoost(Difficulty difficulty, int levelNum)
+        {
+            // FELIX
+            return 0;
         }
 
         private CompositeCalculator CreateCompositeCalculator(float defaultBuildSpeedMultiplier)

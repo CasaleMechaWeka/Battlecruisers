@@ -24,6 +24,7 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private readonly IPrefabFetcher _prefabFetcher;
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
+        protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
 
         protected readonly IApplicationModel _appModel;
         protected IDataProvider DataProvider => _appModel.DataProvider;
@@ -39,6 +40,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _appModel = appModel;
             _prefabFetcher = prefabFetcher;
             _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
+            _calculatorFactory = new BuildProgressCalculatorFactory();
         }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
