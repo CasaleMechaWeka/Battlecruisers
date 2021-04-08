@@ -12,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public abstract class ItemButton : ElementWithClickSound, IItemButton
     {
         private Image _itemImage;
-        private Text _itemName;
 
         protected IItemDetailsManager _itemDetailsManager;
         protected IComparingItemFamilyTracker _comparingFamiltyTracker;
@@ -28,7 +27,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             set
             {
                 _itemImage.color = value;
-                _itemName.color = value;
             }
         }
 
@@ -43,9 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemDetailsManager = itemDetailsManager;
             _comparingFamiltyTracker = comparingFamiltyTracker;
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
-
-            _itemName = GetComponentInChildren<Text>();
-            Assert.IsNotNull(_itemName);
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
