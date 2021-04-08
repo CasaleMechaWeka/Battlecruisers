@@ -75,7 +75,7 @@ namespace BattleCruisers.Buildables.BuildProgress
                     return BuildSpeedMultipliers.POINT_65_DEFAULT;
 
                 case Difficulty.Hard:
-                    return BuildSpeedMultipliers.POINT_925_DEFAULT;
+                    return BuildSpeedMultipliers.POINT_93_DEFAULT;
 
                 case Difficulty.Harder:
                     return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
@@ -93,7 +93,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             {
                 case Difficulty.Normal:
                 case Difficulty.Hard:
-                    return levelNum * BOOST_PER_LEVEL;
+                    return (levelNum - 1) * BOOST_PER_LEVEL;
 
                 case Difficulty.Harder:
                     return 0;

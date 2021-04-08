@@ -13,6 +13,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         public LinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.DEFAULT)
         {
+            Logging.Log(Tags.BUILD_PROGRESS, $"build speed multiplier: {buildSpeedMultiplier}");
             _buildMultiplier = buildSpeedMultiplier;
         }
 
