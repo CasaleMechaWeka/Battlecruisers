@@ -208,9 +208,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.DRONE_CONUMSER_FOCUS_MANAGER, false);
 
             // Drones
-            // FELIX
-            tagsToActiveness.Add(Tags.BUILD_PROGRESS, true);
-            //tagsToActiveness.Add(Tags.BUILD_PROGRESS, false);
+            tagsToActiveness.Add(Tags.BUILD_PROGRESS, false);
             tagsToActiveness.Add(Tags.DRONE_FEEDBACK, false);
             tagsToActiveness.Add(Tags.DRONE_MANAGER, false);
             tagsToActiveness.Add(Tags.DRONE_CONSUMER_PROVIDER, false);
