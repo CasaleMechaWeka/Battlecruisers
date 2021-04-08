@@ -1,17 +1,23 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
-using System;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    // FELIX  Test :)
     public class BuildProgressCalculatorFactory : IBuildProgressCalculatorFactory
     {
+        private readonly IBuildSpeedCalculator _buildSpeedCalculator;
+
         // For cheating :)
         public static IBuildSpeedController playerBuildSpeed, aiBuildSpeed;
 
         public const float BOOST_PER_LEVEL = 0.01f;
+
+        public BuildProgressCalculatorFactory(IBuildSpeedCalculator buildSpeedCalculator)
+        {
+            Assert.IsNotNull(buildSpeedCalculator);
+            _buildSpeedCalculator = buildSpeedCalculator;
+        }
 
         public IBuildProgressCalculator CreatePlayerCruiserCalculator()
         {
@@ -30,28 +36,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             aiBuildSpeed = calculator;
             return calculator;
 #endif
-            return new LinearCalculator(FindBuildSpeedMultiplier(difficulty));
-        }
-
-        private float FindBuildSpeedMultiplier(Difficulty difficulty)
-        {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    return BuildSpeedMultipliers.HALF_DEFAULT;
-
-                case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
-
-                case Difficulty.Hard:
-                    return BuildSpeedMultipliers.DEFAULT;
-
-                case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
-
-                default:
-                    throw new ArgumentException($"Unkown difficulty: {difficulty}");
-            }
+            return new LinearCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
         }
 
         public IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
@@ -61,46 +46,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             aiBuildSpeed = calculator;
             return calculator;
 #endif
-            float baseBuildSpeed = FindBaseBuildSpeedMultiplier(difficulty);
-            float levelBoost = FindLevelBoost(difficulty, levelNum);
-            float buildSpeedMultiplier = baseBuildSpeed + levelBoost;
-            return new LinearCalculator(buildSpeedMultiplier);
-        }
-
-        private float FindBaseBuildSpeedMultiplier(Difficulty difficulty)
-        {
-            switch (difficulty)
-            {
-                case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_65_DEFAULT;
-
-                case Difficulty.Hard:
-                    return BuildSpeedMultipliers.POINT_93_DEFAULT;
-
-                case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
-
-                default:
-                    throw new ArgumentException($"Unkown difficulty: {difficulty}");
-            }
-        }
-
-        private float FindLevelBoost(Difficulty difficulty, int levelNum)
-        {
-            Assert.IsTrue(levelNum > 0);
-
-            switch (difficulty)
-            {
-                case Difficulty.Normal:
-                case Difficulty.Hard:
-                    return (levelNum - 1) * BOOST_PER_LEVEL;
-
-                case Difficulty.Harder:
-                    return 0;
-
-                default:
-                    throw new ArgumentException($"Unkown difficulty: {difficulty}");
-            }
+            return new LinearCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
         }
 
         private CompositeCalculator CreateCompositeCalculator(float defaultBuildSpeedMultiplier)

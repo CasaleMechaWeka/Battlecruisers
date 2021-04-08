@@ -40,7 +40,9 @@ namespace BattleCruisers.Scenes.BattleScene
             _appModel = appModel;
             _prefabFetcher = prefabFetcher;
             _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
-            _calculatorFactory = new BuildProgressCalculatorFactory();
+            _calculatorFactory 
+                = new BuildProgressCalculatorFactory(
+                    new BuildSpeedCalculator());
         }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
