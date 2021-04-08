@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables.BuildProgress
         public IBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty)
         {
 #if ENABLE_CHEATS
-            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(difficulty));
+            CompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
             aiBuildSpeed = calculator;
             return calculator;
 #endif
@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.BuildProgress
         public IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
         {
 #if ENABLE_CHEATS
-            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(difficulty));
+            CompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
             aiBuildSpeed = calculator;
             return calculator;
 #endif
