@@ -65,6 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 }
                 else
                 {
+                    _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
                     postBattleScreen.appraisalSection.Initialise(levelTrashTalkData.AppraisalDroneText, soundPlayer);
                 }
             }

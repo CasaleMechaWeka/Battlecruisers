@@ -15,8 +15,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(postBattleScreen, soundPlayer);
 
             homeButton.Initialise(soundPlayer, postBattleScreen.GoToHomeScreen);
-
-            gameObject.SetActive(true);
         }
     }
 }

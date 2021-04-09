@@ -23,6 +23,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 Destroy(retryButton.gameObject);
             }
+
+            gameObject.SetActive(true);
         }
     }
 }
