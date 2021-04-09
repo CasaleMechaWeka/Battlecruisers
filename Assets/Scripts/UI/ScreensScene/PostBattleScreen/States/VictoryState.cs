@@ -70,8 +70,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 }
             }
 
+            SaveVictory(battleResult);
+        }
+
+        private void SaveVictory(BattleResult battleResult)
+        {
             CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: _appModel.DataProvider.SettingsManager.AIDifficulty);
             _appModel.DataProvider.GameModel.AddCompletedLevel(level);
+
+            int nextLevel = _appModel.SelectedLevel + 1;
+            if (nextLevel <= _appModel.DataProvider.LockedInfo.NumOfLevelsUnlocked)
+            {
+                _appModel.DataProvider.GameModel.SelectedLevel = nextLevel;
+            }
+
             _appModel.DataProvider.SaveGame();
         }
 
