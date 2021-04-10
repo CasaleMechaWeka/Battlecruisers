@@ -98,6 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int levelNumToShow = _nextLevelHelper.FindNextLevel();
             ShowLastPlayedLevelSet(_levelSets, levelNumToShow);
         }
+
         private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int levelToShow)
         {
             int levelSetToShow = 0;
