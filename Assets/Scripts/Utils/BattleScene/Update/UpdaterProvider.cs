@@ -10,7 +10,6 @@ namespace BattleCruisers.Utils.BattleScene.Update
         public IUpdater PhysicsUpdater { get; private set; }
         public ISwitchableUpdater SwitchableUpdater { get; private set; }
 
-        // FELIX  TEMP
         private const float SLOW_UPDATER_INTERVAL_IN_S = 0.1f;
         public IUpdater SlowUpdater { get; private set; }
 

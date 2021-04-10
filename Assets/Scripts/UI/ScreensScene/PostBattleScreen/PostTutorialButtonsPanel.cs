@@ -24,6 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 nextButton.Initialise(soundPlayer, postBattleScreen.StartLevel1);
             }
+
+            gameObject.SetActive(true);
         }
     }
 }

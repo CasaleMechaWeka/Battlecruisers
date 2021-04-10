@@ -1,13 +1,23 @@
 ﻿using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
-using System;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
     public class BuildProgressCalculatorFactory : IBuildProgressCalculatorFactory
     {
+        private readonly IBuildSpeedCalculator _buildSpeedCalculator;
+
         // For cheating :)
         public static IBuildSpeedController playerBuildSpeed, aiBuildSpeed;
+
+        public const float BOOST_PER_LEVEL = 0.01f;
+
+        public BuildProgressCalculatorFactory(IBuildSpeedCalculator buildSpeedCalculator)
+        {
+            Assert.IsNotNull(buildSpeedCalculator);
+            _buildSpeedCalculator = buildSpeedCalculator;
+        }
 
         public IBuildProgressCalculator CreatePlayerCruiserCalculator()
         {
@@ -22,32 +32,21 @@ namespace BattleCruisers.Buildables.BuildProgress
         public IBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty)
         {
 #if ENABLE_CHEATS
-            CompositeCalculator calculator = CreateCompositeCalculator(FindBuildSpeedMultiplier(difficulty));
+            CompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
             aiBuildSpeed = calculator;
             return calculator;
 #endif
-            return new LinearCalculator(FindBuildSpeedMultiplier(difficulty));
+            return new LinearCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
         }
 
-        private float FindBuildSpeedMultiplier(Difficulty difficulty)
+        public IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
         {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    return BuildSpeedMultipliers.HALF_DEFAULT;
-
-                case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
-
-                case Difficulty.Hard:
-                    return BuildSpeedMultipliers.DEFAULT;
-
-                case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
-
-                default:
-                    throw new ArgumentException($"Unkown difficulty: {difficulty}");
-            }
+#if ENABLE_CHEATS
+            CompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
+            aiBuildSpeed = calculator;
+            return calculator;
+#endif
+            return new LinearCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
         }
 
         private CompositeCalculator CreateCompositeCalculator(float defaultBuildSpeedMultiplier)

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -65,6 +66,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IPrefabKey GetAiCruiserKey()
         {
             return _skirmish.AICruiser;
+        }
+
+        public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
+        {
+            return _calculatorFactory.CreateAICruiserCalculator(FindDifficulty());
         }
 
         protected override Difficulty FindDifficulty()

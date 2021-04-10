@@ -6,5 +6,6 @@ namespace BattleCruisers.Buildables.BuildProgress
     {
         IBuildProgressCalculator CreatePlayerCruiserCalculator();
         IBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty);
+        IBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum);
     }
 }
