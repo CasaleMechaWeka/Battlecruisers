@@ -11,7 +11,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -22,12 +21,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourController _loadoutItemColourController;
-        private CategoryButtonsPanel _categoryButtonsPanel;
 
+        public ItemDetailsPanel itemDetailsPanel;
+        public ItemPanelsController itemPanels;
+        public CategoryButtonsPanel categoryButtonsPanel;
         public CompareButton compareButton;
         public SelectCruiserButton selectCruiserButton;
+        public CancelButtonController homeButton;
 
-        // FELIX Assign elments via inspector instead of GetComponent() :)
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -38,14 +39,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(compareButton, selectCruiserButton);
+            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton);
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
-            ItemDetailsPanel itemDetailsPanel = GetComponentInChildren<ItemDetailsPanel>(includeInactive: true);
-            Assert.IsNotNull(itemDetailsPanel);
             itemDetailsPanel.Initialise();
 
             IItemDetailsDisplayer<IBuilding> buildingDetails
@@ -77,8 +76,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
                     _dataProvider);
 
-            ItemPanelsController itemPanels = GetComponentInChildren<ItemPanelsController>(includeInactive: true);
-            Assert.IsNotNull(itemPanels);
             IList<IItemButton> itemButtons
                 = itemPanels.Initialise(
                     _itemDetailsManager,
@@ -90,16 +87,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     prefabFactory);
 
             _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
-
-            _categoryButtonsPanel = GetComponentInChildren<CategoryButtonsPanel>(includeInactive: true);
-            Assert.IsNotNull(_categoryButtonsPanel);
-            _categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons);
+            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons);
+            homeButton.Initialise(soundPlayer, this);
 
             ShowPlayerHull();
-
-            CancelButtonController homeButton = GetComponentInChildren<CancelButtonController>();
-            Assert.IsNotNull(homeButton);
-            homeButton.Initialise(soundPlayer, this);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
@@ -119,7 +110,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void DisposeManagedState()
         {
-            _categoryButtonsPanel.DisposeManagedState();
+            categoryButtonsPanel.DisposeManagedState();
         }
     }
 }
