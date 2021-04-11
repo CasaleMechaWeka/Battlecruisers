@@ -24,6 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private LoadoutItemColourController _loadoutItemColourController;
         private CategoryButtonsPanel _categoryButtonsPanel;
 
+        // FELIX Assign elments via inspector instead of GetComponent() :)
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
