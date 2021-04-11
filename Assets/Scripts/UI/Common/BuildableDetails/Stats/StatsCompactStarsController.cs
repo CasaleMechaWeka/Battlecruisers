@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             Assert.IsTrue(index < EXPECTED_NUM_OF_DICE_STARS);
 
             activeDiceStars.sprite = diceStars[index];
+            activeDiceStars.color = comparisonResult.RowColour;
         }
     }
 }

@@ -18,15 +18,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 			ShowResult(value.ToString(), comparisonResult);
 		}
 
-		public void ShowResult(float value, ComparisonResult comparisonResult)
-		{
-			ShowResult(value.ToString(), comparisonResult);
-		}
-
 		public void ShowResult(string value, ComparisonResult comparisonResult)
 		{
 			base.ShowResult(comparisonResult);
+
 			rowValue.text = value;
+			rowValue.color = comparisonResult.RowColour;
 		}
 	}
 }
