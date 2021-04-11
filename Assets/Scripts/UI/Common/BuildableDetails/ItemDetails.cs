@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 	{
 		public Text itemName, itemDescription;
 		public Image itemImage;
+        public GameObject rightSide;
         private StatsController<TItem> _statsController;
         
         protected TItem _item;
@@ -22,7 +23,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 		public void Initialise()
         {
-            Helper.AssertIsNotNull(itemName, itemDescription, itemImage);
+            Helper.AssertIsNotNull(itemName, itemDescription, itemImage, rightSide);
 
             _statsController = GetStatsController();
             Assert.IsNotNull(_statsController);
@@ -49,8 +50,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 			gameObject.SetActive(true);
 
-            // There is only space for the image if there is no comparison item
-            itemImage.enabled = itemToCompareTo == null;
+            // There is only space for the right side if there is no comparison item
+            rightSide.SetActive(itemToCompareTo == null);
 		}
 
         public void Hide()
