@@ -31,7 +31,15 @@ namespace BattleCruisers.Utils
         {
             foreach (object obj in objs)
             {
-                Assert.IsNotNull(obj);
+                // Unity has custom null behaviour, so handle that
+                if (obj is UnityEngine.Object unityObject)
+                {
+                    Assert.IsTrue(unityObject);
+                }
+                else
+                {
+                    Assert.IsNotNull(obj);
+                }
             }
         }
 
