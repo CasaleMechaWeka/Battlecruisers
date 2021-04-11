@@ -2,6 +2,9 @@
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
+    // FELIX  After loot details done:
+    // + Purge stats prefabs
+    // + Purge classe (including this class)
     public class StatsRowStarsController : StatsRow
 	{
         private StarController[] _stars;
