@@ -24,6 +24,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private LoadoutItemColourController _loadoutItemColourController;
         private CategoryButtonsPanel _categoryButtonsPanel;
 
+        public CompareButton compareButton;
+        public SelectCruiserButton selectCruiserButton;
+
         // FELIX Assign elments via inspector instead of GetComponent() :)
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -35,6 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             base.Initialise(screensSceneGod);
 
+            Helper.AssertIsNotNull(compareButton, selectCruiserButton);
             Helper.AssertIsNotNull(dataProvider, prefabFactory);
 
             _dataProvider = dataProvider;
@@ -64,12 +68,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _comparingFamilyTracker = new ComparingItemFamilyTracker();
             IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
 
-            CompareButton compareButton = GetComponentInChildren<CompareButton>();
-            Assert.IsNotNull(compareButton);
             compareButton.Initialise(soundPlayer, _itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
-
-            SelectCruiserButton selectCruiserButton = GetComponentInChildren<SelectCruiserButton>();
-            Assert.IsNotNull(selectCruiserButton);
             selectCruiserButton
                 .Initialise(
                     soundPlayer,
