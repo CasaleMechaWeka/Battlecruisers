@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public class StatsRowNumberController : StatsRow
+    public class NumberStatValue : StatsValue
 	{
 		public Text rowValue;
 

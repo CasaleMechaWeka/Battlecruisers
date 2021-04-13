@@ -7,8 +7,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public abstract class BuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
 	{
-        public StatsRowNumberController drones, buildTime;
-        public StatsCompactStarsController health, cruiserDamage, shipDamage, airDamage;
+        public NumberStatValue drones, buildTime;
+        public StarsStatValue health, cruiserDamage, shipDamage, airDamage;
 
         public override void Initialise()
         {
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             ShowDamageStat(airDamage, GetAntiAirDamage(item), GetAntiAirDamage(itemToCompareTo), _antiAirDamageConverter);
         }
 
-        private void ShowDamageStat(StatsCompactStarsController damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
+        private void ShowDamageStat(StarsStatValue damageStatsRow, float damagePerS, float comparingItemDamagePerS, IValueToStarsConverter converter)
         {
             bool shouldShowRow = damagePerS > 0;
             damageStatsRow.gameObject.SetActive(shouldShowRow);

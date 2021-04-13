@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class UnitStatsController : BuildableStatsController<IUnit>
 	{
-        public StatsCompactStarsController speed;
+        public StarsStatValue speed;
 
         public override void Initialise()
         {

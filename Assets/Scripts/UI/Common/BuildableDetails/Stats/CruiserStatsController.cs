@@ -6,8 +6,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
     public class CruiserStatsController : StatsController<ICruiser>
 	{
-        public StatsCompactStarsController health;
-        public StatsRowNumberController platformSlots, deckSlots, utilitySlots, mastSlots;
+        public StarsStatValue health;
+        public NumberStatValue platformSlots, deckSlots, utilitySlots, mastSlots;
 
         public override void Initialise()
         {

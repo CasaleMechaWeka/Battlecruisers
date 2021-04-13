@@ -4,13 +4,12 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public abstract class StatsRow : MonoBehaviour
+    public abstract class StatsValue : MonoBehaviour
 	{
         public CanvasGroup canvasGroup;
         public Image border, icon;
         // Optional
         public Text label;
-
 
         public virtual void Initialise()
         {
