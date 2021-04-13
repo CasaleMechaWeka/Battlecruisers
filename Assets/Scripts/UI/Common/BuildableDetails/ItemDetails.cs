@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 	{
 		public Text itemName, itemDescription;
 		public Image itemImage;
+        // FELIX  Only loadout needs this. Don't require Loot & BattleScene to provide bogus input :/
         public GameObject rightSide;
         private StatsController<TItem> _statsController;
         
