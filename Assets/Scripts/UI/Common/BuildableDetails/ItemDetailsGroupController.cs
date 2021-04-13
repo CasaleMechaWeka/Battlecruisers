@@ -1,36 +1,34 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Utils;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class ItemDetailsGroupController : MonoBehaviour, IItemDetailsGroup
     {
-        public IComparableItemDetails<IBuilding> BuildingDetails { get; private set; }
-        public IComparableItemDetails<IUnit> UnitDetails { get; private set; }
-        public IComparableItemDetails<ICruiser> HullDetails { get; private set; }
+        public BuildingDetailsController buildingDetails;
+        public IComparableItemDetails<IBuilding> BuildingDetails => buildingDetails;
+
+        public UnitDetailsController unitDetails;
+        public IComparableItemDetails<IUnit> UnitDetails => unitDetails;
+
+        public CruiserDetailsController cruiserDetails;
+        public IComparableItemDetails<ICruiser> HullDetails => cruiserDetails;
 
         public void Initialise()
         {
-            ComparableBuildingDetailsController buildingDetails = GetComponentInChildren<ComparableBuildingDetailsController>();
-            Assert.IsNotNull(buildingDetails);
+            Helper.AssertIsNotNull(buildingDetails, unitDetails, cruiserDetails);
+
             buildingDetails.Initialise();
-            BuildingDetails = buildingDetails;
-            BuildingDetails.Hide();
+            buildingDetails.Hide();
 
-            ComparableUnitDetailsController unitDetails = GetComponentInChildren<ComparableUnitDetailsController>();
-            Assert.IsNotNull(unitDetails);
             unitDetails.Initialise();
-            UnitDetails = unitDetails;
-            UnitDetails.Hide();
+            unitDetails.Hide();
 
-            ComparableCruiserDetailsController cruiserDetails = GetComponentInChildren<ComparableCruiserDetailsController>();
-            Assert.IsNotNull(cruiserDetails);
             cruiserDetails.Initialise();
-            HullDetails = cruiserDetails;
-            HullDetails.Hide();
+            cruiserDetails.Hide();
         }
     }
 }
