@@ -14,17 +14,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 	{
 		public Text itemName, itemDescription;
 		public Image itemImage;
-        // FELIX  Only loadout needs this. Don't require Loot & BattleScene to provide bogus input :/
-        public GameObject rightSide;
         private StatsController<TItem> _statsController;
         
         protected TItem _item;
 
         public event EventHandler Dismissed;
 
-		public void Initialise()
+		public virtual void Initialise()
         {
-            Helper.AssertIsNotNull(itemName, itemDescription, itemImage, rightSide);
+            Helper.AssertIsNotNull(itemName, itemDescription, itemImage);
 
             _statsController = GetStatsController();
             Assert.IsNotNull(_statsController);
@@ -50,9 +48,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             itemImage.sprite = item.Sprite;
 
 			gameObject.SetActive(true);
-
-            // There is only space for the right side if there is no comparison item
-            rightSide.SetActive(itemToCompareTo == null);
 		}
 
         public void Hide()
