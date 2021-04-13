@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Categorisation;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public abstract class BuildableCompactStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
+    public abstract class BuildableStatsController<TItem> : StatsController<TItem> where TItem : class, IBuildable
 	{
         public StatsRowNumberController drones, buildTime;
         public StatsCompactStarsController health, cruiserDamage, shipDamage, airDamage;

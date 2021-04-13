@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public class UnitCompactStatsController : BuildableCompactStatsController<IUnit>
+    public class UnitStatsController : BuildableStatsController<IUnit>
 	{
         public StatsCompactStarsController speed;
 
