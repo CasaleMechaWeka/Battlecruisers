@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
 {
-    public class CruiserCompactStatsController : StatsController<ICruiser>
+    public class CruiserStatsController : StatsController<ICruiser>
 	{
         public StatsCompactStarsController health;
         public StatsRowNumberController platformSlots, deckSlots, utilitySlots, mastSlots;
