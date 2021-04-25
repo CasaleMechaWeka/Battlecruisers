@@ -13,10 +13,10 @@ namespace BattleCruisers.Utils.Localisation
         void Start()
         {
             _text = GetComponent<Text>();
-            Assert.IsNotNull(_text, $"{nameof(AllCaps)} should only be attached to a game object that has a {nameof(Text)} element.");
+            Assert.IsNotNull(_text, $"{gameObject.name}: {nameof(AllCaps)} should only be attached to a game object that has a {nameof(Text)} element.");
 
             _localizeStringEvent = GetComponent<LocalizeStringEvent>();
-            Assert.IsNotNull(_localizeStringEvent, $"{nameof(AllCaps)} should only be attached to a game object that has a {nameof(LocalizeStringEvent)} element.");
+            Assert.IsNotNull(_localizeStringEvent, $"{gameObject.name}: {nameof(AllCaps)} should only be attached to a game object that has a {nameof(LocalizeStringEvent)} element.");
 
             _localizeStringEvent.OnUpdateString.AddListener(OnUpdateString);
         }
