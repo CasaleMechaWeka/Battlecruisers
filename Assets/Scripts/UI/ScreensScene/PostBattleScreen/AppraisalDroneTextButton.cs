@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -12,7 +11,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private AppraisalSectionController _appraisalSection;
         private string _appraisalText;
         private ISingleSoundPlayer _soundPlayer;
-        private ILocTable _screensSceneStrings;
 
         public Text levelNumText;
 
@@ -20,22 +18,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             AppraisalSectionController appraisalSection, 
             string appraisalText, 
             ISingleSoundPlayer soundPlayer,
-            int levelNum,
-            ILocTable screensSceneStrings)
+            int levelNum)
         {
             Assert.IsNotNull(levelNumText);
-            Helper.AssertIsNotNull(appraisalSection, soundPlayer, screensSceneStrings);
+            Helper.AssertIsNotNull(appraisalSection, soundPlayer);
 
             _appraisalSection = appraisalSection;
             _appraisalText = appraisalText;
             _soundPlayer = soundPlayer;
             levelNumText.text = levelNum.ToString();
-            _screensSceneStrings = screensSceneStrings;
         }
 
         public void ShowAppraisalText()
         {
-            _appraisalSection.Initialise(_appraisalText, _screensSceneStrings, _soundPlayer);
+            _appraisalSection.Initialise(_appraisalText, _soundPlayer);
         }
     }
 }

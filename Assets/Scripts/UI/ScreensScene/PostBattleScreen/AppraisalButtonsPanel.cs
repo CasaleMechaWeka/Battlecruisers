@@ -2,7 +2,6 @@
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,8 +20,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             AppraisalDroneTextButton[] buttons = GetComponentsInChildren<AppraisalDroneTextButton>();
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, buttons.Length);
 
-            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-
             for (int i = 0; i < buttons.Length; ++i)
             {
                 int levelNum = i + 1;
@@ -32,8 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         appraisalSection,
                         trashData.AppraisalDroneText,
                         soundPlayer,
-                        levelNum,
-                        screensSceneStrings);
+                        levelNum);
             }
         }
     }
