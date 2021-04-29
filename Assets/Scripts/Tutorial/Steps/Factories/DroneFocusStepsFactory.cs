@@ -129,7 +129,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_slidingPanelWaitStepFactory.CreateInformatorShownWaitStep());
 
             // Explain drone focus buttons
-            string buttonText = _commonStrings.GetString("UI/Informator/DronesButton");
+            string buttonText = _commonStrings.GetString("Common/Builders");
             string clickBuildersButtonBase = _tutorialStrings.GetString("Steps/DroneFocus/ClickBuildersButton");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
