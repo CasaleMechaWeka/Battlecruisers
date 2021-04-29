@@ -7,13 +7,18 @@ namespace BattleCruisers.Tutorial
 {
     public class TextDisplayer : MonoBehaviour, ITextDisplayer
     {
+        private GameObject _parent;
+
         private Text _text;
         public string Text => _text.text;
 
         public event EventHandler TextChanged;
 
-        public void Initialise()
+        public void Initialise(GameObject parent)
         {
+            Assert.IsNotNull(parent);
+            _parent = parent;
+
             _text = GetComponentInChildren<Text>();
             Assert.IsNotNull(_text);
 
@@ -22,9 +27,9 @@ namespace BattleCruisers.Tutorial
 
         public void DisplayText(string textToDisplay)
         {
-            if (!gameObject.activeSelf)
+            if (!_parent.activeSelf)
             {
-                gameObject.SetActive(true);
+                _parent.SetActive(true);
             }
 
             _text.text = textToDisplay;

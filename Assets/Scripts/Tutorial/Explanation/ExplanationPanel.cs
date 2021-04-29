@@ -12,25 +12,26 @@ namespace BattleCruisers.Tutorial.Explanation
         private const float EXPANDED_HEIGHT = 437;
         private const float SHRUNK_HEIGHT = 220;
 
-        public ITextDisplayer TextDisplayer { get; private set; }
-        public IExplanationDismissButton OkButton { get; private set; }
-        public IExplanationDismissButton DoneButton { get; private set; }
+        public TextDisplayer textDisplayer;
+        public ITextDisplayer TextDisplayer => textDisplayer;
+
+        public ExplanationDismissButton okButton;
+        public IExplanationDismissButton OkButton => okButton;
+
+        public ExplanationDismissButton doneButton;
+        public IExplanationDismissButton DoneButton => doneButton;
 
         public void Initialise(ISingleSoundPlayer soundPlayer)
         {
-            TextDisplayer textDisplayer = GetComponentInChildren<TextDisplayer>(includeInactive: true);
-            Assert.IsNotNull(textDisplayer);
-            textDisplayer.Initialise();
-            TextDisplayer = textDisplayer;
+            Helper.AssertIsNotNull(textDisplayer, okButton, doneButton);
+            Assert.IsNotNull(soundPlayer);
 
-            ExplanationDismissButton okButton = transform.FindNamedComponent<ExplanationDismissButton>("OkButton");
+            textDisplayer.Initialise(gameObject);
+
             okButton.Initialise(soundPlayer);
-            OkButton = okButton;
             OkButton.Enabled = false;
 
-            ExplanationDismissButton doneButton = transform.FindNamedComponent<ExplanationDismissButton>("DoneButton");
             doneButton.Initialise(soundPlayer);
-            DoneButton = doneButton;
             DoneButton.Enabled = false;
 
             _transform = transform.Parse<RectTransform>();
