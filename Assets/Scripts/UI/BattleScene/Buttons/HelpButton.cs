@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
+    // FELIX  Will be split into 2 different buttons (off state, normal canvas AND on state, paused help label canvas)
     public class HelpButton : CanvasGroupButton
     {
         private BroadcastingFilter _helpLabelsVisibilityFilter;
