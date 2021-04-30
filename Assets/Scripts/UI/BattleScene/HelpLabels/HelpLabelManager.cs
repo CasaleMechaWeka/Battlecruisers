@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
                 return;
             }
 
-            _helpState = _helpStateFinder.FindHelpStat();
+            _helpState = _helpStateFinder.FindHelpState();
             _helpState.ShowHelpLabels();
             _pauseGameManager.PauseGame();
         }

@@ -2,6 +2,6 @@
 {
     public interface IHelpStateFinder
     {
-        IHelpState FindHelpStat();
+        IHelpState FindHelpState();
     }
 }
