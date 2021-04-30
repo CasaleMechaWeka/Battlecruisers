@@ -28,9 +28,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public IComparableItemDetails<ICruiser> CruiserDetails => cruiserDetails;
 
         public SlidingPanel informatorPanelExtended;
+        public ISlidingPanel ExtendedPanel => informatorPanelExtended;
 
         public InformatorButtons buttons;
         public IInformatorButtons Buttons => buttons;
+
 
         public void Initialise(
             IUIManager uiManager,

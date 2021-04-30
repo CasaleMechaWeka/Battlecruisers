@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         IComparableItemDetails<IUnit> UnitDetails { get; }
         IComparableItemDetails<ICruiser> CruiserDetails { get; }
         IInformatorButtons Buttons { get; }
+        ISlidingPanel ExtendedPanel { get; }
 
         void Show(ITarget item);
     }
