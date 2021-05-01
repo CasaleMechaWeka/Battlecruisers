@@ -12,6 +12,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -58,6 +59,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
         private PausableAudioListener _pausableAudioListener;
+        private IHelpLabelManager _helpLabelManager;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -68,12 +70,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public RightPanelInitialiser rightPanelInitialiser;
         public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
+        public HelpLabelInitialiser helpLabelInitialiser;
 
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
 
-            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController, helpLabelInitialiser);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -192,6 +195,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.UISoundPlayer,
                     new NavigationPermitterManager(navigationPermitters));
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
+            _helpLabelManager = helpLabelInitialiser.Initialise(leftPanelComponents, rightPanelComponents, pauseGameManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
