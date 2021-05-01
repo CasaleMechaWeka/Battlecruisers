@@ -12,6 +12,8 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels.States
         public override void ShowHelpLabels()
         {
             base.ShowHelpLabels();
+
+            _informatorExtendedPanel.Hide();
             _helpLabels.Informator.Show();
         }
     }

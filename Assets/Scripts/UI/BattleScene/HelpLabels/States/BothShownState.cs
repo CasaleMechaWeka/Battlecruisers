@@ -13,6 +13,8 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels.States
         {
             base.ShowHelpLabels();
 
+            _informatorExtendedPanel.Hide();
+
             _helpLabels.BuildMenu.Show();
             _helpLabels.Informator.Show();
         }
