@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.UI.Panels;
 using BattleCruisers.Utils;
 
-namespace BattleCruisers.UI.BattleScene.HelpLabels
+namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
     public abstract class HelpState : IHelpState
     {

@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.UI.BattleScene.HelpLabels
+﻿namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
     public interface IHelpStateFinder
     {
