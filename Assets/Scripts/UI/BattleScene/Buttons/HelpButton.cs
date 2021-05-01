@@ -42,6 +42,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override void OnClicked()
         {
             base.OnClicked();
+            Logging.Log(Tags.HELP_LABELS, $"_helpLabelManager.IsShown.Value: {_helpLabelManager.IsShown.Value}");
 
             if (_helpLabelManager.IsShown.Value)
             {

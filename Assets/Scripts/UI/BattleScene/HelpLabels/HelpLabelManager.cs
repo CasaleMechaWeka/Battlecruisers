@@ -30,6 +30,8 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
 
         public void ShowHelpLables()
         {
+            Logging.LogMethod(Tags.HELP_LABELS);
+
             if (_helpState != null)
             {
                 return;
@@ -38,10 +40,13 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
             _helpState = _helpStateFinder.FindHelpState();
             _helpState.ShowHelpLabels();
             _pauseGameManager.PauseGame();
+            _isShown.Value = true;
         }
 
         public void HideHelpLabels()
         {
+            Logging.LogMethod(Tags.HELP_LABELS);
+
             if (_helpState == null)
             {
                 return;
@@ -50,6 +55,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
             _helpState.HideHelpLables();
             _helpState = null;
             _pauseGameManager.ResumeGame();
+            _isShown.Value = false;
         }
     }
 }

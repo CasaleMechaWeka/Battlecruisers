@@ -56,7 +56,8 @@ namespace BattleCruisers.Utils
 		public const string USER_CHOSEN_TARGET = "UserChosenTarget";
 
         // UI
-		public const string LOADOUT_SCREEN = "LoadoutScreen";
+		public const string HELP_LABELS = "HelpLabels";
+        public const string LOADOUT_SCREEN = "LoadoutScreen";
         public const string LOCALISATION = "Loc";
         public const string MASKS = "Masks";
         public const string PREFAB_KEY_HELPER = "StaticPrefabKeyHelper";
@@ -197,6 +198,9 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.USER_CHOSEN_TARGET, false);
 
             // UI
+            // FELIX
+            tagsToActiveness.Add(Tags.HELP_LABELS, true);
+            //tagsToActiveness.Add(Tags.HELP_LABELS, false);
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
             tagsToActiveness.Add(Tags.LOCALISATION, false);
             tagsToActiveness.Add(Tags.MASKS, false);
