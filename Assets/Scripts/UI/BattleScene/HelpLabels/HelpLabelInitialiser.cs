@@ -19,6 +19,8 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
             Helper.AssertIsNotNull(helpLabelCanvas, helpLabels);
             Helper.AssertIsNotNull(leftPanelComponents, rightPanelComponents, pauseGameManager);
 
+            helpLabels.Initialise();
+
             ISlidingPanel extendedInformatorPanel = rightPanelComponents.InformatorPanel.ExtendedPanel;
 
             IHelpStateFinder helpStateFinder
