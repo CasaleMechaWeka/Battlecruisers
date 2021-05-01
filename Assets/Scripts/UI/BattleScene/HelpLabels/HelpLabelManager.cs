@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.UI.BattleScene.HelpLabels.States;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
@@ -13,12 +14,18 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
         private readonly IPauseGameManager _pauseGameManager;
         private IHelpState _helpState;
 
+        private ISettableBroadcastingProperty<bool> _isShown;
+        public IBroadcastingProperty<bool> IsShown { get; }
+
         public HelpLabelManager(IHelpStateFinder helpStateFinder, IPauseGameManager pauseGameManager)
         {
             Helper.AssertIsNotNull(helpStateFinder, pauseGameManager);
 
             _helpStateFinder = helpStateFinder;
             _pauseGameManager = pauseGameManager;
+
+            _isShown = new SettableBroadcastingProperty<bool>(initialValue: false);
+            IsShown = new BroadcastingProperty<bool>(_isShown);
         }
 
         public void ShowHelpLables()
