@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Cruisers;
-using BattleCruisers.Cruisers.Drones;
+﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Buttons;
@@ -14,7 +12,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -32,6 +29,7 @@ namespace BattleCruisers.UI.BattleScene
         public ModalMenuController modalMenu;
         public MainMenuButtonController modalMainMenuButton;
         public HelpLabel helpLabels;
+        public HelpButton helpButton;
 
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -49,7 +47,7 @@ namespace BattleCruisers.UI.BattleScene
             ISingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager)
         {
-            Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels);
+            Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels, helpButton);
             Helper.AssertIsNotNull(
                 applicationModel, 
                 uiManager, 
@@ -66,7 +64,6 @@ namespace BattleCruisers.UI.BattleScene
             IMainMenuManager mainMenuManager = new MainMenuManager(pauseGameManager, modalMenu, battleCompletionHandler, navigationPermitterManager);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
-            SetupHelpButton(soundPlayer, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
             SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return 
@@ -74,7 +71,8 @@ namespace BattleCruisers.UI.BattleScene
                     informator, 
                     mainMenuManager,
                     modalMenu,
-                    speedComponents);
+                    speedComponents,
+                    helpButton);
         }
 
         private IInformatorPanel SetupInformator(
@@ -112,13 +110,6 @@ namespace BattleCruisers.UI.BattleScene
             mainMenuButton.Initialise(soundPlayer, mainMenuManager);
 
             modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
-        }
-
-        private void SetupHelpButton(ISingleSoundPlayer soundPlayer, BroadcastingFilter helpLabelsVisibilityFilter)
-        {
-            HelpButton helpButton = GetComponentInChildren<HelpButton>();
-            Assert.IsNotNull(helpButton);
-            helpButton.Initialise(soundPlayer, helpLabelsVisibilityFilter);
         }
 
         private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)

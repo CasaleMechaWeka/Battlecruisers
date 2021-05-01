@@ -195,7 +195,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.UISoundPlayer,
                     new NavigationPermitterManager(navigationPermitters));
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
-            _helpLabelManager = helpLabelInitialiser.Initialise(leftPanelComponents, rightPanelComponents, pauseGameManager);
+            _helpLabelManager = helpLabelInitialiser.Initialise(leftPanelComponents, rightPanelComponents, pauseGameManager, factoryProvider.Sound.UISoundPlayer);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());

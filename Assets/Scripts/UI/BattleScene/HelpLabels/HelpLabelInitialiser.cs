@@ -1,5 +1,7 @@
-﻿using BattleCruisers.UI.BattleScene.HelpLabels.States;
+﻿using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.HelpLabels.States;
 using BattleCruisers.UI.Panels;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using UnityEngine;
@@ -10,14 +12,16 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
     {
         public Panel helpLabelCanvas;
         public HelpLabelsController helpLabels;
+        public HelpButton modalHelpButton;
 
         public IHelpLabelManager Initialise(
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
-            IPauseGameManager pauseGameManager)
+            IPauseGameManager pauseGameManager,
+            ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(helpLabelCanvas, helpLabels);
-            Helper.AssertIsNotNull(leftPanelComponents, rightPanelComponents, pauseGameManager);
+            Helper.AssertIsNotNull(helpLabelCanvas, helpLabels, modalHelpButton);
+            Helper.AssertIsNotNull(leftPanelComponents, rightPanelComponents, pauseGameManager, soundPlayer);
 
             helpLabels.Initialise();
 
@@ -32,10 +36,16 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
                     new InformatorShownState(helpLabelCanvas, extendedInformatorPanel, helpLabels),
                     new BothShownState(helpLabelCanvas, extendedInformatorPanel, helpLabels));
 
-            return
-                new HelpLabelManager(
+            IHelpLabelManager helpLabelManager
+                = new HelpLabelManager(
                     helpStateFinder,
                     pauseGameManager);
+
+            // Initialised here because of circular dependency: HelpButton > HelpLabelManager > UI (Informator/Selector)
+            rightPanelComponents.HelpButton.Initialise(soundPlayer, helpLabelManager);
+            modalHelpButton.Initialise(soundPlayer, helpLabelManager);
+
+            return helpLabelManager;
         }
     }
 }
