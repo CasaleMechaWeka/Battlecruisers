@@ -43,7 +43,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
 		void Update()
 		{
-			if (Input.GetKeyUp(KeyCode.Escape))
+			if (Input.GetKeyUp(KeyCode.Escape)
+				&& _canvas != null)
 			{
 				if (_canvas.enabled)
                 {
