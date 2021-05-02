@@ -3,7 +3,6 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
-    // FELIX  Test :D
     public class HelpStateFinder : IHelpStateFinder
     {
         private readonly ISlidingPanel _informatorPanel, _selectorPanel;
