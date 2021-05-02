@@ -1,5 +1,8 @@
 ﻿using Assets.Scripts.Hotkeys.BuildableButtons;
+using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.UI.BattleScene.GameSpeed;
+using BattleCruisers.UI.BattleScene.HelpLabels;
+using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
@@ -14,6 +17,7 @@ namespace BattleCruisers.Hotkeys
         // Keep references to avoid garbage collection
         private NavigationHotkeyListener _navigationHotkeyListener;
         private GameSpeedHotkeyListener _gameSpeedHotkeyListener;
+        private EscapeHandler _escapeHandler;
 
         public BuildableButtonsHotkeyInitialiser buildableButtonsHotkeyInitialiser;
         public BuildingCategoryButtonsHotkeyInitialiser buildingCategoryButtonsHotkeyInitialiser;
@@ -24,17 +28,24 @@ namespace BattleCruisers.Hotkeys
             IUpdater updater,
             IBroadcastingFilter hotkeyFilter,
             ICameraFocuser cameraFocuser,
-            ISpeedComponents speedComponents)
+            ISpeedComponents speedComponents,
+            IMainMenuManager mainMenuManager,
+            IHelpLabelManager helpLabelManager)
         {
             Helper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
-            Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents);
+            Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager, helpLabelManager);
             
+            // Hotkeys (only for PC)
             IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
 
             _navigationHotkeyListener = new NavigationHotkeyListener(hotkeyDetector, cameraFocuser);
             _gameSpeedHotkeyListener = new GameSpeedHotkeyListener(hotkeyDetector, speedComponents);
             buildableButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
             buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
+
+            // Escape (all platforms)
+            IEscapeDetector escapeDetector = new EscapeDetector(input, updater);
+            _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager, helpLabelManager);
         }
 
         private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
