@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
             else
             {
-                _helpLabelManager.ShowHelpLables();
+                _helpLabelManager.ShowHelpLabels();
             }
         }
     }

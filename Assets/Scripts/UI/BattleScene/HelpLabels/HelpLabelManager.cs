@@ -8,7 +8,6 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
     // FELIX  Target button help label string :D
-    // FELIX  Test :D
     public class HelpLabelManager : ModalManager, IHelpLabelManager
     {
         private readonly IHelpStateFinder _helpStateFinder;
@@ -31,7 +30,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
             IsShown = new BroadcastingProperty<bool>(_isShown);
         }
 
-        public void ShowHelpLables()
+        public void ShowHelpLabels()
         {
             Logging.LogMethod(Tags.HELP_LABELS);
 

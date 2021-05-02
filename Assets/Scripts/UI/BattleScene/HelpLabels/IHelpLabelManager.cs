@@ -7,6 +7,6 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
         IBroadcastingProperty<bool> IsShown { get; }
 
         void HideHelpLabels();
-        void ShowHelpLables();
+        void ShowHelpLabels();
     }
 }
