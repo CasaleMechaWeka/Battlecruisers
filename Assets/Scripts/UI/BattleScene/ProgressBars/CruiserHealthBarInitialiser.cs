@@ -17,14 +17,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         private Image _lowHealthFeedback;
         private IHealthStateMonitor _cruiserHealthMonitor;
 
-        public HelpLabel helpLabel;
-
         public IHighlightable Initialise(ICruiser cruiser)
         {
             Assert.IsNotNull(cruiser);
-
-            Assert.IsNotNull(helpLabel);
-            helpLabel.Initialise();
 
             return SetupHealthBar(cruiser);
         }
