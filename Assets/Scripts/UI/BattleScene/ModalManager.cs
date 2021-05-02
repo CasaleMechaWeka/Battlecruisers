@@ -4,7 +4,6 @@ using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    // FELIX  Test, use MainMenuManagerTests
     public abstract class ModalManager
     {
         private readonly INavigationPermitterManager _navigationPermitterManager;
