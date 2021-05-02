@@ -5,49 +5,35 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.MainMenu
 {
-    public class MainMenuManager : IMainMenuManager
+    public class MainMenuManager : ModalManager, IMainMenuManager
     {
-        private readonly IPauseGameManager _pauseGameManager;
         private readonly IModalMenu _modalMenu;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
-        private readonly INavigationPermitterManager _navigationPermitterManager;
-
-        private NavigationPermittersState _stateOnShowMenu;
 
         public event EventHandler Dismissed;
 
         public MainMenuManager(
+            INavigationPermitterManager navigationPermitterManager,
             IPauseGameManager pauseGameManager,
             IModalMenu modalMenu,
-            IBattleCompletionHandler battleCompletionHandler,
-            INavigationPermitterManager navigationPermitterManager)
+            IBattleCompletionHandler battleCompletionHandler)
+            : base (navigationPermitterManager, pauseGameManager)
         {
-            Helper.AssertIsNotNull(pauseGameManager, modalMenu, battleCompletionHandler, navigationPermitterManager);
+            Helper.AssertIsNotNull(modalMenu, battleCompletionHandler);
 
-            _pauseGameManager = pauseGameManager;
             _modalMenu = modalMenu;
             _battleCompletionHandler = battleCompletionHandler;
-            _navigationPermitterManager = navigationPermitterManager;
         }
 
         public void ShowMenu()
         {
-            if (_stateOnShowMenu == null)
-            {
-                _stateOnShowMenu = _navigationPermitterManager.PauseNavigation();
-            }
-            _pauseGameManager.PauseGame();
+            base.ShowModal();
             _modalMenu.ShowMenu();
         }
 
         public void DismissMenu()
         {
-            if (_stateOnShowMenu != null)
-            {
-                _navigationPermitterManager.RestoreNavigation(_stateOnShowMenu);
-                _stateOnShowMenu = null;
-            }
-            _pauseGameManager.ResumeGame();
+            base.HideModal();
             _modalMenu.HideMenu();
             Dismissed?.Invoke(this, EventArgs.Empty);
         }

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.HelpLabels.States;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -18,10 +19,11 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             IPauseGameManager pauseGameManager,
-            ISingleSoundPlayer soundPlayer)
+            ISingleSoundPlayer soundPlayer,
+            INavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(helpLabelCanvas, helpLabels, modalHelpButton);
-            Helper.AssertIsNotNull(leftPanelComponents, rightPanelComponents, pauseGameManager, soundPlayer);
+            Helper.AssertIsNotNull(leftPanelComponents, rightPanelComponents, pauseGameManager, soundPlayer, navigationPermitterManager);
 
             helpLabels.Initialise();
 
@@ -38,8 +40,9 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
 
             IHelpLabelManager helpLabelManager
                 = new HelpLabelManager(
-                    helpStateFinder,
-                    pauseGameManager);
+                    navigationPermitterManager,
+                    pauseGameManager,
+                    helpStateFinder);
 
             // Initialised here because of circular dependency: HelpButton > HelpLabelManager > UI (Informator/Selector)
             rightPanelComponents.HelpButton.Initialise(soundPlayer, helpLabelManager);

@@ -183,6 +183,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser.PopulationLimitMonitor,
                     dataProvider.StaticData);
 
+            NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             RightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
                     applicationModel,
@@ -193,9 +194,15 @@ namespace BattleCruisers.Scenes.BattleScene
                     pauseGameManager,
                     battleCompletionHandler,
                     factoryProvider.Sound.UISoundPlayer,
-                    new NavigationPermitterManager(navigationPermitters));
+                    navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
-            _helpLabelManager = helpLabelInitialiser.Initialise(leftPanelComponents, rightPanelComponents, pauseGameManager, factoryProvider.Sound.UISoundPlayer);
+            _helpLabelManager 
+                = helpLabelInitialiser.Initialise(
+                    leftPanelComponents, 
+                    rightPanelComponents, 
+                    pauseGameManager, 
+                    factoryProvider.Sound.UISoundPlayer, 
+                    navigationPermitterManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());

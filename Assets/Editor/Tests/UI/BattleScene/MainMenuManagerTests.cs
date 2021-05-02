@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
             _battleCompletionHandler = Substitute.For<IBattleCompletionHandler>();
             _navigationPermitterManager = Substitute.For<INavigationPermitterManager>();
 
-            _mainMenuManager = new MainMenuManager(_pauseGameManager, _modalMenu, _battleCompletionHandler, _navigationPermitterManager);
+            _mainMenuManager = new MainMenuManager(_navigationPermitterManager, _pauseGameManager, _modalMenu, _battleCompletionHandler);
 
             _preMenuState = new NavigationPermittersState(default, default, default, default);
             _navigationPermitterManager.PauseNavigation().Returns(_preMenuState);
