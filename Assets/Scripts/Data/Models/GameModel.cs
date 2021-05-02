@@ -20,6 +20,8 @@ namespace BattleCruisers.Data.Models
         {
             public const int PreShowHelpLabel = 0;
             public const int WithShowHelpLabel = 1;
+            // FELIX Use :D
+            public const int RemovedShowHelpLabel = 2;
         }
 
         [SerializeField]
@@ -55,9 +57,6 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private HotkeysModel _hotkeys;
         public HotkeysModel Hotkeys => _hotkeys;
-
-        [SerializeField]
-        private bool _showHelpLabels;
 
         [SerializeField]
         private int _version;
@@ -115,12 +114,6 @@ namespace BattleCruisers.Data.Models
             set { _skirmish = value; }
         }
 
-        public bool ShowHelpLabels
-        {
-            get { return _showHelpLabels; }
-            set { _showHelpLabels = value; }
-        }
-
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
@@ -154,7 +147,6 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
-            _showHelpLabels = true;
         }
 
         public GameModel(
@@ -263,11 +255,9 @@ namespace BattleCruisers.Data.Models
                 _hotkeys = new HotkeysModel();
             }
 
-            // Ensure help label doesn't suddenly appear by default for existing users
-            if (_version == ModelVersion.PreShowHelpLabel)
+            if (_version != ModelVersion.RemovedShowHelpLabel)
             {
-                _showHelpLabels = false;
-                _version = ModelVersion.WithShowHelpLabel;
+                _version = ModelVersion.RemovedShowHelpLabel;
             }
         }
 
@@ -279,7 +269,6 @@ namespace BattleCruisers.Data.Models
                 && other.HasAttemptedTutorial == HasAttemptedTutorial
                 && other.NumOfLevelsCompleted == NumOfLevelsCompleted
                 && other.SelectedLevel == SelectedLevel
-                && other.ShowHelpLabels == ShowHelpLabels
                 && PlayerLoadout.SmartEquals(other.PlayerLoadout)
                 && LastBattleResult.SmartEquals(other.LastBattleResult)
                 && Settings.SmartEquals(other.Settings)
@@ -300,7 +289,6 @@ namespace BattleCruisers.Data.Models
                 HasAttemptedTutorial, 
                 NumOfLevelsCompleted, 
                 SelectedLevel,
-                ShowHelpLabels,
                 PlayerLoadout, 
                 LastBattleResult, 
                 Settings,

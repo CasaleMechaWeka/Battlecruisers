@@ -84,7 +84,8 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         {
             Assert.AreEqual(1, _battleCompletedCount);
             _applicationModel.Received().ShowPostBattleScreen = true;
-            _applicationModel.DataProvider.GameModel.Received().ShowHelpLabels = _helpLabelVisibilityFilter.IsMatch;
+            // FELIX 
+            //_applicationModel.DataProvider.GameModel.Received().ShowHelpLabels = _helpLabelVisibilityFilter.IsMatch;
             _applicationModel.DataProvider.Received().SaveGame();
         }
 

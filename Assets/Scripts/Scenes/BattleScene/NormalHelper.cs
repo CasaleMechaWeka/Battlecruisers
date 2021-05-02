@@ -107,7 +107,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     new DeleteButtonVisibilityFilter(),
                     new BroadcastingFilter(isMatch: true),
                     new StaticBroadcastingFilter(isMatch: true),
-                    new BroadcastingFilter(_appModel.DataProvider.GameModel.ShowHelpLabels));
+                    // FELIX Remove
+                    new BroadcastingFilter(false));
         }
 
         public override IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)

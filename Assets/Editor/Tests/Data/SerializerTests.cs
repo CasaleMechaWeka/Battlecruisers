@@ -45,7 +45,6 @@ namespace BattleCruisers.Tests.Data
             _originalGameModel.NewBuildings.AddItem(new BuildingKey(BuildingCategory.Ultra, "brah"));
             _originalGameModel.NewUnits.AddItem(new UnitKey(UnitCategory.Naval, "seeeendii"));
 			_originalGameModel.SelectedLevel = 17;
-			_originalGameModel.ShowHelpLabels = true;
 			_originalGameModel.Skirmish 
 				= new SkirmishModel(
 					Difficulty.Normal, 

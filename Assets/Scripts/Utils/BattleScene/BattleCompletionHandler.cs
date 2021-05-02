@@ -55,7 +55,8 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
             }
 
-            _applicationModel.DataProvider.GameModel.ShowHelpLabels = _helpLabelsVisibilityFilter.IsMatch;
+            // FELIX  Remove
+            //_applicationModel.DataProvider.GameModel.ShowHelpLabels = _helpLabelsVisibilityFilter.IsMatch;
             _applicationModel.DataProvider.SaveGame();
 
             _applicationModel.ShowPostBattleScreen = true;
