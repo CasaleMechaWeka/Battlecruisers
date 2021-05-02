@@ -5,7 +5,6 @@ using System;
 
 namespace BattleCruisers.Hotkeys.Escape
 {
-    // FELIX  Test :)
     public class EscapeHandler
     {
         private readonly IEscapeDetector _escapeDetector;
