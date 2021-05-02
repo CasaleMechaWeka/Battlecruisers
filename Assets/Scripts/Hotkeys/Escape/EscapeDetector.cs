@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Hotkeys.Escape
 {
-    // FELIX  test
     public class EscapeDetector : IEscapeDetector
     {
         private readonly IInput _input;
