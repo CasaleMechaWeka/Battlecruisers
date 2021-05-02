@@ -24,18 +24,15 @@ namespace BattleCruisers.Tests.UI.BattleScene
         }
     }
 
-    public class ModalManagerTests
+    public class ModalManagerTests : ModalManagerTestsBase
     {
         private DummyModalManager _modalManager;
-        private IPauseGameManager _pauseGameManager;
-        private INavigationPermitterManager _navigationPermitterManager;
         private NavigationPermittersState _preMenuState;
 
         [SetUp]
-        public void TestSetup()
+        public override void TestSetup()
         {
-            _pauseGameManager = Substitute.For<IPauseGameManager>();
-            _navigationPermitterManager = Substitute.For<INavigationPermitterManager>();
+            base.TestSetup();
 
             _modalManager = new DummyModalManager(_navigationPermitterManager, _pauseGameManager);
 
