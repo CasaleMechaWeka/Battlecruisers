@@ -43,8 +43,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                             soundPlayer,
                             group.BuildingCategory, 
                             uiManager, 
-                            buttonVisibilityFilters.CategoryButtonVisibilityFilter,
-                            buttonVisibilityFilters.HelpLabelsVisibilityFilter);
+                            buttonVisibilityFilters.CategoryButtonVisibilityFilter);
                     _categoryToCategoryButtons.Add(group.BuildingCategory, button);
                 }
                 else

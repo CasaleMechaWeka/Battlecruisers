@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 	{
         private IUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
-        private FilterToggler _filterToggler, _helpLabelToggler;
+        private FilterToggler _filterToggler;
 
         public Image activeFeedback;
         protected override MaskableGraphic Graphic => activeFeedback;
@@ -35,22 +35,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             ISingleSoundPlayer soundPlayer,
             BuildingCategory expectedBuildingCategory,
             IUIManager uiManager, 
-            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter,
-            IBroadcastingFilter helpLabelEnabledFilter)
+            IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
 		{
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(activeFeedback, uiManager, shouldBeEnabledFilter, helpLabelEnabledFilter);
+            Helper.AssertIsNotNull(activeFeedback, uiManager, shouldBeEnabledFilter);
             Assert.AreEqual(Category, expectedBuildingCategory);
 
             _uiManager = uiManager;
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
 
             _filterToggler = new FilterToggler(this, this);
-
-            Togglable helpLabel = transform.FindNamedComponent<Togglable>("HelpLabel");
-            helpLabel.Initialise();
-            _helpLabelToggler = new FilterToggler(helpLabelEnabledFilter, helpLabel);
 		}
 
         private void OnDestroy()

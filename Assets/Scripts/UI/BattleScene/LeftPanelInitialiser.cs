@@ -33,14 +33,8 @@ namespace BattleCruisers.UI.BattleScene
     /// </summary>
     public class LeftPanelInitialiser : MonoBehaviour
     {
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private FilterToggler _helpLabelsVisibilityToggler;
-#pragma warning restore CS0414  // Variable is assigned but never used
-
         public DronesPanelInitialiser dronesPanelInitialiser;
         public BuildMenuInitialiser buildMenuInitialiser;
-        public HelpLabel helpLabels;
         public GameObject popLimitReachedFeedback;
 
         public LeftPanelComponents Initialise(
@@ -70,7 +64,7 @@ namespace BattleCruisers.UI.BattleScene
                 uiSoundPlayer,
                 populationLimitMonitor,
                 staticData);
-            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, helpLabels, popLimitReachedFeedback);
+            Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IBuildMenu buildMenu 
@@ -85,7 +79,6 @@ namespace BattleCruisers.UI.BattleScene
                     uiSoundPlayer, 
                     populationLimitMonitor,
                     staticData);
-            SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
@@ -128,12 +121,6 @@ namespace BattleCruisers.UI.BattleScene
                     eventSoundPlayer,
                     uiSoundPlayer,
                     populationLimitMonitor);
-        }
-
-        private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
-        {
-            helpLabels.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabelsVisibilityFilter, helpLabels);
         }
     }
 }

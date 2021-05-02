@@ -8,7 +8,6 @@ using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
@@ -28,13 +27,7 @@ namespace BattleCruisers.UI.BattleScene
     {
         public ModalMenuController modalMenu;
         public MainMenuButtonController modalMainMenuButton;
-        public HelpLabel helpLabels;
         public HelpButton helpButton;
-
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private FilterToggler _helpLabelsVisibilityToggler;
-#pragma warning restore CS0414  // Variable is assigned but never used
 
         public RightPanelComponents Initialise(
             IApplicationModel applicationModel,
@@ -47,7 +40,7 @@ namespace BattleCruisers.UI.BattleScene
             ISingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager)
         {
-            Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpLabels, helpButton);
+            Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
             Helper.AssertIsNotNull(
                 applicationModel, 
                 uiManager, 
@@ -64,7 +57,6 @@ namespace BattleCruisers.UI.BattleScene
             IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
-            SetupHelpLabels(buttonVisibilityFilters.HelpLabelsVisibilityFilter);
 
             return 
                 new RightPanelComponents(
@@ -110,12 +102,6 @@ namespace BattleCruisers.UI.BattleScene
             mainMenuButton.Initialise(soundPlayer, mainMenuManager);
 
             modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
-        }
-
-        private void SetupHelpLabels(IBroadcastingFilter helpLabelsVisibilityFilter)
-        {
-            helpLabels.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(helpLabelsVisibilityFilter, helpLabels);
         }
     }
 }

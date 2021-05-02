@@ -10,11 +10,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class SelectorPanelController : SlidingPanel
     {
-        // Keep reference to avoid garbage collection
-#pragma warning disable CS0414  // Variable is assigned but never used
-        private FilterToggler _helpLabelsVisibilityToggler;
-#pragma warning restore CS0414  // Variable is assigned but never used
-
         public void Initialise(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters, ISingleSoundPlayer soundPlayer)
         {
             base.Initialise();
@@ -24,11 +19,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             DismissSelectorPanelButtonController dismissButton = GetComponentInChildren<DismissSelectorPanelButtonController>();
             Assert.IsNotNull(dismissButton);
             dismissButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DismissButtonVisibilityFilter);
-
-            HelpLabel helpLabel = transform.GetComponentInChildren<HelpLabel>();
-            Assert.IsNotNull(helpLabel);
-            helpLabel.Initialise();
-            _helpLabelsVisibilityToggler = new FilterToggler(buttonVisibilityFilters.HelpLabelsVisibilityFilter, helpLabel);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             buildingDetails.Initialise();
             unitDetails.Initialise();
             cruiserDetails.Initialise();
-            dismissButton.Initialise(soundPlayer, uiManager, new StaticBroadcastingFilter(isMatch: true), visibilityFilters.HelpLabelsVisibilityFilter);
+            dismissButton.Initialise(soundPlayer, uiManager, new StaticBroadcastingFilter(isMatch: true));
         }
 
         public override void Hide()
