@@ -198,9 +198,7 @@ namespace BattleCruisers.Utils
             tagsToActiveness.Add(Tags.USER_CHOSEN_TARGET, false);
 
             // UI
-            // FELIX
-            tagsToActiveness.Add(Tags.HELP_LABELS, true);
-            //tagsToActiveness.Add(Tags.HELP_LABELS, false);
+            tagsToActiveness.Add(Tags.HELP_LABELS, false);
             tagsToActiveness.Add(Tags.LOADOUT_SCREEN, false);
             tagsToActiveness.Add(Tags.LOCALISATION, false);
             tagsToActiveness.Add(Tags.MASKS, false);
