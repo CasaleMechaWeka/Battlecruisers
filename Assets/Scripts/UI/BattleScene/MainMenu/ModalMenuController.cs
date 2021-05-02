@@ -41,6 +41,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			HideMenu();
 		}
 
+		// FELIX  Remove :)
 		void Update()
 		{
 			if (Input.GetKeyUp(KeyCode.Escape)
