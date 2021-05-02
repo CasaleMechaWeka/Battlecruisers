@@ -4,7 +4,7 @@ using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BattleCruisers.Tests.UI.BattleScene
+namespace BattleCruisers.Tests.UI.BattleScene.MainMenu
 {
     public class MainMenuManagerTests
     {
