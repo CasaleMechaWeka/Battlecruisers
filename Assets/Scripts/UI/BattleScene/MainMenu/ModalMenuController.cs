@@ -43,7 +43,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
 		void Update()
 		{
-			// IPAD  Adapt for IPad :P
 			if (Input.GetKeyUp(KeyCode.Escape))
 			{
 				if (_canvas.enabled)
