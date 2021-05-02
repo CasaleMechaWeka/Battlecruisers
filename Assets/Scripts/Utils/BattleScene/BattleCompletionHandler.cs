@@ -1,9 +1,8 @@
-﻿using System;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System;
 
 namespace BattleCruisers.Utils.BattleScene
 {
@@ -11,21 +10,18 @@ namespace BattleCruisers.Utils.BattleScene
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
-        private readonly IBroadcastingFilter _helpLabelsVisibilityFilter;
         private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
         public BattleCompletionHandler(
             IApplicationModel applicationModel, 
-            ISceneNavigator sceneNavigator,
-            IBroadcastingFilter helpLabelsVisibilityFilter)
+            ISceneNavigator sceneNavigator)
         {
-            Helper.AssertIsNotNull(applicationModel, sceneNavigator, helpLabelsVisibilityFilter);
+            Helper.AssertIsNotNull(applicationModel, sceneNavigator);
 
             _applicationModel = applicationModel;
             _sceneNavigator = sceneNavigator;
-            _helpLabelsVisibilityFilter = helpLabelsVisibilityFilter;
 
             _isCompleted = false;
         }
@@ -55,8 +51,6 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
             }
 
-            // FELIX  Remove
-            //_applicationModel.DataProvider.GameModel.ShowHelpLabels = _helpLabelsVisibilityFilter.IsMatch;
             _applicationModel.DataProvider.SaveGame();
 
             _applicationModel.ShowPostBattleScreen = true;

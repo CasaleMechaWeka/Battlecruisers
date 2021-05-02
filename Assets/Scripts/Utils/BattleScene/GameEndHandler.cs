@@ -28,7 +28,6 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly ITargetIndicator _targetIndicator;
         private readonly IWindManager _windManager;
         private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
-        private readonly IPermitter _helpLabelsPermitter;
         private readonly IToggleButtonGroup _speedButtonGroup;
 
         private bool _handledCruiserDeath, _handledGameEnd;
@@ -47,7 +46,6 @@ namespace BattleCruisers.Utils.BattleScene
             ITargetIndicator targetIndicator,
             IWindManager windManager,
             IBuildingCategoryPermitter buildingCategoryPermitter,
-            IPermitter helpLabelsPermitter,
             IToggleButtonGroup speedButtonGroup)
         {
             Helper.AssertIsNotNull(
@@ -61,7 +59,6 @@ namespace BattleCruisers.Utils.BattleScene
                 uiManager, 
                 targetIndicator,
                 windManager,
-                helpLabelsPermitter,
                 speedButtonGroup);
 
             _playerCruiser = playerCruiser;
@@ -75,7 +72,6 @@ namespace BattleCruisers.Utils.BattleScene
             _targetIndicator = targetIndicator;
             _windManager = windManager;
             _buildingCategoryPermitter = buildingCategoryPermitter;
-            _helpLabelsPermitter = helpLabelsPermitter;
             _speedButtonGroup = speedButtonGroup;
 
             _handledCruiserDeath = false;
@@ -103,7 +99,6 @@ namespace BattleCruisers.Utils.BattleScene
             _targetIndicator.Hide();
             _windManager.Stop();
             _buildingCategoryPermitter.AllowNoCategories();
-            _helpLabelsPermitter.IsMatch = false;
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _speedButtonGroup.SelectDefaultButton();
 

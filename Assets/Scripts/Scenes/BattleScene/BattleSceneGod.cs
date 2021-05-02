@@ -164,7 +164,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
             ILevel currentLevel = helper.GetLevel();
             string enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
-            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator, buttonVisibilityFilters.HelpLabelsVisibilityFilter);
+            IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
             LeftPanelComponents leftPanelComponents 
@@ -285,7 +285,6 @@ namespace BattleCruisers.Scenes.BattleScene
                         components.TargetIndicator,
                         windManager,
                         helper.BuildingCategoryPermitter,
-                        buttonVisibilityFilters.HelpLabelsVisibilityFilter,
                         rightPanelComponents.SpeedComponents.SpeedButtonGroup));
 
             // Cheater is only there in debug builds

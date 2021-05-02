@@ -20,7 +20,6 @@ namespace BattleCruisers.Data.Models
         {
             public const int PreShowHelpLabel = 0;
             public const int WithShowHelpLabel = 1;
-            // FELIX Use :D
             public const int RemovedShowHelpLabel = 2;
         }
 

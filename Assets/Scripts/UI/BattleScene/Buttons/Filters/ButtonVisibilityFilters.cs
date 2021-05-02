@@ -13,8 +13,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
         public IFilter<ITarget> DeletButtonVisiblityFilter  { get; }
         public IBroadcastingFilter DismissButtonVisibilityFilter  { get; }
         public IBroadcastingFilter SpeedButtonsEnabledFilter { get; }
-        // FELIX  Remove :D
-        public BroadcastingFilter HelpLabelsVisibilityFilter { get; }
 
         public ButtonVisibilityFilters(
             IBroadcastingFilter<IBuildable> buildableButtonVisibilityFilter,
@@ -22,17 +20,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             IFilter<ITarget> chooseTargetButtonVisiblityFilter,
             IFilter<ITarget> deletButtonVisiblityFilter,
             IBroadcastingFilter backButtonVisibilityFilter,
-            IBroadcastingFilter speedButtonEnabledFilter,
-            BroadcastingFilter helpLabelsVisibilityFilter)
+            IBroadcastingFilter speedButtonEnabledFilter)
         {
             Helper.AssertIsNotNull(
-                buildableButtonVisibilityFilter, 
-                categoryButtonVisibilityFilter, 
-                chooseTargetButtonVisiblityFilter, 
-                deletButtonVisiblityFilter, 
+                buildableButtonVisibilityFilter,
+                categoryButtonVisibilityFilter,
+                chooseTargetButtonVisiblityFilter,
+                deletButtonVisiblityFilter,
                 backButtonVisibilityFilter,
-                speedButtonEnabledFilter,
-                helpLabelsVisibilityFilter);
+                speedButtonEnabledFilter);
 
             BuildableButtonVisibilityFilter = buildableButtonVisibilityFilter;
             CategoryButtonVisibilityFilter = categoryButtonVisibilityFilter;
@@ -40,7 +36,6 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
             DeletButtonVisiblityFilter = deletButtonVisiblityFilter;
             DismissButtonVisibilityFilter = backButtonVisibilityFilter;
             SpeedButtonsEnabledFilter = speedButtonEnabledFilter;
-            HelpLabelsVisibilityFilter = helpLabelsVisibilityFilter;
         }
     }
 }

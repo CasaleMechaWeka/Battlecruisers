@@ -36,7 +36,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IPrioritisedSoundPlayer _soundPlayer;
         private IWindManager _windManager;
         private IBuildingCategoryPermitter _buildingCategoryPermitter;
-        private IPermitter _helpLabelPermitter;
         private IToggleButtonGroup _speedButtonGroup;
 
         private IBuilding _playerBuilding, _aiBuilding;
@@ -60,7 +59,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _targetIndicator = Substitute.For<ITargetIndicator>();
             _windManager = Substitute.For<IWindManager>();
             _buildingCategoryPermitter = Substitute.For<IBuildingCategoryPermitter>();
-            _helpLabelPermitter = Substitute.For<IPermitter>();
             _speedButtonGroup = Substitute.For<IToggleButtonGroup>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
@@ -79,7 +77,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
                     _targetIndicator,
                     _windManager,
                     _buildingCategoryPermitter,
-                    _helpLabelPermitter,
                     _speedButtonGroup);
 
             _deferrer.Defer(Arg.Invoke(), Arg.Any<float>());
@@ -153,7 +150,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _targetIndicator.Received().Hide();
             _windManager.Received().Stop();
             _buildingCategoryPermitter.Received().AllowNoCategories();
-            _helpLabelPermitter.Received().IsMatch = false;
             _speedButtonGroup.Received().SelectDefaultButton();
         }
 
@@ -187,7 +183,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _targetIndicator.Received().Hide();
             _windManager.Received().Stop();
             _buildingCategoryPermitter.Received().AllowNoCategories();
-            _helpLabelPermitter.Received().IsMatch = false;
             _speedButtonGroup.Received().SelectDefaultButton();
         }
 

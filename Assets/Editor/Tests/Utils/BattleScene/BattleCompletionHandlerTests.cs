@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
-using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using NSubstitute;
@@ -14,7 +13,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IBattleCompletionHandler _battleCompletionHandler;
         private IApplicationModel _applicationModel;
         private ISceneNavigator _sceneNavigator;
-        private IBroadcastingFilter _helpLabelVisibilityFilter;
         private int _battleCompletedCount;
 
         [SetUp]
@@ -22,14 +20,11 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         {
             _applicationModel = Substitute.For<IApplicationModel>();
             _sceneNavigator = Substitute.For<ISceneNavigator>();
-            _helpLabelVisibilityFilter = Substitute.For<IBroadcastingFilter>();
 
-            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator, _helpLabelVisibilityFilter);
+            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
 
             _battleCompletedCount = 0;
             _battleCompletionHandler.BattleCompleted += (sender, e) => _battleCompletedCount++;
-
-            _helpLabelVisibilityFilter.IsMatch.Returns(true);
         }
 
         [Test]
@@ -84,8 +79,6 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         {
             Assert.AreEqual(1, _battleCompletedCount);
             _applicationModel.Received().ShowPostBattleScreen = true;
-            // FELIX 
-            //_applicationModel.DataProvider.GameModel.Received().ShowHelpLabels = _helpLabelVisibilityFilter.IsMatch;
             _applicationModel.DataProvider.Received().SaveGame();
         }
 
