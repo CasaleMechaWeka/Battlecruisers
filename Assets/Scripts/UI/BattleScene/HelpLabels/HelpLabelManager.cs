@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
-    // FELIX  Esc should hide help menus
     // FELIX  Target button help label string :D
     // FELIX  Test :D
     public class HelpLabelManager : ModalManager, IHelpLabelManager
