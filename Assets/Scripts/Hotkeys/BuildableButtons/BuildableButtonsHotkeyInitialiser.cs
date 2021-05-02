@@ -1,12 +1,9 @@
-﻿using BattleCruisers.Hotkeys;
-using BattleCruisers.Hotkeys.BuildableButtons;
-using BattleCruisers.UI.BattleScene.Buttons;
+﻿using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// FELIX  fix :D
-namespace Assets.Scripts.Hotkeys.BuildableButtons
+namespace BattleCruisers.Hotkeys.BuildableButtons
 {
     public class BuildableButtonsHotkeyInitialiser : MonoBehaviour
     {

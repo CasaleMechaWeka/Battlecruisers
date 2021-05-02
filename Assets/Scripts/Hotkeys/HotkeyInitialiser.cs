@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Hotkeys.BuildableButtons;
+﻿using BattleCruisers.Hotkeys.BuildableButtons;
 using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.HelpLabels;
