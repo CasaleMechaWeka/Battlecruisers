@@ -5,8 +5,8 @@ using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
-    // FELIX  Help button clicked mide panel slide? Will pause freeze slide? :P
     // FELIX  Esc should hide help menus
+    // FELIX  Target button help label string :D
     // FELIX  Test :D
     public class HelpLabelManager : IHelpLabelManager
     {
