@@ -11,8 +11,6 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
     public class HelpLabelInitialiser : MonoBehaviour
     {
-        private IHelpLabelManager _helpLabelManager;
-
         public Panel helpLabelCanvas;
         public HelpLabelsController helpLabels;
         public HelpButton modalHelpButton;
@@ -40,26 +38,17 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
                     new InformatorShownState(helpLabelCanvas, extendedInformatorPanel, helpLabels),
                     new BothShownState(helpLabelCanvas, extendedInformatorPanel, helpLabels));
 
-            _helpLabelManager
+            IHelpLabelManager helpLabelManager
                 = new HelpLabelManager(
                     navigationPermitterManager,
                     pauseGameManager,
                     helpStateFinder);
 
             // Initialised here because of circular dependency: HelpButton > HelpLabelManager > UI (Informator/Selector)
-            rightPanelComponents.HelpButton.Initialise(soundPlayer, _helpLabelManager);
-            modalHelpButton.Initialise(soundPlayer, _helpLabelManager);
+            rightPanelComponents.HelpButton.Initialise(soundPlayer, helpLabelManager);
+            modalHelpButton.Initialise(soundPlayer, helpLabelManager);
 
-            return _helpLabelManager;
-        }
-
-        // FELIX  Remove :)
-        void Update()
-        {
-            if (Input.GetKeyUp(KeyCode.Escape))
-            {
-                _helpLabelManager.HideHelpLabels();
-            }
+            return helpLabelManager;
         }
     }
 }

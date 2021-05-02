@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
     public class ModalMenuController : MonoBehaviour, IModalMenu
 	{
 		private Canvas _canvas;
-		private IMainMenuManager _menuManager;
 
 		public MainMenuButtonsPanel buttonsPanel;
 		public InGameSettingsPanel settingsPanel;
@@ -27,8 +26,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			Helper.AssertIsNotNull(buttonsPanel, settingsPanel);
 			Helper.AssertIsNotNull(soundPlayer, menuManager, settingsManager);
 
-			_menuManager = menuManager;
-
             _canvas = GetComponent<Canvas>();
             Assert.IsNotNull(_canvas);
 
@@ -39,23 +36,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			IsVisible = new BroadcastingProperty<bool>(_isVisible);
 
 			HideMenu();
-		}
-
-		// FELIX  Remove :)
-		void Update()
-		{
-			if (Input.GetKeyUp(KeyCode.Escape)
-				&& _canvas != null)
-			{
-				if (_canvas.enabled)
-                {
-					_menuManager.DismissMenu();
-                }
-				else
-                {
-					_menuManager.ShowMenu();
-                }
-			}
 		}
 
 		public void ShowMenu()
