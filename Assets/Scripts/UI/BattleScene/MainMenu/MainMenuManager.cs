@@ -10,6 +10,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         private readonly IModalMenu _modalMenu;
         private readonly IBattleCompletionHandler _battleCompletionHandler;
 
+        public bool IsShown => _modalMenu.IsVisible.Value;
+
         public event EventHandler Dismissed;
 
         public MainMenuManager(

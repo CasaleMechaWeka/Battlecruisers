@@ -2,6 +2,8 @@
 {
     public interface IMainMenuManager : IDismissableEmitter
     {
+        bool IsShown { get; }
+
         void ShowMenu();
         void DismissMenu();
         void QuitGame();
