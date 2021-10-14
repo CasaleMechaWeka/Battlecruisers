@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Music
         private readonly ICruiserController _playerCruiser, _aiCruiser;
         private readonly IHealthThresholdMonitor _playerCruiserHealthMonitor, _aiCruiserHealthMonitor;
         
-        public const float DANGER_LIFETIME_IN_S = 120;
+        public const float DANGER_LIFETIME_IN_S = 60;
 
         public event EventHandler DangerStart;
         public event EventHandler DangerEnd;
