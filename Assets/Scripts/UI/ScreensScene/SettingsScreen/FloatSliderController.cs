@@ -3,6 +3,7 @@ using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -10,9 +11,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IRange<float> _validRange;
         private Slider _slider;
-
+        
         private ISettableBroadcastingProperty<float> _sliderValue;
         public IBroadcastingProperty<float> SliderValue { get; private set; }
+
+        public GameObject sliderTextLabel;
+        private Text textSliderValue;
 
         public void Initialise(float selectedValue, IRange<float> validRange)
         {
@@ -32,12 +36,20 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _slider.minValue = validRange.Min;
             _slider.maxValue = validRange.Max;
             _slider.onValueChanged.AddListener(OnValueChanged);
+
+            //Debug.Log(Math.Round(_sliderValue.Value * 100, 0, MidpointRounding.ToEven) + "%");
+
+
+            textSliderValue = sliderTextLabel.GetComponent<Text>();
+            textSliderValue.text = "" + Math.Round(_sliderValue.Value * 100, 0, MidpointRounding.ToEven) + "%";
         }
 
         private void OnValueChanged(float newValue)
         {
             AssertIsValidValue(newValue);
             _sliderValue.Value = newValue;
+            //Debug.Log(Math.Round(_sliderValue.Value*100, 0, MidpointRounding.ToEven) + "%");
+            textSliderValue.text = "" + Math.Round(_sliderValue.Value * 100, 0, MidpointRounding.ToEven) + "%";
         }
 
         private void AssertIsValidValue(float value)

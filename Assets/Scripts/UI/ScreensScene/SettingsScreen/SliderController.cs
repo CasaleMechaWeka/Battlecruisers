@@ -3,6 +3,7 @@ using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -13,6 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private ISettableBroadcastingProperty<int> _sliderValue;
         public IBroadcastingProperty<int> SliderValue { get; private set; }
+        public GameObject sliderTextLabel;
+        private Text textSliderValue;
 
         public void Initialise(int selectedValue, IRange<int> validRange)
         {
@@ -32,6 +35,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _slider.minValue = validRange.Min;
             _slider.maxValue = validRange.Max;
             _slider.onValueChanged.AddListener(OnValueChanged);
+
+            textSliderValue = sliderTextLabel.GetComponent<Text>();
+            textSliderValue.text = _sliderValue.Value + "";
         }
 
         private void OnValueChanged(float newValue)
@@ -39,6 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             int valueAsInt = Mathf.RoundToInt(newValue);
             AssertIsValidValue(valueAsInt);
             _sliderValue.Value = valueAsInt;
+            textSliderValue.text = _sliderValue.Value + "";
         }
 
         private void AssertIsValidValue(int value)
@@ -51,5 +58,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             _slider.value = defaultValue;
         }
+
     }
 }
