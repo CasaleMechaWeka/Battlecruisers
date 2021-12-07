@@ -10,14 +10,11 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class TopPanelInitialiser : MonoBehaviour
     {
-        public Text enemyHealthBarHelpLabel;
+        //public Text enemyHealthBarHelpLabel;
 
-        public TopPanelComponents Initialise(
-            ICruiser playerCruiser, 
-            ICruiser aiCruiser, 
-            string enemyName)
+        public TopPanelComponents Initialise(ICruiser playerCruiser, ICruiser aiCruiser)
         {
-            Assert.IsNotNull(enemyHealthBarHelpLabel);
+            //Assert.IsNotNull(enemyHealthBarHelpLabel);
             Helper.AssertIsNotNull(playerCruiser, aiCruiser);
 
             CruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<CruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
@@ -28,7 +25,7 @@ namespace BattleCruisers.UI.BattleScene
             Assert.IsNotNull(aiHealthInitialiser);
             IHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser);
 
-            enemyHealthBarHelpLabel.text = enemyName;
+            //enemyHealthBarHelpLabel.text = enemyName;
 
             return new TopPanelComponents(playerCruiserHealthBar, aiCruiserHealthBar);
         }
