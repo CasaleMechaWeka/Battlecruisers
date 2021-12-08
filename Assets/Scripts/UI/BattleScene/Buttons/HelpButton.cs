@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class HelpButton : CanvasGroupButton
     {
-        private Image _leverOff, _leverOn;
+        //private Image _leverOff, _leverOn;
         private IHelpLabelManager _helpLabelManager;
 
         public void Initialise(ISingleSoundPlayer soundPlayer, IHelpLabelManager helpLabelManager)
@@ -19,8 +19,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Assert.IsNotNull(helpLabelManager);
             _helpLabelManager = helpLabelManager;
 
-            _leverOff = transform.FindNamedComponent<Image>("LeverOff");
-            _leverOn = transform.FindNamedComponent<Image>("LeverOn");
+            //_leverOff = transform.FindNamedComponent<Image>("LeverOff");
+            //_leverOn = transform.FindNamedComponent<Image>("LeverOn");
 
             UpdateLeverVisibility();
 
@@ -34,8 +34,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         private void UpdateLeverVisibility()
         {
-            _leverOff.enabled = !_helpLabelManager.IsShown.Value;
-            _leverOn.enabled = _helpLabelManager.IsShown.Value;
+            //_leverOff.enabled = !_helpLabelManager.IsShown.Value;
+            //_leverOn.enabled = _helpLabelManager.IsShown.Value;
         }
 
         protected override void OnClicked()
