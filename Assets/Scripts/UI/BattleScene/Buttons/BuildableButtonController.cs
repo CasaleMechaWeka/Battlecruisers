@@ -18,6 +18,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private FilterToggler _isEnabledToggler;
 
 		public Image buildableImage;
+
+        public Image buildableImageOutline;//modified
 		public Text buildableName;
 		public Text droneLevel;
 
@@ -37,8 +39,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             set
             {
                 buildableImage.color = value;
-                buildableName.color = value;
-                droneLevel.color = value;
+                //buildableName.color = value; //modified
+                //droneLevel.color = value;
+                if (value.Equals(Color.white))
+                {
+                    buildableImageOutline.color = value;//modified
+                }
+                else{
+                    buildableImageOutline.color = Color.clear;
+                }//holy shit i am insane
+                
             }
         }
 
