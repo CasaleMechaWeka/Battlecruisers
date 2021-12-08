@@ -23,6 +23,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 		public Text buildableName;
 		public Text droneLevel;
 
+        public Color redColor;
+
         public event EventHandler PotentialMatchChange;
 
         public IBuildable Buildable { get; private set; }
@@ -39,14 +41,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             set
             {
                 buildableImage.color = value;
-                //buildableName.color = value; //modified
+                 //modified
                 //droneLevel.color = value;
                 if (value.Equals(Color.white))
                 {
                     buildableImageOutline.color = value;//modified
+                    buildableName.color = value;
                 }
                 else{
                     buildableImageOutline.color = Color.clear;
+                    buildableName.color = redColor;
                 }//holy shit i am insane
                 
             }
