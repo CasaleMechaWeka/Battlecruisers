@@ -18,12 +18,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private FilterToggler _isEnabledToggler;
 
 		public Image buildableImage;
+        
+        public Image redGlowImage;
 
         public Image buildableImageOutline;//modified
 		public Text buildableName;
 		public Text droneLevel;
 
         public Color redColor;
+
+        public Color redGlowColor;
 
         public event EventHandler PotentialMatchChange;
 
@@ -47,10 +51,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 {
                     buildableImageOutline.color = value;//modified
                     buildableName.color = value;
+                    redGlowImage.color = redGlowColor;
                 }
                 else{
                     buildableImageOutline.color = Color.clear;
                     buildableName.color = redColor;
+                    redGlowImage.color = Color.clear;
                 }//holy shit i am insane
                 
             }
