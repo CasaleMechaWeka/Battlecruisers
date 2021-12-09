@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private ISlidingPanel _informatorPanel;
 
         public Image activeFeedback;
+        public Image defaultImage;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
@@ -20,6 +21,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             base.Initialise(soundPlayer);
 
             Assert.IsNotNull(activeFeedback);
+            Assert.IsNotNull(defaultImage);
             Assert.IsNotNull(informatorPanel);
 
             _informatorPanel = informatorPanel;
@@ -50,6 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private void SetActiveFeedback(bool isActive)
         {
             activeFeedback.gameObject.SetActive(isActive);
+            defaultImage.gameObject.SetActive(!isActive);
         }
     }
 }
