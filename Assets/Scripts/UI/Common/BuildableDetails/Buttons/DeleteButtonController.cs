@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         public Image activeImage;
         public List<Sprite> activeStateImages;
 
-        private const int NUMBER_OF_ACTIVE_STATES = 5;
+        private const int NUMBER_OF_ACTIVE_STATES = 3;
 
         private IBuildable _buildable;
         public IBuildable Buildable
