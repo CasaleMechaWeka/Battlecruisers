@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 {
     public class SpeedPanelController : MonoBehaviour
     {
-        public GameSpeedButton slowMotion, normalSpeed, fastForward;
+        public GameSpeedButton slowMotion, normalSpeed, fastForward, pause;
 
         public SpeedComponents Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
@@ -24,7 +24,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             {
                 slowMotion,
                 normalSpeed,
-                fastForward
+                fastForward,
+                pause
             };
 
             foreach (GameSpeedButton speedButton in speedButtons)
@@ -44,7 +45,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                     speedButtonGroup,
                     slowMotion,
                     normalSpeed,
-                    fastForward);
+                    fastForward,
+                    pause);
         }
     }
 }

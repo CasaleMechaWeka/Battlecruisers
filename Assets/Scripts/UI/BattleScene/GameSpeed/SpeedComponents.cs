@@ -11,13 +11,15 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public IGameSpeedButton SlowMotionButton { get; }
         public IGameSpeedButton NormalSpeedButton { get; }
         public IGameSpeedButton FastForwardButton { get; }
+        public IGameSpeedButton PauseButton { get; }
 
         public SpeedComponents(
             IHighlightable speedButtonPanel,
             IToggleButtonGroup speedButtonGroup,
             IGameSpeedButton slowMotionButton,
             IGameSpeedButton normalSpeedButton,
-            IGameSpeedButton fastForwardButton)
+            IGameSpeedButton fastForwardButton,
+            IGameSpeedButton pauseButton)
         {
             Helper.AssertIsNotNull(speedButtonPanel, speedButtonGroup, slowMotionButton, normalSpeedButton, fastForwardButton);
 
@@ -26,6 +28,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             SlowMotionButton = slowMotionButton;
             NormalSpeedButton = normalSpeedButton;
             FastForwardButton = fastForwardButton;
+            PauseButton = pauseButton;
         }
     }
 }
