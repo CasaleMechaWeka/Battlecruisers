@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
     public class CruiserHealthBarInitialiser : MonoBehaviour
     {
-        private Image _lowHealthFeedback;
+        public Image _lowHealthFeedback;
         private IHealthStateMonitor _cruiserHealthMonitor;
 
         public IHighlightable Initialise(ICruiser cruiser)
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(fillableImage, visibilityFilter);
             healthDial.Damagable = cruiser;
 
-            _lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
+            //_lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
 
             _cruiserHealthMonitor = new HealthStateMonitor(cruiser);
             _cruiserHealthMonitor.HealthStateChanged += CruiserHealthMonitor_HealthStateChanged;
