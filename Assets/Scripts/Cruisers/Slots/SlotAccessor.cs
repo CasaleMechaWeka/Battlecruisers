@@ -18,7 +18,7 @@ namespace BattleCruisers.Cruisers.Slots
             _slots = slots;
             _antiShipSlots
                 = slots[SlotType.Deck]
-                    .Where(slot => slot.BuildingFunctionAffinity == BuildingFunction.AntiShip)
+                    //.Where(slot => slot.BuildingFunctionAffinity == BuildingFunction.AntiShip)
                     .ToList()
                     .AsReadOnly();
         }
