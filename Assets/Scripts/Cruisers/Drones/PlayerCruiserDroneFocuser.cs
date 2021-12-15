@@ -1,8 +1,10 @@
 ﻿using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Drones
 {
@@ -33,7 +35,9 @@ namespace BattleCruisers.Cruisers.Drones
 
             if (isTriggeredByPlayer)
             {
-                _soundPlayer.PlaySound(_soundPicker.PickSound(preFocusState, postFocusState));
+                PrioritisedSoundKey sound =  _soundPicker.PickSound(preFocusState, postFocusState);
+                Debug.Log(sound.Key);
+                _soundPlayer.PlaySound(sound);
 
                 if (droneConsumer.NumOfDronesRequired == RepairManager.NUM_OF_DRONES_REQUIRED_FOR_REPAIR)
                 {

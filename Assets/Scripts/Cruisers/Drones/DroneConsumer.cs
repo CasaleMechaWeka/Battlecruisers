@@ -1,9 +1,13 @@
 ﻿using System;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones
 {
 	public class DroneConsumer : IDroneConsumer
 	{
+		private readonly IDroneManager _droneManager;
+
 		private int _numOfDrones;
 		public int NumOfDrones
 		{
@@ -18,6 +22,7 @@ namespace BattleCruisers.Cruisers.Drones
 
 				if (value != _numOfDrones)
 				{
+					//Debug.Log($"required: {NumOfDronesRequired}   actual: {value}");
 					_numOfDrones = value;
 
 					DroneNumChanged?.Invoke(this, new DroneNumChangedEventArgs(_numOfDrones));
@@ -40,13 +45,15 @@ namespace BattleCruisers.Cruisers.Drones
         public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 		public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
-		public DroneConsumer(int numOfDronesRequired)
+		public DroneConsumer(int numOfDronesRequired, IDroneManager droneManager)
 		{
 			if (numOfDronesRequired < 0)
 			{
 				throw new ArgumentException();
 			}
+			Assert.IsNotNull(droneManager);
 
+			_droneManager = droneManager;
 			NumOfDronesRequired = numOfDronesRequired;
 			NumOfDrones = 0;
 			State = DroneConsumerState.Idle;
@@ -54,7 +61,11 @@ namespace BattleCruisers.Cruisers.Drones
 
 		private DroneConsumerState FindDroneState(int numOfDrones, int numOfDronesRequired)
 		{
-			if (numOfDrones > numOfDronesRequired)
+			if (numOfDrones == _droneManager.NumOfDrones)
+			{
+				return DroneConsumerState.AllFocused;
+			}
+			else if (numOfDrones > numOfDronesRequired)
 			{
 				return DroneConsumerState.Focused;
 			}

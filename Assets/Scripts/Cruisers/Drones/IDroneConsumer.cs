@@ -6,7 +6,8 @@ namespace BattleCruisers.Cruisers.Drones
 	{
 		Active,     // Has the exact number of drones required
 		Focused,    // Has more than the number of drones required
-		Idle        // Has no drones
+		Idle,       // Has no drones
+		AllFocused	// Has every single drone available
 	}
 
 	public class DroneNumChangedEventArgs : EventArgs

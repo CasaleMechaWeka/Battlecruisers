@@ -179,21 +179,22 @@ namespace BattleCruisers.Cruisers.Drones
 					}
 					break;
 
-				case DroneConsumerState.Focused:
-					if (droneConsumer.NumOfDrones < NumOfDrones)
-					{
-						// Focused => More Focused
-						AssignAllDronesToConsumer(droneConsumer);
-					}
-					else
-					{
-						// Focused => Active
-						int numOfFreedDrones = droneConsumer.NumOfDrones - droneConsumer.NumOfDronesRequired;
-						droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
+                case DroneConsumerState.Focused:
+                case DroneConsumerState.AllFocused://TODO update test
+                    if (droneConsumer.NumOfDrones < NumOfDrones)
+                    {
+                        // Focused => More Focused
+                        AssignAllDronesToConsumer(droneConsumer);
+                    }
+                    else
+                    {
+                        // Focused => Active
+                        int numOfFreedDrones = droneConsumer.NumOfDrones - droneConsumer.NumOfDronesRequired;
+                        droneConsumer.NumOfDrones = droneConsumer.NumOfDronesRequired;
 
-						AssignSpareDrones(numOfFreedDrones);
-					}
-					break;
+                        AssignSpareDrones(numOfFreedDrones);
+                    }
+                    break;
 
 				default:
 					throw new InvalidProgramException();
