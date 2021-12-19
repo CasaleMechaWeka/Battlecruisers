@@ -30,19 +30,26 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             IList<PickerTestCase> testCases = new List<PickerTestCase>()
             {
                 // To idle
-                new PickerTestCase(DroneConsumerState.Idle, DroneConsumerState.Idle, PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus),
+                
                 new PickerTestCase(DroneConsumerState.Active, DroneConsumerState.Idle, PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus),
                 new PickerTestCase(DroneConsumerState.Focused, DroneConsumerState.Idle, PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus),
+                new PickerTestCase(DroneConsumerState.AllFocused, DroneConsumerState.Idle, PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus),
 
                 // To active
                 new PickerTestCase(DroneConsumerState.Idle, DroneConsumerState.Active, PrioritisedSoundKeys.Events.Drones.Focusing),
-                new PickerTestCase(DroneConsumerState.Active, DroneConsumerState.Active, PrioritisedSoundKeys.Events.Drones.AllFocused),
                 new PickerTestCase(DroneConsumerState.Focused, DroneConsumerState.Active, PrioritisedSoundKeys.Events.Drones.Dispersing),
+                new PickerTestCase(DroneConsumerState.AllFocused, DroneConsumerState.Active, PrioritisedSoundKeys.Events.Drones.Dispersing),
 
                 // To focused
-                new PickerTestCase(DroneConsumerState.Idle, DroneConsumerState.Focused, PrioritisedSoundKeys.Events.Drones.AllFocused),
-                new PickerTestCase(DroneConsumerState.Active, DroneConsumerState.Focused, PrioritisedSoundKeys.Events.Drones.AllFocused),
-                new PickerTestCase(DroneConsumerState.Focused, DroneConsumerState.Focused, PrioritisedSoundKeys.Events.Drones.AllFocused)
+                new PickerTestCase(DroneConsumerState.Idle, DroneConsumerState.Focused, PrioritisedSoundKeys.Events.Drones.Focusing),
+                new PickerTestCase(DroneConsumerState.Active, DroneConsumerState.Focused, PrioritisedSoundKeys.Events.Drones.Focusing),
+                new PickerTestCase(DroneConsumerState.AllFocused, DroneConsumerState.Focused, PrioritisedSoundKeys.Events.Drones.Dispersing),
+
+                //To all focused
+                new PickerTestCase(DroneConsumerState.Idle, DroneConsumerState.AllFocused, PrioritisedSoundKeys.Events.Drones.AllFocused),
+                new PickerTestCase(DroneConsumerState.Active, DroneConsumerState.AllFocused, PrioritisedSoundKeys.Events.Drones.AllFocused),
+                new PickerTestCase(DroneConsumerState.Focused, DroneConsumerState.AllFocused, PrioritisedSoundKeys.Events.Drones.AllFocused),
+                new PickerTestCase(DroneConsumerState.AllFocused, DroneConsumerState.AllFocused, PrioritisedSoundKeys.Events.Drones.AllFocused)
             };
 
             foreach (PickerTestCase testCase in testCases)

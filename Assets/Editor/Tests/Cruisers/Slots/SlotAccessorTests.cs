@@ -125,14 +125,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetSlots(new SlotSpecification(SlotType.Deck));
             Assert.AreSame(_slots[SlotType.Deck], deckSlots);
         }
-
-        [Test]
-        public void GetSlots_AntiShipSlots()
-        {
-            ReadOnlyCollection<ISlot> antiShipSlots = _slotAccessor.GetSlots(new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip));
-            Assert.AreEqual(1, antiShipSlots.Count);
-            Assert.AreSame(_antiShipDeckSlot, antiShipSlots[0]);
-        }
         #endregion GetSlots
 
         [Test]
@@ -150,7 +142,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void IsSlotAvailableForPlayer_False()
         {
             _antiShipDeckSlot.IsFree.Returns(false);
-            _genericDeckSlot.IsFree.Returns(true);
+            _genericDeckSlot.IsFree.Returns(false);
 
             SlotSpecification desiredSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: false);
 

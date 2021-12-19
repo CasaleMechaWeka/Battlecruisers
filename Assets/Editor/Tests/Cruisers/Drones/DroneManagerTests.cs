@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Specialized;
 using UnityAsserts = UnityEngine.Assertions;
 
+//TODO fix this to work for the new drone states (added AllFocused as a state)
 namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class DroneManagerTests 
