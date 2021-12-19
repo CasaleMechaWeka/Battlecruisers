@@ -1,20 +1,25 @@
 ﻿using System;
 using BattleCruisers.Cruisers.Drones;
 using NUnit.Framework;
+using NSubstitute;
 
 namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class DroneConsumerTests 
 	{
 		private IDroneConsumer _droneConsumer;
+		private IDroneManager _droneManager;
 		private int _droneStateChangedEmittedCount;
 		private DroneStateChangedEventArgs _expectedArgs;
 
 		[SetUp]
 		public void TestSetup()
 		{
-			_droneConsumer = new DroneConsumer(2);
+			_droneManager = Substitute.For<IDroneManager>();
+			_droneConsumer = new DroneConsumer(2, _droneManager);
+
 			_droneStateChangedEmittedCount = 0;
+			_droneManager.NumOfDrones.Returns(4);
 		}
 
 		[Test]
@@ -27,7 +32,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		[Test]
 		public void InvalidConstructorArg() 
 		{
-			Assert.Throws<ArgumentException>(() => new DroneConsumer(-1));
+			Assert.Throws<ArgumentException>(() => new DroneConsumer(-1, _droneManager));
 		}
 
 		[Test]
@@ -40,6 +45,9 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
 			_droneConsumer.NumOfDrones = _droneConsumer.NumOfDronesRequired + 1;
 			Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer.State);
+
+			_droneConsumer.NumOfDrones = _droneManager.NumOfDrones;
+			Assert.AreEqual(DroneConsumerState.AllFocused, _droneConsumer.State);
 		}
 
 		[Test]

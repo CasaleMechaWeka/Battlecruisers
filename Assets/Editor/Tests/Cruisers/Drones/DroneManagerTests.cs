@@ -15,13 +15,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		public void TestSetup()
 		{
 			_droneManager = new DroneManager();
-
+			_droneManager.NumOfDrones = 5;
+			
             ((INotifyCollectionChanged)_droneManager.DroneConsumers).CollectionChanged += (sender, e) => _lastDroneConsumersChangedEventArgs = e;
 
-			_droneConsumer1 = new DroneConsumer(1);
-			_droneConsumer2 = new DroneConsumer(2);
-			_droneConsumer3 = new DroneConsumer(2);
-			_droneConsumer4 = new DroneConsumer(4);
+			_droneConsumer1 = new DroneConsumer(1, _droneManager);
+			_droneConsumer2 = new DroneConsumer(2, _droneManager);
+			_droneConsumer3 = new DroneConsumer(2, _droneManager);
+			_droneConsumer4 = new DroneConsumer(4, _droneManager);
 		}
 
 		[Test]
