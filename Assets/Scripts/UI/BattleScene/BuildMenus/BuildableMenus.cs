@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IList<TMenu> buildableMenus = GetComponentsInChildren<TMenu>().ToList();
 
             
-            Debug.Log(buildables.Count);
+            //Debug.Log(buildables.Count);
             Assert.AreEqual(buildables.Count, buildableMenus.Count);
 
             _buildableCategoryToMenus = new Dictionary<TCategories, IBuildablesMenu>();
