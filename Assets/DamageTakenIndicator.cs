@@ -6,6 +6,7 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 
+//This class is used by the HealthDial when damage is taken to show a visual indication on
 public class DamageTakenIndicator : MonoBehaviour
 {
     public Image image;
@@ -39,9 +40,9 @@ public class DamageTakenIndicator : MonoBehaviour
     public void hideDamageTaken()
     {
         
-        Debug.Log("Color should be clear");
+        //Debug.Log("Color should be clear");
         imageObject.SetActive(false);
-        Debug.Log("COLOR SHOULD BE CLEAR");
+        //Debug.Log("COLOR SHOULD BE CLEAR");
         hidden = true;
     }
 
