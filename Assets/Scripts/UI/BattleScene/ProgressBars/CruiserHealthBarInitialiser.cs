@@ -12,9 +12,11 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
+    //need to link a script containing an image with a method that makes the image active for a second after taking damage
     public class CruiserHealthBarInitialiser : MonoBehaviour
     {
         public Image _lowHealthFeedback;
+        public DamageTakenIndicator damageTakenIndicator;
         private IHealthStateMonitor _cruiserHealthMonitor;
 
         public IHighlightable Initialise(ICruiser cruiser)
@@ -32,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
             IFilter<ICruiser> visibilityFilter = new StaticFilter<ICruiser>(isMatch: true);
 
-            IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(fillableImage, visibilityFilter);
+            IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(fillableImage, visibilityFilter, damageTakenIndicator);
             healthDial.Damagable = cruiser;
 
             //_lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");

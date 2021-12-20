@@ -9,6 +9,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
     {
         private readonly IFillableImage _healthDialImage;
         private readonly IFilter<TDamagable> _visibilityFilter;
+        private DamageTakenIndicator _damageTakenIndicator;
+        
+        private float previousHealthProportion;
 
         private TDamagable _damagable;
         public TDamagable Damagable
@@ -33,6 +36,21 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             }
         }
 
+        //make this take an extra argument, a script (mentioned at the top of CruiserHealthBarInitialiser)
+        public HealthDial(IFillableImage healthDialImage, IFilter<TDamagable> visibilityFilter, DamageTakenIndicator damageTakenIndicator)
+        {
+            Helper.AssertIsNotNull(healthDialImage, visibilityFilter);
+
+            _healthDialImage = healthDialImage;
+            _visibilityFilter = visibilityFilter;
+
+            _healthDialImage.IsVisible = false;
+
+            _damageTakenIndicator = damageTakenIndicator;
+            _damageTakenIndicator.initialise();
+            previousHealthProportion = 1.0f;
+        }
+
         public HealthDial(IFillableImage healthDialImage, IFilter<TDamagable> visibilityFilter)
         {
             Helper.AssertIsNotNull(healthDialImage, visibilityFilter);
@@ -48,10 +66,16 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             UpdateDial();
         }
 
+        //make this method trigger the activation of the damage indicator script
         private void UpdateDial()
         {
             float proportionOfMaxHealth = _damagable.Health / _damagable.MaxHealth;
             _healthDialImage.FillAmount = proportionOfMaxHealth;
+            if (proportionOfMaxHealth < previousHealthProportion)
+            {
+                _damageTakenIndicator.updateDamageTakenIndicator();
+            }
+            previousHealthProportion = proportionOfMaxHealth;
         }
     }
 }

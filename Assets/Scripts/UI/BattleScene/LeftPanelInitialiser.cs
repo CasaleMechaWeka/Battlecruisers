@@ -37,6 +37,10 @@ namespace BattleCruisers.UI.BattleScene
         public BuildMenuInitialiser buildMenuInitialiser;
         public GameObject popLimitReachedFeedback;
 
+        public RectTransform rectTransformThis;
+
+        
+
         public LeftPanelComponents Initialise(
             IDroneManager droneManager, 
             IDroneManagerMonitor droneManagerMonitor,
@@ -80,6 +84,8 @@ namespace BattleCruisers.UI.BattleScene
                     populationLimitMonitor,
                     staticData);
 
+            makeLeftBackgroundPanelFit();
+
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
 
@@ -121,6 +127,16 @@ namespace BattleCruisers.UI.BattleScene
                     eventSoundPlayer,
                     uiSoundPlayer,
                     populationLimitMonitor);
+        }
+
+        //Scales the LeftBackgroundPanel to a smaller size if the aspect ratio is 4/3 or lower
+        //Warning: This is only called on initialisation, not on screen resize. Currently not a problem, but if screen resizing becomes a thing during a match, then this will need to be called.
+        public void makeLeftBackgroundPanelFit()
+        {
+            if ((Screen.width/Screen.height) <= 4/3)
+            {
+                rectTransformThis.localScale = new Vector2(0.9f, 0.9f);
+            }
         }
     }
 }
