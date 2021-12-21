@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
         {
             float proportionOfMaxHealth = _damagable.Health / _damagable.MaxHealth;
             _healthDialImage.FillAmount = proportionOfMaxHealth;
-            if (proportionOfMaxHealth < previousHealthProportion)
+            if (proportionOfMaxHealth < previousHealthProportion && _damageTakenIndicator != null)
             {
                 _damageTakenIndicator.updateDamageTakenIndicator();
             }
