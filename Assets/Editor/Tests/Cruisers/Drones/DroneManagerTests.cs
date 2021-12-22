@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		public void TestSetup()
 		{
 			_droneManager = new DroneManager();
-			_droneManager.NumOfDrones = 5;
+			_droneManager.NumOfDrones = 4;
 			
             ((INotifyCollectionChanged)_droneManager.DroneConsumers).CollectionChanged += (sender, e) => _lastDroneConsumersChangedEventArgs = e;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 		[Test]
 		public void Initialisation() 
 		{
-			Assert.AreEqual(0, _droneManager.NumOfDrones);
+			Assert.AreEqual(4, _droneManager.NumOfDrones);
 		}
 
 		#region NumOfDrones
