@@ -80,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             UpdateEnabledStatus();
 
-            _screensSceneGod.GoToHomeScreen();
+            //_screensSceneGod.GoToHomeScreen();
         }
 
         private void UpdateEnabledStatus()
