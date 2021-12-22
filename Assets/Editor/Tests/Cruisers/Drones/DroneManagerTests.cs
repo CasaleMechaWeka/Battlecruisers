@@ -53,7 +53,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
             _droneManager.AddDroneConsumer(_droneConsumer2);
 			_droneManager.AddDroneConsumer(_droneConsumer1);
-            Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);
+            Assert.AreEqual(DroneConsumerState.AllFocused, _droneConsumer2.State);
 			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer1.State);
 
 			_droneManager.NumOfDrones = 4;
@@ -702,10 +702,10 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 			_droneManager.AddDroneConsumer(_droneConsumer2);
 			_droneManager.AddDroneConsumer(_droneConsumer3);
 			_droneManager.AddDroneConsumer(_droneConsumer4);
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer1.State);  // 1
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer2.State);  // 2
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer3.State);  // 2
-			Assert.AreEqual(DroneConsumerState.Active, _droneConsumer4.State);  // 4
+			Assert.AreEqual(DroneConsumerState.AllFocused, _droneConsumer1.State);  // 1
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer2.State);  // 2
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer3.State);  // 2
+			Assert.AreEqual(DroneConsumerState.Idle, _droneConsumer4.State);  // 4
 
 			_droneManager.ToggleDroneConsumerFocus(_droneConsumer2);
             Assert.AreEqual(DroneConsumerState.Focused, _droneConsumer2.State);  // 9
