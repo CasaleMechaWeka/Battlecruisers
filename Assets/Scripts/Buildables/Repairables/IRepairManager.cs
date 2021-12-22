@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils;
+//using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Buildables.Repairables
 {
@@ -7,5 +8,7 @@ namespace BattleCruisers.Buildables.Repairables
     {
         void Repair(float deltaTimeInS);
         IDroneConsumer GetDroneConsumer(IRepairable repairable);
+
+        //void AddCruiser(ICruiser cruiser);
     }
 }

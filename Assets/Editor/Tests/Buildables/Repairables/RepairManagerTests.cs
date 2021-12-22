@@ -232,13 +232,13 @@ namespace BattleCruisers.Tests.Buildables.Repairables
         }
         #endregion GetDroneConsumer
 
-        [Test]
+        /*[Test]
         public void AddCruiser()
         {
             IRepairManager repairManager = CreateRepairManager();
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
             _feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize);
-        }
+        }*/
 
         private void AddRepairableBuilding()
         {
@@ -260,10 +260,10 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _feedbackFactory.CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize).Returns(_cruiserFeedback);
 
             IRepairManager repairManager = new RepairManager(_feedbackFactory, _droneConsumerProvider, _cruiser);
-
-            //_droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
-            //_feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize);
-
+            //repairManager.AddCruiser(_cruiser);
+            _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
+            _feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize);
+            
             return repairManager;
 		}
 

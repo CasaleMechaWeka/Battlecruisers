@@ -173,9 +173,9 @@ namespace BattleCruisers.Cruisers
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor);
 
             RepairManager repairManager = new RepairManager(cruiserSpecificFactories.DroneFeedbackFactory, droneConsumerProvider, cruiser);
-            if (isPlayerCruiser)
+            if (!isPlayerCruiser)
             {
-                repairManager.AddCruiser(cruiser);
+                repairManager.RemoveCruiser();
             }
 
             ICruiserArgs cruiserArgs
