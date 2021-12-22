@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             _repairableToFeedback = new Dictionary<IRepairable, IDroneFeedback>();
 
-            AddRepairable(_cruiser);
+            //AddRepairable(_cruiser);
 
             _cruiser.BuildingStarted += _cruiser_BuildingStarted;
             _cruiser.Destroyed += _cruiser_Destroyed;
@@ -100,6 +100,12 @@ namespace BattleCruisers.Buildables.Repairables
                     repairable.RepairCommand.Execute(healthGained);
                 }
             }
+        }
+
+        public void AddCruiser(ICruiser cruiser)
+        {
+            Assert.IsNotNull(cruiser);
+            AddRepairable(cruiser);
         }
 
         private void AddRepairable(IRepairable repairable)
