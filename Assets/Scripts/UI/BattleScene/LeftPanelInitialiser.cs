@@ -133,9 +133,9 @@ namespace BattleCruisers.UI.BattleScene
         //Warning: This is only called on initialisation, not on screen resize. Currently not a problem, but if screen resizing becomes a thing during a match, then this will need to be called.
         public void makeLeftBackgroundPanelFit()
         {
-            if ((Screen.width/Screen.height) <= 4/3)
+            if ((double)Screen.width/Screen.height <= 4.0/3)
             {
-                rectTransformThis.localScale = new Vector2(0.9f, 0.9f);
+                rectTransformThis.localScale = new Vector2(0.8f, 0.8f);
             }
         }
     }

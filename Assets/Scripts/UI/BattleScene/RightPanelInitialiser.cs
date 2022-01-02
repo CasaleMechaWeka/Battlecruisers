@@ -28,6 +28,7 @@ namespace BattleCruisers.UI.BattleScene
         public ModalMenuController modalMenu;
         public MainMenuButtonController modalMainMenuButton;
         public HelpButton helpButton;
+        public RectTransform rectTransformThis;
 
         public RightPanelComponents Initialise(
             IApplicationModel applicationModel,
@@ -57,7 +58,7 @@ namespace BattleCruisers.UI.BattleScene
             IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
-
+            makeRightBackgroundPanelFit();
             return 
                 new RightPanelComponents(
                     informator, 
@@ -102,6 +103,16 @@ namespace BattleCruisers.UI.BattleScene
             mainMenuButton.Initialise(soundPlayer, mainMenuManager);
 
             modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
+        }
+
+        public void makeRightBackgroundPanelFit()
+        {
+            if ((double)Screen.width/Screen.height <= 4.0/3)
+            {
+                
+                rectTransformThis.localScale = new Vector2(0.8f, 0.8f);
+                Debug.Log((double)Screen.width/Screen.height);
+            }
         }
     }
 }
