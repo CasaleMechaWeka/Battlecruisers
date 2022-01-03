@@ -2,7 +2,9 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
+using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
@@ -10,6 +12,7 @@ namespace BattleCruisers.Buildables.BuildProgress
     {
         private readonly IFillableImage _buildProgressImage;
         private readonly IGameObject _pausedFeedback;
+        private Image _unitImage;
 
         private IBuildable _currentBuildable;
         private IBuildable CurrentBuildable
@@ -52,17 +55,24 @@ namespace BattleCruisers.Buildables.BuildProgress
                 {
                     _currentFactory.IsUnitPaused.ValueChanged += _currentFactory_IsUnitPausedChanged;
                     _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused.Value;
+                    if (_currentFactory.IsUnitPaused.Value)
+                    {
+                        _unitImage.color = Color.clear;
+                    }
+                    else{
+                        _unitImage.color = Color.black;
+                    }
                 }
             }
         }
 
-        public BuildProgressFeedback(IFillableImage buildProgressImage, IGameObject pausedFeedback)
+        public BuildProgressFeedback(IFillableImage buildProgressImage, IGameObject pausedFeedback, Image unitImage)
         {
-            Helper.AssertIsNotNull(buildProgressImage, pausedFeedback);
+            Helper.AssertIsNotNull(buildProgressImage, pausedFeedback, unitImage);
 
             _buildProgressImage = buildProgressImage;
             _pausedFeedback = pausedFeedback;
-
+            _unitImage = unitImage;
             HideBuildProgress();
         }
 
@@ -89,6 +99,14 @@ namespace BattleCruisers.Buildables.BuildProgress
         private void _currentFactory_IsUnitPausedChanged(object sender, System.EventArgs e)
         {
             _pausedFeedback.IsVisible = _currentFactory.IsUnitPaused.Value;
+            if (_currentFactory.IsUnitPaused.Value)
+            {
+                _unitImage.color = Color.clear;
+            }
+            else{
+                _unitImage.color = Color.black;
+            }
+             
         }
 
         public void ShowBuildProgress(IBuildable buildable, IFactory buildableFactory)
@@ -109,6 +127,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
             _buildProgressImage.IsVisible = false;
             _pausedFeedback.IsVisible = false;
+            _unitImage.color = Color.black;
         }
     }
 }

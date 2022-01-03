@@ -6,6 +6,7 @@ using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
 using UnityAsserts = UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Tests.Buildables.BuildProgress
 {
@@ -14,6 +15,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         private IBuildProgressFeedback _buildProgress;
         private IFillableImage _fillableImage;
         private IGameObject _pausedFeedback;
+        private Image _unitImage;
         private IBuildable _buildable1, _buildable2;
         private IFactory _factory;
 
@@ -22,7 +24,8 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             _fillableImage = Substitute.For<IFillableImage>();
             _pausedFeedback = Substitute.For<IGameObject>();
-            _buildProgress = new BuildProgressFeedback(_fillableImage, _pausedFeedback);
+            _unitImage = Substitute.For<Image>();
+            _buildProgress = new BuildProgressFeedback(_fillableImage, _pausedFeedback, _unitImage);
 
             _buildable1 = Substitute.For<IBuildable>();
             _buildable1.BuildableState.Returns(BuildableState.InProgress);

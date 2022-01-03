@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             set
             {
-                buildableImage.color = value;
+                //buildableImage.color = value;
                  //modified
                 //droneLevel.color = value;
                 if (value.Equals(Color.white))

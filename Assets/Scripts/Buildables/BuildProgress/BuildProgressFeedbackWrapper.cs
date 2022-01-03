@@ -9,6 +9,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 {
     public class BuildProgressFeedbackWrapper : MonoBehaviour
     {
+        public Image unitImage;
         public IBuildProgressFeedback CreateFeedback()
         {
             Image fillableImage = GetComponent<Image>();
@@ -20,7 +21,8 @@ namespace BattleCruisers.Buildables.BuildProgress
             return 
                 new BuildProgressFeedback(
                     new FillableImage(fillableImage),
-                    new GameObjectBC(pausedFeedback.gameObject));
+                    new GameObjectBC(pausedFeedback.gameObject),
+                    unitImage);
         }
     }
 }
