@@ -68,7 +68,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
         public BuildProgressFeedback(IFillableImage buildProgressImage, IGameObject pausedFeedback, Image unitImage)
         {
-            Helper.AssertIsNotNull(buildProgressImage, pausedFeedback, unitImage);
+            Helper.AssertIsNotNull(buildProgressImage, pausedFeedback);
 
             _buildProgressImage = buildProgressImage;
             _pausedFeedback = pausedFeedback;
