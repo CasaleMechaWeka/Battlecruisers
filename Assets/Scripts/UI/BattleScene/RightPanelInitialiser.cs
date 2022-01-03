@@ -107,11 +107,11 @@ namespace BattleCruisers.UI.BattleScene
 
         public void makeRightBackgroundPanelFit()
         {
-            if ((double)Screen.width/Screen.height <= 4.0/3)
+            if ((double)Screen.width/Screen.height <= 13.0/8)
             {
-                
-                rectTransformThis.localScale = new Vector2(0.8f, 0.8f);
-                Debug.Log((double)Screen.width/Screen.height);
+                float scaleAmount = (float)(((double)Screen.width/Screen.height)/1.667);
+                Debug.Log(scaleAmount);
+                rectTransformThis.localScale = new Vector2(scaleAmount, scaleAmount);
             }
         }
     }

@@ -129,13 +129,15 @@ namespace BattleCruisers.UI.BattleScene
                     populationLimitMonitor);
         }
 
-        //Scales the LeftBackgroundPanel to a smaller size if the aspect ratio is 4/3 or lower
+        //Scales the LeftBackgroundPanel to a smaller size if the aspect ratio is 13.0/8 or lower
         //Warning: This is only called on initialisation, not on screen resize. Currently not a problem, but if screen resizing becomes a thing during a match, then this will need to be called.
         public void makeLeftBackgroundPanelFit()
         {
-            if ((double)Screen.width/Screen.height <= 4.0/3)
+            if ((double)Screen.width/Screen.height <= 13.0/8)
             {
-                rectTransformThis.localScale = new Vector2(0.8f, 0.8f);
+                float scaleAmount = (float)(((double)Screen.width/Screen.height)/1.667);
+                Debug.Log(scaleAmount);
+                rectTransformThis.localScale = new Vector2(scaleAmount, scaleAmount);
             }
         }
     }
