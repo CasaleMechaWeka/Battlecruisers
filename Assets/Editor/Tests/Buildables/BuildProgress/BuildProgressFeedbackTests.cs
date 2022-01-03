@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
             _buildProgress.ShowBuildProgress(_buildable1, _factory);
 
             Assert.IsTrue(_fillableImage.IsVisible);
-            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
+            Assert.AreEqual(_buildable1.BuildProgress, _fillableImage.FillAmount);
             Assert.AreEqual(_factory.IsUnitPaused.Value, _pausedFeedback.IsVisible);
         }
 
@@ -81,11 +81,11 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
         {
             // First buildable
             _buildProgress.ShowBuildProgress(_buildable1, _factory);
-            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
+            Assert.AreEqual(_buildable1.BuildProgress, _fillableImage.FillAmount);
 
             // Second buildable
             _buildProgress.ShowBuildProgress(_buildable2, _factory);
-            Assert.AreEqual(1 - _buildable2.BuildProgress, _fillableImage.FillAmount);
+            Assert.AreEqual(_buildable2.BuildProgress, _fillableImage.FillAmount);
             AssertUnsubribedFromBuildable(_buildable1);
         }
         #endregion ShowBuildProgress
@@ -98,7 +98,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
             _buildable1.BuildProgress.Returns(0.55f);
             _buildable1.BuildableProgress += Raise.EventWith(new BuildProgressEventArgs(_buildable1));
 
-            Assert.AreEqual(1 - _buildable1.BuildProgress, _fillableImage.FillAmount);
+            Assert.AreEqual(_buildable1.BuildProgress, _fillableImage.FillAmount);
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
             _buildable1.CompletedBuildable += Raise.Event();
 
             Assert.IsTrue(_fillableImage.IsVisible);
-            Assert.AreEqual(1, _fillableImage.FillAmount);
+            Assert.AreEqual(0, _fillableImage.FillAmount);
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
             _buildable1.Destroyed += Raise.EventWith(new DestroyedEventArgs(_buildable1));
 
             Assert.IsTrue(_fillableImage.IsVisible);
-            Assert.AreEqual(1, _fillableImage.FillAmount);
+            Assert.AreEqual(0, _fillableImage.FillAmount);
         }
 
         [Test]
