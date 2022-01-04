@@ -15,5 +15,6 @@ namespace BattleCruisers.Cruisers.Slots
 
         void UnhighlightSlots();
         void HighlightBuildingSlot(IBuilding building);
+        void HighlightAvailableSlotsCurrent();
 	}
 }

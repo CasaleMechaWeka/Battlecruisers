@@ -100,6 +100,7 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
+        private int updateCnt = 0;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -256,6 +257,12 @@ namespace BattleCruisers.Cruisers
         void Update()
         {
             RepairManager.Repair(_time.DeltaTime);
+            updateCnt += 1;
+            updateCnt = updateCnt%200;
+            if (IsPlayerCruiser && updateCnt==0)
+            {
+                SlotHighlighter.HighlightAvailableSlotsCurrent();
+            }
         }
 
         public void MakeInvincible()

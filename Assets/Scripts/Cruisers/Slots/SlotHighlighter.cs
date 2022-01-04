@@ -2,6 +2,8 @@
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
+using System;
+using UnityEngine;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -10,7 +12,7 @@ namespace BattleCruisers.Cruisers.Slots
         private readonly ISlotAccessor _slotAccessor;
         private readonly ISlotFilter _highlightableFilter;
         private ISlotSpecification _highlightedSlotSpec;
-
+        public bool isHighlighting = false;
 		private ISlot _highlightedSlot;
         private ISlot HighlightedSlot
         {
@@ -51,7 +53,7 @@ namespace BattleCruisers.Cruisers.Slots
             if (_highlightedSlotSpec != null
                 && _highlightedSlotSpec.SlotType == e.DestroyedBuilding.SlotSpecification.SlotType)
             {
-                HighlightAvailableSlots(_highlightedSlotSpec);
+                HighlightAvailableSlotsCurrent();
             }
         }
 
@@ -76,6 +78,14 @@ namespace BattleCruisers.Cruisers.Slots
 
             return wasAnySlotHighlighted;
 		}
+
+        public void HighlightAvailableSlotsCurrent()
+        {
+            if (_highlightedSlotSpec != null)
+            {
+                HighlightAvailableSlots(_highlightedSlotSpec);
+            }  
+        }
 
         public void HighlightSlots(ISlotSpecification slotSpecification)
         {
@@ -118,6 +128,11 @@ namespace BattleCruisers.Cruisers.Slots
 
             HighlightedSlot = _slotAccessor.GetSlot(building);
             Assert.IsNotNull(HighlightedSlot);
+        }
+
+        public void refresh()
+        {
+            HighlightAvailableSlotsCurrent();
         }
     }
 }
