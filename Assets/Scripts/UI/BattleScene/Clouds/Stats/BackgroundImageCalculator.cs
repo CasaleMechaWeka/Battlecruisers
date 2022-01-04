@@ -14,7 +14,10 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             float gradient = deltaY / deltaX;
 
             float constant = stats.YPositionAt16to9 - (gradient * RATIO_16_TO_9);
-
+            if (cameraAspectRatio > RATIO_16_TO_9)
+            {
+                constant -= 70*cameraAspectRatio;
+            }
             float yAdjustedPosition = gradient * cameraAspectRatio + constant;
 
             return
