@@ -121,8 +121,14 @@ namespace BattleCruisers.Cruisers.Slots
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
-			SlotBuilding = null;
+            Invoke("NullifySlotBuilding", 2f);
 		}
+
+        private void NullifySlotBuilding()
+        {
+            SlotBuilding = null;
+            IsVisible = true;
+        }
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
         {
