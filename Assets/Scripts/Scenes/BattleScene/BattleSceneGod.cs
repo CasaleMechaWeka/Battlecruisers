@@ -45,6 +45,8 @@ using UnityEngine.Assertions;
 // TEMP     => Temporary for testing
 // DLC      => For DLC
 // PERF     => Potential performance hit
+
+//Comments with no spaces => made by Dean :)
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
