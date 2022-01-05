@@ -37,6 +37,7 @@ using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
 
 // === Tag keys :D ===
@@ -70,6 +71,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
         public HelpLabelInitialiser helpLabelInitialiser;
+        public GameObject enemyCharacterImages;
 
         private async void Start()
         {
@@ -312,6 +314,9 @@ namespace BattleCruisers.Scenes.BattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
             sceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
+
+            Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
+            enemyImages[currentLevel.Num-1].enabled = true;
         }
 
         private IBattleSceneHelper CreateHelper(
