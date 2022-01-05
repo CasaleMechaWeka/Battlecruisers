@@ -316,7 +316,9 @@ namespace BattleCruisers.Scenes.BattleScene
             sceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
 
             //Code that uses current level to set the image of the enemy robot on the enemy nav button
+            //Make sure to add more images to the EnemyCharacterImages prefab if more enemies are added
             Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
+            Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
             enemyImages[currentLevel.Num-1].enabled = true;
         }
 
