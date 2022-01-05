@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public class FrigateController : ShipController
 	{
-        private IBarrelWrapper _directFireAntiSea, _mortar, _directFireAntiAir;
+        private IBarrelWrapper _directFireAntiSea, _mortar, _samSite;// _directFireAntiAir;
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
@@ -43,8 +43,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             turrets.Add(_mortar);
 
             // Anti air turret
-            _directFireAntiAir = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir");
-            turrets.Add(_directFireAntiAir);
+            //_directFireAntiAir = transform.FindNamedComponent<IBarrelWrapper>("DirectBurstFireAntiAir");
+            //turrets.Add(_directFireAntiAir);
+
+            // SAM site
+            _samSite = transform.FindNamedComponent<IBarrelWrapper>("SamSite");
+            turrets.Add(_samSite);
 
             return turrets;
 		}
@@ -53,7 +57,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             _directFireAntiSea.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
             _mortar.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-            _directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
+            //_directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
+            _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
 		}
 	}
 }

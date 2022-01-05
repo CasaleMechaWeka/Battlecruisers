@@ -76,7 +76,13 @@ namespace BattleCruisers.Projectiles.Spawners
             Assert.IsNotNull(projectileActivationArgs);
 
             _projectilePool.GetItem(projectileActivationArgs);
-            _soundPlayer.OnProjectileFired();
+            if (_soundPlayer != null)
+            {
+                _soundPlayer.OnProjectileFired();
+            }
+            else{
+                Debug.Log("Warning, soundplayer was null when spawn projectile was called");
+            }
         }
     }
 }
