@@ -12,6 +12,7 @@ using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using BattleCruisers.Effects.Explosions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
@@ -19,6 +20,8 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
+        private IExplosion _explosion;
+        public ExplosionController _explosionController;
         private IBuildingPlacer _buildingPlacer;
         private Vector2 _size;
         // Hold reference to avoid garbage collection
@@ -88,7 +91,7 @@ namespace BattleCruisers.Cruisers.Slots
             _buildingPlacer = buildingPlacer;
 
 			_renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
-
+            _explosion = _explosionController.Initialise();
             Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
             BuildingPlacementPoint = buildingPlacementPoint.position;
 
@@ -121,8 +124,9 @@ namespace BattleCruisers.Cruisers.Slots
 
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
-            //SlotBuilding = null;
+            _explosion.Activate(Transform.Position);
             Invoke("NullifySlotBuilding", 2f);
+            
 		}
 
         private void NullifySlotBuilding()
