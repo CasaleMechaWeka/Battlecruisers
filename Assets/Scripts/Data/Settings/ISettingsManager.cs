@@ -21,6 +21,8 @@ namespace BattleCruisers.Data.Settings
         float MasterVolume {get; set;}
         float MusicVolume { get; set; }
         float EffectVolume { get; set; }
+        float AlertVolume { get; set; }
+        float InterfaceVolume { get; set; }
 
         bool ShowInGameHints { get; set; }
 

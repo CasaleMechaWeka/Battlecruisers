@@ -110,6 +110,30 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private float _alertVolume;
+        public float AlertVolume
+        {
+            get => _alertVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _alertVolume = value;
+            }
+        }
+
+        [SerializeField]
+        private float _interfaceVolume;
+        public float InterfaceVolume
+        {
+            get => _interfaceVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _interfaceVolume = value;
+            }
+        }
+
+        [SerializeField]
         private bool _showInGameHints;
         public bool ShowInGameHints
         {

@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
         public InGameSaveButton saveButton;
         public CanvasGroupButton cancelButton;
-        public FloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider;
+        public FloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider, alertVolumeSlider, interfaceVolumeSlider;
         public SliderController zoomSlider, scrollSlider;
 
         public void Initialise(
@@ -37,6 +37,12 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             effectVolumeSlider.Initialise(settingsManager.EffectVolume, effectVolumeRange);
 
+            IRange<float> alertVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            alertVolumeSlider.Initialise(settingsManager.AlertVolume, alertVolumeRange);
+
+            IRange<float> interfaceVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            interfaceVolumeSlider.Initialise(settingsManager.InterfaceVolume, interfaceVolumeRange);
+
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
@@ -52,7 +58,9 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
                     effectVolumeSlider.SliderValue,
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
-                    masterVolumeSlider.SliderValue);
+                    masterVolumeSlider.SliderValue,
+                    alertVolumeSlider.SliderValue,
+                    interfaceVolumeSlider.SliderValue);
 
             cancelButton.Initialise(soundPlayer, mainMenuManager.DismissMenu);
 
@@ -67,6 +75,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
             masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);
+            alertVolumeSlider.ResetToDefaults(_settingsManager.AlertVolume);
+            interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
         }
     }
 }

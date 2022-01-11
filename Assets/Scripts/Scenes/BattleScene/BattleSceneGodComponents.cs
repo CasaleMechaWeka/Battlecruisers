@@ -74,11 +74,11 @@ namespace BattleCruisers.Scenes.BattleScene
             PrioritisedSoundPlayerAudioSource
                 = new EffectVolumeAudioSource(
                     new AudioSourceBC(prioritisedSoundPlayerAudioSource),
-                    settingsManager);
+                    settingsManager, 0);
             UISoundsAudioSource
                 = new EffectVolumeAudioSource(
                     new AudioSourceBC(uiSoundsAudioSource),
-                    settingsManager);
+                    settingsManager, 1);
 
             SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);
