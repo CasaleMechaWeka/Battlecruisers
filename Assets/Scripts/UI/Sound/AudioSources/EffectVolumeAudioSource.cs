@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Sound.AudioSources
 
         protected override float GetVolume(ISettingsManager settingsManager)
         {
-            return settingsManager.EffectVolume;
+            return settingsManager.EffectVolume*settingsManager.MasterVolume;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
         public InGameSaveButton saveButton;
         public CanvasGroupButton cancelButton;
-        public FloatSliderController musicVolumeSlider, effectVolumeSlider;
+        public FloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider;
         public SliderController zoomSlider, scrollSlider;
 
         public void Initialise(
@@ -27,6 +27,9 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             Helper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager);
 
             _settingsManager = settingsManager;
+
+            IRange<float> masterVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            masterVolumeSlider.Initialise(settingsManager.MasterVolume, masterVolumeRange);
 
             IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             musicVolumeSlider.Initialise(settingsManager.MusicVolume, musicVolumeRange);
@@ -48,7 +51,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
                     musicVolumeSlider.SliderValue,
                     effectVolumeSlider.SliderValue,
                     zoomSlider.SliderValue,
-                    scrollSlider.SliderValue);
+                    scrollSlider.SliderValue,
+                    masterVolumeSlider.SliderValue);
 
             cancelButton.Initialise(soundPlayer, mainMenuManager.DismissMenu);
 
@@ -62,6 +66,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             effectVolumeSlider.ResetToDefaults(_settingsManager.EffectVolume);
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
+            masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);
         }
     }
 }

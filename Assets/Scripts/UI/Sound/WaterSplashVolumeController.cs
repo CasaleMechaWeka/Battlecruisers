@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.Sound
 
         private void SetVolume()
         {
-            water.OnCollisonRipplesModule.OnWaterEnterRipplesSoundEffect.AudioVolume = _settingsManager.EffectVolume;
+            water.OnCollisonRipplesModule.OnWaterEnterRipplesSoundEffect.AudioVolume = _settingsManager.EffectVolume*_settingsManager.MasterVolume;
         }
     }
 }

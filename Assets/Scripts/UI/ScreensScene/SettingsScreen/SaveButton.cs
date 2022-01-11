@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
-        private IBroadcastingProperty<float> _musicVolume, _effectVolume;
+        private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume;
         private IBroadcastingProperty<bool> _showInGameHints;
         private IHotkeysPanel _hotkeysPanel;
 
@@ -31,6 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<int> scrollSpeedLevel,
             IBroadcastingProperty<float> musicVolume,
             IBroadcastingProperty<float> effectVolume,
+            IBroadcastingProperty<float> masterVolume,
             IBroadcastingProperty<bool> showInGameHints,
             IHotkeysPanel hotkeysPanel)
         {
@@ -45,6 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _scrollSpeedLevel = scrollSpeedLevel;
             _musicVolume = musicVolume;
             _effectVolume = effectVolume;
+            _masterVolume = masterVolume;
             _showInGameHints = showInGameHints;
             _hotkeysPanel = hotkeysPanel;
 
@@ -56,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _effectVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _masterVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
 
@@ -73,8 +76,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
+            _settingsManager.MasterVolume = _masterVolume.Value;
             _settingsManager.MusicVolume = _musicVolume.Value;
             _settingsManager.EffectVolume = _effectVolume.Value;
+            
             _settingsManager.ShowInGameHints = _showInGameHints.Value;
             _settingsManager.Save();
 
@@ -96,6 +101,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
                 || _musicVolume.Value != _settingsManager.MusicVolume
                 || _effectVolume.Value != _settingsManager.EffectVolume
+                || _masterVolume.Value != _settingsManager.MasterVolume
                 || _showInGameHints.Value != _settingsManager.ShowInGameHints
                 || _hotkeysPanel.IsDirty.Value;
         }

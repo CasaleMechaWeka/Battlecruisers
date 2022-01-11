@@ -22,10 +22,11 @@ namespace BattleCruisers.UI.Sound.Wind
             _settingsManager = settingsManager;
         }
 
+        //note, this is used for wind sound effects
         public float FindVolume(float cameraOrthographicSize)
         {
             float rawProportion = _proportionCalculator.FindProportion(cameraOrthographicSize, _validOrthographicSizes);
-            return rawProportion * _settingsManager.EffectVolume;
+            return rawProportion * _settingsManager.EffectVolume*_settingsManager.MasterVolume;
         }
     }
 }

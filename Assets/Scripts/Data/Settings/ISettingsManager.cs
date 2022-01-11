@@ -18,6 +18,7 @@ namespace BattleCruisers.Data.Settings
         int ZoomSpeedLevel { get; set; }
         int ScrollSpeedLevel { get; set; }
 
+        float MasterVolume {get; set;}
         float MusicVolume { get; set; }
         float EffectVolume { get; set; }
 

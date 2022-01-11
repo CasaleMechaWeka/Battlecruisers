@@ -29,6 +29,11 @@ namespace BattleCruisers.Data.Settings
             set => _settings.ScrollSpeedLevel = value;
         }
 
+        public float MasterVolume
+        {
+            get => _settings.MasterVolume;
+            set => _settings.MasterVolume = value;
+        }
         public float MusicVolume
         {
             get => _settings.MusicVolume;

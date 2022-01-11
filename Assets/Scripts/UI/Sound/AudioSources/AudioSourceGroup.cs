@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Sound.AudioSources
         {
             foreach (IAudioSource audioSource in _audioSources)
             {
-                audioSource.Volume = _settingsManager.EffectVolume;
+                audioSource.Volume = _settingsManager.EffectVolume*_settingsManager.MasterVolume;
             }
         }
 

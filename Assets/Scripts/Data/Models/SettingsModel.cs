@@ -12,11 +12,11 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class SettingsModel : ISettingsModel
     {
-        private const int DEFAULT_ZOOM_SPEED_LEVEL = 5;
+        private const int DEFAULT_ZOOM_SPEED_LEVEL = 7;
         public const int MIN_ZOOM_SPEED_LEVEL = 2;
         public const int MAX_ZOOM_SPEED_LEVEL = 9;
 
-        public const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
+        public const int DEFAULT_SCROLL_SPEED_LEVEL = 7;
         public const int MIN_SCROLL_SPEED_LEVEL = 2;
         public const int MAX_SCROLL_SPEED_LEVEL = 9;
 
@@ -70,6 +70,18 @@ namespace BattleCruisers.Data.Models
                 Assert.IsTrue(value >= MIN_SCROLL_SPEED_LEVEL);
                 Assert.IsTrue(value <= MAX_SCROLL_SPEED_LEVEL);
                 _scrollSpeedLevel = value;
+            }
+        }
+
+        [SerializeField]
+        private float _masterVolume;
+        public float MasterVolume
+        {
+            get => _masterVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _masterVolume = value;
             }
         }
 

@@ -8,6 +8,7 @@ namespace BattleCruisers.Data.Models
         int ScrollSpeedLevel { get; set; }
         bool ShowInGameHints { get; set; }
         int ZoomSpeedLevel { get; set; }
+        float MasterVolume { get; set; }
         float MusicVolume { get; set; }
         float EffectVolume { get; set; }
     }

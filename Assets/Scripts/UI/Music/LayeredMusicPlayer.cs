@@ -36,9 +36,9 @@ namespace BattleCruisers.UI.Music
 
         private void _settingsManager_SettingsSaved(object sender, EventArgs e)
         {
-            _primarySource.Volume = _settingsManager.MusicVolume;
+            _primarySource.Volume = _settingsManager.MusicVolume*_settingsManager.MasterVolume;
             _audioVolumeFade.Stop();
-            _secondarySource.Volume = _isPlayingSecondary ? _settingsManager.MusicVolume : 0;
+            _secondarySource.Volume = _isPlayingSecondary ? _settingsManager.MusicVolume*_settingsManager.MasterVolume : 0;
         }
 
         public void Play()
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.Music
                 return;
             }
 
-            _primarySource.Volume = _settingsManager.MusicVolume;
+            _primarySource.Volume = _settingsManager.MusicVolume*_settingsManager.MasterVolume;
             _primarySource.Play(isSpatial: false, loop: true);
 
             _secondarySource.Volume = 0;
@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.Music
         {
             Assert.IsFalse(_isDisposed);
             _isPlayingSecondary = true;
-            _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: _settingsManager.MusicVolume, FADE_TIME_IN_S);
+            _audioVolumeFade.FadeToVolume(_secondarySource, targetVolume: _settingsManager.MusicVolume*_settingsManager.MasterVolume, FADE_TIME_IN_S);
         }
 
         public void StopSecondary()
