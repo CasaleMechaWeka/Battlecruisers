@@ -45,6 +45,13 @@ namespace BattleCruisers.UI.Cameras
         [Header("Smooth Time")]
         public float normalCameraSmoothTime = 0.15f;
         public float slowCameraSmoothTime = 0.5f;
+        private ICamera icamera;
+        private ICameraFocuser cameraFocuser;
+        private IStaticCameraTargetProvider defaultCameraTargetProvider;
+        private IStaticCameraTargetProvider trumpCameraTargetProvider;
+        private ICameraTargets targets;
+        private ITime time;
+        private CameraTransitionSpeedManager cameraTransitionSpeedManager;
 
         public ICameraComponents Initialise(
             ISettingsManager settingsManager, 
@@ -59,27 +66,27 @@ namespace BattleCruisers.UI.Cameras
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
 
-            ICamera camera = new CameraBC(mainCamera);
+            icamera = new CameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
-            ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, camera.Aspect);
-            ICameraCalculator cameraCalculator = new CameraCalculator(camera, settings);
-            IStaticCameraTargetProvider trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
+            ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
+            ICameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
+            trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
 
-            ICameraTargets targets
+            targets
                 = new CameraTargets(
                     cameraCalculator,
                     settings,
                     playerCruiser,
                     aiCruiser,
-                    camera);
+                    icamera);
 
-            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
+            defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
             ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
-                    camera,
+                    icamera,
                     cameraCalculator,
                     settingsManager,
                     settings,
@@ -87,14 +94,14 @@ namespace BattleCruisers.UI.Cameras
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider);
 
-            ITime time = TimeBC.Instance;
-            CameraTransitionSpeedManager cameraTransitionSpeedManager = new CameraTransitionSpeedManager(normalCameraSmoothTime, slowCameraSmoothTime);
+            time = TimeBC.Instance;
+            cameraTransitionSpeedManager = new CameraTransitionSpeedManager(normalCameraSmoothTime, slowCameraSmoothTime);
 
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,
-                    new SmoothZoomAdjuster(camera, time, cameraTransitionSpeedManager),
-                    new SmoothPositionAdjuster(camera, time, cameraTransitionSpeedManager));
+                    new SmoothZoomAdjuster(icamera, time, cameraTransitionSpeedManager),
+                    new SmoothPositionAdjuster(icamera, time, cameraTransitionSpeedManager));
 
             CameraFocuser coreCameraFocuser 
                 = new CameraFocuser(
@@ -103,22 +110,24 @@ namespace BattleCruisers.UI.Cameras
                     defaultCameraTargetProvider,
                     cameraTransitionSpeedManager);
 
-            ICameraFocuser cameraFocuser
+            cameraFocuser
                 = new IndirectCameraFocuser(
                     coreCameraFocuser,
-                    camera,
+                    icamera,
                     new CameraTargetTracker(
-                        camera,
+                        icamera,
                         targets.OverviewTarget,
                         new CameraTargetEqualityCalculator(
                             overviewPositionEqualityMarginInM,
                             overviewOrthographicSizeEqualityMargin)));
 
             navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
-
+            //these must all be private variables.
+            //cameraAdjuster must be reset using the new cameraTargetProvider
+            //then camera components must be reassigned in battlescenegod
             return
                 new CameraComponents(
-                    camera,
+                    icamera,
                     _cameraAdjuster,
                     cameraFocuser,
                     new CruiserDeathCameraFocuser(cameraFocuser),
@@ -270,6 +279,37 @@ namespace BattleCruisers.UI.Cameras
         private void SwitchableUpdater_Updated(object sender, EventArgs e)
         {
             _cameraAdjuster.AdjustCamera();
+        }
+
+        public CameraComponents UpdateCamera(ISettingsManager settingsManager, NavigationPermitters navigationPermitters)
+        {
+            ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
+            ICameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
+            ICameraTargetProvider cameraTargetProvider
+                = CreateCameraTargetProvider(
+                    icamera,
+                    cameraCalculator,
+                    settingsManager,
+                    settings,
+                    navigationPermitters,
+                    trumpCameraTargetProvider,
+                    defaultCameraTargetProvider);
+
+            _cameraAdjuster
+                = new SmoothCameraAdjuster(
+                    cameraTargetProvider,
+                    new SmoothZoomAdjuster(icamera, time, cameraTransitionSpeedManager),
+                    new SmoothPositionAdjuster(icamera, time, cameraTransitionSpeedManager));
+
+            return
+                new CameraComponents(
+                    icamera,
+                    _cameraAdjuster,
+                    cameraFocuser,
+                    new CruiserDeathCameraFocuser(cameraFocuser),
+                    skybox,
+                    settings,
+                    navigationButtonsPanel);
         }
     }
 }

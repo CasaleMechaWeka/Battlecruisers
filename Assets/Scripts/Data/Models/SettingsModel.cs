@@ -13,11 +13,11 @@ namespace BattleCruisers.Data.Models
     public class SettingsModel : ISettingsModel
     {
         private const int DEFAULT_ZOOM_SPEED_LEVEL = 5;
-        public const int MIN_ZOOM_SPEED_LEVEL = 1;
+        public const int MIN_ZOOM_SPEED_LEVEL = 2;
         public const int MAX_ZOOM_SPEED_LEVEL = 9;
 
         public const int DEFAULT_SCROLL_SPEED_LEVEL = 5;
-        public const int MIN_SCROLL_SPEED_LEVEL = 1;
+        public const int MIN_SCROLL_SPEED_LEVEL = 2;
         public const int MAX_SCROLL_SPEED_LEVEL = 9;
 
         public const float DEFAULT_VOLUME = 0.5f;

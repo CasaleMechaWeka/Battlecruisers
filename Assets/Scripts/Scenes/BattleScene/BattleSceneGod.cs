@@ -46,7 +46,7 @@ using UnityEngine.Assertions;
 // DLC      => For DLC
 // PERF     => Potential performance hit
 
-//Comments with no spaces => made by Dean :)
+//Comments with no spaces after // => made by Dean :)
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
@@ -74,6 +74,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public WaterSplashVolumeController waterSplashVolumeController;
         public HelpLabelInitialiser helpLabelInitialiser;
         public GameObject enemyCharacterImages;
+        private IDataProvider dataProvider;
+        private Cruiser playerCruiser;
+        private Cruiser aiCruiser;
+        private NavigationPermitters navigationPermitters;
+        private BattleSceneGodComponents components;
+        private FactoryProvider factoryProvider;
+        private ICameraComponents cameraComponents;
 
         private async void Start()
         {
@@ -93,7 +100,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            BattleSceneGodComponents components = GetComponent<BattleSceneGodComponents>();
+            components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
@@ -105,7 +112,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 applicationModel.SelectedLevel = 1;
             }
 
-            IDataProvider dataProvider = applicationModel.DataProvider;
+            dataProvider = applicationModel.DataProvider;
             waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
@@ -116,7 +123,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
-            NavigationPermitters navigationPermitters = new NavigationPermitters();
+            navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
@@ -127,16 +134,16 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            FactoryProvider factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
-            Cruiser playerCruiser = cruiserFactory.CreatePlayerCruiser();
+            playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
-            Cruiser aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
+            aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
 
             // Camera
-            ICameraComponents cameraComponents
+            cameraComponents
                 = cameraInitialiser.Initialise(
                     dataProvider.SettingsManager,
                     playerCruiser,
@@ -348,6 +355,15 @@ namespace BattleCruisers.Scenes.BattleScene
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
             }
+        }
+
+        public void UpdateCamera()
+        {
+            cameraComponents =  cameraInitialiser.UpdateCamera(
+                    dataProvider.SettingsManager,
+                    navigationPermitters);
+
+            
         }
    }
 }
