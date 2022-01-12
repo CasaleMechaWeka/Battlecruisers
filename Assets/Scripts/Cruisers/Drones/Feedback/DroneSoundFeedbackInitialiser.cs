@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     parentCruiserHasActiveDrones,
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(audioSource),
-                        settingsManager));
+                        settingsManager, 2));
         }
     }
 }

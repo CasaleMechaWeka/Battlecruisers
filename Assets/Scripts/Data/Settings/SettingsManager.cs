@@ -57,6 +57,12 @@ namespace BattleCruisers.Data.Settings
             set => _settings.InterfaceVolume = value;
         }
 
+        public float AmbientVolume
+        {
+            get => _settings.AmbientVolume;
+            set => _settings.AmbientVolume = value;
+        }
+
         public bool ShowInGameHints
         {
             get => _settings.ShowInGameHints;

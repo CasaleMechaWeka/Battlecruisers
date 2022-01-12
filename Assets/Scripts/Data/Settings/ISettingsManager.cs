@@ -23,6 +23,7 @@ namespace BattleCruisers.Data.Settings
         float EffectVolume { get; set; }
         float AlertVolume { get; set; }
         float InterfaceVolume { get; set; }
+        float AmbientVolume { get; set; }
 
         bool ShowInGameHints { get; set; }
 

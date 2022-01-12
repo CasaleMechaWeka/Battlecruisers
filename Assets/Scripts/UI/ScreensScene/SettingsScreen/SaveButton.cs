@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
-        private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume;
+        private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IBroadcastingProperty<bool> _showInGameHints;
         private IHotkeysPanel _hotkeysPanel;
 
@@ -34,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<float> masterVolume,
             IBroadcastingProperty<float> alertVolume,
             IBroadcastingProperty<float> interfaceVolume,
+            IBroadcastingProperty<float> ambientVolume,
             IBroadcastingProperty<bool> showInGameHints,
             IHotkeysPanel hotkeysPanel)
         {
@@ -53,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysPanel = hotkeysPanel;
             _alertVolume = alertVolume;
             _interfaceVolume = interfaceVolume;
+            _ambientVolume = ambientVolume;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -65,6 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _masterVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _alertVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _interfaceVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _ambientVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _settingsManager.Save();
@@ -87,6 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.EffectVolume = _effectVolume.Value;
             _settingsManager.AlertVolume = _alertVolume.Value;
             _settingsManager.InterfaceVolume = _interfaceVolume.Value;
+            _settingsManager.AmbientVolume = _ambientVolume.Value;
             _settingsManager.ShowInGameHints = _showInGameHints.Value;
             _settingsManager.Save();
 
@@ -111,6 +115,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _masterVolume.Value != _settingsManager.MasterVolume
                 || _alertVolume.Value != _settingsManager.AlertVolume
                 || _interfaceVolume.Value != _settingsManager.InterfaceVolume
+                || _ambientVolume.Value != _settingsManager.AmbientVolume
                 || _showInGameHints.Value != _settingsManager.ShowInGameHints
                 || _hotkeysPanel.IsDirty.Value;
         }

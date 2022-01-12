@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
-        public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider;
+        public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
         public ToggleController showInGameHintsToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
@@ -74,6 +74,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IRange<float> interfaceVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
             interfaceVolumeSlider.Initialise(_settingsManager.InterfaceVolume, interfaceVolumeRange);
 
+            IRange<float> ambientVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            ambientVolumeSlider.Initialise(_settingsManager.AmbientVolume, ambientVolumeRange);
+
             showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
 
             hotkeysPanel.Initialise(hotkeysModel);
@@ -92,6 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     masterVolumeSlider.SliderValue,
                     alertVolumeSlider.SliderValue,
                     interfaceVolumeSlider.SliderValue,
+                    ambientVolumeSlider.SliderValue,
                     showInGameHintsToggle.IsChecked,
                     hotkeysPanel);
 
@@ -165,6 +169,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             effectVolumeSlider.ResetToDefaults(_settingsManager.EffectVolume);
             alertVolumeSlider.ResetToDefaults(_settingsManager.AlertVolume);
             interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
+            ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
             showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
         }
     }

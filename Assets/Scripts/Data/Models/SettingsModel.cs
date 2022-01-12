@@ -20,7 +20,7 @@ namespace BattleCruisers.Data.Models
         public const int MIN_SCROLL_SPEED_LEVEL = 2;
         public const int MAX_SCROLL_SPEED_LEVEL = 9;
 
-        public const float DEFAULT_VOLUME = 0.5f;
+        public const float DEFAULT_VOLUME = 1f;
         public const float MIN_VOLUME = 0;
         public const float MAX_VOLUME = 1;
 
@@ -134,6 +134,18 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private float _ambientVolume;
+        public float AmbientVolume
+        {
+            get => _ambientVolume;
+            set
+            {
+                CheckVolumeValue(value);
+                _ambientVolume = value;
+            }
+        }
+
+        [SerializeField]
         private bool _showInGameHints;
         public bool ShowInGameHints
         {
@@ -148,6 +160,11 @@ namespace BattleCruisers.Data.Models
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
             MusicVolume = DEFAULT_VOLUME;
             EffectVolume = DEFAULT_VOLUME;
+            AmbientVolume = DEFAULT_VOLUME;
+            AlertVolume = DEFAULT_VOLUME;
+            InterfaceVolume = DEFAULT_VOLUME;
+
+            MasterVolume = 0.5f;
             ShowInGameHints = true;
         }
 
@@ -190,7 +207,11 @@ namespace BattleCruisers.Data.Models
                 && ShowInGameHints == other.ShowInGameHints
                 && ZoomSpeedLevel == other.ZoomSpeedLevel
                 && MusicVolume == other.MusicVolume
-                && EffectVolume == other.EffectVolume;
+                && EffectVolume == other.EffectVolume
+                && MasterVolume == other.MasterVolume
+                && AmbientVolume == other.AmbientVolume
+                && InterfaceVolume == other.InterfaceVolume
+                && AlertVolume == other.AlertVolume;
         }
 
         public override int GetHashCode()

@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene
             {
                 _stateOnShowMenu = _navigationPermitterManager.PauseNavigation();
             }
-            //_pauseGameManager.PauseGame();
+            _pauseGameManager.PauseGame();
         }
 
         protected void HideModal()
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene
                 _navigationPermitterManager.RestoreNavigation(_stateOnShowMenu);
                 _stateOnShowMenu = null;
             }
-            //_pauseGameManager.ResumeGame();
+            _pauseGameManager.ResumeGame();
         }
     }
 }

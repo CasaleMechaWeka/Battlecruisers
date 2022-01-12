@@ -65,7 +65,7 @@ namespace BattleCruisers.Buildables.Units
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager);
+            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)

@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.Sound.Wind
         public float FindVolume(float cameraOrthographicSize)
         {
             float rawProportion = _proportionCalculator.FindProportion(cameraOrthographicSize, _validOrthographicSizes);
-            return rawProportion * _settingsManager.EffectVolume*_settingsManager.MasterVolume;
+            return rawProportion * _settingsManager.AmbientVolume*_settingsManager.MasterVolume;
         }
     }
 }
