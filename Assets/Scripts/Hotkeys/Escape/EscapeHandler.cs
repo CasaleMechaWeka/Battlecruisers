@@ -9,26 +9,21 @@ namespace BattleCruisers.Hotkeys.Escape
     {
         private readonly IEscapeDetector _escapeDetector;
         private readonly IMainMenuManager _mainMenuManager;
-        private readonly IHelpLabelManager _helpLabelManager;
 
-        public EscapeHandler(IEscapeDetector escapeDetector, IMainMenuManager mainMenuManager, IHelpLabelManager helpLabelManager)
+        public EscapeHandler(IEscapeDetector escapeDetector, IMainMenuManager mainMenuManager)
         {
-            Helper.AssertIsNotNull(escapeDetector, mainMenuManager, helpLabelManager);
+            Helper.AssertIsNotNull(escapeDetector, mainMenuManager);
 
             _escapeDetector = escapeDetector;
             _mainMenuManager = mainMenuManager;
-            _helpLabelManager = helpLabelManager;
+            
 
             _escapeDetector.EscapePressed += _escapeDetector_EscapePressed;
         }
 
         private void _escapeDetector_EscapePressed(object sender, EventArgs e)
         {
-            if (_helpLabelManager.IsShown.Value)
-            {
-                _helpLabelManager.HideHelpLabels();
-            }
-            else if (_mainMenuManager.IsShown)
+            if (_mainMenuManager.IsShown)
             {
                 _mainMenuManager.DismissMenu();
             }

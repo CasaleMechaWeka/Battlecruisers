@@ -61,7 +61,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
         private PausableAudioListener _pausableAudioListener;
-        private IHelpLabelManager _helpLabelManager;
 
         public int defaultLevel = 1;
         public bool isTutorial = false;
@@ -72,7 +71,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public RightPanelInitialiser rightPanelInitialiser;
         public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
-        public HelpLabelInitialiser helpLabelInitialiser;
         public GameObject enemyCharacterImages;
         private IDataProvider dataProvider;
         private Cruiser playerCruiser;
@@ -86,7 +84,7 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
 
-            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController, helpLabelInitialiser);
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -206,13 +204,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     factoryProvider.Sound.UISoundPlayer,
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
-            _helpLabelManager 
-                = helpLabelInitialiser.Initialise(
-                    leftPanelComponents, 
-                    rightPanelComponents, 
-                    pauseGameManager, 
-                    factoryProvider.Sound.UISoundPlayer, 
-                    navigationPermitterManager);
 
             IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
@@ -276,8 +267,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 navigationPermitters.HotkeyFilter,
                 cameraComponents.CameraFocuser,
                 rightPanelComponents.SpeedComponents,
-                rightPanelComponents.MainMenuManager,
-                _helpLabelManager);
+                rightPanelComponents.MainMenuManager);
             _gameEndMonitor 
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(

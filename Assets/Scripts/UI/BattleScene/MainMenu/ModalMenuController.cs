@@ -4,6 +4,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.BattleScene.GameSpeed;
 
 namespace BattleCruisers.UI.BattleScene.MainMenu
 {
@@ -13,6 +14,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
 		public MainMenuButtonsPanel buttonsPanel;
 		public InGameSettingsPanel settingsPanel;
+		public GameSpeedButton playButton;
+		public GameSpeedButton pauseButton;
 
 		private ISettableBroadcastingProperty<bool> _isVisible;
 		public IBroadcastingProperty<bool> IsVisible { get; private set; }
@@ -44,12 +47,14 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			_isVisible.Value = true;
 			buttonsPanel.Show();
 			settingsPanel.Hide();
+			pauseButton.TriggerClick();
 		}
 
 		public void HideMenu()
 		{
 			_canvas.enabled = false;
 			_isVisible.Value = false;
+			playButton.TriggerClick();
 		}
 
         public void ShowSettings()

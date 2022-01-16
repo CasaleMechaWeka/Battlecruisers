@@ -29,11 +29,10 @@ namespace BattleCruisers.Hotkeys
             IBroadcastingFilter hotkeyFilter,
             ICameraFocuser cameraFocuser,
             ISpeedComponents speedComponents,
-            IMainMenuManager mainMenuManager,
-            IHelpLabelManager helpLabelManager)
+            IMainMenuManager mainMenuManager)
         {
             Helper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
-            Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager, helpLabelManager);
+            Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager);
             
             // Hotkeys (only for PC)
             IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
@@ -45,7 +44,7 @@ namespace BattleCruisers.Hotkeys
 
             // Escape (all platforms)
             IEscapeDetector escapeDetector = new EscapeDetector(input, updater);
-            _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager, helpLabelManager);
+            _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager);
         }
 
         private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
