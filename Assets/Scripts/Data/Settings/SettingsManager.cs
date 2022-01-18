@@ -68,6 +68,11 @@ namespace BattleCruisers.Data.Settings
             get => _settings.ShowInGameHints;
             set => _settings.ShowInGameHints = value;
         }
+        public bool ShowToolTips
+        {
+            get => _settings.ShowToolTips;
+            set => _settings.ShowToolTips = value;
+        }
 
         public SettingsManager(IDataProvider dataProvider)
         {

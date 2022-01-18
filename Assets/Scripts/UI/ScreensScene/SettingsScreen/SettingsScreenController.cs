@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public DifficultyDropdown difficultyDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public ToggleController showInGameHintsToggle;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
@@ -78,6 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ambientVolumeSlider.Initialise(_settingsManager.AmbientVolume, ambientVolumeRange);
 
             showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
+            showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -97,6 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     interfaceVolumeSlider.SliderValue,
                     ambientVolumeSlider.SliderValue,
                     showInGameHintsToggle.IsChecked,
+                    showToolTipsToggle.IsChecked,
                     hotkeysPanel);
 
             cancelButton.Initialise(soundPlayer, this);
@@ -192,6 +194,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
             ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
             showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
+            showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
         }
     }
 }

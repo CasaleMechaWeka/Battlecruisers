@@ -153,6 +153,14 @@ namespace BattleCruisers.Data.Models
             set => _showInGameHints = value;
         }
 
+        [SerializeField]
+        private bool _showToolTips;
+        public bool ShowToolTips
+        {
+            get => _showToolTips;
+            set => _showToolTips = value;
+        }
+
         public SettingsModel()
         {
             AIDifficulty = Difficulty.Hard;
@@ -166,6 +174,7 @@ namespace BattleCruisers.Data.Models
 
             MasterVolume = 0.5f;
             ShowInGameHints = true;
+            ShowToolTips = true;
         }
 
         private void CheckVolumeValue(float volume)
@@ -211,7 +220,8 @@ namespace BattleCruisers.Data.Models
                 && MasterVolume == other.MasterVolume
                 && AmbientVolume == other.AmbientVolume
                 && InterfaceVolume == other.InterfaceVolume
-                && AlertVolume == other.AlertVolume;
+                && AlertVolume == other.AlertVolume
+                && ShowToolTips == other.ShowToolTips;
         }
 
         public override int GetHashCode()

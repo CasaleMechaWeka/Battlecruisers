@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public InGameSaveButton saveButton;
         public CanvasGroupButton cancelButton;
         public FloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
+        public ToggleController showToolTipsToggle;
         public SliderController zoomSlider, scrollSlider;
 
         public void Initialise(
@@ -51,6 +52,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
             IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
             scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
+
+            showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
             
 
             saveButton
@@ -65,7 +68,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
                     masterVolumeSlider.SliderValue,
                     alertVolumeSlider.SliderValue,
                     interfaceVolumeSlider.SliderValue,
-                    ambientVolumeSlider.SliderValue);
+                    ambientVolumeSlider.SliderValue,
+                    showToolTipsToggle.IsChecked);
 
             cancelButton.Initialise(soundPlayer, mainMenuManager.DismissMenu);
 
@@ -83,6 +87,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             alertVolumeSlider.ResetToDefaults(_settingsManager.AlertVolume);
             interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
             ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
+            showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
         }
     }
 }

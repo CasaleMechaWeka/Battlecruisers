@@ -26,6 +26,7 @@ namespace BattleCruisers.Data.Settings
         float AmbientVolume { get; set; }
 
         bool ShowInGameHints { get; set; }
+        bool ShowToolTips { get; set; }
 
         void Save();
     }

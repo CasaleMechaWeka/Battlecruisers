@@ -7,6 +7,7 @@ namespace BattleCruisers.Data.Models
         Difficulty AIDifficulty { get; set; }
         int ScrollSpeedLevel { get; set; }
         bool ShowInGameHints { get; set; }
+        bool ShowToolTips { get; set; }
         int ZoomSpeedLevel { get; set; }
         float MasterVolume { get; set; }
         float MusicVolume { get; set; }
@@ -14,5 +15,6 @@ namespace BattleCruisers.Data.Models
         float AlertVolume { get; set; }
         float InterfaceVolume { get; set; }
         float AmbientVolume { get; set; }
+        
     }
 }

@@ -79,6 +79,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private BattleSceneGodComponents components;
         private FactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
+        public ToolTipActivator toolTipActivator;
 
         private async void Start()
         {
@@ -319,6 +320,8 @@ namespace BattleCruisers.Scenes.BattleScene
             Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
             Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
             enemyImages[currentLevel.Num-1].enabled = true;
+
+            toolTipActivator.Initialise();
         }
 
         private IBattleSceneHelper CreateHelper(
