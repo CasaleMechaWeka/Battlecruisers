@@ -40,13 +40,11 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         else{
             toolTipText.alignment = TextAnchor.LowerRight;
         }
-        Debug.Log("WOW");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         toolTipText.enabled = false;
         toolTipText.text = "";
-        Debug.Log("WOW2");
     }
 }
