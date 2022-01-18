@@ -23,7 +23,6 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             ToolTipTextObject.transform.position = Input.mousePosition;
             ToolTipTextObject.transform.position = new Vector3(ToolTipTextObject.transform.position.x, ToolTipTextObject.transform.position.y + 60, ToolTipTextObject.transform.position.z);
-            
         }
     }
     
