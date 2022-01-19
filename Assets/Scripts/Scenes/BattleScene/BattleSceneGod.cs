@@ -355,8 +355,6 @@ namespace BattleCruisers.Scenes.BattleScene
             cameraComponents =  cameraInitialiser.UpdateCamera(
                     dataProvider.SettingsManager,
                     navigationPermitters);
-
-            
         }
    }
 }
