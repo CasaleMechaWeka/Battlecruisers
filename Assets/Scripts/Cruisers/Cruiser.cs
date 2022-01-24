@@ -30,8 +30,8 @@ namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IComparableItem
 	{
-		private IUIManager _uiManager;
-        private ICruiser _enemyCruiser;
+		protected IUIManager _uiManager;
+        protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         private PolygonCollider2D _collider;
         private ICruiserHelper _helper;
@@ -102,6 +102,8 @@ namespace BattleCruisers.Cruisers
         public event EventHandler Clicked;
         private int updateCnt = 0;
 
+        public bool isCruiser = true;
+
         public override void StaticInitialise(ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);
@@ -113,7 +115,8 @@ namespace BattleCruisers.Cruisers
 
             _collider = GetComponent<PolygonCollider2D>();
             Assert.IsNotNull(_collider);
-
+            
+            
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
             _slotWrapperController.StaticInitialise();
@@ -125,6 +128,10 @@ namespace BattleCruisers.Cruisers
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
+            Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
+            
+            
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
@@ -133,8 +140,7 @@ namespace BattleCruisers.Cruisers
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
-            Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
-            Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
+            
         }
 
         public async virtual void Initialise(ICruiserArgs args)
@@ -254,7 +260,7 @@ namespace BattleCruisers.Cruisers
             BuildingDestroyed?.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
         }
 
-        void Update()
+        public virtual void Update()
         {
             RepairManager.Repair(_time.DeltaTime);
             updateCnt += 1;

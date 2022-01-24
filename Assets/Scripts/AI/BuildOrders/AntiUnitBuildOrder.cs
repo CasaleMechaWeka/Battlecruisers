@@ -44,7 +44,7 @@ namespace BattleCruisers.AI.BuildOrders
 
             if (_numOfSlotsUsed < _numOfSlotsToUse)
             {
-                Assert.IsTrue(_levelInfo.CanConstructBuilding(_basicDefenceKey), "Should always have enough drones to build the basic defence building :(");
+                //Assert.IsTrue(_levelInfo.CanConstructBuilding(_basicDefenceKey), "Should always have enough drones to build the basic defence building :(");
 
                 if (_isFirstKey
                     || !_levelInfo.CanConstructBuilding(_advancedDefenceKey))

@@ -255,6 +255,19 @@ namespace BattleCruisers.Buildables
             _parent.SetActive(false);
         }
 
+        public void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
+        {
+            _parent.SetActive(true);
+            ParentCruiser = parentCruiser;
+            EnemyCruiser = enemyCruiser;
+            _cruiserSpecificFactories = cruiserSpecificFactories;
+
+            Faction = ParentCruiser.Faction;
+            _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
+            _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+        }
+
         /// <summary>
         /// Called every time an object is taken from an object pool and activated.  Can happen
         /// multiple times for buildables as they are recycled.

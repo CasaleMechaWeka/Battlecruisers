@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.Units
 		public Direction FacingDirection
 		{
 			get { return _facingDirection; }
-            protected set
+            set
 			{
 				_facingDirection = value;
 				OnDirectionChange();
