@@ -11,17 +11,24 @@ namespace BattleCruisers.Cruisers
         public ArchonBattleshipController unit;
         public GameObject parentWrapper;
         public HealthBarController healthBar;
+        bool started = false;
         public override void Initialise(ICruiserArgs args)
         {
             isCruiser = false;
             base.Initialise(args);
             unit.Initialise(_uiManager, FactoryProvider);
             unit.Activate(this, _enemyCruiser, CruiserSpecificFactories);
+            started = true;
+            maxHealth = unit.maxHealth;
+            _healthTracker.SetHealth(unit.Health);
         }
 
         public override void Update()
         {
-            
+            if (started)
+            {
+                _healthTracker.SetHealth(unit.Health);
+            }
         }
 
         public override void StaticInitialise(ILocTable commonStrings)

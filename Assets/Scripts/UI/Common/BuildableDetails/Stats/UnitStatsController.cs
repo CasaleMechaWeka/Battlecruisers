@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails.Stats
@@ -21,6 +22,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             base.InternalShowStats(item, itemToCompareTo);
 
             int starRating = _unitMovementSpeedConverter.ConvertValueToStars(item.MaxVelocityInMPerS);
+            if (starRating == 0)
+            {
+                starRating = 1;
+            }
             ComparisonResult comparisonResult = _higherIsBetterComparer.CompareStats(item.MaxVelocityInMPerS, itemToCompareTo.MaxVelocityInMPerS);
             speed.ShowResult(starRating, comparisonResult);
         }

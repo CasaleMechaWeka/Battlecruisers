@@ -59,6 +59,11 @@ namespace BattleCruisers.Buildables
             }
         }
 
+        public void SetHealth(float amount)
+        {
+            Health = amount;
+        }
+
         public bool AddHealth(float amountToAdd)
         {
             if (amountToAdd > 0

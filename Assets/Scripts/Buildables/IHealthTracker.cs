@@ -23,5 +23,7 @@ namespace BattleCruisers.Buildables
         bool AddHealth(float amountToAdd);
 
         void SetMinHealth();
+        void SetHealth(float amount);
+        
     }
 }

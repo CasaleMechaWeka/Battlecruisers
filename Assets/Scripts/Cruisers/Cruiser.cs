@@ -101,7 +101,6 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
         private int updateCnt = 0;
-
         public bool isCruiser = true;
 
         public override void StaticInitialise(ILocTable commonStrings)

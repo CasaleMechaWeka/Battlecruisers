@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables.Units
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            Assert.IsTrue(maxVelocityInMPerS > 0);
+            //Assert.IsTrue(maxVelocityInMPerS > 0);
 
             AudioSource engineAudioSource = transform.FindNamedComponent<AudioSource>("EngineAudioSource");
             Assert.IsNotNull(engineAudioSource);
