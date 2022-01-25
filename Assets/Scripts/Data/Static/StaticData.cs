@@ -209,7 +209,7 @@ namespace BattleCruisers.Data.Static
 			return new List<ILevel>()
 			{
                 // Set 1:  Raptor
-                new Level(1, StaticPrefabKeys.Hulls.ManOfWarBoss, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
+                new Level(1, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
                 new Level(2, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
                 new Level(3, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
                 
