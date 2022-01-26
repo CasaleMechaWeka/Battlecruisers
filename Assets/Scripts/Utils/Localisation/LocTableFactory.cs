@@ -119,7 +119,7 @@ namespace BattleCruisers.Utils.Localisation
 
             // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
             Locale localeToUse = await LocalizationSettings.SelectedLocaleAsync.Task;
-
+/*
 #if PSEUDO_LOCALE
             Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
             Locale pseudoLocale = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Pseudo-Locale(pseudo)");
@@ -127,6 +127,7 @@ namespace BattleCruisers.Utils.Localisation
             LocalizationSettings.SelectedLocale = pseudoLocale;
             localeToUse = pseudoLocale;
 #endif
+*/
             _locale = localeToUse;
 
             return localeToUse;

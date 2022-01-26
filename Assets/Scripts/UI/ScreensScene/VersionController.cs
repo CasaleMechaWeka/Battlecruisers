@@ -31,9 +31,9 @@ namespace BattleCruisers.UI.ScreensScene
             value += " - Logs";
 #endif
 
-#if PSEUDO_LOCALE
-            value += " - PseudoLoc";
-#endif
+//#if PSEUDO_LOCALE
+//            value += " - PseudoLoc";
+//#endif
 
             if (staticData.HasAsserts)
             {

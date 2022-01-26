@@ -25,9 +25,9 @@ namespace BattleCruisers.Utils.Localisation
             StringTableEntry entry = Handle.Result.GetEntry(key);
             Assert.IsNotNull(entry, $"No string entry for key: {key}");
 
-#if !PSEUDO_LOCALE
+//#if !PSEUDO_LOCALE
             return entry.GetLocalizedString();
-#else
+/*#else
             if (LocalizationSettings.SelectedLocale is PseudoLocale loc)
             {
                 return loc.GetPseudoString(entry.GetLocalizedString());
@@ -36,7 +36,7 @@ namespace BattleCruisers.Utils.Localisation
             {
                 throw new Exception($"Selected locale is not pseudo locale :/  {LocalizationSettings.SelectedLocale}");
             }
-#endif
+#endif*/
         }
     }
 }
