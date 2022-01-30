@@ -10,6 +10,7 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Targets.TargetTrackers;
@@ -273,6 +274,11 @@ namespace BattleCruisers.Cruisers
         public void MakeInvincible()
         {
             _healthTracker.State = HealthTrackerState.Immutable;
+        }
+
+        public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)
+        {
+
         }
     }
 }

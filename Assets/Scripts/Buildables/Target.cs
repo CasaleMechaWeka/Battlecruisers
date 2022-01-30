@@ -185,5 +185,10 @@ namespace BattleCruisers.Buildables
         {
             return $"{base.ToString()}: {gameObject.GetInstanceID()}";
         }
+
+        public void SetHealthToMax()
+        {
+            _healthTracker.SetHealth(maxHealth);
+        }
     }
 }

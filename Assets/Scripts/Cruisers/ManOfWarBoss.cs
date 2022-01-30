@@ -3,6 +3,7 @@ using UnityEngine;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Buildables;
+using BattleCruisers.Data.Settings;
 
 namespace BattleCruisers.Cruisers
 {
@@ -38,6 +39,31 @@ namespace BattleCruisers.Cruisers
             isCruiser = false;
             base.StaticInitialise(commonStrings);
             unit.StaticInitialise(parentWrapper, healthBar, commonStrings);
+        }
+
+        public override void AdjustStatsByDifficulty(Difficulty AIDifficulty)
+        {
+            switch (AIDifficulty)
+            {
+                case Difficulty.Normal:
+                    unit.maxHealth = 1000;
+                    break;
+
+                case Difficulty.Hard:
+                    unit.maxHealth = 2000;
+                    break;
+
+                case Difficulty.Harder:
+                    unit.maxHealth = 3200;
+                    break;
+
+                default:
+                    unit.maxHealth = 4800;
+                    break;
+            }
+            unit.SetHealthToMax();
+            maxHealth = unit.maxHealth;
+            _healthTracker.SetHealth(unit.Health);
         }
     }
 

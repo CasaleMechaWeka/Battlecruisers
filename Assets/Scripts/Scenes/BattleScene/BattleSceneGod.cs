@@ -168,6 +168,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     cameraComponents.CameraFocuser,
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
+            
 
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
@@ -322,6 +323,12 @@ namespace BattleCruisers.Scenes.BattleScene
             enemyImages[currentLevel.Num-1].enabled = true;
 
             toolTipActivator.Initialise();
+
+            if (!aiCruiser.isCruiser)
+            {
+                aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
+                Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
+            }
         }
 
         private IBattleSceneHelper CreateHelper(

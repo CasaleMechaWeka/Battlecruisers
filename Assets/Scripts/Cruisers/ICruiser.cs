@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -32,5 +33,6 @@ namespace BattleCruisers.Cruisers
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
         void MakeInvincible();
+        void AdjustStatsByDifficulty(Difficulty AIDifficulty);
     }
 }
