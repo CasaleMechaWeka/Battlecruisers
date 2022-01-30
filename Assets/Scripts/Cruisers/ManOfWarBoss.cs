@@ -12,6 +12,7 @@ namespace BattleCruisers.Cruisers
         public GameObject parentWrapper;
         public HealthBarController healthBar;
         bool started = false;
+        public SpriteRenderer spriteRenderer;
         public override void Initialise(ICruiserArgs args)
         {
             isCruiser = false;
@@ -21,6 +22,7 @@ namespace BattleCruisers.Cruisers
             started = true;
             maxHealth = unit.maxHealth;
             _healthTracker.SetHealth(unit.Health);
+            spriteRenderer.sprite = null;
         }
 
         public override void Update()

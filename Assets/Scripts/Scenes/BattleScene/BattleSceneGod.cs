@@ -62,7 +62,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private InformatorDismisser _informatorDismisser;
         private PausableAudioListener _pausableAudioListener;
 
-        public int defaultLevel = 1;
+        public int defaultLevel;
         public bool isTutorial = false;
 
         public CameraInitialiser cameraInitialiser;
@@ -95,7 +95,7 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 // TEMP  Force level I'm currently testing :)
                 applicationModel.SelectedLevel = defaultLevel;
-
+                Debug.Log(applicationModel.SelectedLevel);
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
