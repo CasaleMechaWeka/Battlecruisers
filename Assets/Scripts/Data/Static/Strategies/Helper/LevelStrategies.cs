@@ -45,6 +45,9 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 				new BalancedStrategy(),
 				new BalancedStrategy(),
 
+                //man o war
+                new RushStrategy(),
+
                 // Set 5:  Levels 15 - 17
 				new RushStrategy(),
                 new BoomStrategy(),
@@ -60,7 +63,13 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BalancedStrategy(),
                 new BoomStrategy(),
                 new RushStrategy(),
-                new BoomStrategy()
+                new BoomStrategy(),
+
+                new BalancedStrategy(),
+                new BoomStrategy(),
+                new RushStrategy(),
+                new BoomStrategy(),
+                new BalancedStrategy()
             };
         }
 
@@ -90,6 +99,9 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicBalancedStrategy(),
                 new BasicTurtleStrategy(),
 
+                //man o war
+                new BasicRushStrategy(),
+
                 // Set 5:  Levels 15 - 17
 				new BasicRushStrategy(),
 				new BasicBoomDefensiveStrategy(),
@@ -105,7 +117,13 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicTurtleStrategy(),
                 new BasicBoomDefensiveStrategy(),
                 new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy()
+                new BasicBoomAggressiveStrategy(),
+
+                new BasicTurtleStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicRushStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicTurtleStrategy()
             };
 		}
 
@@ -192,6 +210,13 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
 
+                //Man of war
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+
                 // Set 5:  Levels 15 - 17
                 new IOffensiveRequest[]
                 {
@@ -260,6 +285,38 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                //New enemies
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 }
             };
         }

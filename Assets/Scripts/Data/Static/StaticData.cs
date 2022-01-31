@@ -255,7 +255,7 @@ namespace BattleCruisers.Data.Static
 
                 new Level(29, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
                 new Level(30, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold),
-                new Level(31, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold)
+                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold)
             };
 		}
 
