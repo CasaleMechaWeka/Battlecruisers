@@ -19,7 +19,7 @@ namespace BattleCruisers.Data.Static
         private readonly IList<UnitKey> _allUnits;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
-        public const int NUM_OF_LEVELS = 26;
+        public const int NUM_OF_LEVELS = 31;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
 
 #if IS_DEMO
@@ -246,7 +246,16 @@ namespace BattleCruisers.Data.Static
                 new Level(23, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
                 new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
                 new Level(25, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold)
+
+
+                new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold),
+                new Level(27, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(28, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+
+
+                new Level(29, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
+                new Level(30, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold),
+                new Level(31, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Cold)
             };
 		}
 

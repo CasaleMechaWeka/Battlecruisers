@@ -52,6 +52,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             {
                 targetProxy.Initialise(this);
             }
+            
         }
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -70,6 +71,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override void Activate(BuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
+            base.OnShipCompleted();
         }
 
         protected override void OnShipCompleted()
@@ -83,6 +85,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
             base.OnShipCompleted();
+            Debug.Log("wow, completed");
         }
 
         protected override void AddBuildRateBoostProviders(
