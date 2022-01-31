@@ -46,7 +46,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 				new BalancedStrategy(),
 
                 //man o war
-                new RushStrategy(),
+                new BalancedStrategy(),
 
                 // Set 5:  Levels 15 - 17
 				new RushStrategy(),
@@ -100,7 +100,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicTurtleStrategy(),
 
                 //man o war
-                new BasicRushStrategy(),
+               new BasicTurtleStrategy(),
 
                 // Set 5:  Levels 15 - 17
 				new BasicRushStrategy(),
@@ -213,8 +213,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 //Man of war
                 new IOffensiveRequest[]
                 {
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
 
                 // Set 5:  Levels 15 - 17
