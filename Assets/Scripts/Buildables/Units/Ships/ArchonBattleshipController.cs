@@ -69,7 +69,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
+            Debug.Log("Done 4 head");
             base.Activate(activationArgs);
+            
         }
 
         protected override void OnShipCompleted()

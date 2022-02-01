@@ -2,6 +2,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -68,24 +69,29 @@ namespace BattleCruisers.Buildables.Units.Ships
                     new AudioSourceBC(dieselAudioSource));*/
         }
 
-        public override void Activate(BuildableActivationArgs activationArgs)
+        public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
         {
-            base.Activate(activationArgs);
-            base.OnShipCompleted();
+            base.Activate(parentCruiser, enemyCruiser, cruiserSpecificFactories);
+            CompleteShip();
         }
 
         protected override void OnShipCompleted()
         {
             // Show bones, starting unfurl animation
-            bones.SetActive(true);
-
+            //bones.SetActive(true);
             // Delay normal setup (movement, turrets) until the unfurl animation has completed
+        }
+
+        private void CompleteShip()
+        {
+            base.OnShipCompleted();
+            Debug.Log("wow, completed");
         }
 
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
             base.OnShipCompleted();
-            Debug.Log("wow, completed");
+            Debug.Log("wow!");
         }
 
         protected override void AddBuildRateBoostProviders(

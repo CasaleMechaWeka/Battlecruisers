@@ -255,7 +255,7 @@ namespace BattleCruisers.Buildables
             _parent.SetActive(false);
         }
 
-        public void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
+        public virtual void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
         {
             _parent.SetActive(true);
             ParentCruiser = parentCruiser;
