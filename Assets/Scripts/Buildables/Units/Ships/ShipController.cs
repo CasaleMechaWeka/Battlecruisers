@@ -121,6 +121,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected virtual void OnShipCompleted()
         {
+            Debug.Log("Based");
             InitialiseTurrets();
             SetupMovement();
         }

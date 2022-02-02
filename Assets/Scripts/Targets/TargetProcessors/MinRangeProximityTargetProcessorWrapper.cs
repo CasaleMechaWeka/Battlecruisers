@@ -2,6 +2,7 @@
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
@@ -17,6 +18,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
             // Create target finder
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            Debug.Log(args.EnemyFaction);
             return args.TargetFactories.FinderFactory.CreateMinRangeTargetFinder(maxRangeDetector, minRangeDetector, enemyDetectionFilter);
         }
     }

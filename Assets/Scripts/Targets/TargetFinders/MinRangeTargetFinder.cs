@@ -2,6 +2,7 @@
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -40,6 +41,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
         private void OnTargetFound(object sender, TargetEventArgs args)
         {
+            Debug.Log("Found");
             if (!args.Target.IsDestroyed
                 && _targetFilter.IsMatch(args.Target))
             {
@@ -49,6 +51,7 @@ namespace BattleCruisers.Targets.TargetFinders
 
         private void OnTargetLost(object sender, TargetEventArgs args)
         {
+            Debug.Log("Lost");
             if (_targetFilter.IsMatch(args.Target))
             {
                 TargetLost?.Invoke(this, args);

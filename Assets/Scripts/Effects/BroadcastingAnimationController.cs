@@ -9,6 +9,7 @@ namespace BattleCruisers.Effects
 
         public void Done()
         {
+            Debug.Log("Done boss");
             AnimationDone?.Invoke(this, EventArgs.Empty);
         }
 
