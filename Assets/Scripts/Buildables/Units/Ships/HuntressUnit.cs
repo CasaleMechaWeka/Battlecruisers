@@ -26,7 +26,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBroadcastingAnimation _unfurlAnimation;
         private AudioSourceGroup _unfurlAudioGroup;
 
-        public BarrelWrapper minigun, _samSite, _antiSeaTurret;
+        public BarrelWrapper minigun, _samSite;
         public GameObject bones;
         //public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
 
@@ -72,8 +72,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
         {
             base.Activate(parentCruiser, enemyCruiser, cruiserSpecificFactories);
-            //Invoke("CompleteShip", 2f);
-            CompleteShip();
         }
 
         protected override void OnShipCompleted()
@@ -86,7 +84,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         private void CompleteShip()
         {
             base.OnShipCompleted();
-            Debug.Log("wow, completed");
         }
 
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
@@ -117,15 +114,14 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             return new List<IBarrelWrapper>()
             { 
-                minigun, _samSite, _antiSeaTurret
+                minigun, _samSite
             };
         }
 
         protected override void InitialiseTurrets()
         {
-            minigun.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
+            minigun.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
             _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
-            _antiSeaTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

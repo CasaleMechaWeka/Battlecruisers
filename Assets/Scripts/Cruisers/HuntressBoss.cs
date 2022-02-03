@@ -14,6 +14,7 @@ namespace BattleCruisers.Cruisers
         public HealthBarController healthBar;
         bool started = false;
         public SpriteRenderer spriteRenderer;
+        public float timeToFinish;
         public override void Initialise(ICruiserArgs args)
         {
             isCruiser = false;
