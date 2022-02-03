@@ -34,7 +34,7 @@ namespace BattleCruisers.Cruisers
 		protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
-        private PolygonCollider2D _collider;
+        protected Collider2D _collider;
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
         private IClickHandler _clickHandler;
@@ -113,7 +113,7 @@ namespace BattleCruisers.Cruisers
             _renderer = GetComponent<SpriteRenderer>();
 			Assert.IsNotNull(_renderer);
 
-            _collider = GetComponent<PolygonCollider2D>();
+            _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
             
             

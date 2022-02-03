@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override Vector2 Size => base.Size * 2;
 
         public override Vector2 DroneAreaSize => base.Size;
-
+        public override TargetType TargetType => TargetType.Cruiser;
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
 
