@@ -121,7 +121,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _enemyFaction = _parent.EnemyCruiser.Faction;
             _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;
-            Debug.Log(_enemyFaction);
+            //Debug.Log(_enemyFaction);
             // Shared by all barrels
             ITargetFilter targetFilter = CreateTargetFilter();
             IAngleCalculator angleCalculator = CreateAngleCalculator(ProjectileStats);
