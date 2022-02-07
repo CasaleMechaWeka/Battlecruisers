@@ -37,6 +37,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override TargetType TargetType => TargetType.Cruiser;
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
+        public Animator bonesAnimator;
+        private float animationSpeed = 1.0f;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -45,6 +47,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             //Helper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 
             _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
+
             Assert.IsNotNull(_unfurlAnimation);
             _unfurlAnimation.AnimationDone += _unfurlAnimation_AnimationDone;
 
@@ -147,6 +150,17 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.Deactivate();
             bones.SetActive(false);
+        }
+        
+        protected override void OnTakeDamage()
+        {
+            SpeedUpAnimation();
+        }
+
+        public void SpeedUpAnimation()
+        {
+            animationSpeed *= 2f;
+            bonesAnimator.SetFloat("multiplier", animationSpeed);
         }
     }
 }

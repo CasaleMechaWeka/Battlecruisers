@@ -72,6 +72,7 @@ namespace BattleCruisers.Data.Static
 
             // Ships
             public static UnitKey AttackBoat { get; } = new UnitKey(UnitCategory.Naval, "AttackBoat");
+            public static UnitKey AttackRIB { get; } = new UnitKey(UnitCategory.Naval, "AttackRIB");
             public static UnitKey Frigate { get; } = new UnitKey(UnitCategory.Naval, "Frigate");
             public static UnitKey Destroyer { get; } = new UnitKey(UnitCategory.Naval, "Destroyer");
             public static UnitKey ArchonBattleship { get; } = new UnitKey(UnitCategory.Naval, "ArchonBattleship");
@@ -85,7 +86,7 @@ namespace BattleCruisers.Data.Static
                         // Aircraft
                         Bomber, Fighter, Gunship, TestAircraft,
                         // Ships
-                        AttackBoat, Frigate, Destroyer, ArchonBattleship
+                        AttackBoat, AttackRIB, Frigate, Destroyer, ArchonBattleship
                     };
                 }
             }

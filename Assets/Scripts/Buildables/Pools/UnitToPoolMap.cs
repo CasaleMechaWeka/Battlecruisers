@@ -69,6 +69,9 @@ namespace BattleCruisers.Buildables.Pools
                 case "ArchonBattleship":
                     return _unitPoolProvider.ArchonPool;
 
+                case "AttackRIB":
+                    return _unitPoolProvider.AttackRIBPool;
+
                 default:
                     throw new ArgumentException($"Unsupported ship: {ship.PrefabName}");
             }
