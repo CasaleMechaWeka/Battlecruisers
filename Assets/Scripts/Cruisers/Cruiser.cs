@@ -262,7 +262,10 @@ namespace BattleCruisers.Cruisers
 
         public virtual void Update()
         {
-            RepairManager.Repair(_time.DeltaTime);
+            if (RepairManager != null)
+            {
+                RepairManager.Repair(_time.DeltaTime);
+            }
             updateCnt += 1;
             updateCnt = updateCnt%200;
             if (IsPlayerCruiser && updateCnt==0)
