@@ -13,6 +13,8 @@ namespace BattleCruisers.Data.Static
 			public static BuildingKey AirFactory { get; } = new BuildingKey(BuildingCategory.Factory, "AirFactory");
 			public static BuildingKey NavalFactory { get; } = new BuildingKey(BuildingCategory.Factory, "NavalFactory");
 			public static BuildingKey DroneStation { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
+            public static BuildingKey DroneStation4 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay4");
+            public static BuildingKey DroneStation8 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay8");
 
 			// Tactical
 			public static BuildingKey ShieldGenerator { get; } = new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
@@ -47,7 +49,7 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         // Factories
-                        AirFactory, NavalFactory, DroneStation,
+                        AirFactory, NavalFactory, DroneStation, DroneStation4, DroneStation8,
                         // Tactical
                         ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower,
                         // Defence

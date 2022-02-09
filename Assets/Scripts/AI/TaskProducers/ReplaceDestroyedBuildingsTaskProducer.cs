@@ -7,6 +7,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers

@@ -40,7 +40,7 @@ namespace BattleCruisers.Data.Static
 		public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
-        public int LastLevelWithLoot => 25;
+        public int LastLevelWithLoot => 31;
         public ILevelStrategies Strategies { get; }
 
         public StaticData()
@@ -93,6 +93,8 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.AirFactory,
 				StaticPrefabKeys.Buildings.NavalFactory,
 				StaticPrefabKeys.Buildings.DroneStation,
+                StaticPrefabKeys.Buildings.DroneStation4,
+                StaticPrefabKeys.Buildings.DroneStation8,
 
                 // Tactical
                 StaticPrefabKeys.Buildings.ShieldGenerator,
@@ -265,32 +267,34 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.AirFactory, 1 },
                 { StaticPrefabKeys.Buildings.NavalFactory, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
+                { StaticPrefabKeys.Buildings.DroneStation4, 26 },
+                { StaticPrefabKeys.Buildings.DroneStation8, 27 },
 
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
                 { StaticPrefabKeys.Buildings.LocalBooster, 9 },
-                { StaticPrefabKeys.Buildings.ControlTower, 23 },
-                { StaticPrefabKeys.Buildings.StealthGenerator, 16 },
-                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 16 },
+                { StaticPrefabKeys.Buildings.ControlTower, 24 },
+                { StaticPrefabKeys.Buildings.StealthGenerator, 17 },
+                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 17 },
 
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
                 { StaticPrefabKeys.Buildings.AntiAirTurret, 1 },
                 { StaticPrefabKeys.Buildings.Mortar, 3 },
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
-                { StaticPrefabKeys.Buildings.TeslaCoil, 20 },
+                { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
-                { StaticPrefabKeys.Buildings.RocketLauncher, 19 },
+                { StaticPrefabKeys.Buildings.RocketLauncher, 20 },
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
                 { StaticPrefabKeys.Buildings.NukeLauncher, 10 },
                 { StaticPrefabKeys.Buildings.Ultralisk, 14 },
-                { StaticPrefabKeys.Buildings.KamikazeSignal, 21 },
-                { StaticPrefabKeys.Buildings.Broadsides, 24 }
+                { StaticPrefabKeys.Buildings.KamikazeSignal, 22 },
+                { StaticPrefabKeys.Buildings.Broadsides, 25 }
             };
         }
 
@@ -307,7 +311,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
                 { StaticPrefabKeys.Units.Frigate, 3 },
                 { StaticPrefabKeys.Units.Destroyer, 13 },
-                { StaticPrefabKeys.Units.ArchonBattleship, 17 }
+                { StaticPrefabKeys.Units.ArchonBattleship, 15 }
             };
         }
 
@@ -319,10 +323,10 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Raptor, 4 },
                 { StaticPrefabKeys.Hulls.Bullshark, 8 },
                 { StaticPrefabKeys.Hulls.Rockjaw, 11},
-                { StaticPrefabKeys.Hulls.Eagle, 15 },
-                { StaticPrefabKeys.Hulls.Hammerhead, 18 },
-                { StaticPrefabKeys.Hulls.Longbow, 22 },
-                { StaticPrefabKeys.Hulls.Megalodon, 25 }
+                { StaticPrefabKeys.Hulls.Eagle, 18 },
+                { StaticPrefabKeys.Hulls.Hammerhead, 19 },
+                { StaticPrefabKeys.Hulls.Longbow, 23 },
+                { StaticPrefabKeys.Hulls.Megalodon, 26 }
             };
         }
 
