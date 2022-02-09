@@ -170,6 +170,7 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
             public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
             public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
+            public static ProjectileKey RocketSmall { get; } = new ProjectileKey("RocketSmall");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -179,7 +180,7 @@ namespace BattleCruisers.Data.Static
                     {
                         Bullet, ShellSmall, ShellLarge, 
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
-                        Bomb, Nuke, Rocket
+                        Bomb, Nuke, Rocket, RocketSmall
                     };
                 }
             }

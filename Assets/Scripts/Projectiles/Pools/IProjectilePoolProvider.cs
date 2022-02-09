@@ -12,6 +12,7 @@ namespace BattleCruisers.Projectiles.Pools
         IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
         IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
         IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
+        IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
         IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }

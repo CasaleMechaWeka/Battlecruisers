@@ -16,6 +16,7 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
+        public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
@@ -52,6 +53,12 @@ namespace BattleCruisers.Projectiles.Pools
                 = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.Rocket,
+                    InitialCapacity.ROCKET);
+
+            RocketsSmallPool
+                = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
+                    factoryProvider,
+                    StaticPrefabKeys.Projectiles.RocketSmall,
                     InitialCapacity.ROCKET);
 
             MissilesSmallPool
@@ -98,6 +105,7 @@ namespace BattleCruisers.Projectiles.Pools
             ShellsLargePool.AddCapacity(InitialCapacity.SHELL_LARGE);
             BombsPool.AddCapacity(InitialCapacity.BOMB);
             RocketsPool.AddCapacity(InitialCapacity.ROCKET);
+            RocketsSmallPool.AddCapacity(InitialCapacity.ROCKET);
             MissilesSmallPool.AddCapacity(InitialCapacity.MISSILE_SMALL);
             MissilesMediumPool.AddCapacity(InitialCapacity.MISSILE_MEDIUM);
             MissilesLargePool.AddCapacity(InitialCapacity.MISSILE_LARGE);
