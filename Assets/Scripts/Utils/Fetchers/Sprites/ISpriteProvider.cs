@@ -9,5 +9,6 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         Task<IList<ISpriteWrapper>> GetBomberSpritesAsync();
         Task<IList<ISpriteWrapper>> GetFighterSpritesAsync();
         Task<IList<ISpriteWrapper>> GetGunshipSpritesAsync();
+        Task<IList<ISpriteWrapper>> GetSteamCopterSpritesAsync();
     }
 }

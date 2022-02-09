@@ -92,7 +92,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
+            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateSteamCopterSpriteChooserAsync(this);
         }
 
         private void SetupTargetDetection()
