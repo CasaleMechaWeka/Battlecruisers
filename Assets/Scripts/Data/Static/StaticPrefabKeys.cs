@@ -35,6 +35,8 @@ namespace BattleCruisers.Data.Static
 			public static BuildingKey RocketLauncher { get; } = new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
 			public static BuildingKey Railgun { get; } = new BuildingKey(BuildingCategory.Offence, "Railgun");
             public static BuildingKey MLRS { get; } = new BuildingKey(BuildingCategory.Offence, "MLRS");
+            public static BuildingKey GatlingMortar { get; } = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
+
 
 			// Ultras
 			public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
@@ -56,7 +58,7 @@ namespace BattleCruisers.Data.Static
                         // Defence
                         AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil,
                         // Offence
-                        Artillery, RocketLauncher, Railgun, MLRS,
+                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar,
                         // Ultras
                         DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides
                     };

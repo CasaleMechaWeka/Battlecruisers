@@ -115,6 +115,7 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Buildings.Railgun,
 				StaticPrefabKeys.Buildings.RocketLauncher,
                 StaticPrefabKeys.Buildings.MLRS,
+                StaticPrefabKeys.Buildings.GatlingMortar,
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
@@ -290,6 +291,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.RocketLauncher, 20 },
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
                 { StaticPrefabKeys.Buildings.MLRS, 28},
+                { StaticPrefabKeys.Buildings.GatlingMortar, 31},
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
