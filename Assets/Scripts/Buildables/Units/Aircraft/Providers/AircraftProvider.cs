@@ -108,6 +108,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 			};
 		}
 
+		public IList<Vector2> FindSteamCopterPatrolPoints(float cruisingAltitudeInM)
+		{
+            cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
+
+            float parentCruiserPatrolPointAdjustmentX = IsEnemyToTheRight ? GUNSHIP_PARENT_CRUISER_MARGIN : -GUNSHIP_PARENT_CRUISER_MARGIN;
+			float parentCruiserPatrolPointX = _parentCruiserPosition.x + parentCruiserPatrolPointAdjustmentX;
+            float gunshipTurnAroundPointX = _parentCruiserPosition.x + _enemyCruiserPosition.x;
+
+			return new List<Vector2>()
+			{
+				new Vector2(parentCruiserPatrolPointX, cruisingAltitudeInM),
+                new Vector2(gunshipTurnAroundPointX, cruisingAltitudeInM)
+			};
+		}
+
 		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
 		{
             cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);

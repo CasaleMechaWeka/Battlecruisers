@@ -13,6 +13,9 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly HashSet<ITarget> _aircraft;
         public IReadOnlyCollection<ITarget> Aircraft => _aircraft;
 
+        private readonly HashSet<ITarget> _cruisers;
+        public IReadOnlyCollection<ITarget> Cruisers => _cruisers;
+
         private readonly HashSet<ITarget> _shipsAndAircraft;
         public IReadOnlyCollection<ITarget> ShipsAndAircraft => _shipsAndAircraft;
 
@@ -23,6 +26,7 @@ namespace BattleCruisers.Cruisers.Construction
             _ships = new HashSet<ITarget>();
             _aircraft = new HashSet<ITarget>();
             _shipsAndAircraft = new HashSet<ITarget>();
+            _cruisers = new HashSet<ITarget>();
 
             cruiserUnitMonitor.UnitStarted += CruiserUnitMonitor_UnitStarted;
             cruiserUnitMonitor.UnitDestroyed += CruiserUnitMonitor_UnitDestroyed;

@@ -24,6 +24,8 @@ namespace BattleCruisers.Buildables.Pools
         public IPool<Unit, BuildableActivationArgs> BomberPool { get; }
         public IPool<Unit, BuildableActivationArgs> FighterPool { get; }
         public IPool<Unit, BuildableActivationArgs> GunshipPool { get; }
+        public IPool<Unit, BuildableActivationArgs> SteamCopterPool { get; }
+
         public IPool<Unit, BuildableActivationArgs> TestAircraftPool { get; }
 
         // Ships
@@ -45,6 +47,7 @@ namespace BattleCruisers.Buildables.Pools
             BomberPool = CreatePool(StaticPrefabKeys.Units.Bomber);
             FighterPool = CreatePool(StaticPrefabKeys.Units.Fighter);
             GunshipPool = CreatePool(StaticPrefabKeys.Units.Gunship);
+            SteamCopterPool = CreatePool(StaticPrefabKeys.Units.SteamCopter);
             TestAircraftPool = CreatePool(StaticPrefabKeys.Units.TestAircraft);
 
             // Ship

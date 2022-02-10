@@ -5,6 +5,7 @@ using BattleCruisers.Data.Static.Strategies.Helper;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static
@@ -155,12 +156,14 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Units.Bomber,
                 StaticPrefabKeys.Units.Gunship,
 				StaticPrefabKeys.Units.Fighter,
+                StaticPrefabKeys.Units.SteamCopter,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
 				StaticPrefabKeys.Units.Frigate,
                 StaticPrefabKeys.Units.Destroyer,
-                StaticPrefabKeys.Units.ArchonBattleship
+                StaticPrefabKeys.Units.ArchonBattleship,
+                StaticPrefabKeys.Units.AttackRIB
 			};
 		}
 
@@ -310,12 +313,14 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Bomber, 1 },
                 { StaticPrefabKeys.Units.Gunship, 5 },
                 { StaticPrefabKeys.Units.Fighter, 12 },
+                { StaticPrefabKeys.Units.SteamCopter, 29 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
                 { StaticPrefabKeys.Units.Frigate, 3 },
                 { StaticPrefabKeys.Units.Destroyer, 13 },
-                { StaticPrefabKeys.Units.ArchonBattleship, 15 }
+                { StaticPrefabKeys.Units.ArchonBattleship, 15 },
+                { StaticPrefabKeys.Units.AttackRIB, 30 }
             };
         }
 
@@ -390,6 +395,7 @@ namespace BattleCruisers.Data.Static
 
         public int LevelFirstAvailableIn(UnitKey unitKey)
         {
+            Debug.Log(unitKey);
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
             return _unitToUnlockedLevel[unitKey];
         }

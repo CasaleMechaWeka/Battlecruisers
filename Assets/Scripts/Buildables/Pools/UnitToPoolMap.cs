@@ -45,6 +45,9 @@ namespace BattleCruisers.Buildables.Pools
                 case "Gunship":
                     return _unitPoolProvider.GunshipPool;
 
+                case "SteamCopter":
+                    return _unitPoolProvider.SteamCopterPool;
+
                 case "TestAircraft":
                     return _unitPoolProvider.TestAircraftPool;
 
