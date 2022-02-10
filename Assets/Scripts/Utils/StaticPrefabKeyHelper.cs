@@ -26,6 +26,8 @@ namespace BattleCruisers.Utils
         Building_AirFactory,
         Building_NavalFactory,
         Building_DroneStation,
+        Building_DroneStation4,
+        Building_DroneStation8,
 
         // Tactical
         Building_ShieldGenerator,
@@ -45,6 +47,8 @@ namespace BattleCruisers.Utils
         Building_Artillery,
         Building_RocketLauncher,
         Building_Railgun,
+        Building_MLRS,
+        Building_GatlingMortar,
 
         // Ultras
         Building_DeathstarLauncher,
@@ -59,12 +63,14 @@ namespace BattleCruisers.Utils
         Unit_Bomber,
         Unit_Fighter,
         Unit_Gunship,
+        Unit_SteamCopter,
 
         // Ships
         Unit_AttackBoat,
         Unit_Frigate,
         Unit_Destroyer,
         Unit_ArchonBattleship,
+        Unit_AttackRIB
     }
 
     public static class StaticPrefabKeyHelper
