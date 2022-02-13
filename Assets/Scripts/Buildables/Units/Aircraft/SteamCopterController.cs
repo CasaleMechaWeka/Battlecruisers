@@ -138,7 +138,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 new PatrolPoint(patrolPositions[1], removeOnceReached: true)
             };
 
-            for (int i = 1; i < patrolPositions.Count; ++i)
+            for (int i = 2; i < patrolPositions.Count; ++i)
             {
 				patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
             }
