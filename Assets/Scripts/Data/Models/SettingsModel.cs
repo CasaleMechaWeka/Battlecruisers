@@ -48,6 +48,14 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private string _language;
+        public string Language
+        {
+            get => _language;
+            set => _language = value;
+        }
+
+        [SerializeField]
         private int _zoomSpeedLevel;
         public int ZoomSpeedLevel
         {
@@ -164,6 +172,7 @@ namespace BattleCruisers.Data.Models
         public SettingsModel()
         {
             AIDifficulty = Difficulty.Hard;
+            Language = "English";
             ZoomSpeedLevel = DEFAULT_ZOOM_SPEED_LEVEL;
             ScrollSpeedLevel = DEFAULT_SCROLL_SPEED_LEVEL;
             MusicVolume = DEFAULT_VOLUME;

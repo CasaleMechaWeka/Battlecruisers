@@ -15,6 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
 
         public DifficultyDropdown difficultyDropdown;
+        public LanguageDropdown languageDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
         public ToggleController showInGameHintsToggle, showToolTipsToggle;
@@ -52,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             }
 
             difficultyDropdown.Initialise(_settingsManager.AIDifficulty, commonLocTable);
-
+            languageDropdown.Initialise(_settingsManager.Language, commonLocTable);
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
@@ -89,6 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     screensSceneGod,
                     _settingsManager,
                     difficultyDropdown,
+                    languageDropdown,
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
                     musicVolumeSlider.SliderValue,
@@ -185,6 +187,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             hotkeysPanel.ResetToSavedState();
             difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
+            languageDropdown.ResetToDefaults(_settingsManager.Language);
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
             masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);
