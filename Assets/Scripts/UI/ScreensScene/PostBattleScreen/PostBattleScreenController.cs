@@ -278,7 +278,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private void ClockedGameCommandExecute()
         {
-            _screensSceneGod.LoadCreditsScene();
+            _screensSceneGod.LoadCutsceneScene();
         }
 
         private bool CanClockedGameCommandExecute()

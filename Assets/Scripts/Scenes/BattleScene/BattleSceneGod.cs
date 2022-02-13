@@ -327,7 +327,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
-                Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
+                //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
             }
         }
 

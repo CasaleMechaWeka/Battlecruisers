@@ -304,6 +304,12 @@ namespace BattleCruisers.Scenes
             CleanUp();
         }
 
+         public void LoadCutsceneScene()
+        {
+            _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE);
+            CleanUp();
+        }
+
         private void CleanUp()
         {
             loadoutScreen.DisposeManagedState();
