@@ -79,8 +79,7 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Hulls.Eagle,
 				StaticPrefabKeys.Hulls.Hammerhead,
 				StaticPrefabKeys.Hulls.Longbow,
-				StaticPrefabKeys.Hulls.Megalodon,
-                StaticPrefabKeys.Hulls.ManOfWarBoss,
+				StaticPrefabKeys.Hulls.Megalodon
 			};
 		}
 
