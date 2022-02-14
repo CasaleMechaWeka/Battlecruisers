@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
         private IBroadcastingAnimation _unfurlAnimation;
         private AudioSourceGroup _unfurlAudioGroup;
-
+        public AudioSource bellowAudioSource, explosionAudioSource;
         public BarrelWrapper minigun, _samSite;
         public GameObject bones;
         //public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
@@ -63,13 +63,11 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.Initialise(uiManager, factoryProvider);
 
-           /* _unfurlAudioGroup
+            _unfurlAudioGroup
                 = new AudioSourceGroup(
                     factoryProvider.SettingsManager,
                     new AudioSourceBC(bellowAudioSource),
-                    new AudioSourceBC(crankAudioSource),
-                    new AudioSourceBC(chainAudioSource),
-                    new AudioSourceBC(dieselAudioSource));*/
+                    new AudioSourceBC(explosionAudioSource));
         }
 
         public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
@@ -92,7 +90,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
             base.OnShipCompleted();
-            Debug.Log("wow!");
+            //Debug.Log("wow!");
         }
 
         protected override void AddBuildRateBoostProviders(
