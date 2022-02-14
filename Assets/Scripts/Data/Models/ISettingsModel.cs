@@ -5,7 +5,6 @@ namespace BattleCruisers.Data.Models
     public interface ISettingsModel
     {
         Difficulty AIDifficulty { get; set; }
-        string Language {get; set;}
         int ScrollSpeedLevel { get; set; }
         bool ShowInGameHints { get; set; }
         bool ShowToolTips { get; set; }

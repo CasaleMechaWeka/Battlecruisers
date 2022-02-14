@@ -15,7 +15,6 @@ namespace BattleCruisers.Data.Settings
         event EventHandler SettingsSaved;
 
         Difficulty AIDifficulty { get; set; }
-        string Language {get; set;}
         int ZoomSpeedLevel { get; set; }
         int ScrollSpeedLevel { get; set; }
 

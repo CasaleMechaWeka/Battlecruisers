@@ -17,12 +17,6 @@ namespace BattleCruisers.Data.Settings
             set => _settings.AIDifficulty = value;
         }
 
-        public string Language
-        {
-            get => _settings.Language;
-            set => _settings.Language = value;
-        }
-
         public int ZoomSpeedLevel
         {
             get => _settings.ZoomSpeedLevel;
