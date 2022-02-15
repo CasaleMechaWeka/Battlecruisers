@@ -74,7 +74,7 @@ namespace BattleCruisers.Cruisers
 
         private void _RearingStarted(object sender, EventArgs e)
         {
-            shipBlocker.transform.Translate(new Vector3(-9,0,0));
+            shipBlocker.transform.Translate(new Vector3(-6.5f,0,0));
             //Debug.Log("Moved ship blocker: " + shipBlocker.transform.localPosition);
         }
     }
