@@ -42,6 +42,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
         public Animator bonesAnimator;
         private float animationSpeed = 1.0f;
+        
+        public event EventHandler RearingStarted;
 
         private IDamageApplier _areaDamageApplier;
 
@@ -111,6 +113,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                     target: null,
                     collisionPoint: collisionPoint,
                     damageSource: null);
+
+            RearingStarted?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void AddBuildRateBoostProviders(

@@ -4,6 +4,7 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
+using System;
 
 namespace BattleCruisers.Cruisers
 {
@@ -15,6 +16,7 @@ namespace BattleCruisers.Cruisers
         bool started = false;
         public SpriteRenderer spriteRenderer;
         public float timeToFinish;
+        public GameObject shipBlocker;
         public override void Initialise(ICruiserArgs args)
         {
             isCruiser = false;
@@ -25,6 +27,7 @@ namespace BattleCruisers.Cruisers
             maxHealth = unit.maxHealth;
             _healthTracker.SetHealth(unit.Health);
             spriteRenderer.sprite = null;
+            unit.RearingStarted += _RearingStarted;
         }
 
         public override void Update()
@@ -66,6 +69,13 @@ namespace BattleCruisers.Cruisers
             maxHealth = unit.maxHealth;
             unit.SetHealthToMax();
             _healthTracker.SetHealth(unit.Health);
+            //Debug.Log("Ship blocker: " + shipBlocker.transform.localPosition);
+        }
+
+        private void _RearingStarted(object sender, EventArgs e)
+        {
+            shipBlocker.transform.Translate(new Vector3(-9,0,0));
+            //Debug.Log("Moved ship blocker: " + shipBlocker.transform.localPosition);
         }
     }
 
