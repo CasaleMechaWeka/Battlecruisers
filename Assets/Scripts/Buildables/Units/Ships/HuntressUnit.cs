@@ -5,6 +5,9 @@ using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
+using BattleCruisers.Projectiles.DamageAppliers;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
@@ -40,6 +43,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         public Animator bonesAnimator;
         private float animationSpeed = 1.0f;
 
+        private IDamageApplier _areaDamageApplier;
+
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -50,6 +55,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
             Assert.IsNotNull(_unfurlAnimation);
             _unfurlAnimation.AnimationDone += _unfurlAnimation_AnimationDone;
+            _unfurlAnimation.AnimationStarted += _unfurlAnimation_AnimationStarted;
 
             TargetProxy[] colliderTargetProxies = GetComponentsInChildren<TargetProxy>(includeInactive: true);
             foreach (TargetProxy targetProxy in colliderTargetProxies)
@@ -93,6 +99,20 @@ namespace BattleCruisers.Buildables.Units.Ships
             //Debug.Log("wow!");
         }
 
+        private void _unfurlAnimation_AnimationStarted(object sender, EventArgs e)
+        {
+            Vector2 collisionPoint = new Vector2(0,0);
+            IDamageStats damageStats = new DamageStats(2000, 25);
+            ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
+
+            _areaDamageApplier = new AreaOfEffectDamageApplier(damageStats, targetFilter);
+                _areaDamageApplier
+                    .ApplyDamage(
+                    target: null,
+                    collisionPoint: collisionPoint,
+                    damageSource: null);
+        }
+
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
@@ -129,7 +149,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
 
-            Transform pistonsParent = transform.FindNamedComponent<Transform>("UnitBones");
+            Transform pistonsParent = transform.FindNamedComponent<Transform>("HuntressBones");
             SpriteRenderer[] boneRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
 
             foreach (SpriteRenderer renderer in boneRenderers)

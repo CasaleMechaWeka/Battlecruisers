@@ -394,7 +394,6 @@ namespace BattleCruisers.Data.Static
 
         public int LevelFirstAvailableIn(UnitKey unitKey)
         {
-            Debug.Log(unitKey);
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
             return _unitToUnlockedLevel[unitKey];
         }
