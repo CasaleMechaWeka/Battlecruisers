@@ -47,6 +47,7 @@
 		public const string SCREENS_SCENE = "ScreensScene";
 		public const string CREDITS_SCENE = "LonelyCreditsScene";
         public const string CUTSCENE_SCENE = "HuntressCutscene";
+        public const string DESTRUCTION_SCENE = "DestructionScene";
 	}
 
     public static class GameObjectTags

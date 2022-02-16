@@ -9,6 +9,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Movement;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -472,6 +473,12 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup.CleanUp();
 
             _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+
+            if (Faction == Faction.Reds)
+            {
+                BattleSceneGod.AddDeadBuildable(TargetType, (int)(buildTimeInS*numOfDronesRequired));
+                BattleSceneGod.ShowDeadBuildableStats();
+            }
         }
 
         protected void SetupDroneConsumer(int numOfDrones, bool showDroneFeedback)

@@ -39,6 +39,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using BattleCruisers.Buildables;
+using System.Collections.Generic;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -80,6 +82,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private FactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
+        public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables; 
 
         private async void Start()
         {
@@ -329,6 +332,11 @@ namespace BattleCruisers.Scenes.BattleScene
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
                 //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
             }
+            deadBuildables = new Dictionary<TargetType, DeadBuildableCounter>();
+            deadBuildables.Add(TargetType.Aircraft, new DeadBuildableCounter());
+            deadBuildables.Add(TargetType.Ships, new DeadBuildableCounter());
+            deadBuildables.Add(TargetType.Cruiser, new DeadBuildableCounter());
+            deadBuildables.Add(TargetType.Buildings, new DeadBuildableCounter());
         }
 
         private IBattleSceneHelper CreateHelper(
@@ -362,6 +370,21 @@ namespace BattleCruisers.Scenes.BattleScene
             cameraComponents =  cameraInitialiser.UpdateCamera(
                     dataProvider.SettingsManager,
                     navigationPermitters);
+        }
+
+        public static void AddDeadBuildable(TargetType type, int value)
+        {
+            deadBuildables[type].AddDeadBuildable(value);
+        }
+
+        public static void ShowDeadBuildableStats()
+        {
+            foreach(KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
+            {
+                Debug.Log(kvp.Key);
+                Debug.Log("Destroyed: " + kvp.Value.GetTotalDestroyed());
+                Debug.Log("Damage in credits: " + kvp.Value.GetTotalDamageInCredits());
+            }
         }
    }
 }

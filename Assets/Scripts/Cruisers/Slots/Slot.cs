@@ -132,7 +132,7 @@ namespace BattleCruisers.Cruisers.Slots
         private void NullifySlotBuilding()
         {
             SlotBuilding = null;
-            Debug.Log("Nullified slot");
+            //Debug.Log("Nullified slot");
         }
 
         public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)

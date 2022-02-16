@@ -13,6 +13,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.Click;
@@ -282,6 +283,16 @@ namespace BattleCruisers.Cruisers
         public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)
         {
 
+        }
+
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+            if (Faction == Faction.Reds)
+            {
+                BattleSceneGod.AddDeadBuildable(TargetType, (int)(MaxHealth));
+                BattleSceneGod.ShowDeadBuildableStats();
+            }
         }
     }
 }
