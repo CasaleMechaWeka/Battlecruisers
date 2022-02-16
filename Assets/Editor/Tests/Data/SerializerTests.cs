@@ -36,6 +36,7 @@ namespace BattleCruisers.Tests.Data
 
 			_originalGameModel = new GameModel(
                 hasAttemptedTutorial: true,
+				0,
 				playerLoadout: CreateLoadout(),
 				lastBattleResult: CreateBattleResult(),
 				unlockedHulls: CreateUnlockedHulls(),

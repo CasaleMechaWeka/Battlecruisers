@@ -4,5 +4,6 @@
     {
         void HandleCruiserDestroyed(bool wasPlayerVictory);
         void HandleGameEnd();
+        void HandleCruiserDestroyed(bool wasPlayerVictory, long destructionScore);
     }
 }

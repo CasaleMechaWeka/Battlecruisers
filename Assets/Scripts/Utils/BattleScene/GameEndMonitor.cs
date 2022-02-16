@@ -1,5 +1,8 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Scenes.BattleScene;
 using System;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Utils.BattleScene
 {
@@ -15,7 +18,6 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IGameEndHandler _gameEndHandler;
 
         public event EventHandler GameEnded;
-
         public GameEndMonitor(
             ICruiserDestroyedMonitor cruiserDestroyedMonitor, 
             IBattleCompletionHandler battleCompletionHandler,
@@ -37,7 +39,7 @@ namespace BattleCruisers.Utils.BattleScene
         {
             _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
 
-            _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory);
+            _gameEndHandler.HandleCruiserDestroyed(e.WasPlayerVictory, GetTotalDestructionScore());
 
             GameEnded?.Invoke(this, EventArgs.Empty);
         }
@@ -51,6 +53,17 @@ namespace BattleCruisers.Utils.BattleScene
             _gameEndHandler.HandleGameEnd();
 
             GameEnded?.Invoke(this, EventArgs.Empty);
+        }
+
+        private static long GetTotalDestructionScore()
+        {
+            Dictionary<TargetType, DeadBuildableCounter> deadBuildables = BattleSceneGod.deadBuildables;
+            long ds = 0;
+            foreach(KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
+            {
+                ds += kvp.Value.GetTotalDamageInCredits();
+            }
+            return ds;
         }
     }
 }

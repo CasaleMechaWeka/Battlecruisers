@@ -105,6 +105,33 @@ namespace BattleCruisers.Utils.BattleScene
             _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
+        public void HandleCruiserDestroyed(bool wasPlayerVictory, long destructionScore)
+        {
+            Assert.IsFalse(_handledCruiserDeath, "Should only be called once.");
+            Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
+            _handledCruiserDeath = true;
+
+            ICruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
+            ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
+
+            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            _ai.DisposeManagedState();
+            victoryCruiser.MakeInvincible();
+            _navigationPermitter.IsMatch = false;
+            _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
+            DestroyCruiserBuildables(losingCruiser);
+            StopAllShips(victoryCruiser);
+            _uiManager.HideCurrentlyShownMenu();
+            _uiManager.HideItemDetails();
+            _targetIndicator.Hide();
+            _windManager.Stop();
+            _buildingCategoryPermitter.AllowNoCategories();
+            // Want to play cruiser sinking animation in real time, regardless of time player has set
+            _speedButtonGroup.SelectDefaultButton();
+
+            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
+        }
+
         private void DestroyCruiserBuildables(ICruiser cruiser)
         {
             foreach (IBuilding building in cruiser.BuildingMonitor.AliveBuildings.ToList())

@@ -3,6 +3,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
+using UnityEngine;
 
 namespace BattleCruisers.Utils.BattleScene
 {
@@ -51,6 +52,7 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
             }
 
+            
             _applicationModel.DataProvider.SaveGame();
 
             _applicationModel.ShowPostBattleScreen = true;
@@ -63,6 +65,47 @@ namespace BattleCruisers.Utils.BattleScene
             else
             {
                 _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+            }
+        }
+
+        public void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore)
+        {
+            if (_isCompleted)
+            {
+                // Battle should only be completed once
+                return;
+            }
+            _isCompleted = true;
+
+            BattleCompleted?.Invoke(this, EventArgs.Empty);
+
+            switch (_applicationModel.Mode)
+            {
+                case GameMode.Campaign:
+                    // Completing the tutorial does not count as a real level, so 
+                    // only save battle result if this was not the tutorial.
+                    BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
+                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                    break;
+
+                case GameMode.Skirmish:
+                    _applicationModel.UserWonSkirmish = wasVictory;
+                    break;
+            }
+
+            _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+            _applicationModel.DataProvider.SaveGame();
+            Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            _applicationModel.ShowPostBattleScreen = true;
+            TimeBC.Instance.TimeScale = 1;
+
+            if (retryLevel)
+            {
+                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+            }
+            else
+            {
+                _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE);
             }
         }
     }

@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
     {
-        private IGameEndMonitor _gameEndMonitor;
+        private static IGameEndMonitor _gameEndMonitor;
         // Hold references to avoid garbage collection
         private AudioInitialiser _audioInitialiser;
         private ITutorialProvider _tutorialProvider;

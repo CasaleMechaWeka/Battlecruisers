@@ -184,6 +184,7 @@ namespace BattleCruisers.Data.Static
 
             return new GameModel(
                 hasAttemptedTutorial,
+                0,
                 playerLoadout,
                 lastBattleResult: null,
                 // TEMP  Do not unlock all hulls & buildables at the game start :P

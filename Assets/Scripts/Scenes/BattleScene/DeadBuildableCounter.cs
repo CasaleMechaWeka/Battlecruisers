@@ -5,29 +5,34 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class DeadBuildableCounter
     {
-        private int count;
-        private long dollars;
+        private long count;
+        private long credits;
 
         public DeadBuildableCounter()
         {
-            dollars = 0;
+            credits = 0;
             count = 0;
         }
 
         public void AddDeadBuildable(int value)
         {
             count++;
-            dollars += value;
+            credits += value;
         }
 
-        public int GetTotalDestroyed()
+        public long GetTotalDestroyed()
         {
             return count;
         }
 
         public long GetTotalDamageInCredits()
         {
-            return dollars;
+            return credits;
+        }
+
+        public override string ToString()
+        {
+            return "Count: " + count + ", Credits: " + credits;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace BattleCruisers.Data.Models
     public interface IGameModel
     {
         int NumOfLevelsCompleted { get; }
+        long LifetimeDestructionScore { get; set;}
         bool HasAttemptedTutorial { get; set; }
         bool FirstNonTutorialBattle { get; }
         Loadout PlayerLoadout { get; set; }

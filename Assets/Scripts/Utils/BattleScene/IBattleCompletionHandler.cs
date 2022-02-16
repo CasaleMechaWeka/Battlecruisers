@@ -7,5 +7,6 @@ namespace BattleCruisers.Utils.BattleScene
         event EventHandler BattleCompleted;
 
         void CompleteBattle(bool wasVictory, bool retryLevel);
+        void CompleteBattle(bool wasVictory, bool retryLevel, long destructionScore);
     }
 }

@@ -45,6 +45,14 @@ namespace BattleCruisers.Data.Models
         private List<CompletedLevel> _completedLevels;
 
         [SerializeField]
+        private long _lifetimeDestructionScore;
+        public long LifetimeDestructionScore
+        {
+            get => _lifetimeDestructionScore;
+            set => _lifetimeDestructionScore = value;
+        }
+
+        [SerializeField]
         private SettingsModel _settings;
 
         [SerializeField]
@@ -150,6 +158,7 @@ namespace BattleCruisers.Data.Models
 
         public GameModel(
             bool hasAttemptedTutorial,
+            long lifetimeDestructionScore,
             Loadout playerLoadout,
             BattleResult lastBattleResult,
             List<HullKey> unlockedHulls,
@@ -158,6 +167,7 @@ namespace BattleCruisers.Data.Models
             : this()
         {
             HasAttemptedTutorial = hasAttemptedTutorial;
+            LifetimeDestructionScore = lifetimeDestructionScore;
             PlayerLoadout = playerLoadout;
             LastBattleResult = lastBattleResult;
 
