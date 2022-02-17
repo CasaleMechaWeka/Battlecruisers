@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.PostBattleScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.Loading;
@@ -36,15 +37,15 @@ namespace BattleCruisers.Scenes
             for (int i = 0; i < destructionCards.Length; i++)
             {
                 destructionCards[i].destructionValue.text = MakeDenomination(BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDamageInCredits());
-                destructionCards[i].numberOfUnitsDestroyed.text = "" + BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDestroyed();
+                destructionCards[i].numberOfUnitsDestroyed.text = i== 2 ? "1" : "" + BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDestroyed();
                 totalDestruction += BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDamageInCredits();
             }
 
             postBattleDestructionScoreText.text = MakeDenomination(totalDestruction);
             lifetimeDestructionScoreText.text = MakeDenomination(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
 
-
-
+            destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
+            destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
             _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
         }
 

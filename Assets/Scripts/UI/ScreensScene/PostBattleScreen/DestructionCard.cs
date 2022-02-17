@@ -20,6 +20,8 @@ namespace BattleCruisers.PostBattleScreen
     {
         public Text numberOfUnitsDestroyed;
         public Text destructionValue;
+        public Image image;
+        public Text description;
 
     }
 

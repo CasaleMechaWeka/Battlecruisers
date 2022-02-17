@@ -82,7 +82,9 @@ namespace BattleCruisers.Scenes.BattleScene
         private FactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
-        public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables; 
+        public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
+        public static Sprite enemyCruiserSprite;
+        public static string enemyCruiserName;
 
         private async void Start()
         {
@@ -337,6 +339,9 @@ namespace BattleCruisers.Scenes.BattleScene
             deadBuildables.Add(TargetType.Ships, new DeadBuildableCounter());
             deadBuildables.Add(TargetType.Cruiser, new DeadBuildableCounter());
             deadBuildables.Add(TargetType.Buildings, new DeadBuildableCounter());
+
+            enemyCruiserSprite = aiCruiser.Sprite;
+            enemyCruiserName = aiCruiser.Name;
         }
 
         private IBattleSceneHelper CreateHelper(
