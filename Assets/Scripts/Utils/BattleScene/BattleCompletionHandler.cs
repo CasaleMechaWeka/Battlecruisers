@@ -93,9 +93,9 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
             }
 
-            _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
-            _applicationModel.DataProvider.SaveGame();
-            Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            
+            //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+
             _applicationModel.ShowPostBattleScreen = true;
             TimeBC.Instance.TimeScale = 1;
 
@@ -103,9 +103,15 @@ namespace BattleCruisers.Utils.BattleScene
             {
                 _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
             }
-            else
+            else if (wasVictory)
             {
+                _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                _applicationModel.DataProvider.SaveGame();
                 _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE);
+                
+            }
+            else{
+                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
             }
         }
     }
