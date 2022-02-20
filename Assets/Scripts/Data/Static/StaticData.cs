@@ -280,7 +280,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.LocalBooster, 9 },
                 { StaticPrefabKeys.Buildings.ControlTower, 23 },
                 { StaticPrefabKeys.Buildings.StealthGenerator, 17 },
-                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 17 },
+                { StaticPrefabKeys.Buildings.SpySatelliteLauncher, 16 },
 
                 // Defence
                 { StaticPrefabKeys.Buildings.AntiShipTurret, 1 },
