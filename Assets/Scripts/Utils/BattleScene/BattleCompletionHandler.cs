@@ -106,6 +106,10 @@ namespace BattleCruisers.Utils.BattleScene
             else if (wasVictory)
             {
                 _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                {
+                    _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                }
                 _applicationModel.DataProvider.SaveGame();
                 _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE);
                 

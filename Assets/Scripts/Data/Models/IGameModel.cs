@@ -10,6 +10,7 @@ namespace BattleCruisers.Data.Models
     {
         int NumOfLevelsCompleted { get; }
         long LifetimeDestructionScore { get; set;}
+        long BestDestructionScore { get; set;}
         bool HasAttemptedTutorial { get; set; }
         bool FirstNonTutorialBattle { get; }
         Loadout PlayerLoadout { get; set; }

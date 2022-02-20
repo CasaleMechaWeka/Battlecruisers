@@ -46,6 +46,12 @@ namespace BattleCruisers.Scenes
 
             destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
             destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
+
+
+
+
+
+            
             _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
         }
 
