@@ -272,7 +272,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.AirFactory, 1 },
                 { StaticPrefabKeys.Buildings.NavalFactory, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
-                { StaticPrefabKeys.Buildings.DroneStation4, 26 },
+                { StaticPrefabKeys.Buildings.DroneStation4, 25 },
                 { StaticPrefabKeys.Buildings.DroneStation8, 27 },
 
                 // Tactical
