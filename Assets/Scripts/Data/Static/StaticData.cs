@@ -334,7 +334,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Rockjaw, 11},
                 { StaticPrefabKeys.Hulls.Eagle, 18 },
                 { StaticPrefabKeys.Hulls.Hammerhead, 19 },
-                { StaticPrefabKeys.Hulls.Longbow, 23 },
+                { StaticPrefabKeys.Hulls.Longbow, 22 },
                 { StaticPrefabKeys.Hulls.Megalodon, 26 }
             };
         }
