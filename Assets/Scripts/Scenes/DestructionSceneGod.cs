@@ -27,6 +27,7 @@ namespace BattleCruisers.Scenes
         public DestructionCard [] destructionCards;
         public Text postBattleDestructionScoreText;
         public Text lifetimeDestructionScoreText;
+        public DestructionRanker ranker;
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -47,7 +48,7 @@ namespace BattleCruisers.Scenes
             destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
             destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
 
-
+            ranker.DisplayRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
 
 
 

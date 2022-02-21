@@ -41,6 +41,7 @@ using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
 using System.Collections.Generic;
+using BattleCruisers.Data.Settings;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -85,6 +86,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
         public static Sprite enemyCruiserSprite;
         public static string enemyCruiserName;
+        private static float difficultyDestructionScoreMultiplier;
 
         private async void Start()
         {
@@ -340,6 +342,20 @@ namespace BattleCruisers.Scenes.BattleScene
             deadBuildables.Add(TargetType.Cruiser, new DeadBuildableCounter());
             deadBuildables.Add(TargetType.Buildings, new DeadBuildableCounter());
 
+            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            {
+                difficultyDestructionScoreMultiplier = 1.0f;
+            }
+            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            {
+                difficultyDestructionScoreMultiplier = 1.5f;
+            }
+            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            {
+                difficultyDestructionScoreMultiplier = 2.0f;
+            }
+
+
             enemyCruiserSprite = aiCruiser.Sprite;
             enemyCruiserName = aiCruiser.Name;
         }
@@ -379,7 +395,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public static void AddDeadBuildable(TargetType type, int value)
         {
-            deadBuildables[type].AddDeadBuildable(value);
+            deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier*((float)value)));
         }
 
         public static void ShowDeadBuildableStats()

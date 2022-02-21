@@ -3,6 +3,7 @@ using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.PostBattleScreen;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene;
 using BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen;
@@ -70,6 +71,7 @@ namespace BattleCruisers.Scenes
         public bool testSkirmishScreen = false;
         [Header("For testing the loadout screen")]
         public bool testLoadoutScreen = false;
+        public DestructionRanker ranker;
 
         async void Start()
 		{
@@ -171,6 +173,8 @@ namespace BattleCruisers.Scenes
             {
                 GoToLoadoutScreen();
             }
+
+            ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
