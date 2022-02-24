@@ -3,6 +3,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.PostBattleScreen;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
@@ -29,6 +30,11 @@ namespace BattleCruisers.Scenes
         public Text postBattleDestructionScoreText;
         public Text lifetimeDestructionScoreText;
         public DestructionRanker ranker;
+        public CanvasGroupButton nextButton;
+        [SerializeField]
+        private AudioSource _uiAudioSource;
+        private ISingleSoundPlayer _soundPlayer;
+        public Text million, billion, trillion, quadrillion;
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -52,8 +58,15 @@ namespace BattleCruisers.Scenes
             ranker.DisplayRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
 
 
+            _soundPlayer
+                = new SingleSoundPlayer(
+                    new SoundFetcher(),
+                    new EffectVolumeAudioSource(
+                        new AudioSourceBC(_uiAudioSource),
+                        ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
 
-            
+
+            nextButton.Initialise(_soundPlayer, Done);
             _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
         }
 
@@ -79,13 +92,13 @@ namespace BattleCruisers.Scenes
             long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
             num = num / i * i;
             if (num >= 1000000000000)
-                return (num / 1000000000000D).ToString("0.##") + "Q";
+                return (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
             if (num >= 1000000000)
-                return (num / 1000000000D).ToString("0.##") + "T";
+                return (num / 1000000000D).ToString("0.##") + " " + trillion.text;
             if (num >= 1000000)
-                return (num / 1000000D).ToString("0.##") + "B";
+                return (num / 1000000D).ToString("0.##") + " " + billion.text;
             if (num >= 1000)
-                return (num / 1000D).ToString("0.##") + "M";
+                return (num / 1000D).ToString("0.##") + " " + million.text;
 
             return num.ToString("#,0");
         }
