@@ -401,7 +401,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!GameOver)
             {
                 deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier*((float)value)));
-                Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
+                //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == TargetType.Cruiser)
                 {
                     GameOver = true;
