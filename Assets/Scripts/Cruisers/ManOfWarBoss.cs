@@ -31,7 +31,7 @@ namespace BattleCruisers.Cruisers
             if (started)
             {
                 _healthTracker.SetHealth(0 + unit.Health);
-                Debug.Log(unit.Health);
+                //Debug.Log(unit.Health);
             }
         }
 

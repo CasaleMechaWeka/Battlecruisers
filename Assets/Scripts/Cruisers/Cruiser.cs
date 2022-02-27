@@ -290,9 +290,9 @@ namespace BattleCruisers.Cruisers
             base.OnDestroyed();
             if (Faction == Faction.Reds)
             {
-                Debug.Log(maxHealth);
+                //Debug.Log(maxHealth);
                 BattleSceneGod.AddDeadBuildable(TargetType, (int)(maxHealth));
-                Debug.Log(maxHealth);
+                //Debug.Log(maxHealth);
                 //BattleSceneGod.ShowDeadBuildableStats();
             }
         }
