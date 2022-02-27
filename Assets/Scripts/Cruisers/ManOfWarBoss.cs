@@ -21,8 +21,8 @@ namespace BattleCruisers.Cruisers
             unit.Initialise(_uiManager, FactoryProvider);
             unit.Activate(this, _enemyCruiser, CruiserSpecificFactories);
             started = true;
-            maxHealth = unit.maxHealth;
-            _healthTracker.SetHealth(unit.Health);
+            maxHealth = 0 + unit.maxHealth;
+            _healthTracker.SetHealth(0 + unit.maxHealth);
             spriteRenderer.sprite = null;
         }
 
@@ -30,7 +30,8 @@ namespace BattleCruisers.Cruisers
         {
             if (started)
             {
-                _healthTracker.SetHealth(unit.Health);
+                _healthTracker.SetHealth(0 + unit.Health);
+                Debug.Log(unit.Health);
             }
         }
 
@@ -46,11 +47,11 @@ namespace BattleCruisers.Cruisers
             switch (AIDifficulty)
             {
                 case Difficulty.Normal:
-                    unit.maxHealth = 4800;
+                    unit.maxHealth = 4000;
                     break;
 
                 case Difficulty.Hard:
-                    unit.maxHealth = 7000;
+                    unit.maxHealth = 6000;
                     break;
 
                 case Difficulty.Harder:
@@ -58,12 +59,17 @@ namespace BattleCruisers.Cruisers
                     break;
 
                 default:
-                    unit.maxHealth = 20000;
+                    unit.maxHealth = 150000;
                     break;
             }
             unit.SetHealthToMax();
-            maxHealth = unit.maxHealth;
-            _healthTracker.SetHealth(unit.Health);
+            maxHealth = 0 + unit.maxHealth;
+            unit.SetHealthToMax();
+            _healthTracker.SetHealth(0 + unit.Health);
+            unit.buildTimeInS = maxHealth;
+            //Debug.Log("Ship blocker: " + shipBlocker.transform.localPosition);
+            //Debug.Log(maxHealth);
+            //Debug.Log(MaxHealth);
         }
     }
 

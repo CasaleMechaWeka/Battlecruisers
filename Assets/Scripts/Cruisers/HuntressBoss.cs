@@ -24,8 +24,8 @@ namespace BattleCruisers.Cruisers
             unit.Initialise(_uiManager, FactoryProvider);
             unit.Activate(this, _enemyCruiser, CruiserSpecificFactories);
             started = true;
-            maxHealth = unit.maxHealth;
-            _healthTracker.SetHealth(unit.maxHealth);
+            maxHealth = 0 + unit.maxHealth;
+            _healthTracker.SetHealth(0 + unit.maxHealth);
             spriteRenderer.sprite = null;
             unit.RearingStarted += _RearingStarted;
         }
@@ -34,7 +34,8 @@ namespace BattleCruisers.Cruisers
         {
             if (started)
             {
-                _healthTracker.SetHealth(unit.Health);
+                _healthTracker.SetHealth(0 + unit.Health);
+                //Debug.Log(maxHealth);
             }
         }
 
@@ -66,12 +67,13 @@ namespace BattleCruisers.Cruisers
                     break;
             }
             unit.SetHealthToMax();
-            maxHealth = unit.maxHealth;
+            maxHealth = 0 + unit.maxHealth;
             unit.SetHealthToMax();
-            _healthTracker.SetHealth(unit.Health);
+            _healthTracker.SetHealth(0 + unit.Health);
+            unit.buildTimeInS = maxHealth;
             //Debug.Log("Ship blocker: " + shipBlocker.transform.localPosition);
-            Debug.Log(maxHealth);
-            Debug.Log(MaxHealth);
+            //Debug.Log(maxHealth);
+            //Debug.Log(MaxHealth);
         }
 
         private void _RearingStarted(object sender, EventArgs e)
