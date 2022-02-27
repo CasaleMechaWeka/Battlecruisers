@@ -194,6 +194,7 @@ namespace BattleCruisers.Data.Static
         public static class ShipDeaths
         {
             public static ShipDeathKey AttackBoat { get; } = new ShipDeathKey("AttackBoat");
+            public static ShipDeathKey AttackRIB { get; } = new ShipDeathKey("AttackRIB");
             public static ShipDeathKey Frigate { get; } = new ShipDeathKey("Frigate");
             public static ShipDeathKey Destroyer { get; } = new ShipDeathKey("Destroyer");
             public static ShipDeathKey Archon { get; } = new ShipDeathKey("Archon");
@@ -207,7 +208,8 @@ namespace BattleCruisers.Data.Static
                         AttackBoat,
                         Frigate,
                         Destroyer,
-                        Archon
+                        Archon,
+                        AttackRIB
                     };
                 }
             }

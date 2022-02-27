@@ -87,6 +87,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public static Sprite enemyCruiserSprite;
         public static string enemyCruiserName;
         private static float difficultyDestructionScoreMultiplier;
+        private static bool GameOver;
 
         private async void Start()
         {
@@ -358,6 +359,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             enemyCruiserSprite = aiCruiser.Sprite;
             enemyCruiserName = aiCruiser.Name;
+
+            GameOver = false;
         }
 
         private IBattleSceneHelper CreateHelper(
@@ -395,7 +398,15 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public static void AddDeadBuildable(TargetType type, int value)
         {
-            deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier*((float)value)));
+            if (!GameOver)
+            {
+                deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier*((float)value)));
+                Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
+                if (type == TargetType.Cruiser)
+                {
+                    GameOver = true;
+                }
+            }
         }
 
         public static void ShowDeadBuildableStats()

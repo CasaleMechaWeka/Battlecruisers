@@ -32,7 +32,7 @@ namespace BattleCruisers.PostBattleScreen
             for(int i = 0; i < destructionRanks.Length-1; i++)
             {
                 long x = 5000 + 5000*i*i;
-                Debug.Log(x);
+                //Debug.Log(x);
                 if (score < x)
                 {
                     return i;

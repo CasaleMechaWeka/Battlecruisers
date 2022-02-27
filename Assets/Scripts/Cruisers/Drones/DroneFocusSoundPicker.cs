@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers.Drones
         //TODO update tests
         public PrioritisedSoundKey PickSound(DroneConsumerState preFocusState, DroneConsumerState postFocusState)
         {
-            Debug.Log($"{preFocusState}>{postFocusState}");
+            //Debug.Log($"{preFocusState}>{postFocusState}");
             
             switch (preFocusState)
             {

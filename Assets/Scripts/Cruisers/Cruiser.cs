@@ -291,7 +291,7 @@ namespace BattleCruisers.Cruisers
             if (Faction == Faction.Reds)
             {
                 BattleSceneGod.AddDeadBuildable(TargetType, (int)(MaxHealth));
-                BattleSceneGod.ShowDeadBuildableStats();
+                //BattleSceneGod.ShowDeadBuildableStats();
             }
         }
     }

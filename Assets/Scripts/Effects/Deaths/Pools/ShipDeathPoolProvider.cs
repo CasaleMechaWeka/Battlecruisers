@@ -11,6 +11,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
     {
         public IPool<IShipDeath, Vector3> ArchonPool { get; }
         public IPool<IShipDeath, Vector3> AttackBoatPool { get; }
+        public IPool<IShipDeath, Vector3> AttackRIBPool { get; }
         public IPool<IShipDeath, Vector3> FrigatePool { get; }
         public IPool<IShipDeath, Vector3> DestroyerPool { get; }
 
@@ -19,6 +20,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
             Assert.IsNotNull(prefabFactory);
 
             AttackBoatPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.AttackBoat);
+            AttackRIBPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.AttackRIB);
             FrigatePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Frigate);
             DestroyerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Destroyer);
             ArchonPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Archon);
@@ -36,6 +38,7 @@ namespace BattleCruisers.Effects.Deaths.Pools
         public void SetInitialCapacity()
         {
             AttackBoatPool.AddCapacity(InitialCapacity.ATTACK_BOAT);
+            AttackRIBPool.AddCapacity(InitialCapacity.ATTACK_RIB);
             FrigatePool.AddCapacity(InitialCapacity.FRIGATE);
             DestroyerPool.AddCapacity(InitialCapacity.DESTROYFER);
             ArchonPool.AddCapacity(InitialCapacity.ARCHON);
