@@ -35,6 +35,13 @@ namespace BattleCruisers.Data.Models
         #endregion Navigation
 
         #region Game speed
+
+        private KeyCode _pauseSpeed;
+        public KeyCode PauseSpeed
+        {
+            get => _pauseSpeed;
+            set => _pauseSpeed = value;
+        }
         private KeyCode _slowMotion;
         public KeyCode SlowMotion
         {
@@ -349,9 +356,10 @@ namespace BattleCruisers.Data.Models
             EnemyCruiser = KeyCode.C;
 
             // Game speed
-            SlowMotion = KeyCode.Alpha1;
-            NormalSpeed = KeyCode.Alpha2;
-            FastForward = KeyCode.Alpha3;
+            PauseSpeed = KeyCode.Alpha1;
+            SlowMotion = KeyCode.Alpha2;
+            NormalSpeed = KeyCode.Alpha3;
+            FastForward = KeyCode.Alpha4;
 
             // Building categories
             Factories = KeyCode.A;

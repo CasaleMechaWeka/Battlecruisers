@@ -17,7 +17,7 @@ namespace BattleCruisers.Hotkeys
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
 
         // Game speed
-        public event EventHandler SlowMotion, NormalSpeed, FastForward;
+        public event EventHandler PauseSpeed, SlowMotion, NormalSpeed, FastForward;
 
         // Buliding categories
         public event EventHandler Factories, Defensives, Offensives, Tacticals, Ultras;
@@ -84,6 +84,11 @@ namespace BattleCruisers.Hotkeys
             }
 
             // Game speed
+            if (_input.GetKeyUp(_hotkeyList.PauseSpeed))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SlowMotion: {_hotkeyList.PauseSpeed}");
+                PauseSpeed?.Invoke(this, EventArgs.Empty);
+            }
             if (_input.GetKeyUp(_hotkeyList.SlowMotion))
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SlowMotion: {_hotkeyList.SlowMotion}");

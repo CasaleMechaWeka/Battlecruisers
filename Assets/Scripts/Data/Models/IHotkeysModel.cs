@@ -10,6 +10,7 @@ namespace BattleCruisers.Data.Models
         KeyCode EnemyCruiser { get; set; }
 
         // Game speed
+        KeyCode PauseSpeed { get; set; }
         KeyCode SlowMotion { get; set; }
         KeyCode NormalSpeed { get; set; }
         KeyCode FastForward { get; set; }

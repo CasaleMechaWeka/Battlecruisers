@@ -16,9 +16,15 @@ namespace BattleCruisers.Hotkeys
             _hotkeyDetector = hotkeyDetector;
             _speedComponents = speedComponents;
 
+            _hotkeyDetector.PauseSpeed += _hotkeyDetector_PauseSpeed;
             _hotkeyDetector.SlowMotion += _hotkeyDetector_SlowMotion;
             _hotkeyDetector.NormalSpeed += _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward += _hotkeyDetector_FastForward;
+        }
+
+        private void _hotkeyDetector_PauseSpeed(object sender, EventArgs e)
+        {
+            _speedComponents.PauseButton.TriggerClick();
         }
 
         private void _hotkeyDetector_SlowMotion(object sender, EventArgs e)

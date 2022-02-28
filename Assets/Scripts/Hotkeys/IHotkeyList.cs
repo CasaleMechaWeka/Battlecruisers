@@ -10,6 +10,7 @@ namespace BattleCruisers.Hotkeys
         KeyCode EnemyCruiser { get; }
 
         // Game speed
+        KeyCode PauseSpeed { get; }
         KeyCode SlowMotion { get; }
         KeyCode NormalSpeed { get; }
         KeyCode FastForward { get; }
