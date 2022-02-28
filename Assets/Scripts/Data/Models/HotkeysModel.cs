@@ -341,6 +341,10 @@ namespace BattleCruisers.Data.Models
         {
             // Navigation
             PlayerCruiser = KeyCode.Z;
+            if (Application.systemLanguage == SystemLanguage.German)
+            {
+                PlayerCruiser = KeyCode.Y;
+            }
             Overview = KeyCode.X;
             EnemyCruiser = KeyCode.C;
 
