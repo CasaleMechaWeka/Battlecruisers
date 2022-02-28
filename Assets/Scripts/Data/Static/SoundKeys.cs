@@ -168,6 +168,7 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey TargetingAlt { get; } = new SoundKey(SoundType.Events, "TargetingAlt");
             public static ISoundKey UntargetAlt { get; } = new SoundKey(SoundType.Events, "UntargetAlt");
             public static ISoundKey WaitForFactoryToCompleteAlt { get; } = new SoundKey(SoundType.Events, "WaitForFactoryToCompleteAlt");
+            public static ISoundKey UltraReadyAlt { get; } = new SoundKey(SoundType.Events, "UltraReadyAlt");
         }
     }
 }

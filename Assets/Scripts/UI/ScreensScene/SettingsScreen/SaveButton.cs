@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private IDifficultyDropdown _difficultyDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
-        private IBroadcastingProperty<bool> _showInGameHints, _showToolTips;
+        private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds;
         private IHotkeysPanel _hotkeysPanel;
 
         private CanvasGroup _canvasGroup;
@@ -37,6 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<float> ambientVolume,
             IBroadcastingProperty<bool> showInGameHints,
             IBroadcastingProperty<bool> showToolTips,
+            IBroadcastingProperty<bool> altDroneSounds,
             IHotkeysPanel hotkeysPanel)
         {
             base.Initialise(soundPlayer, parent: parent);
@@ -57,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _interfaceVolume = interfaceVolume;
             _ambientVolume = ambientVolume;
             _showToolTips = showToolTips;
+            _altDroneSounds = altDroneSounds;
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
@@ -72,6 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _ambientVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showInGameHints.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _showToolTips.ValueChanged += (sender, e) => UpdateEnabledStatus();
+            _altDroneSounds.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _hotkeysPanel.IsDirty.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _settingsManager.Save();
             UpdateEnabledStatus();
@@ -96,6 +99,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.AmbientVolume = _ambientVolume.Value;
             _settingsManager.ShowInGameHints = _showInGameHints.Value;
             _settingsManager.ShowToolTips = _showToolTips.Value;
+            _settingsManager.AltDroneSounds = _altDroneSounds.Value;
             _settingsManager.Save();
 
             UpdateEnabledStatus();
@@ -122,6 +126,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || _ambientVolume.Value != _settingsManager.AmbientVolume
                 || _showInGameHints.Value != _settingsManager.ShowInGameHints
                 || _showToolTips.Value != _settingsManager.ShowToolTips
+                || _altDroneSounds.Value != _settingsManager.AltDroneSounds
                 || _hotkeysPanel.IsDirty.Value;
         }
     }

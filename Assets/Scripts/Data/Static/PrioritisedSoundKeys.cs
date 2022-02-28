@@ -81,7 +81,7 @@ namespace BattleCruisers.Data.Static
                 Completed.Buildings.StealthGenerator = new PrioritisedSoundKey(SoundKeys.AltDrones.BuildingReadyAlt, SoundPriority.VeryLow);
                 Completed.Buildings.TeslaCoil = new PrioritisedSoundKey(SoundKeys.AltDrones.BuildingReadyAlt, SoundPriority.VeryLow);
 
-                Completed.Ultra = new PrioritisedSoundKey(SoundKeys.AltDrones.BuildingReadyAlt, SoundPriority.VeryHigh);//missing file
+                Completed.Ultra = new PrioritisedSoundKey(SoundKeys.AltDrones.UltraReadyAlt, SoundPriority.VeryHigh);//missing file
 
 
                 Events.Cruiser.UnderAttack = new PrioritisedSoundKey(SoundKeys.AltDrones.CruiserUnderAttackAlt, SoundPriority.Normal);

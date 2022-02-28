@@ -161,6 +161,14 @@ namespace BattleCruisers.Data.Models
             set => _showToolTips = value;
         }
 
+        [SerializeField]
+        private bool _altDroneSounds;
+        public bool AltDroneSounds
+        {
+            get => _altDroneSounds;
+            set => _altDroneSounds = value;
+        }
+
         public SettingsModel()
         {
             AIDifficulty = Difficulty.Hard;
@@ -175,6 +183,10 @@ namespace BattleCruisers.Data.Models
             MasterVolume = 0.5f;
             ShowInGameHints = true;
             ShowToolTips = true;
+            
+            AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+            Debug.Log(Application.systemLanguage);
+
         }
 
         private void CheckVolumeValue(float volume)

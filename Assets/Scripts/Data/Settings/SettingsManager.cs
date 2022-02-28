@@ -73,6 +73,11 @@ namespace BattleCruisers.Data.Settings
             get => _settings.ShowToolTips;
             set => _settings.ShowToolTips = value;
         }
+        public bool AltDroneSounds
+        {
+            get => _settings.AltDroneSounds;
+            set => _settings.AltDroneSounds = value;
+        }
 
         public SettingsManager(IDataProvider dataProvider)
         {

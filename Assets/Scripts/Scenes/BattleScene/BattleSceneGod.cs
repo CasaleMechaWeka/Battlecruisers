@@ -98,8 +98,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            
-            PrioritisedSoundKeys.SetSoundKeys(true);
+
+            PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
             if (sceneNavigator == null)
             {

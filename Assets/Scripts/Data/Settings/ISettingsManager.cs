@@ -27,6 +27,7 @@ namespace BattleCruisers.Data.Settings
 
         bool ShowInGameHints { get; set; }
         bool ShowToolTips { get; set; }
+        bool AltDroneSounds { get; set; }
 
         void Save();
     }
