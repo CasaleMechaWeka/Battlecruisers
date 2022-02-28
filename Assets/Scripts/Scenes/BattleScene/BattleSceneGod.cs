@@ -42,6 +42,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
 using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -98,6 +99,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             
+            PrioritisedSoundKeys.SetSoundKeys(true);
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
             if (sceneNavigator == null)
             {

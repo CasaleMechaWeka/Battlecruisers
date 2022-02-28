@@ -150,5 +150,24 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey HitWhileActive { get; } = new SoundKey(SoundType.Shields, "shield-bracing");
             public static ISoundKey FullyDepleted { get; } = new SoundKey(SoundType.Shields, "shields-broken");
         }
+
+        public static class AltDrones
+        {
+            public static ISoundKey AllDronesFocused { get; } = new SoundKey(SoundType.Events, "AllDronesFocusedAlt");
+            public static ISoundKey BuildersReadyAlt { get; } = new SoundKey(SoundType.Events, "BuildersReadyAlt");
+            public static ISoundKey BuildingReadyAlt { get; } = new SoundKey(SoundType.Events, "BuildingReadyAlt");
+            public static ISoundKey CruiserSignificantlyDamagedAlt { get; } = new SoundKey(SoundType.Events, "CruiserSignificantlyDamagedAlt");
+            public static ISoundKey CruiserUnderAttackAlt { get; } = new SoundKey(SoundType.Events, "CruiserUnderAttackAlt");
+            public static ISoundKey DispersingAlt { get; } = new SoundKey(SoundType.Events, "DispersingAlt");
+            public static ISoundKey DronesIdleAlt { get; } = new SoundKey(SoundType.Events, "DronesIdleAlt");
+            public static ISoundKey EnemyBuildingUltraAlt { get; } = new SoundKey(SoundType.Events, "EnemyBuildingUltraAlt");
+            public static ISoundKey FocusingAlt { get; } = new SoundKey(SoundType.Events, "FocusingAlt");
+            public static ISoundKey InsufficientBuildersAlt { get; } = new SoundKey(SoundType.Events, "InsufficientBuildersAlt");
+            public static ISoundKey NowhereToBuildAlt { get; } = new SoundKey(SoundType.Events, "NowhereToBuildAlt");
+            public static ISoundKey PopCapReachedAlt { get; } = new SoundKey(SoundType.Events, "PopCapReachedAlt");
+            public static ISoundKey TargetingAlt { get; } = new SoundKey(SoundType.Events, "TargetingAlt");
+            public static ISoundKey UntargetAlt { get; } = new SoundKey(SoundType.Events, "UntargetAlt");
+            public static ISoundKey WaitForFactoryToCompleteAlt { get; } = new SoundKey(SoundType.Events, "WaitForFactoryToCompleteAlt");
+        }
     }
 }
