@@ -89,6 +89,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public static string enemyCruiserName;
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
+        public GameObject nukeButton;
 
         private async void Start()
         {
@@ -337,6 +338,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
+                nukeButton.SetActive(false);
                 //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
             }
             deadBuildables = new Dictionary<TargetType, DeadBuildableCounter>();
