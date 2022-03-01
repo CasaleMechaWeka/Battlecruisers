@@ -273,8 +273,8 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.AirFactory, 1 },
                 { StaticPrefabKeys.Buildings.NavalFactory, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
-                { StaticPrefabKeys.Buildings.DroneStation4, 25 },
-                { StaticPrefabKeys.Buildings.DroneStation8, 27 },
+                { StaticPrefabKeys.Buildings.DroneStation4, 26 },
+                { StaticPrefabKeys.Buildings.DroneStation8, 30 },
 
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
@@ -292,17 +292,17 @@ namespace BattleCruisers.Data.Static
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
-                { StaticPrefabKeys.Buildings.RocketLauncher, 19 },
+                { StaticPrefabKeys.Buildings.RocketLauncher, 20 },
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
-                { StaticPrefabKeys.Buildings.MLRS, 28},
-                { StaticPrefabKeys.Buildings.GatlingMortar, 31},
+                { StaticPrefabKeys.Buildings.MLRS, 29},
+                { StaticPrefabKeys.Buildings.GatlingMortar, 32},
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
                 { StaticPrefabKeys.Buildings.NukeLauncher, 10 },
                 { StaticPrefabKeys.Buildings.Ultralisk, 14 },
                 { StaticPrefabKeys.Buildings.KamikazeSignal, 21 },
-                { StaticPrefabKeys.Buildings.Broadsides, 24 }
+                { StaticPrefabKeys.Buildings.Broadsides, 25 }
             };
         }
 
@@ -314,14 +314,14 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Bomber, 1 },
                 { StaticPrefabKeys.Units.Gunship, 5 },
                 { StaticPrefabKeys.Units.Fighter, 12 },
-                { StaticPrefabKeys.Units.SteamCopter, 29 },
+                { StaticPrefabKeys.Units.SteamCopter, 28 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
                 { StaticPrefabKeys.Units.Frigate, 3 },
                 { StaticPrefabKeys.Units.Destroyer, 13 },
-                { StaticPrefabKeys.Units.ArchonBattleship, 15 },
-                { StaticPrefabKeys.Units.AttackRIB, 30 }
+                { StaticPrefabKeys.Units.ArchonBattleship, 16 },
+                { StaticPrefabKeys.Units.AttackRIB, 31 }
             };
         }
 
@@ -333,10 +333,10 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Raptor, 4 },
                 { StaticPrefabKeys.Hulls.Bullshark, 8 },
                 { StaticPrefabKeys.Hulls.Rockjaw, 11},
-                { StaticPrefabKeys.Hulls.Eagle, 18 },
+                { StaticPrefabKeys.Hulls.Eagle, 16 },
                 { StaticPrefabKeys.Hulls.Hammerhead, 19 },
-                { StaticPrefabKeys.Hulls.Longbow, 22 },
-                { StaticPrefabKeys.Hulls.Megalodon, 26 }
+                { StaticPrefabKeys.Hulls.Longbow, 23 },
+                { StaticPrefabKeys.Hulls.Megalodon, 27 }
             };
         }
 
