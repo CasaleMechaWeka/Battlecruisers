@@ -32,6 +32,10 @@ namespace BattleCruisers.UI.Sound.AudioSources
             {
                 return settingsManager.AmbientVolume*settingsManager.MasterVolume;
             }
+            else if (_type == 3)
+            {
+                return settingsManager.MusicVolume*settingsManager.MasterVolume;
+            }
             else{
                 return settingsManager.EffectVolume*settingsManager.MasterVolume;
             }

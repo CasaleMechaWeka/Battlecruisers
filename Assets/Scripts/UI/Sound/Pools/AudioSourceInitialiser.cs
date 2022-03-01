@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.Sound.Pools
     {
         [SerializeField]
         private AudioSource _audioSource;
+        public int type = -1;
 
         public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, ISettingsManager settingsManager)
         {
@@ -22,7 +23,7 @@ namespace BattleCruisers.UI.Sound.Pools
                 new AudioSourcePoolable(
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_audioSource),
-                        settingsManager), 
+                        settingsManager, type), 
                     realTimeDeferrer);
         }
     }

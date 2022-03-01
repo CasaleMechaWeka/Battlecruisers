@@ -49,11 +49,11 @@ namespace BattleCruisers.Scenes
                 // Game starts with the screens scene
                 if (testCreditsScene)
                 {
-                    GoToScene(SceneNames.CREDITS_SCENE);
+                    GoToScene(SceneNames.CREDITS_SCENE, true);
                 }
                 else
                 {
-                    GoToScene(SceneNames.SCREENS_SCENE);
+                    GoToScene(SceneNames.SCREENS_SCENE, true);
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace BattleCruisers.Scenes
                         audioSource));
         }
 
-        public void GoToScene(string sceneName)
+        public void GoToScene(string sceneName, bool stopMusic)
         {
             string hint = null;
             if (sceneName == SceneNames.BATTLE_SCENE
@@ -83,6 +83,8 @@ namespace BattleCruisers.Scenes
                 hint = _hintProvider.GetHint();
             }
             LoadingScreenHint = hint;
+
+            if (stopMusic)
             MusicPlayer.Stop();
 
             StartCoroutine(LoadSceneWithLoadingScreen(sceneName));

@@ -43,6 +43,16 @@ namespace BattleCruisers.UI.Music
             PlayMusic(SoundKeys.Music.TrashTalk, loop: false);
         }
 
+        public void PlayCutsceneMusic()
+        {
+            PlayMusic(SoundKeys.Music.Cutscene, loop: false);
+        }
+
+        public void PlayCreditsMusic()
+        {
+            PlayMusic(SoundKeys.Music.Credits, loop: false);
+        }
+
         private async Task PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)
         {
             if (!soundKeyToPlay.Equals(_currentlyPlaying))

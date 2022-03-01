@@ -298,19 +298,19 @@ namespace BattleCruisers.Scenes
 
         public void LoadBattleScene()
         { 
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }
 
         public void LoadCreditsScene()
         {
-            _sceneNavigator.GoToScene(SceneNames.CREDITS_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.CREDITS_SCENE, true);
             CleanUp();
         }
 
          public void LoadCutsceneScene()
         {
-            _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
             CleanUp();
         }
 

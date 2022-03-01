@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.title.text = _screensSceneStrings.GetString(VICTORY_TITLE_NO_LOOT_KEY);
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
-            musicPlayer.PlayVictoryMusic();
+            //musicPlayer.PlayVictoryMusic();
 
             if (desiredBehaviour == PostBattleScreenBehaviour.Victory_DemoCompleted
                 || (desiredBehaviour == PostBattleScreenBehaviour.Default

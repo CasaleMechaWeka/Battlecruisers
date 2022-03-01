@@ -81,6 +81,8 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Victory { get; } = new SoundKey(SoundType.Music, "victory");
             public static ISoundKey Defeat { get; } = new SoundKey(SoundType.Music, "defeat");
             public static ISoundKey TrashTalk { get; } = new SoundKey(SoundType.Music, "TrashTalk");
+            public static ISoundKey Cutscene { get; } = new SoundKey(SoundType.Music, "OrionOmega");
+            public static ISoundKey Credits { get; } = new SoundKey(SoundType.Music, "SerialKillerRemaster");
             
             public static class Background
             {

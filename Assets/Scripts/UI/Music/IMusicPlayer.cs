@@ -6,6 +6,8 @@
         void PlayVictoryMusic();
         void PlayDefeatMusic();
         void PlayTrashMusic();
+        void PlayCutsceneMusic();
+        void PlayCreditsMusic();
         void Stop();
     }
 }

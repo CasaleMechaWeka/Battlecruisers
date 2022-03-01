@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.CompleteBattle(wasVictory: default, retryLevel: true);
 
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE);
+            _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE, true);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.CompleteBattle(wasVictory: default, retryLevel: false);
 
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE);
+            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             BattleResult expectedResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory: true);
             _applicationModel.DataProvider.GameModel.Received().LastBattleResult = expectedResult;
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE);
+            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             _applicationModel.Received().UserWonSkirmish = false;
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE);
+            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         private void CommonChecks()

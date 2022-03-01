@@ -8,7 +8,7 @@
     /// </summary>
     public interface ISceneNavigator
     {
-        void GoToScene(string sceneName);
+        void GoToScene(string sceneName, bool stopMusic);
         void SceneLoaded(string sceneName);
     }
 }

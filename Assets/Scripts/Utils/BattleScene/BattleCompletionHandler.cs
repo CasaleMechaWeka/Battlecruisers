@@ -60,11 +60,11 @@ namespace BattleCruisers.Utils.BattleScene
 
             if (retryLevel)
             {
-                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             }
             else
             {
-                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
 
@@ -101,7 +101,7 @@ namespace BattleCruisers.Utils.BattleScene
 
             if (retryLevel)
             {
-                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE);
+                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             }
             else if (wasVictory)
             {
@@ -113,11 +113,11 @@ namespace BattleCruisers.Utils.BattleScene
                     _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
                 }
                 _applicationModel.DataProvider.SaveGame();
-                _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE);
+                _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
                 
             }
             else{
-                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
     }

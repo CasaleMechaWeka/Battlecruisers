@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes
             {
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
-
+            LandingSceneGod.MusicPlayer.PlayCreditsMusic();
             _sceneNavigator.SceneLoaded(SceneNames.CREDITS_SCENE);
         }
 
@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes
 
         private void Exit()
         {
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
     }
 }

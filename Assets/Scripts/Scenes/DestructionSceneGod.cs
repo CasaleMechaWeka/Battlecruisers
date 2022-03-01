@@ -56,7 +56,8 @@ namespace BattleCruisers.Scenes
             destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
 
             ranker.DisplayRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-
+            
+            LandingSceneGod.MusicPlayer.PlayVictoryMusic();
 
             _soundPlayer
                 = new SingleSoundPlayer(
@@ -82,7 +83,7 @@ namespace BattleCruisers.Scenes
 
         private void Done()
         {
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE);
+            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
         }
 
         //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding
