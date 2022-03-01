@@ -151,6 +151,8 @@ namespace BattleCruisers.Scenes.BattleScene
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
+            enemyCruiserSprite = aiCruiser.Sprite;
+            enemyCruiserName = aiCruiser.Name;
 
             // Camera
             cameraComponents
@@ -361,8 +363,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
 
-            enemyCruiserSprite = aiCruiser.Sprite;
-            enemyCruiserName = aiCruiser.Name;
+            
 
             GameOver = false;
         }
