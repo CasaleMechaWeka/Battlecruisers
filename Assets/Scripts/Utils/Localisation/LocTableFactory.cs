@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;
@@ -97,18 +98,21 @@ namespace BattleCruisers.Utils.Localisation
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
             Locale localeToUse = await GetLocaleAsync();
-
+            //Debug.Log(localeToUse);
             AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, localeToUse);
 
             // Load table, so getting any strings will be synchronous
             await handle.Task;
 
             Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
-            Assert.IsNotNull(handle.Result);
+            //Assert.IsNotNull(handle.Result);
 
             return handle;
         }
 
+        //basically just need to make a string selection in settings menu and make it so that on load it uses the string in the code below
+        //also need to setup drop down selector for this functionality
+        //won't work until the game is fully translated
         private async Task<Locale> GetLocaleAsync()
         {
             if (_locale != null)
@@ -119,6 +123,21 @@ namespace BattleCruisers.Utils.Localisation
 
             // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
             Locale localeToUse = await LocalizationSettings.SelectedLocaleAsync.Task;
+            Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
+            //Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
+            foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
+            {
+                Debug.Log(locale.name);
+                //replace below with the string saved in settings
+                if (locale.name == "English (en)")
+                {
+                    
+                    localeToUse = locale;
+                }
+            }
+            
+            //localeToUse = Locale.CreateLocale(LocaleIdentifier);
+
 /*
 #if PSEUDO_LOCALE
             Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
@@ -128,8 +147,11 @@ namespace BattleCruisers.Utils.Localisation
             localeToUse = pseudoLocale;
 #endif
 */
-            _locale = localeToUse;
 
+            LocalizationSettings.SelectedLocale = localeToUse;
+
+            _locale = localeToUse;
+            //Debug.Log(_locale);
             return localeToUse;
         }
 

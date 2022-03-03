@@ -106,7 +106,7 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 // TEMP  Force level I'm currently testing :)
                 applicationModel.SelectedLevel = defaultLevel;
-                Debug.Log(applicationModel.SelectedLevel);
+                //Debug.Log(applicationModel.SelectedLevel);
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
