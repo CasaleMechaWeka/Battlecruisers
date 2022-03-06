@@ -16,6 +16,7 @@ namespace BattleCruisers.Data.Models
         float AlertVolume { get; set; }
         float InterfaceVolume { get; set; }
         float AmbientVolume { get; set; }
+        string Language { get; set; }
         
     }
 }

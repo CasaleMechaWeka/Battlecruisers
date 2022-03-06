@@ -7,6 +7,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
@@ -15,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
 
         public DifficultyDropdown difficultyDropdown;
+        public LanguageDropdown languageDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
         public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle;
@@ -22,9 +24,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
 
-        public Panel gameSettingsPanel, audioPanel;
+        public Panel gameSettingsPanel, audioPanel, languagePanel;
         public HotkeysPanel hotkeysPanel;
-        public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton;
+        public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton;
 
         public bool showGameSettingsFirst = true;
 
@@ -52,6 +54,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             }
 
             difficultyDropdown.Initialise(_settingsManager.AIDifficulty, commonLocTable);
+            languageDropdown.Initialise(_settingsManager.Language, commonLocTable);
+
+            
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
@@ -89,6 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     screensSceneGod,
                     _settingsManager,
                     difficultyDropdown,
+                    languageDropdown,
                     zoomSlider.SliderValue,
                     scrollSlider.SliderValue,
                     musicVolumeSlider.SliderValue,
@@ -108,6 +114,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gameSettingsButton.Initialise(soundPlayer, ShowGameSettings, this);
             hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
             audioButton.Initialise(soundPlayer, ShowAudioSettings, this);
+            languageButton.Initialise(soundPlayer, ShowLanguageSettings, this);
 
             ShowTab();
         }
@@ -148,6 +155,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             audioButton.IsSelected = false;
             audioPanel.Hide();
+            languageButton.IsSelected = false;
+            languagePanel.Hide();
+
 
             gameSettingsPanel.Show();
             gameSettingsButton.IsSelected = true;
@@ -161,6 +171,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             audioButton.IsSelected = false;
             audioPanel.Hide();
 
+            languageButton.IsSelected = false;
+            languagePanel.Hide();
+
             hotkeysPanel.Show();
             hotkeysButton.IsSelected = true;
             resetHotkeysButton.IsVisible = true;
@@ -173,10 +186,28 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             resetHotkeysButton.IsVisible = false;
             gameSettingsPanel.Hide();
             gameSettingsButton.IsSelected = false;
+            languageButton.IsSelected = false;
+            languagePanel.Hide();
 
             audioButton.IsSelected = true;
             audioPanel.Show();
             
+
+        }
+
+        public void ShowLanguageSettings()
+        {
+
+            hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
+            gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+            audioButton.IsSelected = false;
+            audioPanel.Hide();
+            
+            languageButton.IsSelected = true;
+            languagePanel.Show();
 
         }
 
@@ -186,6 +217,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             hotkeysPanel.ResetToSavedState();
             difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
+            languageDropdown.ResetToDefaults(_settingsManager.Language);
             zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
             scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
             masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);

@@ -78,6 +78,11 @@ namespace BattleCruisers.Data.Settings
             get => _settings.AltDroneSounds;
             set => _settings.AltDroneSounds = value;
         }
+        public string Language
+        {
+            get => _settings.Language;
+            set => _settings.Language = value;
+        }
 
         public SettingsManager(IDataProvider dataProvider)
         {

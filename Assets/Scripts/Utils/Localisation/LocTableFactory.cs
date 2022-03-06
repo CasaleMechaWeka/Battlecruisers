@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BattleCruisers.Data;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
@@ -125,17 +126,24 @@ namespace BattleCruisers.Utils.Localisation
             Locale localeToUse = await LocalizationSettings.SelectedLocaleAsync.Task;
             Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
             //Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
-            foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
+            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language != null)
             {
-                Debug.Log(locale.name);
-                //replace below with the string saved in settings
-                if (locale.name == "English (en)")
+                foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
                 {
-                    
-                    localeToUse = locale;
+                    Debug.Log(locale.name);
+                    //replace below with the string saved in settings
+                    if (locale.name == ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language)
+                    {
+                        
+                        localeToUse = locale;
+                        LocalizationSettings.SelectedLocale = localeToUse;
+                    }
                 }
             }
-            
+            else{
+                ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = LocalizationSettings.SelectedLocale.name;
+                Debug.Log("Set the language to " + ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language);
+            }
             //localeToUse = Locale.CreateLocale(LocaleIdentifier);
 
 /*
@@ -148,7 +156,7 @@ namespace BattleCruisers.Utils.Localisation
 #endif
 */
 
-            LocalizationSettings.SelectedLocale = localeToUse;
+            
 
             _locale = localeToUse;
             //Debug.Log(_locale);

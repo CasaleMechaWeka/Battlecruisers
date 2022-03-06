@@ -146,6 +146,17 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private string _language;
+        public string Language
+        {
+            get => _language;
+            set
+            {
+                _language = value;
+            }
+        }
+
+        [SerializeField]
         private bool _showInGameHints;
         public bool ShowInGameHints
         {
