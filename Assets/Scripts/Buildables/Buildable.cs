@@ -58,6 +58,7 @@ namespace BattleCruisers.Buildables
         protected BuildableProgressController _buildableProgress;
 
         public string stringKeyName;
+        public string keyName{get;set;}
         public int numOfDronesRequired;
         public float buildTimeInS;
 
@@ -178,7 +179,7 @@ namespace BattleCruisers.Buildables
         public virtual void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);
-
+            keyName = stringKeyName;
             Helper.AssertIsNotNull(parent, healthBar);
 
             _parent = parent;

@@ -60,10 +60,11 @@ namespace BattleCruisers.AI.TaskProducers
             foreach (BuildingKey key in buildingKeys)
             {
                 Assert.IsNotNull(key);
-
+                //Debug.Log(key);
                 IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(key);
-                Assert.IsFalse(buildingNamesToKeys.ContainsKey(buildingWrapper.Buildable.Name));
-                buildingNamesToKeys.Add(buildingWrapper.Buildable.Name, key);
+                //Debug.Log(buildingWrapper.Buildable.keyName);
+                Assert.IsFalse(buildingNamesToKeys.ContainsKey(buildingWrapper.Buildable.keyName));
+                buildingNamesToKeys.Add(buildingWrapper.Buildable.keyName, key);
             }
 
             return buildingNamesToKeys;
@@ -71,9 +72,9 @@ namespace BattleCruisers.AI.TaskProducers
 
         private void _cruiser_BuildingDestroyed(object sender, BuildingDestroyedEventArgs e)
         {
-            Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.Name));
+            Assert.IsTrue(_buildingNamesToKeys.ContainsKey(e.DestroyedBuilding.keyName));
 
-            IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.Name];
+            IPrefabKey key = _buildingNamesToKeys[e.DestroyedBuilding.keyName];
             TaskPriority taskPriority = key.Equals(StaticPrefabKeys.Buildings.DroneStation) ? TaskPriority.High : TaskPriority.Normal;
             _tasks.Add(_taskFactory.CreateConstructBuildingTask(taskPriority, key));
 		}

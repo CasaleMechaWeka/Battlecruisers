@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public void Initialise(ILocTable storyStrings)
         {
             Assert.IsNotNull(storyStrings);
-
+            Debug.Log(stringKeyBase);
             PlayerText = storyStrings.GetString($"{stringKeyBase}/PlayerText");
             EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
             AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");

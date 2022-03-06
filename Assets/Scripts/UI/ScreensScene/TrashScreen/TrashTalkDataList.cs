@@ -16,10 +16,11 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             _trashDataList = GetComponentsInChildren<TrashTalkData>();
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, _trashDataList.Length);
-
+            //int cnt = 0;
             foreach (TrashTalkData trashTalk in _trashDataList)
             {
                 trashTalk.Initialise(storyStrings);
+                //Debug.Log(cnt++);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Localization.Pseudo;
 using UnityEngine.Localization.Settings;
@@ -15,14 +16,20 @@ namespace BattleCruisers.Utils.Localisation
         {
             Assert.IsTrue(tableHandle.IsValid());
             Handle = tableHandle;
+            Debug.Log(Handle.Result);
         }
 
         public string GetString(string key)
         {
             Assert.IsFalse(string.IsNullOrEmpty(key));
             Assert.IsTrue(Handle.IsValid(), $"Handle has been released :/");
-
+            //Debug.Log(key);
+            if (Handle.Result == null)
+            {
+                return "handle had no result";
+            }
             StringTableEntry entry = Handle.Result.GetEntry(key);
+            //Debug.Log(entry.LocalizedValue);
             Assert.IsNotNull(entry, $"No string entry for key: {key}");
 
 //#if !PSEUDO_LOCALE
