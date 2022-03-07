@@ -11,11 +11,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     public class LanguageDropdown : MonoBehaviour
     {
         private Dropdown _languageDropdown;
-        private IList<string> _languages;
 
         public List<Sprite> flagSymbols;
-        public List<string> languages;
-        public string Language => _languages[_languageDropdown.value];
+        public List<string> languageCodeNames;
+        public List<string> languageNativeNames;
+        public string Language => languageCodeNames[_languageDropdown.value];
 
         public event EventHandler LanguageChanged;
 
@@ -27,18 +27,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Assert.IsNotNull(_languageDropdown);
 
             List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
-            _languages = new List<string>();
             int currentIndex = 0;
             //Assert.AreEqual(flagSymbols.Count, difficultiesNoEasy.Count);
 
             for (int i = 0; i < flagSymbols.Count; ++i)
             {
-                
-
-                options.Add(new Dropdown.OptionData(languages[i], flagSymbols[i]));
-                _languages.Add(languages[i]);
-
-                if (languages[i] == selectedLanguage)
+                options.Add(new Dropdown.OptionData(languageNativeNames[i], flagSymbols[i]));
+                if (languageCodeNames[i] == selectedLanguage)
                 {
                     currentIndex = i;
                 }
@@ -51,14 +46,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void OnLanguageChanged(int dropdownIndex)
         {
-            Assert.IsTrue(_languageDropdown.value < _languages.Count);
-
             LanguageChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void ResetToDefaults(string defaultLanguage)
         {
-            int defaultIndex = _languages.IndexOf(defaultLanguage);
+            int defaultIndex = languageCodeNames.IndexOf(defaultLanguage);
             _languageDropdown.value = defaultIndex;
         }
     }

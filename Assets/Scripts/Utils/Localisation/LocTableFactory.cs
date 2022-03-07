@@ -131,7 +131,7 @@ namespace BattleCruisers.Utils.Localisation
             {
                 foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
                 {
-                    //Debug.Log(locale.name);
+                    Debug.Log(locale.name);
                     //replace below with the string saved in settings
                     if (locale.name == ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language)
                     {
