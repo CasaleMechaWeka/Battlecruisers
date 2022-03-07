@@ -119,7 +119,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private bool ShouldBeEnabled()
         {
-            Debug.Log(_languageDropdown.Language + ", " + _settingsManager.Language);
+            //Debug.Log(_languageDropdown.Language + ", " + _settingsManager.Language);
             return
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
                 || _languageDropdown.Language != _settingsManager.Language
