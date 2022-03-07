@@ -340,7 +340,10 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
-                nukeButton.SetActive(false);
+                if (nukeButton != null)
+                {
+                    nukeButton.SetActive(false);
+                }
                 //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
             }
             deadBuildables = new Dictionary<TargetType, DeadBuildableCounter>();
