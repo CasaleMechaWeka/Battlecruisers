@@ -100,7 +100,7 @@ namespace BattleCruisers.Utils.Localisation
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
             Locale localeToUse = await GetLocaleAsync();
-            //Debug.Log(localeToUse);
+            Debug.Log(localeToUse.name + " selected");
             AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, localeToUse);
 
             // Load table, so getting any strings will be synchronous
@@ -126,12 +126,19 @@ namespace BattleCruisers.Utils.Localisation
             // Wait for locale preload to finish, otherwise accessing LocalizationSettings.AvailableLocales fails
             Locale localeToUse = await LocalizationSettings.SelectedLocaleAsync.Task;
             Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
-            //Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
+            Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
+
+            Debug.Log("Should be names below");
+            foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
+            {
+                Debug.Log(locale.name + " wow");
+            }
+
             if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language != null)
             {
                 foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
                 {
-                    Debug.Log(locale.name);
+                    //Debug.Log(locale.name);
                     //replace below with the string saved in settings
                     if (locale.name == ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language)
                     {
@@ -143,9 +150,11 @@ namespace BattleCruisers.Utils.Localisation
                 }
             }
             else{
-                ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = LocalizationSettings.SelectedLocale.name;
+                ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = localeToUse.name;
+                LocalizationSettings.SelectedLocale = localeToUse;
                 //Debug.Log("Set the language to " + ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language);
-                localeToUse = LocalizationSettings.SelectedLocale;
+                //localeToUse = LocalizationSettings.SelectedLocale;
+                //Debug.Log(localeToUse);
             }
             //localeToUse = Locale.CreateLocale(LocaleIdentifier);
 
