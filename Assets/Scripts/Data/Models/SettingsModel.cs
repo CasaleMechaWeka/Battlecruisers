@@ -196,7 +196,7 @@ namespace BattleCruisers.Data.Models
             ShowToolTips = true;
             
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
-            Debug.Log(Application.systemLanguage);
+            //Debug.Log(Application.systemLanguage);
 
         }
 

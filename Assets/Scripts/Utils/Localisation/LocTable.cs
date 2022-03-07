@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Localisation
         {
             Assert.IsTrue(tableHandle.IsValid());
             Handle = tableHandle;
-            Debug.Log(Handle.Result);
+            //Debug.Log(Handle.Result);
         }
 
         public string GetString(string key)

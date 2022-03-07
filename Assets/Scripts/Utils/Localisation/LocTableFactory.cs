@@ -76,7 +76,7 @@ namespace BattleCruisers.Utils.Localisation
 
         public async Task<ILocTable> LoadStoryTableAsync()
         {
-            Debug.Log("Loaded story");
+            //Debug.Log("Loaded story");
             if (_storyTable == null)
             {
                 AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.STORY);
@@ -131,7 +131,7 @@ namespace BattleCruisers.Utils.Localisation
             {
                 foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
                 {
-                    Debug.Log(locale.name);
+                    //Debug.Log(locale.name);
                     //replace below with the string saved in settings
                     if (locale.name == ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language)
                     {
@@ -144,7 +144,7 @@ namespace BattleCruisers.Utils.Localisation
             }
             else{
                 ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language = LocalizationSettings.SelectedLocale.name;
-                Debug.Log("Set the language to " + ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language);
+                //Debug.Log("Set the language to " + ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language);
                 localeToUse = LocalizationSettings.SelectedLocale;
             }
             //localeToUse = Locale.CreateLocale(LocaleIdentifier);

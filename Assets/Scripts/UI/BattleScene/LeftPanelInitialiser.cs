@@ -136,7 +136,7 @@ namespace BattleCruisers.UI.BattleScene
             if ((double)Screen.width/Screen.height <= 13.0/8)
             {
                 float scaleAmount = (float)(((double)Screen.width/Screen.height)/1.667);
-                Debug.Log(scaleAmount);
+                //Debug.Log(scaleAmount);
                 rectTransformThis.localScale = new Vector2(scaleAmount, scaleAmount);
             }
         }
