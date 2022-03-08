@@ -43,6 +43,9 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        toolTipText.enabled = false;
+        background.enabled = false;
+        toolTipText.text = "";
         if (Input.mousePosition.x < Screen.width/2)
         {
             xDelta = (((RectTransform)ToolTipTextObject.transform).rect.width)/3;
