@@ -100,7 +100,7 @@ namespace BattleCruisers.Utils.Localisation
         private async Task<AsyncOperationHandle<StringTable>> LoadTable(string tableName)
         {
             Locale localeToUse = await GetLocaleAsync();
-            Debug.Log(localeToUse.name + " selected");
+            //Debug.Log(localeToUse.name + " selected");
             AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, localeToUse);
 
             // Load table, so getting any strings will be synchronous
@@ -128,10 +128,10 @@ namespace BattleCruisers.Utils.Localisation
             Logging.Log(Tags.LOCALISATION, $"Use pseudo loc");
             Locale arabic = LocalizationSettings.AvailableLocales.Locales.FirstOrDefault(locale => locale.name == "Arabic");
 
-            Debug.Log("Should be names below");
+            //Debug.Log("Should be names below");
             foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
             {
-                Debug.Log(locale.name + " wow");
+                //Debug.Log(locale.name + " wow");
             }
 
             if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language != null)
