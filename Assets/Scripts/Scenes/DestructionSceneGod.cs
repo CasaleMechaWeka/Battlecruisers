@@ -93,15 +93,15 @@ namespace BattleCruisers.Scenes
             long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
             num = num / i * i;
             if (num >= 1000000000000)
-                return (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
+                return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion.text;
             if (num >= 1000000000)
-                return (num / 1000000000D).ToString("0.##") + " " + trillion.text;
+                return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion.text;
             if (num >= 1000000)
-                return (num / 1000000D).ToString("0.##") + " " + billion.text;
+                return "$" + (num / 1000000D).ToString("0.##") + " " + billion.text;
             if (num >= 1000)
-                return (num / 1000D).ToString("0.##") + " " + million.text;
+                return "$" + (num / 1000D).ToString("0.##") + " " + million.text;
 
-            return num.ToString("#,0");
+            return "$" + num.ToString("#,0");
         }
     }
         
