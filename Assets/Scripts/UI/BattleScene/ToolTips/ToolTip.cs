@@ -23,21 +23,20 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Update()
     {
-        if (toolTipText.enabled)
+        
+        if (Input.mousePosition.x < Screen.width/2)
         {
-            if (Input.mousePosition.x < Screen.width/2)
-            {
-                xDelta = (((RectTransform)ToolTipTextObject.transform).rect.width)/3;
-            }
-            else{
-                xDelta = -(((RectTransform)ToolTipTextObject.transform).rect.width)/3;
-            }
-            if (Mathf.Abs(xDelta) > 10)
-            {
-                ToolTipTextObject.transform.position = Input.mousePosition;
-                ToolTipTextObject.transform.position = new Vector3(ToolTipTextObject.transform.position.x + xDelta, ToolTipTextObject.transform.position.y + 60, ToolTipTextObject.transform.position.z);
-            } 
+            xDelta = (((RectTransform)ToolTipTextObject.transform).rect.width)/3;
         }
+        else{
+            xDelta = -(((RectTransform)ToolTipTextObject.transform).rect.width)/3;
+        }
+        if (Mathf.Abs(xDelta) > 10)
+        {
+            ToolTipTextObject.transform.position = Input.mousePosition;
+            ToolTipTextObject.transform.position = new Vector3(ToolTipTextObject.transform.position.x + xDelta, ToolTipTextObject.transform.position.y + 60, ToolTipTextObject.transform.position.z);
+        } 
+        
     }
     
 
