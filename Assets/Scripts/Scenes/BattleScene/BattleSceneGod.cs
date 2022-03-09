@@ -408,6 +408,10 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             if (!GameOver)
             {
+                if (type == TargetType.Satellite || type == TargetType.Rocket)
+                {
+                    return;
+                }
                 deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier*((float)value)));
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == TargetType.Cruiser)
