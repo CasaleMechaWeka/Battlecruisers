@@ -13,7 +13,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public override float OptimalArmamentRangeInM => ak1.RangeInM;
 
-        protected override Vector2 MaskHighlightableSize
+        /*protected override Vector2 MaskHighlightableSize
         {
             get
             {
@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                         base.MaskHighlightableSize.x * 1.5f,
                         base.MaskHighlightableSize.y * 2);
             }
-        }
+        }*/
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {
