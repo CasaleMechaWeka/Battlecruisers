@@ -2,6 +2,7 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Loading
@@ -16,6 +17,7 @@ namespace BattleCruisers.UI.Loading
 
         private static bool IsFirstTime = true;
         public static LoadingScreenController Instance { get; private set; }
+        public GameObject logos;
 
         async void Start()
         {
@@ -27,6 +29,16 @@ namespace BattleCruisers.UI.Loading
             loadingText.text = FindLoadingText();
             Instance = this;
 
+            string locName = LocalizationSettings.SelectedLocale.name;
+            Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
+            foreach(Transform t in ts)
+            {
+                if (t.gameObject.name == locName)
+                {
+                    t.gameObject.SetActive(true);
+                    break;
+                }
+            }
             IsFirstTime = false;
         }
 

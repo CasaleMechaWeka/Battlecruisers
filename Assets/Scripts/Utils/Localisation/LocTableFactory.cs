@@ -131,7 +131,7 @@ namespace BattleCruisers.Utils.Localisation
             //Debug.Log("Should be names below");
             foreach(Locale locale in LocalizationSettings.AvailableLocales.Locales)
             {
-                //Debug.Log(locale.name + " wow");
+                Debug.Log(locale.name);
             }
 
             if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.Language != null)
