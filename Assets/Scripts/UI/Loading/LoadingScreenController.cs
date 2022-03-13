@@ -29,6 +29,7 @@ namespace BattleCruisers.UI.Loading
             loadingText.text = FindLoadingText();
             Instance = this;
 
+            //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
             Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
             foreach(Transform t in ts)

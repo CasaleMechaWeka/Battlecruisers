@@ -226,7 +226,11 @@ namespace BattleCruisers.Buildables
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
-            Assert.IsNotNull(mainRenderer);
+            //Assert.IsNotNull(mainRenderer);
+            if (mainRenderer == null)
+            {
+                return new List<SpriteRenderer>(){};
+            }
             return new List<SpriteRenderer>() { mainRenderer };
         }
 
