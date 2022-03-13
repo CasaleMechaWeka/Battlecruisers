@@ -30,8 +30,12 @@ namespace BattleCruisers.Utils.Localisation
             }
             StringTableEntry entry = Handle.Result.GetEntry(key);
             //Debug.Log(entry.LocalizedValue);
-            Assert.IsNotNull(entry, $"No string entry for key: {key}");
+            //Assert.IsNotNull(entry, $"No string entry for key: {key}");
 
+            if (entry == null || entry.GetLocalizedString() == " ")
+            {
+                return key + " is Not localised in " + LocalizationSettings.SelectedLocale.name +  " yet";
+            }
 //#if !PSEUDO_LOCALE
             return entry.GetLocalizedString();
 /*#else
