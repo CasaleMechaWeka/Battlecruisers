@@ -90,7 +90,9 @@ namespace BattleCruisers.Scenes.BattleScene
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         public GameObject nukeButton;
+        private IApplicationModel applicationModel;
 
+        public GameObject[] ilegalTutorialSettings;
         private async void Start()
         {
             Logging.Log(Tags.BATTLE_SCENE, "Start");
@@ -98,7 +100,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            applicationModel = ApplicationModelProvider.ApplicationModel;
 
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
@@ -120,6 +122,14 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 applicationModel.Mode = GameMode.Tutorial;
                 applicationModel.SelectedLevel = 1;
+            }
+
+            if (applicationModel.Mode == GameMode.Tutorial)
+            {
+                foreach (GameObject setting in ilegalTutorialSettings)
+                {
+                    setting.SetActive(false);
+                }
             }
 
             dataProvider = applicationModel.DataProvider;
@@ -399,9 +409,14 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void UpdateCamera()
         {
+            if (applicationModel.Mode == GameMode.Tutorial)
+            {
+                return;
+            }
             cameraComponents =  cameraInitialiser.UpdateCamera(
                     dataProvider.SettingsManager,
                     navigationPermitters);
+            Debug.Log("camera changed");
         }
 
         public static void AddDeadBuildable(TargetType type, int value)
