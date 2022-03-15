@@ -11,7 +11,9 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
 		public BarrelWrapper ak1, ak2;
 
-        public override float OptimalArmamentRangeInM => ak1.RangeInM;
+        public override float OptimalArmamentRangeInM => ak1.RangeInM - 5;
+
+
 
         /*protected override Vector2 MaskHighlightableSize
         {
@@ -35,6 +37,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
+            AddExtraFriendDetectionRange(1);
             ak1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
             ak2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
 		}

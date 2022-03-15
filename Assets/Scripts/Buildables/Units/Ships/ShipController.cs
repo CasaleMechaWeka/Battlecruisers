@@ -41,7 +41,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
         private IPool<IShipDeath, Vector3> _deathPool;
 
-        private const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
+        private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
         public override TargetType TargetType => TargetType.Ships;
@@ -262,6 +262,11 @@ namespace BattleCruisers.Buildables.Units.Ships
                     turret.DisposeManagedState();
                 }
             }
+        }
+
+        public void AddExtraFriendDetectionRange(float extraRange)
+        {
+            FRIEND_DETECTION_RADIUS_MULTIPLIER += extraRange;
         }
     }
 }
