@@ -14,8 +14,8 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 
 		public MainMenuButtonsPanel buttonsPanel;
 		public InGameSettingsPanel settingsPanel;
-		public GameSpeedButton playButton;
-		public GameSpeedButton pauseButton;
+		public GameSpeedButton[] speedButtons;
+		private int lastClicked = 2;
 
 		private ISettableBroadcastingProperty<bool> _isVisible;
 		public IBroadcastingProperty<bool> IsVisible { get; private set; }
@@ -47,14 +47,21 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			_isVisible.Value = true;
 			buttonsPanel.Show();
 			settingsPanel.Hide();
-			pauseButton.TriggerClick();
+			for (int i = 0; i < 4; i++)
+			{
+				if (speedButtons[i].selectedFeedback.gameObject.activeInHierarchy)
+				{
+					lastClicked = i;
+				}
+			}
+			speedButtons[0].TriggerClick();
 		}
 
 		public void HideMenu()
 		{
 			_canvas.enabled = false;
 			_isVisible.Value = false;
-			playButton.TriggerClick();
+			speedButtons[lastClicked].TriggerClick();
 		}
 
         public void ShowSettings()
