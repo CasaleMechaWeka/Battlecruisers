@@ -125,7 +125,7 @@ namespace BattleCruisers.Cruisers.Slots
 		private void OnBuildingDestroyed(object sender, EventArgs e)
 		{
             _explosion.Activate(Transform.Position);
-            Invoke("NullifySlotBuilding", 2f);
+            Invoke("NullifySlotBuilding", 1f);
             
 		}
 
