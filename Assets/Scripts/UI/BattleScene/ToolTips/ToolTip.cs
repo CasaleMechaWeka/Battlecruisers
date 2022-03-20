@@ -15,7 +15,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void Start()
     {
         textForLoc.enabled = false;
-        toolTipText = ToolTipTextObject.GetComponentInChildren<Text>();
+        toolTipText = ToolTipTextObject.GetComponentInChildren<Text>(includeInactive: true);
         background = ToolTipTextObject.GetComponent<Image>();
         toolTipText.enabled = false;
         background.enabled = false;
