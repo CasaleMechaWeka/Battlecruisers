@@ -7,6 +7,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 	{
         // DLC  Have own sound
         protected override ISoundKey FiringSound => SoundKeys.Firing.AttackBoat;
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Artillery;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Mortar;
     }
 }
