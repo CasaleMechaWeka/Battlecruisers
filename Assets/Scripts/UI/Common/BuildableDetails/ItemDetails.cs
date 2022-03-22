@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _item = item;
 			
             _statsController.ShowStats(item, itemToCompareTo);
-            itemName.text = item.Name.ToUpper();
+            itemName.text = item.Name;
             itemDescription.text = item.Description;
             itemImage.sprite = item.Sprite;
 
