@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         
         [Header("Factories")]
         public HotkeyRow droneStationRow;
-        public HotkeyRow airFactoryRow, navalFactoryRow;
+        public HotkeyRow airFactoryRow, navalFactoryRow, droneStation4Row, droneStation8Row;
         
         [Header("Defensives")]
         public HotkeyRow shipTurretRow;
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         [Header("Offensives")]
         public HotkeyRow artilleryRow;
-        public HotkeyRow railgunRow, rocketLauncherRow;
+        public HotkeyRow railgunRow, rocketLauncherRow, MLRSRow, gatlingMortarRow;
 
         [Header("Tacticals")]
         public HotkeyRow shieldRow;
@@ -59,11 +59,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         [Header("Aircraft")]
         public HotkeyRow bomberRow;
-        public HotkeyRow gunshipRow, fighterRow;
+        public HotkeyRow gunshipRow, fighterRow, steamCopterRow;
 
         [Header("Ships")]
         public HotkeyRow attackBoatRow;
-        public HotkeyRow frigateRow, destroyerRow, archonRow;
+        public HotkeyRow frigateRow, destroyerRow, archonRow, attackRIBRow;
 
         private ISettableBroadcastingProperty<bool> _isDirty;
         public IBroadcastingProperty<bool> IsDirty { get; private set; }
@@ -163,6 +163,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(navalFactoryRow);
             navalFactoryRow.Initialise(InputBC.Instance, _hotkeysModel.NavalFactory, this);
+
+            rows.Add(droneStation4Row);
+            droneStation4Row.Initialise(InputBC.Instance, _hotkeysModel.DroneStation4, this);
+
+            rows.Add(droneStation8Row);
+            droneStation8Row.Initialise(InputBC.Instance, _hotkeysModel.DroneStation8, this);
         }
 
         private void SetupDefensiveRows(IList<HotkeyRow> rows)
@@ -193,6 +199,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(rocketLauncherRow);
             rocketLauncherRow.Initialise(InputBC.Instance, _hotkeysModel.RocketLauncher, this);
+
+            rows.Add(MLRSRow);
+            MLRSRow.Initialise(InputBC.Instance, _hotkeysModel.MLRS, this);
+
+            rows.Add(gatlingMortarRow);
+            gatlingMortarRow.Initialise(InputBC.Instance, _hotkeysModel.GatlingMortar, this);
         }
 
         private void SetupTacticalsRows(IList<HotkeyRow> rows)
@@ -241,6 +253,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(fighterRow);
             fighterRow.Initialise(InputBC.Instance, _hotkeysModel.Fighter, this);
+
+            rows.Add(steamCopterRow);
+            steamCopterRow.Initialise(InputBC.Instance, _hotkeysModel.SteamCopter, this);
         }
 
         private void SetupShipRows(IList<HotkeyRow> rows)
@@ -256,6 +271,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(archonRow);
             archonRow.Initialise(InputBC.Instance, _hotkeysModel.Archon, this);
+
+            rows.Add(attackRIBRow);
+            attackRIBRow.Initialise(InputBC.Instance, _hotkeysModel.AttackRIB, this);
         }
 
         private void Row_Enabled(object sender, EventArgs e)
@@ -291,6 +309,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || droneStationRow.Value.Key.Value != _hotkeysModel.DroneStation
                 || airFactoryRow.Value.Key.Value != _hotkeysModel.AirFactory
                 || navalFactoryRow.Value.Key.Value != _hotkeysModel.NavalFactory
+                || droneStation4Row.Value.Key.Value != _hotkeysModel.DroneStation4
+                || droneStation8Row.Value.Key.Value != _hotkeysModel.DroneStation8
                 // Defensives
                 || shipTurretRow.Value.Key.Value != _hotkeysModel.ShipTurret
                 || airTurretRow.Value.Key.Value != _hotkeysModel.AirTurret
@@ -301,6 +321,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || artilleryRow.Value.Key.Value != _hotkeysModel.Artillery
                 || railgunRow.Value.Key.Value != _hotkeysModel.Railgun
                 || rocketLauncherRow.Value.Key.Value != _hotkeysModel.RocketLauncher
+                || MLRSRow.Value.Key.Value != _hotkeysModel.MLRS
+                || gatlingMortarRow.Value.Key.Value != _hotkeysModel.GatlingMortar
                 // Tacticals
                 || shieldRow.Value.Key.Value != _hotkeysModel.Shield
                 || boosterRow.Value.Key.Value != _hotkeysModel.Booster
@@ -317,11 +339,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || bomberRow.Value.Key.Value != _hotkeysModel.Bomber
                 || gunshipRow.Value.Key.Value != _hotkeysModel.Gunship
                 || fighterRow.Value.Key.Value != _hotkeysModel.Fighter
+                || steamCopterRow.Value.Key.Value != _hotkeysModel.SteamCopter
                 // Ships
                 || attackBoatRow.Value.Key.Value != _hotkeysModel.AttackBoat
                 || frigateRow.Value.Key.Value != _hotkeysModel.Frigate
                 || destroyerRow.Value.Key.Value != _hotkeysModel.Destroyer
-                || archonRow.Value.Key.Value != _hotkeysModel.Archon;
+                || archonRow.Value.Key.Value != _hotkeysModel.Archon
+                || attackRIBRow.Value.Key.Value != _hotkeysModel.AttackRIB;
         }
 
         public void UpdateHokeysModel()
@@ -348,6 +372,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.DroneStation = droneStationRow.Value.Key.Value;
             _hotkeysModel.AirFactory = airFactoryRow.Value.Key.Value;
             _hotkeysModel.NavalFactory = navalFactoryRow.Value.Key.Value;
+            _hotkeysModel.DroneStation4 = droneStation4Row.Value.Key.Value;
+            _hotkeysModel.DroneStation8 = droneStation8Row.Value.Key.Value;
 
             // Defensives
             _hotkeysModel.ShipTurret = shipTurretRow.Value.Key.Value;
@@ -360,6 +386,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Artillery = artilleryRow.Value.Key.Value;
             _hotkeysModel.Railgun = railgunRow.Value.Key.Value;
             _hotkeysModel.RocketLauncher = rocketLauncherRow.Value.Key.Value;
+            _hotkeysModel.MLRS = MLRSRow.Value.Key.Value;
+            _hotkeysModel.GatlingMortar = gatlingMortarRow.Value.Key.Value;
 
             // Tacticals
             _hotkeysModel.Shield = shieldRow.Value.Key.Value;
@@ -379,12 +407,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Bomber = bomberRow.Value.Key.Value;
             _hotkeysModel.Gunship = gunshipRow.Value.Key.Value;
             _hotkeysModel.Fighter = fighterRow.Value.Key.Value;
+            _hotkeysModel.SteamCopter = steamCopterRow.Value.Key.Value;
 
             // Ships
             _hotkeysModel.AttackBoat = attackBoatRow.Value.Key.Value;
             _hotkeysModel.Frigate = frigateRow.Value.Key.Value;
             _hotkeysModel.Destroyer= destroyerRow.Value.Key.Value;
             _hotkeysModel.Archon = archonRow.Value.Key.Value;
+            _hotkeysModel.AttackRIB = attackRIBRow.Value.Key.Value;
 
             _isDirty.Value = FindIsDirty();
         }
@@ -428,6 +458,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             droneStationRow.ResetToDefaults(hotkeysModel.DroneStation);
             airFactoryRow.ResetToDefaults(hotkeysModel.AirFactory);
             navalFactoryRow.ResetToDefaults(hotkeysModel.NavalFactory);
+            droneStation4Row.ResetToDefaults(hotkeysModel.DroneStation4);
+            droneStation8Row.ResetToDefaults(hotkeysModel.DroneStation8);
 
             // Defensives
             shipTurretRow.ResetToDefaults(hotkeysModel.ShipTurret);
@@ -440,6 +472,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             artilleryRow.ResetToDefaults(hotkeysModel.Artillery);
             railgunRow.ResetToDefaults(hotkeysModel.Railgun);
             rocketLauncherRow.ResetToDefaults(hotkeysModel.RocketLauncher);
+            MLRSRow.ResetToDefaults(hotkeysModel.MLRS);
+            gatlingMortarRow.ResetToDefaults(hotkeysModel.GatlingMortar);
 
             // Tacticals
             shieldRow.ResetToDefaults(hotkeysModel.Shield);
@@ -459,12 +493,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             bomberRow.ResetToDefaults(hotkeysModel.Bomber);
             gunshipRow.ResetToDefaults(hotkeysModel.Gunship);
             fighterRow.ResetToDefaults(hotkeysModel.Fighter);
+            steamCopterRow.ResetToDefaults(hotkeysModel.SteamCopter);
 
             // Ships
             attackBoatRow.ResetToDefaults(hotkeysModel.AttackBoat);
             frigateRow.ResetToDefaults(hotkeysModel.Frigate);
             destroyerRow.ResetToDefaults(hotkeysModel.Destroyer);
             archonRow.ResetToDefaults(hotkeysModel.Archon);
+            attackRIBRow.ResetToDefaults(hotkeysModel.AttackRIB);
         }
     }
 }

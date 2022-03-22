@@ -26,6 +26,8 @@ namespace BattleCruisers.Hotkeys
         KeyCode DroneStation { get; }
         KeyCode AirFactory { get; }
         KeyCode NavalFactory { get; }
+        KeyCode DroneStation4 { get; }
+        KeyCode DroneStation8 { get; }
 
         // Defensives
         KeyCode ShipTurret { get; }
@@ -38,6 +40,8 @@ namespace BattleCruisers.Hotkeys
         KeyCode Artillery { get; }
         KeyCode Railgun { get; }
         KeyCode RocketLauncher { get; }
+        KeyCode MLRS { get; }
+        KeyCode GatlingMortar { get; }
 
         // Tacticals
         KeyCode Shield { get; }
@@ -57,11 +61,13 @@ namespace BattleCruisers.Hotkeys
         KeyCode Bomber { get; }
         KeyCode Gunship { get; }
         KeyCode Fighter { get; }
+        KeyCode SteamCopter { get; }
 
         // Boats
         KeyCode AttackBoat { get; }
         KeyCode Frigate { get; }
         KeyCode Destroyer { get; }
         KeyCode Archon { get; }
+        KeyCode AttackRIB { get; }
     }
 }

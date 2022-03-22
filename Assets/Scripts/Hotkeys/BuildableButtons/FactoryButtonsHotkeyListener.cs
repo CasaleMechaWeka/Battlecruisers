@@ -6,13 +6,15 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 {
     public class FactoryButtonsHotkeyListener : BuildableButtonHotkeyListener, IManagedDisposable
     {
-        private readonly IBuildableButton _droneStationButton, _airFactoryButton, _navalFactoryButtons;
+        private readonly IBuildableButton _droneStationButton, _airFactoryButton, _navalFactoryButtons, _droneStation4Button, _droneStation8Button;
 
         public FactoryButtonsHotkeyListener(
             IHotkeyDetector hotkeyDetector,
             IBuildableButton droneStationButton,
             IBuildableButton airFactoryButton,
-            IBuildableButton navalFactoryButton)
+            IBuildableButton navalFactoryButton,
+            IBuildableButton droneStation4Button,
+            IBuildableButton droneStation8Button)
             : base(hotkeyDetector)
         {
             Helper.AssertIsNotNull(droneStationButton, airFactoryButton, navalFactoryButton);
@@ -20,10 +22,14 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _droneStationButton = droneStationButton;
             _airFactoryButton = airFactoryButton;
             _navalFactoryButtons = navalFactoryButton;
+            _droneStation4Button = droneStation4Button;
+            _droneStation8Button = droneStation8Button;
 
             _hotkeyDetector.DroneStation += _hotkeyDetector_DroneStation;
             _hotkeyDetector.AirFactory += _hotkeyDetector_AirFactory;
             _hotkeyDetector.NavalFactory += _hotkeyDetector_NavalFactory;
+            _hotkeyDetector.DroneStation4 += _hotkeyDetector_DroneStation4;
+            _hotkeyDetector.DroneStation8 += _hotkeyDetector_DroneStation8;
         }
 
         private void _hotkeyDetector_DroneStation(object sender, EventArgs e)
@@ -41,11 +47,23 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             ClickIfPresented(_navalFactoryButtons);
         }
 
+        private void _hotkeyDetector_DroneStation4(object sender, EventArgs e)
+        {
+            ClickIfPresented(_droneStation4Button);
+        }
+
+        private void _hotkeyDetector_DroneStation8(object sender, EventArgs e)
+        {
+            ClickIfPresented(_droneStation8Button);
+        }
+
         public void DisposeManagedState()
         {
             _hotkeyDetector.DroneStation -= _hotkeyDetector_DroneStation;
             _hotkeyDetector.AirFactory -= _hotkeyDetector_AirFactory;
             _hotkeyDetector.NavalFactory -= _hotkeyDetector_NavalFactory;
+            _hotkeyDetector.DroneStation4 -= _hotkeyDetector_DroneStation4;
+            _hotkeyDetector.DroneStation8 -= _hotkeyDetector_DroneStation8;
         }
     }
 }

@@ -6,13 +6,14 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 {
     public class AircraftButtonsHotkeyListener : BuildableButtonHotkeyListener, IManagedDisposable
     {
-        private readonly IBuildableButton _bomberButton, _gunshipButton, _fighterButton;
+        private readonly IBuildableButton _bomberButton, _gunshipButton, _fighterButton, _steamCopterButton;
 
         public AircraftButtonsHotkeyListener(
             IHotkeyDetector hotkeyDetector,
             IBuildableButton bomberButton,
             IBuildableButton gunhsipButton,
-            IBuildableButton fighterButton)
+            IBuildableButton fighterButton,
+            IBuildableButton steamCopterButton)
             : base(hotkeyDetector)
         {
             Helper.AssertIsNotNull(bomberButton, gunhsipButton, fighterButton);
@@ -20,10 +21,12 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _bomberButton = bomberButton;
             _gunshipButton = gunhsipButton;
             _fighterButton = fighterButton;
+            _steamCopterButton = steamCopterButton;
 
             _hotkeyDetector.Bomber += _hotkeyDetector_Bomber;
             _hotkeyDetector.Gunship += _hotkeyDetector_Gunship;
             _hotkeyDetector.Fighter += _hotkeyDetector_Fighter;
+            _hotkeyDetector.SteamCopter += _hotkeyDetector_SteamCopter;
         }
 
         private void _hotkeyDetector_Bomber(object sender, EventArgs e)
@@ -41,11 +44,17 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             ClickIfPresented(_fighterButton);
         }
 
+        private void _hotkeyDetector_SteamCopter(object sender, EventArgs e)
+        {
+            ClickIfPresented(_steamCopterButton);
+        }
+
         public void DisposeManagedState()
         {
             _hotkeyDetector.Bomber -= _hotkeyDetector_Bomber;
             _hotkeyDetector.Gunship -= _hotkeyDetector_Gunship;
             _hotkeyDetector.Fighter -= _hotkeyDetector_Fighter;
+            _hotkeyDetector.SteamCopter -= _hotkeyDetector_SteamCopter;
         }
     }
 }

@@ -23,13 +23,13 @@ namespace BattleCruisers.Hotkeys
         public event EventHandler Factories, Defensives, Offensives, Tacticals, Ultras;
 
         // Factories
-        public event EventHandler DroneStation, AirFactory, NavalFactory;
+        public event EventHandler DroneStation, AirFactory, NavalFactory, DroneStation4, DroneStation8;
 
         // Defensives
         public event EventHandler ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil;
 
         // Offensives
-        public event EventHandler Artillery, Railgun, RocketLauncher;
+        public event EventHandler Artillery, Railgun, RocketLauncher, MLRS, GatlingMortar;
 
         // Tacticals
         public event EventHandler Shield, Booster, StealthGenerator, SpySatellite, ControlTower;
@@ -38,10 +38,10 @@ namespace BattleCruisers.Hotkeys
         public event EventHandler Deathstar, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides;
 
         // Aircraft
-        public event EventHandler Bomber, Gunship, Fighter;
+        public event EventHandler Bomber, Gunship, Fighter, SteamCopter;
 
         // Ships
-        public event EventHandler AttackBoat, Frigate, Destroyer, Archon;
+        public event EventHandler AttackBoat, Frigate, Destroyer, Archon, AttackRIB;
 
         public HotkeyDetector(
             IHotkeyList hotkeyList, 
@@ -148,6 +148,16 @@ namespace BattleCruisers.Hotkeys
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.NavalFactory: {_hotkeyList.NavalFactory}");
                 NavalFactory?.Invoke(this, EventArgs.Empty);
             }
+            if (_input.GetKeyUp(_hotkeyList.DroneStation4))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.DroneStation: {_hotkeyList.DroneStation4}");
+                DroneStation4?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.DroneStation8))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.DroneStation: {_hotkeyList.DroneStation8}");
+                DroneStation8?.Invoke(this, EventArgs.Empty);
+            }
 
             // Defensives
             if (_input.GetKeyUp(_hotkeyList.ShipTurret))
@@ -191,6 +201,16 @@ namespace BattleCruisers.Hotkeys
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.RocketLauncher: {_hotkeyList.RocketLauncher}");
                 RocketLauncher?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.MLRS))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.RocketLauncher: {_hotkeyList.MLRS}");
+                MLRS?.Invoke(this, EventArgs.Empty);
+            }
+            if (_input.GetKeyUp(_hotkeyList.GatlingMortar))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.RocketLauncher: {_hotkeyList.GatlingMortar}");
+                GatlingMortar?.Invoke(this, EventArgs.Empty);
             }
 
             // Tacticals
@@ -263,6 +283,11 @@ namespace BattleCruisers.Hotkeys
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Fighter: {_hotkeyList.Fighter}");
                 Fighter?.Invoke(this, EventArgs.Empty);
             }
+            if (_input.GetKeyUp(_hotkeyList.SteamCopter))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Fighter: {_hotkeyList.SteamCopter}");
+                SteamCopter?.Invoke(this, EventArgs.Empty);
+            }
 
             // Boats
             if (_input.GetKeyUp(_hotkeyList.AttackBoat))
@@ -285,6 +310,12 @@ namespace BattleCruisers.Hotkeys
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Archon: {_hotkeyList.Archon}");
                 Archon?.Invoke(this, EventArgs.Empty);
             }
+            if (_input.GetKeyUp(_hotkeyList.AttackRIB))
+            {
+                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Archon: {_hotkeyList.AttackRIB}");
+                AttackRIB?.Invoke(this, EventArgs.Empty);
+            }
+            
         }
 
         public void DisposeManagedState()

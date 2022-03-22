@@ -14,7 +14,7 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         [Header("Factories")]
         public BuildingButtonController droneStationButton;
-        public BuildingButtonController airFactoryButton, navalFactoryButton;
+        public BuildingButtonController airFactoryButton, navalFactoryButton, droneStation4Button, droneStation8Button;
         
         [Header("Defensives")]
         public BuildingButtonController shipTurretButton;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         [Header("Offensives")]
         public BuildingButtonController artilleryButton;
-        public BuildingButtonController railgunButton, rocketLauncherButton;
+        public BuildingButtonController railgunButton, rocketLauncherButton, MLRSButton, gatlingMortarButton;
 
         [Header("Tacticals")]
         public BuildingButtonController shieldButton;
@@ -34,11 +34,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         [Header("Aircraft")]
         public UnitButtonController bomberButton;
-        public UnitButtonController gunshipButton, fighterButton;
+        public UnitButtonController gunshipButton, fighterButton, steamCopterButton;
 
         [Header("Ships")]
         public UnitButtonController attackBoatButton;
-        public UnitButtonController frigateButton, destroyerButton, archonButton;
+        public UnitButtonController frigateButton, destroyerButton, archonButton, attackRIBButton;
 
         private void Awake()
         {
@@ -58,7 +58,9 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
         {
             Assert.IsNotNull(hotkeyDetector);
 
-            _factoriesListener = new FactoryButtonsHotkeyListener(hotkeyDetector, droneStationButton, airFactoryButton, navalFactoryButton);
+            _factoriesListener = new FactoryButtonsHotkeyListener(hotkeyDetector, droneStationButton, airFactoryButton, navalFactoryButton,
+            UseNullButtonIfNeeded(droneStation4Button),
+            UseNullButtonIfNeeded(droneStation8Button));
             _defensivesListener 
                 = new DefensiveButtonsHotkeyListener(
                     hotkeyDetector, 
@@ -72,7 +74,9 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
                     hotkeyDetector, 
                     artilleryButton, // always unlocked
                     UseNullButtonIfNeeded(railgunButton),
-                    UseNullButtonIfNeeded(rocketLauncherButton));
+                    UseNullButtonIfNeeded(rocketLauncherButton),
+                    UseNullButtonIfNeeded(MLRSButton),
+                    UseNullButtonIfNeeded(gatlingMortarButton));
             _tacticalsListener 
                 = new TacticalButtonsHotkeyListener(
                     hotkeyDetector,
@@ -94,14 +98,16 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
                     hotkeyDetector, 
                     bomberButton, // always unlocked
                     UseNullButtonIfNeeded(gunshipButton),
-                    UseNullButtonIfNeeded(fighterButton));
+                    UseNullButtonIfNeeded(fighterButton),
+                    UseNullButtonIfNeeded(steamCopterButton));
             _shipsListener 
                 = new ShipButtonsHotkeyListener(
                     hotkeyDetector, 
                     attackBoatButton, // always unlocked
                     UseNullButtonIfNeeded(frigateButton), 
                     UseNullButtonIfNeeded(destroyerButton), 
-                    UseNullButtonIfNeeded(archonButton));
+                    UseNullButtonIfNeeded(archonButton),
+                    UseNullButtonIfNeeded(attackRIBButton));
         }
 
         // Locked buttons may have been destroyed, so replace these with a dummy button

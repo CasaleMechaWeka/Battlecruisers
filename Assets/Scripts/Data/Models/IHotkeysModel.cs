@@ -26,11 +26,15 @@ namespace BattleCruisers.Data.Models
         KeyCode DroneStation { get; set; }
         KeyCode AirFactory { get; set; }
         KeyCode NavalFactory { get; set; }
+        KeyCode DroneStation4 { get; set;}
+        KeyCode DroneStation8 { get; set;}
 
         // Offensives
         KeyCode Artillery { get; set; }
         KeyCode Railgun { get; set; }
         KeyCode RocketLauncher { get; set; }
+        KeyCode MLRS { get; set; }
+        KeyCode GatlingMortar { get; set; }
 
         // Tacticals
         KeyCode Shield { get; set; }
@@ -50,6 +54,7 @@ namespace BattleCruisers.Data.Models
         KeyCode Bomber { get; set; }
         KeyCode Gunship { get; set; }
         KeyCode Fighter { get; set; }
+        KeyCode SteamCopter { get; set; }
 
         // Defensives
         KeyCode ShipTurret { get; set; }
@@ -63,5 +68,6 @@ namespace BattleCruisers.Data.Models
         KeyCode Frigate { get; set; }
         KeyCode Destroyer { get; set; }
         KeyCode Archon { get; set; }
+        KeyCode AttackRIB { get; set; }
     }
 }

@@ -15,13 +15,13 @@ namespace BattleCruisers.Hotkeys
         event EventHandler Factories, Defensives, Offensives, Tacticals, Ultras;
 
         // Factories
-        event EventHandler DroneStation, AirFactory, NavalFactory;
+        event EventHandler DroneStation, AirFactory, NavalFactory, DroneStation4, DroneStation8;
 
         // Defensives
         event EventHandler ShipTurret, AirTurret, Mortar, SamSite, TeslaCoil;
 
         // Offensives
-        event EventHandler Artillery, Railgun, RocketLauncher;
+        event EventHandler Artillery, Railgun, RocketLauncher, MLRS, GatlingMortar;
 
         // Tacticals
         event EventHandler Shield, Booster, StealthGenerator, SpySatellite, ControlTower;
@@ -30,9 +30,9 @@ namespace BattleCruisers.Hotkeys
         event EventHandler Deathstar, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides;
 
         // Aircraft
-        event EventHandler Bomber, Gunship, Fighter;
+        event EventHandler Bomber, Gunship, Fighter, SteamCopter;
 
         // Ships
-        event EventHandler AttackBoat, Frigate, Destroyer, Archon;
+        event EventHandler AttackBoat, Frigate, Destroyer, Archon, AttackRIB;
     }
 }

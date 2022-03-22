@@ -130,6 +130,22 @@ namespace BattleCruisers.Data.Models
             get => _navalFactory;
             set => _navalFactory = value;
         }
+
+        [SerializeField]
+        private KeyCode _droneStation4;
+        public KeyCode DroneStation4
+        {
+            get => _droneStation4;
+            set => _droneStation4 = value;
+        }
+
+        [SerializeField]
+        private KeyCode _droneStation8;
+        public KeyCode DroneStation8
+        {
+            get => _droneStation8;
+            set => _droneStation8 = value;
+        }
         #endregion Factories
 
         #region Defensives
@@ -197,6 +213,22 @@ namespace BattleCruisers.Data.Models
         {
             get => _rocketLauncher;
             set => _rocketLauncher = value;
+        }
+
+        [SerializeField]
+        private KeyCode _MLRS;
+        public KeyCode MLRS
+        {
+            get => _MLRS;
+            set => _MLRS = value;
+        }
+
+        [SerializeField]
+        private KeyCode _gatlingMortar;
+        public KeyCode GatlingMortar
+        {
+            get => _gatlingMortar;
+            set => _gatlingMortar = value;
         }
         #endregion Offensives
 
@@ -308,6 +340,14 @@ namespace BattleCruisers.Data.Models
             get => _fighter;
             set => _fighter = value;
         }
+
+        [SerializeField]
+        private KeyCode _steamCopter;
+        public KeyCode SteamCopter
+        {
+            get => _steamCopter;
+            set => _steamCopter = value;
+        }
         #endregion Aircraft
 
         #region Ships
@@ -342,6 +382,14 @@ namespace BattleCruisers.Data.Models
             get => _archon;
             set => _archon = value;
         }
+
+        [SerializeField]
+        private KeyCode _attackRIB;
+        public KeyCode AttackRIB
+        {
+            get => _attackRIB;
+            set => _attackRIB = value;
+        }
         #endregion Ships
 
         public HotkeysModel()
@@ -372,6 +420,8 @@ namespace BattleCruisers.Data.Models
             DroneStation = KeyCode.Q;
             AirFactory = KeyCode.W;
             NavalFactory = KeyCode.E;
+            DroneStation4 = KeyCode.R;
+            DroneStation8 = KeyCode.T;
 
             // Defensives
             ShipTurret = KeyCode.Q;
@@ -384,6 +434,8 @@ namespace BattleCruisers.Data.Models
             Artillery = KeyCode.Q;
             Railgun = KeyCode.W;
             RocketLauncher = KeyCode.E;
+            MLRS = KeyCode.R;
+            GatlingMortar = KeyCode.T;
 
             // Tacticals
             Shield = KeyCode.Q;
@@ -403,12 +455,14 @@ namespace BattleCruisers.Data.Models
             Bomber = KeyCode.Q;
             Gunship = KeyCode.W;
             Fighter = KeyCode.E;
+            SteamCopter = KeyCode.R;
 
             // Ships
             AttackBoat = KeyCode.Q;
             Frigate = KeyCode.W;
             Destroyer = KeyCode.E;
             Archon = KeyCode.R;
+            AttackRIB = KeyCode.T;
         }
 
         public static HotkeysModel CreateDefault()
@@ -450,6 +504,8 @@ namespace BattleCruisers.Data.Models
                 && Artillery == other.Artillery
                 && Railgun == other.Railgun
                 && RocketLauncher == other.RocketLauncher
+                && MLRS == other.MLRS
+                && GatlingMortar == other.GatlingMortar
                 // Tacticals
                 && Shield == other.Shield
                 && Booster == other.Booster
