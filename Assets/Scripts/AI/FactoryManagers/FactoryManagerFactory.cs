@@ -55,7 +55,7 @@ namespace BattleCruisers.AI.FactoryManagers
             Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY),"Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
             IBuildableWrapper<IUnit> lategamePlane;
-            if (_gameModel.NumOfLevelsCompleted > 25)
+            if (_gameModel.NumOfLevelsCompleted >= 25)
             {
                 lategamePlane = _prefabFactory.GetUnitWrapperPrefab(LATEGAME_PLANE_KEY);
             }
