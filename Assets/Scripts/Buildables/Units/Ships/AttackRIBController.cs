@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
 		public BarrelWrapper ak1, ak2;
 
-        public override float OptimalArmamentRangeInM => ak1.RangeInM - 5;
+        public override float OptimalArmamentRangeInM => ak1.RangeInM - 6;
 
 
 
