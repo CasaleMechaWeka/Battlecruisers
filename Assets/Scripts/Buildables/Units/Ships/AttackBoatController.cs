@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Units.Ships
     {
 		private IBarrelWrapper _antiSeaTurret;
 
-        public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM - 4;
+        public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
 
         protected override Vector2 MaskHighlightableSize
         {
