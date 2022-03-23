@@ -8,6 +8,9 @@ namespace BattleCruisers.Effects.Explosions.Pools
         // Ship turret, air turret, boat direct fire guns
         IPool<IExplosion, Vector3> BulletImpactPool { get; }
 
+        //Steamcopter
+        IPool<IExplosion, Vector3> HighCalibreBulletImpactPool { get; }
+
         // Radius 0.75  => Small shells: Mortar, frigate & destroyer front cannon.
         IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
 

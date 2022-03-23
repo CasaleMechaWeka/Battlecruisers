@@ -142,6 +142,7 @@ namespace BattleCruisers.Data.Static
         public static class Explosions
         {
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
+            public static ExplosionKey HighCalibreBulletImpact { get; } = new ExplosionKey("HighCalibreBulletImpact");
             public static ExplosionKey BombExplosion { get; } = new ExplosionKey("ExplosionBomb");
             public static ExplosionKey FlakExplosion { get; } = new ExplosionKey("ExplosionSAM");
             public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
@@ -155,7 +156,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        BulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
+                        BulletImpact, HighCalibreBulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
                     };
                 }
             }
@@ -164,6 +165,7 @@ namespace BattleCruisers.Data.Static
         public static class Projectiles
         {
             public static ProjectileKey Bullet { get; } = new ProjectileKey("Bullet");
+            public static ProjectileKey HighCalibreBullet { get; } = new ProjectileKey("HighCalibreBullet");
             public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
 
@@ -183,7 +185,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullet, ShellSmall, ShellLarge, 
+                        Bullet, HighCalibreBullet, ShellSmall, ShellLarge, 
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
                         Bomb, Nuke, Rocket, RocketSmall
                     };

@@ -7,6 +7,7 @@ namespace BattleCruisers.Projectiles.Pools
     public interface IProjectilePoolProvider
     {
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
+        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
         IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
