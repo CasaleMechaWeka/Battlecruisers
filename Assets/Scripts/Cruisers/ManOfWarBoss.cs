@@ -47,15 +47,15 @@ namespace BattleCruisers.Cruisers
             switch (AIDifficulty)
             {
                 case Difficulty.Normal:
-                    unit.maxHealth = 4000;
+                    unit.maxHealth = 2000;
                     break;
 
                 case Difficulty.Hard:
-                    unit.maxHealth = 6000;
+                    unit.maxHealth = 4000;
                     break;
 
                 case Difficulty.Harder:
-                    unit.maxHealth = 10000;
+                    unit.maxHealth = 8000;
                     break;
 
                 default:

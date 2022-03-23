@@ -175,13 +175,40 @@ namespace BattleCruisers.Data.Static
 						new AntiNavalPrefabKeyWrapper(),
 						
 						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
-						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
 						new AntiAirPrefabKeyWrapper(),
                         new AntiNavalPrefabKeyWrapper()
                     };
                 }
             }
+
+			public static IList<IPrefabKeyWrapper> BOOM
+			{
+				get
+				{
+					return new List<IPrefabKeyWrapper>()
+					{
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
+						new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new OffensivePrefabKeyWrapper(),
+                        new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
+						new OffensivePrefabKeyWrapper()
+                    };
+				}
+			}
 
             public static IList<IPrefabKeyWrapper> Rush
             {

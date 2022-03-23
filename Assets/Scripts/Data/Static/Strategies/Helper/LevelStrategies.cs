@@ -65,10 +65,10 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new RushStrategy(),
                 new BoomStrategy(),
 
-                new BalancedStrategy(),
-                new BoomStrategy(),
+                new BasicBOOMStrategy(),
+                new BasicBOOMStrategy(),
                 new RushStrategy(),
-                new BoomStrategy(),
+                new BasicBOOMStrategy(),
                 new BalancedStrategy()
             };
         }
