@@ -17,13 +17,14 @@ namespace BattleCruisers.AI.FactoryManagers
     /// </summary>
     public class AircraftUnitChooser : UnitChooser
 	{
-        private readonly IBuildableWrapper<IUnit> _defaultPlane, _antiAirPlane, _antiNavalPlane;
+        private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane;
 		private readonly IDroneManager _droneManager;
         private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
 
 		public AircraftUnitChooser(
             IBuildableWrapper<IUnit> defaultPlane, 
+            IBuildableWrapper<IUnit> lategamePlane, 
             IBuildableWrapper<IUnit> antiAirPlane, 
             IBuildableWrapper<IUnit> antiNavalPlane, 
             IDroneManager droneManager, 
@@ -34,6 +35,7 @@ namespace BattleCruisers.AI.FactoryManagers
             Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, droneManager, airThreatMonitor, navalThreatMonitor);
 
             _defaultPlane = defaultPlane;
+            _lategamePlane = lategamePlane;
             _antiAirPlane = antiAirPlane;
             _antiNavalPlane = antiNavalPlane;
 			_droneManager = droneManager;
@@ -87,7 +89,7 @@ namespace BattleCruisers.AI.FactoryManagers
 			}
 			else
 			{
-				return _defaultPlane;
+				return _lategamePlane;
 			}
         }
 

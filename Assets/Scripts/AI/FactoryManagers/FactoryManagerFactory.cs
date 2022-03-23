@@ -20,6 +20,7 @@ namespace BattleCruisers.AI.FactoryManagers
 		private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         private readonly static UnitKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
+        private readonly static UnitKey LATEGAME_PLANE_KEY = StaticPrefabKeys.Units.SteamCopter;
         private readonly static UnitKey ANTI_AIR_PLANE_KEY = StaticPrefabKeys.Units.Fighter;
         private readonly static UnitKey ANTI_NAVAL_PLANE_KEY = StaticPrefabKeys.Units.Gunship;
 
@@ -52,6 +53,7 @@ namespace BattleCruisers.AI.FactoryManagers
         {
             Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY),"Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
+            IBuildableWrapper<IUnit> lategamePlane = _prefabFactory.GetUnitWrapperPrefab(LATEGAME_PLANE_KEY);
 
             IBuildableWrapper<IUnit> antiAirPlane =
                 _gameModel.IsUnitUnlocked(ANTI_AIR_PLANE_KEY) ?
@@ -69,6 +71,7 @@ namespace BattleCruisers.AI.FactoryManagers
             IUnitChooser unitchooser
                 = new AircraftUnitChooser(
                     defaultPlane,
+                    lategamePlane,
                     antiAirPlane,
                     antiNavalPlane,
                     aiCruiser.DroneManager,
