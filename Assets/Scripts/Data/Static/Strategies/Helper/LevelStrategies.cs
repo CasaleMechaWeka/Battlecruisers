@@ -102,18 +102,18 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 //man o war
                new BasicTurtleStrategy(),
 
-                // Set 5:  Levels 15 - 17
+                // Set 5:  Levels 16 - 18
 				new BasicRushStrategy(),
 				new BasicBoomDefensiveStrategy(),
 				new BasicBoomAggressiveStrategy(),
 
-                // Set 6:  Levels 18 - 21
+                // Set 6:  Levels 19 - 22
 				new BasicBalancedStrategy(),
 				new BasicRushStrategy(),
 				new BasicBoomAggressiveStrategy(),
 				new BasicBalancedStrategy(),
 
-                // Set 7: Levels 22 - 25
+                // Set 7: Levels 23 - 26
                 new BasicTurtleStrategy(),
                 new BasicBoomDefensiveStrategy(),
                 new BasicRushStrategy(),
