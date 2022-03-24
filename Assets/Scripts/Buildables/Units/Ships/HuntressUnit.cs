@@ -184,7 +184,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public void SpeedUpAnimation()
         {
-            animationSpeed *= 1.5f;
+            animationSpeed += 1.0f;
+            animationSpeed = Math.Max(animationSpeed, 8f);
             bonesAnimator.SetFloat("SpeedMultiplier", animationSpeed);
         }
     }
