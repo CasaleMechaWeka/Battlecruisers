@@ -274,7 +274,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.NavalFactory, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation4, 27 },
-                { StaticPrefabKeys.Buildings.DroneStation8, 30 },
+                { StaticPrefabKeys.Buildings.DroneStation8, 31 },
 
                 // Tactical
                 { StaticPrefabKeys.Buildings.ShieldGenerator, 2 },
@@ -321,7 +321,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Frigate, 3 },
                 { StaticPrefabKeys.Units.Destroyer, 13 },
                 { StaticPrefabKeys.Units.ArchonBattleship, 16 },
-                { StaticPrefabKeys.Units.AttackRIB, 31 }
+                { StaticPrefabKeys.Units.AttackRIB, 30 }
             };
         }
 
