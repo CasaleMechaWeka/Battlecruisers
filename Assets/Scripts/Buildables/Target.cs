@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables
         // Seems to be an okay approximation (for cruisers at least). ------------ (OLD COMMENT BY FELIX, default was 3)
         // 3 was too much, changing it to much lower ----------------------------- (NEW COMMENT BY DEAN)
         // For buildables ranges from 0.75 (tesla coil) to 5 (broadsides)
-		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 1f;
+		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.667f;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
         public event EventHandler<DamagedEventArgs> Damaged;
