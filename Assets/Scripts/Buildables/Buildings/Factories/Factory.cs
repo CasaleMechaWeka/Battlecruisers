@@ -141,7 +141,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 		private void StartBuildingUnit()
 		{
             Logging.LogMethod(Tags.FACTORY);
-
+            if (EnemyCruiser == null || ParentCruiser == null)
+            {
+                return;
+            }
             BuildableActivationArgs activationArgs = new BuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories);
             UnitUnderConstruction = _unitPool.GetItem(activationArgs);
 
