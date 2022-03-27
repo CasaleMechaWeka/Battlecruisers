@@ -58,11 +58,13 @@ namespace BattleCruisers.Cruisers
                     break;
 
                 case Difficulty.Hard:
-                    unit.maxHealth = 15000;
+                    unit.maxHealth = 20000;
+                    unit.minigunStats.damage *= 1.5f;
                     break;
 
                 case Difficulty.Harder:
-                    unit.maxHealth = 30000;
+                    unit.maxHealth = 50000;
+                    unit.minigunStats.damage *= 2.5f;
                     break;
 
                 default:
@@ -74,9 +76,6 @@ namespace BattleCruisers.Cruisers
             unit.SetHealthToMax();
             _healthTracker.SetHealth(0 + unit.Health);
             unit.buildTimeInS = maxHealth;
-            //Debug.Log("Ship blocker: " + shipBlocker.transform.localPosition);
-            //Debug.Log(maxHealth);
-            //Debug.Log(MaxHealth);
         }
 
         private void _RearingStarted(object sender, EventArgs e)

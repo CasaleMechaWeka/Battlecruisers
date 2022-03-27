@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
@@ -30,6 +31,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private AudioSourceGroup _unfurlAudioGroup;
         public AudioSource[] audioSources;
         public BarrelWrapper minigun, _samSite;
+        public ProjectileStats minigunStats;
         public GameObject bones;
         //public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
 
