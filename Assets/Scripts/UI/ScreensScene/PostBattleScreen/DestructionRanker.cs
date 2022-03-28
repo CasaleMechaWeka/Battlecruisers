@@ -19,8 +19,6 @@ namespace BattleCruisers.PostBattleScreen
     public class DestructionRanker : MonoBehaviour
     {
         public GameObject[] destructionRanks;
-        //[Header("There should be a rank interval for each rank except the very last")]
-        //public long[] rankIntervals;
         public void DisplayRank(long score)
         {
             destructionRanks[CalculateRank(score)].SetActive(true);
@@ -31,7 +29,7 @@ namespace BattleCruisers.PostBattleScreen
             
             for(int i = 0; i < destructionRanks.Length-1; i++)
             {
-                long x = 5000 + 5000*i*i;
+                long x = 2500 + 2500*i*i;
                 //Debug.Log(x);
                 if (score < x)
                 {

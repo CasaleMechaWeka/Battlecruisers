@@ -105,9 +105,9 @@ namespace BattleCruisers.Utils.BattleScene
             }
             else if (wasVictory)
             {
-                Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
+                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
                 _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
-                Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
+                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
                 if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
                 {
                     _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
