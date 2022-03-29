@@ -84,5 +84,9 @@ namespace BattleCruisers.Buildables.Buildings
             base.OnDoubleClick();
             _doubleClickHandler.OnDoubleClick(this);
         }
+
+        public void Activate(BuildingActivationArgs activationArgs, Faction faction)
+        {
+        }
     }
 }

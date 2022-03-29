@@ -302,6 +302,10 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
         }
 
+        public void Activate(TActivationArgs activationArgs, Faction faction)
+        {
+        }
+
         private IBoostableGroup CreateBuildRateBoostableGroup(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = boostFactory.CreateBoostableGroup();

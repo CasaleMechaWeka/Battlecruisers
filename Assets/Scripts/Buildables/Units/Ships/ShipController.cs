@@ -215,7 +215,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void ShowDeathEffects()
         {
-            _deathPool.GetItem(Position);
+            _deathPool.GetItem(Position, Faction);
             Deactivate();
         }
 

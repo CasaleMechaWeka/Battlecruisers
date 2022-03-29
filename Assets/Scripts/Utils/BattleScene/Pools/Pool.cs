@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.BattleScene.Pools
@@ -34,6 +35,15 @@ namespace BattleCruisers.Utils.BattleScene.Pools
             Logging.Verbose(Tags.POOLS, $"{item}");
 
             item.Activate(activationArgs);
+            return item;
+        }
+
+        public TPoolable GetItem(TArgs activationArgs, Faction faction)
+        {
+            TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
+            Logging.Verbose(Tags.POOLS, $"{item}");
+
+            item.Activate(activationArgs, faction);
             return item;
         }
 

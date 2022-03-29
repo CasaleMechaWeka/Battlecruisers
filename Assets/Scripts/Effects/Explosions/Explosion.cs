@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects.ParticleSystems;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -56,6 +57,10 @@ namespace BattleCruisers.Effects.Explosions
             _explosionController.Position = position;
 
             Play();
+        }
+
+        public void Activate(Vector3 position, Faction faction)
+        {
         }
     }
 }

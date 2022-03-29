@@ -109,6 +109,10 @@ namespace BattleCruisers.Projectiles
             _isActiveAndAlive = true;
         }
 
+        public void Activate(TActivationArgs activationArgs, Faction faction)
+        {
+        }
+
         private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
         {
             return

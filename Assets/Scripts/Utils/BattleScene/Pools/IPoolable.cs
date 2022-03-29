@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Utils.BattleScene.Pools
 {
@@ -7,5 +8,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         event EventHandler Deactivated;
 
         void Activate(TArgs activationArgs);
+
+        void Activate(TArgs activationArgs, Faction faction);
     }
 }

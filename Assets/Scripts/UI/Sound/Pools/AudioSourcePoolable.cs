@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using System;
@@ -34,6 +35,10 @@ namespace BattleCruisers.UI.Sound.Pools
             _source.Play();
 
             _realTimeDeferrer.Defer(CleanUp, activationArgs.Sound.Length);
+        }
+
+        public void Activate(AudioSourceActivationArgs activationArgs, Faction faction)
+        {
         }
 
         private void CleanUp()

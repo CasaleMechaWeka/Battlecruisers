@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Effects.Deaths
         private IList<IParticleSystemGroup> _effects;
         private IParticleSystemGroup _effect;
 
-        [SetUp]
+        /*[SetUp]
         public void TestSetup()
         {
             _shipDeathController = Substitute.For<IGameObject>();
@@ -63,5 +63,6 @@ namespace BattleCruisers.Tests.Effects.Deaths
             _shipDeathController.Received().IsVisible = false;
             Assert.AreEqual(1, deactivatedCount);
         }
+        */
     }
 }

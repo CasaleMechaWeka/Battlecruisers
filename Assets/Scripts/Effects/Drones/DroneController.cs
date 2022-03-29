@@ -41,6 +41,10 @@ namespace BattleCruisers.Effects.Drones
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
+        public void Activate(DroneActivationArgs activationArgs, Faction faction)
+        {
+        }
+
         public void Deactivate()
         {
             gameObject.SetActive(false);

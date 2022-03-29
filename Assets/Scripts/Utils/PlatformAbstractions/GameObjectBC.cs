@@ -5,7 +5,7 @@ namespace BattleCruisers.Utils.PlatformAbstractions
 {
     public class GameObjectBC : IGameObject
     {
-        private readonly GameObject _platformObject;
+        public GameObject _platformObject;
 
         public bool IsVisible
         {

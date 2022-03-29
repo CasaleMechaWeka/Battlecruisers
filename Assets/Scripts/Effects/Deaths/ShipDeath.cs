@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Effects.ParticleSystems;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -9,14 +10,14 @@ namespace BattleCruisers.Effects.Deaths
 {
     public class ShipDeath : IShipDeath
     {
-        private readonly IGameObject _shipDeathController;
+        private readonly GameObjectBC _shipDeathController;
         private readonly IBroadcastingAnimation _sinkingAnimation;
         private readonly IList<IParticleSystemGroup> _effects;
 
         public event EventHandler Deactivated;
 
         public ShipDeath(
-            IGameObject shipDeathController, 
+            GameObjectBC shipDeathController, 
             IBroadcastingAnimation sinkingAnimation,
             IList<IParticleSystemGroup> effects)
         {
@@ -46,6 +47,28 @@ namespace BattleCruisers.Effects.Deaths
             
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
+
+            _sinkingAnimation.Play();
+
+            foreach (IParticleSystemGroup effect in _effects)
+            {
+                effect.Play();
+            }
+        }
+
+        public void Activate(Vector3 activationArgs, Faction faction)
+        {
+            Logging.LogMethod(Tags.DEATHS);
+            
+            _shipDeathController.IsVisible = true;
+            _shipDeathController.Position = activationArgs;
+            Vector3 pos = _shipDeathController.Position;
+            if (faction == Faction.Reds)
+            {
+                Vector3 newScale = _shipDeathController._platformObject.transform.localScale;
+                newScale.x *= -1;
+                _shipDeathController._platformObject.transform.localScale = newScale;
+            }
 
             _sinkingAnimation.Play();
 
