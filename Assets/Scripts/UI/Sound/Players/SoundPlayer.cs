@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.Sound.Players
 
             _soundFetcher = soundFetcher;
             _audioSourcePool = audioSourcePool;
+            _audioSourcePool.SetMaxLimit(10);
         }
 
         public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)

@@ -7,5 +7,6 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         void AddCapacity(int capacityToAdd);
         TPoolable GetItem(TArgs activationArgs);
         TPoolable GetItem(TArgs activationArgs, Faction faction);
+        void SetMaxLimit(int amount);
     }
 }

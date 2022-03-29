@@ -23,6 +23,7 @@
         private int _activeAudioSourcesCount;
         private int _firstActiveAudioSourceIndex;
         private int _nextAudioSourceToActivateIndex;
+        private int _limit = 5;
         #endregion
 
         public WaterRipplesSoundEffect(WaterRipplesSoundEffectParameters parameters, Transform poolParent)
@@ -112,27 +113,31 @@
 
         public void PlaySoundEffect(Vector3 position, float disturbanceFactor)
         {
-            if (!_isActive || !IsPoolCreated)
-                return;
-
-            if (_activeAudioSourcesCount == _poolSize)
+            //Debug.Log(_activeAudioSourcesCount);
+            if (_activeAudioSourcesCount <= _limit)
             {
-                if (!_canExpandPool)
+                if (!_isActive || !IsPoolCreated)
                     return;
 
-                _nextAudioSourceToActivateIndex = _poolSize;
-                ExpandPool(newPoolSize: _poolSize * 2);
+                if (_activeAudioSourcesCount == _poolSize)
+                {
+                    if (!_canExpandPool)
+                        return;
+
+                    _nextAudioSourceToActivateIndex = _poolSize;
+                    ExpandPool(newPoolSize: _poolSize * 2);
+                }
+
+                AudioSource newlyActivatedAudioSource = _pool[_nextAudioSourceToActivateIndex];
+                newlyActivatedAudioSource.transform.position = position;
+                newlyActivatedAudioSource.gameObject.SetActive(true);
+                newlyActivatedAudioSource.volume = _audioVolume;
+                newlyActivatedAudioSource.pitch = _isUsingConstantAudioPitch ? _audioPitch : Mathf.Lerp(_minimumAudioPitch, _maximumAudioPitch, 1f - disturbanceFactor); ;
+                newlyActivatedAudioSource.Play();
+
+                _activeAudioSourcesCount++;
+                _nextAudioSourceToActivateIndex = (_nextAudioSourceToActivateIndex + 1 < _pool.Count) ? _nextAudioSourceToActivateIndex + 1 : 0;
             }
-
-            AudioSource newlyActivatedAudioSource = _pool[_nextAudioSourceToActivateIndex];
-            newlyActivatedAudioSource.transform.position = position;
-            newlyActivatedAudioSource.gameObject.SetActive(true);
-            newlyActivatedAudioSource.volume = _audioVolume;
-            newlyActivatedAudioSource.pitch = _isUsingConstantAudioPitch ? _audioPitch : Mathf.Lerp(_minimumAudioPitch, _maximumAudioPitch, 1f - disturbanceFactor); ;
-            newlyActivatedAudioSource.Play();
-
-            _activeAudioSourcesCount++;
-            _nextAudioSourceToActivateIndex = (_nextAudioSourceToActivateIndex + 1 < _pool.Count) ? _nextAudioSourceToActivateIndex + 1 : 0;
         }
 
         private void CreatePool()

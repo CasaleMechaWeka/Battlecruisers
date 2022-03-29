@@ -10,6 +10,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         private readonly Stack<TPoolable> _items;
         private readonly IPoolableFactory<TPoolable, TArgs> _itemFactory;
         private int _createCount = 0;
+        private int MaxLimit = 1000;
 
         public Pool(IPoolableFactory<TPoolable, TArgs> itemFactory)
         {
@@ -31,11 +32,15 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         public TPoolable GetItem(TArgs activationArgs)
         {
-            TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
-            Logging.Verbose(Tags.POOLS, $"{item}");
+            if (_items.Count < MaxLimit)
+            {
+                TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
+                Logging.Verbose(Tags.POOLS, $"{item}");
 
-            item.Activate(activationArgs);
-            return item;
+                item.Activate(activationArgs);
+                return item;
+            }
+            return null;
         }
 
         public TPoolable GetItem(TArgs activationArgs, Faction faction)
@@ -60,6 +65,11 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         {
             Logging.Verbose(Tags.POOLS, $"{typeof(TPoolable)}");
             _items.Push(sender.Parse<TPoolable>());
+        }
+
+        public void SetMaxLimit(int amount)
+        {
+            MaxLimit = amount;
         }
     }
 }
