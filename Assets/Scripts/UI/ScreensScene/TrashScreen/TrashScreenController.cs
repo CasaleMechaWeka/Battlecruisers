@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _musicPlayer = musicPlayer;
             _commonStrings = commonStrings;
 
-            startBattleButton.Initialise(soundPlayer, StartBattle);
+            startBattleButton.Initialise(soundPlayer, LoadBattle);
             homeButton.Initialise(soundPlayer, Cancel);
 		}
 
@@ -90,6 +90,11 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private void StartBattle()
         {
             _screensSceneGod.LoadBattleScene();
+        }
+
+        private void LoadBattle()
+        {
+            Invoke("StartBattle", 0.5f);
         }
 
         public override void Cancel()
