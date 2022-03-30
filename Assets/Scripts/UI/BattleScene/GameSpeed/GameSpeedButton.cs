@@ -27,6 +27,9 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
                 _time.TimeScale = value ? timeScale : DEFAULT_TIME_SCALE;
             }
+            get{
+                return selectedFeedback.gameObject.activeInHierarchy;
+            }
         }
 
         public void Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)

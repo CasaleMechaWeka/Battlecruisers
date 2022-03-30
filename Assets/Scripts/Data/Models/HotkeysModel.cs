@@ -62,6 +62,13 @@ namespace BattleCruisers.Data.Models
             get => _fastForward;
             set => _fastForward = value;
         }
+
+        private KeyCode _toggleSpeed;
+        public KeyCode ToggleSpeed
+        {
+            get => _toggleSpeed;
+            set => _toggleSpeed = value;
+        }
         #endregion Game speed
 
         #region Building categories
@@ -408,6 +415,7 @@ namespace BattleCruisers.Data.Models
             SlowMotion = KeyCode.Alpha2;
             NormalSpeed = KeyCode.Alpha3;
             FastForward = KeyCode.Alpha4;
+            ToggleSpeed = KeyCode.Space;
 
             // Building categories
             Factories = KeyCode.A;
@@ -484,6 +492,7 @@ namespace BattleCruisers.Data.Models
                 && SlowMotion == other.SlowMotion
                 && NormalSpeed == other.NormalSpeed
                 && FastForward == other.FastForward
+                && ToggleSpeed == other.ToggleSpeed
                 // Building categories
                 && Factories == other.Factories
                 && Defensives == other.Defensives

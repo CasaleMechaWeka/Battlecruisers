@@ -14,6 +14,7 @@ namespace BattleCruisers.Data.Models
         KeyCode SlowMotion { get; set; }
         KeyCode NormalSpeed { get; set; }
         KeyCode FastForward { get; set; }
+        KeyCode ToggleSpeed { get; set; }
 
         // Building categories
         KeyCode Factories { get; set; }

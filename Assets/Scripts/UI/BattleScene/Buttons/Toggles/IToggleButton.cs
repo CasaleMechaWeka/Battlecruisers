@@ -2,6 +2,6 @@
 {
     public interface IToggleButton : IButton
     {
-        bool IsSelected { set; }
+        bool IsSelected { set; get;}
     }
 }

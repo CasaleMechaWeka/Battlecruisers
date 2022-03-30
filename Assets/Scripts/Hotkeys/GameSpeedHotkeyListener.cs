@@ -20,6 +20,7 @@ namespace BattleCruisers.Hotkeys
             _hotkeyDetector.SlowMotion += _hotkeyDetector_SlowMotion;
             _hotkeyDetector.NormalSpeed += _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward += _hotkeyDetector_FastForward;
+            _hotkeyDetector.ToggleSpeed += _hotkeyDetector_ToggleSpeed;
         }
 
         private void _hotkeyDetector_PauseSpeed(object sender, EventArgs e)
@@ -42,11 +43,24 @@ namespace BattleCruisers.Hotkeys
             _speedComponents.FastForwardButton.TriggerClick();
         }
 
+        private void _hotkeyDetector_ToggleSpeed(object sender, EventArgs e)
+        {
+            if (_speedComponents.PauseButton.IsSelected)
+            {
+                _speedComponents.NormalSpeedButton.TriggerClick();
+            }
+            else{
+                _speedComponents.PauseButton.TriggerClick();
+            }
+           
+        }
+
         public void DisposeManagedState()
         {
             _hotkeyDetector.SlowMotion -= _hotkeyDetector_SlowMotion;
             _hotkeyDetector.NormalSpeed -= _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward -= _hotkeyDetector_FastForward;
+            _hotkeyDetector.ToggleSpeed += _hotkeyDetector_ToggleSpeed;
         }
     }
 }

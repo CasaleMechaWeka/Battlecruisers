@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         [Header("Game speed")]
         public HotkeyRow pauseSpeedRow, slowMotionRow;
-        public HotkeyRow normalSpeedRow, fastForwardRow;
+        public HotkeyRow normalSpeedRow, fastForwardRow, toggleSpeedRow;
 
         [Header("Building categories")]
         public HotkeyRow factoriesRow;
@@ -133,6 +133,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(fastForwardRow);
             fastForwardRow.Initialise(InputBC.Instance, _hotkeysModel.FastForward, this);
+
+            rows.Add(toggleSpeedRow);
+            toggleSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.ToggleSpeed, this);
         }
 
         private void SetupBulidingCategoryRows(IList<HotkeyRow> rows)
@@ -299,6 +302,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || slowMotionRow.Value.Key.Value != _hotkeysModel.SlowMotion
                 || normalSpeedRow.Value.Key.Value != _hotkeysModel.NormalSpeed
                 || fastForwardRow.Value.Key.Value != _hotkeysModel.FastForward
+                || toggleSpeedRow.Value.Key.Value != _hotkeysModel.ToggleSpeed
                 // Building categories
                 || factoriesRow.Value.Key.Value != _hotkeysModel.Factories
                 || defensivesRow.Value.Key.Value != _hotkeysModel.Defensives
@@ -360,6 +364,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.SlowMotion = slowMotionRow.Value.Key.Value;
             _hotkeysModel.NormalSpeed = normalSpeedRow.Value.Key.Value;
             _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
+            _hotkeysModel.ToggleSpeed = toggleSpeedRow.Value.Key.Value;
+
 
             // Building categories
             _hotkeysModel.Factories = factoriesRow.Value.Key.Value;
@@ -446,6 +452,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);
             normalSpeedRow.ResetToDefaults(hotkeysModel.NormalSpeed);
             fastForwardRow.ResetToDefaults(hotkeysModel.FastForward);
+            toggleSpeedRow.ResetToDefaults(hotkeysModel.ToggleSpeed);
 
             // Building categories
             factoriesRow.ResetToDefaults(hotkeysModel.Factories);
