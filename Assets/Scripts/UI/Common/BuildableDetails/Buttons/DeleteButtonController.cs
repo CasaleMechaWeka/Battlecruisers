@@ -1,5 +1,7 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -21,6 +23,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         public float lightUpIntervalS = 0.25f;
         public Image activeImage;
         public List<Sprite> activeStateImages;
+        protected override ISoundKey ClickSound => SoundKeys.UI.Delete;
 
         private const int NUMBER_OF_ACTIVE_STATES = 3;
 
@@ -60,7 +63,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         {
             activeImage.sprite = activeStateImages[0];
             activeImage.gameObject.SetActive(true);
-
+            _soundPlayer.PlaySoundAsync(ClickSound);
             if (Buildable.BuildableState == BuildableState.NotStarted)
             {
                 Buildable.Destroy();
