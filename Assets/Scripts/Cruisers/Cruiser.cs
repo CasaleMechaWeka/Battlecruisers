@@ -268,7 +268,7 @@ namespace BattleCruisers.Cruisers
                 RepairManager.Repair(_time.DeltaTime);
             }
             updateCnt += 1;
-            updateCnt = updateCnt%200;
+            updateCnt = updateCnt%20;
             if (IsPlayerCruiser && updateCnt==0)
             {
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
