@@ -25,11 +25,9 @@ namespace BattleCruisers.UI.Loading
             {
                 "Hints/Factories",
                 "Hints/BuilderAutomaticRepair",
-                "Hints/ClickItemForDetails",
                 "Hints/DifficultyIsChangeable",
                 "Hints/HowToChangeCruiser",
-                "Hints/CheckEnemyCruiser",
-                "Hints/HelpLabels"
+                "Hints/CheckEnemyCruiser"
             };
             IList<string> hints = GetStrings(commonStrings, keys);
 
