@@ -24,7 +24,12 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 		// width = height * aspect ratio
 		public float FindCameraOrthographicSize(ICruiser cruiser)
 		{
+            
 			float desiredWidth = cruiser.Size.x * _settings.CruiserWidthMultiplier;
+            if (!cruiser.IsCruiser())
+            {
+                desiredWidth = 30.0f;
+            }
 			float desiredHeight = desiredWidth / _camera.Aspect;
 			float desiredOrthographicSize = desiredHeight / 2;
 

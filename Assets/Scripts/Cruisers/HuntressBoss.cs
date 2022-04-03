@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers
         public SpriteRenderer spriteRenderer;
         public float timeToFinish;
         public GameObject shipBlocker;
-        public override Vector2 Size => base.Size*300;
+        //public override Vector2 Size => base.Size*300;
         public override void Initialise(ICruiserArgs args)
         {
             isCruiser = false;

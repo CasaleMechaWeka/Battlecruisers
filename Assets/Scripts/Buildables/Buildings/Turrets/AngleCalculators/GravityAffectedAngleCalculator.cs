@@ -16,6 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
         private readonly IAngleConverter _angleConverter;
         private readonly IProjectileFlightStats _projectileFlightStats;
         private readonly float _adjustedGravity;
+        private float previousAngle;
 
         protected abstract bool UseLargerAngle { get; }
 
@@ -34,7 +35,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 		{
             if (!Helper.IsFacingTarget(targetPosition, sourcePosition, isSourceMirrored))
             {
-                throw new ArgumentException("Source does not face target :(  source: " + sourcePosition + "  target: " + targetPosition + "  isSourceMirrored: " + isSourceMirrored);
+                return previousAngle;
+                //throw new ArgumentException("Source does not face target :(  source: " + sourcePosition + "  target: " + targetPosition + "  isSourceMirrored: " + isSourceMirrored);
             }
 
             float distanceInM = Math.Abs(sourcePosition.x - targetPosition.x);
@@ -45,7 +47,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 
 			if (squareRootArg < 0)
 			{
-				throw new ArgumentException("Out of range :/  source: " + sourcePosition + "  target: " + targetPosition);
+                return previousAngle;
+				//throw new ArgumentException("Out of range :/  source: " + sourcePosition + "  target: " + targetPosition);
 			}
 
 			float denominator = _adjustedGravity * distanceInM;
@@ -56,7 +59,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators
 			float angleInDegrees = angleInRadians * Mathf.Rad2Deg;
 
             angleInDegrees = _angleConverter.ConvertToUnsigned(angleInDegrees);
-
+            previousAngle = angleInDegrees;
             Logging.Verbose(
                 Tags.ANGLE_CALCULATORS, 
                 $"source: {sourcePosition}  target: {targetPosition}  isSourceMirrored: {isSourceMirrored}  UseLargerAngle: {UseLargerAngle}  " +

@@ -296,5 +296,10 @@ namespace BattleCruisers.Cruisers
                 //BattleSceneGod.ShowDeadBuildableStats();
             }
         }
+
+        public bool IsCruiser()
+        {
+            return isCruiser;
+        }
     }
 }

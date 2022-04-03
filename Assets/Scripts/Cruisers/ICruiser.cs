@@ -34,5 +34,6 @@ namespace BattleCruisers.Cruisers
         IBuilding ConstructSelectedBuilding(ISlot slot);
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
+        bool IsCruiser();
     }
 }

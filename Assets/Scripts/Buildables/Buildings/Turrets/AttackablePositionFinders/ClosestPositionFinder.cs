@@ -47,7 +47,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders
                 // should not make any difference.
                 return target.Position;
             }
-
+            Debug.Log(target.Size.x);
             float attackPositionX = target.Position.x + (FindXChangeInM(target.Size.x) * FindDirectionMultiplier(sourcePosition, target.Position));
             Vector2 closestAttackablePosition = new Vector2(attackPositionX, target.Position.y);
 

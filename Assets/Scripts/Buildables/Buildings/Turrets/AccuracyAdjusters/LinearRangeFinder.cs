@@ -14,12 +14,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters
 			var t2 = onTargetRange.Min;
             var t1 = onTargetRange.Max;
 
-            Assert.IsTrue(onTargetRange.Max > onTargetRange.Min);
+            //Assert.IsTrue(onTargetRange.Max > onTargetRange.Min);
 
             float onTargetRangeSize = onTargetRange.Max - onTargetRange.Min;
 
             float fireAngleRangeSize = onTargetRangeSize / accuracy;
-            Assert.IsTrue(fireAngleRangeSize >= onTargetRangeSize);
+            //Assert.IsTrue(fireAngleRangeSize >= onTargetRangeSize);
 
             float totalErrorMargin = fireAngleRangeSize - onTargetRangeSize;
             float errorMarginEachSide = totalErrorMargin / 2;
