@@ -26,6 +26,7 @@ namespace BattleCruisers.Projectiles
     {
 		private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
+        private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
@@ -106,6 +107,7 @@ namespace BattleCruisers.Projectiles
             AdjustGameObjectDirection();
 
             _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
+            _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
             _isActiveAndAlive = true;
         }
 
@@ -131,7 +133,13 @@ namespace BattleCruisers.Projectiles
             if (_targetToDamage != null)
             {
                 DestroyProjectile();
-                _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                //if (_targetToDamage.IsShield())
+                //{
+                //    _singleDamageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                //}
+                //else{
+                    _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                //}
                 _isActiveAndAlive = false;
             }
             else if (MovementController != null)

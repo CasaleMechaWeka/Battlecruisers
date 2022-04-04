@@ -38,5 +38,9 @@ namespace BattleCruisers.Buildables
 
 		Vector2 Position { get; set; }
 		Quaternion Rotation { get; set; }
+
+		bool IsShield();
+		void SetBuildingImmunity(bool boo);
+		bool IsBuildingImmune();
 	}
 }

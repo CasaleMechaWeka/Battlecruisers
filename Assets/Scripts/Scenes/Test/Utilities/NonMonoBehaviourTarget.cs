@@ -53,5 +53,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             throw new NotImplementedException();
         }
+
+        public virtual bool IsShield()
+        {
+            return false;
+        }
+
+        public virtual void SetBuildingImmunity(bool boo)
+        {
+            
+        }
+
+        public virtual bool IsBuildingImmune()
+        {
+            return false;
+        }
     }
 }

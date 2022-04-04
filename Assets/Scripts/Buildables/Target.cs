@@ -133,6 +133,10 @@ namespace BattleCruisers.Buildables
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
 		{
+            if (IsBuildingImmune())
+            {
+                return;
+            }
             Logging.Log(Tags.TARGET, $"{this}  damageAmount: {damageAmount}  damageSource: {damageSource}");
 
             LastDamagedSource = damageSource;
@@ -189,6 +193,21 @@ namespace BattleCruisers.Buildables
         public void SetHealthToMax()
         {
             _healthTracker.SetHealth(maxHealth);
+        }
+
+        public virtual bool IsShield()
+        {
+            return false;
+        }
+
+        public virtual void SetBuildingImmunity(bool boo)
+        {
+            
+        }
+
+        public virtual bool IsBuildingImmune()
+        {
+            return false;
         }
     }
 }

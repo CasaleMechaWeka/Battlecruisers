@@ -35,6 +35,8 @@ namespace BattleCruisers.Buildables.Buildings
 
         public virtual bool IsBoostable => false;
 
+        private bool isImmune = false;
+
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
@@ -87,6 +89,16 @@ namespace BattleCruisers.Buildables.Buildings
 
         public void Activate(BuildingActivationArgs activationArgs, Faction faction)
         {
+        }
+
+        public override void SetBuildingImmunity(bool boo)
+        {
+            isImmune = boo;
+        }
+
+        public override bool IsBuildingImmune()
+        {
+            return isImmune;
         }
     }
 }

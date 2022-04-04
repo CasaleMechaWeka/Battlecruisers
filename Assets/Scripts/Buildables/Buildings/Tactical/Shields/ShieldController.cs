@@ -7,6 +7,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -19,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         public GameObject visuals;
         public CircleCollider2D circleCollider;
         public HealthBarController healthBar;
+		private List<Collider2D> protectedColliders;
 
         private const int NUM_OF_POINTS_IN_RING = 100;
         private const float HEALTH_BAR_Y_POSITION_MULTIPLIER = 1.2f;
@@ -30,6 +32,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private Vector2 _size;
         public override Vector2 Size => _size;
+		private int shieldUpdateCnt = 0;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -72,6 +75,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         // PERF:  Don't need to do this every frame
 		void Update()
 		{
+			
 			// Eat into recharge delay
 			if (Health < maxHealth)
 			{
@@ -93,6 +97,12 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
                     }
                 }
 			}
+			shieldUpdateCnt++;
+			shieldUpdateCnt %= 100;
+			if (shieldUpdateCnt == 0)
+			{
+				UpdateBuildingImmunity(circleCollider.enabled);
+			}
 		}
 
 		protected override void OnHealthGone()
@@ -105,7 +115,23 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             _timeSinceDamageInS = 0;
             _takeDamageSoundDebouncer.Debounce(PlayDamagedSound);
+			//UpdateBuildingImmunity(true);
         }
+
+		private void UpdateBuildingImmunity(bool boo)
+		{
+			Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5);
+
+			foreach(Collider2D c2d in colliders)
+			{
+				if (c2d.gameObject.layer == 15)
+				{
+					ITarget target = c2d.gameObject.GetComponent<ITargetProxy>()?.Target;
+					target.SetBuildingImmunity(boo);
+					//Debug.Log(target.GameObject);
+				}
+			}
+		}
 
         private void PlayDamagedSound()
         {
@@ -116,6 +142,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		{
             visuals.SetActive(true);
 			circleCollider.enabled = true;
+			UpdateBuildingImmunity(true);
         }
 
         private void DisableShield()
@@ -123,6 +150,12 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             visuals.SetActive(false);
             circleCollider.enabled = false;
             _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
+			UpdateBuildingImmunity(false);
+		}
+
+		public override bool IsShield()
+		{
+			return true;
 		}
 	}
 }
