@@ -116,7 +116,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             
             _takeDamageSoundDebouncer.Debounce(PlayDamagedSound);
-			//UpdateBuildingImmunity(true);
         }
 
 		private void UpdateBuildingImmunity(bool boo)
@@ -129,7 +128,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 				{
 					ITarget target = c2d.gameObject.GetComponent<ITargetProxy>()?.Target;
 					target.SetBuildingImmunity(boo);
-					//Debug.Log(target.GameObject);
 				}
 			}
 		}

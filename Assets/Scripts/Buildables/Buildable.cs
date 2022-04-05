@@ -391,7 +391,7 @@ namespace BattleCruisers.Buildables
         }
 
         // PERF  Doesn't need to be every update :)
-        void Update()
+        public void Update()
         {
             if (BuildableState == BuildableState.InProgress)
             {
