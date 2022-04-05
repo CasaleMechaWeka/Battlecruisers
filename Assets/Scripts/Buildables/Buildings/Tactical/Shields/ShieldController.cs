@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 			Faction = faction;
 
             _soundPlayer = soundPlayer;
-			_timeSinceDamageInS = 0;
+			_timeSinceDamageInS = 1000;
 			circleCollider.radius = Stats.ShieldRadiusInM;
 
 			SetupHealthBar();
@@ -109,11 +109,12 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 		{
 			DisableShield();
 			InvokeDestroyedEvent();
+			_timeSinceDamageInS = 0;
 		}
 
 		protected override void OnTakeDamage()
         {
-            _timeSinceDamageInS = 0;
+            
             _takeDamageSoundDebouncer.Debounce(PlayDamagedSound);
 			//UpdateBuildingImmunity(true);
         }

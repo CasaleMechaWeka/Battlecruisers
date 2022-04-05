@@ -95,7 +95,10 @@ namespace BattleCruisers.Buildables.Repairables
                 {
                     Logging.Verbose(Tags.REPAIR_MANAGER, "About to repair: " + repairable);
 
-                    Assert.IsTrue(repairable.RepairCommand.CanExecute);
+                    if (!repairable.RepairCommand.CanExecute)
+                    {
+                        return;
+                    }
                     float healthGained = deltaTimeInS * droneConsumer.NumOfDrones * repairable.HealthGainPerDroneS * BuildSpeedMultipliers.DEFAULT;
                     repairable.RepairCommand.Execute(healthGained);
                 }
