@@ -180,6 +180,32 @@ namespace BattleCruisers.Data.Models
             set => _altDroneSounds = value;
         }
 
+        public Vector2 Resolution
+        {
+            get => new Vector2(_resolutionWidth, _resolutionHeight);
+            set {
+                _resolutionWidth = (int)value.x;
+                _resolutionHeight = (int)value.y;
+            }
+            
+        }
+
+        [SerializeField]
+        private int _resolutionWidth;
+        public int ResolutionWidth
+        {
+            get => _resolutionWidth;
+            set => _resolutionWidth = value;
+        }
+
+        [SerializeField]
+        private int _resolutionHeight;
+        public int ResolutionHeight
+        {
+            get => _resolutionHeight;
+            set => _resolutionHeight = value;
+        }
+
         public SettingsModel()
         {
             AIDifficulty = Difficulty.Hard;
@@ -196,6 +222,7 @@ namespace BattleCruisers.Data.Models
             ShowToolTips = true;
             
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+            Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
             //Debug.Log(Application.systemLanguage);
 
         }

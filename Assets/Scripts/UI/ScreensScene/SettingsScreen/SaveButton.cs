@@ -14,6 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private ISettingsManager _settingsManager;
         private IDifficultyDropdown _difficultyDropdown;
         private LanguageDropdown _languageDropdown;
+        private ResolutionDropdown _resolutionDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds;
@@ -29,6 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ISettingsManager settingsManager, 
             IDifficultyDropdown difficultyDropdown,
             LanguageDropdown languageDropdown,
+            ResolutionDropdown resolutionDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
             IBroadcastingProperty<int> scrollSpeedLevel,
             IBroadcastingProperty<float> musicVolume,
@@ -50,6 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager = settingsManager;
             _difficultyDropdown = difficultyDropdown;
             _languageDropdown = languageDropdown;
+            _resolutionDropdown = resolutionDropdown;
             _zoomSpeedLevel = zoomSpeedLevel;
             _scrollSpeedLevel = scrollSpeedLevel;
             _musicVolume = musicVolume;
@@ -68,6 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             _difficultyDropdown.DifficultyChanged += (sender, e) => UpdateEnabledStatus();
             _languageDropdown.LanguageChanged += (sender, e) => UpdateEnabledStatus();
+            _resolutionDropdown.ResolutionChanged += (sender, e) => UpdateEnabledStatus();
             _zoomSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _scrollSpeedLevel.ValueChanged += (sender, e) => UpdateEnabledStatus();
             _musicVolume.ValueChanged += (sender, e) => UpdateEnabledStatus();
@@ -94,6 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.Language = _languageDropdown.Language;
+            _settingsManager.Resolution = _resolutionDropdown.Resolution;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.MasterVolume = _masterVolume.Value;
@@ -123,6 +128,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             return
                 _difficultyDropdown.Difficulty != _settingsManager.AIDifficulty
                 || _languageDropdown.Language != _settingsManager.Language
+                || _resolutionDropdown.Resolution != _settingsManager.Resolution
                 || _zoomSpeedLevel.Value != _settingsManager.ZoomSpeedLevel
                 || _scrollSpeedLevel.Value != _settingsManager.ScrollSpeedLevel
                 || _musicVolume.Value != _settingsManager.MusicVolume

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data.Settings;
+using UnityEngine;
 
 namespace BattleCruisers.Data.Models
 {
@@ -17,6 +18,7 @@ namespace BattleCruisers.Data.Models
         float InterfaceVolume { get; set; }
         float AmbientVolume { get; set; }
         string Language { get; set; }
+        Vector2 Resolution { get; set; }
         
     }
 }

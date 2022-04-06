@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace BattleCruisers.Data.Settings
 {
@@ -29,6 +30,7 @@ namespace BattleCruisers.Data.Settings
         bool ShowToolTips { get; set; }
         bool AltDroneSounds { get; set; }
         string Language { get; set; }
+        Vector2 Resolution { get; set; }
 
         void Save();
     }

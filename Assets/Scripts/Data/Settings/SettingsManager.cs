@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Settings
@@ -82,6 +83,11 @@ namespace BattleCruisers.Data.Settings
         {
             get => _settings.Language;
             set => _settings.Language = value;
+        }
+        public Vector2 Resolution
+        {
+            get => _settings.Resolution;
+            set => _settings.Resolution = value;
         }
 
         public SettingsManager(IDataProvider dataProvider)

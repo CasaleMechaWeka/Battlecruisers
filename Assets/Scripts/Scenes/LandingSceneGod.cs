@@ -45,7 +45,9 @@ namespace BattleCruisers.Scenes
                 ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
                 HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-
+                Vector2 resolution = dataProvider.SettingsManager.Resolution;
+                Debug.Log(dataProvider.SettingsManager.Resolution);
+                Screen.SetResolution((int)resolution.x, (int)resolution.y, FullScreenMode.ExclusiveFullScreen);
                 // Game starts with the screens scene
                 if (testCreditsScene)
                 {
