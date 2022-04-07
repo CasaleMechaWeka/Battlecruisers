@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ResolutionDropdown resolutionDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
@@ -86,6 +86,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
             showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
             altDroneSoundsToggle.Initialise(_settingsManager.AltDroneSounds);
+            fullScreenToggle.Initialise(_settingsManager.FullScreen);
+            VSyncToggle.Initialise(_settingsManager.VSync);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -109,6 +111,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     showInGameHintsToggle.IsChecked,
                     showToolTipsToggle.IsChecked,
                     altDroneSoundsToggle.IsChecked,
+                    fullScreenToggle.IsChecked,
+                    VSyncToggle.IsChecked,
                     hotkeysPanel);
 
             cancelButton.Initialise(soundPlayer, this);
@@ -231,6 +235,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
             showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
             showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
+            VSyncToggle.ResetToDefaults(_settingsManager.VSync);
+            fullScreenToggle.ResetToDefaults(_settingsManager.FullScreen);
             altDroneSoundsToggle.ResetToDefaults(_settingsManager.AltDroneSounds);
         }
     }

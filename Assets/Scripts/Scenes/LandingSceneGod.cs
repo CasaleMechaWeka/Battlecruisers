@@ -46,8 +46,10 @@ namespace BattleCruisers.Scenes
                 HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
                 Vector2 resolution = dataProvider.SettingsManager.Resolution;
-                Debug.Log(dataProvider.SettingsManager.Resolution);
-                Screen.SetResolution((int)resolution.x, (int)resolution.y, FullScreenMode.ExclusiveFullScreen);
+                //Debug.Log(dataProvider.SettingsManager.Resolution);
+                Screen.SetResolution((int)resolution.x, (int)resolution.y, dataProvider.SettingsManager.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                QualitySettings.vSyncCount = dataProvider.SettingsManager.VSync ? 1 : 0;
+                //Debug.Log(Screen.currentResolution);
                 // Game starts with the screens scene
                 if (testCreditsScene)
                 {

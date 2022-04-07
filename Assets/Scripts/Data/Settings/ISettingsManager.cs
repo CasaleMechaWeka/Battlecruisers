@@ -29,6 +29,8 @@ namespace BattleCruisers.Data.Settings
         bool ShowInGameHints { get; set; }
         bool ShowToolTips { get; set; }
         bool AltDroneSounds { get; set; }
+        bool VSync { get; set; }
+        bool FullScreen { get; set; }
         string Language { get; set; }
         Vector2 Resolution { get; set; }
 

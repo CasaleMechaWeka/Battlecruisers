@@ -180,6 +180,22 @@ namespace BattleCruisers.Data.Models
             set => _altDroneSounds = value;
         }
 
+        [SerializeField]
+        private bool _VSync;
+        public bool VSync
+        {
+            get => _VSync;
+            set => _VSync = value;
+        }
+
+        [SerializeField]
+        private bool _fullScreen;
+        public bool FullScreen
+        {
+            get => _fullScreen;
+            set => _fullScreen = value;
+        }
+
         public Vector2 Resolution
         {
             get => new Vector2(_resolutionWidth, _resolutionHeight);
@@ -222,6 +238,8 @@ namespace BattleCruisers.Data.Models
             ShowToolTips = true;
             
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+            VSync = false;
+            FullScreen = true;
             Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
             //Debug.Log(Application.systemLanguage);
 

@@ -79,6 +79,16 @@ namespace BattleCruisers.Data.Settings
             get => _settings.AltDroneSounds;
             set => _settings.AltDroneSounds = value;
         }
+        public bool VSync
+        {
+            get => _settings.VSync;
+            set => _settings.VSync = value;
+        }
+        public bool FullScreen
+        {
+            get => _settings.FullScreen;
+            set => _settings.FullScreen = value;
+        }
         public string Language
         {
             get => _settings.Language;
