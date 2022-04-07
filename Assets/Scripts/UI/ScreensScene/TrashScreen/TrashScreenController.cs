@@ -101,7 +101,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         {
             if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle)
             {
-                _screensSceneGod.GoToChooseDifficultyScreen();
+                _screensSceneGod.GoToHomeScreen();
             }
             else
             {

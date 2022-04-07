@@ -35,5 +35,11 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 
             _screensSceneGod.GoToTrashScreen(levelNum: 1);
         }
+
+        public override void Cancel()
+        {
+            _screensSceneGod.GoToHomeScreen();
+
+        }
     }
 }
