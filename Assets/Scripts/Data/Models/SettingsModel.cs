@@ -222,6 +222,14 @@ namespace BattleCruisers.Data.Models
             set => _resolutionHeight = value;
         }
 
+        [SerializeField]
+        private bool _initialisedGraphics;
+        public bool InitialisedGraphics
+        {
+            get => _initialisedGraphics;
+            set => _initialisedGraphics = value;
+        }
+
         public SettingsModel()
         {
             AIDifficulty = Difficulty.Hard;
@@ -238,11 +246,18 @@ namespace BattleCruisers.Data.Models
             ShowToolTips = true;
             
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+            InitialiseGraphicsSettings();
+            
+            //Debug.Log(Application.systemLanguage);
+
+        }
+
+        public void InitialiseGraphicsSettings()
+        {
             VSync = false;
             FullScreen = true;
             Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
-            //Debug.Log(Application.systemLanguage);
-
+            _initialisedGraphics = true;
         }
 
         private void CheckVolumeValue(float volume)

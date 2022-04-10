@@ -36,6 +36,11 @@ namespace BattleCruisers.Scenes
                 IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
                 MusicPlayer = CreateMusicPlayer(dataProvider);
 
+                if (!dataProvider.GameModel.Settings.InitialisedGraphics)
+                {
+                    dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
+                }
+                
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
@@ -45,10 +50,7 @@ namespace BattleCruisers.Scenes
                 ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
                 HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-                Vector2 resolution = dataProvider.SettingsManager.Resolution;
-                //Debug.Log(dataProvider.SettingsManager.Resolution);
-                Screen.SetResolution((int)resolution.x, (int)resolution.y, dataProvider.SettingsManager.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                QualitySettings.vSyncCount = dataProvider.SettingsManager.VSync ? 1 : 0;
+
                 //Debug.Log(Screen.currentResolution);
                 // Game starts with the screens scene
                 if (testCreditsScene)

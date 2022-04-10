@@ -97,7 +97,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-            Screen.SetResolution((int)_resolutionDropdown.Resolution.x, (int)_resolutionDropdown.Resolution.y, _fullScreen.Value ? (FullScreenMode)1 : (FullScreenMode)3);
+            Screen.SetResolution((int)_resolutionDropdown.Resolution.x, (int)_resolutionDropdown.Resolution.y - (_fullScreen.Value ? 0: (int)(_resolutionDropdown.Resolution.y*0.06)), _fullScreen.Value ? (FullScreenMode)1 : (FullScreenMode)3);
             QualitySettings.vSyncCount = _VSync.Value ? 1 : 0;
             
             Assert.IsTrue(ShouldBeEnabled());

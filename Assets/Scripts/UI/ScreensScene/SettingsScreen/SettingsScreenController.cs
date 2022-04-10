@@ -237,6 +237,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
             VSyncToggle.ResetToDefaults(_settingsManager.VSync);
             fullScreenToggle.ResetToDefaults(_settingsManager.FullScreen);
+            resolutionDropdown.ResetToDefaults(_settingsManager.Resolution);
             altDroneSoundsToggle.ResetToDefaults(_settingsManager.AltDroneSounds);
         }
     }
