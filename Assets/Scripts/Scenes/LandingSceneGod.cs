@@ -41,8 +41,8 @@ namespace BattleCruisers.Scenes
                 {
                     dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
                 }
-                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height - (dataProvider.GameModel.Settings.FullScreen ? 0: (int)(Screen.currentResolution.height*0.06)), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0: (int)(dataProvider.GameModel.Settings.ResolutionHeight*0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
