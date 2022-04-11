@@ -256,6 +256,11 @@ namespace BattleCruisers.Data.Models
         {
             VSync = false;
             FullScreen = true;
+            if (Screen.currentResolution.width < 600)
+            {
+                Screen.SetResolution(600, 400, FullScreenMode.Windowed);
+                FullScreen = false;
+            }
             Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
             _initialisedGraphics = true;
         }

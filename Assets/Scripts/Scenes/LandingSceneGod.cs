@@ -7,6 +7,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -30,7 +31,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
-
+            
             if (!_isInitialised)
             {
                 IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
@@ -40,7 +41,8 @@ namespace BattleCruisers.Scenes
                 {
                     dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
                 }
-                
+                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height - (dataProvider.GameModel.Settings.FullScreen ? 0: (int)(Screen.currentResolution.height*0.06)), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
                 _isInitialised = true;
