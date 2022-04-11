@@ -12,6 +12,8 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Text textForLoc;
     private float xDelta;
     private bool exited = true;
+    private ToolTipActivator toolTipActivator;
+    private bool started = false;
 
     public void Start()
     {
@@ -20,21 +22,33 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         background = ToolTipTextObject.GetComponent<Image>();
         toolTipText.enabled = false;
         background.enabled = false;
+        toolTipActivator = ToolTipTextObject.GetComponent<ToolTipActivator>();
+        started = true;
     }
 
     public void Update()
     {
-        
-        if (Input.mousePosition.x < Screen.width*3/4)
+        if (started && toolTipActivator.toggleController.IsChecked != null)
         {
-            xDelta = (((RectTransform)ToolTipTextObject.transform).rect.width)/3;
+            if (Input.mousePosition.x < Screen.width*3/4)
+            {
+                ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(0, 0);
+                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(0, 0);
+                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(0, 0);
+            }
+            else{
+                ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(1, 0);
+                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(1, 0);
+                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(1, 0);
+            }
+            
+            ToolTipTextObject.transform.position = Input.mousePosition;
+            ToolTipTextObject.transform.position = new Vector3(ToolTipTextObject.transform.position.x, ToolTipTextObject.transform.position.y + 60, ToolTipTextObject.transform.position.z);
+            if (!toolTipActivator.toggleController.IsChecked.Value)
+            {
+                hide();
+            }
         }
-        else{
-            xDelta = -(((RectTransform)ToolTipTextObject.transform).rect.width)/3;
-        }
-        
-        ToolTipTextObject.transform.position = Input.mousePosition;
-        ToolTipTextObject.transform.position = new Vector3(ToolTipTextObject.transform.position.x + xDelta, ToolTipTextObject.transform.position.y + 60, ToolTipTextObject.transform.position.z);
     }
     
 
