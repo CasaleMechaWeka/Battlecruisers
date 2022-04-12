@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.BattleScene.Lifetime
         void OnApplicationFocus(bool hasFocus)
         {
             Logging.Log(Tags.LIFETIME_EVENTS, $"hasFocus: {hasFocus}");
-            _isPaused.Value = !hasFocus;
+            //_isPaused.Value = !hasFocus;
         }
 
         void OnApplicationPause(bool pauseStatus)
