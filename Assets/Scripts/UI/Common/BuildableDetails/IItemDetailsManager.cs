@@ -13,6 +13,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         void ShowDetails(IBuilding building);
         void ShowDetails(IUnit unit);
         void ShowDetails(ICruiser cruiser);
+        void SelectUnit(IUnit unit);
+        void SelectBuilding(IBuilding building);
         void HideDetails();
     }
 }

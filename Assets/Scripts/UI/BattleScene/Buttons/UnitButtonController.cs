@@ -99,5 +99,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             Assert.IsNotNull(CurrentFactory);
             _unitClickHandler.HandleClick(isButtonEnabled, _unitWrapper, CurrentFactory);
 		}
+
+        public override void HandleHover()
+        {
+            _unitClickHandler.HandleHover(_unitWrapper);
+		}
+
+        public override void HandleHoverExit()
+        {
+            _unitClickHandler.HandleHoverExit();
+		}
 	}
 }

@@ -37,6 +37,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 
             if (canAffordBuildable)
             {
+                _uiManager.SelectBuilding(buildingClicked.Buildable);
                 _uiManager.SelectBuildingFromMenu(buildingClicked);
 
                 if (buildingClicked.Buildable.SlotSpecification.SlotType == SlotType.Bow)
@@ -50,9 +51,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             }
             else
             {
-                _uiManager.SelectBuilding(buildingClicked.Buildable);
+                //_uiManager.SelectBuilding(buildingClicked.Buildable);
                 PlayUnaffordableSound();
             }
+        }
+
+        public void HandleHover(IBuildableWrapper<IBuilding> buildingClicked)
+        {
+            _uiManager.PeakBuildingDetails(buildingClicked.Buildable);
+        }
+
+        public void HandleHoverExit()
+        {
+            _uiManager.UnpeakBuildingDetails();
         }
     }
 }

@@ -19,6 +19,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private IItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
         private ISingleSoundPlayer _uiSoundPlayer;
+        private IBuilding lastClickedBuilding;
+        private IUnit lastClickedUnit;
+        private ICruiser lastClickedCruiser;
+        private ITarget lastClickedBuildable;
+        private int lastClickedType = -1; //-1 is for nothing, 0 is for buildings and 1 is for units
 
         private ITarget _shownItem;
         private ITarget ShownItem
@@ -67,6 +72,10 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _aiCruiser.SlotHighlighter.UnhighlightSlots();
             ShownItem = null;
+            lastClickedBuilding = null;
+            lastClickedUnit = null;
+            lastClickedType = -1;
+            lastClickedBuildable = null;
         }
 
 		public void HideCurrentlyShownMenu()
@@ -77,6 +86,10 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _playerCruiser.SlotHighlighter.UnhighlightSlots();
             _buildMenu.HideCurrentlyShownMenu();
             ShownItem = null;
+            lastClickedBuilding = null;
+            lastClickedUnit = null;
+            lastClickedType = -1;
+            lastClickedBuildable = null;
         }
 
         public void SelectBuildingGroup(BuildingCategory buildingCategory)
@@ -92,7 +105,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            _detailsManager.ShowDetails(buildingWrapper.Buildable);
+            //_detailsManager.ShowDetails(buildingWrapper.Buildable);
             bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
 
             if (!wasAnySlotHighlighted)
@@ -107,7 +120,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.ShowDetails(building);
+            _detailsManager.SelectBuilding(building);
             ShownItem = building;
+            lastClickedBuilding = building;
+            lastClickedBuildable = building;
+            lastClickedType = 0;
         }
 
 		public void ShowFactoryUnits(IFactory factory)
@@ -126,7 +143,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.ShowDetails(unit);
+            _detailsManager.SelectUnit(unit);
             ShownItem = unit;
+            lastClickedUnit = unit;
+            lastClickedBuildable = unit;
+            lastClickedType = 1;
         }
 
         public virtual void ShowCruiserDetails(ICruiser cruiser)
@@ -135,6 +156,63 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
             _detailsManager.ShowDetails(cruiser);
             ShownItem = cruiser;
+            lastClickedCruiser = cruiser;
+            lastClickedBuildable = cruiser;
+            lastClickedType = 2;
+        }
+
+        public void PeakBuildingDetails(IBuilding building)
+        {
+            _detailsManager.ShowDetails(building);
+            //ShownItem = building;
+        }
+
+        public void PeakUnitDetails(IUnit unit)
+        {
+            _detailsManager.ShowDetails(unit);
+            //ShownItem = unit;
+        }
+
+        public void UnpeakBuildingDetails()
+        {
+            if (lastClickedBuildable!=null)
+            {
+                if (lastClickedType == 0)
+                {
+                    _detailsManager.ShowDetails(lastClickedBuilding);
+                }
+                else if (lastClickedType == 1){
+                    _detailsManager.ShowDetails(lastClickedUnit);
+                }
+                else{
+                    _detailsManager.ShowDetails(lastClickedCruiser);
+                }
+                
+            }
+            else{
+                _detailsManager.HideDetails();
+            }
+        }
+
+        public void UnpeakUnitDetails()
+        {
+            if (lastClickedBuildable!=null)
+            {
+                if (lastClickedType == 0)
+                {
+                    _detailsManager.ShowDetails(lastClickedBuilding);
+                }
+                else if (lastClickedType == 1){
+                    _detailsManager.ShowDetails(lastClickedUnit);
+                }
+                else{
+                    _detailsManager.ShowDetails(lastClickedCruiser);
+                }
+                
+            }
+            else{
+                _detailsManager.HideDetails();
+            }
         }
     }
 }

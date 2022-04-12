@@ -29,10 +29,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
             Helper.AssertIsNotNull(unitClicked, unitFactory);
 
             _uiSoundPlayer.PlaySound(unitFactory.UnitSelectedSound);
-			_uiManager.ShowUnitDetails(unitClicked.Buildable);
+			//_uiManager.ShowUnitDetails(unitClicked.Buildable);
 
             if (canAffordBuildable)
             {
+                _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
                 HandleFactory(unitClicked, unitFactory);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
@@ -69,6 +70,16 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
                 // Different unit
                 unitFactory.StartBuildingUnit(unitClicked);
             }
+        }
+
+        public void HandleHover(IBuildableWrapper<IUnit> unitClicked)
+        {
+            _uiManager.PeakUnitDetails(unitClicked.Buildable);
+        }
+
+        public void HandleHoverExit()
+        {
+            _uiManager.UnpeakUnitDetails();
         }
     }
 }

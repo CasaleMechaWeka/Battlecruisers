@@ -27,5 +27,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             _clickHandler.HandleClick(isButtonEnabled, _buildingWrapper);
 		}
+
+        public override void HandleHover()
+        {
+            _clickHandler.HandleHover(_buildingWrapper);
+		}
+
+        public override void HandleHoverExit()
+        {
+            _clickHandler.HandleHoverExit();
+		}
 	}
 }

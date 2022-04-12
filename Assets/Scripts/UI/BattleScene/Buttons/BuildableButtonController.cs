@@ -8,6 +8,7 @@ using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
@@ -106,5 +107,21 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         {
             OnClicked();
         }
+
+        public override void OnPointerEnter(PointerEventData eventData)
+        {
+            base.OnPointerEnter(eventData);
+            HandleHover();
+        }
+
+        public override void OnPointerExit(PointerEventData eventData)
+        {
+            base.OnPointerExit(eventData);
+            HandleHoverExit();
+        }
+
+        public virtual void HandleHover(){}
+
+        public virtual void HandleHoverExit(){}
     }
 }
