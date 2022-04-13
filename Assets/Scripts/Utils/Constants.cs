@@ -48,6 +48,7 @@
 		public const string CREDITS_SCENE = "LonelyCreditsScene";
         public const string CUTSCENE_SCENE = "HuntressCutscene";
         public const string DESTRUCTION_SCENE = "DestructionScene";
+        public const string STAGE_INTERSTITIAL_SCENE = "StageInterstitialScene";
 	}
 
     public static class GameObjectTags
@@ -55,5 +56,19 @@
         public const string AIRCRAFT = "Aircraft";
         public const string SHIP = "Ship";
         public const string OFFENSIVE = "Offensive";
+    }
+
+    //these should be the same as specified in the LevelSets in screens scene, but are unlinked right now, so if changes to the level sets occur these must be updated.
+    public static class LevelStages
+    {
+        public const int STAGE_1 = 0;
+        public const int STAGE_2 = 3;
+        public const int STAGE_3 = 7;
+        public const int STAGE_4 = 10;
+        public const int STAGE_5 = 15;
+        public const int STAGE_6 = 18;
+        public const int STAGE_7 = 22;
+        public const int STAGE_8 = 26;
+        public static int[] STAGE_STARTS = {STAGE_1, STAGE_2, STAGE_3, STAGE_4, STAGE_5, STAGE_6, STAGE_7, STAGE_8};
     }
 }

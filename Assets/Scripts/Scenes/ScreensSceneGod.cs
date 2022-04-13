@@ -137,9 +137,13 @@ namespace BattleCruisers.Scenes
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
-            else
+            else if (levelToShowCutscene == 0)
             {
                 GoToHomeScreen();
+            }
+            else
+            {
+                GoToTrashScreen(levelToShowCutscene);
             }
 
             // After potentially initialising post battle screen, because that can modify the data model.
@@ -180,6 +184,8 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
+            
+            
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
@@ -246,6 +252,7 @@ namespace BattleCruisers.Scenes
             GoToScreen(settingsScreen);
         }
 
+        private static int levelToShowCutscene = 0;
 		public void GoToTrashScreen(int levelNum)
 		{
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
@@ -257,7 +264,19 @@ namespace BattleCruisers.Scenes
 
             if (_applicationModel.Mode == GameMode.Campaign)
             {
-                GoToScreen(trashScreen, playDefaultMusic: false);
+                if (LevelStages.STAGE_STARTS.Contains(levelNum-1) && levelToShowCutscene != levelNum)
+                {
+                    levelToShowCutscene = levelNum;
+                    //GoToScreen(trashScreen, playDefaultMusic: false);
+                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                }
+                else{
+                    levelToShowCutscene = 0;
+                    //_musicPlayer.PlayTrashMusic();
+                    GoToScreen(trashScreen, playDefaultMusic: false);
+                    //_musicPlayer.PlayTrashMusic();
+                }
+                
             }
             else
             {
