@@ -34,6 +34,7 @@ namespace BattleCruisers.Scenes
         public GameObject[] screens;
         [Header("The number of the screen that comes up when running this scene.")]
         public int TestingScreen = 1;
+        public GameObject musicePlayerForTesting;
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -44,6 +45,8 @@ namespace BattleCruisers.Scenes
                 screens[TestingScreen-1].SetActive(true);
             }
             else{
+                musicePlayerForTesting.SetActive(false);
+                LandingSceneGod.MusicPlayer.PlayCutsceneMusic();
                 for (int i = 0; i < LevelStages.STAGE_STARTS.Length; i++)
                 {
                     screens[i].SetActive(false);
@@ -56,7 +59,7 @@ namespace BattleCruisers.Scenes
             
             
             
-            //LandingSceneGod.MusicPlayer.PlayVictoryMusic();
+            
 
             _soundPlayer
                 = new SingleSoundPlayer(
@@ -67,7 +70,10 @@ namespace BattleCruisers.Scenes
 
 
             nextButton.Initialise(_soundPlayer, Done);
-            _sceneNavigator.SceneLoaded(SceneNames.STAGE_INTERSTITIAL_SCENE);
+            if (_sceneNavigator != null)
+            {
+                _sceneNavigator.SceneLoaded(SceneNames.STAGE_INTERSTITIAL_SCENE);
+            }
         }
 
         void Update()
