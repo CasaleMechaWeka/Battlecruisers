@@ -107,6 +107,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected void UpdateNewItemMarkVisibility()
         {
+            if (_newItemMark == null)
+            {
+                return;
+            }
             Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
             _newItemMark.IsVisible = HasNewItems(_gameModel);
             Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
