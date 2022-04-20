@@ -251,7 +251,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void Retry()
 		{
-			_screensSceneGod.GoToTrashScreen(BattleResult.LevelNum);
+			_screensSceneGod.GoStraightToTrashScreen(BattleResult.LevelNum);
 		}
 
 		public void GoToLoadoutScreen()

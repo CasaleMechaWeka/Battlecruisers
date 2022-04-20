@@ -284,6 +284,27 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        public void GoStraightToTrashScreen(int levelNum)
+		{
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
+            Assert.IsTrue(
+                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+
+			_applicationModel.SelectedLevel = levelNum;
+
+            if (_applicationModel.Mode == GameMode.Campaign)
+            {
+
+                levelToShowCutscene = 0;
+                GoToScreen(trashScreen, playDefaultMusic: false);
+            }
+            else
+            {
+                LoadBattleScene();
+            }
+        }
+
         public void GoToChooseDifficultyScreen()
         {
             GoToScreen(chooseDifficultyScreen);
