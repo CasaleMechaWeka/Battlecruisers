@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.Panels
         private float _smoothTimeinS;
         private Vector2 _targetPosition, _targetScale;
         private PanelState _targetState;
+        public GameObject blocker;
         public PanelState TargetState
         {
             get => _targetState;
@@ -99,7 +100,15 @@ namespace BattleCruisers.UI.Panels
             if (_positionDone && _scaleDone)
             {
                 _state.Value = TargetState;
+                if (blocker!=null)
+                blocker.SetActive(false);
                 return;
+            }
+
+            if (!_positionDone)
+            {
+                if (blocker!=null)
+                blocker.SetActive(true);
             }
 
             _positionDone = AdjustPosition();
