@@ -13,6 +13,7 @@ namespace BattleCruisers.Utils.Localisation
         private LocalizeStringEvent _localizeStringEvent;
         public Font newFont;
         public Font defaultFont;
+        public bool boldNewFont = true;
 
         // Start is called before the first frame update
         void Start()
@@ -36,7 +37,10 @@ namespace BattleCruisers.Utils.Localisation
                 if (newFont != null)
                 {
                     _text.font = newFont;
-                    _text.fontStyle = FontStyle.Bold;
+                    if (boldNewFont)
+                    {
+                        _text.fontStyle = FontStyle.Bold;
+                    }
                 }
             }
             else
