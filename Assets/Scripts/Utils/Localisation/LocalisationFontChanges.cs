@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Globalization;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
@@ -11,19 +13,33 @@ namespace BattleCruisers.Utils.Localisation
     {
         private Text _text;
         private LocalizeStringEvent _localizeStringEvent;
-        public Font newFont;
-        public Font defaultFont;
-        public bool boldNewFont = true;
+        private Font _newFont;
+        private int _originalFontMaxSize;
+        private int _originalFontMinSize;
+        private float _newFontScaleAdjustment;
+        private bool _boldNewFont;
+        public bool allowScaleAdjustment = true;
 
         // Start is called before the first frame update
-        void Start()
+        async void Start()
         {
-            _text = GetComponent<Text>();
-            newFont = (Font)Resources.Load("Fonts/NotoSansCJK-VF.ttf");
-            defaultFont = _text.font;//default font is what ever was originally there
 
+            //get original settings incase we need to switch back
+            _text = GetComponent<Text>();
             Assert.IsNotNull(_text, $"{gameObject.name}: {nameof(AllCaps)} should only be attached to a game object that has a {nameof(Text)} element.");
 
+            _originalFontMaxSize = _text.resizeTextMaxSize;
+            _originalFontMinSize = _text.resizeTextMinSize;
+            
+            ILocTable fontSettings = await LocTableFactory.Instance.LoadFontsTableAsync();
+
+            //get the string we need
+            string newFontName = fontSettings.GetString("FontName");
+            _newFont = (Font)Resources.Load("Fonts/" + newFontName);
+            string bestFitScaleAdjustment = fontSettings.GetString("BestFitScaleAdjustment");
+            _newFontScaleAdjustment = float.Parse(bestFitScaleAdjustment, CultureInfo.InvariantCulture.NumberFormat);
+            string boldNewFontBool = fontSettings.GetString("Bold");
+            Boolean.TryParse(boldNewFontBool, out _boldNewFont);
             UpdateString();
         }
 
@@ -32,24 +48,19 @@ namespace BattleCruisers.Utils.Localisation
             Locale currentSelectedLocale = LocalizationSettings.SelectedLocale;
             ILocalesProvider availableLocales = LocalizationSettings.AvailableLocales;
 
-            if (currentSelectedLocale == availableLocales.GetLocale("ja"))
+            //if there is a new font use it
+            if (_newFont != null)
             {
-                if (newFont != null)
-                {
-                    _text.font = newFont;
-                    if (boldNewFont)
-                    {
-                        _text.fontStyle = FontStyle.Bold;
-                    }
-                }
+                _text.font = _newFont;
             }
-            else
+            if (_boldNewFont)
             {
-                if (defaultFont != null)
-                {
-                    _text.font = defaultFont;
-                    _text.fontStyle = FontStyle.Normal;
-                }
+                _text.fontStyle = FontStyle.Bold;
+            }
+            if (allowScaleAdjustment)//controlled when the component is applied
+            {   //default scale adjustment is 1.0 e.g. no adjustment
+                _text.resizeTextMinSize = (int)(_originalFontMinSize * _newFontScaleAdjustment);
+                _text.resizeTextMaxSize = (int)(_originalFontMaxSize * _newFontScaleAdjustment);
             }
         }
     }

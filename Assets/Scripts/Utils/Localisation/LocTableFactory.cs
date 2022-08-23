@@ -35,11 +35,23 @@ namespace BattleCruisers.Utils.Localisation
             public const string SCREENS_SCENE = "ScreensScene";
             public const string STORY = "StoryTable";
             public const string TUTORIAL = "Tutorial";
+            public const string FONTS = "Fonts";
         }
 
-        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable;
+        private ILocTable _battleSceneTable, _commonTable, _screensSceneTable, _storyTable, _tutorialTable, _fonts;
 
         private LocTableFactory() { }
+
+        public async Task<ILocTable> LoadFontsTableAsync()
+        {
+            if (_fonts == null)
+            {
+                AsyncOperationHandle<StringTable> tableHandle = await LoadTable(TableName.FONTS);
+                _fonts = new LocTable(tableHandle);
+            }
+
+            return _fonts;
+        }
 
         public async Task<ILocTable> LoadBattleSceneTableAsync()
         {
@@ -173,6 +185,15 @@ namespace BattleCruisers.Utils.Localisation
             _locale = localeToUse;
             //Debug.Log(_locale);
             return localeToUse;
+        }
+
+        public void ReleaseFontsTable()
+        {
+            if (_fonts != null)
+            {
+                Addressables.Release(_fonts.Handle);
+                _fonts = null;
+            }
         }
 
         public void ReleaseBattleSceneTable()
