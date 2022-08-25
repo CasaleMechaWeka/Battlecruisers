@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             playerBubble.Initialise(protagonistName, trashTalkData.PlayerText);
             playerBubble.gameObject.SetActive(true);
 
-            string enemyName = storyStrings.GetString($"{trashTalkData.stringKeyBase}/name");
+            string enemyName = storyStrings.GetString($"{trashTalkData.StringKeyBase}/name");
 
             enemyBubble.Initialise(enemyName, trashTalkData.EnemyText);
             enemyBubble.gameObject.SetActive(true);

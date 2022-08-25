@@ -34,7 +34,8 @@ namespace BattleCruisers.Scenes.Test.UI
                     new SpriteFetcher(),
                     trashDataList,
                     Substitute.For<IMusicPlayer>(),
-                    helper.CommonStrings);
+                    helper.CommonStrings,
+                    helper.StoryStrings);
 
             levelButtonsPanel
                 .Initialise(

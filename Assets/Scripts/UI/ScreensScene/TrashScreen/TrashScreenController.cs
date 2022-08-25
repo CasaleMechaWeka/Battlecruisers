@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private ITrashTalkProvider _trashDataList;
         private IMusicPlayer _musicPlayer;
         private ILocTable _commonStrings;
+        private ILocTable _storyStrings;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
@@ -38,7 +39,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ISpriteFetcher spriteFetcher,
             ITrashTalkProvider trashDataList,
             IMusicPlayer musicPlayer,
-            ILocTable commonStrings)
+            ILocTable commonStrings,
+            ILocTable storyStrings)
 		{
 			base.Initialise(screensSceneGod);
 
@@ -51,6 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             _trashDataList = trashDataList;
             _musicPlayer = musicPlayer;
             _commonStrings = commonStrings;
+            _storyStrings = storyStrings;
 
             startBattleButton.Initialise(soundPlayer, LoadBattle);
             homeButton.Initialise(soundPlayer, Cancel);
@@ -64,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ILevel level = _appModel.DataProvider.Levels[levelIndex];
 
             ITrashTalkData trashTalkData = await _trashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
-            trashTalkBubbles.Initialise(trashTalkData, _commonStrings);
+            trashTalkBubbles.Initialise(trashTalkData, _commonStrings, _storyStrings);
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
