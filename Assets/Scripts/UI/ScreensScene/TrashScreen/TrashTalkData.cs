@@ -27,6 +27,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public string stringKeyBase;
 
+        public string StringKeyBase => stringKeyBase;
+
         public void Initialise(ILocTable storyStrings)
         {
             Assert.IsNotNull(storyStrings);
@@ -34,6 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             PlayerText = storyStrings.GetString($"{stringKeyBase}/PlayerText");
             EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
             AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");
+        
         }
     }
 }

@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public BubbleController leftTop, rightBottom;
         public BubbleController rightTop, leftBottom;
 
-        public void Initialise(ITrashTalkData trashTalkData, ILocTable commonStrings)
+        public void Initialise(ITrashTalkData trashTalkData, ILocTable commonStrings, ILocTable storyStrings)
         {
             Helper.AssertIsNotNull(leftTop, rightBottom, rightTop, leftBottom);
             Helper.AssertIsNotNull(trashTalkData, commonStrings);
@@ -32,10 +32,13 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
 
             string protagonistName = commonStrings.GetString("Names/Protagonist");
+
             playerBubble.Initialise(protagonistName, trashTalkData.PlayerText);
             playerBubble.gameObject.SetActive(true);
 
-            enemyBubble.Initialise(trashTalkData.EnemyName, trashTalkData.EnemyText);
+            string enemyName = storyStrings.GetString($"{trashTalkData.stringKeyBase}/name");
+
+            enemyBubble.Initialise(enemyName, trashTalkData.EnemyText);
             enemyBubble.gameObject.SetActive(true);
         }
     }
