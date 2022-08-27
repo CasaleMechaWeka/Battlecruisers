@@ -9,7 +9,11 @@ namespace BattleCruisers.Tutorial.Explanation
     {
         private RectTransform _transform;
 
-        private const float EXPANDED_HEIGHT = 437;
+        private const float LARGE_HEIGHT = 770;
+        private const float EXPANDED_HEIGHT = 570; 
+        private const float EXPANDED_HEIGHT_NO_BUTTONS = 460;
+        private const float MID_HEIGHT = 430;
+        private const float MID_HEIGHT_NO_BUTTONS = 320;
         private const float SHRUNK_HEIGHT = 220;
 
         public TextDisplayer textDisplayer;
@@ -40,7 +44,38 @@ namespace BattleCruisers.Tutorial.Explanation
         public void ExpandHeight()
         {
             Logging.LogMethod(Tags.TUTORIAL_EXPLANATION_PANEL);
-            _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, EXPANDED_HEIGHT);
+            //change height depending on the length of the text (number of characters)
+            if (textDisplayer.Text.Length <= 36)
+            {
+                _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, MID_HEIGHT_NO_BUTTONS);
+            }
+            else if (textDisplayer.Text.Length < 60)
+            {
+                if (!doneButton.Enabled && !okButton.Enabled) //if no buttons then reduce height further
+                {
+                    _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, MID_HEIGHT_NO_BUTTONS);
+                }
+                else
+                {
+                    _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, MID_HEIGHT);
+                }
+            }
+            else if (textDisplayer.Text.Length < 140)
+            {
+                if (!doneButton.Enabled && !okButton.Enabled) //if no buttons then reduce height further
+                {
+                    _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, EXPANDED_HEIGHT_NO_BUTTONS);
+                }
+                else
+                {
+                    _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, EXPANDED_HEIGHT);
+                }
+            }
+            else 
+            {
+                _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, LARGE_HEIGHT);
+            }
+            
         }
 
         public void ShrinkHeight()
