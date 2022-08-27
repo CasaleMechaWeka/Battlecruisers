@@ -1086,7 +1086,7 @@ namespace Game2DWaterKit
                 if (EditorGUI.EndChangeCheck())
                 {
 
-                    noiseTex.Resize(newNoiseSize, newNoiseSize, noiseTextureFormat, false);
+                    noiseTex.Reinitialize(newNoiseSize, newNoiseSize, noiseTextureFormat, false);
 
 #if UNITY_2017_1_OR_NEWER
                     noiseTex.wrapMode = newNoiseTextureWrapMode == NoiseTextureWrapMode.Repeat ? TextureWrapMode.Repeat : TextureWrapMode.Mirror;
