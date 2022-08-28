@@ -45,7 +45,7 @@ namespace BattleCruisers.Tutorial.Explanation
         {
             Logging.LogMethod(Tags.TUTORIAL_EXPLANATION_PANEL);
             //change height depending on the length of the text (number of characters)
-            if (textDisplayer.Text.Length <= 36)
+            if (textDisplayer.Text.Length < 39)
             {
                 _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, MID_HEIGHT_NO_BUTTONS);
             }

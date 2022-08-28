@@ -5,7 +5,7 @@ namespace BattleCruisers.Tutorial.Explanation
 {
     public class HeightDecider : IHeightDecider
     {
-        private const float SHRUNK_CHARACTER_COUNT = 36;
+        private const float SHRUNK_CHARACTER_COUNT = 39;
 
         public bool CanShrinkPanel(ITogglable doneButton, ITogglable okButton, string text)
         {
