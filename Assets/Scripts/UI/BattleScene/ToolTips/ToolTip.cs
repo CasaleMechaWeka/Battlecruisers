@@ -14,6 +14,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private bool exited = true;
     private ToolTipActivator toolTipActivator;
     private bool started = false;
+    private int _virticalAdjustment = 0;
 
     public void Start()
     {
@@ -28,18 +29,34 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void Update()
     {
+        
+    }
+
+    private void adjustForHandheld() {
+        _virticalAdjustment = -3;
+        toolTipText.fontSize = 80;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+
         if (started && toolTipActivator.toggleController.IsChecked != null)
         {
-            if (Input.mousePosition.x < Screen.width*3/4)
+            if (SystemInfo.deviceType == DeviceType.Handheld)
             {
-                ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(0, 0);
-                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(0, 0);
-                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(0, 0);
+                adjustForHandheld();
             }
-            else{
-                ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(1, 0);
-                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(1, 0);
-                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(1, 0);
+            if (Input.mousePosition.x < Screen.width*3/4)
+            {//left 3/4 of the screen
+                ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(0, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(0, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(0, _virticalAdjustment);
+            }
+            else
+            {//right 1/4 of the screen
+                ((RectTransform)ToolTipTextObject.transform).anchorMin = new Vector2(1, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).anchorMax  = new Vector2(1, _virticalAdjustment);
+                ((RectTransform)ToolTipTextObject.transform).pivot  = new Vector2(1, _virticalAdjustment);
             }
             
             ToolTipTextObject.transform.position = Input.mousePosition;
@@ -48,14 +65,11 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             {
                 hide();
             }
-        }
-    }
-    
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        toolTipText.text = textForLoc.text;
-        show();
+            toolTipText.text = textForLoc.text;
+            show();
+        }
+
     }
 
     private void show()
