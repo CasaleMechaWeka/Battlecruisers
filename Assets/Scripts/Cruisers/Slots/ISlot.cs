@@ -63,5 +63,8 @@ namespace BattleCruisers.Cruisers.Slots
 
         void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer);
         void SetBuilding(IBuilding building);
-	}
+
+        void controlBuildingPlacementFeedback(bool active);
+
+    }
 }

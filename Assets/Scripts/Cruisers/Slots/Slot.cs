@@ -51,6 +51,8 @@ namespace BattleCruisers.Cruisers.Slots
         private ISettableBroadcastingProperty<IBuilding> _baseBuilding;
         public IBroadcastingProperty<IBuilding> Building { get; private set; }
 
+        private Transform _buildingPlacementFeedback;
+
         /// <summary>
         /// Only show/hide slot sprite renderer.  Always show boost feedback.
         /// </summary>
@@ -58,6 +60,12 @@ namespace BattleCruisers.Cruisers.Slots
         {
             get { return _renderer.gameObject.activeSelf; }
             set { _renderer.gameObject.SetActive(value); }
+        }
+
+        public void controlBuildingPlacementFeedback( bool active) 
+        {
+            _renderer.gameObject.SetActive(active);
+            _buildingPlacementFeedback.gameObject.SetActive(active);
         }
 
         private IBuilding SlotBuilding
@@ -108,6 +116,9 @@ namespace BattleCruisers.Cruisers.Slots
             SlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);
             _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this);
+
+
+            _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");
         }
 
 		public void OnPointerClick(PointerEventData eventData)

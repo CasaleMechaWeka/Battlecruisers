@@ -217,9 +217,8 @@ namespace BattleCruisers.Cruisers
 
         public IBuilding ConstructSelectedBuilding(ISlot slot)
 		{
-			Assert.IsNotNull(SelectedBuildingPrefab);
+            Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
 
             building.Activate(
@@ -240,7 +239,8 @@ namespace BattleCruisers.Cruisers
 
 			BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
 
-			return building;
+            slot.controlBuildingPlacementFeedback(true);
+            return building;
 		}
 
         private void Building_CompletedBuildable(object sender, EventArgs e)

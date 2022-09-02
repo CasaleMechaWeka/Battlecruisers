@@ -71,6 +71,7 @@ namespace BattleCruisers.Cruisers.Slots
 			{
                 if (_highlightableFilter.IsMatch(slot))
 				{
+                    slot.controlBuildingPlacementFeedback(false);
                     slot.IsVisible = true;
                     wasAnySlotHighlighted = true;
 				}
