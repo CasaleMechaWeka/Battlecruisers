@@ -8,7 +8,7 @@ public class ScreenShake : MonoBehaviour
     private Camera _camera;
     // Transform of the camera to shake. Grabs the gameObject's transform
     private Transform _camTransform;
-    private Vector3 _originalPos;
+    private Quaternion _originalPos;
     //easy off and on switch
     public bool useScreenShake = true;
     // How long the object should shake for.
@@ -33,7 +33,7 @@ public class ScreenShake : MonoBehaviour
         }
 
         _camTransform = _camera.GetComponent(typeof(Transform)) as Transform;
-        _originalPos = _camTransform.localPosition;
+        _originalPos = _camera.transform.rotation;
     }
 
     // Update is called once per frame
@@ -44,14 +44,15 @@ public class ScreenShake : MonoBehaviour
         }
         if (shakeDuration > 0)
         {
-            _camTransform.localPosition = _originalPos + Random.insideUnitSphere * shakeAmount;
+            Vector3 newRotation =  Random.insideUnitSphere * shakeAmount;
+            _camTransform.rotation = Quaternion.Euler(newRotation); //_originalPos + Random.insideUnitSphere * shakeAmount;
 
             shakeDuration -= Time.deltaTime * decreaseFactor;
         }
         else
         {
             shakeDuration = 0f;
-            _camTransform.localPosition = _originalPos;
+            _camTransform.rotation = _originalPos;
         }
     }
 }
