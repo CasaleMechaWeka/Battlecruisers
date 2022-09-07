@@ -13,10 +13,11 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class Slot : MonoBehaviour, ISlot, IPointerClickHandler
+    public class Slot : MonoBehaviour, ISlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
     {
         private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
@@ -52,6 +53,9 @@ namespace BattleCruisers.Cruisers.Slots
         public IBroadcastingProperty<IBuilding> Building { get; private set; }
 
         private Transform _buildingPlacementFeedback;
+        private Transform _buildingPlacementBeacon;
+
+        private BuildableClickAndDrag _clickAndDrag;
 
         /// <summary>
         /// Only show/hide slot sprite renderer.  Always show boost feedback.
@@ -65,7 +69,21 @@ namespace BattleCruisers.Cruisers.Slots
         public void controlBuildingPlacementFeedback( bool active) 
         {
             _renderer.gameObject.SetActive(active);
-            _buildingPlacementFeedback.gameObject.SetActive(active);
+
+            if (_buildingPlacementFeedback != null && _buildingPlacementBeacon != null)
+            {
+                _buildingPlacementFeedback.gameObject.SetActive(active);
+                _buildingPlacementBeacon.gameObject.SetActive(false);
+            }
+
+        }
+
+        public void controlBuildingPlacementBeacon(bool active)
+        {
+            if (_renderer.gameObject.activeSelf && _buildingPlacementBeacon != null)
+            {
+                _buildingPlacementBeacon.gameObject.SetActive(active);
+            }
         }
 
         private IBuilding SlotBuilding
@@ -119,9 +137,34 @@ namespace BattleCruisers.Cruisers.Slots
 
 
             _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");
+            _buildingPlacementBeacon = _renderer.gameObject.transform.Find("BuildingPlacementBeacon");
+            _clickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<BuildableClickAndDrag>();
         }
 
-		public void OnPointerClick(PointerEventData eventData)
+
+        public void OnDrop(PointerEventData eventData) {
+            OnPointerClick(eventData);
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+         //do nothing here
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (Input.GetMouseButton(0) && _clickAndDrag.ClickAndDraging)//if we are doing click and drag
+            {
+                controlBuildingPlacementBeacon(true);
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            controlBuildingPlacementBeacon(false);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
 		{
             Logging.LogMethod(Tags.SLOTS);
 

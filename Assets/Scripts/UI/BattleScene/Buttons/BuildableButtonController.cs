@@ -53,16 +53,19 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                     buildableImageOutline.color = value;//modified
                     buildableName.color = value;
                     redGlowImage.color = redGlowColor;
+                    isSelected = true;
                 }
                 else{
                     buildableImageOutline.color = Color.clear;
                     buildableName.color = redColor;
                     redGlowImage.color = Color.clear;
+                    isSelected = false;
                 }//holy shit i am insane
                 
             }
         }
 
+        public bool isSelected = false;
         public void Initialise(ISingleSoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
 		{
 			base.Initialise(soundPlayer);
@@ -106,6 +109,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void TriggerClick()
         {
             OnClicked();
+        }
+
+        public override void OnPointerDown(PointerEventData eventData) {
+            base.OnPointerDown(eventData);
+        }
+
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            base.OnPointerUp(eventData);
         }
 
         public override void OnPointerEnter(PointerEventData eventData)
