@@ -66,5 +66,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         void controlBuildingPlacementFeedback(bool active);
 
+        void stopBuildingPlacementFeedback();
+
     }
 }

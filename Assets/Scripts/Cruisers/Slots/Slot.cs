@@ -66,16 +66,18 @@ namespace BattleCruisers.Cruisers.Slots
             set { _renderer.gameObject.SetActive(value); }
         }
 
-        public void controlBuildingPlacementFeedback( bool active) 
+        public void controlBuildingPlacementFeedback(bool active) 
         {
             _renderer.gameObject.SetActive(active);
+            _buildingPlacementFeedback.gameObject.SetActive(active);
+            Invoke("stopBuildingPlacementFeedback", 0.5f);
+            _buildingPlacementBeacon.gameObject.SetActive(false);
 
-            if (_buildingPlacementFeedback != null && _buildingPlacementBeacon != null)
-            {
-                _buildingPlacementFeedback.gameObject.SetActive(active);
-                _buildingPlacementBeacon.gameObject.SetActive(false);
-            }
+        }
 
+        public void stopBuildingPlacementFeedback() {
+            _buildingPlacementFeedback.gameObject.SetActive(false);
+            _renderer.gameObject.SetActive(false);
         }
 
         public void controlBuildingPlacementBeacon(bool active)
@@ -102,7 +104,7 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     _buildingPlacer.PlaceBuilding(_baseBuilding.Value, this);
                     _baseBuilding.Value.Destroyed += OnBuildingDestroyed;
-				}
+                }
             }
         }
 
