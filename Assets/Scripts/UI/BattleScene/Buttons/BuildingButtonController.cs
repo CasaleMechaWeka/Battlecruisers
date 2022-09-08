@@ -57,7 +57,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 _buildableClickAndDrag.ClickAndDraging = true;
                 _clickAndDragIcon.gameObject.SetActive(true);
                 Vector3 mousePosition = Input.mousePosition;
-                mousePosition.y = mousePosition.y + (Screen.height/10);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
+                if (SystemInfo.deviceType == DeviceType.Handheld)
+                {
+                    mousePosition.y = mousePosition.y + (Screen.height / 5);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
+                }
+                else 
+                {
+                    mousePosition.y = mousePosition.y + (Screen.height / 10);//move to just above the pointer - this enables better visability of icon and for pointer to gameobject interactions
+                }
+                
                 _clickAndDragIcon.position = mousePosition;
             }
         }
