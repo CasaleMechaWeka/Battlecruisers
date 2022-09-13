@@ -4,10 +4,14 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
@@ -26,6 +30,13 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private int lastClickedType = -1; //-1 is for nothing, 0 is for buildings and 1 is for units
 
         private ITarget _shownItem;
+        private IExplanationPanel _explanationPanel;
+        private IHintDisplayer _hintDisplayer;
+
+        public void SetExplanationPanel(IExplanationPanel explanationPanelValue) {
+            _explanationPanel = explanationPanelValue;
+        }
+
         private ITarget ShownItem
         {
             set
@@ -100,14 +111,22 @@ namespace BattleCruisers.UI.BattleScene.Manager
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
-		public void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
+		public async void SelectBuildingFromMenu(IBuildableWrapper<IBuilding> buildingWrapper)
 		{
             Logging.LogMethod(Tags.UI_MANAGER);
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
             //_detailsManager.ShowDetails(buildingWrapper.Buildable);
             bool wasAnySlotHighlighted =_playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
-
+            ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
+            if (_explanationPanel != null)
+            {
+                if (_hintDisplayer == null)
+                {
+                    _hintDisplayer = new NonRepeatingHintDisplayer(new HintDisplayer(_explanationPanel));
+                }
+                _hintDisplayer.ShowHint(_commonStrings.GetString("Steps/Touchdrag"));
+            }
             if (!wasAnySlotHighlighted)
             {
                 _soundPlayer.PlaySound(PrioritisedSoundKeys.Events.Cruiser.NoBuildingSlotsLeft);

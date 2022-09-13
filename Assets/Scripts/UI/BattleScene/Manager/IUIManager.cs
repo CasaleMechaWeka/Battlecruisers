@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Tutorial.Explanation;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
@@ -21,5 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         void UnpeakUnitDetails();
         void UnpeakBuildingDetails();
 
-	}
+        void SetExplanationPanel(IExplanationPanel explanationPanelValue);
+
+    }
 }

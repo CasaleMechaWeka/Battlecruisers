@@ -179,7 +179,7 @@ namespace BattleCruisers.Scenes.BattleScene
             cruiserFactory.InitialisePlayerCruiser(playerCruiser, aiCruiser, cameraComponents.CameraFocuser, playerCruiserUserChosenTargetManager);
 
             // Initialise AI cruiser
-            IUserChosenTargetHelper userChosenTargetHelper 
+            IUserChosenTargetHelper userChosenTargetHelper
                 = helper.CreateUserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
                     playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
@@ -191,7 +191,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     cameraComponents.CameraFocuser,
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
-            
+
 
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
@@ -201,7 +201,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
-            LeftPanelComponents leftPanelComponents 
+            LeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
                     new DroneManagerMonitor(playerCruiser.DroneManager, components.Deferrer),
@@ -293,7 +293,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 cameraComponents.CameraFocuser,
                 rightPanelComponents.SpeedComponents,
                 rightPanelComponents.MainMenuManager);
-            _gameEndMonitor 
+            _gameEndMonitor
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(
                         playerCruiser,
@@ -320,20 +320,22 @@ namespace BattleCruisers.Scenes.BattleScene
             // Tutorial
             ITutorialArgsBase tutorialArgs
                 = new TutorialArgsBase(
-                    applicationModel, 
-                    playerCruiser, 
-                    aiCruiser, 
+                    applicationModel,
+                    playerCruiser,
+                    aiCruiser,
                     _tutorialProvider,
                     prefabFactory,
-                    components, 
-                    cameraComponents, 
+                    components,
+                    cameraComponents,
                     topPanelComponents,
-                    leftPanelComponents, 
-                    rightPanelComponents, 
+                    leftPanelComponents,
+                    rightPanelComponents,
                     uiManager,
                     _gameEndMonitor);
             await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
-
+            if (helper.ShowInGameHints) { 
+                uiManager.SetExplanationPanel(tutorialInitialiser.explanationPanel);
+            }
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
