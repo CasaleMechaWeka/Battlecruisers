@@ -11,11 +11,14 @@ namespace BattleCruisers.Utils.Localisation
         Task<ILocTable> LoadTutorialTableAsync();
         Task<ILocTable> LoadFontsTableAsync();
 
+        Task<ILocTable> LoadAdvertisingTableAsync();
+
         void ReleaseBattleSceneTable();
         void ReleaseCommonTable();
         void ReleaseScreensSceneTable();
         void ReleaseStoryTable();
         void ReleaseTutorialTable();
         void ReleaseFontsTable();
+        void ReleaseAdvertisingTable();
     }
 }
