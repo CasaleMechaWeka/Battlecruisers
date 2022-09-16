@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
-    public class BuildingButtonController : BuildableButtonController, IPointerUpHandler, IEndDragHandler, IDragHandler
+    public class BuildingButtonController : BuildableButtonController, IPointerDownHandler, IEndDragHandler, IDragHandler
     {
 		private IBuildableWrapper<IBuilding> _buildingWrapper;
         private IBuildingClickHandler _clickHandler;
@@ -69,11 +69,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 _clickAndDragIcon.position = mousePosition;
             }
         }
-
+        public override void OnPointerDown(PointerEventData eventData)
+        {
+            base.OnPointerDown(eventData);
+            _clickHandler.HandleClick(IsMatch, _buildingWrapper);
+        }
 
         protected override void HandleClick(bool isButtonEnabled)
         {
-            _clickHandler.HandleClick(isButtonEnabled, _buildingWrapper);
+          //we are now controlling the selection via OnPointerDown
 		}
 
         public override void HandleHover()
