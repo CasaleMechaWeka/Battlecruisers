@@ -1,6 +1,8 @@
 using BattleCruisers.Utils.Localisation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,16 +13,18 @@ public class ScrollingText : MonoBehaviour
     public GameObject _TextCompanyName;
     private TMP_Text TextBox;
     private BoxCollider2D boxCollider;
-    private string _message = "";
+    private TMP_Text _TextBox;
     public float scrollSpeed = 50;
     private float _xPos;
     private ILocTable _advertisingTable;
+    private int _scrollAdjustment;
+    private int[] _randomiserArray = new int[7];
+    private int _numberOfRandomAttempts = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        TextBox = GetComponent<TMP_Text>();
-        _message = TextBox.text;
+        _TextBox = GetComponent<TMP_Text>();
         boxCollider = _TextMask.GetComponent<BoxCollider2D>();
         setupText();
     }
@@ -30,7 +34,7 @@ public class ScrollingText : MonoBehaviour
     {
         _xPos -= Time.deltaTime * scrollSpeed;
         transform.position = new Vector3(_xPos, transform.position.y, transform.position.z);
-        if ((_xPos + 3000) < 2700) {
+        if ((_xPos + 3000) < (2700-_scrollAdjustment)) {
             setupText();   
         }
     }
@@ -42,55 +46,31 @@ public class ScrollingText : MonoBehaviour
         textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
         _xPos = boxCollider.size.x;
         transform.position = new Vector3(_xPos, transform.position.y, transform.position.z);
+        int randomnumber = UnityEngine.Random.Range(1, 8);
+        int numberOfRandomAttempts = 0;
+        while (numberOfRandomAttempts < 6) {
+            numberOfRandomAttempts += 1;
+            if (_randomiserArray.Contains(randomnumber))
+            {
+                randomnumber = UnityEngine.Random.Range(1, 8);
+            }
+            else {
+                break;
+            }
+        }
+
+        _numberOfRandomAttempts += 1;
+
+        _randomiserArray[_numberOfRandomAttempts] = randomnumber;
+        if (_numberOfRandomAttempts > 5) {//we have to much history, clear it
+            Array.Clear(_randomiserArray, 0, _randomiserArray.Length);
+            _numberOfRandomAttempts = 0;
+        }
+
+        _TextBox.text = _advertisingTable.GetString("ScrollingAd/" + randomnumber);
+        _scrollAdjustment = (int)(_TextBox.text.Length * 3);
+
     }
 
-    private void scrollText()
-    {
-        // Set up the message's rect if we haven't already
-        if (messageRect.width == 0)
-        {
-            Vector2 dimensions = GUI.skin.label.CalcSize(new GUIContent(_message));
-
-            // Start the message past the left side of the screen
-            messageRect.x = +dimensions.x;
-            messageRect.width = dimensions.x;
-            messageRect.height = dimensions.y;
-        }
-
-        messageRect.x -= Time.deltaTime * scrollSpeed;
-
-        // If the message has moved past the right side, move it back to the left
-        if (messageRect.x > Screen.width)
-        {
-            messageRect.x = -messageRect.width;
-        }
-
-        GUI.Label(messageRect, _message);
-    }
-
-    Rect messageRect;
-
-    void OnGUI()
-    {
-       /* // Set up the message's rect if we haven't already
-        if (messageRect.width == 0)
-        {
-            Vector2 dimensions = GUI.skin.label.CalcSize(new GUIContent(_message));
-
-            // Start the message past the left side of the screen
-            messageRect.x = +dimensions.x;
-            messageRect.width = dimensions.x;
-            messageRect.height = dimensions.y;
-        }
-
-        messageRect.x -= Time.deltaTime * scrollSpeed;
-
-        // If the message has moved past the right side, move it back to the left
-        if (messageRect.x > Screen.width)
-        {
-            messageRect.x = -messageRect.width;
-        }
-
-        GUI.Label(messageRect, _message);*/
-    }
+ 
 }
