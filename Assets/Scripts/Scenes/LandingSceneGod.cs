@@ -7,6 +7,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using GoogleMobileAds.Api;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -30,6 +31,9 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+            // Initialize the Google Mobile Ads SDK.
+            MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
+
             Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
             
             if (!_isInitialised)
