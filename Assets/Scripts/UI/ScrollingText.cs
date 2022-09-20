@@ -8,9 +8,8 @@ using UnityEngine.UI;
 
 public class ScrollingText : MonoBehaviour
 {
-    public GameObject _TextMask;
-    public GameObject _TextCompanyName;
-    private TMP_Text TextBox;
+    public GameObject TextMask;
+    public GameObject TextCompanyName;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     public float scrollSpeed = 50;
@@ -29,7 +28,9 @@ public class ScrollingText : MonoBehaviour
     {
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = GetComponent<TMP_Text>();
-        boxCollider = _TextMask.GetComponent<BoxCollider2D>();
+        boxCollider = TextMask.GetComponent<BoxCollider2D>();
+        Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
+        textBoxCompanyName.text = "";
         RequestBanner();
     }
 
@@ -44,6 +45,7 @@ public class ScrollingText : MonoBehaviour
         transform.position = new Vector3(_xPos, transform.position.y, transform.position.z);
         if (_xPos < -_scrollAdjustment) {
             RequestBanner();
+
         }
     }
 
@@ -52,7 +54,7 @@ public class ScrollingText : MonoBehaviour
         transform.position = new Vector3(_xPos, transform.position.y, transform.position.z);
 
         _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
-        Text textBoxCompanyName = _TextCompanyName.GetComponent<Text>();
+        Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
         textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
         int randomnumber = UnityEngine.Random.Range(1, 8);
         int numberOfRandomAttempts = 0;
@@ -80,7 +82,6 @@ public class ScrollingText : MonoBehaviour
 
     }
 
-
     private void RequestBanner()
     {
         if (_bannerView != null)
@@ -90,24 +91,24 @@ public class ScrollingText : MonoBehaviour
 
         _ADLoaded = false;
 
+        string adUnitId = "unused";
+
         #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-7490362328602066/6763471166";//only android implementation to start with
+            adUnitId = "ca-app-pub-3940256099942544/6300978111";//only android implementation to start with
         #else
-                    string adUnitId = "unexpected_platform";
+            adUnitId = "unexpected_platform";
         #endif
 
-        // Create a 320x50 banner at the top of the screen.
-        _bannerView = new BannerView(adUnitId, AdSize.Leaderboard, AdPosition.Bottom);
+        _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
         // Called when an ad request has successfully loaded.
-        _bannerView.OnAdLoaded += this.HandleOnAdLoaded;
+        _bannerView.OnAdLoaded += HandleOnAdLoaded;
         // Called when an ad request failed to load.
-        _bannerView.OnAdFailedToLoad += this.HandleOnAdFailedToLoad;
+        _bannerView.OnAdFailedToLoad += HandleOnAdFailedToLoad;
         // Called when an ad is clicked.
-        _bannerView.OnAdOpening += this.HandleOnAdOpened;
+        _bannerView.OnAdOpening += HandleOnAdOpened;
         // Called when the user returned from the app after an ad click.
-        _bannerView.OnAdClosed += this.HandleOnAdClosed;
-
+        _bannerView.OnAdClosed += HandleOnAdClosed;
 
         // Load the banner with the request.
         _bannerView.LoadAd(CreateAdRequest());
@@ -126,8 +127,11 @@ public class ScrollingText : MonoBehaviour
         setupText();
     }
 
+
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
+        _ADLoaded = true;
+        setupText();//carry on anyway - we have a dummy add to serve up
         Debug.Log("HandleFailedToReceiveAd event received with message: "
                             + args.LoadAdError.GetMessage());
     }
