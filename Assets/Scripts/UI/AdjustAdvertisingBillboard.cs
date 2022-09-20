@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class AdjustAdvertisingBillboard : MonoBehaviour
 {
+
+    private bool _LoadAdvert = false;
+    public bool LoadAdvert
+    {
+        get => _LoadAdvert;
+        set => _LoadAdvert = value;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -11,9 +19,9 @@ public class AdjustAdvertisingBillboard : MonoBehaviour
 
         #if UNITY_ANDROID
             gameObject.SetActive(true);
-#elif UNITY_EDITOR
-            gameObject.SetActive(true);
-#endif
+        #elif UNITY_EDITOR
+                    gameObject.SetActive(true);
+        #endif
 
         if (gameObject.activeSelf) //if active we might want to do some things to it
         { 

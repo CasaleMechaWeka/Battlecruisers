@@ -10,6 +10,9 @@ public class ScrollingText : MonoBehaviour
 {
     public GameObject TextMask;
     public GameObject TextCompanyName;
+    public GameObject ScrollingTextBox;
+    public GameObject ParentScreen;
+    private AdjustAdvertisingBillboard _adjustAdvertisingBillboard;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     public float scrollSpeed = 50;
@@ -19,6 +22,7 @@ public class ScrollingText : MonoBehaviour
     private int[] _randomiserArray = new int[7];
     private int _numberOfRandomAttempts = 0;
     private bool _ADLoaded = false;
+    private bool _isFirstLoad = true;
 
     //advertising banner
     private BannerView _bannerView;
@@ -27,31 +31,50 @@ public class ScrollingText : MonoBehaviour
     void Start()
     {
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
-        _TextBox = GetComponent<TMP_Text>();
+        _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
         boxCollider = TextMask.GetComponent<BoxCollider2D>();
         Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
         textBoxCompanyName.text = "";
-        RequestBanner();
+
+        if (ParentScreen != null) 
+        {
+            _adjustAdvertisingBillboard = ParentScreen.GetComponent<AdjustAdvertisingBillboard>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_adjustAdvertisingBillboard != null && _isFirstLoad) 
+        {
+            if (!_adjustAdvertisingBillboard.LoadAdvert)
+            {
+                return;
+            }
+            else 
+            {
+                _isFirstLoad = false;
+                RequestBanner();//first request for banner
+            }
+        }
+
         if (!_ADLoaded)
         {
             return;
         }
         _xPos -= Time.deltaTime * scrollSpeed;
-        transform.position = new Vector3(_xPos, transform.position.y, transform.position.z);
+        ScrollingTextBox.transform.position = new Vector3(_xPos, ScrollingTextBox.transform.position.y, ScrollingTextBox.transform.position.z);
         if (_xPos < -_scrollAdjustment) {
-            RequestBanner();
-
+            if (_adjustAdvertisingBillboard == null || _adjustAdvertisingBillboard.LoadAdvert)
+            {
+                RequestBanner();
+            }
         }
     }
 
     private async void setupText() {
         _xPos = (int) (boxCollider.size.x * 1.2);
-        transform.position = new Vector3(_xPos, transform.position.y, transform.position.z);
+        ScrollingTextBox.transform.position = new Vector3(_xPos, ScrollingTextBox.transform.position.y, ScrollingTextBox.transform.position.z);
 
         _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
         Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
@@ -126,7 +149,6 @@ public class ScrollingText : MonoBehaviour
         _ADLoaded = true;
         setupText();
     }
-
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
