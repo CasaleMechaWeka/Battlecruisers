@@ -52,6 +52,7 @@ namespace BattleCruisers.Scenes
         public TrashTalkDataList trashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
+        public AdvertisingBannerScrollingText AdvertisingBanner;
 
         [SerializeField]
         private AudioSource _uiAudioSource;
@@ -200,6 +201,7 @@ namespace BattleCruisers.Scenes
         public void GoToHomeScreen()
         {
             GoToScreen(homeScreen);
+            AdvertisingBanner.startAdvert();
         }
 
         public void GoToLevelsScreen()
@@ -255,6 +257,7 @@ namespace BattleCruisers.Scenes
         private static int levelToShowCutscene = 0;
 		public void GoToTrashScreen(int levelNum)
 		{
+
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
@@ -275,6 +278,10 @@ namespace BattleCruisers.Scenes
                     //_musicPlayer.PlayTrashMusic();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
+                    AdvertisingBanner.startAdvert();
+                    //AdvertisingBanner.gameObject.activeSelf  can use this to adjust things
+                    //Debug.Log(trashScreen.startBattleButton.transform.localPosition);
+                   // Debug.Log(trashScreen.startBattleButton.transform.position);
                 }
                 
             }
@@ -317,6 +324,8 @@ namespace BattleCruisers.Scenes
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
+            AdvertisingBanner.stopAdvert();
+
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
             Assert.AreNotEqual(_currentScreen, destinationScreen);

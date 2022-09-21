@@ -6,12 +6,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScrollingText : MonoBehaviour
+public class AdvertisingBannerScrollingText : MonoBehaviour
 {
+    public bool loadAdvert;
     public GameObject TextMask;
     public GameObject TextCompanyName;
     public GameObject ScrollingTextBox;
-    public GameObject ParentScreen;
+    public GameObject MainBannerFront;
     private AdjustAdvertisingBillboard _adjustAdvertisingBillboard;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
@@ -28,30 +29,47 @@ public class ScrollingText : MonoBehaviour
     private BannerView _bannerView;
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        gameObject.SetActive(false);//default of not active
+        #if UNITY_ANDROID
+            gameObject.SetActive(true);
+        #elif UNITY_EDITOR
+            gameObject.SetActive(true);
+        #endif
+
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
         boxCollider = TextMask.GetComponent<BoxCollider2D>();
+        _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
         Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
-        textBoxCompanyName.text = "";
+        textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
+    }
 
-        if (ParentScreen != null) 
+    public void stopAdvert() {
+        gameObject.SetActive(false);
+        if (_bannerView != null)
         {
-            _adjustAdvertisingBillboard = ParentScreen.GetComponent<AdjustAdvertisingBillboard>();
+            _bannerView.Destroy();//clear out the old one
+            _bannerView = null;
         }
+    }
+
+    public void startAdvert() {
+        loadAdvert = true;
+        gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_adjustAdvertisingBillboard != null && _isFirstLoad) 
+        if (_isFirstLoad)
         {
-            if (!_adjustAdvertisingBillboard.LoadAdvert)
+            if (!loadAdvert)
             {
                 return;
             }
-            else 
+            else
             {
                 _isFirstLoad = false;
                 RequestBanner();//first request for banner
@@ -62,23 +80,25 @@ public class ScrollingText : MonoBehaviour
         {
             return;
         }
+
+        if (_bannerView == null) {
+            RequestBanner();
+        }
+
         _xPos -= Time.deltaTime * scrollSpeed;
         ScrollingTextBox.transform.position = new Vector3(_xPos, ScrollingTextBox.transform.position.y, ScrollingTextBox.transform.position.z);
         if (_xPos < -_scrollAdjustment) {
-            if (_adjustAdvertisingBillboard == null || _adjustAdvertisingBillboard.LoadAdvert)
+            if (loadAdvert)
             {
                 RequestBanner();
             }
         }
     }
 
-    private async void setupText() {
+    private void setupText() {
         _xPos = (int) (boxCollider.size.x * 1.2);
         ScrollingTextBox.transform.position = new Vector3(_xPos, ScrollingTextBox.transform.position.y, ScrollingTextBox.transform.position.z);
 
-        _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
-        Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
-        textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
         int randomnumber = UnityEngine.Random.Range(1, 8);
         int numberOfRandomAttempts = 0;
         while (numberOfRandomAttempts < 6) {
@@ -110,6 +130,7 @@ public class ScrollingText : MonoBehaviour
         if (_bannerView != null)
         {
             _bannerView.Destroy();//clear out the old one
+            _bannerView = null;
         }
 
         _ADLoaded = false;

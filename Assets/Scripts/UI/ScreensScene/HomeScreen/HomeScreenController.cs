@@ -13,12 +13,6 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 	{
 		private BattleResult _lastBattleResult;
         private INextLevelHelper _nextLevelHelper;
-        private bool _LoadAdvert = false;
-        private bool LoadAdvert
-        {
-            get => _LoadAdvert;
-            set => _LoadAdvert = value;
-        }
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -36,10 +30,6 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
             HomeScreenLayout layout = GetLayout(dataProvider.GameModel);
             layout.Initialise(this, dataProvider.GameModel, soundPlayer);
             layout.IsVisible = true;
-
-            AdjustAdvertisingBillboard billboard = GetComponent<AdjustAdvertisingBillboard>();
-            billboard.LoadAdvert = true;
-
         }
 
         private HomeScreenLayout GetLayout(IGameModel gameModel)
@@ -68,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void Continue()
 		{
-			Assert.IsNotNull(_lastBattleResult);
+            Assert.IsNotNull(_lastBattleResult);
 
             int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
 			_screensSceneGod.GoToTrashScreen(nextLevelToPlay);
@@ -76,12 +66,12 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void GoToLevelsScreen()
 		{
-			_screensSceneGod.GoToLevelsScreen();
+            _screensSceneGod.GoToLevelsScreen();
 		}
 
         public void GoToLoadoutScreen()
 		{
-			_screensSceneGod.GoToLoadoutScreen();
+            _screensSceneGod.GoToLoadoutScreen();
 		}
 
         public void GoToSettingsScreen()

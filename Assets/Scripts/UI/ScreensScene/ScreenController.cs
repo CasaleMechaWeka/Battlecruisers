@@ -8,7 +8,6 @@ namespace BattleCruisers.UI.ScreensScene
     public abstract class ScreenController : PresentableController
 	{ 
 		protected IScreensSceneGod _screensSceneGod;
-
         public bool IsInitialised => _screensSceneGod != null;
 
         protected void Initialise(IScreensSceneGod screensSceneGod)

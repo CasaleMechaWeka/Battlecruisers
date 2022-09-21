@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class AdjustAdvertisingBillboard : MonoBehaviour
 {
-
+    public GameObject AdertisingBanner;
+    private AdvertisingBannerScrollingText _AdvertisingBannerController;
+    public AdvertisingBannerScrollingText AdvertisingBannerController
+    { get => _AdvertisingBannerController; }
+   
     private bool _LoadAdvert = false;
     public bool LoadAdvert
     {
@@ -15,17 +19,7 @@ public class AdjustAdvertisingBillboard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);//default of not active
-
-        #if UNITY_ANDROID
-            gameObject.SetActive(true);
-        #elif UNITY_EDITOR
-                    gameObject.SetActive(true);
-        #endif
-
-        if (gameObject.activeSelf) //if active we might want to do some things to it
-        { 
-        }
+         _AdvertisingBannerController = AdertisingBanner.GetComponent<AdvertisingBannerScrollingText>();
     }
 
     // Update is called once per frame
