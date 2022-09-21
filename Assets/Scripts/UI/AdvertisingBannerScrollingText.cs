@@ -137,8 +137,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         string adUnitId = "unused";
 
-        #if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/6300978111";//only android implementation to start with
+#if UNITY_ANDROID
+        adUnitId = "ca-app-pub-7490362328602066/6763471166";//test ID>> "ca-app-pub-3940256099942544/6300978111";//only android implementation to start with
         #else
             adUnitId = "unexpected_platform";
         #endif
