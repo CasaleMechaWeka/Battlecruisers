@@ -256,8 +256,8 @@ namespace BattleCruisers.Scenes
 
         private static int levelToShowCutscene = 0;
 		public void GoToTrashScreen(int levelNum)
-		{
-
+        {
+            AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
@@ -293,6 +293,7 @@ namespace BattleCruisers.Scenes
 
         public void GoStraightToTrashScreen(int levelNum)
 		{
+            AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
