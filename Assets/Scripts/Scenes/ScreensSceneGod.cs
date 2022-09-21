@@ -349,7 +349,8 @@ namespace BattleCruisers.Scenes
         }
 
         public void LoadBattleScene()
-        { 
+        {
+            AdvertisingBanner.stopAdvert();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }

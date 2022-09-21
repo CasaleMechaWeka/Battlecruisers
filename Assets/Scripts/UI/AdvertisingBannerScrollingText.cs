@@ -13,6 +13,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public GameObject TextCompanyName;
     public GameObject ScrollingTextBox;
     public GameObject MainBannerFront;
+    public GameObject DefaultBanner;
     private AdjustAdvertisingBillboard _adjustAdvertisingBillboard;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
@@ -34,9 +35,21 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         gameObject.SetActive(false);//default of not active
         #if UNITY_ANDROID
             gameObject.SetActive(true);
-        #elif UNITY_EDITOR
+#elif UNITY_EDITOR
             gameObject.SetActive(true);
-        #endif
+#endif
+      //  float heightOfAdvert = getBannerHeight();
+        float scaleAdjustment = 50 / getBannerHeight(); 
+       // float px_height = heightOfAdvert * (Screen.dpi / 240);
+       // float scaleAdjustment = (px_height / heightOfAdvert)* 0.83f;
+        //Debug.Log(getBannerHeight());
+        Debug.Log(scaleAdjustment);
+        float xAdjustment = DefaultBanner.transform.localScale.x * scaleAdjustment;
+        float yAdjustment = DefaultBanner.transform.localScale.y * scaleAdjustment;
+       // DefaultBanner.transform.localScale = new Vector3(xAdjustment, yAdjustment);
+        Debug.Log("helpfulstuff");
+        Debug.Log(Screen.dpi);
+        Debug.Log(getBannerHeight());
 
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
@@ -46,10 +59,32 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
     }
 
+    private float getBannerHeight() {
+        if (_bannerView != null)
+        {
+            _bannerView.Destroy();//clear out the old one
+            _bannerView = null;
+        }
+
+        _ADLoaded = false;
+
+        string adUnitId = "unused";
+
+        #if UNITY_ANDROID
+                adUnitId = "ca-app-pub-7490362328602066/6763471166";//test ID>> "ca-app-pub-3940256099942544/6300978111";//only android implementation to start with
+        #else
+                    adUnitId = "unexpected_platform";
+        #endif
+
+        _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        return _bannerView.GetHeightInPixels();
+    }
+
     public void stopAdvert() {
         gameObject.SetActive(false);
         if (_bannerView != null)
         {
+            _bannerView.Hide();
             _bannerView.Destroy();//clear out the old one
             _bannerView = null;
         }
@@ -167,6 +202,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     public void HandleOnAdLoaded(object sender, EventArgs args)
     {
+        Debug.Log("ad loaded");
         _ADLoaded = true;
         setupText();
     }
