@@ -38,9 +38,15 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 #elif UNITY_EDITOR
             gameObject.SetActive(true);
 #endif
-        float scaleAdjustment = 100/(Screen.dpi / 3.2f);
+
+        float scaleAdjustment = 100 / (Screen.dpi / 3.2f);
+        if (scaleAdjustment > 1f)
+        {
+            scaleAdjustment = 1f;
+        }
         float xAdjustment = transform.localScale.x * scaleAdjustment;
         float yAdjustment = transform.localScale.y * scaleAdjustment;
+
         transform.localScale = new Vector3(xAdjustment, yAdjustment);
 
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
@@ -123,11 +129,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     }
 
     private void setupText() {
-      //  Debug.Log("box " + boxCollider.bounds.size.x);
-      //  Debug.Log("box " + boxCollider.size.x);
+
         _xPos = (int) (boxCollider.size.x * 1.8);
-       // Debug.Log(ScrollingTextBox.transform.localPosition);
-     //   Debug.Log(ScrollingTextBox.transform.position);
+
         ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
         int randomnumber = UnityEngine.Random.Range(1, 8);
