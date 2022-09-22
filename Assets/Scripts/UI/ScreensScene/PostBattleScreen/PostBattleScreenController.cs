@@ -156,11 +156,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
                 ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
                 postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
-                //if (AdvertrisingBanner.activeInHierarchy)
-                // _screensSceneGod. AdvertrisingBanner
-                //  Vector3 newPosition = new Vector3(0, postBattleButtonsPanel.transform.localPosition.y + 330);
-                // postBattleButtonsPanel.transform.localPosition = newPosition;
-                //
             }
 
             SetupBackground(postBattleState.ShowVictoryBackground);

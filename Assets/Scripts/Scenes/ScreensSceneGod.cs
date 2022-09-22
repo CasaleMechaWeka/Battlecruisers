@@ -278,10 +278,21 @@ namespace BattleCruisers.Scenes
                     //_musicPlayer.PlayTrashMusic();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
-                    AdvertisingBanner.startAdvert();
-                    //AdvertisingBanner.gameObject.activeSelf  can use this to adjust things
-                    //Debug.Log(trashScreen.startBattleButton.transform.localPosition);
-                   // Debug.Log(trashScreen.startBattleButton.transform.position);
+
+                    bool usingAdvert = false;
+#if UNITY_ANDROID
+          usingAdvert = true;
+#elif UNITY_EDITOR
+          usingAdvert = true;
+#endif
+                    if (usingAdvert) {
+                        float adjustment = 100 / (Screen.dpi / 3.2f);
+
+                        AdvertisingBanner.startAdvert();
+                        Vector3 newPosition = new Vector3(0, trashScreen.startBattleButton.transform.localPosition.y + (50*adjustment));
+                        trashScreen.startBattleButton.transform.localPosition = newPosition;
+                    }
+
                 }
                 
             }

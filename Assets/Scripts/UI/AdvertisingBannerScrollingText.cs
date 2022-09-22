@@ -38,18 +38,10 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 #elif UNITY_EDITOR
             gameObject.SetActive(true);
 #endif
-      //  float heightOfAdvert = getBannerHeight();
-        float scaleAdjustment = 50 / getBannerHeight(); 
-       // float px_height = heightOfAdvert * (Screen.dpi / 240);
-       // float scaleAdjustment = (px_height / heightOfAdvert)* 0.83f;
-        //Debug.Log(getBannerHeight());
-        Debug.Log(scaleAdjustment);
-        float xAdjustment = DefaultBanner.transform.localScale.x * scaleAdjustment;
-        float yAdjustment = DefaultBanner.transform.localScale.y * scaleAdjustment;
-       // DefaultBanner.transform.localScale = new Vector3(xAdjustment, yAdjustment);
-        Debug.Log("helpfulstuff");
-        Debug.Log(Screen.dpi);
-        Debug.Log(getBannerHeight());
+        float scaleAdjustment = 100/(Screen.dpi / 3.2f);
+        float xAdjustment = transform.localScale.x * scaleAdjustment;
+        float yAdjustment = transform.localScale.y * scaleAdjustment;
+        transform.localScale = new Vector3(xAdjustment, yAdjustment);
 
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
@@ -166,6 +158,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     private void RequestBanner()
     {
+        DefaultBanner.SetActive(true);
+
         if (_bannerView != null)
         {
             _bannerView.Destroy();//clear out the old one
@@ -206,13 +200,14 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     public void HandleOnAdLoaded(object sender, EventArgs args)
     {
-        Debug.Log("ad loaded");
+        DefaultBanner.SetActive(false);
         _ADLoaded = true;
         setupText();
     }
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
+        DefaultBanner.SetActive(true);
         _ADLoaded = true;
         setupText();//carry on anyway - we have a dummy add to serve up
         Debug.Log("HandleFailedToReceiveAd event received with message: "
