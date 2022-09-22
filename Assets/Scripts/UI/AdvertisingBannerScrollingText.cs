@@ -121,7 +121,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         }
 
         _xPos -= Time.deltaTime * scrollSpeed;
-        ScrollingTextBox.transform.position = new Vector3(_xPos, ScrollingTextBox.transform.position.y, ScrollingTextBox.transform.position.z);
+        ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
         if (_xPos < -_scrollAdjustment) {
             if (loadAdvert)
             {
@@ -131,8 +131,12 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     }
 
     private void setupText() {
-        _xPos = (int) (boxCollider.size.x * 1.2);
-        ScrollingTextBox.transform.position = new Vector3(_xPos, ScrollingTextBox.transform.position.y, ScrollingTextBox.transform.position.z);
+      //  Debug.Log("box " + boxCollider.bounds.size.x);
+      //  Debug.Log("box " + boxCollider.size.x);
+        _xPos = (int) (boxCollider.size.x * 1.8);
+       // Debug.Log(ScrollingTextBox.transform.localPosition);
+     //   Debug.Log(ScrollingTextBox.transform.position);
+        ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
         int randomnumber = UnityEngine.Random.Range(1, 8);
         int numberOfRandomAttempts = 0;
@@ -156,7 +160,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         }
 
         _TextBox.text = _advertisingTable.GetString("ScrollingAd/" + randomnumber);
-        _scrollAdjustment = (int)(_TextBox.text.Length*2.6);
+        _scrollAdjustment = (int)(_TextBox.text.Length*13);
 
     }
 
