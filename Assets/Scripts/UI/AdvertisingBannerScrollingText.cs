@@ -21,7 +21,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     private float _xPos;
     private ILocTable _advertisingTable;
     private int _scrollAdjustment;
-    private int[] _randomiserArray = new int[7];
+    private int[] _randomiserArray = new int[16];
     private int _numberOfRandomAttempts = 0;
     private bool _ADLoaded = false;
     private bool _isFirstLoad = true;
@@ -39,15 +39,28 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             gameObject.SetActive(true);
 #endif
 
-        float scaleAdjustment = 100 / (Screen.dpi / 3.2f);
-        if (scaleAdjustment > 1f)
-        {
-            scaleAdjustment = 1f;
-        }
-        float xAdjustment = transform.localScale.x * scaleAdjustment;
-        float yAdjustment = transform.localScale.y * scaleAdjustment;
+        float xAdjustment = transform.localScale.x;
+        float yAdjustment = transform.localScale.y;
 
-        transform.localScale = new Vector3(xAdjustment, yAdjustment);
+        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f /*6.5f*/))
+        {
+            xAdjustment = 0.8f;
+            yAdjustment = 0.8f;
+            transform.localScale = new Vector3(xAdjustment, yAdjustment);
+        }
+        else
+        {
+            float scaleAdjustment = 100 / (Screen.dpi / 3.2f);
+            if (scaleAdjustment > 1f)
+            {
+                scaleAdjustment = 1f;
+            }
+            xAdjustment *= scaleAdjustment;
+            yAdjustment *= scaleAdjustment;
+            transform.localScale = new Vector3(xAdjustment, yAdjustment);
+        }
+
+        
 
         MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
@@ -123,9 +136,23 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         if (_xPos < -_scrollAdjustment) {
             if (loadAdvert)
             {
-                RequestBanner();
+                clearAdvertShowDummy();
+                Invoke("RequestBanner", 4.5f);
             }
         }
+    }
+
+    private void clearAdvertShowDummy() {
+       // _ADLoaded = false;
+        DefaultBanner.SetActive(true);
+        dummyText();
+        _bannerView.Hide();
+    }
+
+    private void dummyText() {
+        _xPos = (int)(boxCollider.size.x * 1.8);
+        ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
+        _TextBox.text = "*** VOTE PRESIDENTRON *** VOTE PRESIDENTRON *** VOTE PRESIDENTRON ***  VOTE PRESIDENTRON ***";
     }
 
     private void setupText() {
@@ -134,9 +161,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
-        int randomnumber = UnityEngine.Random.Range(1, 8);
+        int randomnumber = UnityEngine.Random.Range(1, 16);
         int numberOfRandomAttempts = 0;
-        while (numberOfRandomAttempts < 6) {
+        while (numberOfRandomAttempts < 14) {
             numberOfRandomAttempts += 1;
             if (_randomiserArray.Contains(randomnumber))
             {
@@ -150,7 +177,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _numberOfRandomAttempts += 1;
 
         _randomiserArray[_numberOfRandomAttempts] = randomnumber;
-        if (_numberOfRandomAttempts > 5) {//we have to much history, clear it
+        if (_numberOfRandomAttempts > 13) {//we have to much history, clear it
             Array.Clear(_randomiserArray, 0, _randomiserArray.Length);
             _numberOfRandomAttempts = 0;
         }
@@ -170,17 +197,19 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             _bannerView = null;
         }
 
-        _ADLoaded = false;
-
         string adUnitId = "unused";
 
 #if UNITY_ANDROID
         adUnitId = "ca-app-pub-7490362328602066/6763471166";//test ID>> "ca-app-pub-3940256099942544/6300978111";//only android implementation to start with
-        #else
+#else
             adUnitId = "unexpected_platform";
-        #endif
-
-        _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+#endif
+        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f /*6.5f*/))
+        {
+            _bannerView = new BannerView(adUnitId, AdSize.IABBanner, AdPosition.Bottom);
+        } else {
+            _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        }
 
         // Called when an ad request has successfully loaded.
         _bannerView.OnAdLoaded += HandleOnAdLoaded;
@@ -200,6 +229,17 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         return new AdRequest.Builder()
             .AddKeyword("unity-admob-sample")
             .Build();
+    }
+
+    public static float DeviceDiagonalSizeInInches()
+    {
+        float screenWidth = Screen.width / Screen.dpi;
+        float screenHeight = Screen.height / Screen.dpi;
+        float diagonalInches = Mathf.Sqrt(Mathf.Pow(screenWidth, 2) + Mathf.Pow(screenHeight, 2));
+
+        Debug.Log("Getting device inches: " + diagonalInches);
+
+        return diagonalInches;
     }
 
     public void HandleOnAdLoaded(object sender, EventArgs args)
