@@ -11,6 +11,9 @@ namespace BattleCruisers.Effects.Explosions.Pools
         //Steamcopter
         IPool<IExplosion, Vector3> HighCalibreBulletImpactPool { get; }
 
+        // CIWS
+        IPool<IExplosion, Vector3> TinyBulletImpactPool { get; }
+
         // Radius 0.75  => Small shells: Mortar, frigate & destroyer front cannon.
         IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
 
@@ -28,5 +31,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         
         // Radius 5m    => Nuke
         IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
+
+ 
     }
 }

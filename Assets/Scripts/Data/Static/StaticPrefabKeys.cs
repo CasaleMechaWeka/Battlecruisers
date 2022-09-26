@@ -143,6 +143,7 @@ namespace BattleCruisers.Data.Static
         {
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
             public static ExplosionKey HighCalibreBulletImpact { get; } = new ExplosionKey("HighCalibreBulletImpact");
+            public static ExplosionKey TinyBulletImpact { get; } = new ExplosionKey("TinyBulletImpact");
             public static ExplosionKey BombExplosion { get; } = new ExplosionKey("ExplosionBomb");
             public static ExplosionKey FlakExplosion { get; } = new ExplosionKey("ExplosionSAM");
             public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
@@ -156,7 +157,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        BulletImpact, HighCalibreBulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
+                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
                     };
                 }
             }
@@ -166,6 +167,7 @@ namespace BattleCruisers.Data.Static
         {
             public static ProjectileKey Bullet { get; } = new ProjectileKey("Bullet");
             public static ProjectileKey HighCalibreBullet { get; } = new ProjectileKey("HighCalibreBullet");
+            public static ProjectileKey TinyBullet { get; } = new ProjectileKey("TinyBullet");
             public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
 
@@ -185,7 +187,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullet, HighCalibreBullet, ShellSmall, ShellLarge, 
+                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge, 
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
                         Bomb, Nuke, Rocket, RocketSmall
                     };

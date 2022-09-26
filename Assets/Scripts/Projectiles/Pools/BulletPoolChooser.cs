@@ -9,6 +9,7 @@ namespace BattleCruisers.Projectiles.Pools
     public class BulletPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         public bool highCalibre = false;
+        public bool tinyBullet = false;
 
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> 
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
@@ -16,6 +17,10 @@ namespace BattleCruisers.Projectiles.Pools
             if (highCalibre)
             {
                 return projectilePoolProvider.HighCalibreBulletsPool;
+            }
+             if (tinyBullet)
+            {
+                return projectilePoolProvider.TinyBulletsPool;
             }
             return projectilePoolProvider.BulletsPool;
         }
