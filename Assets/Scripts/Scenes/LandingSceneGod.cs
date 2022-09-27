@@ -12,11 +12,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes
 {
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
+        public Text SubTitle;
         private bool _isInitialised = false;
         private string _lastSceneLoaded;
         private IHintProvider _hintProvider;
@@ -30,6 +32,13 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+#if FREE_EDITION
+            SubTitle.text = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+#else
+            SubTitle.text = commonStrings.GetString("GameNameSubtitle").ToUpper();
+#endif
+
             Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
             
             if (!_isInitialised)
@@ -49,7 +58,6 @@ namespace BattleCruisers.Scenes
 
                 SceneNavigator = this;
 
-                ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
                 HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
                 _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 

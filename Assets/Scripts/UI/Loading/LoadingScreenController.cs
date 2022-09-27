@@ -11,6 +11,7 @@ namespace BattleCruisers.UI.Loading
     {
         public Canvas root;
         public Text loadingText;
+        public Text SubTitle;
 
         private string _defaultLoadingText;
         private string startingText;
@@ -21,9 +22,16 @@ namespace BattleCruisers.UI.Loading
 
         async void Start()
         {
+
             Helper.AssertIsNotNull(root, loadingText);
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+#if FREE_EDITION
+            SubTitle.text = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+#else
+            SubTitle.text = commonStrings.GetString("GameNameSubtitle").ToUpper();
+#endif
+
             _defaultLoadingText = commonStrings.GetString("UI/LoadingScreen/DefaultLoadingText");
             startingText  = commonStrings.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();

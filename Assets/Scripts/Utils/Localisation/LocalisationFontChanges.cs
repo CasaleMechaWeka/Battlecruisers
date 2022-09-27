@@ -12,7 +12,6 @@ namespace BattleCruisers.Utils.Localisation
     public class LocalisationFontChanges : MonoBehaviour
     {
         private Text _text;
-        private LocalizeStringEvent _localizeStringEvent;
         private Font _newFont;
         private int _originalFontMaxSize;
         private int _originalFontMinSize;
@@ -45,9 +44,6 @@ namespace BattleCruisers.Utils.Localisation
 
         private void UpdateString()
         {
-            Locale currentSelectedLocale = LocalizationSettings.SelectedLocale;
-            ILocalesProvider availableLocales = LocalizationSettings.AvailableLocales;
-
             //if there is a new font use it
             if (_newFont != null)
             {

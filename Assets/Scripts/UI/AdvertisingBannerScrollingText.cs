@@ -33,10 +33,10 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     async void Start()
     {
         gameObject.SetActive(false);//default of not active
-        #if UNITY_ANDROID
+#if UNITY_ANDROID && FREE_EDITION
             gameObject.SetActive(true);
-#elif UNITY_EDITOR
-            gameObject.SetActive(true);
+#elif UNITY_EDITOR && FREE_EDITION
+        gameObject.SetActive(true);
 #endif
 
         float xAdjustment = transform.localScale.x;
