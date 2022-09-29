@@ -9,6 +9,10 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Services.Analytics;
+using Unity.Services.Core;
+using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -32,6 +36,32 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+            try
+            {
+                var options = new InitializationOptions();
+                #if UNITY_EDITOR
+                    options.SetEnvironmentName("dev");
+#else
+                    options.SetEnvironmentName("production");
+#endif
+
+                await UnityServices.InitializeAsync(options);
+                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+            }
+            catch (ConsentCheckException e)
+            {
+                //do nothing
+            }
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+{
+    { "fabulousString", "hello there" },
+    { "sparklingInt", 1337 },
+    { "spectacularFloat", 0.451f },
+    { "peculiarBool", true },
+};
+            AnalyticsService.Instance.CustomData("custom event at landing scene", parameters);
+            AnalyticsService.Instance.Flush();
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
 #if FREE_EDITION
             SubTitle.text = commonStrings.GetString("GameNameFreeEdition").ToUpper();
