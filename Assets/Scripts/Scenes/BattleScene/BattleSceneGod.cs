@@ -43,6 +43,7 @@ using BattleCruisers.Buildables;
 using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using Unity.Services.Analytics;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -381,6 +382,9 @@ namespace BattleCruisers.Scenes.BattleScene
             
 
             GameOver = false;
+
+            AnalyticsService.Instance.CustomData("Battle_Begin", dataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), applicationModel.UserWonSkirmish));
+            AnalyticsService.Instance.Flush();
         }
 
         private IBattleSceneHelper CreateHelper(

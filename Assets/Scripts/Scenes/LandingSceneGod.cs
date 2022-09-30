@@ -53,15 +53,6 @@ namespace BattleCruisers.Scenes
                 //do nothing
             }
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-{
-    { "fabulousString", "hello there" },
-    { "sparklingInt", 1337 },
-    { "spectacularFloat", 0.451f },
-    { "peculiarBool", true },
-};
-            AnalyticsService.Instance.CustomData("custom event at landing scene", parameters);
-            AnalyticsService.Instance.Flush();
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
 #if FREE_EDITION
             SubTitle.text = commonStrings.GetString("GameNameFreeEdition").ToUpper();

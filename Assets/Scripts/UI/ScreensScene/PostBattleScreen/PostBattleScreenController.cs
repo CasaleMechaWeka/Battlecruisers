@@ -16,7 +16,9 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -94,17 +96,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             _applicationModel = applicationModel;
             _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
-
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
             {
                 SetupBattleResult();
             }
-
+            
             IPostBattleState postBattleState = null;
-
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || _applicationModel.IsTutorial)
             {
+                AnalyticsService.Instance.CustomData("Battle_End", 
+                                                     _dataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), 
+                                                                                        _applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
                 postBattleState
                     = new TutorialCompletedState(
                         this,
@@ -115,6 +119,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else if (_applicationModel.Mode == GameMode.Skirmish)
             {
+                AnalyticsService.Instance.CustomData("Battle_End", _dataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), _applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+
                 postBattleState
                     = new PostSkirmishState(
                         this,
@@ -125,6 +132,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else
             {
+                AnalyticsService.Instance.CustomData("Battle_End", _dataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), _applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
                 ITrashTalkData levelTrashTalkData = await trashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
@@ -204,6 +213,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     BattleResult.LevelNum = StaticData.NUM_OF_LEVELS;
                 }
             }
+
         }
 
         private SkirmishModel CreateSkirmish()

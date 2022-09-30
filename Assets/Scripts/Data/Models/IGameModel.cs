@@ -29,6 +29,8 @@ namespace BattleCruisers.Data.Models
         NewItems<BuildingKey> NewBuildings { get; }
         NewItems<UnitKey> NewUnits { get; }
 
+        Dictionary<string, object> Analytics(string gameModeString, bool lastSkirmishResult);
+
         void AddUnlockedHull(HullKey hull);
         void AddUnlockedBuilding(BuildingKey building);
         void AddUnlockedUnit(UnitKey unit);

@@ -185,6 +185,20 @@ namespace BattleCruisers.Data.Models
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
         }
+        
+        public Dictionary<string, object> Analytics( string gameModeString, bool lastSkirmishResult ) {
+            return new Dictionary<string, object>() { { "gameMode", gameModeString },
+                                                    { "selectedLevel", SelectedLevel },
+                                                    { "campaign_Difficulty", (int)Settings.AIDifficulty },
+                                                    { "lastCampaign_Level", LastBattleResult.LevelNum }, 
+                                                    { "lastCampaign_Result", LastBattleResult.WasVictory },
+                                                    { "lastSkirmish_Result", lastSkirmishResult },
+                                                    { "lastSkirmish_Difficulty", (int)_skirmish.Difficulty },
+                                                    { "LifetimeDestructionScore", LifetimeDestructionScore },
+                                                    { "BestDestructionScore", BestDestructionScore },
+                                                    { "HasAttemptedTutorial", HasAttemptedTutorial }
+                                                  };
+        }
 
         public void AddUnlockedHull(HullKey hull)
         {
