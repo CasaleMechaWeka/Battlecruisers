@@ -1,7 +1,10 @@
-﻿using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.Data;
+using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using System;
+using Unity.Services.Analytics;
+using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.MainMenu
 {
@@ -46,6 +49,13 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
             Dismissed?.Invoke(this, EventArgs.Empty);
+            string logName = "Battle_Quit";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+            AnalyticsService.Instance.Flush();
         }
 
         public void RetryLevel()
@@ -54,6 +64,13 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: true);
             Dismissed?.Invoke(this, EventArgs.Empty);
+            string logName = "Battle_Retry_InGame";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+           IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+            AnalyticsService.Instance.Flush();
         }
 
         public void ShowSettings()

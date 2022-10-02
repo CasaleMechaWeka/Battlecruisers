@@ -186,8 +186,9 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits.AddRange(unlockedUnits);
         }
         
-        public Dictionary<string, object> Analytics( string gameModeString, bool lastSkirmishResult ) {
+        public Dictionary<string, object> Analytics( string gameModeString, string location, bool lastSkirmishResult ) {
             return new Dictionary<string, object>() { { "gameMode", gameModeString },
+                                                    { "Analytics_Location", location },
                                                     { "selectedLevel", SelectedLevel },
                                                     { "campaign_Difficulty", (int)Settings.AIDifficulty },
                                                     { "lastCampaign_Level", LastBattleResult.LevelNum }, 
@@ -196,7 +197,7 @@ namespace BattleCruisers.Data.Models
                                                     { "lastSkirmish_Difficulty", (int)_skirmish.Difficulty },
                                                     { "LifetimeDestructionScore", LifetimeDestructionScore },
                                                     { "BestDestructionScore", BestDestructionScore },
-                                                    { "HasAttemptedTutorial", HasAttemptedTutorial }
+                                                    { "HasAttemptedTutorial", HasAttemptedTutorial },
                                                   };
         }
 

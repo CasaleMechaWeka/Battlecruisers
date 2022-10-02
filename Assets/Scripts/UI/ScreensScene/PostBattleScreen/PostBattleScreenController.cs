@@ -105,8 +105,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || _applicationModel.IsTutorial)
             {
-                AnalyticsService.Instance.CustomData("Battle_End", 
-                                                     _dataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), 
+                string logName = "Battle_End";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                AnalyticsService.Instance.CustomData("Battle",
+                                                     _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                        logName,
                                                                                         _applicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
                 postBattleState
@@ -119,7 +124,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else if (_applicationModel.Mode == GameMode.Skirmish)
             {
-                AnalyticsService.Instance.CustomData("Battle_End", _dataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), _applicationModel.UserWonSkirmish));
+                string logName = "Battle_End";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                AnalyticsService.Instance.CustomData("Battle",
+                                                     _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                        logName,
+                                                                                        _applicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
 
                 postBattleState
@@ -132,7 +144,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else
             {
-                AnalyticsService.Instance.CustomData("Battle_End", _dataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), _applicationModel.UserWonSkirmish));
+                string logName = "Battle_End";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                AnalyticsService.Instance.CustomData("Battle",
+                                                     _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                                        logName,
+                                                                                        _applicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
@@ -262,7 +281,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public void Retry()
 		{
 			_screensSceneGod.GoStraightToTrashScreen(BattleResult.LevelNum);
-		}
+            string logName = "Battle_Retry_Level";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+            AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
+            AnalyticsService.Instance.Flush();
+        }
 
 		public void GoToLoadoutScreen()
 		{
@@ -313,6 +338,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             _applicationModel.Mode = GameMode.Skirmish;
             _screensSceneGod.LoadBattleScene();
+            string logName = "Battle_Retry_Skirmish";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+            AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
+            AnalyticsService.Instance.Flush();
         }
 
         public void StartLevel1()

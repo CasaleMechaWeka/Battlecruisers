@@ -382,8 +382,11 @@ namespace BattleCruisers.Scenes.BattleScene
             
 
             GameOver = false;
-
-            AnalyticsService.Instance.CustomData("Battle_Begin", dataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), applicationModel.UserWonSkirmish));
+            string logName = "Battle_Begin";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
             AnalyticsService.Instance.Flush();
         }
 
