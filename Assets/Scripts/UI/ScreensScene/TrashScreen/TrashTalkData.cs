@@ -36,6 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             PlayerText = storyStrings.GetString($"{stringKeyBase}/PlayerText");
             EnemyText = storyStrings.GetString($"{stringKeyBase}/EnemyText");
             AppraisalDroneText = storyStrings.GetString($"{stringKeyBase}/DroneText");
+            enemyName = storyStrings.GetString($"{stringKeyBase}/name");
         
         }
     }
