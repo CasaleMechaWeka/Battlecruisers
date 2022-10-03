@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Data;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -10,6 +11,7 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -159,8 +161,18 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             UnitUnderConstruction.Destroyed += UnitUnderConstruction_Destroyed;
 
             UnitUnderConstruction.AddBuildRateBoostProviders(_parentSlot.BoostProviders);
+            UnitUnderConstruction.StartConstruction();
 
-			UnitUnderConstruction.StartConstruction();
+            if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser) {
+                string logName = UnitUnderConstruction.Name;
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+
 		}
 
 		protected virtual void Unit_BuildingStarted(object sender, EventArgs e) 

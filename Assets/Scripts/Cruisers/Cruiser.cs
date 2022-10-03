@@ -10,6 +10,7 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
@@ -25,6 +26,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -189,7 +191,19 @@ namespace BattleCruisers.Cruisers
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
-		}
+
+            if (IsPlayerCruiser)
+            {
+                string logName = Name;
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+
+        }
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
@@ -240,6 +254,18 @@ namespace BattleCruisers.Cruisers
 			BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
 
             slot.controlBuildingPlacementFeedback(true);
+
+            if (IsPlayerCruiser)
+            {
+                string logName = building.Name;
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+
             return building;
 		}
 
