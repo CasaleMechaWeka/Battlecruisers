@@ -186,9 +186,9 @@ namespace BattleCruisers.Data.Models
             _unlockedUnits.AddRange(unlockedUnits);
         }
         
-        public Dictionary<string, object> Analytics( string gameModeString, string location, bool lastSkirmishResult ) {
+        public Dictionary<string, object> Analytics( string gameModeString, string type, bool lastSkirmishResult ) {
             return new Dictionary<string, object>() { { "gameMode", gameModeString },
-                                                    { "Analytics_Location", location },
+                                                    { "Analytics_Type", type },
                                                     { "selectedLevel", SelectedLevel },
                                                     { "campaign_Difficulty", (int)Settings.AIDifficulty },
                                                     { "lastCampaign_Level", LastBattleResult.LevelNum }, 
