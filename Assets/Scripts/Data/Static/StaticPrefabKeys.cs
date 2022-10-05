@@ -149,7 +149,8 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
             public static ExplosionKey Explosion100 { get; } = new ExplosionKey("Explosion1.0");
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
-            public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
+            public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0"); //Nuclear Explosion
+            public static ExplosionKey NovaShellImpact { get; } = new ExplosionKey("NovaShellImpact");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -157,7 +158,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
+                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500, NovaShellImpact
                     };
                 }
             }
@@ -170,6 +171,8 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey TinyBullet { get; } = new ProjectileKey("TinyBullet");
             public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
+
+            public static ProjectileKey NovaShell { get; } = new ProjectileKey("NovaShell");
 
             public static ProjectileKey MissileSmall { get; } = new ProjectileKey("MissileSmall");
             public static ProjectileKey MissileMedium { get; } = new ProjectileKey("MissileMedium");
@@ -187,7 +190,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge, 
+                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge, NovaShell,
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
                         Bomb, Nuke, Rocket, RocketSmall
                     };
