@@ -18,7 +18,6 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public IPool<IExplosion, Vector3> MediumExplosionsPool { get; }
         public IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
         public IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
-        public IPool<IExplosion, Vector3> NovaShellImpactPool { get; }
 
 
         public ExplosionPoolProvider(IPrefabFactory prefabFactory)
@@ -34,7 +33,6 @@ namespace BattleCruisers.Effects.Explosions.Pools
             MediumExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion100);
             LargeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion150);
             HugeExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion500);
-            NovaShellImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.NovaShellImpact);
         }
 
         private IPool<IExplosion, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
@@ -57,7 +55,6 @@ namespace BattleCruisers.Effects.Explosions.Pools
             MediumExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
             LargeExplosionsPool.AddCapacity(InitialCapacity.LARGE);
             HugeExplosionsPool.AddCapacity(InitialCapacity.HUGE);
-            NovaShellImpactPool.AddCapacity(InitialCapacity.LARGE);
         }
     }
 }

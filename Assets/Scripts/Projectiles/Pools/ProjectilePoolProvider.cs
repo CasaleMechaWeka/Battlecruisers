@@ -15,7 +15,6 @@ namespace BattleCruisers.Projectiles.Pools
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
-        public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
         public IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
         public IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
         public IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
@@ -56,14 +55,7 @@ namespace BattleCruisers.Projectiles.Pools
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.ShellLarge,
-                    InitialCapacity.SHELL_LARGE);
-
-            NovaShellPool
-                = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
-                    StaticPrefabKeys.Projectiles.NovaShell,
-                    InitialCapacity.SHELL_LARGE);
-                
+                    InitialCapacity.SHELL_LARGE);                
 
             BombsPool
                 = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
@@ -129,7 +121,6 @@ namespace BattleCruisers.Projectiles.Pools
             TinyBulletsPool.AddCapacity(InitialCapacity.BULLET);
             ShellsSmallPool.AddCapacity(InitialCapacity.SHELL_SMALL);
             ShellsLargePool.AddCapacity(InitialCapacity.SHELL_LARGE);
-            NovaShellPool.AddCapacity(InitialCapacity.SHELL_LARGE);
             BombsPool.AddCapacity(InitialCapacity.BOMB);
             RocketsPool.AddCapacity(InitialCapacity.ROCKET);
             RocketsSmallPool.AddCapacity(InitialCapacity.ROCKET);

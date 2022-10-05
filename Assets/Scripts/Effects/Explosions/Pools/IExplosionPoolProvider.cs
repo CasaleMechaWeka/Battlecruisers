@@ -32,9 +32,6 @@ namespace BattleCruisers.Effects.Explosions.Pools
         // Radius 5m    => Nuke
         IPool<IExplosion, Vector3> HugeExplosionsPool { get; }
 
-        // Radius 2m    => Nova artillery
-        IPool<IExplosion, Vector3> NovaShellImpactPool { get; }
-
  
     }
 }
