@@ -109,6 +109,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
+
                 AnalyticsService.Instance.CustomData("Battle",
                                                      _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
                                                                                         logName,

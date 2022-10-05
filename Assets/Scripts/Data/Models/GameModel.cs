@@ -187,14 +187,25 @@ namespace BattleCruisers.Data.Models
         }
         
         public Dictionary<string, object> Analytics( string gameModeString, string type, bool lastSkirmishResult ) {
+            int campaignDifficulty = 0;
+            if (Settings != null) { campaignDifficulty = (int)Settings.AIDifficulty; }
+            int skirmishDifficulty = 0;
+            if (_skirmish != null) { campaignDifficulty = (int)_skirmish.Difficulty; }
+
+            int levelNumber = 0;
+            bool wasVictory = false;
+            if (LastBattleResult != null) {
+                levelNumber = LastBattleResult.LevelNum;
+                wasVictory = LastBattleResult.WasVictory;
+            }
             return new Dictionary<string, object>() { { "gameMode", gameModeString },
                                                     { "Analytics_Type", type },
                                                     { "selectedLevel", SelectedLevel },
-                                                    { "campaign_Difficulty", (int)Settings.AIDifficulty },
-                                                    { "lastCampaign_Level", LastBattleResult.LevelNum }, 
-                                                    { "lastCampaign_Result", LastBattleResult.WasVictory },
+                                                    { "campaign_Difficulty", campaignDifficulty },
+                                                    { "lastCampaign_Level", levelNumber }, 
+                                                    { "lastCampaign_Result", wasVictory },
                                                     { "lastSkirmish_Result", lastSkirmishResult },
-                                                    { "lastSkirmish_Difficulty", (int)_skirmish.Difficulty },
+                                                    { "lastSkirmish_Difficulty", skirmishDifficulty },
                                                     { "LifetimeDestructionScore", LifetimeDestructionScore },
                                                     { "BestDestructionScore", BestDestructionScore },
                                                     { "HasAttemptedTutorial", HasAttemptedTutorial },
