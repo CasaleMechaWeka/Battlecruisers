@@ -12,5 +12,7 @@
         public const int ROCKET = 3;
         public const int SHELL_SMALL = 5;
         public const int SHELL_LARGE = 2;
+        public const int  NOVA_SHELL = 3;
+       
     }
 }

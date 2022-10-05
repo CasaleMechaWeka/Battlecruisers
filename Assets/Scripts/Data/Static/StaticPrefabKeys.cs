@@ -149,7 +149,7 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
             public static ExplosionKey Explosion100 { get; } = new ExplosionKey("Explosion1.0");
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
-            public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
+            public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0"); 
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -187,7 +187,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge, 
+                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge,
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
                         Bomb, Nuke, Rocket, RocketSmall
                     };

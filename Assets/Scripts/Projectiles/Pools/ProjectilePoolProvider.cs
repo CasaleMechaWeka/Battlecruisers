@@ -45,7 +45,6 @@ namespace BattleCruisers.Projectiles.Pools
                     StaticPrefabKeys.Projectiles.TinyBullet,
                     InitialCapacity.BULLET);
 
-
             ShellsSmallPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
@@ -56,7 +55,7 @@ namespace BattleCruisers.Projectiles.Pools
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.ShellLarge,
-                    InitialCapacity.SHELL_LARGE);
+                    InitialCapacity.SHELL_LARGE);                
 
             BombsPool
                 = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
@@ -99,6 +98,8 @@ namespace BattleCruisers.Projectiles.Pools
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileSmart,
                     InitialCapacity.MISSILE_SMART);
+
+                
         }
 
         private IPool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(IFactoryProvider factoryProvider, ProjectileKey projectileKey, int initialCapacity)
