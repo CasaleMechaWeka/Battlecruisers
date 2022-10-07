@@ -103,10 +103,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             {
                 allSpriteWrappers.Add(new SpriteWrapper(sprite));
             }
-            //Reverse the list so it's in the correct order 
-            //"Reverse order, because the sprites are provided in most turned to 
-            // least turned, whereas we want to return least turned to most turned."
-            allSpriteWrappers.Reverse();
             //create Sprite Chooser
             _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this); // await _factoryProvider.SpriteChooserFactory.CreateGunshipSpriteChooserAsync(this);
         }
