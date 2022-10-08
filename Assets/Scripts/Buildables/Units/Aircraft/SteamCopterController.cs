@@ -33,7 +33,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
-        public SpriteAtlas allSprites;
+        public List<Sprite> allSprites = new List<Sprite>();
+      
         public ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
 
         private const float WITHTIN_RANGE_VELOCITY_MULTIPLIER = 0.5f;
@@ -95,12 +96,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
 
-            //get sprites from spriteAtlas
-            Sprite[] spritesForBuildable = new Sprite[allSprites.spriteCount];
-            allSprites.GetSprites(spritesForBuildable);
-            //move all sprites to the required ISpriteWrapper List
             List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
-            foreach (Sprite sprite in spritesForBuildable)
+            foreach (Sprite sprite in allSprites)
             {
                 allSpriteWrappers.Add(new SpriteWrapper(sprite));
             }

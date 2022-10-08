@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private ITargetTracker _inRangeTargetTracker;
 		private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
-        public SpriteAtlas allSprites;
+        public List<Sprite> allSprites = new List<Sprite>();
         public ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
 
         private const float WITHTIN_RANGE_VELOCITY_MULTIPLIER = 0.5f;
@@ -94,21 +94,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             SetupTargetDetection();
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-            //get sprites from spriteAtlas
-            Sprite[] spritesForBuildable = new Sprite[allSprites.spriteCount];
-            allSprites.GetSprites(spritesForBuildable);
-            //move all sprites to the required ISpriteWrapper List
             List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
-            foreach ( Sprite sprite in spritesForBuildable )
+            foreach (Sprite sprite in allSprites)
             {
                 allSpriteWrappers.Add(new SpriteWrapper(sprite));
             }
-            //Reverse the list so it's in the correct order 
-            //"Reverse order, because the sprites are provided in most turned to 
-            // least turned, whereas we want to return least turned to most turned."
-            allSpriteWrappers.Reverse();
             //create Sprite Chooser
-            _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this); 
+            _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
         }
 
         private void SetupTargetDetection()

@@ -164,9 +164,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
 			ActiveMovementController.AdjustVelocity();
-
+            //compare sprite number choses to sprite name
             _spriteRenderer.sprite = _spriteChooser.ChooseSprite(Velocity).Sprite;
-		}
+        }
 
         public void Kamikaze(ITarget kamikazeTarget)
         {
