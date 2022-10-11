@@ -70,7 +70,7 @@ namespace BattleCruisers.Cruisers.Slots
         {
             _renderer.gameObject.SetActive(active);
             _buildingPlacementFeedback.gameObject.SetActive(active);
-            Invoke("stopBuildingPlacementFeedback", 0.5f);
+            Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
             _buildingPlacementBeacon.gameObject.SetActive(false);
 
         }
