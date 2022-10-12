@@ -194,7 +194,7 @@ namespace BattleCruisers.Cruisers
 
             if (IsPlayerCruiser)
             {
-                string logName = Name;
+                string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
@@ -257,7 +257,7 @@ namespace BattleCruisers.Cruisers
 
             if (IsPlayerCruiser)
             {
-                string logName = building.Name;
+                string logName = building.PrefabName.ToUpper().Replace("(CLONE)", "");
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif

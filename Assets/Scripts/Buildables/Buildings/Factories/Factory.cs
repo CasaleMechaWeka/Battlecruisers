@@ -164,7 +164,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             UnitUnderConstruction.StartConstruction();
 
             if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser) {
-                string logName = UnitUnderConstruction.Name;
+                string logName = UnitUnderConstruction.PrefabName.ToUpper().Replace("(CLONE)","");
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
