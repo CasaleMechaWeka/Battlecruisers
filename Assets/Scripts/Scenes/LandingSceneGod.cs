@@ -53,12 +53,22 @@ namespace BattleCruisers.Scenes
                 //do nothing
             }
 
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+
 #if FREE_EDITION
-            SubTitle.text = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+            //if player NOT already paid then use Free title
+            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+                subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
 #else
-            SubTitle.text = commonStrings.GetString("GameNameSubtitle").ToUpper();
+            //if premium version set here 
+            applicationModel.DataProvider.GameModel.PremiumEdition = true;
+            applicationModel.DataProvider.SaveGame();
 #endif
+
+            SubTitle.text = subTitle;
 
             Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
             

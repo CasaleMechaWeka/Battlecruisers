@@ -16,6 +16,7 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class GameModel : IGameModel
     {
+        
         public class ModelVersion
         {
             public const int PreShowHelpLabel = 0;
@@ -50,6 +51,13 @@ namespace BattleCruisers.Data.Models
         {
             get => _lifetimeDestructionScore;
             set => _lifetimeDestructionScore = value;
+        }
+
+        private bool _PremiumEdition;
+        public bool PremiumEdition
+        {
+            get => _PremiumEdition;
+            set => _PremiumEdition = value;
         }
 
         [SerializeField]

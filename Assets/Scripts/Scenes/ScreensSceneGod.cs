@@ -280,11 +280,17 @@ namespace BattleCruisers.Scenes
                     //_musicPlayer.PlayTrashMusic();
 
                     bool usingAdvert = false;
+                    IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 #if UNITY_ANDROID && FREE_EDITION
-    usingAdvert = true;
+                    if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+                        usingAdvert = true;
 #elif UNITY_EDITOR && FREE_EDITION
-    usingAdvert = true;
+if (!applicationModel.DataProvider.GameModel.PremiumEdition)    
+usingAdvert = true;
 #endif
+                   
+
+
                     if (usingAdvert) {
                         float adjustment = 100 / (Screen.dpi / 3.2f);
 

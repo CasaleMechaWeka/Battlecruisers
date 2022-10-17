@@ -1,4 +1,10 @@
+using BattleCruisers.Data;
+using BattleCruisers.UI;
+using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using GoogleMobileAds.Api;
 using System;
 using System.Linq;
@@ -14,7 +20,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public GameObject ScrollingTextBox;
     public GameObject MainBannerFront;
     public GameObject DefaultBanner;
-    private AdjustAdvertisingBillboard _adjustAdvertisingBillboard;
+    public GameObject ConfirmationScreen;
+    public CanvasGroupButton RemoveAdvertsButton;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     public float scrollSpeed = 50;
@@ -25,19 +32,22 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     private int _numberOfRandomAttempts = 0;
     private bool _ADLoaded = false;
     private bool _isFirstLoad = true;
-
+    [SerializeField]
+    public AudioSource _uiAudioSource;
+    private ISingleSoundPlayer _soundPlayer;
     //advertising banner
     private BannerView _bannerView;
 
     // Start is called before the first frame update
     async void Start()
     {
-        gameObject.SetActive(false);//default of not active
+gameObject.SetActive(false);//default of not active
 #if UNITY_ANDROID && FREE_EDITION
             gameObject.SetActive(true);
 #elif UNITY_EDITOR && FREE_EDITION
         gameObject.SetActive(true);
 #endif
+        HideIAPButton();
 
         float xAdjustment = transform.localScale.x;
         float yAdjustment = transform.localScale.y;
@@ -68,6 +78,33 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
         Text textBoxCompanyName = TextCompanyName.GetComponent<Text>();
         textBoxCompanyName.text = _advertisingTable.GetString("CompanyName");
+
+        _soundPlayer
+                = new SingleSoundPlayer(
+                    new SoundFetcher(),
+                    new EffectVolumeAudioSource(
+                        new AudioSourceBC(_uiAudioSource),
+                        ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
+        RemoveAdvertsButton.Initialise(_soundPlayer, ShowPurchaseConfirmationScreenDelayed);
+
+    }
+    private void ShowPurchaseConfirmationScreenDelayed()
+    {
+        Invoke("ShowPurchaseConfirmationScreen", 0.25f);
+    }
+
+    public void HideIAPButton() {
+        RemoveAdvertsButton.gameObject.SetActive(false);
+    }
+
+    public void ShowIAPButton() {
+        RemoveAdvertsButton.gameObject.SetActive(true);
+    }
+
+    private void ShowPurchaseConfirmationScreen() {
+        if (ConfirmationScreen != null) {
+            ConfirmationScreen.SetActive(true);
+        }
     }
 
     private float getBannerHeight() {
@@ -109,6 +146,18 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+        if (applicationModel.DataProvider.GameModel.PremiumEdition && gameObject.activeSelf)
+        {
+            Debug.Log("exiting early");
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (IAPManager.instance != null) {
+            ShowIAPButton();
+        }
+
         if (_isFirstLoad)
         {
             if (!loadAdvert)

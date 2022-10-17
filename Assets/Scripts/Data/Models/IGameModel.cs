@@ -15,6 +15,8 @@ namespace BattleCruisers.Data.Models
         bool FirstNonTutorialBattle { get; }
         Loadout PlayerLoadout { get; set; }
         BattleResult LastBattleResult { get; set; }
+
+        public bool PremiumEdition { get; set; }
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
         HotkeysModel Hotkeys { get; }
