@@ -22,6 +22,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public GameObject DefaultBanner;
     public GameObject ConfirmationScreen;
     public CanvasGroupButton RemoveAdvertsButton;
+    public GameObject ThankYouEffect;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     public float scrollSpeed = 50;
@@ -149,8 +150,9 @@ gameObject.SetActive(false);//default of not active
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
         if (applicationModel.DataProvider.GameModel.PremiumEdition && gameObject.activeSelf)
         {
-            Debug.Log("exiting early");
-            gameObject.SetActive(false);
+            if (ThankYouEffect != null)
+                ThankYouEffect.SetActive(true);
+            stopAdvert();
             return;
         }
 

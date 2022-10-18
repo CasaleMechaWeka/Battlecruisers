@@ -18,9 +18,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
     public CanvasGroupButton Button_No;
     public CanvasGroupButton Button_Upgrade;
     public AdvertisingBannerScrollingText AdvertistingBanner;
-    public IAPManager IAPController;
     public Text TextPrice;
-    
     // Start is called before the first frame update
     void Start()
     {       
@@ -46,7 +44,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
 
     private void Close() {
         Invoke("HideSelf", 0.25f);
-    }
+}
 
     private void HideSelf() {
         gameObject.SetActive(false);
@@ -54,17 +52,14 @@ public class IAPPremiumConfirmation : MonoBehaviour
     }
 
     public void UpgradeToPremium() {
-        Debug.Log("upgradddding");
         Close();
-        AdvertistingBanner.stopAdvert();
-        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-        applicationModel.DataProvider.GameModel.PremiumEdition = true;
-        applicationModel.DataProvider.SaveGame();
+        IAPManager.instance.storeController.InitiatePurchase(IAPManager.premium_version_product);
     }
 
     public void UpgradeToPremiumFailed()
     {
-        Debug.Log("upgradddding has failed please try again");
+        //Debug.Log("upgraing has failed please try again");
+        //UpgradeToPremium has failed do nothing - things will remain unchanged
     }
 
     // Update is called once per frame

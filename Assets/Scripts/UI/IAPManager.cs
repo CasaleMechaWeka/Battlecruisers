@@ -1,3 +1,4 @@
+using BattleCruisers.Data;
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
@@ -9,15 +10,15 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public IStoreController storeController;
     private static IExtensionProvider _StoreExtensionProvider;
+    public const string premium_version_product = "premium_version";
 
-    
     //************************** Adjust these methods **************************************
     public void InitializePurchasing()
     {
         if (IsInitialized()) { return; }
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-        builder.AddProduct("premium_version", ProductType.NonConsumable);
+        builder.AddProduct(premium_version_product, ProductType.NonConsumable);
 
         UnityPurchasing.Initialize(this, builder);
     }
@@ -37,9 +38,11 @@ public class IAPManager : MonoBehaviour, IStoreListener
     //Step 4 modify purchasing
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        if (String.Equals(args.purchasedProduct.definition.id, "", StringComparison.Ordinal))
+        if (args.purchasedProduct.definition.id == premium_version_product)//allowing for just the single IAP at this stage
         {
-            Debug.Log("");
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            applicationModel.DataProvider.GameModel.PremiumEdition = true;
+            applicationModel.DataProvider.SaveGame();
         }
         else
         {
