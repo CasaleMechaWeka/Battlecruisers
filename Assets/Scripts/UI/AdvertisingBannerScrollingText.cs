@@ -53,10 +53,10 @@ gameObject.SetActive(false);//default of not active
         float xAdjustment = transform.localScale.x;
         float yAdjustment = transform.localScale.y;
 
-        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f /*6.5f*/))
+        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f /*6.5f*/))//if tablet
         {
-            xAdjustment = 0.8f;
-            yAdjustment = 0.8f;
+            xAdjustment = 1.25f;
+            yAdjustment = 1.25f;
             transform.localScale = new Vector3(xAdjustment, yAdjustment);
         }
         else

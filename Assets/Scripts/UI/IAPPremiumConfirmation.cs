@@ -21,7 +21,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
     public Text TextPrice;
     // Start is called before the first frame update
     void Start()
-    {       
+    {
         _soundPlayer
         = new SingleSoundPlayer(
             new SoundFetcher(),
