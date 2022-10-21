@@ -12,6 +12,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public IPool<IExplosion, Vector3> BulletImpactPool { get; }
         public IPool<IExplosion, Vector3> HighCalibreBulletImpactPool { get; }
         public IPool<IExplosion, Vector3> TinyBulletImpactPool { get; }
+        public IPool<IExplosion, Vector3> NovaShellImpactPool { get; }
         public IPool<IExplosion, Vector3> BombExplosionPool { get; }
         public IPool<IExplosion, Vector3> FlakExplosionsPool { get; }
         public IPool<IExplosion, Vector3> SmallExplosionsPool { get; }
@@ -27,6 +28,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             BulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
             HighCalibreBulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HighCalibreBulletImpact);
             TinyBulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.TinyBulletImpact);
+            NovaShellImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.NovaShellImpact);
             BombExplosionPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BombExplosion);
             FlakExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.FlakExplosion);
             SmallExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.Explosion75);
@@ -46,7 +48,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
 
         public void SetInitialCapacity()
         {
-           TinyBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
+            TinyBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             HighCalibreBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             BombExplosionPool.AddCapacity(InitialCapacity.BOMB);
@@ -54,6 +56,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             SmallExplosionsPool.AddCapacity(InitialCapacity.SMALL);
             MediumExplosionsPool.AddCapacity(InitialCapacity.MEDIUM);
             LargeExplosionsPool.AddCapacity(InitialCapacity.LARGE);
+            NovaShellImpactPool.AddCapacity(InitialCapacity.LARGE);
             HugeExplosionsPool.AddCapacity(InitialCapacity.HUGE);
         }
     }

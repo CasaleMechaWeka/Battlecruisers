@@ -8,7 +8,9 @@ namespace BattleCruisers.Projectiles.Pools
     {
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
+        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
+        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
         IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
         IPool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
         IPool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
@@ -17,6 +19,6 @@ namespace BattleCruisers.Projectiles.Pools
         IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         IPool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         IPool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
-        IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
+
     }
 }

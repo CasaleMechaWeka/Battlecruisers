@@ -28,6 +28,10 @@ namespace BattleCruisers.Effects.Explosions.Pools
         
         // Radius 1.5m  => Artillery, rocket launcher, broadsides, archon back missile launcher, archon primary cannon
         IPool<IExplosion, Vector3> LargeExplosionsPool { get; }
+
+        // Nova Shell Radius 2m  => Nova Artillery
+        IPool<IExplosion, Vector3> NovaShellImpactPool { get; }
+        
         
         // Radius 5m    => Nuke
         IPool<IExplosion, Vector3> HugeExplosionsPool { get; }

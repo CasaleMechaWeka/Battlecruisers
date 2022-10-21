@@ -7,9 +7,17 @@ namespace BattleCruisers.Projectiles.Pools
 {
     public class ShellLargePoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
+
+        public bool novaShell = false;
+
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
+            if (novaShell)
+            {
+                return projectilePoolProvider.NovaShellPool;
+            }
+
             return projectilePoolProvider.ShellsLargePool;
         }
     }
