@@ -145,6 +145,7 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey HighCalibreBulletImpact { get; } = new ExplosionKey("HighCalibreBulletImpact");
             public static ExplosionKey TinyBulletImpact { get; } = new ExplosionKey("TinyBulletImpact");
             public static ExplosionKey NovaShellImpact { get; } = new ExplosionKey("NovaShellImpact");
+             public static ExplosionKey RocketShellImpact { get; } = new ExplosionKey("RocketShellImpact");
             public static ExplosionKey BombExplosion { get; } = new ExplosionKey("ExplosionBomb");
             public static ExplosionKey FlakExplosion { get; } = new ExplosionKey("ExplosionSAM");
             public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
@@ -158,7 +159,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
+                        BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact, BombExplosion, FlakExplosion, Explosion75, Explosion100, Explosion150, Explosion500
                     };
                 }
             }
@@ -171,9 +172,8 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey TinyBullet { get; } = new ProjectileKey("TinyBullet");
             public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
-
             public static ProjectileKey NovaShell { get; } = new ProjectileKey("NovaShell");
-
+            public static ProjectileKey RocketShell { get; } = new ProjectileKey("RocketShell");
             public static ProjectileKey MissileSmall { get; } = new ProjectileKey("MissileSmall");
             public static ProjectileKey MissileMedium { get; } = new ProjectileKey("MissileMedium");
             public static ProjectileKey MissileLarge { get; } = new ProjectileKey("MissileLarge");
@@ -190,7 +190,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge, NovaShell,
+                        Bullet, HighCalibreBullet, TinyBullet, ShellSmall, ShellLarge, NovaShell, RocketShell,
                         MissileSmall, MissileMedium, MissileLarge, MissileSmart,
                         Bomb, Nuke, Rocket, RocketSmall
                     };

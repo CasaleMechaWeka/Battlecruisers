@@ -7,10 +7,18 @@ namespace BattleCruisers.Projectiles.Pools
 {
     public class ShellSmallPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
+        public bool rocketShell = false;
+
         public IPool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> 
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
+             if (rocketShell)
+            {
+                return projectilePoolProvider.RocketShellPool;
+            }
+
             return projectilePoolProvider.ShellsSmallPool;
         }
     }
 }
+
