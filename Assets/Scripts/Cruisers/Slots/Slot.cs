@@ -66,7 +66,9 @@ namespace BattleCruisers.Cruisers.Slots
             set { _renderer.gameObject.SetActive(value); }
         }
 
-        public void controlBuildingPlacementFeedback(bool active) 
+        public void controlBuildingPlacementFeedback(bool active)   // let's describe a publicly-accessible function that returns nothing, 
+                                                                    // named contorlBuildingPlacementFeedback
+                                                                    // which will be passed a bool (true or false) and active??
         {
             _renderer.gameObject.SetActive(active);
             _buildingPlacementFeedback.gameObject.SetActive(active);
