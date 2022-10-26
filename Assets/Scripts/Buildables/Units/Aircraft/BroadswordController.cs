@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public class BroadswordController : AircraftController, ITargetConsumer
 	{
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
-        private IBarrelWrapper _barrelWrapper;
+        private IBarrelWrapper _rocketBarrelWrapper, _minigunBarrelWrapper;
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
@@ -62,10 +62,17 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 
-            _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
-			Assert.IsNotNull(_barrelWrapper);
-			_barrelWrapper.StaticInitialise();
-            AddDamageStats(_barrelWrapper.DamageCapability);
+            _minigunBarrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
+			Assert.IsNotNull(_minigunBarrelWrapper);
+
+			_minigunBarrelWrapper.StaticInitialise();
+            AddDamageStats(_minigunBarrelWrapper.DamageCapability);
+
+            _rocketBarrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
+			Assert.IsNotNull(_rocketBarrelWrapper);
+            
+			_rocketBarrelWrapper.StaticInitialise();
+            AddDamageStats(_rocketBarrelWrapper.DamageCapability);
 		}
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -93,7 +100,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             SetupTargetDetection();
 
-            _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _rocketBarrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _minigunBarrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
             List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
             foreach (Sprite sprite in allSprites)
             {
@@ -191,13 +199,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _hoverTargetDetectorProvider.DisposeManagedState();
             _hoverTargetDetectorProvider = null;
 
-            _barrelWrapper.DisposeManagedState();
+            _minigunBarrelWrapper.DisposeManagedState();
+            _rocketBarrelWrapper.DisposeManagedState();
 		}
 
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             List<SpriteRenderer> renderers = base.GetInGameRenderers();
-            renderers.AddRange(_barrelWrapper.Renderers);
+            renderers.AddRange(_rocketBarrelWrapper.Renderers);
+            renderers.AddRange(_minigunBarrelWrapper.Renderers);
             return renderers;
         }
     }
