@@ -11,10 +11,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
-    public class GodCopterTestGod : TestGodBase
+    public class BroadswordTestGod : TestGodBase
     {
         private AttackBoatController[] _ships;
-        private GunShipController _gunship;
+        private BroadswordController _broadsword;
 
         public List<Vector2> gunshipPatrolPoints;
 
@@ -23,8 +23,8 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             _ships = FindObjectsOfType<AttackBoatController>();
             List<GameObject> gameObjects = _ships.Select(ship => ship.GameObject).ToList();
 
-            _gunship = FindObjectOfType<GunShipController>();
-            gameObjects.Add(_gunship.GameObject);
+            _broadsword = FindObjectOfType<BroadswordController>();
+            gameObjects.Add(_broadsword.GameObject);
 
             return gameObjects;
         }
@@ -33,10 +33,10 @@ namespace BattleCruisers.Scenes.Test.Aircraft
         {
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
 
-            // Setup gunship
+            // Setup Broadsword
             IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
-            helper.InitialiseUnit(_gunship, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left, enemyCruiser: redCruiser);
-            _gunship.StartConstruction();
+            helper.InitialiseUnit(_broadsword, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left, enemyCruiser: redCruiser);
+            _broadsword.StartConstruction();
 
             // Setup target attack boats
             foreach (AttackBoatController ship in _ships)
