@@ -11,7 +11,7 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         private readonly ISpriteFetcher _spriteFetcher;
 
         private const string BOMBER_SPRITE_NAME = "bomber";
-        private const int NUM_OF_BOMBER_SPRITES = 8;
+        private const int NUM_OF_BOMBER_SPRITES = 20;
         private const string FIGHTER_SPRITE_NAME = "fighter";
         private const int NUM_OF_FIGHTER_SPRITES = 7;
         private const string GUNSHIP_SPRITE_NAME = "gunship";
