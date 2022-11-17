@@ -230,7 +230,7 @@ namespace BattleCruisers.Data.Static
                 // Set 3:  Rockjaw
                 new Level(8, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
                 new Level(9, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning),
-                new Level(10, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(10, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Purple),
 
                 // Set 4:  Eagle
                 new Level(11, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
@@ -246,7 +246,7 @@ namespace BattleCruisers.Data.Static
 
                 // Set 6:  Longbow
                 new Level(19, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
-                new Level(20, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Midnight),
+                new Level(20, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight),
                 new Level(21, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
                 new Level(22, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
 
@@ -259,7 +259,7 @@ namespace BattleCruisers.Data.Static
 			     // Set 8:  Huntress Prime
                 new Level(27, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
                 new Level(28, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
-                new Level(29, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Dusk),
+                new Level(29, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
                 new Level(30, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
                 new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)
             };
