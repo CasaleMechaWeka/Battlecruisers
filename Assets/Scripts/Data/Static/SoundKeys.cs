@@ -101,6 +101,11 @@ namespace BattleCruisers.Data.Static
                         new SoundKey(SoundType.Music, "experimental-base"),
                         new SoundKey(SoundType.Music, "experimental-danger"));
 
+                public static SoundKeyPair Againagain { get; }
+                    = new SoundKeyPair(
+                        new SoundKey(SoundType.Music, "againagain-base"),
+                        new SoundKey(SoundType.Music, "againagain-danger"));
+
                 public static SoundKeyPair Juggernaut { get; }
                     = new SoundKeyPair(
                         new SoundKey(SoundType.Music, "juggernaut-base"),

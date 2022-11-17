@@ -33,7 +33,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 SoundKeys.Music.Background.Experimental,
                 SoundKeys.Music.Background.Juggernaut,
                 SoundKeys.Music.Background.Nothing,
-                SoundKeys.Music.Background.Sleeper
+                SoundKeys.Music.Background.Sleeper,
+                SoundKeys.Music.Background.Againagain
             };
             _songs = new CircularList<SoundKeyPair>(songs)
             {
