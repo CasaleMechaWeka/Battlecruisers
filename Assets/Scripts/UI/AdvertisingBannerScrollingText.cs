@@ -148,13 +148,21 @@ gameObject.SetActive(false);//default of not active
     void Update()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-        if (applicationModel.DataProvider.GameModel.PremiumEdition && gameObject.activeSelf)
+        if (gameObject.activeSelf)
         {
-            if (ThankYouEffect != null)
-                ThankYouEffect.SetActive(true);
-            stopAdvert();
+            if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            {
+                if (ThankYouEffect != null)
+                    ThankYouEffect.SetActive(true);//set based on if the game is premium or not
+                stopAdvert();
+            }
+            else {
+                if (ThankYouEffect != null)
+                    ThankYouEffect.SetActive(false);//set based on if the game is premium or not
+            }
             return;
         }
+      
 
         if (IAPManager.instance != null) {
             ShowIAPButton();
