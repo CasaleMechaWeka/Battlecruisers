@@ -23,40 +23,52 @@ namespace BattleCruisers.Utils.Localisation
         async void Start()
         {
 
-            //get original settings incase we need to switch back
-            _text = GetComponent<Text>();
-            Assert.IsNotNull(_text, $"{gameObject.name}: {nameof(AllCaps)} should only be attached to a game object that has a {nameof(Text)} element.");
+            try
+            {
+                //get original settings incase we need to switch back
+                _text = GetComponent<Text>();
+                Assert.IsNotNull(_text, $"{gameObject.name}: {nameof(AllCaps)} should only be attached to a game object that has a {nameof(Text)} element.");
 
-            _originalFontMaxSize = _text.resizeTextMaxSize;
-            _originalFontMinSize = _text.resizeTextMinSize;
-            
-            ILocTable fontSettings = await LocTableFactory.Instance.LoadFontsTableAsync();
+                _originalFontMaxSize = _text.resizeTextMaxSize;
+                _originalFontMinSize = _text.resizeTextMinSize;
 
-            //get the string we need
-            string newFontName = fontSettings.GetString("FontName");
-            _newFont = (Font)Resources.Load("Fonts/" + newFontName);
-            string bestFitScaleAdjustment = fontSettings.GetString("BestFitScaleAdjustment");
-            _newFontScaleAdjustment = float.Parse(bestFitScaleAdjustment, CultureInfo.InvariantCulture.NumberFormat);
-            string boldNewFontBool = fontSettings.GetString("Bold");
-            Boolean.TryParse(boldNewFontBool, out _boldNewFont);
-            UpdateString();
+                ILocTable fontSettings = await LocTableFactory.Instance.LoadFontsTableAsync();
+
+                //get the string we need
+                string newFontName = fontSettings.GetString("FontName");
+                _newFont = (Font)Resources.Load("Fonts/" + newFontName);
+                string bestFitScaleAdjustment = fontSettings.GetString("BestFitScaleAdjustment");
+                _newFontScaleAdjustment = float.Parse(bestFitScaleAdjustment, CultureInfo.InvariantCulture.NumberFormat);
+                string boldNewFontBool = fontSettings.GetString("Bold");
+                Boolean.TryParse(boldNewFontBool, out _boldNewFont);
+                UpdateString();
+            }
+            catch {
+                Debug.Log("font localisation failed - Start");
+            }
         }
 
         private void UpdateString()
         {
-            //if there is a new font use it
-            if (_newFont != null)
+            try
             {
-                _text.font = _newFont;
+                //if there is a new font use it
+                if (_newFont != null)
+                {
+                    _text.font = _newFont;
+                }
+                if (_boldNewFont)
+                {
+                    _text.fontStyle = FontStyle.Bold;
+                }
+                if (allowScaleAdjustment)//controlled when the component is applied
+                {   //default scale adjustment is 1.0 e.g. no adjustment
+                    _text.resizeTextMinSize = (int)(_originalFontMinSize * _newFontScaleAdjustment);
+                    _text.resizeTextMaxSize = (int)(_originalFontMaxSize * _newFontScaleAdjustment);
+                }
             }
-            if (_boldNewFont)
-            {
-                _text.fontStyle = FontStyle.Bold;
-            }
-            if (allowScaleAdjustment)//controlled when the component is applied
-            {   //default scale adjustment is 1.0 e.g. no adjustment
-                _text.resizeTextMinSize = (int)(_originalFontMinSize * _newFontScaleAdjustment);
-                _text.resizeTextMaxSize = (int)(_originalFontMaxSize * _newFontScaleAdjustment);
+            catch {
+                Debug.Log("font localisation failed - UpdateString");
             }
         }
     }
