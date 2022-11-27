@@ -155,12 +155,12 @@ gameObject.SetActive(false);//default of not active
                 if (ThankYouEffect != null)
                     ThankYouEffect.SetActive(true);//set based on if the game is premium or not
                 stopAdvert();
+                return;
             }
             else {
                 if (ThankYouEffect != null)
                     ThankYouEffect.SetActive(false);//set based on if the game is premium or not
             }
-            return;
         }
       
 
