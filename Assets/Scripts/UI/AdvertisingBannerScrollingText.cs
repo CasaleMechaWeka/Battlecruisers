@@ -177,26 +177,30 @@ gameObject.SetActive(false);//default of not active
             else
             {
                 _isFirstLoad = false;
-                RequestBanner();//first request for banner
+                //RequestBanner();//first request for banner
+                dummyText();//test with only fake banner
             }
         }
 
-        if (!_ADLoaded)
+       /* if (!_ADLoaded)
         {
             return;
-        }
+        }*///running only fake advert
 
-        if (_bannerView == null) {
-            RequestBanner();
-        }
+       /* if (_bannerView == null) {
+            //RequestBanner();
+            dummyText();//test with only fake banner
+        }*/
 
         _xPos -= Time.deltaTime * scrollSpeed;
         ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
+
         if (_xPos < -_scrollAdjustment) {
             if (loadAdvert)
             {
-                clearAdvertShowDummy();
-                Invoke("RequestBanner", 4.5f);
+                // clearAdvertShowDummy();
+                //  Invoke("RequestBanner", 4.5f);
+                  Invoke("dummyText", 1.0f);//test with only fake banner
             }
         }
     }
@@ -205,13 +209,16 @@ gameObject.SetActive(false);//default of not active
        // _ADLoaded = false;
         DefaultBanner.SetActive(true);
         dummyText();
-        _bannerView.Hide();
+        if (_bannerView != null) 
+            _bannerView.Hide();
     }
 
-    private void dummyText() {
-        _xPos = (int)(boxCollider.size.x * 1.8);
-        ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
-        _TextBox.text = "*** VOTE PRESIDENTRON *** VOTE PRESIDENTRON *** VOTE PRESIDENTRON ***  VOTE PRESIDENTRON ***";
+    private void dummyText()
+    {//run only fake advert
+     //_xPos = (int)(boxCollider.size.x * 1.8);
+     // ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
+     //_TextBox.text = "*** VOTE PRESIDENTRON *** VOTE PRESIDENTRON *** VOTE PRESIDENTRON ***  VOTE PRESIDENTRON ***";
+        setupText();
     }
 
     private void setupText() {
