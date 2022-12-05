@@ -4,7 +4,9 @@
     {
         Campaign = 1,
         Tutorial = 2,
-        Skirmish = 3
+        Skirmish = 3 //,
+
+        //Voyage = 4
     }
 
     public interface IApplicationModel
