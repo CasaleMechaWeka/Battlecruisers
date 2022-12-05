@@ -20,6 +20,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Scenes
 {
+
     public class LandingSceneGod : MonoBehaviour, ISceneNavigator
     {
         public Text SubTitle;
@@ -38,6 +39,8 @@ namespace BattleCruisers.Scenes
         {
             try
             {
+                Debug.Log("Heloooooooo");
+                
                 var options = new InitializationOptions();
                 #if UNITY_EDITOR
                     options.SetEnvironmentName("dev");

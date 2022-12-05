@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
         {
             base.Initialise(soundPlayer, homeScreen);
 
-            Helper.AssertIsNotNull(homeScreen, gameModel);
+            Helper.AssertIsNotNull(homeScreen, gameModel); //stop application from running if these are not set already
 
             _homeScreen = homeScreen;
             _gameModel = gameModel;
