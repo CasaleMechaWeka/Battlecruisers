@@ -19,7 +19,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private FilterToggler _isEnabledToggler;
 
 		public Image buildableImage;
-        
+
+        public Image upgradeIconImage;
+
         public Image redGlowImage;
 
         public Image buildableImageOutline;//modified
@@ -52,15 +54,17 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 {
                     buildableImageOutline.color = value;//modified
                     buildableName.color = value;
+                    upgradeIconImage.color = value;
                     redGlowImage.color = redGlowColor;
                     isSelected = true;
                 }
                 else{
                     buildableImageOutline.color = Color.clear;
                     buildableName.color = redColor;
+                    upgradeIconImage.color = redColor;
                     redGlowImage.color = Color.clear;
                     isSelected = false;
-                }//holy shit i am insane
+                }
                 
             }
         }
