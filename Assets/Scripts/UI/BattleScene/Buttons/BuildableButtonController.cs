@@ -20,7 +20,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
 		public Image buildableImage;
 
-        public Image upgradeIconImage;
+        public Image upgradeIconImage1;
+        public Image upgradeIconImage2;
+        public Image upgradeIconImage3;
+        public Image upgradeIconImage4;
+        public Image upgradeIconImage5;
+        public Image warheadIconImage;
 
         public Image redGlowImage;
 
@@ -54,14 +59,24 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                 {
                     buildableImageOutline.color = value;//modified
                     buildableName.color = value;
-                    upgradeIconImage.color = value;
+                    upgradeIconImage1.color = value;
+                    upgradeIconImage2.color = value;
+                    upgradeIconImage3.color = value;
+                    upgradeIconImage4.color = value;
+                    upgradeIconImage5.color = value;
+                    warheadIconImage.color = value;
                     redGlowImage.color = redGlowColor;
                     isSelected = true;
                 }
                 else{
                     buildableImageOutline.color = Color.clear;
                     buildableName.color = redColor;
-                    upgradeIconImage.color = redColor;
+                    upgradeIconImage1.color = redColor;
+                    upgradeIconImage2.color = redColor;
+                    upgradeIconImage3.color = redColor;
+                    upgradeIconImage4.color = redColor;
+                    upgradeIconImage5.color = redColor;
+                    warheadIconImage.color = redColor;
                     redGlowImage.color = Color.clear;
                     isSelected = false;
                 }
