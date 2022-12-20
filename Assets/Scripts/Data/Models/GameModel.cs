@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class GameModel : IGameModel
+    public class GameModel : IGameModel, IVoyageModel
     {
         
         public class ModelVersion
