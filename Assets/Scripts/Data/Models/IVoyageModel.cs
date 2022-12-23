@@ -6,42 +6,21 @@ using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Data.Models
 {
+
     public interface IVoyageModel
     {
-        int NumOfLevelsCompleted { get; }
-        long LifetimeDestructionScore { get; set;}
-        long BestDestructionScore { get; set;}
-        bool HasAttemptedTutorial { get; set; }
-        bool FirstNonTutorialBattle { get; }
-        Loadout PlayerLoadout { get; set; }
-        BattleResult LastBattleResult { get; set; }
 
-        public bool PremiumEdition { get; set; }
-        SettingsModel Settings { get; set; }
-        int SelectedLevel { get; set; }
-        HotkeysModel Hotkeys { get; }
-        SkirmishModel Skirmish { get; set; }
+        // The stage of the voyage
+        int LegNumber { get; set; }
 
-        ReadOnlyCollection<HullKey> UnlockedHulls { get; }
-        ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
-        ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
-        ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
+        // The number of the battle within the stage
+        int BattleNumber { get; set; }
 
-        NewItems<HullKey> NewHulls { get; }
-        NewItems<BuildingKey> NewBuildings { get; }
-        NewItems<UnitKey> NewUnits { get; }
+        // The number of battles won so far in the current voyage
+        int BattlesWon { get; set; }
 
-        Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult);
+        // Whether the current voyage is in progress
+        bool VoyageInProgress { get; set; }
 
-        void AddUnlockedHull(HullKey hull);
-        void AddUnlockedBuilding(BuildingKey building);
-        void AddUnlockedUnit(UnitKey unit);
-        void AddCompletedLevel(CompletedLevel completedLevel);
-
-        IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory);
-        IList<UnitKey> GetUnlockedUnits(UnitCategory unitCategory);
-
-        bool IsUnitUnlocked(UnitKey unitKey);
-        bool IsBuildingUnlocked(BuildingKey buildingKey);
     }
 }

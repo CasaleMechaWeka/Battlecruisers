@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VoyageModel : MonoBehaviour
+namespace BattleCruisers.Data.Models
 {
-    // Start is called before the first frame update
-    void Start()
+    public class VoyageModel : IVoyageModel
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // The stage of the voyage
+        public int LegNumber { get; set; } = 1;
+
+        // The number of the battle within the stage
+        public int BattleNumber { get; set; } = 1;
+
+        // The number of battles won so far in the current voyage
+        public int BattlesWon { get; set; } = 0;
+
+        // Is there a voyage in progress?
+        public bool VoyageInProgress { get; set; } = false;
+
+        // Start a new voyage
+        public void StartNewVoyage()
+        {
+            LegNumber = 1;
+            BattleNumber = 1;
+            BattlesWon = 0;
+            VoyageInProgress = true;
+        }
+
     }
 }
