@@ -9,6 +9,7 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
@@ -66,7 +67,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             previousSetButton.Initialise(soundPlayer, _previousSetCommand);
-
             cancelButton.Initialise(soundPlayer, Cancel);
         }
 
