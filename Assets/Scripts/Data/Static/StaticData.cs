@@ -253,11 +253,11 @@ namespace BattleCruisers.Data.Static
                 // Set 7:  Megolodon
                 new Level(23, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
                 new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-                new Level(25, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
+                new Level(25, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
                 new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
 				
 			     // Set 8:  Huntress Prime
-                new Level(27, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(27, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
                 new Level(28, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
                 new Level(29, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
                 new Level(30, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
