@@ -35,32 +35,7 @@ namespace BattleCruisers.Scenes
 
     public class VoyageController : MonoBehaviour
     {
-        // Reference to the "New Voyage" button
-        public Button newVoyageButton;
-
-        // Reference to the label GameObject that displays the VoyageNumber
-        public GameObject voyageNumberLabel;
-
-        // Reference to the text GameObject that displays the VoyageNumber
-        public GameObject voyageNumberText;
-
-        private void Start()
-        {
-            // Set up the "New Voyage" button to call the NewVoyage method when clicked
-            newVoyageButton.onClick.AddListener(NewVoyage);
-        }
-
-        private void NewVoyage()
-        {
-            // Create a new instance of the Voyage singleton object
-            Voyage voyage = new Voyage();
-
-            // Set the singleton field to the new instance of the Voyage object
-            Voyage.Instance = voyage;
-
-            // Update the text component of the voyageNumberText GameObject to display the new VoyageNumber
-            voyageNumberText.GetComponent<Text>().text = voyage.VoyageNumber.ToString();
-        }
+        // todo;
     }
 
 }
