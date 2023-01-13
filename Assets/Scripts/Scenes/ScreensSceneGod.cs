@@ -279,26 +279,6 @@ namespace BattleCruisers.Scenes
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
 
-                    bool usingAdvert = false;
-                    IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-#if UNITY_ANDROID && FREE_EDITION
-                    if (!applicationModel.DataProvider.GameModel.PremiumEdition)
-                        usingAdvert = true;
-#elif UNITY_EDITOR && FREE_EDITION
-if (!applicationModel.DataProvider.GameModel.PremiumEdition)    
-usingAdvert = true;
-#endif
-                   
-
-
-                    if (usingAdvert) {
-                        float adjustment = 100 / (Screen.dpi / 3.2f);
-
-                        AdvertisingBanner.startAdvert();
-                        Vector3 newPosition = new Vector3(0, trashScreen.startBattleButton.transform.localPosition.y + (50*adjustment));
-                        trashScreen.startBattleButton.transform.localPosition = newPosition;
-                    }
-
                 }
                 
             }

@@ -150,6 +150,7 @@ gameObject.SetActive(false);//default of not active
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
         if (gameObject.activeSelf)
         {
+            applicationModel.DataProvider.GameModel.PremiumEdition = false;
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {
                 if (ThankYouEffect != null)
