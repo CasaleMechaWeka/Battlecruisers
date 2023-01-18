@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public List<Sprite> allSprites = new List<Sprite>();
         public ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
 
-        private const float WITHTIN_RANGE_VELOCITY_MULTIPLIER = 0.5f;
+        private const float WITHIN_RANGE_VELOCITY_MULTIPLIER = 0.5f;
 
         public float enemyHoverRangeInM, enemyFollowRangeInM;
 
@@ -84,7 +84,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             IVelocityProvider inRangeVelocityProvider
                 = _movementControllerFactory.CreateMultiplyingVelocityProvider(
                     providerToWrap: this,
-                    multiplier: WITHTIN_RANGE_VELOCITY_MULTIPLIER);
+                    multiplier: WITHIN_RANGE_VELOCITY_MULTIPLIER);
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
 		}
 
