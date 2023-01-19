@@ -39,7 +39,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
             TextPrice.text = premiumVersionProduct.metadata.localizedPriceString;
         }
 
-        AdvertistingBanner.stopAdvert();
+        //AdvertistingBanner.stopAdvert();
     }
 
     private void Close() {
@@ -48,7 +48,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
 
     private void HideSelf() {
         gameObject.SetActive(false);
-        AdvertistingBanner.startAdvert();
+        //AdvertistingBanner.startAdvert();
     }
 
     public void UpgradeToPremium() {

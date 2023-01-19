@@ -5,7 +5,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using System;
 using System.Linq;
 using TMPro;
@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 public class AdvertisingBannerScrollingText : MonoBehaviour
 {
-    public bool loadAdvert;
+    /*public bool loadAdvert;
     public GameObject TextMask;
     public GameObject TextCompanyName;
     public GameObject ScrollingTextBox;
@@ -53,7 +53,7 @@ gameObject.SetActive(false);//default of not active
         float xAdjustment = transform.localScale.x;
         float yAdjustment = transform.localScale.y;
 
-        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f /*6.5f*/))//if tablet
+        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f))//if tablet
         {
             xAdjustment = 1.25f;
             yAdjustment = 1.25f;
@@ -183,16 +183,6 @@ gameObject.SetActive(false);//default of not active
             }
         }
 
-       /* if (!_ADLoaded)
-        {
-            return;
-        }*///running only fake advert
-
-       /* if (_bannerView == null) {
-            //RequestBanner();
-            dummyText();//test with only fake banner
-        }*/
-
         _xPos -= Time.deltaTime * scrollSpeed;
         ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
@@ -271,7 +261,7 @@ gameObject.SetActive(false);//default of not active
 #else
             adUnitId = "unexpected_platform";
 #endif
-        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f /*6.5f*/))
+        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f ))
         {
             _bannerView = new BannerView(adUnitId, AdSize.IABBanner, AdPosition.Bottom);
         } else {
@@ -333,6 +323,6 @@ gameObject.SetActive(false);//default of not active
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
         Debug.Log("HandleAdClosed event received");
-    }
+    }*/
 
 }
