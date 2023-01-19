@@ -201,7 +201,7 @@ namespace BattleCruisers.Scenes
         public void GoToHomeScreen()
         {
             GoToScreen(homeScreen);
-            //AdvertisingBanner.startAdvert();
+            AdvertisingBanner.startAdvert();
         }
 
         public void GoToLevelsScreen()
@@ -257,7 +257,7 @@ namespace BattleCruisers.Scenes
         private static int levelToShowCutscene = 0;
 		public void GoToTrashScreen(int levelNum)
         {
-            //AdvertisingBanner.stopAdvert();
+            AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
@@ -290,7 +290,7 @@ namespace BattleCruisers.Scenes
 
         public void GoStraightToTrashScreen(int levelNum)
 		{
-            //AdvertisingBanner.stopAdvert();
+            AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
@@ -322,7 +322,7 @@ namespace BattleCruisers.Scenes
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
 		{
-            //AdvertisingBanner.stopAdvert();
+            AdvertisingBanner.stopAdvert();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
@@ -347,7 +347,7 @@ namespace BattleCruisers.Scenes
 
         public void LoadBattleScene()
         {
-            //AdvertisingBanner.stopAdvert();
+            AdvertisingBanner.stopAdvert();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }

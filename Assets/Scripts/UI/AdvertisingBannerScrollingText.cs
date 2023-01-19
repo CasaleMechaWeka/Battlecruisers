@@ -128,22 +128,22 @@ gameObject.SetActive(false);//default of not active
         _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
         return _bannerView.GetHeightInPixels();
     }
-
+    */
     public void stopAdvert() {
         gameObject.SetActive(false);
-        if (_bannerView != null)
+        /*if (_bannerView != null)
         {
             _bannerView.Hide();
             _bannerView.Destroy();//clear out the old one
             _bannerView = null;
-        }
+        }*/
     }
-
+    
     public void startAdvert() {
-        loadAdvert = true;
+        //loadAdvert = true;
         gameObject.SetActive(true);
     }
-
+    /*
     // Update is called once per frame
     void Update()
     {
