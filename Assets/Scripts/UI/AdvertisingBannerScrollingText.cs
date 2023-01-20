@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 public class AdvertisingBannerScrollingText : MonoBehaviour
 {
-    /*public bool loadAdvert;
+    public bool loadAdvert;
     public GameObject TextMask;
     public GameObject TextCompanyName;
     public GameObject ScrollingTextBox;
@@ -37,7 +37,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public AudioSource _uiAudioSource;
     private ISingleSoundPlayer _soundPlayer;
     //advertising banner
-    private BannerView _bannerView;
+    //private BannerView _bannerView;
 
     // Start is called before the first frame update
     async void Start()
@@ -73,7 +73,7 @@ gameObject.SetActive(false);//default of not active
 
         
 
-        MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
+        //MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
         boxCollider = TextMask.GetComponent<BoxCollider2D>();
         _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
@@ -108,7 +108,7 @@ gameObject.SetActive(false);//default of not active
         }
     }
 
-    private float getBannerHeight() {
+    /*private float getBannerHeight() {
         if (_bannerView != null)
         {
             _bannerView.Destroy();//clear out the old one
@@ -127,8 +127,8 @@ gameObject.SetActive(false);//default of not active
 
         _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
         return _bannerView.GetHeightInPixels();
-    }
-    */
+    }*/
+    
     public void stopAdvert() {
         gameObject.SetActive(false);
         /*if (_bannerView != null)
@@ -143,7 +143,7 @@ gameObject.SetActive(false);//default of not active
         //loadAdvert = true;
         gameObject.SetActive(true);
     }
-    /*
+    
     // Update is called once per frame
     void Update()
     {
@@ -200,8 +200,8 @@ gameObject.SetActive(false);//default of not active
        // _ADLoaded = false;
         DefaultBanner.SetActive(true);
         dummyText();
-        if (_bannerView != null) 
-            _bannerView.Hide();
+        //if (_bannerView != null) 
+         //   _bannerView.Hide();
     }
 
     private void dummyText()
@@ -248,7 +248,7 @@ gameObject.SetActive(false);//default of not active
     {
         DefaultBanner.SetActive(true);
 
-        if (_bannerView != null)
+        /*if (_bannerView != null)
         {
             _bannerView.Destroy();//clear out the old one
             _bannerView = null;
@@ -278,15 +278,15 @@ gameObject.SetActive(false);//default of not active
         _bannerView.OnAdClosed += HandleOnAdClosed;
 
         // Load the banner with the request.
-        _bannerView.LoadAd(CreateAdRequest());
+        _bannerView.LoadAd(CreateAdRequest());*/
     }
 
-    public AdRequest CreateAdRequest()
+    /*public AdRequest CreateAdRequest()
     {
         return new AdRequest.Builder()
             .AddKeyword("unity-admob-sample")
             .Build();
-    }
+    }*/
 
     public static float DeviceDiagonalSizeInInches()
     {
@@ -306,14 +306,14 @@ gameObject.SetActive(false);//default of not active
         setupText();
     }
 
-    public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    /*public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         DefaultBanner.SetActive(true);
         _ADLoaded = true;
         setupText();//carry on anyway - we have a dummy add to serve up
         Debug.Log("HandleFailedToReceiveAd event received with message: "
                             + args.LoadAdError.GetMessage());
-    }
+    }*/
 
     public void HandleOnAdOpened(object sender, EventArgs args)
     {
@@ -323,6 +323,6 @@ gameObject.SetActive(false);//default of not active
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
         Debug.Log("HandleAdClosed event received");
-    }*/
+    }
 
 }
