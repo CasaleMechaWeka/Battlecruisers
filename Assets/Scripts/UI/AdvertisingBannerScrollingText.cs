@@ -42,12 +42,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-gameObject.SetActive(false);//default of not active
-#if UNITY_ANDROID && FREE_EDITION
-            gameObject.SetActive(true);
-#elif UNITY_EDITOR && FREE_EDITION
-        gameObject.SetActive(true);
-#endif
+        gameObject.SetActive(false);//default of not active
+        StartPlatformSpecificAds();
+
         HideIAPButton();
 
         float xAdjustment = transform.localScale.x;
@@ -141,9 +138,20 @@ gameObject.SetActive(false);//default of not active
     
     public void startAdvert() {
         //loadAdvert = true;
-        gameObject.SetActive(true);
+        StartPlatformSpecificAds();
     }
-    
+
+    void StartPlatformSpecificAds()
+    {
+#if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+        gameObject.SetActive(false);
+#elif UNITY_ANDROID && FREE_EDITION
+        gameObject.SetActive(true);
+#elif UNITY_EDITOR && FREE_EDITION
+        gameObject.SetActive(true);
+#endif
+    }
+
     // Update is called once per frame
     void Update()
     {
