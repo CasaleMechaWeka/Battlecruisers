@@ -82,7 +82,8 @@ namespace BattleCruisers.AI
         {
             return
                 difficulty == Difficulty.Hard
-                || difficulty == Difficulty.Harder;
+                || difficulty == Difficulty.Harder
+                || difficulty == Difficulty.Normal;//add this condition 
         }
     }
 }
