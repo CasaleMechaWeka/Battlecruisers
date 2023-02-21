@@ -110,6 +110,10 @@ namespace BattleCruisers.Data.Static
 			public static HullKey Trident { get; } = new HullKey("Trident");
             public static HullKey ManOfWarBoss { get; } = new HullKey("ManOfWarBoss");
             public static HullKey HuntressBoss { get; } = new HullKey("HuntressBoss");
+            public static HullKey TasDevil { get; } = new HullKey("TasDevil");
+            public static HullKey Yeti { get; } = new HullKey("Yeti");
+            public static HullKey Rickshaw { get; } = new HullKey("Rickshaw");
+            public static HullKey BlackRig { get; } = new HullKey("BlackRig");
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -117,7 +121,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil
                     };
                 }
             }
@@ -128,7 +132,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<HullKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil
                     };
                 }
             }
