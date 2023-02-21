@@ -22,7 +22,12 @@ namespace BattleCruisers.Effects.Explosions
 
             foreach (ParticleSystem particleSystem in _particleSystems)
             {
+                if (particleSystem.isPlaying)
+                {
+                    particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                }
                 particleSystem.randomSeed = (uint)_randomSeed;
+                particleSystem.Play();
             }
         }
 
