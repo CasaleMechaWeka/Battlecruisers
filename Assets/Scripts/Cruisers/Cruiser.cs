@@ -26,9 +26,11 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using BattleCruisers.Movement;
 using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace BattleCruisers.Cruisers
 {
@@ -53,7 +55,8 @@ namespace BattleCruisers.Cruisers
         public int numOfDrones;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
-
+        [Tooltip("If the cruiser has custom movement like the Huntress Boss it's recommended to disable physics, until the behaviour of the boss is updated to support physics")]
+        public bool enablePhysics = true;
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
@@ -86,6 +89,8 @@ namespace BattleCruisers.Cruisers
         public CruiserDeathExplosion deathPrefab;
         public CruiserDeathExplosion DeathPrefab => deathPrefab;
 
+        public CruiserPhysics CruiserPhysics { get; private set; }
+
 
         // ICruiserController
         public bool IsAlive => !IsDestroyed;
@@ -106,6 +111,7 @@ namespace BattleCruisers.Cruisers
         public event EventHandler Clicked;
         private int updateCnt = 0;
         public bool isCruiser = true;
+        
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -140,6 +146,7 @@ namespace BattleCruisers.Cruisers
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
             PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
             UnitTargets = new UnitTargets(UnitMonitor);
+            CruiserPhysics = new CruiserPhysics(gameObject);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
@@ -166,6 +173,7 @@ namespace BattleCruisers.Cruisers
             RepairManager = args.RepairManager;
 
             _fog.Initialise(args.FogStrength);
+            if (enablePhysics) CruiserPhysics.Initialize();
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
@@ -234,7 +242,9 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
-
+            // Set the building parent to be the slot's PlatformObject making the building a child of the Cruiser
+            // important for physics related behaviour in the cruiser!!
+            building.GameObject.transform.parent.transform.SetParent(slot.Transform.PlatformObject);
             building.Activate(
                 new BuildingActivationArgs(
                     this,
