@@ -4,26 +4,58 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace BattleCruisers.Movement
 {
     public class CruiserPhysics
     {
-        // The RelativeJoint2D to work properly needs to be at least 1 unit of distance to its connectedBody;
-        private const float CRUISER_Z_OFFSET_MODIFIER = 1.0f;
-        public CruiserPhysics(GameObject cruiser)
-        {
-            Assert.IsNotNull(cruiser);
-            _cruiser = cruiser;
-        }
+        
+        
+        // MEMBERS
 
-        private GameObject _cruiser;
+        private Cruiser _cruiser;
         private GameObject _joint;
         private RelativeJoint2D _relativeJoint2D;
         private Rigidbody2D _rigidbody2D;
         private Rigidbody2D _jointRigidbody2D;
         private CruiserJoint _cruiserJoint;
 
+        // The RelativeJoint2D to work properly needs to be at least 1 unit of distance to its connectedBody;
+        private const float CRUISER_Z_OFFSET_MODIFIER = 1.0f;
+        
+        // PROPERTIES
+        [Serializable]
+        public struct Settings
+        {
+            [Tooltip("Enables or disables completely the physics behaviour")]
+            public bool enabledPhysics;
+            [Tooltip("sets the maximum force that can be applied to the cruiser to maintain its relative position. If the cruiser is pushed or pulled beyond its allowed range, the cruiser will apply a force to move it back into position, but this force will not exceed the MaxForce value.")]
+            public float maxForce;
+            [Tooltip("sets the maximum torque that can be applied to the cruiser to maintain its relative angle. If the cruiser is twisted or rotated beyond its allowed range, the cruiser will apply a torque to rotate it back into position, but this torque will not exceed the MaxTorque value.")]
+            public float maxTorque;
+            [Range(0,1)]
+            [Tooltip("A larger CorrectionScale value means that more of the error is corrected in each step, resulting in faster correction behavior, but potentially less accurate or smooth movement. A smaller CorrectionScale value means that less of the error is corrected in each step, resulting in slower correction behavior, but potentially more accurate or smooth movement.")]
+            public float correctionScale;
+
+            public Settings(bool defaultEnablePhysics,float defaultMaxForce, float defaultMaxTorque, float defaultCorrectionScale)
+            {
+                enabledPhysics = defaultEnablePhysics;
+                maxForce = defaultMaxForce;
+                maxTorque = defaultMaxTorque;
+                correctionScale = defaultCorrectionScale;
+            }
+        }
+        
+        
+        public CruiserPhysics(Cruiser cruiser)
+        {
+            Assert.IsNotNull(cruiser);
+            _cruiser = cruiser;
+        }
+
+        
+        // METHODS
         public void Initialize()
         {
             SetupCruiserRigidbody();
@@ -34,7 +66,7 @@ namespace BattleCruisers.Movement
         private void SetupCruiserRigidbody()
         {
             // Setting up all the requisites for the rigidbody of the cruiser
-            _rigidbody2D = _cruiser.GetComponent<Rigidbody2D>();
+            _rigidbody2D = _cruiser.gameObject.GetComponent<Rigidbody2D>();
             _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
             _rigidbody2D.isKinematic = false;
             _rigidbody2D.simulated = true;
@@ -50,8 +82,8 @@ namespace BattleCruisers.Movement
             {
                 transform =
                 {
-                    position = new Vector3(_cruiser.transform.position.x, _cruiser.transform.position.y, _cruiser.transform.position.z + CRUISER_Z_OFFSET_MODIFIER),
-                    rotation = _cruiser.transform.rotation
+                    position = new Vector3(_cruiser.transform.position.x, _cruiser.gameObject.transform.position.y, _cruiser.gameObject.transform.position.z + CRUISER_Z_OFFSET_MODIFIER),
+                    rotation = _cruiser.gameObject.transform.rotation
                 }
             };
             // Adding the current cruiser as the RelativeJoint connectedBody
@@ -64,9 +96,9 @@ namespace BattleCruisers.Movement
             _relativeJoint2D.autoConfigureOffset = true;
             _relativeJoint2D.breakForce = Mathf.Infinity;
             _relativeJoint2D.breakTorque = Mathf.Infinity;
-            _relativeJoint2D.maxForce = 40f;
-            _relativeJoint2D.maxTorque = 40f;
-            _relativeJoint2D.correctionScale = 0.75f;
+            _relativeJoint2D.maxForce = _cruiser.physicsSettings.maxForce;
+            _relativeJoint2D.maxTorque = _cruiser.physicsSettings.maxTorque;
+            _relativeJoint2D.correctionScale = _cruiser.physicsSettings.correctionScale;
         }
 
         private void SetupCruiserJoint()
