@@ -115,6 +115,7 @@ namespace BattleCruisers.Data.Static
             public static HullKey Rickshaw { get; } = new HullKey("Rickshaw");
             public static HullKey BlackRig { get; } = new HullKey("BlackRig");
 
+
             public static IList<IPrefabKey> AllKeys
             {
                 get
