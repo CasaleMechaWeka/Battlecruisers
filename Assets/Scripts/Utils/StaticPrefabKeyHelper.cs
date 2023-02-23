@@ -19,7 +19,11 @@ namespace BattleCruisers.Utils
         Hull_Longbow,
         Hull_Megalodon,
         Hull_Eagle,
-        Hull_Bullshark,
+        Hull_Bullshark, /*
+        Hull_TasDevil,
+        Hull_Yeti,
+        Hull_Rickshaw,
+        Hull_BlackRig, */
 
         // === Buildings ===
         // Factories
