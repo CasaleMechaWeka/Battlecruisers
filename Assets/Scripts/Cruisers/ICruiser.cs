@@ -7,7 +7,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Movement;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils.Factories;
@@ -31,8 +30,6 @@ namespace BattleCruisers.Cruisers
         ICruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
         CruiserDeathExplosion DeathPrefab { get; }
-
-        CruiserPhysics CruiserPhysics { get; }
 
         IBuilding ConstructSelectedBuilding(ISlot slot);
         void MakeInvincible();
