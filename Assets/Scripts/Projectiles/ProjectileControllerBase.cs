@@ -20,17 +20,17 @@ namespace BattleCruisers.Projectiles
 {
     public abstract class ProjectileControllerBase<TActivationArgs, TStats> : Projectile,
         IRemovable,
-        IPoolable<TActivationArgs> 
+        IPoolable<TActivationArgs>
             where TActivationArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
     {
-		private ITargetFilter _targetFilter;
+        private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
         private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
         private IAudioClipWrapper _impactSound;
         private IPool<IExplosion, Vector3> _explosionPool;
-        
+
         private bool _isActiveAndAlive;
         protected IFactoryProvider _factoryProvider;
 
@@ -40,13 +40,11 @@ namespace BattleCruisers.Projectiles
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private ITarget _targetToDamage;
 
-		protected Rigidbody2D _rigidBody;
+        protected Rigidbody2D _rigidBody;
 
         public event EventHandler Destroyed;
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
-
-        private const float PROJECTILE_IMPULSE_MODIFIER = 10.0f;
 
         private IMovementController _movementController;
         protected IMovementController MovementController
@@ -73,15 +71,15 @@ namespace BattleCruisers.Projectiles
         public Vector3 Position => transform.position;
 
         public virtual void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
-		{
+        {
             Logging.LogMethod(Tags.SHELLS);
             Helper.AssertIsNotNull(commonStrings, factoryProvider);
 
             _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
-			_rigidBody = GetComponent<Rigidbody2D>();
-			Assert.IsNotNull(_rigidBody);
+            _rigidBody = GetComponent<Rigidbody2D>();
+            Assert.IsNotNull(_rigidBody);
 
             IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
@@ -98,7 +96,7 @@ namespace BattleCruisers.Projectiles
             gameObject.SetActive(true);
             transform.position = activationArgs.Position;
 
-			_targetFilter = activationArgs.TargetFilter;
+            _targetFilter = activationArgs.TargetFilter;
             _parent = activationArgs.Parent;
             _impactSound = activationArgs.ImpactSound;
 
@@ -125,8 +123,8 @@ namespace BattleCruisers.Projectiles
                 damageApplierFactory.CreateSingleDamageApplier(projectileStats);
         }
 
-		void FixedUpdate()
-		{
+        void FixedUpdate()
+        {
             if (!_isActiveAndAlive)
             {
                 return;
@@ -140,7 +138,7 @@ namespace BattleCruisers.Projectiles
                 //    _singleDamageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
                 //}
                 //else{
-                    _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
+                _damageApplier.ApplyDamage(_targetToDamage, transform.position, damageSource: _parent);
                 //}
                 _isActiveAndAlive = false;
             }
@@ -155,44 +153,19 @@ namespace BattleCruisers.Projectiles
         }
 
         void OnTriggerEnter2D(Collider2D collider)
-		{
+        {
             Logging.LogMethod(Tags.SHELLS);
 
-			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+            ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
 
-			if (target != null 
+            if (target != null
                 && !target.IsDestroyed
                 && _targetFilter.IsMatch(target)
                 && _targetToDamage == null)
-			{
-                #region PhysicsTesting
-                
-                
-                /*
-                // Get the direction from this object to the other object
-                Vector2 direction = collider.transform.position - transform.position;
-                Rigidbody2D rigidbody = collider.GetComponent<Rigidbody2D>();
-                // Apply a force in that direction
-                rigidbody.AddForce(direction.normalized * 5f, ForceMode2D.Impulse);
-                */
-                #endregion
-
-                #region PhysicsStable
-                /*
-                
-                */
-
-          
-                /*
-                Rigidbody2D rigidbody = collider.GetComponent<Rigidbody2D>();
-                Vector2 direction = this._rigidBody.velocity.normalized;
-                rigidbody.AddForceAtPosition(direction * PROJECTILE_IMPULSE_MODIFIER * _parent.Health / target.MaxHealth,transform.position,ForceMode2D.Impulse);
-                */
-                #endregion
-                
+            {
                 _targetToDamage = target;
 
-           
+
             }
         }
 
@@ -201,8 +174,8 @@ namespace BattleCruisers.Projectiles
             Logging.LogMethod(Tags.SHELLS);
 
             ShowExplosion();
-			RemoveFromScene();
-		}
+            RemoveFromScene();
+        }
 
         protected void ShowExplosion()
         {
