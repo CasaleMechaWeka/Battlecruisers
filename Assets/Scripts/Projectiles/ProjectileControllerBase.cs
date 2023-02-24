@@ -181,12 +181,18 @@ namespace BattleCruisers.Projectiles
                 /*
                 
                 */
+
+          
+                /*
                 Rigidbody2D rigidbody = collider.GetComponent<Rigidbody2D>();
                 Vector2 direction = this._rigidBody.velocity.normalized;
                 rigidbody.AddForceAtPosition(direction * PROJECTILE_IMPULSE_MODIFIER * _parent.Health / target.MaxHealth,transform.position,ForceMode2D.Impulse);
+                */
                 #endregion
                 
                 _targetToDamage = target;
+
+           
             }
         }
 

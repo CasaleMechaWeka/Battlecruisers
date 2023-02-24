@@ -33,6 +33,7 @@ namespace BattleCruisers.Data.Serialization
 			Assert.IsTrue(DoesSavedGameExist());
 
 			FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open);
+	
 			GameModel game = (GameModel)_binaryFormatter.Deserialize(file);
 			file.Close();
 			return game;
