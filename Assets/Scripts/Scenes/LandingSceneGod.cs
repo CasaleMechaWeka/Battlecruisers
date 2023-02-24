@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                Debug.Log("Heloooooooo");
+                Debug.Log(" ========= " + Application.persistentDataPath);
                 
                 var options = new InitializationOptions();
                 #if UNITY_EDITOR
