@@ -55,13 +55,8 @@ namespace BattleCruisers.Cruisers
         public int numOfDrones;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
-
-        private const bool PHYSICS_DEFAULT_ENABLED = true;
-        private const float PHYSICS_DEFAULT_MAX_FORCE = 40f;
-        private const float PHYSICS_DEFAULT_MAX_TORQUE = 40f;
-        private const float PHYSICS_DEFAULT_CORRECTION_SCALE = 0.75f;
-        
-        public CruiserPhysics.Settings physicsSettings = new CruiserPhysics.Settings(PHYSICS_DEFAULT_ENABLED, PHYSICS_DEFAULT_MAX_FORCE, PHYSICS_DEFAULT_MAX_TORQUE, PHYSICS_DEFAULT_CORRECTION_SCALE);
+        [Tooltip("If the cruiser has custom movement like the Huntress Boss it's recommended to disable physics, until the behaviour of the boss is updated to support physics")]
+        public bool enablePhysics = true;
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
@@ -95,7 +90,6 @@ namespace BattleCruisers.Cruisers
         public CruiserDeathExplosion DeathPrefab => deathPrefab;
 
         public CruiserPhysics CruiserPhysics { get; private set; }
-        
 
 
         // ICruiserController
@@ -152,7 +146,7 @@ namespace BattleCruisers.Cruisers
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
             PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
             UnitTargets = new UnitTargets(UnitMonitor);
-            CruiserPhysics = new CruiserPhysics(this);
+            CruiserPhysics = new CruiserPhysics(gameObject);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
@@ -179,7 +173,7 @@ namespace BattleCruisers.Cruisers
             RepairManager = args.RepairManager;
 
             _fog.Initialise(args.FogStrength);
-            if (physicsSettings.enabledPhysics) CruiserPhysics.Initialize();
+            if (enablePhysics) CruiserPhysics.Initialize();
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
