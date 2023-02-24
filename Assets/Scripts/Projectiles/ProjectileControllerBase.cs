@@ -46,8 +46,6 @@ namespace BattleCruisers.Projectiles
         public event EventHandler PositionChanged;
         public event EventHandler Deactivated;
 
-        private const float PROJECTILE_IMPULSE_MODIFIER = 10.0f;
-
         private IMovementController _movementController;
         protected IMovementController MovementController
         {
@@ -165,27 +163,6 @@ namespace BattleCruisers.Projectiles
                 && _targetFilter.IsMatch(target)
                 && _targetToDamage == null)
 			{
-                #region PhysicsTesting
-                
-                
-                /*
-                // Get the direction from this object to the other object
-                Vector2 direction = collider.transform.position - transform.position;
-                Rigidbody2D rigidbody = collider.GetComponent<Rigidbody2D>();
-                // Apply a force in that direction
-                rigidbody.AddForce(direction.normalized * 5f, ForceMode2D.Impulse);
-                */
-                #endregion
-
-                #region PhysicsStable
-                /*
-                
-                */
-                Rigidbody2D rigidbody = collider.GetComponent<Rigidbody2D>();
-                Vector2 direction = this._rigidBody.velocity.normalized;
-                rigidbody.AddForceAtPosition(direction * PROJECTILE_IMPULSE_MODIFIER * _parent.Health / target.MaxHealth,transform.position,ForceMode2D.Impulse);
-                #endregion
-                
                 _targetToDamage = target;
             }
         }
