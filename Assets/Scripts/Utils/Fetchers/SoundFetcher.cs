@@ -16,15 +16,24 @@ namespace BattleCruisers.Utils.Fetchers
         public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
-
-            AsyncOperationHandle<AudioClip> handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
-            await handle.Task;
-
-            if (handle.Status != AsyncOperationStatus.Succeeded
-                || handle.Result == null)
+            Debug.Log("Sound Path === " + soundPath);
+            AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
+            try
             {
-                throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
+                handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
+                await handle.Task;
+
+                if (handle.Status != AsyncOperationStatus.Succeeded
+                    || handle.Result == null)
+                {
+                    throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
+                }                
             }
+            catch(Exception ex)
+            {
+                Debug.Log(ex.Message + " === " + soundPath);
+            }
+
 
             return new AudioClipWrapper(handle.Result, handle);
         }
