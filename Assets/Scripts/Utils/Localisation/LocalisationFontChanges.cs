@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using Utils.Localisation;
 
 namespace BattleCruisers.Utils.Localisation
 {
@@ -17,7 +18,29 @@ namespace BattleCruisers.Utils.Localisation
         private int _originalFontMinSize;
         private float _newFontScaleAdjustment;
         private bool _boldNewFont;
+        private LocalizeStringEvent _localizeStringEvent;
+        private RTLSettings _rtlSettings = new RTLSettings();
         public bool allowScaleAdjustment = true;
+
+        public struct RTLSettings
+        {
+            public bool IsRtl { get; set; }
+            public string RtlCorrectedText { get; set; }
+        }
+
+        private void Awake()
+        {
+            
+            if (_text == null) _text = GetComponent<Text>();
+            if (TryGetComponent(out LocalizeStringEvent localizeStringEvent))
+            {
+                _localizeStringEvent = localizeStringEvent;
+            }
+            else if (transform.parent.TryGetComponent(out LocalizeStringEvent localizeStringEventInParent))
+            {
+                _localizeStringEvent = localizeStringEventInParent;
+            }
+        }
 
         // Start is called before the first frame update
         async void Start()
@@ -26,11 +49,13 @@ namespace BattleCruisers.Utils.Localisation
             try
             {
                 //get original settings incase we need to switch back
-                _text = GetComponent<Text>();
                 Assert.IsNotNull(_text, $"{gameObject.name}: {nameof(AllCaps)} should only be attached to a game object that has a {nameof(Text)} element.");
 
                 _originalFontMaxSize = _text.resizeTextMaxSize;
                 _originalFontMinSize = _text.resizeTextMinSize;
+
+                _rtlSettings.IsRtl = false;
+                _rtlSettings.RtlCorrectedText = "";
 
                 ILocTable fontSettings = await LocTableFactory.Instance.LoadFontsTableAsync();
 
@@ -48,7 +73,36 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        private void UpdateString()
+        private void OnEnable()
+        {
+            if (_localizeStringEvent != null)
+            {
+                _localizeStringEvent.OnUpdateString.AddListener(OnUpdateString);
+                _localizeStringEvent.RefreshString();
+            }
+            else if (_text.text != _rtlSettings.RtlCorrectedText && _rtlSettings.IsRtl == false)
+            {
+                ConvertToRtl();
+            }
+            else if (_text.text != _rtlSettings.RtlCorrectedText && _rtlSettings.IsRtl)
+            {
+                ResetRtl();
+            }
+        }
+
+        private void OnDisable()
+        {
+            _rtlSettings.IsRtl = false;
+            if (_localizeStringEvent != null) _localizeStringEvent.OnUpdateString.RemoveListener(OnUpdateString);
+        }
+
+        private void OnUpdateString(string localizedString)
+        {
+            _text.text = localizedString;
+            ConvertToRtl();
+        }
+
+        private async void UpdateString()
         {
             try
             {
@@ -69,6 +123,29 @@ namespace BattleCruisers.Utils.Localisation
             }
             catch {
                 Debug.Log("font localisation failed - UpdateString");
+            }
+        }
+
+        private async void ConvertToRtl()
+        {
+            if (LocalizationSettings.SelectedLocale.LocaleName == "Arabic (ar)")
+            {
+                _rtlSettings.IsRtl = true;
+                await Task.Delay(1);
+                var allCaps = GetComponent<AllCaps>();
+                if (allCaps) allCaps.enabled = false;
+                _rtlSettings.RtlCorrectedText = _text.text;
+                _rtlSettings.RtlCorrectedText = ArabicSupport.Fix(_rtlSettings.RtlCorrectedText);
+                _text.text = _rtlSettings.RtlCorrectedText;
+            }
+        }
+
+        private async void ResetRtl()
+        {
+            if (LocalizationSettings.SelectedLocale.LocaleName == "Arabic (ar)")
+            {
+                await Task.Delay(1);
+                _text.text = _rtlSettings.RtlCorrectedText;
             }
         }
     }
