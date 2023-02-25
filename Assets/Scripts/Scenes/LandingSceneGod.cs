@@ -39,8 +39,7 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                Debug.Log(" ========= " + Application.persistentDataPath);
-                
+                              
                 var options = new InitializationOptions();
                 #if UNITY_EDITOR
                     options.SetEnvironmentName("dev");
@@ -54,6 +53,7 @@ namespace BattleCruisers.Scenes
             catch (ConsentCheckException e)
             {
                 //do nothing
+                Debug.Log(e.Message);
             }
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;

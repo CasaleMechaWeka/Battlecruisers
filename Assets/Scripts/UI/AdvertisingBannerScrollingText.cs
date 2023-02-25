@@ -42,7 +42,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        gameObject.SetActive(false);//default of not active
+    //    gameObject.SetActive(false);//default of not active
         StartPlatformSpecificAds();
 
         HideIAPButton();
@@ -143,12 +143,28 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     void StartPlatformSpecificAds()
     {
+        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
 #if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
         gameObject.SetActive(false);
 #elif UNITY_ANDROID && FREE_EDITION
-        gameObject.SetActive(true);
+        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
 #elif UNITY_EDITOR && FREE_EDITION
-        gameObject.SetActive(true);
+         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        {
+            gameObject.SetActive(true);
+        }
+          else
+        {
+            gameObject.SetActive(false);
+        }
 #endif
     }
 
@@ -158,6 +174,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
         if (gameObject.activeSelf)
         {
+            /*
             applicationModel.DataProvider.GameModel.PremiumEdition = false;
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {
@@ -170,11 +187,22 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
                 if (ThankYouEffect != null)
                     ThankYouEffect.SetActive(false);//set based on if the game is premium or not
             }
+
+            */
         }
       
 
         if (IAPManager.instance != null) {
-            ShowIAPButton();
+            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+            {
+                ShowIAPButton();
+                startAdvert();
+            }                
+            else
+            {
+                HideIAPButton();
+                stopAdvert();
+            }
         }
 
         if (_isFirstLoad)

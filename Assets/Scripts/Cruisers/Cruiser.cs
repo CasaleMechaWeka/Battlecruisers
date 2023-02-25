@@ -199,8 +199,16 @@ namespace BattleCruisers.Cruisers
     Debug.Log("Analytics: " + logName);
 #endif
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-                AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
+                try
+                {
+                    AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.Flush();
+                }
+                catch(ConsentCheckException e)
+                {
+                    Debug.Log(e.Message);
+                }
+                
             }
 
         }
@@ -262,8 +270,16 @@ namespace BattleCruisers.Cruisers
     Debug.Log("Analytics: " + logName);
 #endif
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-                AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
+                try
+                {
+                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.Flush();
+                }
+                catch (ConsentCheckException ex)
+                {
+                    Debug.Log(ex.Message);
+                }
+              
             }
 
             return building;
