@@ -34,7 +34,10 @@ namespace BattleCruisers.UI.Loading
 #if FREE_EDITION
             //if player NOT already paid then use Free title
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+            {
                 subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+            }
+               
 #else
             //if premium version set here 
             applicationModel.DataProvider.GameModel.PremiumEdition = true;

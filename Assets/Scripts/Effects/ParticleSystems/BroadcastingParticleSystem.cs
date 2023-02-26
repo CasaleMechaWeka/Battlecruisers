@@ -29,7 +29,7 @@ namespace BattleCruisers.Effects.ParticleSystems
 
         public void Stop()
         {
-            _particleSystem.Stop();
+            _particleSystem?.Stop();
         }
 
         private void OnParticleSystemStopped()

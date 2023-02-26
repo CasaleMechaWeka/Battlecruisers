@@ -42,8 +42,17 @@ public class GlobalExceptionHandler : MonoBehaviour
         {
             Debug.Log("Exception caught and logged for analytics - remove GLOBAL_EXCEPTION_HANDLER - to disable");
             Dictionary<string, object> logErrorDetail = new Dictionary<string, object>() { { "logString", logString },{ "stackTrace", stackTrace }};
-            AnalyticsService.Instance.CustomData("AppException", logErrorDetail);
-            AnalyticsService.Instance.Flush();
+            try
+            {
+                AnalyticsService.Instance.CustomData("AppException", logErrorDetail);
+                AnalyticsService.Instance.Flush();
+            }
+            catch
+            (ConsentCheckException ex)
+            {
+                Debug.Log(ex.Message);
+            }
+          
         }  
     }
 
