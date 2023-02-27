@@ -14,7 +14,6 @@ using UnityEngine.UI;
 public class FullScreenAdverts : MonoBehaviour
 {
     public GameObject defaultAd;
-    public GameObject ThankYouEffect;
     public Button closeButton;
 
 
@@ -28,12 +27,10 @@ public class FullScreenAdverts : MonoBehaviour
         float xAdjustment = transform.localScale.x;
         float yAdjustment = transform.localScale.y;
 
-        float xad = defaultAd.transform.localScale.x;
-        float yad = defaultAd.transform.localScale.y;
 
         if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f))//if tablet
         {
-            xAdjustment = 2f;
+            xAdjustment = 1f;
             yAdjustment = 1f;;
             defaultAd.transform.localScale = new Vector3(xAdjustment, yAdjustment);
         }
@@ -50,37 +47,18 @@ public class FullScreenAdverts : MonoBehaviour
         }
 
         Button btn = closeButton.GetComponent<Button>();
-        btn.onClick.AddListener(closeAdvert);
+        btn.onClick.AddListener(CloseAdvert);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-        if (gameObject.activeSelf)
-        {
-            applicationModel.DataProvider.GameModel.PremiumEdition = false;
-            if (applicationModel.DataProvider.GameModel.PremiumEdition)
-            {
-                if (ThankYouEffect != null)
-                    ThankYouEffect.SetActive(true);//set based on if the game is premium or not
-                closeAdvert();
-                return;
-            }
-            else
-            {
-                if (ThankYouEffect != null)
-                    ThankYouEffect.SetActive(false);//set based on if the game is premium or not
-            }
-        }
-    }
 
-    public void closeAdvert()
+
+    public void CloseAdvert()
     {
         gameObject.SetActive(false);
     }
 
-    public void openAdvert()
+    public void OpenAdvert()
     {
         StartPlatformSpecficAds();
     }
