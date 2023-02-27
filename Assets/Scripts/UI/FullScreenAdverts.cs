@@ -20,7 +20,7 @@ public class FullScreenAdverts : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       gameObject.SetActive(false);
+       //gameObject.SetActive(false);
         StartPlatformSpecficAds();
 
 
@@ -37,10 +37,10 @@ public class FullScreenAdverts : MonoBehaviour
         else
         {
             float scaleAdjustment = 100 / (Screen.dpi / 3.2f);
-            if (scaleAdjustment > 1f)
-            {
+            //if (scaleAdjustment > 1f)
+            //{
                 scaleAdjustment = 1f;
-            }
+            //}
             xAdjustment *= scaleAdjustment;
             yAdjustment *= scaleAdjustment;
             transform.localScale = new Vector3(xAdjustment, yAdjustment);
@@ -65,7 +65,7 @@ public class FullScreenAdverts : MonoBehaviour
 
     void StartPlatformSpecficAds()
     {
-#if FREE_EDITION && UNITY_ANDROID || UNITY_IOS
+#if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
         gameObject.SetActive(true);
 #elif UNITY_EDITOR && FREE_EDITION
         gameObject.SetActive(true);
