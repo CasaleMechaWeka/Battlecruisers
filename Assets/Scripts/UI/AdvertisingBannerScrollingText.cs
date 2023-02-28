@@ -23,6 +23,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public GameObject ConfirmationScreen;
     public CanvasGroupButton RemoveAdvertsButton;
     public GameObject ThankYouEffect;
+    public Animator ThankYouAnimator;
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     public float scrollSpeed = 50;
@@ -36,6 +37,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     [SerializeField]
     public AudioSource _uiAudioSource;
     private ISingleSoundPlayer _soundPlayer;
+
+    private static readonly int Play = Animator.StringToHash("Play");
     //advertising banner
     //private BannerView _bannerView;
 
@@ -172,10 +175,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     void Update()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+        /* DISABLED DUE TO USING ANIMATOR CONTROLLER TO CONTROL THE THANK YOU ANIMATION
         if (gameObject.activeSelf)
         {
-            /*
-            applicationModel.DataProvider.GameModel.PremiumEdition = false;
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {
                 if (ThankYouEffect != null)
@@ -183,19 +185,19 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
                 stopAdvert();
                 return;
             }
-            else {
+            else 
+            {
                 if (ThankYouEffect != null)
                     ThankYouEffect.SetActive(false);//set based on if the game is premium or not
             }
-
-            */
         }
-      
-
+        */
+        
         if (IAPManager.instance != null) {
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
             {
                 ShowIAPButton();
+                PlayThankYouAnimation();
                 startAdvert();
             }                
             else
@@ -230,6 +232,11 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
                   Invoke("dummyText", 1.0f);//test with only fake banner
             }
         }
+    }
+
+    private void PlayThankYouAnimation()
+    {
+        ThankYouAnimator.SetTrigger(Play);
     }
 
     private void clearAdvertShowDummy() {
