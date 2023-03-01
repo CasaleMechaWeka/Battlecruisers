@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data;
+﻿using System;
+using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
@@ -23,20 +24,24 @@ namespace BattleCruisers.UI.Loading
 
         async void Start()
         {
-
+            
             Helper.AssertIsNotNull(root, loadingText);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+            string subTitle = String.Empty;
 
-#if FREE_EDITION
             //if player NOT already paid then use Free title
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
             {
                 subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
             }
+            else if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            {
+                subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+            }
+#if FREE_EDITION
+            
                
 #else
             //if premium version set here 
