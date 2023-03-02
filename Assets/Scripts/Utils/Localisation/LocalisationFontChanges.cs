@@ -70,6 +70,7 @@ namespace BattleCruisers.Utils.Localisation
             }
             catch {
                 Debug.Log("font localisation failed - Start");
+                Debug.Log("NAna");
             }
         }
 
