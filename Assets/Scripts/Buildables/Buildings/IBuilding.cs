@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings
         Generic = 0,
         AntiAir = 1,
         AntiShip = 2,
-        Shield = 3
+        Shield = 3  
     }
 
     public interface IBuilding : IBuildable, IPoolable<BuildingActivationArgs>
