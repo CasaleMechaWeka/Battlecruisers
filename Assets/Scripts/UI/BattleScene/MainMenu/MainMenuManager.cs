@@ -78,8 +78,16 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
     Debug.Log("Analytics: " + logName);
 #endif
            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-            AnalyticsService.Instance.Flush();
+            try
+            {
+                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+            catch (Exception ex)
+            { 
+                Debug.Log(ex.Message);
+            }
+            
         }
 
         public void ShowSettings()

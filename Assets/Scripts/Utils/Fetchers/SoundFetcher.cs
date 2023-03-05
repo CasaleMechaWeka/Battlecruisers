@@ -15,8 +15,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
-            string soundPath = CreateSoundPath(soundKey);
-            Debug.Log("Sound Path === " + soundPath);
+            string soundPath = CreateSoundPath(soundKey);       
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
             try
             {

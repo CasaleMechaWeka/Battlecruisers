@@ -386,8 +386,16 @@ namespace BattleCruisers.Scenes.BattleScene
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-            AnalyticsService.Instance.Flush();
+            try
+            {
+                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+            catch(Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
+      
         }
 
         private IBattleSceneHelper CreateHelper(
