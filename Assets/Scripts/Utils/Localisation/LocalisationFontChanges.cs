@@ -32,6 +32,7 @@ namespace BattleCruisers.Utils.Localisation
         {
             
             if (_text == null) _text = GetComponent<Text>();
+            
             if (TryGetComponent(out LocalizeStringEvent localizeStringEvent))
             {
                 _localizeStringEvent = localizeStringEvent;
