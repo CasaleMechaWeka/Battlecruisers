@@ -19,14 +19,23 @@ namespace BattleCruisers.Utils.Fetchers
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
             try
             {
-                handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
-                await handle.Task;
-
-                if (handle.Status != AsyncOperationStatus.Succeeded
-                    || handle.Result == null)
+                var validateAddress = Addressables.LoadResourceLocationsAsync(soundPath);
+                await validateAddress.Task;
+                if(validateAddress.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
                 {
-                    throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
-                }                
+                    if (validateAddress.Result.Count > 0)
+                    {
+                        handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
+                        await handle.Task;
+
+                        if (handle.Status != AsyncOperationStatus.Succeeded
+                            || handle.Result == null)
+                        {
+                            throw new ArgumentException("Failed to retrieve sound with key: " + soundPath);
+                        }
+                    }
+                }
+                  
             }
             catch(Exception ex)
             {
