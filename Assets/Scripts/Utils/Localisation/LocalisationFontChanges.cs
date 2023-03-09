@@ -77,6 +77,7 @@ namespace BattleCruisers.Utils.Localisation
 
         private void OnEnable()
         {
+            if (LocalizationSettings.SelectedLocale.LocaleName != "Arabic (ar)") return;
             if (_localizeStringEvent != null)
             {
                 _localizeStringEvent.OnUpdateString.AddListener(OnUpdateString);
