@@ -45,9 +45,7 @@ namespace BattleCruisers.Scenes
         private ISingleSoundPlayer _soundPlayer;
 
         public HomeScreenController homeScreen;
-		public LevelsScreenController levelsScreen;
-        public MultiplayScreenController multiplayScreen;
-        public MatchmakingScreenController matchmakingScreen;
+		public LevelsScreenController levelsScreen;      
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
@@ -128,8 +126,6 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
-            multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
-            matchmakingScreen.Initialise(this, _soundPlayer, _dataProvider);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
@@ -214,15 +210,7 @@ namespace BattleCruisers.Scenes
             GoToScreen(levelsScreen);
         }
 
-        public void GoToMultiplayScreen()
-        {
-            GoToScreen(multiplayScreen);   
-        }
-
-        public void GotoMatchmakingScreen()
-        {
-            GoToScreen(matchmakingScreen);
-        }
+ 
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {
@@ -376,6 +364,13 @@ namespace BattleCruisers.Scenes
          public void LoadCutsceneScene()
         {
             _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
+            CleanUp();
+        }
+
+        public void LoadMultiplayScene()
+        {
+            AdvertisingBanner.stopAdvert();
+            _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);
             CleanUp();
         }
 

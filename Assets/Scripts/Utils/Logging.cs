@@ -113,6 +113,7 @@ namespace BattleCruisers.Utils
         public const string PREFAB_CACHE_FACTORY = "PrefabCacheFactory";
         public const string SCENE_NAVIGATION = "SceneNavigation";
         public const string SCREENS_SCENE_GOD = "ScreensSceneGod";
+        public const string Multiplay_SCREENS_SCENE_GOD = "MultiplayScreensSceneGod";
 
         // Other
         public const string ALWAYS = "Always";

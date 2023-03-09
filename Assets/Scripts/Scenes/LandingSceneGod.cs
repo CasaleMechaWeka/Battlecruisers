@@ -135,7 +135,7 @@ namespace BattleCruisers.Scenes
             LoadingScreenHint = hint;
 
             if (stopMusic)
-            MusicPlayer.Stop();
+                MusicPlayer.Stop();
 
             StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
         }

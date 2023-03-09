@@ -5,6 +5,7 @@ using BattleCruisers.UI.Sound.Players;
 using System;
 using System.Linq;
 using UnityEngine;
+using BattleCruisers.Network.Multiplay.Scenes;
 
 
 
@@ -20,11 +21,11 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
 
         }
-        public void Initialise(IScreensSceneGod screensSceneGod,
+        public void Initialise(IMultiplayScreensSceneGod multiplayScreensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider)
         {
-            base.Initialise(screensSceneGod);
+            base.Initialise(multiplayScreensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider);
             Helper.AssertIsNotNull(cancelButton, battleButton);
@@ -40,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         private void StartBattle()
         {
-            _screensSceneGod.GotoMatchmakingScreen();
+            _multiplayScreensSceneGod.GotoMatchmakingScreen();
         }
 
 
@@ -84,7 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public override void Cancel()
         {
-            _screensSceneGod.GoToHomeScreen();
+            _multiplayScreensSceneGod.LoadMainMenuScene();
         }
     }
 

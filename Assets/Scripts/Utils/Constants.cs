@@ -49,7 +49,8 @@
         public const string CUTSCENE_SCENE = "HuntressCutscene";
         public const string DESTRUCTION_SCENE = "DestructionScene";
         public const string STAGE_INTERSTITIAL_SCENE = "StageInterstitialScene";
-	}
+        public const string MULTIPLAY_SCREENS_SCENE = "MultiplayScreensScene";
+    }
 
     public static class GameObjectTags
     {
