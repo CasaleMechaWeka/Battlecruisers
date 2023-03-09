@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using BattleCruisers.Data;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
 
-public class MatchmakingScreenController : MonoBehaviour
+
+namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MatchmakingScreenController : ScreenController
     {
-        
-    }
+        public override void OnPresenting(object activationParameter)
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
+
+
+        public void Initialise(IScreensSceneGod screensSceneGod,
+                           ISingleSoundPlayer soundPlayer,
+                           IDataProvider dataProvider)
+        {
+            base.Initialise(screensSceneGod);
+            Helper.AssertIsNotNull(dataProvider);
+        }
     }
 }
+

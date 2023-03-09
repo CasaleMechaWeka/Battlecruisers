@@ -11,7 +11,7 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
-using BattleCruisers.UI.ScreensScene.PvP.ArenaScreen;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.SkirmishScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -47,6 +47,7 @@ namespace BattleCruisers.Scenes
         public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;
         public MultiplayScreenController multiplayScreen;
+        public MatchmakingScreenController matchmakingScreen;
 		public PostBattleScreenController postBattleScreen;
 		public LoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
@@ -128,6 +129,7 @@ namespace BattleCruisers.Scenes
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
             multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
+            matchmakingScreen.Initialise(this, _soundPlayer, _dataProvider);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
@@ -215,6 +217,11 @@ namespace BattleCruisers.Scenes
         public void GoToMultiplayScreen()
         {
             GoToScreen(multiplayScreen);   
+        }
+
+        public void GotoMatchmakingScreen()
+        {
+            GoToScreen(matchmakingScreen);
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)

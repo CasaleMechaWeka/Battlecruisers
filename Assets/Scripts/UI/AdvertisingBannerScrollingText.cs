@@ -236,7 +236,18 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     private void PlayThankYouAnimation()
     {
-        ThankYouAnimator.SetTrigger(Play);
+        if(HasParameter("Play", ThankYouAnimator))
+            ThankYouAnimator.SetTrigger(Play);
+    }
+
+    public static bool HasParameter(string parameterName, Animator animator)
+    {
+        foreach (AnimatorControllerParameter param in animator.parameters)
+        {
+            if(param.name == parameterName)
+                return true;
+        }
+        return false;
     }
 
     private void clearAdvertShowDummy() {

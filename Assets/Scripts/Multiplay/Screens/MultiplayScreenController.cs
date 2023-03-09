@@ -8,14 +8,14 @@ using UnityEngine;
 
 
 
-namespace BattleCruisers.UI.ScreensScene.PvP.ArenaScreen
+namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
-    public class MultiplayScreenController : ScreenController, IMultiplayScreen
+    public class MultiplayScreenController : ScreenController
     {
         private Arena _curSelectedArena;
         public Arena CurSelectedArena => _curSelectedArena;
 
-        public CanvasGroupButton cancelButton;
+        public CanvasGroupButton cancelButton, battleButton;
         public override void OnPresenting(object activationParameter)
         {
 
@@ -27,11 +27,20 @@ namespace BattleCruisers.UI.ScreensScene.PvP.ArenaScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider);
-            Helper.AssertIsNotNull(cancelButton);
+            Helper.AssertIsNotNull(cancelButton, battleButton);
 
 
             cancelButton.Initialise(soundPlayer, Cancel);
+            battleButton.Initialise(soundPlayer, LoadBattle);
+        }
 
+        private void LoadBattle()
+        {
+            Invoke("StartBattle", 0.3f);
+        }
+        private void StartBattle()
+        {
+            _screensSceneGod.GotoMatchmakingScreen();
         }
 
 

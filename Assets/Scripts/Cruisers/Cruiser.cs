@@ -272,14 +272,13 @@ namespace BattleCruisers.Cruisers
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException ex)
                 {
                     Debug.Log(ex.Message);
-                }
-              
+                }              
             }
 
             return building;
