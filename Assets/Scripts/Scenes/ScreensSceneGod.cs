@@ -121,7 +121,7 @@ namespace BattleCruisers.Scenes
                 _musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
-
+         
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);

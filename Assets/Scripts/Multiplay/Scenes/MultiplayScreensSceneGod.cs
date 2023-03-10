@@ -20,6 +20,7 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Static;
 using UnityEngine.Assertions;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -103,6 +104,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         }
 
 
+   /*     private async Task InitialiseMultiplayScreensScreenAsync()
+        {
+            
+        }*/
+
         public void GotoMatchmakingScreen()
         {
             GoToScreen(matchmakingScreen);
@@ -127,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
         {           
 
-            Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
+            Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
             Assert.AreNotEqual(_currentScreen, destinationScreen);
 

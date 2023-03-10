@@ -2,6 +2,8 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.UI.Common;
+using BattleCruisers.UI.Commands;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +19,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Arena CurSelectedArena => _curSelectedArena;
 
         public CanvasGroupButton cancelButton, battleButton;
+
+        public ButtonController nextBattleButton, previousBattleButton;
+        private ICommand _nextBattleCommand, _previousBattleCommand;
         public override void OnPresenting(object activationParameter)
         {
 
@@ -28,11 +33,36 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             base.Initialise(multiplayScreensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider);
-            Helper.AssertIsNotNull(cancelButton, battleButton);
+            Helper.AssertIsNotNull(cancelButton, battleButton, nextBattleButton, previousBattleButton);
 
+            _nextBattleCommand = new Command(NextBattleCommandExecute, CanNextBattleCommandExecute);
+            nextBattleButton.Initialise(soundPlayer, _nextBattleCommand);
+
+            _previousBattleCommand = new Command(PreviousBattleCommandExecute, CanPreviousBattleCommandExecute);
+            previousBattleButton.Initialise(soundPlayer, _previousBattleCommand);
 
             cancelButton.Initialise(soundPlayer, Cancel);
             battleButton.Initialise(soundPlayer, LoadBattle);
+        }
+
+        private void NextBattleCommandExecute()
+        {
+            OnNextArena();
+            Debug.Log(_curSelectedArena);
+        }
+        private bool CanNextBattleCommandExecute()
+        {
+            return true;
+        }
+
+        private void PreviousBattleCommandExecute()
+        {
+            OnPrevArena();
+            Debug.Log(_curSelectedArena);
+        }
+        private bool CanPreviousBattleCommandExecute()
+        {
+            return true;
         }
 
         private void LoadBattle()
