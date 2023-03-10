@@ -38,7 +38,8 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public AudioSource _uiAudioSource;
     private ISingleSoundPlayer _soundPlayer;
 
-    private static readonly int Play = Animator.StringToHash("Play");
+    private const string ANIMATOR_TRIGGER = "Play";
+    
     //advertising banner
     //private BannerView _bannerView;
 
@@ -236,7 +237,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     private void PlayThankYouAnimation()
     {
-        ThankYouAnimator.SetTrigger(Play);
+        ThankYouAnimator.SetTrigger(ANIMATOR_TRIGGER);
     }
 
     private void clearAdvertShowDummy() {
