@@ -53,6 +53,7 @@ namespace BattleCruisers.Scenes
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
+        public FullScreenAdverts fullScreenads;
 
         [SerializeField]
         private AudioSource _uiAudioSource;
@@ -136,6 +137,7 @@ namespace BattleCruisers.Scenes
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen adds after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
             else if (levelToShowCutscene == 0)
