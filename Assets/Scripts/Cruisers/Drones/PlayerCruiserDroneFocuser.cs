@@ -35,14 +35,22 @@ namespace BattleCruisers.Cruisers.Drones
 
             if (isTriggeredByPlayer)
             {
-                PrioritisedSoundKey sound =  _soundPicker.PickSound(preFocusState, postFocusState);
-                //Debug.Log(sound.Key);
-                _soundPlayer.PlaySound(sound);
-
-                if (droneConsumer.NumOfDronesRequired == RepairManager.NUM_OF_DRONES_REQUIRED_FOR_REPAIR)
+                try
                 {
-                    PlayerTriggeredRepair?.Invoke(this, EventArgs.Empty);
+                    PrioritisedSoundKey sound = _soundPicker.PickSound(preFocusState, postFocusState);
+                    //Debug.Log(sound.Key);
+                    _soundPlayer.PlaySound(sound);
+
+                    if (droneConsumer.NumOfDronesRequired == RepairManager.NUM_OF_DRONES_REQUIRED_FOR_REPAIR)
+                    {
+                        PlayerTriggeredRepair?.Invoke(this, EventArgs.Empty);
+                    }
                 }
+                catch(Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                }              
+
             }
         }
     }

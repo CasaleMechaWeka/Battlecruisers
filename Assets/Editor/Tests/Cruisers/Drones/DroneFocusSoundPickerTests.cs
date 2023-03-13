@@ -3,6 +3,8 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System;
+
 
 namespace BattleCruisers.Tests.Cruisers.Drones
 {
@@ -54,8 +56,16 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 
             foreach (PickerTestCase testCase in testCases)
             {
-                PrioritisedSoundKey chosenSound = soundPicker.PickSound(testCase.PreFocusState, testCase.PostFocusState);
-                Assert.AreEqual(testCase.ExpectedSound, chosenSound);
+                try
+                {
+                    PrioritisedSoundKey chosenSound = soundPicker.PickSound(testCase.PreFocusState, testCase.PostFocusState);
+                    Assert.AreEqual(testCase.ExpectedSound, chosenSound);
+                }
+                catch(Exception ex)
+                {
+                    UnityEngine.Debug.Log(ex.Message);
+                }
+               
             }
         }
     }

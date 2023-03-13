@@ -38,14 +38,15 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     public AudioSource _uiAudioSource;
     private ISingleSoundPlayer _soundPlayer;
 
-    private static readonly int Play = Animator.StringToHash("Play");
+    private const string ANIMATOR_TRIGGER = "Play";
+
     //advertising banner
     //private BannerView _bannerView;
 
     // Start is called before the first frame update
     async void Start()
     {
-    //    gameObject.SetActive(false);//default of not active
+        //    gameObject.SetActive(false);//default of not active
         StartPlatformSpecificAds();
 
         HideIAPButton();
@@ -71,7 +72,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             transform.localScale = new Vector3(xAdjustment, yAdjustment);
         }
 
-        
+
 
         //MobileAds.Initialize(initStatus => { });//initalising Ads as early as possible
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
@@ -94,16 +95,20 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         Invoke("ShowPurchaseConfirmationScreen", 0.25f);
     }
 
-    public void HideIAPButton() {
+    public void HideIAPButton()
+    {
         RemoveAdvertsButton.gameObject.SetActive(false);
     }
 
-    public void ShowIAPButton() {
+    public void ShowIAPButton()
+    {
         RemoveAdvertsButton.gameObject.SetActive(true);
     }
 
-    private void ShowPurchaseConfirmationScreen() {
-        if (ConfirmationScreen != null) {
+    private void ShowPurchaseConfirmationScreen()
+    {
+        if (ConfirmationScreen != null)
+        {
             ConfirmationScreen.SetActive(true);
         }
     }
@@ -128,8 +133,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
         return _bannerView.GetHeightInPixels();
     }*/
-    
-    public void stopAdvert() {
+
+    public void stopAdvert()
+    {
         gameObject.SetActive(false);
         /*if (_bannerView != null)
         {
@@ -138,8 +144,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             _bannerView = null;
         }*/
     }
-    
-    public void startAdvert() {
+
+    public void startAdvert()
+    {
         //loadAdvert = true;
         StartPlatformSpecificAds();
     }
@@ -192,14 +199,15 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             }
         }
         */
-        
-        if (IAPManager.instance != null) {
+
+        if (IAPManager.instance != null)
+        {
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
             {
                 ShowIAPButton();
                 PlayThankYouAnimation();
                 startAdvert();
-            }                
+            }
             else
             {
                 HideIAPButton();
@@ -224,38 +232,39 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _xPos -= Time.deltaTime * scrollSpeed;
         ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
-        if (_xPos < -_scrollAdjustment) {
+        if (_xPos < -_scrollAdjustment)
+        {
             if (loadAdvert)
             {
                 // clearAdvertShowDummy();
                 //  Invoke("RequestBanner", 4.5f);
-                  Invoke("dummyText", 1.0f);//test with only fake banner
+                Invoke("dummyText", 1.0f);//test with only fake banner
             }
         }
     }
 
     private void PlayThankYouAnimation()
     {
-        if(HasParameter("Play", ThankYouAnimator))
-            ThankYouAnimator.SetTrigger(Play);
+        ThankYouAnimator.SetTrigger(ANIMATOR_TRIGGER);
     }
 
     public static bool HasParameter(string parameterName, Animator animator)
     {
         foreach (AnimatorControllerParameter param in animator.parameters)
         {
-            if(param.name == parameterName)
+            if (param.name == parameterName)
                 return true;
         }
         return false;
     }
 
-    private void clearAdvertShowDummy() {
-       // _ADLoaded = false;
+    private void clearAdvertShowDummy()
+    {
+        // _ADLoaded = false;
         DefaultBanner.SetActive(true);
         dummyText();
         //if (_bannerView != null) 
-         //   _bannerView.Hide();
+        //   _bannerView.Hide();
     }
 
     private void dummyText()
@@ -266,21 +275,24 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         setupText();
     }
 
-    private void setupText() {
+    private void setupText()
+    {
 
-        _xPos = (int) (boxCollider.size.x * 1.8);
+        _xPos = (int)(boxCollider.size.x * 1.8);
 
         ScrollingTextBox.transform.localPosition = new Vector3(_xPos, ScrollingTextBox.transform.localPosition.y, ScrollingTextBox.transform.localPosition.z);
 
         int randomnumber = UnityEngine.Random.Range(1, 16);
         int numberOfRandomAttempts = 0;
-        while (numberOfRandomAttempts < 14) {
+        while (numberOfRandomAttempts < 14)
+        {
             numberOfRandomAttempts += 1;
             if (_randomiserArray.Contains(randomnumber))
             {
                 randomnumber = UnityEngine.Random.Range(1, 8);
             }
-            else {
+            else
+            {
                 break;
             }
         }
@@ -288,13 +300,14 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _numberOfRandomAttempts += 1;
 
         _randomiserArray[_numberOfRandomAttempts] = randomnumber;
-        if (_numberOfRandomAttempts > 13) {//we have to much history, clear it
+        if (_numberOfRandomAttempts > 13)
+        {//we have to much history, clear it
             Array.Clear(_randomiserArray, 0, _randomiserArray.Length);
             _numberOfRandomAttempts = 0;
         }
 
         _TextBox.text = _advertisingTable.GetString("ScrollingAd/" + randomnumber);
-        _scrollAdjustment = (int)(_TextBox.text.Length*13);
+        _scrollAdjustment = (int)(_TextBox.text.Length * 13);
 
     }
 
