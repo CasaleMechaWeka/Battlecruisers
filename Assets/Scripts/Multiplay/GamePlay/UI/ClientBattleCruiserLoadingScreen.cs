@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Gameplay.GameplayObjects;
+using BattleCruisers.Network.Multiplay.Infrastructure;
 
 namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 {
-    public class ClientBattleCruiserLoadingScreen : ClientLoadingScreen
+    public class ClientBattleCruiserLoadingScreen : ClientLoadingScreen, INetworkObject
     {
         [SerializeField]
         PersistentPlayerRuntimeCollection m_PersistentPlayerRuntimeCollection;
@@ -33,6 +34,11 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
                 }
             }
             return "";
+        }
+
+        public void DestroyNetworkObject()
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
     /// <summary>
     /// Subscribes to connection status messages to display them through the popup panel.
     /// </summary>
-    public class ConnectionStatusMessageUIManager : MonoBehaviour
+    public class ConnectionStatusMessageUIManager : MonoBehaviour, INetworkObject
     {
         DisposableGroup m_Subscriptions;
 
@@ -36,6 +36,12 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
         {
             m_Subscriptions?.Dispose();
         }
+
+        public void DestroyNetworkObject()
+        {
+            Destroy(gameObject);
+        }
+
 
         void OnConnectStatus(ConnectStatus status)
         {

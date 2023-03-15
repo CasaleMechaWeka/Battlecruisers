@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Infrastructure
     /// Some objects might need to be on a slower update loop than the usual MonoBehaviour Update and without precise timing, e.g. to refresh data from services.
     /// Some might also not want to be coupled to a Unity object at all but still need an update loop.
     /// </summary>
-    public class UpdateRunner : MonoBehaviour
+    public class UpdateRunner : MonoBehaviour, INetworkObject
     {
         class SubscriberData
         {
@@ -60,6 +60,12 @@ namespace BattleCruisers.Network.Multiplay.Infrastructure
                     }
                 });
             }
+        }
+
+
+        public void DestroyNetworkObject()
+        {
+            Destroy(gameObject);
         }
 
         /// <summary>

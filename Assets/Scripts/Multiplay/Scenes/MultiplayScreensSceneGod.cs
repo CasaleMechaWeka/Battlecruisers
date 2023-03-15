@@ -127,8 +127,22 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         public void LoadMainMenuScene()
         {
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            StartCoroutine(iDestoryAllNetworkObjects());
         }
 
+
+        IEnumerator iDestoryAllNetworkObjects()
+        {            
+            yield return new WaitForEndOfFrame();
+            GameObject[] gos = (GameObject[]) GameObject.FindObjectsOfType(typeof(GameObject));
+            foreach (GameObject go in gos)
+            {
+                if (go && go.transform.parent == null)
+                {
+                    go.gameObject.BroadcastMessage("DestroyNetworkObject", SendMessageOptions.DontRequireReceiver);
+                }
+            }
+        }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
         {           

@@ -3,6 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 namespace Unity.Multiplayer.Samples.Utilities
 {
     public class SceneLoaderWrapper : NetworkBehaviour
@@ -34,6 +35,11 @@ namespace Unity.Multiplayer.Samples.Utilities
                 Instance = this;
             }
             DontDestroyOnLoad(this);
+        }
+
+        public void DestroyNetworkObject()
+        {
+            Destroy(gameObject);
         }
 
         public virtual void Start()

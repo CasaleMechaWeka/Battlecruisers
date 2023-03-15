@@ -4,6 +4,8 @@ using UnityEngine;
 using Unity.Netcode;
 using VContainer;
 using BattleCruisers.Network.Multiplay.Utils;
+using BattleCruisers.Network.Multiplay.Infrastructure;
+
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     public enum ConnectStatus
@@ -52,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     /// This state machine handles connection through the NetworkManager. It is responsible for listening to
     /// NetworkManger callbacks and other outside calls and redirecting them to the current ConnectionState object.
     /// </summary>
-    public class ConnectionManager : MonoBehaviour
+    public class ConnectionManager : MonoBehaviour, INetworkObject
     {
         ConnectionState m_CurrentState;
 
@@ -80,6 +82,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
+        }
+
+        public void DestroyNetworkObject()
+        {
+            Destroy(gameObject);
         }
 
         void Start()

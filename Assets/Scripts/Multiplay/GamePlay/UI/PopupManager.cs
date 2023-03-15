@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleCruisers.Network.Multiplay.Infrastructure;
 
 namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 {
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
     /// Handles the display of Popup messages. Instantiates and reuses popup panel prefabs to allow displaying multiple
     /// messages in succession.
     /// </summary>
-    public class PopupManager : MonoBehaviour
+    public class PopupManager : MonoBehaviour, INetworkObject
     {
         [SerializeField]
         GameObject m_PopupPanelPrefab;
@@ -34,6 +35,11 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
         void OnDestroy()
         {
             s_Instance = null;
+        }
+
+        public void DestroyNetworkObject()
+        {
+            Destroy(m_Canvas);
         }
 
         /// <summary>
