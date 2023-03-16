@@ -50,6 +50,8 @@
         public const string DESTRUCTION_SCENE = "DestructionScene";
         public const string STAGE_INTERSTITIAL_SCENE = "StageInterstitialScene";
         public const string MULTIPLAY_SCREENS_SCENE = "MultiplayScreensScene";
+        public const string MATCHMAKING_SCREENS_SCENE = "MatchmakingScreensScene";
+        public const string MULTIPLAY_STARTUP_SCENE = "MultiplayStartupScene";
     }
 
     public static class GameObjectTags

@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Gameplay.GameplayObjects
 {
+
+    [CreateAssetMenu]
     public class PersistentPlayerRuntimeCollection : RuntimeCollection<PersistentPlayer>
     {
         public bool TryGetPlayer(ulong clientID, out PersistentPlayer persistentPlayer)

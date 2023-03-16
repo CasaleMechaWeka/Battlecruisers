@@ -145,8 +145,10 @@ namespace BattleCruisers.Scenes
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
-
-            yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+            if(sceneName == SceneNames.MULTIPLAY_SCREENS_SCENE)
+                yield return LoadScene(SceneNames.MULTIPLAY_STARTUP_SCENE, LoadSceneMode.Single);
+            else
+                yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
             yield return LoadScene(sceneName, LoadSceneMode.Additive);
 
             Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);

@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         private void StartBattle()
         {
-            _multiplayScreensSceneGod.GotoMatchmakingScreen();
+            _multiplayScreensSceneGod.LoadMatchmakingScene();
         }
 
 

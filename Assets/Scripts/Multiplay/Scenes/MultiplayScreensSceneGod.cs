@@ -1,7 +1,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using NSubstitute;
 using BattleCruisers.Utils;
@@ -21,13 +21,20 @@ using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Static;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
+using VContainer;
+using BattleCruisers.Network.Multiplay.UnityServices.Auth;
+using Unity.Services.Core;
+using BattleCruisers.Network.Multiplay.Utils;
+using Unity.Services.Authentication;
+using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using Unity.Multiplayer.Samples.Utilities;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
     public class MultiplayScreensSceneGod : MonoBehaviour, IMultiplayScreensSceneGod
     {
         public MultiplayScreenController multiplayScreen;
-        public MatchmakingScreenController matchmakingScreen;
+/*        public MatchmakingScreenController matchmakingScreen;*/
 
         public int defaultLevel;
 
@@ -42,13 +49,13 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private ISingleSoundPlayer _soundPlayer;
 
 
-        public TrashTalkDataList trashDataList;
+        public TrashTalkDataList trashDataList;     
 
 
         [SerializeField]
         private AudioSource _uiAudioSource;
 
-        private async void Start()
+           private async void Start()
         {
             Helper.AssertIsNotNull(multiplayScreen, _uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
@@ -109,10 +116,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             
         }*/
 
-        public void GotoMatchmakingScreen()
+/*        public void GotoMatchmakingScreen()
         {
             GoToScreen(matchmakingScreen);
-        }
+        }*/
 
         public void GotoSettingScreen()
         {
@@ -128,6 +135,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             StartCoroutine(iDestoryAllNetworkObjects());
+        }
+
+        public void LoadMatchmakingScene()
+        {
+            /*  _sceneNavigator.GoToScene(SceneNames.MATCHMAKING_SCREENS_SCENE, true);*/
+            SceneLoaderWrapper.Instance.LoadScene(SceneNames.MATCHMAKING_SCREENS_SCENE, false);
         }
 
 
