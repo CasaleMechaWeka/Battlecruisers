@@ -20,7 +20,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Static;
 using UnityEngine.Assertions;
-using System.Threading.Tasks;
 using VContainer;
 using BattleCruisers.Network.Multiplay.UnityServices.Auth;
 using Unity.Services.Core;
@@ -28,11 +27,15 @@ using BattleCruisers.Network.Multiplay.Utils;
 using Unity.Services.Authentication;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using Unity.Multiplayer.Samples.Utilities;
+using BattleCruisers.Network.Multiplay.Gameplay.GameState;
+using VContainer.Unity;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
-    public class MultiplayScreensSceneGod : MonoBehaviour, IMultiplayScreensSceneGod
+    public class MultiplayScreensSceneGod : GameStateBehaviour, IMultiplayScreensSceneGod
     {
+
+        public override GameState ActiveState { get { return GameState.MultiplayScreenScene; } }
         public MultiplayScreenController multiplayScreen;
 /*        public MatchmakingScreenController matchmakingScreen;*/
 
@@ -49,13 +52,98 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private ISingleSoundPlayer _soundPlayer;
 
 
-        public TrashTalkDataList trashDataList;     
-
-
+        public TrashTalkDataList trashDataList;   
         [SerializeField]
         private AudioSource _uiAudioSource;
 
-           private async void Start()
+
+        [Inject] AuthenticationServiceFacade m_AuthServiceFacade;
+        [Inject] LocalLobbyUser m_LocalUser;
+        [Inject] LocalLobby m_LocalLobby;
+        [Inject] ProfileManager m_ProfileManager;
+
+
+        protected override void Awake()
+        {
+
+            base.Awake();
+
+            if (string.IsNullOrEmpty(Application.cloudProjectId))
+            {
+                OnSignInFailed();
+                return;
+            }
+
+            TrySignIn();
+        }
+
+
+        protected override void Configure(IContainerBuilder builder)
+        {
+            base.Configure(builder);
+        }
+
+        private async void TrySignIn()
+        {
+            try
+            {
+                var unityAuthenticationInitOptions = new InitializationOptions();             
+                var profile = m_ProfileManager.Profile;         
+                if (profile.Length > 0)
+                {
+                    try
+                    {
+                        unityAuthenticationInitOptions.SetProfile(profile);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e.ToString());
+                    }
+                }
+
+                await m_AuthServiceFacade.InitializeAndSignInAsync(unityAuthenticationInitOptions);
+                OnAuthSignIn();
+                m_ProfileManager.onProfileChanged += OnProfileChanged;
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.ToString());                
+                OnSignInFailed();
+            }
+        }
+
+        private void OnAuthSignIn()
+        {
+            Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
+            m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
+            // The local LobbyUser object will be hooked into UI before the LocalLobby is populated during lobby join, so the LocalLobby must know about it already when that happens.
+            m_LocalLobby.AddUser(m_LocalUser);
+        }
+
+
+        private void OnSignInFailed()
+        {
+
+        }
+
+        void OnDestroy()
+        {
+            m_ProfileManager.onProfileChanged -= OnProfileChanged;    
+        }
+
+        async void OnProfileChanged()
+        {    
+            await m_AuthServiceFacade.SwitchProfileAndReSignInAsync(m_ProfileManager.Profile);      
+
+            Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
+
+            // Updating LocalUser and LocalLobby
+            m_LocalLobby.RemoveUser(m_LocalUser);
+            m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
+            m_LocalLobby.AddUser(m_LocalUser);
+        }
+
+        private async void Start()
         {
             Helper.AssertIsNotNull(multiplayScreen, _uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
