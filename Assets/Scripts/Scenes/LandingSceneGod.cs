@@ -57,11 +57,12 @@ namespace BattleCruisers.Scenes
             }
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            
+
+
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
 
-#if FREE_EDITION
+#if FREE_EDITION || UNITY_EDITOR
             //if player NOT already paid then use Free title
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
                 subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
