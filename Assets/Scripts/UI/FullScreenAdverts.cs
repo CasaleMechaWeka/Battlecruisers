@@ -20,32 +20,8 @@ public class FullScreenAdverts : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       //gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         StartPlatformSpecficAds();
-
-
-        float xAdjustment = transform.localScale.x;
-        float yAdjustment = transform.localScale.y;
-
-
-        if ((SystemInfo.deviceType == DeviceType.Handheld && DeviceDiagonalSizeInInches() >= 7f))//if tablet
-        {
-            xAdjustment = 1f;
-            yAdjustment = 1f;;
-            defaultAd.transform.localScale = new Vector3(xAdjustment, yAdjustment);
-        }
-        else
-        {
-            float scaleAdjustment = 100 / (Screen.dpi / 3.2f);
-            //if (scaleAdjustment > 1f)
-            //{
-                scaleAdjustment = 1f;
-            //}
-            xAdjustment *= scaleAdjustment;
-            yAdjustment *= scaleAdjustment;
-            transform.localScale = new Vector3(xAdjustment, yAdjustment);
-        }
-
         Button btn = closeButton.GetComponent<Button>();
         btn.onClick.AddListener(CloseAdvert);
     }
@@ -65,8 +41,16 @@ public class FullScreenAdverts : MonoBehaviour
 
     void StartPlatformSpecficAds()
     {
+        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
-        gameObject.SetActive(true);
+        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
 #elif UNITY_EDITOR && FREE_EDITION
         gameObject.SetActive(true);
 #else
