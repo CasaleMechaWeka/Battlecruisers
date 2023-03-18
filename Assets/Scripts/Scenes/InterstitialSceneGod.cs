@@ -76,10 +76,10 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        private void OnEnable()
+/*        private void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.STAGE_INTERSTITIAL_SCENE);
-        }
+        }*/
 
         void Update()
         {

@@ -41,10 +41,10 @@ namespace BattleCruisers.Scenes
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
     
-        private void OnEnable()
+/*        private void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.CREDITS_SCENE);
-        }
+        }*/
         
     }
 }

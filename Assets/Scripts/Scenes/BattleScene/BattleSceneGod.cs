@@ -399,10 +399,10 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
 
-        private void OnEnable()
+/*        private void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
-        }
+        }*/
 
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel,

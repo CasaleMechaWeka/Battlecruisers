@@ -73,18 +73,19 @@ namespace BattleCruisers.UI.Loading
 
         void Update()
         {
-            AudioListener[] listeners = GameObject.FindObjectsOfType<AudioListener>();
+/*            AudioListener[] listeners = GameObject.FindObjectsOfType<AudioListener>();
             if (listeners.Length == 0)
             {
                 gameObject.AddComponent<AudioListener>();
             }
             if (listeners.Length > 1)
             {
-                if (GetComponent<AudioListener>() != null)
+                AudioListener audioListener = gameObject.GetComponent<AudioListener>();
+                if (audioListener != null)
                 {
-                    GetComponent<AudioListener>().enabled = false;
+                    Destroy(audioListener);
                 }
-            }
+            }*/
         }
 
         private string FindLoadingText()
