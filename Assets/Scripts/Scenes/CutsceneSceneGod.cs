@@ -37,6 +37,11 @@ namespace BattleCruisers.Scenes
             _sceneNavigator.SceneLoaded(SceneNames.CUTSCENE_SCENE);
         }
 
+        private void OnEnable()
+        {
+            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.CUTSCENE_SCENE);
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             Exit();

@@ -199,6 +199,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         }
 
 
+        void OnEnable()
+        {
+            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.MULTIPLAY_SCREENS_SCENE);
+        }
+
    /*     private async Task InitialiseMultiplayScreensScreenAsync()
         {
             

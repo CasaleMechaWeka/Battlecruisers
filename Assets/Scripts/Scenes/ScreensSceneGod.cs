@@ -193,6 +193,11 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
+
+        private void OnEnable()
+        {
+            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+        }
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
