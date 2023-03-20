@@ -144,6 +144,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
+            Debug.Log("======================== called Approval check in Connection Manager");
             m_CurrentState.ApprovalCheck(request, response);
         }
 
