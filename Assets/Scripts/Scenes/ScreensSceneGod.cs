@@ -75,7 +75,7 @@ namespace BattleCruisers.Scenes
         public bool testSkirmishScreen = false;
         [Header("For testing the loadout screen")]
         public bool testLoadoutScreen = false;
-        public DestructionRanker ranker;
+        public DestructionRanker ranker;        
 
         async void Start()
 		{
@@ -194,10 +194,12 @@ namespace BattleCruisers.Scenes
         }
 
 
-        private void OnEnable()
+/*        private void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-        }
+        }*/
+
+
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");

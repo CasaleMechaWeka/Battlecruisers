@@ -71,10 +71,10 @@ namespace BattleCruisers.Scenes
             _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
         }
 
-        private void OnEnable()
+/*        private void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-        }
+        }*/
 
         void Update()
         {

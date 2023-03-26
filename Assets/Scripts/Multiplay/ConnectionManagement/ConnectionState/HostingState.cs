@@ -22,9 +22,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Enter()
         {
             SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
-            //The "BossRoom" server always advances to CharSelect immediately on start. Different games
-            //may do this differently.
-            SceneLoaderWrapper.Instance.LoadScene("CharSelect", useNetworkSceneManager: true);
+
+        //  SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true);
 
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
@@ -38,8 +37,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
         public override void OnClientConnected(ulong clientId)
-        {
-            m_ConnectionEventPublisher.Publish(new ConnectionEventMessage() { ConnectStatus = ConnectStatus.Success, PlayerName = SessionManager<SessionPlayerData>.Instance.GetPlayerData(clientId)?.PlayerName });
+        {   
+          //  m_ConnectionEventPublisher.Publish(new ConnectionEventMessage() { ConnectStatus = ConnectStatus.Success, PlayerName = SessionManager<SessionPlayerData>.Instance.GetPlayerData(clientId)?.PlayerName });
+            SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true);
         }
 
         public override void OnClientDisconnect(ulong clientId)

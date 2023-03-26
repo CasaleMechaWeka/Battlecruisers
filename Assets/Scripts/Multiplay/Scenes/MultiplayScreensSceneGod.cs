@@ -29,6 +29,7 @@ using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using Unity.Multiplayer.Samples.Utilities;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
 using VContainer.Unity;
+using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -56,7 +57,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         [SerializeField]
         private AudioSource _uiAudioSource;
 
-
         [Inject] AuthenticationServiceFacade m_AuthServiceFacade;
         [Inject] LocalLobbyUser m_LocalUser;
         [Inject] LocalLobby m_LocalLobby;
@@ -65,7 +65,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         protected override void Awake()
         {
-
             base.Awake();
 
             if (string.IsNullOrEmpty(Application.cloudProjectId))
@@ -80,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            base.Configure(builder);
+            base.Configure(builder);         
         }
 
         private async void TrySignIn()
@@ -186,6 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
+
             multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
 
             // Temp only because I am starting the scene without a previous choose level scene
@@ -199,10 +199,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         }
 
 
-        void OnEnable()
+/*        void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.MULTIPLAY_SCREENS_SCENE);
-        }
+        }*/
 
    /*     private async Task InitialiseMultiplayScreensScreenAsync()
         {
