@@ -36,9 +36,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IPrefabFactory prefabFactory)
         {
             Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);
-            HullButton hullButton = GetComponentInChildren<HullButton>(includeInactive: true);
+            HullButtonV2 hullButton = GetComponentInChildren<HullButtonV2>(includeInactive: true);
             Assert.IsNotNull(hullButton);
-            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull);
+            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull,hullKeyName);
             return hullButton;
         }
 

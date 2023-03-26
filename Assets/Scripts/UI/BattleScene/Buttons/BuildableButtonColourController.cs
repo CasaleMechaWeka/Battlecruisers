@@ -11,6 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     {
         public static Color Default = Color.black;
         public static Color Selected = Color.white;
+        public static Color SelectedNew = new Color(173f,52f,30f);
     }
 
     /// <summary>
