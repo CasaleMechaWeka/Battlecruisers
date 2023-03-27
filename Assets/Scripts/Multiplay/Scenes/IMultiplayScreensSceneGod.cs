@@ -8,11 +8,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 {
     public interface IMultiplayScreensSceneGod
     {
-      
+
         void GotoSettingScreen();
         void GotoShopScreen();
         void LoadMainMenuScene();
-        void LoadMatchmakingScene();
+        void GotoMatchmakingScreen();
+        // void LoadMatchmakingScene();
     }
 }
 

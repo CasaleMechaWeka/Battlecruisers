@@ -37,7 +37,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
 
-        public override void OnUserRequestedShutdown() {
+        public override void OnUserRequestedShutdown()
+        {
             m_ConnectStatusPublisher.Publish(ConnectStatus.UserRequestedDisconnect);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
