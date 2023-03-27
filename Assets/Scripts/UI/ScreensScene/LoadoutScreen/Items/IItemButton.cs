@@ -10,6 +10,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         IComparableItem Item { get; }
         Color Color { set; }
 
+        bool UpdateClickedFeedback { set; }
+
         event EventHandler Clicked;
     }
 }

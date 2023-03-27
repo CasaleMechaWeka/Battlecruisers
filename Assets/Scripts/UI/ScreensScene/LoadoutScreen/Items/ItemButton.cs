@@ -12,6 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public abstract class ItemButton : ElementWithClickSound, IItemButton
     {
         private Image _itemImage;
+        private RectTransform _clickedFeedback;
 
         protected IItemDetailsManager _itemDetailsManager;
         protected IComparingItemFamilyTracker _comparingFamiltyTracker;
@@ -30,6 +31,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
+        public bool UpdateClickedFeedback
+        {
+            set
+            {
+                _clickedFeedback.gameObject.SetActive(value);   
+            }
+        }
+
         public ItemFamily itemFamily;
 
         protected virtual void Initialise(ISingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
@@ -41,6 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemDetailsManager = itemDetailsManager;
             _comparingFamiltyTracker = comparingFamiltyTracker;
             _itemImage = transform.FindNamedComponent<Image>("ItemImage");
+            //_clickedFeedback = transform.FindNamedComponent<RectTransform>("ClickedFeedBack");
 
             _canvasGroup = GetComponent<CanvasGroup>();
             Assert.IsNotNull(_canvasGroup);
