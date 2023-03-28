@@ -84,14 +84,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             if (currentButton != null)
             {
-                currentButton.Color = ButtonColour.Default;
-                //currentButton.UpdateClickedFeedback = false;
+                currentButton.Color = ButtonColour.SelectedNew;
+                currentButton.UpdateClickedFeedback = false;
             }
 
             if (newButton != null)
             {
                 newButton.Color = ButtonColour.Selected;
-                //newButton.UpdateClickedFeedback = true;
+                newButton.UpdateClickedFeedback = true;
             }
 
             return newButton;
