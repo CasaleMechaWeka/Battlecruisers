@@ -47,7 +47,8 @@ namespace BattleCruisers.Scenes
         public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;      
 		public PostBattleScreenController postBattleScreen;
-		public LoadoutScreenController loadoutScreen;
+        //public LoadoutScreenController loadoutScreen;
+        public InfiniteLoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
         public TrashScreenController trashScreen;
         public TrashTalkDataList trashDataList;
