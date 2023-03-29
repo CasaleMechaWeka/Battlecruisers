@@ -210,6 +210,7 @@ namespace BattleCruisers.Scenes
         {
             GoToScreen(homeScreen);
             AdvertisingBanner.startAdvert();
+            fullScreenads.OpenAdvert();//<Aaron> To test the full screen ads
         }
 
         public void GoToLevelsScreen()
