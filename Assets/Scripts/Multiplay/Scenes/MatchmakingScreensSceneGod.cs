@@ -2,10 +2,8 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using ParrelSync;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using VContainer;
 
@@ -35,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private string m_localTestName;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
 
         [Inject] ConnectionManager m_ConnectionManager;
 
@@ -52,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         void OnConnectStatusMessage(ConnectStatus connectStatus)
         {
-            
+
         }
 
         protected override void Awake()
@@ -79,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private void HostIPRequest(string ip, string port)
         {
-           
+
             int.TryParse(port, out var portNum);
             if (portNum <= 0)
             {
@@ -109,15 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             if (isLocalTest)
             {
-                // Local Test
-                if (!ClonesManager.IsClone())
-                {
-                    HostIPRequest(m_IP, m_Port);
-                }
-                else
-                {
-                    JoinWithIP(m_IP, m_Port);
-                }
+
             }
             else
             {

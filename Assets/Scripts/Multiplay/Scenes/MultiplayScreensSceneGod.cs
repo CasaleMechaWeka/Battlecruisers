@@ -32,7 +32,6 @@ using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using ParrelSync;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -139,15 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             if (isLocalTest)
             {
-                // Local Test
-                if (!ClonesManager.IsClone())
-                {
-                    HostIPRequest(m_IP, m_Port);
-                }
-                else
-                {
-                    JoinWithIP(m_IP, m_Port);
-                }
+
             }
             else
             {
