@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             PrefabKeyName buildingKeyName)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
-            _buildingName.text = (buildingKeyName.ToString()).Replace("Building_", string.Empty);
+            //_buildingName.text = (buildingKeyName.ToString()).Replace("Building_", string.Empty);
 
             Assert.IsNotNull(buildingPrefab);
             _buildingPrefab = buildingPrefab;
