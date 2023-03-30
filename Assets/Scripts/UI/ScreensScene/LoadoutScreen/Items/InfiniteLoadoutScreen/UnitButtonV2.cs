@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingItemFamily);
 
-            _unitName.text = (unitKeyName.ToString()).Replace("Unit_", string.Empty);
+            //_unitName.text = (unitKeyName.ToString()).Replace("Unit_", string.Empty);
 
             Assert.IsNotNull(unitPrefab);
             _unitPrefab = unitPrefab;
