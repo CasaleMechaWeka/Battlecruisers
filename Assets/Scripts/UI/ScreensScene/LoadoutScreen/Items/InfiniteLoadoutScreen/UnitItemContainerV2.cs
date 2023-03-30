@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Cruisers;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -11,20 +12,20 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public class HullItemContainerV2 : ItemContainer
+    public class UnitItemContainerV2 : ItemContainer
     {
-        public PrefabKeyName hullKeyName;
+        public PrefabKeyName unitKeyName;
 
-        private HullKey _hullKey;
-        private HullKey HullKey
+        private UnitKey _key;
+        private UnitKey Key
         {
             get
             {
-                if (_hullKey == null)
+                if (_key == null)
                 {
-                    _hullKey = StaticPrefabKeyHelper.GetPrefabKey<HullKey>(hullKeyName);
+                    _key = StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(unitKeyName);
                 }
-                return _hullKey;
+                return _key;
             }
         }
 
@@ -32,29 +33,29 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamilyTracker, 
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer,
+            ISingleSoundPlayer soundPlayer, 
             IPrefabFactory prefabFactory)
         {
-            Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);
-            HullButton hullButton = GetComponentInChildren<HullButton>(includeInactive: true);
-            Assert.IsNotNull(hullButton);
-            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull);
-            return hullButton;
+            IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(Key);
+            UnitButtonV2 unitButton = GetComponentInChildren<UnitButtonV2>(includeInactive: true);
+            Assert.IsNotNull(unitButton);
+            unitButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, unitPrefab, unitKeyName);
+            return unitButton;
         }
 
         protected override bool IsUnlocked(IGameModel gameModel)
         {
-            return gameModel.UnlockedHulls.Contains(HullKey);
+            return gameModel.UnlockedUnits.Contains(Key);
         }
 
         protected override bool IsNew(IGameModel gameModel)
         {
-            return gameModel.NewHulls.Items.Contains(HullKey);
+            return gameModel.NewUnits.Items.Contains(Key);
         }
 
         protected override void MakeOld(IGameModel gameModel)
         {
-            gameModel.NewHulls.RemoveItem(HullKey);
+            gameModel.NewUnits.RemoveItem(Key);
         }
     }
 }

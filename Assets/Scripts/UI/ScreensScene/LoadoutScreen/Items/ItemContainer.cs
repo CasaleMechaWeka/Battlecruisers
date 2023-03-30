@@ -38,8 +38,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             _gameModel = gameModel;
 
-            LockedItem lockedItem = GetComponentInChildren<LockedItem>(includeInactive: true);
-            Assert.IsNotNull(lockedItem);
+            //LockedItem lockedItem = GetComponentInChildren<LockedItem>(includeInactive: true);
+            //Assert.IsNotNull(lockedItem);
 
             _newItemMark = GetComponentInChildren<NewItemMark>(includeInactive: true);
             Assert.IsNotNull(_newItemMark);
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             itemButton.Clicked += ItemButton_Clicked;
 
             bool isItemUnlocked = IsUnlocked(gameModel);
-            lockedItem.IsVisible = !isItemUnlocked;
+            //lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
 
             UpdateNewItemMarkVisibility();

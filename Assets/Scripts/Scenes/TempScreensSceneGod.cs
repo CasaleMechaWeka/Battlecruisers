@@ -33,7 +33,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes
 {
-    public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
+    public class TempScreensSceneGod : MonoBehaviour, IScreensSceneGod
 	{
 		private IPrefabFactory _prefabFactory;
 		private ScreenController _currentScreen;
@@ -47,8 +47,7 @@ namespace BattleCruisers.Scenes
         public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;      
 		public PostBattleScreenController postBattleScreen;
-        //public LoadoutScreenController loadoutScreen;
-        public InfiniteLoadoutScreenController loadoutScreen;
+		public InfiniteLoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
         public TrashScreenController trashScreen;
         public TrashTalkDataList trashDataList;
@@ -76,7 +75,7 @@ namespace BattleCruisers.Scenes
         public bool testSkirmishScreen = false;
         [Header("For testing the loadout screen")]
         public bool testLoadoutScreen = false;
-        public DestructionRanker ranker;        
+        public DestructionRanker ranker;
 
         async void Start()
 		{
@@ -195,12 +194,10 @@ namespace BattleCruisers.Scenes
         }
 
 
-/*        private void OnEnable()
+        private void OnEnable()
         {
             LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-        }*/
-
-
+        }
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
@@ -213,6 +210,7 @@ namespace BattleCruisers.Scenes
         {
             GoToScreen(homeScreen);
             AdvertisingBanner.startAdvert();
+            fullScreenads.OpenAdvert();//<Aaron> To test the full screen ads
         }
 
         public void GoToLevelsScreen()

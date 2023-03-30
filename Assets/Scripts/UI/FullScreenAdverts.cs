@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class FullScreenAdverts : MonoBehaviour
 {
-    public GameObject defaultAd;
+    public DefaultAdvertController defaultAd;
     public Button closeButton;
 
 
@@ -36,6 +36,7 @@ public class FullScreenAdverts : MonoBehaviour
 
     public void OpenAdvert()
     {
+        defaultAd.UpdateImage();
         StartPlatformSpecficAds();
     }
 
