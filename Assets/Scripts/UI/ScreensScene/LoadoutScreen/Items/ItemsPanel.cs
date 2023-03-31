@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public bool HasUnlockedItem { get; private set; }
 
         public IList<IItemButton> Initialise(
-            IItemDetailsManager itemDetailsManager, 
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
@@ -38,6 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                 buttons.Add(button);
                 HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
+                itemContainer.gameObject.SetActive(button.IsUnlocked);
             }
 
             return buttons;
