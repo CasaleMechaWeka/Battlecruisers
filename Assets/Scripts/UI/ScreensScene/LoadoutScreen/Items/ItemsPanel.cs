@@ -8,6 +8,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
+using Google.Android.AppBundle.Editor.Internal.BuildTools;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -38,6 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 IItemButton button = itemContainer.Initialise(itemDetailsManager, comparingFamiltyTracker, gameModel, selectedHull, soundPlayer, prefabFactory);
                 buttons.Add(button);
                 HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
+                itemContainer.gameObject.SetActive(button.IsUnlocked);
             }
 
             return buttons;
