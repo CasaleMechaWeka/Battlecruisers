@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
 
-        //  SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true);
+            //  SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true);
 
             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
             {
@@ -37,9 +37,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
         public override void OnClientConnected(ulong clientId)
-        {   
-          //  m_ConnectionEventPublisher.Publish(new ConnectionEventMessage() { ConnectStatus = ConnectStatus.Success, PlayerName = SessionManager<SessionPlayerData>.Instance.GetPlayerData(clientId)?.PlayerName });
-            SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true);
+        {
+
+            SceneLoaderWrapper.Instance.LoadScene("MultiplayBattleScene", useNetworkSceneManager: true, UnityEngine.SceneManagement.LoadSceneMode.Single);
+
         }
 
         public override void OnClientDisconnect(ulong clientId)
