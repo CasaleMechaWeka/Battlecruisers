@@ -18,6 +18,7 @@ using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 namespace BattleCruisers.Scenes
 {
 
@@ -35,14 +36,17 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
+        public AudioListener audioListener;
+
+
         async void Start()
         {
             try
             {
-                              
+
                 var options = new InitializationOptions();
-                #if UNITY_EDITOR
-                    options.SetEnvironmentName("dev");
+#if UNITY_EDITOR
+                options.SetEnvironmentName("dev");
 #else
                     options.SetEnvironmentName("production");
 #endif
@@ -75,7 +79,7 @@ namespace BattleCruisers.Scenes
             SubTitle.text = subTitle;
 
             Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
-            
+
             if (!_isInitialised)
             {
                 IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
@@ -85,7 +89,7 @@ namespace BattleCruisers.Scenes
                 {
                     dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
                 }
-                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0: (int)(dataProvider.GameModel.Settings.ResolutionHeight*0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 // Persist this game object across scenes
                 DontDestroyOnLoad(gameObject);
@@ -146,7 +150,7 @@ namespace BattleCruisers.Scenes
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
-            if(sceneName == SceneNames.MULTIPLAY_SCREENS_SCENE)
+            if (sceneName == SceneNames.MULTIPLAY_SCREENS_SCENE)
                 yield return LoadScene(SceneNames.MULTIPLAY_STARTUP_SCENE, LoadSceneMode.Single);
             else
                 yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
@@ -185,5 +189,11 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCENE_NAVIGATION, sceneName);
             _lastSceneLoaded = sceneName;
         }
+
+        void update()
+        {
+            transform.localPosition = Camera.main.gameObject.transform.localPosition;
+        }
+
     }
 }
