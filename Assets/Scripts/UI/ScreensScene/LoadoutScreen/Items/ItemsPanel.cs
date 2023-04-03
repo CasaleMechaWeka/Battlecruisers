@@ -8,7 +8,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
-using Google.Android.AppBundle.Editor.Internal.BuildTools;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -20,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public bool HasUnlockedItem { get; private set; }
 
         public IList<IItemButton> Initialise(
-            IItemDetailsManager itemDetailsManager, 
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
