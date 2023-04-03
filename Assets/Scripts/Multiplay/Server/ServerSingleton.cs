@@ -1,6 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
+using Unity.Services.Core;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using Unity.Netcode;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Server
@@ -48,6 +53,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         void OnDestroy()
         {
             m_GameManager?.Dispose();
+        }
+
+        public async Task CreateServer()
+        {
+            await Unity.Services.Core.UnityServices.InitializeAsync();
+            m_GameManager = new ServerGameManager(
+                ApplicationData.IP(),
+                ApplicationData.Port(),
+                ApplicationData.QPort(),
+                NetworkManager.Singleton
+            );
         }
 
     }

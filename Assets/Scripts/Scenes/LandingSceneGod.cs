@@ -19,6 +19,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using ParrelSync;
+using BattleCruisers.Network.Multiplay.Matchplay.Server;
 
 
 namespace BattleCruisers.Scenes
@@ -38,9 +39,14 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
-        public AudioListener audioListener;
+        /////////////////////////////////////////////////////////////
 
+        //////////       Dedicated Game Server     //////////////////
+
+        /////////////////////////////////////////////////////////////
         public static bool IsServer;
+        [SerializeField]
+        ServerSingleton m_ServerPrefab;
         async void Start()
         {
 
@@ -101,6 +107,8 @@ namespace BattleCruisers.Scenes
             IsServer = isServer;
             if (isServer)
             {
+                var serverSingletone = Instantiate(m_ServerPrefab);
+                await serverSingletone.CreateServer();
 
             }
             else

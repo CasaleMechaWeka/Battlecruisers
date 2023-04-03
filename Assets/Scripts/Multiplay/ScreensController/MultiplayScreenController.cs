@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Scenes;
-
+using Arena = BattleCruisers.Network.Multiplay.Matchplay.Shared.GameData.Arena;
 
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
@@ -75,18 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
 
 
-        public enum Arena
-        {
-            Wreckyards,
-            Australia,
-            BattleClub,
-            UACBattleNight,
-            NuclearDome,
-            UACArena,
-            RioBattlesport,
-            UACUltimate,
-            MercenaryOne
-        }
+
 
         public void GotoArena()
         {
