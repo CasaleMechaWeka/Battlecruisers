@@ -17,6 +17,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+using ParrelSync;
 
 
 namespace BattleCruisers.Scenes
@@ -38,19 +40,15 @@ namespace BattleCruisers.Scenes
 
         public AudioListener audioListener;
 
-
+        public static bool IsServer;
         async void Start()
         {
+
             try
             {
 
                 var options = new InitializationOptions();
-#if UNITY_EDITOR
-                options.SetEnvironmentName("dev");
-#else
-                    options.SetEnvironmentName("production");
-#endif
-
+                options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);
                 List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
             }
@@ -60,59 +58,106 @@ namespace BattleCruisers.Scenes
                 Debug.Log(e.Message);
             }
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+            if (Application.isEditor)
+            {
+#if UNITY_EDITOR
+                if (ClonesManager.IsClone())
+                {
+                    var argument = ClonesManager.GetArgument();
+
+                    if (argument == "server")
+                    {
+
+                        await LaunchInMode(true, "server");
+
+                    }
+                    else if (argument == "client")
+                    {
+
+                        await LaunchInMode(false, "client");
+
+                    }
+                }
+                else
+                {
+                    await LaunchInMode(false, "client");
+                }
+#endif
+            }
+            else
+            {
+                await LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
+            }
 
 
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+
+
+        }
+
+
+        async Task LaunchInMode(bool isServer, string profileName = "default")
+        {
+            IsServer = isServer;
+            if (isServer)
+            {
+
+            }
+            else
+            {
+                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+
+                ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+                string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
 
 #if FREE_EDITION || UNITY_EDITOR
-            //if player NOT already paid then use Free title
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
-                subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+                //if player NOT already paid then use Free title
+                if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+                    subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
 #else
             //if premium version set here 
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
             applicationModel.DataProvider.SaveGame();
 #endif
 
-            SubTitle.text = subTitle;
+                SubTitle.text = subTitle;
 
-            Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
+                Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
 
-            if (!_isInitialised)
-            {
-                IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-                MusicPlayer = CreateMusicPlayer(dataProvider);
-
-                if (!dataProvider.GameModel.Settings.InitialisedGraphics)
+                if (!_isInitialised)
                 {
-                    dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
-                }
-                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                // Persist this game object across scenes
-                DontDestroyOnLoad(gameObject);
-                _isInitialised = true;
+                    IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                    MusicPlayer = CreateMusicPlayer(dataProvider);
 
-                SceneNavigator = this;
+                    if (!dataProvider.GameModel.Settings.InitialisedGraphics)
+                    {
+                        dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
+                    }
+                    Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                    //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                    // Persist this game object across scenes
+                    DontDestroyOnLoad(gameObject);
+                    _isInitialised = true;
 
-                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
-                _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+                    SceneNavigator = this;
 
-                //Debug.Log(Screen.currentResolution);
-                // Game starts with the screens scene
-                if (testCreditsScene)
-                {
-                    GoToScene(SceneNames.CREDITS_SCENE, true);
-                }
-                else
-                {
-                    GoToScene(SceneNames.SCREENS_SCENE, true);
+                    HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+                    _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+
+                    //Debug.Log(Screen.currentResolution);
+                    // Game starts with the screens scene
+                    if (testCreditsScene)
+                    {
+                        GoToScene(SceneNames.CREDITS_SCENE, true);
+                    }
+                    else
+                    {
+                        GoToScene(SceneNames.SCREENS_SCENE, true);
+                    }
                 }
             }
         }
-
         private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();

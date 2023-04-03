@@ -74,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             Application.wantsToQuit += OnWantToQuit;
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(m_UpdateRunner.gameObject);
-            Application.targetFrameRate = 120;
+            // Application.targetFrameRate = 120;
             //SceneManager.LoadScene("MainMenu");
         }
         protected override void OnDestroy()
