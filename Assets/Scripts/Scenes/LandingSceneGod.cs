@@ -113,7 +113,7 @@ namespace BattleCruisers.Scenes
                     map = Arena.PracticeWreckyards,
                     gameQueue = GameQueue.Casual
                 };
-
+                await serverSingletone.Manager.StartGameServerAsync(defaultGameInfo);
             }
             else
             {

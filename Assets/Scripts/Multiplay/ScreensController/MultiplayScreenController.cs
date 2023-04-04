@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Scenes;
-using Arena = BattleCruisers.Network.Multiplay.Matchplay.Shared.GameData.Arena;
+using Arena = BattleCruisers.Network.Multiplay.Matchplay.Shared.Arena;
 
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
