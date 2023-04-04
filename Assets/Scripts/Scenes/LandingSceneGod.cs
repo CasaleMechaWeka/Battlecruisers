@@ -20,7 +20,8 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using ParrelSync;
 using BattleCruisers.Network.Multiplay.Matchplay.Server;
-
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using GameMode = BattleCruisers.Network.Multiplay.Matchplay.Shared.GameMode;
 
 namespace BattleCruisers.Scenes
 {
@@ -96,9 +97,6 @@ namespace BattleCruisers.Scenes
                 await LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
             }
 
-
-
-
         }
 
 
@@ -109,6 +107,12 @@ namespace BattleCruisers.Scenes
             {
                 var serverSingletone = Instantiate(m_ServerPrefab);
                 await serverSingletone.CreateServer();
+                var defaultGameInfo = new GameInfo
+                {
+                    gameMode = GameMode.Starting,
+                    map = Arena.PracticeWreckyards,
+                    gameQueue = GameQueue.Casual
+                };
 
             }
             else
@@ -124,9 +128,9 @@ namespace BattleCruisers.Scenes
                 if (!applicationModel.DataProvider.GameModel.PremiumEdition)
                     subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
 #else
-            //if premium version set here 
-            applicationModel.DataProvider.GameModel.PremiumEdition = true;
-            applicationModel.DataProvider.SaveGame();
+                //if premium version set here 
+                applicationModel.DataProvider.GameModel.PremiumEdition = true;
+                applicationModel.DataProvider.SaveGame();
 #endif
 
                 SubTitle.text = subTitle;
