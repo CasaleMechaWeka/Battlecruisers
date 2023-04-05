@@ -17,6 +17,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         [SerializeField]
         NetworkManager m_NetworkManager;
 
+        ApplicationData m_AppData;
+
 
 
         // Start is called before the first frame update
@@ -57,6 +59,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 
         async Task LaunchInMode(bool isServer, string profileName = "default")
         {
+            m_AppData = new ApplicationData();
+            IsServer = isServer;
             if (isServer)
             {
                 var serverSingletone = Instantiate(m_ServerPrefab);
