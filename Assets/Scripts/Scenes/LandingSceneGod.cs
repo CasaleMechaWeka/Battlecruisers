@@ -40,14 +40,6 @@ namespace BattleCruisers.Scenes
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
 
-        /////////////////////////////////////////////////////////////
-
-        //////////       Dedicated Game Server     //////////////////
-
-        /////////////////////////////////////////////////////////////
-        public static bool IsServer;
-        [SerializeField]
-        ServerSingleton m_ServerPrefab;
         async void Start()
         {
 
@@ -65,111 +57,61 @@ namespace BattleCruisers.Scenes
                 Debug.Log(e.Message);
             }
 
-
-            if (Application.isEditor)
-            {
-#if UNITY_EDITOR
-                if (ClonesManager.IsClone())
-                {
-                    var argument = ClonesManager.GetArgument();
-
-                    if (argument == "server")
-                    {
-
-                        await LaunchInMode(true, "server");
-
-                    }
-                    else if (argument == "client")
-                    {
-
-                        await LaunchInMode(false, "client");
-
-                    }
-                }
-                else
-                {
-                    await LaunchInMode(false, "client");
-                }
-#endif
-            }
-            else
-            {
-                await LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
-            }
-
-        }
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
 
-        async Task LaunchInMode(bool isServer, string profileName = "default")
-        {
-            IsServer = isServer;
-            if (isServer)
-            {
-                var serverSingletone = Instantiate(m_ServerPrefab);
-                await serverSingletone.CreateServer();
-                var defaultGameInfo = new GameInfo
-                {
-                    gameMode = GameMode.Starting,
-                    map = Arena.PracticeWreckyards,
-                    gameQueue = GameQueue.Casual
-                };
-                await serverSingletone.Manager.StartGameServerAsync(defaultGameInfo);
-            }
-            else
-            {
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
-
-                ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-                string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
+            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            string subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
 
 #if FREE_EDITION || UNITY_EDITOR
-                //if player NOT already paid then use Free title
-                if (!applicationModel.DataProvider.GameModel.PremiumEdition)
-                    subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
+            //if player NOT already paid then use Free title
+            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+                subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
 #else
                 //if premium version set here 
                 applicationModel.DataProvider.GameModel.PremiumEdition = true;
                 applicationModel.DataProvider.SaveGame();
 #endif
 
-                SubTitle.text = subTitle;
+            SubTitle.text = subTitle;
 
-                Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
+            Logging.Log(Tags.SCENE_NAVIGATION, $"_isInitialised: {_isInitialised}");
 
-                if (!_isInitialised)
+            if (!_isInitialised)
+            {
+                IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                MusicPlayer = CreateMusicPlayer(dataProvider);
+
+                if (!dataProvider.GameModel.Settings.InitialisedGraphics)
                 {
-                    IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-                    MusicPlayer = CreateMusicPlayer(dataProvider);
+                    dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
+                }
+                Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
+                // Persist this game object across scenes
+                DontDestroyOnLoad(gameObject);
+                _isInitialised = true;
 
-                    if (!dataProvider.GameModel.Settings.InitialisedGraphics)
-                    {
-                        dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
-                    }
-                    Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                    //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
-                    // Persist this game object across scenes
-                    DontDestroyOnLoad(gameObject);
-                    _isInitialised = true;
+                SceneNavigator = this;
 
-                    SceneNavigator = this;
+                HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+                _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 
-                    HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
-                    _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
-
-                    //Debug.Log(Screen.currentResolution);
-                    // Game starts with the screens scene
-                    if (testCreditsScene)
-                    {
-                        GoToScene(SceneNames.CREDITS_SCENE, true);
-                    }
-                    else
-                    {
-                        GoToScene(SceneNames.SCREENS_SCENE, true);
-                    }
+                //Debug.Log(Screen.currentResolution);
+                // Game starts with the screens scene
+                if (testCreditsScene)
+                {
+                    GoToScene(SceneNames.CREDITS_SCENE, true);
+                }
+                else
+                {
+                    GoToScene(SceneNames.SCREENS_SCENE, true);
                 }
             }
         }
+
+
+
         private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
