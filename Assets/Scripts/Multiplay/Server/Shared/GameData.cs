@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
 
 
-    public enum Arena
+    public enum Map
     {
         PracticeWreckyards,
         OzPenitentiary,
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         }
 
 
-        public Arena MapPreferences
+        public Map MapPreferences
         {
             get => Data.userGamePreferences.map;
             set { Data.userGamePreferences.map = value; }
@@ -125,7 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
     [Serializable]
     public class GameInfo
     {
-        public Arena map;
+        public Map map;
         public GameMode gameMode;
         public GameQueue gameQueue;
 
@@ -149,12 +149,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             sb.AppendLine($"- gameQueue:     {gameQueue}");
             return sb.ToString();
         }
-        public static string ConvertToScene(Arena map)
+        public static string ConvertToScene(Map map)
         {
             switch (map)
             {
                 default:
-                    return " ";
+                    return "MultiplayBattleScene";
             }
         }
         public string ToMultiplayQueue()

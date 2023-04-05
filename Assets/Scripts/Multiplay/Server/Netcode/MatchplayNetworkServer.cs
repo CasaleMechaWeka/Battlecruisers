@@ -51,6 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 
         public async Task<SynchedServerData> ConfigureServer(GameInfo startingGameInfo)
         {
+            Debug.Log("========" + startingGameInfo.ToSceneName);
             m_NetworkManager.SceneManager.LoadScene(startingGameInfo.ToSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
             var localNetworkedSceneLoaded = false;
             m_NetworkManager.SceneManager.OnLoadComplete += CreateAndSetSynchedServerData;

@@ -8,15 +8,15 @@ using System;
 using System.Linq;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Scenes;
-using Arena = BattleCruisers.Network.Multiplay.Matchplay.Shared.Arena;
+using Map = BattleCruisers.Network.Multiplay.Matchplay.Shared.Map;
 
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
     public class MultiplayScreenController : ScreenController
     {
-        private Arena _curSelectedArena;
-        public Arena CurSelectedArena => _curSelectedArena;
+        private Map _curSelectedArena;
+        public Map CurSelectedArena => _curSelectedArena;
 
         public CanvasGroupButton cancelButton, battleButton;
 
@@ -85,20 +85,20 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void OnNextArena()
         {
             int m_nextArena = ((int)_curSelectedArena + 1);
-            if (m_nextArena > (int)Enum.GetValues(typeof(Arena)).Cast<Arena>().Last())
+            if (m_nextArena > (int)Enum.GetValues(typeof(Map)).Cast<Map>().Last())
             {
                 m_nextArena = 0;
             }
-            _curSelectedArena = (Arena)m_nextArena;
+            _curSelectedArena = (Map)m_nextArena;
         }
         public void OnPrevArena()
         {
             int m_nextArena = ((int)_curSelectedArena - 1);
             if (m_nextArena < 0)
             {
-                m_nextArena = (int)Enum.GetValues(typeof(Arena)).Cast<Arena>().Last();
+                m_nextArena = (int)Enum.GetValues(typeof(Map)).Cast<Map>().Last();
             }
-            _curSelectedArena = (Arena)m_nextArena;
+            _curSelectedArena = (Map)m_nextArena;
         }
 
 

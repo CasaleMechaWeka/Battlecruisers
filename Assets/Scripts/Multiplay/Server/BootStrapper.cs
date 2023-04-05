@@ -69,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                 var defaultGameInfo = new GameInfo
                 {
                     gameMode = GameMode.Starting,
-                    map = Arena.PracticeWreckyards,
+                    map = Map.PracticeWreckyards,
                     gameQueue = GameQueue.Casual
                 };
                 await serverSingletone.Manager.StartGameServerAsync(defaultGameInfo);

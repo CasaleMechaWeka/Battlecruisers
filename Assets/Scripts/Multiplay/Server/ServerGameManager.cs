@@ -129,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 
         #region ServerSynching
 
-        void OnServerChangedMap(Arena oldMap, Arena newMap)
+        void OnServerChangedMap(Map oldMap, Map newMap)
         {
             m_MultiplayServerQueryService.SetMap(newMap.ToString());
         }
@@ -181,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 
         public static GameInfo PickGameInfo(MatchmakingResults mmAllocation)
         {
-            var chosenMap = Arena.PracticeWreckyards;
+            var chosenMap = Map.PracticeWreckyards;
             var chosenMode = GameMode.Starting;
 
             foreach (var player in mmAllocation.MatchProperties.Players)
