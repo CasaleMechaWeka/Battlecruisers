@@ -3,6 +3,7 @@ using UnityEngine;
 using ParrelSync;
 using UnityEngine.SceneManagement;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using Unity.Netcode;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Server
@@ -13,6 +14,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         public static bool IsServer;
         [SerializeField]
         ServerSingleton m_ServerPrefab;
+        [SerializeField]
+        NetworkManager m_NetworkManager;
+
 
 
         // Start is called before the first frame update
@@ -56,7 +60,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             if (isServer)
             {
                 var serverSingletone = Instantiate(m_ServerPrefab);
-                await serverSingletone.CreateServer();
+                var networkManager = Instantiate(m_NetworkManager);
+                await serverSingletone.CreateServer(networkManager);
                 var defaultGameInfo = new GameInfo
                 {
                     gameMode = GameMode.Starting,

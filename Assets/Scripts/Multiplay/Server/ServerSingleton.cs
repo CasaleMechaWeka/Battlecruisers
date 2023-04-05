@@ -55,17 +55,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             m_GameManager?.Dispose();
         }
 
-        public async Task CreateServer()
+        public async Task CreateServer(NetworkManager networkManager)
         {
             await Unity.Services.Core.UnityServices.InitializeAsync();
             m_GameManager = new ServerGameManager(
                 ApplicationData.IP(),
                 ApplicationData.Port(),
                 ApplicationData.QPort(),
-                NetworkManager.Singleton
+                networkManager
             );
         }
-
     }
 }
 
