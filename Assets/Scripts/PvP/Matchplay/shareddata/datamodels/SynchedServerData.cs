@@ -19,8 +19,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             OnNetworkSpawned?.Invoke();
         }
-
-
     }
 
 }

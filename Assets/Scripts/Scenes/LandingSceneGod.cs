@@ -17,11 +17,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using ParrelSync;
-using BattleCruisers.Network.Multiplay.Matchplay.Server;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using GameMode = BattleCruisers.Network.Multiplay.Matchplay.Shared.GameMode;
 
 namespace BattleCruisers.Scenes
 {
