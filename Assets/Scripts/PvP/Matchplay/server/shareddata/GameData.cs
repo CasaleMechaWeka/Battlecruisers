@@ -6,8 +6,6 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
-
-
     public enum Map
     {
         PracticeWreckyards,

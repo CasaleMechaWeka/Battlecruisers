@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
 
         //// ------------------------------------  Local Test  -------------------------------------  //////
-        public bool isLocalTest = true;
+        public bool m_LocalLaunchMode = true;
         private string m_localTestName;
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,18 +106,18 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
 
 
-        private void HostIPRequest(string ip, string port)
-        {
+        // private void HostIPRequest(string ip, string port)
+        // {
 
-            int.TryParse(port, out var portNum);
-            if (portNum <= 0)
-            {
-                portNum = k_DefaultPort;
-            }
-            ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-            m_ConnectionManager.StartHostIp(m_localTestName, ip, portNum);
+        //     int.TryParse(port, out var portNum);
+        //     if (portNum <= 0)
+        //     {
+        //         portNum = k_DefaultPort;
+        //     }
+        //     ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
+        //     m_ConnectionManager.StartHostIp(m_localTestName, ip, portNum);
 
-        }
+        // }
 
 
         private void JoinWithIP(string ip, string port)
@@ -135,17 +135,15 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
 
             yield return new WaitForEndOfFrame();
-
-            if (isLocalTest)
+            if (m_LocalLaunchMode)
             {
 
             }
             else
             {
-                // Lobby Service
-
 
             }
+
         }
 
         protected override void Awake()
