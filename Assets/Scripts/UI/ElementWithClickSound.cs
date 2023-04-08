@@ -21,7 +21,7 @@ namespace BattleCruisers.UI
         {
             base.Initialise();
             Assert.IsNotNull(soundPlayer);
-            Debug.Log("--------------------------");
+
             _soundPlayer = soundPlayer;
             _clickAction = clickAction;
             _parent = parent;
