@@ -266,6 +266,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
+
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
 
             multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
