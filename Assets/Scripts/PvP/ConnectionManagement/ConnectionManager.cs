@@ -82,6 +82,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         internal readonly StartingHostState m_StartingHost = new StartingHostState();
         internal readonly HostingState m_Hosting = new HostingState();
 
+
+
         public ClientGameManager Manager
         {
             get
@@ -146,6 +148,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         void OnClientDisconnectCallback(ulong clientId)
         {
+
             m_CurrentState.OnClientDisconnect(clientId);
         }
 

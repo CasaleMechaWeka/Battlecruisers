@@ -14,6 +14,8 @@ using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using Map = BattleCruisers.Network.Multiplay.Matchplay.Shared.Map;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 
 
 
@@ -56,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             leaderboardButton.Initialise(soundPlayer, OpenLeaderboard);
             arenaButton.Initialise(soundPlayer, OpenArenaSelection);
 
-            battleButton.Initialise(soundPlayer, LoadBattle);
+            battleButton.Initialise(soundPlayer, StartBattle);
 
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             arenaSpritesProvider = new PvPArenaBackgroundSpriteProvider(spriteFetcher);
@@ -77,29 +79,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
         }
 
-        // private void NextBattleCommandExecute()
-        // {
-        //     OnNextArena();
-        // }
-        // private bool CanNextBattleCommandExecute()
-        // {
-        //     return true;
-        // }
 
-        // private void PreviousBattleCommandExecute()
-        // {
-        //     OnPrevArena();
-        // // }
-
-        // private bool CanPreviousBattleCommandExecute()
-        // {
-        //     return true;
-        // }
-
-        private void LoadBattle()
-        {
-            Invoke("StartBattle", 0.3f);
-        }
         private void StartBattle()
         {
             _multiplayScreensSceneGod.GotoMatchmakingScreen();

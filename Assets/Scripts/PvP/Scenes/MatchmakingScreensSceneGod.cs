@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         void Start()
         {
             m_localTestName = m_NameGenerationData.GenerateName();
-            StartCoroutine(iStartPvP());
+            // StartCoroutine(iStartPvP());
         }
 
         // Update is called once per frame
@@ -74,49 +74,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             base.Configure(builder);
         }
-
-        private void HostIPRequest(string ip, string port)
-        {
-
-            int.TryParse(port, out var portNum);
-            if (portNum <= 0)
-            {
-                portNum = k_DefaultPort;
-            }
-            ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-            m_ConnectionManager.StartHostIp(m_localTestName, ip, portNum);
-
-        }
-
-
-        private void JoinWithIP(string ip, string port)
-        {
-            int.TryParse(port, out var portNum);
-            if (portNum <= 0)
-            {
-                portNum = k_DefaultPort;
-            }
-            ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-            m_ConnectionManager.StartClientIp(m_localTestName, ip, portNum);
-        }
-
-        IEnumerator iStartPvP()
-        {
-
-            yield return new WaitForEndOfFrame();
-
-            if (isLocalTest)
-            {
-
-            }
-            else
-            {
-                // Lobby Service
-
-
-            }
-        }
-
     }
 }
 
