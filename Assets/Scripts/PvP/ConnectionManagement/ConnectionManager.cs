@@ -5,6 +5,7 @@ using Unity.Netcode;
 using VContainer;
 using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using BattleCruisers.Network.Multiplay.Matchplay.Client;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -60,6 +61,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         [Inject]
         NetworkManager m_NetworkManager;
+        [Inject]
+        ProfileManager m_ProfileManager;
         public NetworkManager NetworkManager => m_NetworkManager;
 
         [SerializeField]
@@ -78,6 +81,18 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         internal readonly ClientReconnectingState m_ClientReconnecting = new ClientReconnectingState();
         internal readonly StartingHostState m_StartingHost = new StartingHostState();
         internal readonly HostingState m_Hosting = new HostingState();
+
+        public ClientGameManager Manager
+        {
+            get
+            {
+                if (m_GameManager != null) return m_GameManager;
+                Debug.LogError($"CilentGameManger is missing, did you run StartClient()?");
+                return null;
+            }
+        }
+
+        ClientGameManager m_GameManager;
 
         void Awake()
         {
@@ -104,6 +119,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             NetworkManager.OnServerStarted += OnServerStarted;
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
+
+            m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
         }
 
         void OnDestroy()

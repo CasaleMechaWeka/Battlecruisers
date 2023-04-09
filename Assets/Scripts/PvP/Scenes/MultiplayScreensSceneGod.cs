@@ -137,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             yield return new WaitForEndOfFrame();
             if (m_LocalLaunchMode)
             {
-
+                JoinWithIP("127.0.0.1", "7777");
             }
             else
             {
@@ -275,6 +275,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             multiplayScreen.gameObject.SetActive(true);
             matchmakingScreen.gameObject.SetActive(false);
+
+            _currentScreen = multiplayScreen;
 
 
             // Temp only because I am starting the scene without a previous choose level scene

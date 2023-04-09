@@ -17,6 +17,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 m_lobbyServiceFacade.BeginTracking();
             }
+
         }
 
         public override void Exit() { }

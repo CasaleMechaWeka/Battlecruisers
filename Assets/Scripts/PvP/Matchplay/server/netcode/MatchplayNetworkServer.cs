@@ -116,10 +116,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             {
                 ulong oldClientId = m_clientData[userData.userAuthId].networkId;
                 Debug.Log($"Duplicate ID Found : {userData.userAuthId}, Disconnecting Old User");
-                SendClientDisconnected(request.ClientNetworkId, ConnectStatus.LoggedInAgain);
+                SendClientDisconnected(request.ClientNetworkId, MatchplayConnectStatus.LoggedInAgain);
                 WaitToDisconnect(oldClientId);
             }
-            SendClientConnected(request.ClientNetworkId, ConnectStatus.Success);
+            SendClientConnected(request.ClientNetworkId, MatchplayConnectStatus.Success);
             m_NetworkIdToAuth[request.ClientNetworkId] = userData.userAuthId;
             m_clientData[userData.userAuthId] = userData;
             OnPlayerJoined?.Invoke(userData);
@@ -141,7 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 
         private void OnClientDisconnect(ulong networkId)
         {
-            SendClientDisconnected(networkId, ConnectStatus.GenericDisconnect);
+            SendClientDisconnected(networkId, MatchplayConnectStatus.GenericDisconnect);
             if (m_NetworkIdToAuth.TryGetValue(networkId, out var authId))
             {
                 m_NetworkIdToAuth?.Remove(networkId);
@@ -185,18 +185,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             m_NetworkManager.DisconnectClient(networkId);
         }
 
-        void SendClientConnected(ulong networkId, ConnectStatus status)
+        void SendClientConnected(ulong networkId, MatchplayConnectStatus status)
         {
-            var writer = new FastBufferWriter(sizeof(ConnectStatus), Unity.Collections.Allocator.Temp);
+            var writer = new FastBufferWriter(sizeof(MatchplayConnectStatus), Unity.Collections.Allocator.Temp);
             writer.WriteValueSafe(status);
             Debug.Log($"Send Network Client Connected to : {networkId}");
             MatchplayNetworkMessenger.SendMessageTo(NetworkMessage.LocalClientConnected, networkId, writer);
         }
 
 
-        void SendClientDisconnected(ulong networkId, ConnectStatus status)
+        void SendClientDisconnected(ulong networkId, MatchplayConnectStatus status)
         {
-            var writer = new FastBufferWriter(sizeof(ConnectStatus), Unity.Collections.Allocator.Temp);
+            var writer = new FastBufferWriter(sizeof(MatchplayConnectStatus), Unity.Collections.Allocator.Temp);
             writer.WriteValueSafe(status);
             Debug.Log($"Send networkClient Disconnected to : {networkId}");
             MatchplayNetworkMessenger.SendMessageTo(NetworkMessage.LocalClientDisconnected, networkId, writer);

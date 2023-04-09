@@ -14,11 +14,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<GameQueue> gameQueue = new NetworkVariable<GameQueue>();
 
         public Action OnNetworkSpawned;
+        public event Action<ulong> OnClientRegstered;
 
         public override void OnNetworkSpawn()
         {
             OnNetworkSpawned?.Invoke();
         }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void RegisterClient(ulong clientId)
+        {
+            OnClientRegstered?.Invoke(clientId);
+        }
+
     }
 
 }
+

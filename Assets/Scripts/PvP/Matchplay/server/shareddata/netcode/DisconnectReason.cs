@@ -8,20 +8,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Networking
 {
     public class DisconnectReason
     {
-        public void SetDisconnectReason(ConnectStatus reason)
+        public void SetDisconnectReason(MatchplayConnectStatus reason)
         {
-            Debug.Assert(reason != ConnectStatus.Success);
+            Debug.Assert(reason != MatchplayConnectStatus.Success);
             Reason = reason;
         }
 
-        public ConnectStatus Reason { get; private set; } = ConnectStatus.Undefined;
+        public MatchplayConnectStatus Reason { get; private set; } = MatchplayConnectStatus.Undefined;
 
         public void Clear()
         {
-            Reason = ConnectStatus.Undefined;
+            Reason = MatchplayConnectStatus.Undefined;
         }
 
-        public bool HasTransitionReason => Reason != ConnectStatus.Undefined;
+        public bool HasTransitionReason => Reason != MatchplayConnectStatus.Undefined;
     }
 }
 

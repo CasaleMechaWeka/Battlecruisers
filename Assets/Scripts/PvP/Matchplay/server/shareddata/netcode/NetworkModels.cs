@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Networking
 {
-    public enum ConnectStatus
+    public enum MatchplayConnectStatus
     {
         Undefined,
         Success,  // client successfully connected, This may also be a successful reconnect.

@@ -12,8 +12,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 {
     public class MatchplayNetworkClient : IDisposable
     {
-        public event Action<ConnectStatus> OnLocalConnection;
-        public event Action<ConnectStatus> OnLocalDisconnection;
+        public event Action<MatchplayConnectStatus> OnLocalConnection;
+        public event Action<MatchplayConnectStatus> OnLocalDisconnection;
 
         const int k_TimeoutDuration = 10;
         NetworkManager m_NetworkManager;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 
         public void DisconnectClient()
         {
-            DisconnectReason.SetDisconnectReason(ConnectStatus.UserRequestedDisconnect);
+            DisconnectReason.SetDisconnectReason(MatchplayConnectStatus.UserRequestedDisconnect);
             NetworkShutdown();
         }
 
@@ -58,16 +58,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             else
             {
                 Debug.LogWarning($"Could not Start Client!");
-                OnLocalDisconnection?.Invoke(ConnectStatus.Undefined);
+                OnLocalDisconnection?.Invoke(MatchplayConnectStatus.Undefined);
             }
         }
 
         void ReceiveLocalClientConnectStatus(ulong clientId, FastBufferReader reader)
         {
-            reader.ReadValueSafe(out ConnectStatus status);
+            reader.ReadValueSafe(out MatchplayConnectStatus status);
             Debug.Log("ReceiveLocalClientConnectStatus: " + status);
 
-            if (status != ConnectStatus.Success)
+            if (status != MatchplayConnectStatus.Success)
             {
                 DisconnectReason.SetDisconnectReason(status);
             }
@@ -76,7 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 
         void ReceiveLocalClientDisconnectStatus(ulong clientId, FastBufferReader reader)
         {
-            reader.ReadValueSafe(out ConnectStatus status);
+            reader.ReadValueSafe(out MatchplayConnectStatus status);
             Debug.Log("ReceiveLocalClientDisconnectStatus: " + status);
             DisconnectReason.SetDisconnectReason(status);
         }

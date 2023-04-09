@@ -4,6 +4,8 @@ using Unity.Multiplayer.Samples.Utilities;
 using VContainer;
 using System;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using BattleCruisers.Network.Multiplay.Matchplay.Networking;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -14,6 +16,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         protected LocalLobby m_LocalLobby;
         ConnectionMethodBase m_ConnectionMethod;
+
+        const int k_TimeoutDuration = 10;
+
+
+        public event Action<MatchplayConnectStatus> OnLocalConnection;
+        public event Action<MatchplayConnectStatus> OnLocalDisconnection;
+
+        DisconnectReason disconnectReason { get; } = new DisconnectReason();
 
         public ClientConnectingState Configure(ConnectionMethodBase baseConnectionMethod)
         {
@@ -61,9 +71,24 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             try
             {
                 await m_ConnectionMethod.SetupClientConnectionAsync();
+
+                var userData = m_ConnectionManager.Manager.User.Data;
+                var payload = JsonUtility.ToJson(userData);
+                var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
+
+                m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
+                m_ConnectionManager.NetworkManager.NetworkConfig.ClientConnectionBufferTimeout = k_TimeoutDuration;
+
                 if (!m_ConnectionManager.NetworkManager.StartClient())
                 {
                     throw new System.Exception("NetworkManager StartClient failed");
+                }
+                else
+                {
+                    MatchplayNetworkMessenger.RegisterListener(NetworkMessage.LocalClientConnected,
+                                  ReceiveLocalClientConnectStatus);
+                    MatchplayNetworkMessenger.RegisterListener(NetworkMessage.LocalClientDisconnected,
+                        ReceiveLocalClientDisconnectStatus);
                 }
                 SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
             }
@@ -74,6 +99,26 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 StartingClientFailedAsync();
                 throw;
             }
+        }
+
+
+        void ReceiveLocalClientConnectStatus(ulong clientId, FastBufferReader reader)
+        {
+            reader.ReadValueSafe(out MatchplayConnectStatus status);
+            Debug.Log("ReceiveLocalClientConnectStatus: " + status);
+
+            //this indicates a game level failure, rather than a network failure. See note in ServerGameNetPortal.
+            if (status != MatchplayConnectStatus.Success)
+                disconnectReason.SetDisconnectReason(status);
+
+            OnLocalConnection?.Invoke(status);
+        }
+
+        void ReceiveLocalClientDisconnectStatus(ulong clientId, FastBufferReader reader)
+        {
+            reader.ReadValueSafe(out MatchplayConnectStatus status);
+            Debug.Log("ReceiveLocalClientDisconnectStatus: " + status);
+            disconnectReason.SetDisconnectReason(status);
         }
 
     }
