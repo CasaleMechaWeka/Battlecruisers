@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         // screens
         public MultiplayScreenController multiplayScreen;
-        public MatchmakingScreenController matchmakingScreen;
+        // public MatchmakingScreenController matchmakingScreen;
 
         public int defaultLevel;
 
@@ -270,11 +270,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
 
             multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
-            matchmakingScreen.Initialise(this, _soundPlayer, _dataProvider);
+            // matchmakingScreen.Initialise(this, _soundPlayer, _dataProvider);
 
 
             multiplayScreen.gameObject.SetActive(true);
-            matchmakingScreen.gameObject.SetActive(false);
+            // matchmakingScreen.gameObject.SetActive(false);
 
             _currentScreen = multiplayScreen;
 
@@ -309,7 +309,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             if (AuthenticationService.Instance.IsAuthorized)
             {
-                GoToScreen(matchmakingScreen);
+
                 StartCoroutine(iStartPvP());
             }
         }

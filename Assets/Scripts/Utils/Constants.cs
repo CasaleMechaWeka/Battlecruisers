@@ -52,6 +52,8 @@
         public const string MULTIPLAY_SCREENS_SCENE = "MultiplayScreensScene";
         public const string MATCHMAKING_SCREENS_SCENE = "MatchmakingScreensScene";
         public const string MULTIPLAY_STARTUP_SCENE = "MultiplayStartupScene";
+        public const string MULTIPLAY_MATCHMAKER_SCENE = "Matchmaker";
+        public const string MULTIPLAY_MATCHMAKING_LOADING_SCENE = "MultiplayMatchmakingLoadingScene";
     }
 
     public static class GameObjectTags

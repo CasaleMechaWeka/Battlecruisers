@@ -9,6 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.GameState
     {
         MultiplayScreenScene,
         MatchmakingScreenScene,
+        MatchmakingLoadingScene,
         OnlineArena
     }
 
