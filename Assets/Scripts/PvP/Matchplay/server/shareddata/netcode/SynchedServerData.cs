@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void RegisterClient(ulong clientId)
+        public void RegisterClientServerRpc(ulong clientId)
         {
             OnClientRegstered?.Invoke(clientId);
         }
