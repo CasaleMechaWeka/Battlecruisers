@@ -90,7 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void GotoArena()
         {
-            Debug.Log("Goto Arena!");
+
         }
 
         public void OnNextArena()
