@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
         private static IGameEndMonitor _gameEndMonitor;
 
         private AudioInitialiser _audioInitialiser;
-        private ITutorialProvider _tutorialProvider;
+        // private ITutorialProvider _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
         private BuildableButtonColourController _buildableButtonColourController;
         private CruiserDeathManager _cruiserDeathManager;
@@ -89,7 +89,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
         public GameObject nukeButton;
         private IApplicationModel applicationModel;
 
-        public GameObject[] ilegalTutorialSettings;
 
         private async void Start()
         {
@@ -310,21 +309,21 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
             cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
 
             // Tutorial
-            ITutorialArgsBase tutorialArgs
-                = new TutorialArgsBase(
-                    applicationModel,
-                    playerCruiser,
-                    aiCruiser,
-                    _tutorialProvider,
-                    prefabFactory,
-                    components,
-                    cameraComponents,
-                    topPanelComponents,
-                    leftPanelComponents,
-                    rightPanelComponents,
-                    uiManager,
-                    _gameEndMonitor);
-            await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
+            // ITutorialArgsBase tutorialArgs
+            //     = new TutorialArgsBase(
+            //         applicationModel,
+            //         playerCruiser,
+            //         aiCruiser,
+            //         _tutorialProvider,
+            //         prefabFactory,
+            //         components,
+            //         cameraComponents,
+            //         topPanelComponents,
+            //         leftPanelComponents,
+            //         rightPanelComponents,
+            //         uiManager,
+            //         _gameEndMonitor);
+            // await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
             if (helper.ShowInGameHints)
             {
                 uiManager.SetExplanationPanel(tutorialInitialiser.explanationPanel);
@@ -401,10 +400,10 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
         {
             switch (applicationModel.Mode)
             {
-                case GameMode.Tutorial:
-                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
-                    _tutorialProvider = helper;
-                    return helper;
+                // case GameMode.Tutorial:
+                //     TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
+                //     _tutorialProvider = helper;
+                //     return helper;
 
                 case GameMode.Campaign:
                     return new NormalHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
