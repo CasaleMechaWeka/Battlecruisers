@@ -70,7 +70,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
         public TopPanelInitialiser topPanelInitialiser;
         public LeftPanelInitialiser leftPanelInitialiser;
         public RightPanelInitialiser rightPanelInitialiser;
-        public TutorialInitialiser tutorialInitialiser;
+        // public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
         public GameObject enemyCharacterImages;
         private IDataProvider dataProvider;
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
         {
             // Logging.Log(Tags.BATTLE_SCENE, "Start");
 
-            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
+            Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, waterSplashVolumeController);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -148,7 +148,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
             factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
-
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
@@ -276,6 +275,9 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
             IPrefabContainer<BackgroundImageStats> backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
+
+
+
             components.HotkeyInitialiser.Initialise(
                 dataProvider.GameModel.Hotkeys,
                 InputBC.Instance,
@@ -324,10 +326,14 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
             //         uiManager,
             //         _gameEndMonitor);
             // await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
-            if (helper.ShowInGameHints)
-            {
-                uiManager.SetExplanationPanel(tutorialInitialiser.explanationPanel);
-            }
+
+
+            // if (helper.ShowInGameHints)
+            // {
+            //     uiManager.SetExplanationPanel(tutorialInitialiser.explanationPanel);
+            // }
+
+
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
@@ -410,6 +416,8 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
 
                 case GameMode.Skirmish:
                     return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                // case GameMode.PvP_1VS1:
+                //     return;
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");

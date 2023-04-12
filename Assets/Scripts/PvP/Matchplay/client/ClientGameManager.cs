@@ -54,14 +54,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             }
             Debug.Log($"did Auth? {authenticationResult} {User.AuthId}");
             Initialized = true;
-
         }
 
         public void BeginConnection(string ip, int port)
         {
             Debug.Log($"Starting networkClient @ {ip}:{port}\nWith : {User}");
             NetworkClient.StartClient(ip, port);
-
         }
 
         public void Disconnect()

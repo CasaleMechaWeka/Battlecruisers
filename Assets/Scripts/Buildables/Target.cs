@@ -12,7 +12,7 @@ using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables
 {
-    public abstract class Target : Prefab , ITarget, ITargetProxy
+    public abstract class Target : Prefab, ITarget, ITargetProxy
     {
         protected IHealthTracker _healthTracker;
         protected ITime _time;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables
         // Seems to be an okay approximation (for cruisers at least). ------------ (OLD COMMENT BY FELIX, default was 3)
         // 3 was too much, changing it to much lower ----------------------------- (NEW COMMENT BY DEAN)
         // For buildables ranges from 0.75 (tesla coil) to 5 (broadsides)
-		private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.667f;
+        private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.667f;
 
         public event EventHandler<DestroyedEventArgs> Destroyed;
         public event EventHandler<DamagedEventArgs> Damaged;
@@ -78,11 +78,11 @@ namespace BattleCruisers.Buildables
             if (!_attackCapabilities.Contains(attackCapability))
             {
                 _attackCapabilities.Add(attackCapability);
-			}
+            }
         }
 
         public override void StaticInitialise(ILocTable commonStrings)
-		{
+        {
             base.StaticInitialise(commonStrings);
 
             _healthTracker = new HealthTracker(maxHealth);
@@ -102,11 +102,11 @@ namespace BattleCruisers.Buildables
             OnHealthGone();
         }
 
-		protected virtual void OnHealthGone()
-		{
-			OnDestroyed();
-			InvokeDestroyedEvent();
-			InternalDestroy();
+        protected virtual void OnHealthGone()
+        {
+            OnDestroyed();
+            InvokeDestroyedEvent();
+            InternalDestroy();
         }
 
         public void Destroy()
@@ -115,24 +115,24 @@ namespace BattleCruisers.Buildables
             {
                 _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
             }
-		}
+        }
 
-		protected virtual void InternalDestroy()
-		{
+        protected virtual void InternalDestroy()
+        {
             Destroy(gameObject);
         }
 
         protected virtual void OnDestroyed() { }
 
-		protected void InvokeDestroyedEvent()
-		{
+        protected void InvokeDestroyedEvent()
+        {
             Logging.Log(Tags.TARGET, $"{this} destroyed :/");
 
-			Destroyed?.Invoke(this, new DestroyedEventArgs(this));
-		}
+            Destroyed?.Invoke(this, new DestroyedEventArgs(this));
+        }
 
         public void TakeDamage(float damageAmount, ITarget damageSource)
-		{
+        {
             if (IsBuildingImmune())
             {
                 return;
@@ -144,7 +144,7 @@ namespace BattleCruisers.Buildables
 
             if (_healthTracker.RemoveHealth(damageAmount))
             {
-	            OnTakeDamage();
+                OnTakeDamage();
 
                 Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
 
@@ -152,14 +152,14 @@ namespace BattleCruisers.Buildables
                 {
                     RepairCommand.EmitCanExecuteChanged();
                 }
-			}
-		}
+            }
+        }
 
-		protected virtual void OnTakeDamage() { }
+        protected virtual void OnTakeDamage() { }
 
-		protected void RepairCommandExecute(float repairAmount)
-		{
-			Assert.IsTrue(CanRepairCommandExecute());
+        protected void RepairCommandExecute(float repairAmount)
+        {
+            Assert.IsTrue(CanRepairCommandExecute());
 
             if (_healthTracker.AddHealth(repairAmount))
             {
@@ -168,7 +168,7 @@ namespace BattleCruisers.Buildables
                     RepairCommand.EmitCanExecuteChanged();
                 }
             }
-		}
+        }
 
         protected virtual bool CanRepairCommandExecute()
         {
@@ -202,7 +202,7 @@ namespace BattleCruisers.Buildables
 
         public virtual void SetBuildingImmunity(bool boo)
         {
-            
+
         }
 
         public virtual bool IsBuildingImmune()

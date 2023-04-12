@@ -131,6 +131,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             m_ConnectionManager.StartClientIp(m_localTestName, ip, portNum);
         }
 
+        private void JoinWithLobby()
+        {
+
+        }
+
         IEnumerator iStartPvP()
         {
 
@@ -141,7 +146,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             }
             else
             {
-
+                JoinWithLobby();
             }
 
         }

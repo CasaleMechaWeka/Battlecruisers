@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data;
+﻿
+using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
@@ -63,9 +64,9 @@ namespace BattleCruisers.Scenes
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
                 subTitle = commonStrings.GetString("GameNameFreeEdition").ToUpper();
 #else
-                //if premium version set here 
-                applicationModel.DataProvider.GameModel.PremiumEdition = true;
-                applicationModel.DataProvider.SaveGame();
+            //if premium version set here 
+            applicationModel.DataProvider.GameModel.PremiumEdition = true;
+            applicationModel.DataProvider.SaveGame();
 #endif
 
             SubTitle.text = subTitle;

@@ -4,7 +4,8 @@
     {
         Campaign = 1,
         Tutorial = 2,
-        Skirmish = 3 //,
+        Skirmish = 3,
+        PvP_1VS1 = 4,
 
         //Voyage = 4
     }
