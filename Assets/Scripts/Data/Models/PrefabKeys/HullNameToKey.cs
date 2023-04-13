@@ -9,6 +9,8 @@ namespace BattleCruisers.Data.Models.PrefabKeys
     public class HullNameToKey : IHullNameToKey
     {
         private readonly IDictionary<string, HullKey> _hullNameToKey;
+        private readonly IDictionary<string, BuildingKey> _buildingKey;
+        private readonly IDictionary<string, UnitKey> _unitKey;
 
         public HullNameToKey(IList<HullKey> keys, IPrefabFactory prefabFactory)
         {

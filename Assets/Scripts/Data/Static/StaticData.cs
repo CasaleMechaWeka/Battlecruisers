@@ -183,7 +183,6 @@ namespace BattleCruisers.Data.Static
             // TEMP  For final game, don't add ALL the prefabs :D
             Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
-
             bool hasAttemptedTutorial = false;
 
             return new GameModel(

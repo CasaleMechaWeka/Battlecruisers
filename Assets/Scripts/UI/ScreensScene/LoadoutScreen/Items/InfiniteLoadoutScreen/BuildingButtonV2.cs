@@ -5,6 +5,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -14,6 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public IBuildableWrapper<IBuilding> _buildingPrefab;
         public override IComparableItem Item => _buildingPrefab.Buildable;
         public TextMeshProUGUI _buildingName;
+        private RectTransform _selectedFeedback;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer, 
@@ -24,6 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
             //_buildingName.text = (buildingKeyName.ToString()).Replace("Building_", string.Empty);
+            _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
+            Assert.IsNotNull(_selectedFeedback);
 
             Assert.IsNotNull(buildingPrefab);
             _buildingPrefab = buildingPrefab;

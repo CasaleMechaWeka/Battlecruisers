@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Utils;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models
 {
-    [Serializable]
+	[Serializable]
 	public class Loadout : ILoadout
 	{
 		[SerializeField]
@@ -19,10 +23,30 @@ namespace BattleCruisers.Data.Models
 		[SerializeField]
 		private List<BuildingKey> _buildings;
 
+		private Dictionary<ItemType, List<BuildingKey>> _builds = new();
+
+		
+        [SerializeField]
+        private List<BuildingKey> _factories;
+
+        [SerializeField]
+        private List<BuildingKey> _defence;
+
+        [SerializeField]
+        private List<BuildingKey> _offensive;
+
+        [SerializeField]
+        private List<BuildingKey> _tactical;
+
+        [SerializeField]
+        private List<BuildingKey> _ultra;
+
 		[SerializeField]
 		private List<UnitKey> _units;
 
-		public HullKey Hull
+		private Dictionary<ItemType, List<UnitKey>> _unit = new();
+
+        public HullKey Hull
 		{
 			get { return _hull; }
 			set 
@@ -40,6 +64,7 @@ namespace BattleCruisers.Data.Models
 			Hull = hull;
 			_buildings = buildings;
 			_units = units;
+			AddList();
 		}
 
 		public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
@@ -80,7 +105,77 @@ namespace BattleCruisers.Data.Models
             Assert.IsTrue(removedSuccessfully);
         }
 
-		public override bool Equals(object obj)
+		//functions to handle the lists for the buildables
+		public void AddbuildItem(ItemType category, BuildingKey keyToAdd)
+		{
+			List<BuildingKey> builds = _builds[category];
+			builds.Add(keyToAdd);
+			_builds[category] = builds;
+		}
+
+        public void AddUnitItem(ItemType category, UnitKey keyToAdd)
+        {
+            List<UnitKey> unitList = _unit[category];
+            unitList.Add(keyToAdd);
+            _unit[category] = unitList;
+        }
+
+		public void RemoveBuildItem(ItemType category, BuildingKey keyToRemove)
+		{
+            List<BuildingKey> builds = _builds[category];
+            bool removedSuccessfully = builds.Remove(keyToRemove);
+            Assert.IsTrue(removedSuccessfully);
+            _builds[category] = builds;
+        }
+
+        public void RemoveUnitItem(ItemType category, UnitKey keyToRemove)
+        {
+            List<UnitKey> unitList = _unit[category];
+            bool removedSuccessfully = unitList.Remove(keyToRemove);
+            Assert.IsTrue(removedSuccessfully);
+            _unit[category] = unitList;
+        }
+
+		public List<BuildingKey> GetBuildingKeys(ItemType buildingCategory)
+		{
+            List<BuildingKey> builds = _builds[buildingCategory].ToList();
+			Assert.IsNotNull(builds);
+			return builds;
+        }
+
+        public List<UnitKey> GetUnitKeys(ItemType unitCategory)
+        {
+            List<UnitKey> unitList = _unit[unitCategory];
+            return unitList;
+        }
+
+		public int GetBuildingListSize(ItemType category)
+		{
+            List<BuildingKey> builds = _builds[category];
+            return builds.Count;
+		}
+
+        public int GetUnitListSize(ItemType category)
+		{
+            List<UnitKey> unitList = _unit[category];
+			return unitList.Count;
+        }
+
+		public void AddList()
+		{
+			List<BuildingKey> buildlist = new List<BuildingKey>();
+			_builds.Add(ItemType.Factory, buildlist);
+            _builds.Add(ItemType.Defense, buildlist);
+            _builds.Add(ItemType.Offensive, buildlist);
+            _builds.Add(ItemType.Tactical, buildlist);
+            _builds.Add(ItemType.Ultra, buildlist);
+
+			List<UnitKey> unitKeys = new List<UnitKey>();
+			_unit.Add(ItemType.Ship, unitKeys);
+			_unit.Add(ItemType.Aircraft, unitKeys);	
+        }
+
+        public override bool Equals(object obj)
 		{
 			Loadout other = obj as Loadout;
 

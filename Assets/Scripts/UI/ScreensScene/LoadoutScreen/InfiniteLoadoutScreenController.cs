@@ -27,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CategoryButtonsPanel categoryButtonsPanel;
         public CompareButton compareButton;
         public SelectCruiserButton selectCruiserButton;
+        public SelectButtonContoller selectButtonContoller;
         public CancelButtonController homeButton;
 
         public void Initialise(
@@ -75,6 +76,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     comparisonStateTracker,
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
                     _dataProvider);
+
+            selectButtonContoller.Initialise(soundPlayer, dataProvider);
 
             IList<IItemButton> itemButtons
                 = itemPanels.Initialise(

@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IDictionary<ItemType, IItemsPanel> _typeToPanel;
 
         private IItemsPanel _currentlyShownPanel;
-        private IItemsPanel CurrentlyShownPanel
+        public IItemsPanel CurrentlyShownPanel
         {
             get { return _currentlyShownPanel; }
             set
