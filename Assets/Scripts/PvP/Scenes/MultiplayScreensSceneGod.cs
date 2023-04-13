@@ -2,6 +2,8 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using NSubstitute;
 using BattleCruisers.Utils;
@@ -23,6 +25,8 @@ using UnityEngine.Assertions;
 using VContainer;
 using BattleCruisers.Network.Multiplay.UnityServices.Auth;
 using Unity.Services.Core;
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
 using BattleCruisers.Network.Multiplay.Utils;
 using Unity.Services.Authentication;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
@@ -55,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         //// ------------------------------------  Local Test  -------------------------------------  //////
         public bool m_LocalLaunchMode = true;
-        private string m_localTestName;
+        private string k_DefaultLobbyName;
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // screens
@@ -82,10 +86,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         [Inject] AuthenticationServiceFacade m_AuthServiceFacade;
         [Inject] LocalLobbyUser m_LocalUser;
         [Inject] LocalLobby m_LocalLobby;
+        [Inject] LobbyServiceFacade m_LobbyServiceFacade;
         [Inject] ProfileManager m_ProfileManager;
 
         [Inject] ConnectionManager m_ConnectionManager;
-
+        [Inject] AuthenticationServiceFacade m_AuthenticationServiceFacade;
         ISubscriber<ConnectStatus> m_ConnectStatusSubscriber;
 
         [Inject]
@@ -126,12 +131,59 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 portNum = k_DefaultPort;
             }
             ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-            m_ConnectionManager.StartClientIp(m_localTestName, ip, portNum);
+            m_ConnectionManager.StartClientIp(k_DefaultLobbyName, ip, portNum);
         }
 
         private void JoinWithLobby()
         {
-            m_ConnectionManager.StartClientLobby(m_localTestName);
+
+#pragma warning disable 4014
+            JoinWithLobbyRequest();
+#pragma warning restore 4014
+        }
+
+
+        private async Task JoinWithLobbyRequest()
+        {
+            bool playerIsAuthorized = await m_AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
+            if (!playerIsAuthorized)
+            {
+                return;
+            }
+
+
+            List<QueryFilter> m_Filters = new List<QueryFilter>()
+            {
+                new QueryFilter(
+                    field: QueryFilter.FieldOptions.S1,
+                    op: QueryFilter.OpOptions.EQ,
+                    value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName
+                )
+            };
+            var lobbyQuickJoinAttemp = await m_LobbyServiceFacade.TryQuickJoinLobbyAsync(m_Filters);
+            if (lobbyQuickJoinAttemp.Success)
+            {
+                m_LobbyServiceFacade.SetRemoteLobby(lobbyQuickJoinAttemp.Lobby);
+                if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                {
+                    m_LobbyServiceFacade.BeginTracking();
+                }
+                await m_ConnectionManager.StartMatchmaking();
+            }
+            else
+            {
+                var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(k_DefaultLobbyName, m_ConnectionManager.MaxConnectedPlayers, isPrivate: false);
+                if (lobbyCreationAttemp.Success)
+                {
+                    m_LocalUser.IsHost = true;
+                    m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
+                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                    {
+                        m_LobbyServiceFacade.BeginTracking();
+                    }
+                }
+            }
+
         }
 
         IEnumerator iStartPvP()
@@ -294,7 +346,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
 
             // cheat code for local test
-            m_localTestName = m_NameGenerationData.GenerateName();
+            k_DefaultLobbyName = m_NameGenerationData.GenerateName();
         }
 
 

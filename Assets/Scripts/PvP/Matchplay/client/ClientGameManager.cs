@@ -125,6 +125,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             return matchmakingResult.result;
         }
 
+        public async Task<MatchmakingResult> GetMatchAsyncInLobby()
+        {
+            Debug.Log($"Beginning Matchmaking with {User}");
+            var matchmakingResult = await Matchmaker.Matchmake(User.Data);
+            return matchmakingResult;
+        }
+
 
 
         public void Dispose()

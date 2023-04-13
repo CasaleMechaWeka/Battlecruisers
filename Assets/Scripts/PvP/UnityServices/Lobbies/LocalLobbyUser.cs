@@ -125,6 +125,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             new Dictionary<string, PlayerDataObject>()
             {
                 {"DisplayName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, DisplayName)},
+                // I need to add here some fields for rank, score etc...
             };
 
 

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Netcode;
 using VContainer;
 using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.Client;
+using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -73,7 +75,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         IObjectResolver m_Resolver;
 
-        public int MaxConnectedPlayers = 8;
+        [Inject]
+        LobbyServiceFacade m_LobbyServiceFacade;
+        [Inject]
+        LocalLobby m_LocalLobby;
+
+        public int MaxConnectedPlayers = 2;
+        // public bool IsMatchmaking = false;
 
         internal readonly OfflineState m_Offline = new OfflineState();
         internal readonly ClientConnectingState m_ClientConnecting = new ClientConnectingState();
@@ -113,15 +121,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 m_Resolver.Inject(connectionState);
             }
-
             m_CurrentState = m_Offline;
-
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
             NetworkManager.OnServerStarted += OnServerStarted;
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
-
             m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
         }
 
@@ -192,6 +197,24 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_CurrentState.StartHostIP(playerName, ipaddress, port);
         }
 
+
+        public async Task StartMatchmaking()
+        {
+            if (Manager.Matchmaker.IsMatchmaking)
+            {
+                return;
+            }
+            if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                Manager.User.Data.lobbyId = m_LocalLobby.LobbyID;
+            var matchmakingResult = await Manager.GetMatchAsyncInLobby();
+            if (matchmakingResult.result == MatchmakerPollingResult.Success)
+                StartClientIp(Manager.User.Data.userName, matchmakingResult.ip, matchmakingResult.port);
+        }
+
+        public async Task CancelMatchmaking()
+        {
+            await Manager.CancelMatchmaking();
+        }
         public void RequestShutdown()
         {
             m_CurrentState.OnUserRequestedShutdown();

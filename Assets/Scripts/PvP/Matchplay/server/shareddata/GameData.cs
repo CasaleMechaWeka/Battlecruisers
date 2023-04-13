@@ -40,7 +40,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public MatchplayUser()
         {
             var tmepId = Guid.NewGuid().ToString();
-            Data = new UserData(NameGenerator.GetName(tmepId), tmepId, 0, new GameInfo());
+            var tempLobbyId = Guid.NewGuid().ToString();
+            Data = new UserData(NameGenerator.GetName(tmepId), tmepId, 0, new GameInfo(), tempLobbyId);
         }
 
         public UserData Data { get; }
@@ -84,6 +85,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             set => Data.userGamePreferences.gameQueue = value;
         }
 
+        public string LobbyID
+        {
+            get => Data.lobbyId;
+            set => Data.lobbyId = value;
+        }
+
         public override string ToString()
         {
             var userData = new StringBuilder("MatchplayerUser: ");
@@ -99,13 +106,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public string userName;
         public string userAuthId;
         public ulong networkId;
+        public string lobbyId;
         public GameInfo userGamePreferences;
-        public UserData(string userName, string userAuthId, ulong networkId, GameInfo userGamePreferences)
+        public UserData(string userName, string userAuthId, ulong networkId, GameInfo userGamePreferences, string lobbyId)
         {
             this.userName = userName;
             this.userAuthId = userAuthId;
             this.networkId = networkId;
             this.userGamePreferences = userGamePreferences;
+            this.lobbyId = lobbyId;
         }
 
 

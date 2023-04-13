@@ -88,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
         }
 
-        public Task EndTracking()
+        public async Task EndTracking()
         {
             var task = Task.CompletedTask;
             if (CurrentUnityLobby != null)
@@ -121,7 +121,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 m_JoinedLobbyContentHeartbeat.EndTracking();
             }
 
-            return task;
+            // m_ConnectionManager.IsMatchmaking = false;
+            await m_ConnectionManager.CancelMatchmaking();
+            return;
         }
 
         async void UpdateLobby(float unused)
@@ -151,6 +153,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
                     await EndTracking();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
+                }
+                else
+                {
+                    if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
+                    {
+                        await m_ConnectionManager.StartMatchmaking();
+                    }
                 }
             }
             catch (LobbyServiceException e)

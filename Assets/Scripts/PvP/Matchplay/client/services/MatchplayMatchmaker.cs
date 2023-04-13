@@ -146,7 +146,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         {
             var attributes = new Dictionary<string, object>
             {
-
+                {"lobbyId", data.lobbyId}
             };
             var queueName = data.userGamePreferences.ToMultiplayQueue();
             return new CreateTicketOptions(queueName, attributes);

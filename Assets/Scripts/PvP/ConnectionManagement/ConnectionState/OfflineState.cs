@@ -43,22 +43,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
         }
 
-        public override async Task StartClientLobby(string playerName)
+        public override void StartClientLobby(string playerName)
         {
-            m_LocalLobbyUser.DisplayName = playerName;
             var connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
-            (bool success, Lobby lobby) = await connectionMethod.TryQuickJoinConnectionAsync();
-            if (success)
-            {
-                m_LocalLobby.ApplyRemoteData(lobby);
-                m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
-                m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
-            }
-            else
-            {
-
-            }
-
+            m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
+            m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
         }
 
         public override void StartHostIP(string playerName, string ipaddress, int port)
