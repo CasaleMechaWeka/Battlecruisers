@@ -88,8 +88,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         ISubscriber<ConnectStatus> m_ConnectStatusSubscriber;
 
-
-
         [Inject]
         void InjectDependencies(ISubscriber<ConnectStatus> connectStatusSubscriber)
         {
@@ -133,7 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private void JoinWithLobby()
         {
-
+            m_ConnectionManager.StartClientLobby(m_localTestName);
         }
 
         IEnumerator iStartPvP()

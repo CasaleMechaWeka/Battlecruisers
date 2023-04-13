@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
+// using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 
 
@@ -125,6 +126,12 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 {"DisplayName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, DisplayName)},
             };
+
+
+        // public Dictionary<string, PlayerDataObject> GetDataForUnityServices(GameInfo gameInfo) => new Dictionary<string, PlayerDataObject>()
+        // {
+        //     {"DisplayName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, DisplayName),}
+        // };
     }
 }
 

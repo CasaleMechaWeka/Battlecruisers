@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
@@ -137,6 +139,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             { k_MultiplayCompetetiveQueue, GameQueue.Competitive }
         };
 
+
+        public Dictionary<string, DataObject> GetDataForUnityServices() =>
+            new Dictionary<string, DataObject>()
+            {
+                        {
+                            "Map", new DataObject(
+                            visibility: DataObject.VisibilityOptions.Public,
+                            value: ToSceneName,
+                            index: DataObject.IndexOptions.S1)
+                        },
+            };
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -150,8 +164,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             switch (map)
             {
+                case Map.PracticeWreckyards:
+                    return "PracticeWreckyards";
+                case Map.OzPenitentiary:
+                    return "OzPenitentiary";
+                case Map.SanFranciscoFightClub:
+                    return "SanFranciscoFightClub";
+                case Map.UACBattleNight:
+                    return "UACBattleNight";
+                case Map.UACArena:
+                    return "UACArena";
+                case Map.RioBattlesport:
+                    return "RioBattlesport";
+                case Map.UACUltimate:
+                    return "UACUltimate";
+                case Map.MercenaryOne:
+                    return "MercenaryOne";
                 default:
-                    return "MultiplayBattleScene";
+                    return "Non exist";
             }
         }
         public string ToMultiplayQueue()

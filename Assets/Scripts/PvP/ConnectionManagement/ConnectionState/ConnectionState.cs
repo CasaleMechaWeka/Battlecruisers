@@ -1,13 +1,15 @@
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
+using Unity.Services.Lobbies.Models;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
-    abstract class ConnectionState 
+    abstract class ConnectionState
     {
         [Inject]
         protected ConnectionManager m_ConnectionManager;
@@ -23,15 +25,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public virtual void OnServerStarted() { }
         public virtual void StartClientIP(string playerName, string ipaddress, int port) { }
-        public virtual void StartClientLobby(string playerName) { }
+        public virtual async Task StartClientLobby(string playerName) { }
         public virtual void StartHostIP(string playerName, string ipaddress, int port) { }
         public virtual void StartHostLobby(string playerName) { }
         public virtual void OnUserRequestedShutdown() { }
         public virtual void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response) { }
         public virtual void OnTransportFailure() { }
 
-     
-        
+
+
     }
 }
 

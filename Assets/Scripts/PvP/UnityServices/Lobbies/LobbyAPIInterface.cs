@@ -65,11 +65,11 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             return await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId, joinOptions);
         }
 
-        public async Task<Lobby> QuickJoinLobby(string requesterUasId, Dictionary<string, PlayerDataObject> localUserData)
+        public async Task<Lobby> QuickJoinLobby(string requesterUasId, Dictionary<string, PlayerDataObject> localUserData, List<QueryFilter> mFilters)
         {
             var joinRequest = new QuickJoinLobbyOptions
             {
-                Filter = m_Filters,
+                Filter = mFilters,
                 Player = new Player(id: requesterUasId, data: localUserData)
             };
 

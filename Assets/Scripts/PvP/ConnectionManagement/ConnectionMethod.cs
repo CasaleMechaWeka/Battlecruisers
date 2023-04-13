@@ -1,14 +1,19 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Utils;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -26,12 +31,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public abstract Task SetupClientConnectionAsync();
 
+
         public ConnectionMethodBase(ConnectionManager connectionManager, ProfileManager profileManager, string playerName)
         {
             m_ConnectionManager = connectionManager;
             m_ProfileManager = profileManager;
             m_PlayerName = playerName;
         }
+
+
 
         protected void SetConnectionPayload(string playerId, string playerName)
         {
@@ -100,18 +108,42 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     /// <summary>
     /// UTP's Relay connection setup
     /// </summary>
-    class ConnectionMethodRelay : ConnectionMethodBase
+    class ConnectionMethodLobby : ConnectionMethodBase
     {
         LobbyServiceFacade m_LobbyServiceFacade;
         LocalLobby m_LocalLobby;
 
-        public ConnectionMethodRelay(LobbyServiceFacade lobbyServiceFacade, LocalLobby localLobby, ConnectionManager connectionManager, ProfileManager profileManager, string playerName)
+        public ConnectionMethodLobby(LobbyServiceFacade lobbyServiceFacade, LocalLobby localLobby, ConnectionManager connectionManager, ProfileManager profileManager, string playerName)
             : base(connectionManager, profileManager, playerName)
         {
             m_LobbyServiceFacade = lobbyServiceFacade;
             m_LocalLobby = localLobby;
             m_ConnectionManager = connectionManager;
         }
+
+        public async Task<(bool, Lobby)> TryQuickJoinConnectionAsync()
+        {
+            List<QueryFilter> m_filters = new List<QueryFilter>
+            {
+                new QueryFilter(
+                    field: QueryFilter.FieldOptions.S1,
+                    op:QueryFilter.OpOptions.EQ,
+                    value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName
+                ),
+            };
+
+            (bool success, Lobby lobby) = await m_LobbyServiceFacade.TryQuickJoinLobbyAsync(m_filters);
+            return (success, lobby);
+        }
+
+        public async Task<(bool, Lobby)> TryCreateLobbyAsync()
+        {
+            string lobbyName = NameGenerator.GetName(Guid.NewGuid().ToString());
+            (bool success, Lobby lobby) = await m_LobbyServiceFacade.TryCreateLobbyAsync(lobbyName, 2, isPrivate: false);
+            return (success, lobby);
+        }
+
+
 
         public override async Task SetupClientConnectionAsync()
         {

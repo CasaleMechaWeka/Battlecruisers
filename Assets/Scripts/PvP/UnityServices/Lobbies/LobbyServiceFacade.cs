@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -21,6 +22,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         [Inject] LocalLobby m_LocalLobby;
         [Inject] LocalLobbyUser m_LocalUser;
+        [Inject] ConnectionManager m_ConnectionManager;
         [Inject] IPublisher<UnityServiceErrorMessage> m_UnityServiceErrorMessagePub;
         [Inject] IPublisher<LobbyListFetchedMessage> m_LobbyListFetchedPub;
 
@@ -177,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, m_LocalUser.GetDataForUnityServices(), null);
+                var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, m_LocalUser.GetDataForUnityServices(), m_ConnectionManager.Manager.User.Data.userGamePreferences.GetDataForUnityServices());
                 return (true, lobby);
             }
             catch (LobbyServiceException e)
@@ -238,17 +240,17 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         /// <summary>
         /// Attempt to join the first lobby among the available lobbies that match the filtered onlineMode.
         /// </summary>
-        public async Task<(bool Success, Lobby Lobby)> TryQuickJoinLobbyAsync()
+        public async Task<(bool Success, Lobby Lobby)> TryQuickJoinLobbyAsync(List<QueryFilter> m_Filters)
         {
             if (!m_RateLimitQuickJoin.CanCall)
             {
                 Debug.LogWarning("Quick Join Lobby hit the rate limit.");
                 return (false, null);
             }
-
             try
             {
-                var lobby = await m_LobbyApiInterface.QuickJoinLobby(AuthenticationService.Instance.PlayerId, m_LocalUser.GetDataForUnityServices());
+                var lobby = await m_LobbyApiInterface.QuickJoinLobby(AuthenticationService.Instance.PlayerId, m_LocalUser.GetDataForUnityServices(), m_Filters);
+
                 return (true, lobby);
             }
             catch (LobbyServiceException e)

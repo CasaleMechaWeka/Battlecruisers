@@ -1,9 +1,14 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Utils;
 using Unity.Multiplayer.Samples.Utilities;
 using VContainer;
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -15,7 +20,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         ProfileManager m_ProfileManager;
         [Inject]
         LocalLobby m_LocalLobby;
-
+        [Inject]
+        LocalLobbyUser m_LocalLobbyUser;
         const string k_MainMenuSceneName = "MainMenu";
 
         public override void Enter()
@@ -37,11 +43,22 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
         }
 
-        public override void StartClientLobby(string playerName)
+        public override async Task StartClientLobby(string playerName)
         {
-            var connectionMethod = new ConnectionMethodRelay(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
-            m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
-            m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
+            m_LocalLobbyUser.DisplayName = playerName;
+            var connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
+            (bool success, Lobby lobby) = await connectionMethod.TryQuickJoinConnectionAsync();
+            if (success)
+            {
+                m_LocalLobby.ApplyRemoteData(lobby);
+                m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
+                m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
+            }
+            else
+            {
+
+            }
+
         }
 
         public override void StartHostIP(string playerName, string ipaddress, int port)
@@ -52,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void StartHostLobby(string playerName)
         {
-            var connectionMethod = new ConnectionMethodRelay(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
+            var connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingHost.Configure(connectionMethod));
         }
     }
