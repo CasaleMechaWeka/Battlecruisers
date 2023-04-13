@@ -42,6 +42,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
             Data = new UserData(NameGenerator.GetName(tmepId), tmepId, 0, new GameInfo(), tempLobbyId);
+
+
+            //cheat code
+            Data.userGamePreferences.gameQueue = GameQueue.Casual;
         }
 
         public UserData Data { get; }

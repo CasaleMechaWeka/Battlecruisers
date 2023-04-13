@@ -167,8 +167,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                 {
                     m_LobbyServiceFacade.BeginTracking();
+                    await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
                 }
-                await m_ConnectionManager.StartMatchmaking();
+
             }
             else
             {

@@ -158,7 +158,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
                     {
-                        await m_ConnectionManager.StartMatchmaking();
+                        await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
                     }
                 }
             }

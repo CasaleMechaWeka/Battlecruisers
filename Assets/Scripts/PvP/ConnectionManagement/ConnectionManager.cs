@@ -75,8 +75,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         IObjectResolver m_Resolver;
 
-        [Inject]
-        LobbyServiceFacade m_LobbyServiceFacade;
+        // [Inject]
+        // LobbyServiceFacade m_LobbyServiceFacade;
         [Inject]
         LocalLobby m_LocalLobby;
 
@@ -198,14 +198,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
 
-        public async Task StartMatchmaking()
+        public async Task StartMatchmaking(string lobbyId)
         {
             if (Manager.Matchmaker.IsMatchmaking)
             {
                 return;
             }
-            if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-                Manager.User.Data.lobbyId = m_LocalLobby.LobbyID;
+            Manager.User.Data.lobbyId = lobbyId;
             var matchmakingResult = await Manager.GetMatchAsyncInLobby();
             if (matchmakingResult.result == MatchmakerPollingResult.Success)
                 StartClientIp(Manager.User.Data.userName, matchmakingResult.ip, matchmakingResult.port);
