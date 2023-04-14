@@ -28,6 +28,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_LobbyServiceFacade.EndTracking();
             m_ConnectionManager.NetworkManager.Shutdown();
+            m_ConnectionManager.IsConnecting = false;
             if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)
             {
                 SceneLoaderWrapper.Instance.LoadScene(k_MainMenuSceneName, useNetworkSceneManager: false);

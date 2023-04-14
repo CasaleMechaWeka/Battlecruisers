@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         public ClientGameManager(string profileName = "default")
         {
             User = new MatchplayUser();
-            Debug.Log($"Beginning with new Profile:{profileName}");
+            // Debug.Log($"Beginning with new Profile:{profileName}");
             ProfileName = profileName;
 
 
@@ -34,17 +34,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 #pragma warning restore 4014
         }
 
+
         async Task InitAsync()
         {
-            var unityAuthenticationInitOptions = new InitializationOptions();
-            unityAuthenticationInitOptions.SetProfile($"{ProfileName} {LocalProfileTool.LocalProfileSuffix}");
-            await Unity.Services.Core.UnityServices.InitializeAsync(unityAuthenticationInitOptions);
+            // var unityAuthenticationInitOptions = new InitializationOptions();
+            // unityAuthenticationInitOptions.SetProfile($"{ProfileName} {LocalProfileTool.LocalProfileSuffix}");
+            // await Unity.Services.Core.UnityServices.InitializeAsync(unityAuthenticationInitOptions);
 
             NetworkClient = new MatchplayNetworkClient();
             Matchmaker = new MatchplayMatchmaker();
-            var authenticationResult = await AuthenticationWrapper.DoAuth();
 
-            if (authenticationResult == AuthState.Authenticated)
+            // var authenticationResult = await AuthenticationWrapper.DoAuth();
+
+            if (AuthenticationService.Instance.IsAuthorized)
             {
                 User.AuthId = AuthenticationWrapper.PlayerID();
             }
@@ -52,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             {
                 User.AuthId = Guid.NewGuid().ToString();
             }
-            Debug.Log($"did Auth? {authenticationResult} {User.AuthId}");
+            // Debug.Log($"did Auth? {authenticationResult} {User.AuthId}");
             Initialized = true;
         }
 

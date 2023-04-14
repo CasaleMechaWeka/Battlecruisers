@@ -45,6 +45,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         bool m_IsTracking = false;
 
+        public Action OnMatchMakingFailed;
+
         public void Start()
         {
             m_ServiceScope = m_ParentScope.CreateChild(builder =>
@@ -138,9 +140,21 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 var lobby = await m_LobbyApiInterface.GetLobby(m_LocalLobby.LobbyID);
+                if (lobby == null)
+                {
+                    await EndTracking();
+                    OnMatchMakingFailed();
+                    return;
+                }
 
                 CurrentUnityLobby = lobby;
                 m_LocalLobby.ApplyRemoteData(lobby);
+
+                if (m_LocalLobby.MatchIP != null && m_LocalLobby.MatchPort != null)
+                {
+                    m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);
+                    // return;
+                }
 
                 // as client, check if host is still in lobby
                 if (!m_LocalUser.IsHost)
@@ -154,14 +168,26 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     }
                     m_UnityServiceErrorMessagePub.Publish(new UnityServiceErrorMessage("Host left the lobby", "Disconnecting.", UnityServiceErrorMessage.Service.Lobby));
                     await EndTracking();
+                    OnMatchMakingFailed();
                     // no need to disconnect Netcode, it should already be handled by Netcode's callback to disconnect
                 }
                 else
                 {
-                    Debug.Log("Called me now");
                     if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
                     {
-                        await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
+                        var matchResult = await m_ConnectionManager.GetMatchmaking(m_LocalLobby.LobbyID);
+                        if (matchResult.result == GetMatchmakingResult.Success)
+                        {
+                            m_LocalLobby.MatchIP = matchResult.IP;
+                            m_LocalLobby.MatchPort = matchResult.Port;
+                        }
+                        else if (matchResult.result == GetMatchmakingResult.Failed)
+                        {
+                            Debug.Log("Matchmaking Failed");
+                            await EndTracking();
+                            OnMatchMakingFailed();
+                        }
+
                     }
                 }
             }
@@ -192,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, hostUserData, lobbyData);
-                Debug.Log("Lobby Locked?" + lobby.IsLocked);
+
                 return (true, lobby);
             }
             catch (LobbyServiceException e)
@@ -503,11 +529,11 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
 
             //we would want to lock lobbies from appearing in queries if we're in relay mode and the relay isn't fully set up yet
-            var shouldLock = string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode);
+            // var shouldLock = string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode);
 
             try
             {
-                var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock);
+                var result = await m_LobbyApiInterface.UpdateLobby(CurrentUnityLobby.Id, dataCurr, shouldLock: false);
 
                 if (result != null)
                 {

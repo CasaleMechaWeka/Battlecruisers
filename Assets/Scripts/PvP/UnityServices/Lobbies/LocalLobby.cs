@@ -45,6 +45,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             public string LobbyName { get; set; }
             public bool Private { get; set; }
             public int MaxPlayerCount { get; set; }
+            public string MatchIP { get; set; }
+            public string MatchPort { get; set; }
 
             public LobbyData(LobbyData existing)
             {
@@ -54,6 +56,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 LobbyName = existing.LobbyName;
                 Private = existing.Private;
                 MaxPlayerCount = existing.MaxPlayerCount;
+                MatchIP = existing.MatchIP;
+                MatchPort = existing.MatchPort;
             }
 
             public LobbyData(string lobbyCode)
@@ -64,6 +68,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 LobbyName = null;
                 Private = false;
                 MaxPlayerCount = -1;
+                MatchIP = null;
+                MatchPort = null;
             }
         }
 
@@ -113,6 +119,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             changed?.Invoke(this);
         }
 
+
+
         public string LobbyID
         {
             get => m_Data.LobbyID;
@@ -152,6 +160,28 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 OnChanged();
             }
         }
+
+
+        public string MatchIP
+        {
+            get => m_Data.MatchIP;
+            set
+            {
+                m_Data.MatchIP = value;
+                OnChanged();
+            }
+        }
+
+        public string MatchPort
+        {
+            get => m_Data.MatchPort;
+            set
+            {
+                m_Data.MatchPort = value;
+                OnChanged();
+            }
+        }
+
 
         public bool Private
         {
@@ -218,7 +248,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         public Dictionary<string, DataObject> GetDataForUnityServices() =>
             new Dictionary<string, DataObject>()
             {
-                {"RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Public,  RelayJoinCode)}
+                // {"RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Public,  RelayJoinCode)},
+                {"MatchIP", new DataObject(DataObject.VisibilityOptions.Member, MatchIP)},
+                {"MatchPort", new DataObject(DataObject.VisibilityOptions.Member, MatchPort)}
             };
 
         public void ApplyRemoteData(Lobby lobby)
@@ -232,11 +264,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             if (lobby.Data != null)
             {
-                info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null; // By providing RelayCode through the lobby data with Member visibility, we ensure a client is connected to the lobby before they could attempt a relay connection, preventing timing issues between them.
+                // info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null; // By providing RelayCode through the lobby data with Member visibility, we ensure a client is connected to the lobby before they could attempt a relay connection, preventing timing issues between them.
+                info.MatchIP = lobby.Data.ContainsKey("MatchIP") ? lobby.Data["MatchIP"].Value : null;
+                info.MatchPort = lobby.Data.ContainsKey("MatchPort") ? lobby.Data["MatchPort"].Value : null;
             }
             else
             {
-                info.RelayJoinCode = null;
+                // info.RelayJoinCode = null;
+                info.MatchIP = null;
+                info.MatchPort = null;
             }
 
             var lobbyUsers = new Dictionary<string, LocalLobbyUser>();

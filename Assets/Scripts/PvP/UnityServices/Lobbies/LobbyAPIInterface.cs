@@ -107,7 +107,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         public async Task<Lobby> GetLobby(string lobbyId)
         {
-            return await LobbyService.Instance.GetLobbyAsync(lobbyId);
+            try
+            {
+                return await LobbyService.Instance.GetLobbyAsync(lobbyId);
+            }
+            catch (LobbyServiceException)
+            {
+                return null;
+            }
+
         }
 
         public async Task<Lobby> UpdateLobby(string lobbyId, Dictionary<string, DataObject> data, bool shouldLock)

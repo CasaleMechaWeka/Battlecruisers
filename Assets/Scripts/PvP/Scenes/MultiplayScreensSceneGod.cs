@@ -34,6 +34,7 @@ using Unity.Services.Authentication;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using Unity.Multiplayer.Samples.Utilities;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
@@ -146,6 +147,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 #pragma warning restore 4014
         }
 
+        private void onMatchmakingFailed()
+        {
+            GoToScreen(multiplayScreen);
+        }
 
         private async Task JoinWithLobbyRequest()
         {
@@ -207,12 +212,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                     {
+                        Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                         m_LobbyServiceFacade.BeginTracking();
-                        await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
+                        // await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
                     }
-                    Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                 }
-
             }
             else
             {
@@ -232,9 +236,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                     {
+                        Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
                         m_LobbyServiceFacade.BeginTracking();
                     }
-                    Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+
 
                 }
 
@@ -280,6 +285,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             else
             {
                 // should be tested, still not confirmed.
+                m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
                 JoinWithLobby();
             }
         }
@@ -310,12 +316,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 var unityAuthenticationInitOptions = new InitializationOptions();
                 var profile = m_ProfileManager.Profile;
-                Debug.Log("Profile =" + profile.ToString());
+
                 if (profile.Length > 0)
                 {
                     try
                     {
-                        unityAuthenticationInitOptions.SetProfile(profile);
+                        unityAuthenticationInitOptions.SetProfile($"{profile} {LocalProfileTool.LocalProfileSuffix}");
                     }
                     catch (Exception e)
                     {
@@ -325,6 +331,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 await m_AuthServiceFacade.InitializeAndSignInAsync(unityAuthenticationInitOptions);
                 OnAuthSignIn();
                 m_ProfileManager.onProfileChanged += OnProfileChanged;
+                m_ConnectionManager.Manager = new Matchplay.Client.ClientGameManager();
             }
             catch (Exception ex)
             {
@@ -351,6 +358,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         void OnDestroy()
         {
             m_ProfileManager.onProfileChanged -= OnProfileChanged;
+            m_LobbyServiceFacade.OnMatchMakingFailed -= onMatchmakingFailed;
         }
 
         async void OnProfileChanged()
@@ -434,7 +442,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
 
-            Debug.Log("m_localLobbyUser Name" + m_LocalUser.DisplayName);
+            // Debug.Log("m_localLobbyUser Name" + m_LocalUser.DisplayName);
         }
 
 

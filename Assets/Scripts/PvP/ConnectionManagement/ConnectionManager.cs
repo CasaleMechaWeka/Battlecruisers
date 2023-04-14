@@ -26,6 +26,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         StartClientFailed         // failed to connect to server and/or invalid network endpoint
     }
 
+    public enum GetMatchmakingResult
+    {
+        Undefined,
+        Success,
+        Failed,
+        Matchmaking,
+    }
+
     public struct ReconnectMessage
     {
         public int CurrentAttempt;
@@ -80,11 +88,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         LocalLobby m_LocalLobby;
 
-        public int MaxConnectedPlayers = 8;
+        public int MaxConnectedPlayers = 2;
 
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;
-        // public bool IsMatchmaking = false;
+        public bool IsConnecting = false;
 
         internal readonly OfflineState m_Offline = new OfflineState();
         internal readonly ClientConnectingState m_ClientConnecting = new ClientConnectingState();
@@ -102,6 +110,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 if (m_GameManager != null) return m_GameManager;
                 Debug.LogError($"CilentGameManger is missing, did you run StartClient()?");
                 return null;
+            }
+            set
+            {
+                m_GameManager = value;
             }
         }
 
@@ -130,7 +142,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             NetworkManager.OnServerStarted += OnServerStarted;
             NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
-            m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
+            // m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
+
         }
 
         void OnDestroy()
@@ -201,18 +214,36 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
 
-        public async Task StartMatchmaking(string lobbyId)
+        public async Task<(string IP, string Port, GetMatchmakingResult result)> GetMatchmaking(string lobbyId)
         {
             if (Manager.Matchmaker.IsMatchmaking)
             {
-                return;
+                return (null, null, GetMatchmakingResult.Matchmaking);
             }
             Manager.User.Data.lobbyId = lobbyId;
             var matchmakingResult = await Manager.GetMatchAsyncInLobby();
             if (matchmakingResult.result == MatchmakerPollingResult.Success)
-                StartClientIp(Manager.User.Data.userName, matchmakingResult.ip, matchmakingResult.port);
+            {
+                //StartClientIp(Manager.User.Data.userName, matchmakingResult.ip, matchmakingResult.port);
+                return (matchmakingResult.ip, matchmakingResult.port.ToString(), GetMatchmakingResult.Success);
+            }
             else
-                StartClientIp(Manager.User.Data.userName, k_DefaultIP, k_DefaultPort);
+            {
+
+                return (null, null, GetMatchmakingResult.Failed);
+            }
+        }
+
+
+        public void StartMatch(string IP, string Port)
+        {
+            if (IsConnecting)
+                return;
+            if (int.TryParse(Port, out int port))
+            {
+                StartClientIp(Manager.User.Data.userName, IP, port);
+                IsConnecting = true;
+            }
         }
 
         public async Task CancelMatchmaking()

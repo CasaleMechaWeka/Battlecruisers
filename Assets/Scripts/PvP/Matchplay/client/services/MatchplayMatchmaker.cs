@@ -41,43 +41,55 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         {
             m_CancelToken = new CancellationTokenSource();
             var createTicketOptions = UserDataToTicketRuleOptions(data);
+
             var players = new List<Player> { new Player(data.userAuthId, data.userGamePreferences) };
             try
             {
                 m_IsMatchmaking = true;
-                var createResult = await MatchmakerService.Instance.CreateTicketAsync(players, createTicketOptions);
-
-                m_LastUsedTicket = createResult.Id;
                 try
                 {
-                    while (!m_CancelToken.IsCancellationRequested)
+                    var createResult = await MatchmakerService.Instance.CreateTicketAsync(players, createTicketOptions);
+
+                    m_LastUsedTicket = createResult.Id;
+                    try
                     {
-                        var checkTicket = await MatchmakerService.Instance.GetTicketAsync(m_LastUsedTicket);
-                        if (checkTicket.Type == typeof(MultiplayAssignment))
+                        while (!m_CancelToken.IsCancellationRequested)
                         {
-                            var matchAssignment = (MultiplayAssignment)checkTicket.Value;
-                            if (matchAssignment.Status == MultiplayAssignment.StatusOptions.Found)
+                            var checkTicket = await MatchmakerService.Instance.GetTicketAsync(m_LastUsedTicket);
+
+                            if (checkTicket.Type == typeof(MultiplayAssignment))
                             {
-                                return ReturnMatchResult(MatchmakerPollingResult.Success, "", matchAssignment);
+                                var matchAssignment = (MultiplayAssignment)checkTicket.Value;
+                                if (matchAssignment.Status == MultiplayAssignment.StatusOptions.Found)
+                                {
+                                    return ReturnMatchResult(MatchmakerPollingResult.Success, "", matchAssignment);
+                                }
+
+                                if (matchAssignment.Status == MultiplayAssignment.StatusOptions.Timeout ||
+                                   matchAssignment.Status == MultiplayAssignment.StatusOptions.Failed)
+                                {
+                                    return ReturnMatchResult(MatchmakerPollingResult.MatchAssignmentError,
+                                        $"Ticket: {m_LastUsedTicket} - {matchAssignment.Status} - {matchAssignment.Message}");
+                                }
+
+                                Debug.Log($"Polled Ticket: {m_LastUsedTicket} Status: {matchAssignment.Status} ");
                             }
 
-                            if (matchAssignment.Status == MultiplayAssignment.StatusOptions.Timeout ||
-                               matchAssignment.Status == MultiplayAssignment.StatusOptions.Failed)
-                            {
-                                return ReturnMatchResult(MatchmakerPollingResult.MatchAssignmentError,
-                                    $"Ticket: {m_LastUsedTicket} - {matchAssignment.Status} - {matchAssignment.Message}");
-                            }
-
-                            Debug.Log($"Polled Ticket: {m_LastUsedTicket} Status: {matchAssignment.Status} ");
+                            await Task.Delay(k_GetTicketCooldown);
                         }
-
-                        await Task.Delay(k_GetTicketCooldown);
+                    }
+                    catch (MatchmakerServiceException e)
+                    {
+                        return ReturnMatchResult(MatchmakerPollingResult.TicketRetrievalError, e.ToString());
                     }
                 }
-                catch (MatchmakerServiceException e)
+                catch (Exception e)
                 {
+                    Debug.Log(e);
                     return ReturnMatchResult(MatchmakerPollingResult.TicketRetrievalError, e.ToString());
                 }
+
+
             }
 
             catch (MatchmakerServiceException e)
