@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(Key);
             UnitButtonV2 unitButton = GetComponentInChildren<UnitButtonV2>(includeInactive: true);
             Assert.IsNotNull(unitButton);
-            unitButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, unitPrefab, unitKeyName);
+            unitButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, unitPrefab);
             return unitButton;
         }
 

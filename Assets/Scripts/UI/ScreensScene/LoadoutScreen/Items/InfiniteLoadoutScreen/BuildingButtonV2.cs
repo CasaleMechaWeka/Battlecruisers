@@ -19,12 +19,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             ISingleSoundPlayer soundPlayer, 
             IItemDetailsManager itemDetailsManager, 
             IComparingItemFamilyTracker comparingFamiltyTracker,
-            IBuildableWrapper<IBuilding> buildingPrefab,
-            PrefabKeyName buildingKeyName)
+            IBuildableWrapper<IBuilding> buildingPrefab)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
-            //_buildingName.text = (buildingKeyName.ToString()).Replace("Building_", string.Empty);
-
+            _buildingName.text = buildingPrefab.Buildable.Name;
             Assert.IsNotNull(buildingPrefab);
             _buildingPrefab = buildingPrefab;
         }
