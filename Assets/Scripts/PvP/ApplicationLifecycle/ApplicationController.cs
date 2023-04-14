@@ -39,6 +39,7 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             builder.Register<LocalLobby>(Lifetime.Singleton);
             builder.Register<ProfileManager>(Lifetime.Singleton);
             builder.Register<PersistentGameState>(Lifetime.Singleton);
+            builder.Register<LobbyAPIInterface>(Lifetime.Singleton);
 
             builder.RegisterInstance(new MessageChannel<QuitApplicationMessage>()).AsImplementedInterfaces();
             builder.RegisterInstance(new MessageChannel<UnityServiceErrorMessage>()).AsImplementedInterfaces();
@@ -57,6 +58,7 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             builder.RegisterInstance(new BufferedMessageChannel<LobbyListFetchedMessage>()).AsImplementedInterfaces();
             builder.Register<AuthenticationServiceFacade>(Lifetime.Singleton);
             builder.RegisterEntryPoint<LobbyServiceFacade>(Lifetime.Singleton).AsSelf();
+
 
         }
 

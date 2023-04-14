@@ -121,29 +121,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionManager = connectionManager;
         }
 
-        public async Task<(bool, Lobby)> TryQuickJoinConnectionAsync()
-        {
-            List<QueryFilter> m_filters = new List<QueryFilter>
-            {
-                new QueryFilter(
-                    field: QueryFilter.FieldOptions.S1,
-                    op:QueryFilter.OpOptions.EQ,
-                    value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName
-                ),
-            };
-
-            (bool success, Lobby lobby) = await m_LobbyServiceFacade.TryQuickJoinLobbyAsync(m_filters);
-            return (success, lobby);
-        }
-
-        public async Task<(bool, Lobby)> TryCreateLobbyAsync()
-        {
-            string lobbyName = NameGenerator.GetName(Guid.NewGuid().ToString());
-            (bool success, Lobby lobby) = await m_LobbyServiceFacade.TryCreateLobbyAsync(lobbyName, 2, isPrivate: false);
-            return (success, lobby);
-        }
-
-
 
         public override async Task SetupClientConnectionAsync()
         {

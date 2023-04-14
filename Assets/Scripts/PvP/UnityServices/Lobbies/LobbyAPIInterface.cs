@@ -93,13 +93,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
         }
 
-        public async Task<QueryResponse> QueryAllLobbies()
+        public async Task<QueryResponse> QueryAllLobbies(List<QueryFilter> mFilters, List<QueryOrder> mOrders)
         {
             QueryLobbiesOptions queryOptions = new QueryLobbiesOptions
             {
                 Count = k_MaxLobbiesToShow,
-                Filters = m_Filters,
-                Order = m_Order
+                Filters = mFilters,
+                Order = mOrders
             };
 
             return await LobbyService.Instance.QueryLobbiesAsync(queryOptions);

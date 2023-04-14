@@ -9,6 +9,8 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
@@ -179,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         /// <summary>
         /// Attempt to create a new lobby and then join it.
         /// </summary>
-        public async Task<(bool Success, Lobby Lobby)> TryCreateLobbyAsync(string lobbyName, int maxPlayers, bool isPrivate)
+        public async Task<(bool Success, Lobby Lobby)> TryCreateLobbyAsync(string lobbyName, int maxPlayers, bool isPrivate, Dictionary<string, PlayerDataObject> hostUserData, Dictionary<string, DataObject> lobbyData)
         {
             if (!m_RateLimitHost.CanCall)
             {
@@ -189,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, m_LocalUser.GetDataForUnityServices(), m_ConnectionManager.Manager.User.Data.userGamePreferences.GetDataForUnityServices());
+                var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, hostUserData, lobbyData);
                 return (true, lobby);
             }
             catch (LobbyServiceException e)
@@ -279,6 +281,34 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             return (false, null);
         }
 
+
+        public async Task<QueryResponse> QueryLobbyListAsync(List<QueryFilter> mFilters, List<QueryOrder> mOrders)
+        {
+            if (!m_RateLimitQuery.CanCall)
+            {
+                Debug.LogWarning("Retrieve Lobby list hit the rate limit. Will try again soon...");
+                return null;
+            }
+
+            try
+            {
+                return await m_LobbyApiInterface.QueryAllLobbies(null, null);
+
+            }
+            catch (LobbyServiceException e)
+            {
+                if (e.Reason == LobbyExceptionReason.RateLimited)
+                {
+                    m_RateLimitQuery.PutOnCooldown();
+                }
+                else
+                {
+                    PublishError(e);
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Used for getting the list of all active lobbies, without needing full info for each.
         /// </summary>
@@ -292,7 +322,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             try
             {
-                var response = await m_LobbyApiInterface.QueryAllLobbies();
+                //cheat code, should be modified!!!
+                var response = await m_LobbyApiInterface.QueryAllLobbies(null, null);
                 m_LobbyListFetchedPub.Publish(new LobbyListFetchedMessage(LocalLobby.CreateLocalLobbies(response)));
             }
             catch (LobbyServiceException e)

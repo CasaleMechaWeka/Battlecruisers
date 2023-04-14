@@ -2,7 +2,9 @@ using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using UnityEngine;
 using NSubstitute;
@@ -36,6 +38,7 @@ using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using Random = UnityEngine.Random;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -84,6 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         [Inject] LocalLobbyUser m_LocalUser;
         [Inject] LocalLobby m_LocalLobby;
         [Inject] LobbyServiceFacade m_LobbyServiceFacade;
+        [Inject] LobbyAPIInterface m_LobbyAPIInterface;
         [Inject] ProfileManager m_ProfileManager;
 
         [Inject] ConnectionManager m_ConnectionManager;
@@ -144,49 +148,121 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             bool playerIsAuthorized = await m_AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
 
-
-            Debug.Log("PlayerID" + m_LocalUser.ID);
-
             if (!playerIsAuthorized)
             {
                 return;
             }
 
 
-            List<QueryFilter> m_Filters = new List<QueryFilter>()
+            List<QueryFilter> mFilters = new List<QueryFilter>()
             {
-                new QueryFilter(
-                    field: QueryFilter.FieldOptions.S1,
-                    op: QueryFilter.OpOptions.EQ,
-                    value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName
-                )
+            // Let's search for games with open slots (AvailableSlots greater than 0)
+            new QueryFilter(
+                field: QueryFilter.FieldOptions.AvailableSlots,
+                op: QueryFilter.OpOptions.GT,
+                value: "0"),
+            new QueryFilter(
+                field: QueryFilter.FieldOptions.S1, // S2 = "GameMap"
+                op: QueryFilter.OpOptions.EQ,
+                value: m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName),
+            // Example "skill" range filter (skill is a custom numeric field in this example)
+            new QueryFilter(
+                field: QueryFilter.FieldOptions.N1, // N1 = "Skill"
+                op: QueryFilter.OpOptions.GT,
+                value: "0"),
+            new QueryFilter(
+                field: QueryFilter.FieldOptions.N2, // N2 = "Rank"
+                op: QueryFilter.OpOptions.LT,
+                value: "51"),
+
             };
-            var lobbyQuickJoinAttemp = await m_LobbyServiceFacade.TryQuickJoinLobbyAsync(m_Filters);
-            if (lobbyQuickJoinAttemp.Success)
+
+
+            List<QueryOrder> mOrders = new List<QueryOrder>
+        {
+            new QueryOrder(true, QueryOrder.FieldOptions.AvailableSlots),
+            new QueryOrder(false, QueryOrder.FieldOptions.Created),
+            new QueryOrder(false, QueryOrder.FieldOptions.Name),
+        };
+
+
+
+            QueryResponse response = await m_LobbyServiceFacade.QueryLobbyListAsync(mFilters, mOrders);
+
+            List<Lobby> foundLobbies = response.Results;
+
+            if (foundLobbies.Any())
             {
-                Debug.Log("Joined to Lobby Name is " + lobbyQuickJoinAttemp.Lobby.Name);
-                m_LobbyServiceFacade.SetRemoteLobby(lobbyQuickJoinAttemp.Lobby);
-                if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                Debug.Log("Found Lobbies :\n" + JsonConvert.SerializeObject(foundLobbies));
+
+                var randomLobby = foundLobbies[Random.Range(0, foundLobbies.Count)];
+
+                var lobbyJoinAttemp = await m_LobbyServiceFacade.TryJoinLobbyAsync(lobbyId: randomLobby.Id, null);
+
+                if (lobbyJoinAttemp.Success)
                 {
-                    m_LobbyServiceFacade.BeginTracking();
-                    await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
+                    m_LobbyServiceFacade.SetRemoteLobby(lobbyJoinAttemp.Lobby);
+                    if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+                    {
+                        m_LobbyServiceFacade.BeginTracking();
+                        await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
+                    }
+                    Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                 }
 
             }
             else
             {
-                var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(k_DefaultLobbyName, m_ConnectionManager.MaxConnectedPlayers, isPrivate: false);
+                var lobbyData = new Dictionary<string, DataObject>()
+                {
+                    ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, m_ConnectionManager.Manager.User.Data.userGamePreferences.ToSceneName, DataObject.IndexOptions.S1),
+                    ["Skill"] = new DataObject(DataObject.VisibilityOptions.Public, "33", DataObject.IndexOptions.N1),
+                    ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, "22", DataObject.IndexOptions.N2)
+                };
+
+
+
+                var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)
                 {
-                    Debug.Log("Craeted Lobby Name is " + lobbyCreationAttemp.Lobby.Name);
                     m_LocalUser.IsHost = true;
                     m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                     {
                         m_LobbyServiceFacade.BeginTracking();
                     }
+                    Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
+
                 }
+
+
+
             }
+            // if (lobbyQuickJoinAttemp.Success)
+            // {
+            //     Debug.Log("Joined to Lobby Name is " + lobbyQuickJoinAttemp.Lobby.Name);
+            //     m_LobbyServiceFacade.SetRemoteLobby(lobbyQuickJoinAttemp.Lobby);
+            //     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+            //     {
+            //         m_LobbyServiceFacade.BeginTracking();
+            //         await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
+            //     }
+
+            // }
+            // else
+            // {
+            //     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(k_DefaultLobbyName, m_ConnectionManager.MaxConnectedPlayers, isPrivate: false);
+            //     if (lobbyCreationAttemp.Success)
+            //     {
+            //         Debug.Log("Craeted Lobby Name is " + lobbyCreationAttemp.Lobby.Name);
+            //         m_LocalUser.IsHost = true;
+            //         m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
+            //         if (m_LobbyServiceFacade.CurrentUnityLobby != null)
+            //         {
+            //             m_LobbyServiceFacade.BeginTracking();
+            //         }
+            //     }
+            // }
 
         }
 
@@ -212,6 +288,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             TrySignIn();
         }
+
 
 
         protected override void Configure(IContainerBuilder builder)
@@ -251,6 +328,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             Debug.Log($"Signed in. Unity Player ID {AuthenticationService.Instance.PlayerId}");
             m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
+            m_LocalUser.DisplayName = m_NameGenerationData.GenerateName();
             // The local LobbyUser object will be hooked into UI before the LocalLobby is populated during lobby join, so the LocalLobby must know about it already when that happens.
             m_LocalLobby.AddUser(m_LocalUser);
         }
@@ -346,6 +424,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
+
+            Debug.Log("m_localLobbyUser Name" + m_LocalUser.DisplayName);
         }
 
 
