@@ -41,7 +41,6 @@ namespace BattleCruisers.Scenes
 
             try
             {
-
                 var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);

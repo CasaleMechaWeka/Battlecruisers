@@ -68,6 +68,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         public int defaultLevel;
 
+        const int k_DefaultPort = 7777;
+        const string k_DefaultIP = "127.0.0.1";
+
 
         private IPrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
@@ -124,16 +127,16 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         // }
 
 
-        // private void JoinWithIP(string ip, string port)
-        // {
-        //     int.TryParse(port, out var portNum);
-        //     if (portNum <= 0)
-        //     {
-        //         portNum = k_DefaultPort;
-        //     }
-        //     ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-        //     m_ConnectionManager.StartClientIp(k_DefaultLobbyName, ip, portNum);
-        // }
+        private void JoinWithIP(string ip, string port)
+        {
+            int.TryParse(port, out var portNum);
+            if (portNum <= 0)
+            {
+                portNum = k_DefaultPort;
+            }
+            ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
+            m_ConnectionManager.StartClientIp(k_DefaultLobbyName, ip, portNum);
+        }
 
         private void JoinWithLobby()
         {
@@ -268,12 +271,17 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         IEnumerator iStartPvP()
         {
-
             yield return new WaitForEndOfFrame();
 
-            JoinWithLobby();
-
-
+            if (m_LocalLaunchMode)
+            {
+                JoinWithIP("127.0.0.1", "7777");
+            }
+            else
+            {
+                // should be tested, still not confirmed.
+                JoinWithLobby();
+            }
         }
 
         protected override void Awake()
@@ -302,6 +310,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             {
                 var unityAuthenticationInitOptions = new InitializationOptions();
                 var profile = m_ProfileManager.Profile;
+                Debug.Log("Profile =" + profile.ToString());
                 if (profile.Length > 0)
                 {
                     try

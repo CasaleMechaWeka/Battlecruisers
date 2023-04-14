@@ -80,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         [Inject]
         LocalLobby m_LocalLobby;
 
-        public int MaxConnectedPlayers = 2;
+        public int MaxConnectedPlayers = 8;
 
         const string k_DefaultIP = "127.0.0.1";
         const int k_DefaultPort = 7777;

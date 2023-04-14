@@ -192,6 +192,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             try
             {
                 var lobby = await m_LobbyApiInterface.CreateLobby(AuthenticationService.Instance.PlayerId, lobbyName, maxPlayers, isPrivate, hostUserData, lobbyData);
+                Debug.Log("Lobby Locked?" + lobby.IsLocked);
                 return (true, lobby);
             }
             catch (LobbyServiceException e)

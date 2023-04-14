@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         public void BeginTracking()
         {
-            m_UpdateRunner.Subscribe(OnUpdate, 1f);
+            m_UpdateRunner.Subscribe(OnUpdate, 1.5f);
             m_LocalLobby.changed += OnLocalLobbyChanged;
             m_ShouldPushData = true; // Ensure the initial presence of a new player is pushed to the lobby; otherwise, when a non-host joins, the LocalLobby never receives their data until they push something new.
         }
@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             if (m_LocalUser.IsHost)
             {
-                m_LobbyServiceFacade.DoLobbyHeartbeat(1.5f);
+                m_LobbyServiceFacade.DoLobbyHeartbeat(dt);
             }
 
             if (m_ShouldPushData)
