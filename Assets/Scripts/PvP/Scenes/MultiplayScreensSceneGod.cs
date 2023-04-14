@@ -46,9 +46,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         // networking settings
 
-        public const string k_DefaultIP = "127.0.0.1";
-        public const int k_DefaultPort = 9998;
-
         [SerializeField]
         string m_IP;
         [SerializeField]
@@ -123,16 +120,16 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         // }
 
 
-        private void JoinWithIP(string ip, string port)
-        {
-            int.TryParse(port, out var portNum);
-            if (portNum <= 0)
-            {
-                portNum = k_DefaultPort;
-            }
-            ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
-            m_ConnectionManager.StartClientIp(k_DefaultLobbyName, ip, portNum);
-        }
+        // private void JoinWithIP(string ip, string port)
+        // {
+        //     int.TryParse(port, out var portNum);
+        //     if (portNum <= 0)
+        //     {
+        //         portNum = k_DefaultPort;
+        //     }
+        //     ip = string.IsNullOrEmpty(ip) ? k_DefaultIP : ip;
+        //     m_ConnectionManager.StartClientIp(k_DefaultLobbyName, ip, portNum);
+        // }
 
         private void JoinWithLobby()
         {
@@ -146,6 +143,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private async Task JoinWithLobbyRequest()
         {
             bool playerIsAuthorized = await m_AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
+
+
+            Debug.Log("PlayerID" + m_LocalUser.ID);
+
             if (!playerIsAuthorized)
             {
                 return;
@@ -163,6 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             var lobbyQuickJoinAttemp = await m_LobbyServiceFacade.TryQuickJoinLobbyAsync(m_Filters);
             if (lobbyQuickJoinAttemp.Success)
             {
+                Debug.Log("Joined to Lobby Name is " + lobbyQuickJoinAttemp.Lobby.Name);
                 m_LobbyServiceFacade.SetRemoteLobby(lobbyQuickJoinAttemp.Lobby);
                 if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                 {
@@ -176,6 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(k_DefaultLobbyName, m_ConnectionManager.MaxConnectedPlayers, isPrivate: false);
                 if (lobbyCreationAttemp.Success)
                 {
+                    Debug.Log("Craeted Lobby Name is " + lobbyCreationAttemp.Lobby.Name);
                     m_LocalUser.IsHost = true;
                     m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
@@ -191,14 +194,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
 
             yield return new WaitForEndOfFrame();
-            if (m_LocalLaunchMode)
-            {
-                JoinWithIP("127.0.0.1", "7777");
-            }
-            else
-            {
-                JoinWithLobby();
-            }
+
+            JoinWithLobby();
+
 
         }
 

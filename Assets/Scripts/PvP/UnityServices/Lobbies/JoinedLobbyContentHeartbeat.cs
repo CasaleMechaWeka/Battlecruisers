@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             if (m_LocalUser.IsHost)
             {
-                m_LobbyServiceFacade.DoLobbyHeartbeat(dt);
+                m_LobbyServiceFacade.DoLobbyHeartbeat(1.5f);
             }
 
             if (m_ShouldPushData)

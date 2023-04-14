@@ -81,6 +81,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
 
         public int MaxConnectedPlayers = 2;
+
+        const string k_DefaultIP = "127.0.0.1";
+        const int k_DefaultPort = 7777;
         // public bool IsMatchmaking = false;
 
         internal readonly OfflineState m_Offline = new OfflineState();
@@ -208,6 +211,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             var matchmakingResult = await Manager.GetMatchAsyncInLobby();
             if (matchmakingResult.result == MatchmakerPollingResult.Success)
                 StartClientIp(Manager.User.Data.userName, matchmakingResult.ip, matchmakingResult.port);
+            else
+                StartClientIp(Manager.User.Data.userName, k_DefaultIP, k_DefaultPort);
         }
 
         public async Task CancelMatchmaking()

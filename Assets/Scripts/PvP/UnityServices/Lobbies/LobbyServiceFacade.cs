@@ -156,6 +156,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 }
                 else
                 {
+                    Debug.Log("Called me now");
                     if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
                     {
                         await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
@@ -264,14 +265,15 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
             catch (LobbyServiceException e)
             {
+                // Debug.Log(e);
                 if (e.Reason == LobbyExceptionReason.RateLimited)
                 {
                     m_RateLimitQuickJoin.PutOnCooldown();
                 }
-                else
-                {
-                    PublishError(e);
-                }
+                // else
+                // {
+                //     PublishError(e);
+                // }
             }
 
             return (false, null);
@@ -498,12 +500,14 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         /// </summary>
         public void DoLobbyHeartbeat(float dt)
         {
+
             m_HeartbeatTime += dt;
             if (m_HeartbeatTime > k_HeartbeatPeriod)
             {
                 m_HeartbeatTime -= k_HeartbeatPeriod;
                 try
                 {
+                    Debug.Log("heartbeat poing");
                     m_LobbyApiInterface.SendHeartbeatPing(CurrentUnityLobby.Id);
                 }
                 catch (LobbyServiceException e)

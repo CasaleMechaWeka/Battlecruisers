@@ -72,7 +72,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 Filter = mFilters,
                 Player = new Player(id: requesterUasId, data: localUserData)
             };
-
             return await LobbyService.Instance.QuickJoinLobbyAsync(joinRequest);
         }
 
