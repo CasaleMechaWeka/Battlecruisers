@@ -220,7 +220,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 return (null, null, GetMatchmakingResult.Matchmaking);
             }
-            Manager.User.Data.lobbyId = lobbyId;
+            // Manager.User.Data.lobbyId = lobbyId;
+            Manager.User.Data.userGamePreferences.lobbyId = lobbyId;
             var matchmakingResult = await Manager.GetMatchAsyncInLobby();
             if (matchmakingResult.result == MatchmakerPollingResult.Success)
             {

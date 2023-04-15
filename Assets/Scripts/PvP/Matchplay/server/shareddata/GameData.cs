@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
     public enum GameQueue
     {
-        Casual,
+        PvP,
         Competitive
     }
 
@@ -41,11 +41,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData(NameGenerator.GetName(tmepId), tmepId, 0, new GameInfo(), tempLobbyId);
+            Data = new UserData(NameGenerator.GetName(tmepId), tmepId, 0, new GameInfo());
 
 
             //cheat code
-            Data.userGamePreferences.gameQueue = GameQueue.Casual;
+            Data.userGamePreferences.gameQueue = GameQueue.PvP;
+            Data.userGamePreferences.gameMode = GameMode.Starting;
+            Data.userGamePreferences.map = Map.PracticeWreckyards;
         }
 
         public UserData Data { get; }
@@ -89,11 +91,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             set => Data.userGamePreferences.gameQueue = value;
         }
 
-        public string LobbyID
-        {
-            get => Data.lobbyId;
-            set => Data.lobbyId = value;
-        }
+        // public string LobbyID
+        // {
+        //     get => Data.lobbyId;
+        //     set => Data.lobbyId = value;
+        // }
 
         public override string ToString()
         {
@@ -110,15 +112,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public string userName;
         public string userAuthId;
         public ulong networkId;
-        public string lobbyId;
+        // public string lobbyId;
         public GameInfo userGamePreferences;
-        public UserData(string userName, string userAuthId, ulong networkId, GameInfo userGamePreferences, string lobbyId)
+        public UserData(string userName, string userAuthId, ulong networkId, GameInfo userGamePreferences)
         {
             this.userName = userName;
             this.userAuthId = userAuthId;
             this.networkId = networkId;
             this.userGamePreferences = userGamePreferences;
-            this.lobbyId = lobbyId;
+            // this.lobbyId = lobbyId;
         }
 
 
@@ -140,15 +142,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public Map map;
         public GameMode gameMode;
         public GameQueue gameQueue;
+        public string lobbyId;
 
-        public int MaxUsers = 3;
+        public int MaxUsers = 2;
         public string ToSceneName => ConvertToScene(map);
 
-        const string k_MultiplayCasualQueue = "casual-queue";
+        const string k_MultiplayCasualQueue = "bc-1vs1-queue";
         const string k_MultiplayCompetetiveQueue = "competetive-queue";
         static readonly Dictionary<string, GameQueue> k_MultiplayToLocalQueueNames = new Dictionary<string, GameQueue>
         {
-            { k_MultiplayCasualQueue, GameQueue.Casual },
+            { k_MultiplayCasualQueue, GameQueue.PvP },
             { k_MultiplayCompetetiveQueue, GameQueue.Competitive }
         };
 
@@ -201,7 +204,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             return gameQueue switch
             {
-                GameQueue.Casual => k_MultiplayCasualQueue,
+                GameQueue.PvP => k_MultiplayCasualQueue,
                 GameQueue.Competitive => k_MultiplayCompetetiveQueue,
                 _ => k_MultiplayCasualQueue
             };
@@ -213,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             if (!k_MultiplayToLocalQueueNames.ContainsKey(multiplayQueue))
             {
                 Debug.LogWarning($"No QueuePreference that maps to  {multiplayQueue}");
-                return GameQueue.Casual;
+                return GameQueue.PvP;
             }
             return k_MultiplayToLocalQueueNames[multiplayQueue];
         }
