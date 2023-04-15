@@ -46,6 +46,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         bool m_IsTracking = false;
 
         public Action OnMatchMakingFailed;
+        public Action OnMatchMakingStarted;
 
         public void Start()
         {
@@ -159,6 +160,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 // as client, check if host is still in lobby
                 if (!m_LocalUser.IsHost)
                 {
+                    if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
+                    {
+                        OnMatchMakingStarted();
+                    }
                     foreach (var lobbyUser in m_LocalLobby.LobbyUsers)
                     {
                         if (lobbyUser.Value.IsHost)
@@ -175,6 +180,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
                     {
+                        OnMatchMakingStarted();
                         var matchResult = await m_ConnectionManager.GetMatchmaking(m_LocalLobby.LobbyID);
                         if (matchResult.result == GetMatchmakingResult.Success)
                         {

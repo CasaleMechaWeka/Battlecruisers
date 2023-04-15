@@ -19,9 +19,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         Animator animator;
 
-        public static MatchmakingScreenController Instance { get; private set; }
+        // public static MatchmakingScreenController Instance { get; private set; }
 
-        public bool wasFound = false;
+        public bool started = false;
         public override void OnPresenting(object activationParameter)
         {
 
@@ -36,7 +36,21 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         void Start()
         {
             animator = GetComponent<Animator>();
-            Instance = this;
+            started = false;
+            // Instance = this;
+        }
+
+        public void StartMatchmaking()
+        {
+            if (started)
+                return;
+            started = true;
+            animator.SetBool("Matchmaking", started);
+        }
+        public void ResetMatchmakingAnimation()
+        {
+            started = false;
+            animator.SetBool("Matchmaking", started);
         }
 
     }

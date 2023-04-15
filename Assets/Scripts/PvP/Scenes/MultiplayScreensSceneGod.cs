@@ -150,6 +150,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private void onMatchmakingFailed()
         {
             GoToScreen(multiplayScreen);
+            matchmakingScreen.ResetMatchmakingAnimation();
+        }
+
+        private void onMatchmakingStarted()
+        {
+            matchmakingScreen.StartMatchmaking();
         }
 
         private async Task JoinWithLobbyRequest()
@@ -285,7 +291,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             else
             {
                 // should be tested, still not confirmed.
-                m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
                 JoinWithLobby();
             }
         }
@@ -359,6 +364,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             m_ProfileManager.onProfileChanged -= OnProfileChanged;
             m_LobbyServiceFacade.OnMatchMakingFailed -= onMatchmakingFailed;
+            m_LobbyServiceFacade.OnMatchMakingStarted -= onMatchmakingStarted;
         }
 
         async void OnProfileChanged()
@@ -441,6 +447,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
+
+
+            m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
+            m_LobbyServiceFacade.OnMatchMakingStarted += onMatchmakingStarted;
 
             // Debug.Log("m_localLobbyUser Name" + m_LocalUser.DisplayName);
         }
