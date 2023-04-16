@@ -44,6 +44,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         public Lobby CurrentUnityLobby { get; private set; }
 
         bool m_IsTracking = false;
+        bool m_IsMatchmaking = false;
 
         public Action OnMatchMakingFailed;
         public Action OnMatchMakingStarted;
@@ -86,6 +87,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             if (!m_IsTracking)
             {
                 m_IsTracking = true;
+                m_IsMatchmaking = false;
                 // 2s update cadence is arbitrary and is here to demonstrate the fact that this update can be rather infrequent
                 // the actual rate limits are tracked via the RateLimitCooldown objects defined above
                 m_UpdateRunner.Subscribe(UpdateLobby, 2f);
@@ -127,6 +129,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
 
             // m_ConnectionManager.IsMatchmaking = false;
+            m_IsMatchmaking = false;
             await m_ConnectionManager.CancelMatchmaking();
             return;
         }
@@ -153,6 +156,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
                 if (m_LocalLobby.MatchIP != null && m_LocalLobby.MatchPort != null)
                 {
+                    Debug.Log($"IP Address = {m_LocalLobby.MatchIP} --- Port = {m_LocalLobby.MatchPort}");
                     m_ConnectionManager.StartMatch(m_LocalLobby.MatchIP, m_LocalLobby.MatchPort);
                     // return;
                 }
@@ -180,12 +184,19 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
                     {
+
+                        if (m_IsMatchmaking)
+                            return;
+
+                        m_IsMatchmaking = true;
                         OnMatchMakingStarted();
                         var matchResult = await m_ConnectionManager.GetMatchmaking(m_LocalLobby.LobbyID);
                         if (matchResult.result == GetMatchmakingResult.Success)
                         {
+                            Debug.Log($"IP Address = {matchResult.IP} --- Port = {matchResult.Port}");
                             m_LocalLobby.MatchIP = matchResult.IP;
                             m_LocalLobby.MatchPort = matchResult.Port;
+                            // await m_LobbyApiInterface.UpdateLobby(m_LocalLobby.LobbyID, m_LocalLobby.GetDataForUnityServices(), false);
                         }
                         else if (matchResult.result == GetMatchmakingResult.Failed)
                         {
