@@ -65,5 +65,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 = _comparingFamiltyTracker.ComparingFamily.Value == null
                     || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
         }
+
+        protected override void ShowHoverState()
+        {
+            ShowEnabledState();
+        }
     }
 }
