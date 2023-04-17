@@ -5,22 +5,25 @@ namespace BattleCruisers.UI.Loading
 {
     public class RandomAnimationStart : MonoBehaviour
     {
-        public GameObject background;
         public string animationName = "LoadingScreenBackground";
-        public float minStartDelay = 0.0f;
-        public float maxStartDelay = 1.0f;
+        public float earliestAnimationStartTime = 0.0f;
+        public float latestAnimationStartTime = 1.0f;
 
-        private IEnumerator Start()
+        void Start()
         {
-            Animator animator = background.GetComponent<Animator>();
-            if (animator != null)
+            Animator animator = GetComponent<Animator>();
+            if (animator == null)
             {
-                animator.enabled = false;
-                float startDelay = Random.Range(minStartDelay, maxStartDelay);
-                yield return new WaitForSeconds(startDelay);
-                animator.enabled = true;
-                animator.Play(animationName, -1, Random.Range(0.0f, 1.0f));
+                Debug.LogError("Animator component not found.");
+                return;
             }
+
+            if (earliestAnimationStartTime < 0.0f) earliestAnimationStartTime = 0.0f;
+            if (latestAnimationStartTime > 1.0f) latestAnimationStartTime = 1.0f;
+            if (earliestAnimationStartTime > latestAnimationStartTime) earliestAnimationStartTime = latestAnimationStartTime;
+
+            float randomStartPoint = Random.Range(earliestAnimationStartTime, latestAnimationStartTime);
+            animator.Play(animationName, 0, randomStartPoint);
         }
     }
 }
