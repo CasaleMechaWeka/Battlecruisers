@@ -1,4 +1,4 @@
-#if UNITY_SERVER
+#if UNITY_SERVER || UNITY_EDITOR
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Netcode;
