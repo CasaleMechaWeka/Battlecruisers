@@ -51,7 +51,7 @@ using Unity.Netcode;
 using Unity.Multiplayer.Samples.Utilities;
 
 
-namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
+namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 {
     public class MultiplayBattleSceneGod : GameStateBehaviour
     {
