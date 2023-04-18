@@ -38,7 +38,6 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
-
             try
             {
                 var options = new InitializationOptions();

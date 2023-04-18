@@ -139,8 +139,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_CurrentState = m_Offline;
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
-            NetworkManager.OnServerStarted += OnServerStarted;
-            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
+            // NetworkManager.OnServerStarted += OnServerStarted;
+            // NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
             // m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
 

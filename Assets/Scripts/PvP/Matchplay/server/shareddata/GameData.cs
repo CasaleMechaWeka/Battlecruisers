@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
     public enum GameQueue
     {
-        PvP,
+        Casual,
         Competitive
     }
 
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
 
             //cheat code
-            Data.userGamePreferences.gameQueue = GameQueue.PvP;
+            Data.userGamePreferences.gameQueue = GameQueue.Casual;
             Data.userGamePreferences.gameMode = GameMode.Starting;
             Data.userGamePreferences.map = Map.PracticeWreckyards;
         }
@@ -147,11 +147,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public int MaxUsers = 2;
         public string ToSceneName => ConvertToScene(map);
 
-        const string k_MultiplayCasualQueue = "bc-1vs1-queue";
+        const string k_MultiplayCasualQueue = "casual-queue";
         const string k_MultiplayCompetetiveQueue = "competetive-queue";
         static readonly Dictionary<string, GameQueue> k_MultiplayToLocalQueueNames = new Dictionary<string, GameQueue>
         {
-            { k_MultiplayCasualQueue, GameQueue.PvP },
+            { k_MultiplayCasualQueue, GameQueue.Casual },
             { k_MultiplayCompetetiveQueue, GameQueue.Competitive }
         };
 
@@ -180,31 +180,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             switch (map)
             {
-                case Map.PracticeWreckyards:
-                    return "PracticeWreckyards";
-                case Map.OzPenitentiary:
-                    return "OzPenitentiary";
-                case Map.SanFranciscoFightClub:
-                    return "SanFranciscoFightClub";
-                case Map.UACBattleNight:
-                    return "UACBattleNight";
-                case Map.UACArena:
-                    return "UACArena";
-                case Map.RioBattlesport:
-                    return "RioBattlesport";
-                case Map.UACUltimate:
-                    return "UACUltimate";
-                case Map.MercenaryOne:
-                    return "MercenaryOne";
+                // case Map.PracticeWreckyards:
+                //     return "PracticeWreckyards";
+                // case Map.OzPenitentiary:
+                //     return "OzPenitentiary";
+                // case Map.SanFranciscoFightClub:
+                //     return "SanFranciscoFightClub";
+                // case Map.UACBattleNight:
+                //     return "UACBattleNight";
+                // case Map.UACArena:
+                //     return "UACArena";
+                // case Map.RioBattlesport:
+                //     return "RioBattlesport";
+                // case Map.UACUltimate:
+                //     return "UACUltimate";
+                // case Map.MercenaryOne:
+                //     return "MercenaryOne";
                 default:
-                    return "Non exist";
+                    return "MultiplayBattleScene";
             }
         }
         public string ToMultiplayQueue()
         {
             return gameQueue switch
             {
-                GameQueue.PvP => k_MultiplayCasualQueue,
+                GameQueue.Casual => k_MultiplayCasualQueue,
                 GameQueue.Competitive => k_MultiplayCompetetiveQueue,
                 _ => k_MultiplayCasualQueue
             };
@@ -216,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             if (!k_MultiplayToLocalQueueNames.ContainsKey(multiplayQueue))
             {
                 Debug.LogWarning($"No QueuePreference that maps to  {multiplayQueue}");
-                return GameQueue.PvP;
+                return GameQueue.Casual;
             }
             return k_MultiplayToLocalQueueNames[multiplayQueue];
         }

@@ -5,7 +5,18 @@ using Unity.Netcode;
 
 namespace BattleCruisers
 {
-    public class Prefab : NetworkBehaviour, IPrefab
+    public class Prefab : MonoBehaviour, IPrefab
+    {
+        protected ILocTable _commonStrings;
+
+        public virtual void StaticInitialise(ILocTable commonStrings)
+        {
+            Assert.IsNotNull(commonStrings);
+            _commonStrings = commonStrings;
+        }
+    }
+
+    public class NetPrefab : NetworkBehaviour, IPrefab
     {
         protected ILocTable _commonStrings;
 

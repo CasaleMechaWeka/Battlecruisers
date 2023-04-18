@@ -47,6 +47,8 @@ using Unity.Services.Analytics;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Scenes;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
+using Unity.Netcode;
+using Unity.Multiplayer.Samples.Utilities;
 
 
 namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
@@ -89,6 +91,43 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene
         public GameObject nukeButton;
         private IApplicationModel applicationModel;
 
+        [SerializeField]
+        NetcodeHooks m_NetcodeHooks;
+
+
+        protected override void Awake()
+        {
+            base.Awake();
+            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
+
+        }
+
+
+        void OnNetworkSpawn()
+        {
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                enabled = false;
+                return;
+            }
+        }
+
+        void OnNetworkDespawn()
+        {
+
+        }
+
+        protected override void OnDestroy()
+        {
+            if (m_NetcodeHooks)
+            {
+                m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
+                m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
+            }
+
+            base.OnDestroy();
+        }
 
         private async void Start()
         {
