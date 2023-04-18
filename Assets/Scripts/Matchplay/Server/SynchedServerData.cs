@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using Unity.Netcode;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Server
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
     public class SynchedServerData : NetworkBehaviour
     {

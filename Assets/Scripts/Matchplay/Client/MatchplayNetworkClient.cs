@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-// using BattleCruisers.Network.Multiplay.Matchplay.Server;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
 
 
@@ -26,12 +23,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         }
 
 
-        public void StartClient(string ipaddress, int port)
-        {
-            var unityTransport = m_NetworkManager.gameObject.GetComponent<UnityTransport>();
-            unityTransport.SetConnectionData(ipaddress, (ushort)port);
-            ConnectClient();
-        }
+        // public void StartClient(string ipaddress, int port)
+        // {
+        //     var unityTransport = m_NetworkManager.gameObject.GetComponent<UnityTransport>();
+        //     unityTransport.SetConnectionData(ipaddress, (ushort)port);
+        //     ConnectClient();
+        // }
 
         public void DisconnectClient()
         {
@@ -39,28 +36,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             NetworkShutdown();
         }
 
-        void ConnectClient()
-        {
-            var userData = ClientSingleton.Instance.Manager.User.Data;
-            var payload = JsonUtility.ToJson(userData);
-            var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
+        // void ConnectClient()
+        // {
+        //     var userData = ClientSingleton.Instance.Manager.User.Data;
+        //     var payload = JsonUtility.ToJson(userData);
+        //     var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
 
 
-            m_NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
-            m_NetworkManager.NetworkConfig.ClientConnectionBufferTimeout = k_TimeoutDuration;
+        //     m_NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
+        //     m_NetworkManager.NetworkConfig.ClientConnectionBufferTimeout = k_TimeoutDuration;
 
-            if (m_NetworkManager.StartClient())
-            {
-                Debug.Log("Starting Client!");
-                MatchplayNetworkMessenger.RegisterListener(NetworkMessage.LocalClientConnected, ReceiveLocalClientConnectStatus);
-                MatchplayNetworkMessenger.RegisterListener(NetworkMessage.LocalClientDisconnected, ReceiveLocalClientDisconnectStatus);
-            }
-            else
-            {
-                Debug.LogWarning($"Could not Start Client!");
-                OnLocalDisconnection?.Invoke(MatchplayConnectStatus.Undefined);
-            }
-        }
+        //     if (m_NetworkManager.StartClient())
+        //     {
+        //         Debug.Log("Starting Client!");
+        //         MatchplayNetworkMessenger.RegisterListener(NetworkMessage.LocalClientConnected, ReceiveLocalClientConnectStatus);
+        //         MatchplayNetworkMessenger.RegisterListener(NetworkMessage.LocalClientDisconnected, ReceiveLocalClientDisconnectStatus);
+        //     }
+        //     else
+        //     {
+        //         Debug.LogWarning($"Could not Start Client!");
+        //         OnLocalDisconnection?.Invoke(MatchplayConnectStatus.Undefined);
+        //     }
+        // }
 
         void ReceiveLocalClientConnectStatus(ulong clientId, FastBufferReader reader)
         {

@@ -7,7 +7,7 @@ using Unity.Services.Lobbies.Models;
 using Random = UnityEngine.Random;
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Server
+namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
     public enum Map
     {

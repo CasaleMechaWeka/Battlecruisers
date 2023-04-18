@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using Map = BattleCruisers.Network.Multiplay.Matchplay.Client.Map;
+using Map = BattleCruisers.Network.Multiplay.Matchplay.Shared.Map;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 

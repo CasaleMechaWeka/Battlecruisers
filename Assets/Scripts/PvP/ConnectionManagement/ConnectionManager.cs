@@ -142,16 +142,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             // NetworkManager.OnServerStarted += OnServerStarted;
             // NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
-            // m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
-
+            m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
         }
 
         void OnDestroy()
         {
             NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
-            NetworkManager.OnServerStarted -= OnServerStarted;
-            NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
+            // NetworkManager.OnServerStarted -= OnServerStarted;
+            // NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
             NetworkManager.OnTransportFailure -= OnTransportFailure;
         }
 
@@ -230,7 +229,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             else
             {
-
                 return (null, null, GetMatchmakingResult.Failed);
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Client
+namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
     public class Matchplayer : NetworkBehaviour
     {

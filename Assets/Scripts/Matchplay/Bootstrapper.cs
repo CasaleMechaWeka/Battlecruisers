@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+#if UNITY_SERVER
 using BattleCruisers.Network.Multiplay.Matchplay.Server;
+#endif
 using Unity.Netcode;
 
 
@@ -12,12 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
     public class Bootstrapper : MonoBehaviour
     {
 
+#if UNITY_SERVER
         [SerializeField]
         ServerSingleton m_ServerPrefab;
+        ApplicationData m_AppData;
+#endif
+
         [SerializeField]
         NetworkManager m_NetworkManagerPrefab;
-
-        ApplicationData m_AppData;
         void Start()
         {
             if (Application.isEditor)
@@ -32,9 +36,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             if (isServer)
             {
                 // SceneManager.LoadScene("MultiplayServerStartup");
+#if UNITY_SERVER
 #pragma warning disable 4014
-                LaunchServer();
+                    LaunchServer();
 #pragma warning restore 4014
+#endif
             }
             else
             {
@@ -47,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             LaunchInMode(isServer);
         }
 
-
+#if UNITY_SERVER
         async Task LaunchServer()
         {
             // Debug.Log("You called server");
@@ -64,6 +70,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             // NetworkManager.Singleton.StartServer();
             await serverSingletone.Manager.StartGameServerAsync(defaultGameInfo);
         }
+#endif
     }
 
 }

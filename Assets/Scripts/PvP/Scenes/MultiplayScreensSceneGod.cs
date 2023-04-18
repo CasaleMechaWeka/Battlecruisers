@@ -515,8 +515,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
 
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
-
             Assert.AreNotEqual(_currentScreen, destinationScreen);
+            if (_currentScreen == destinationScreen)
+                return;
 
             if (_currentScreen != null)
             {

@@ -69,7 +69,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         public void Dispose()
         {
+#pragma warning disable 4014
             EndTracking();
+#pragma warning restore 4014
             if (m_ServiceScope != null)
             {
                 m_ServiceScope.Dispose();
@@ -166,6 +168,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {
                     if (m_LocalLobby.LobbyUsers.Count == m_ConnectionManager.MaxConnectedPlayers)
                     {
+                        if (m_IsMatchmaking)
+                            return;
+                        m_IsMatchmaking = true;
                         OnMatchMakingStarted();
                     }
                     foreach (var lobbyUser in m_LocalLobby.LobbyUsers)
@@ -187,7 +192,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
                         if (m_IsMatchmaking)
                             return;
-
                         m_IsMatchmaking = true;
                         OnMatchMakingStarted();
                         var matchResult = await m_ConnectionManager.GetMatchmaking(m_LocalLobby.LobbyID);

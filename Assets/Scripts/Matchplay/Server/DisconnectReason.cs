@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Server
+namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
     public class DisconnectReason
     {

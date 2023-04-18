@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using BattleCruisers.Network.Multiplay.Matchplay.Server;
+using BattleCruisers.Network.Multiplay.Matchplay.Server;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
@@ -58,27 +58,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             Initialized = true;
         }
 
-        public void BeginConnection(string ip, int port)
-        {
-            Debug.Log($"Starting networkClient @ {ip}:{port}\nWith : {User}");
-            NetworkClient.StartClient(ip, port);
-        }
+        // public void BeginConnection(string ip, int port)
+        // {
+        //     Debug.Log($"Starting networkClient @ {ip}:{port}\nWith : {User}");
+        //     NetworkClient.StartClient(ip, port);
+        // }
 
         public void Disconnect()
         {
             NetworkClient.DisconnectClient();
         }
 
-        public async Task MatchmakeAsync(Action<MatchmakerPollingResult> onMatchmakerResponse = null)
-        {
-            if (Matchmaker.IsMatchmaking)
-            {
-                Debug.LogWarning("Already matchmaking, please wait or cancel.");
-                return;
-            }
-            var matchResult = await GetMatchAsync();
-            onMatchmakerResponse?.Invoke(matchResult);
-        }
+        // public async Task MatchmakeAsync(Action<MatchmakerPollingResult> onMatchmakerResponse = null)
+        // {
+        //     if (Matchmaker.IsMatchmaking)
+        //     {
+        //         Debug.LogWarning("Already matchmaking, please wait or cancel.");
+        //         return;
+        //     }
+        //     var matchResult = await GetMatchAsync();
+        //     onMatchmakerResponse?.Invoke(matchResult);
+        // }
 
 
         public async Task CancelMatchmaking()
@@ -116,16 +116,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         }
 
 
-        async Task<MatchmakerPollingResult> GetMatchAsync()
-        {
-            Debug.Log($"Beginning Matchmaking with {User}");
-            var matchmakingResult = await Matchmaker.Matchmake(User.Data);
-            if (matchmakingResult.result == MatchmakerPollingResult.Success)
-                BeginConnection(matchmakingResult.ip, matchmakingResult.port);
-            else
-                Debug.LogWarning($"{matchmakingResult.result} : {matchmakingResult.resultMessage}");
-            return matchmakingResult.result;
-        }
+        // async Task<MatchmakerPollingResult> GetMatchAsync()
+        // {
+        //     Debug.Log($"Beginning Matchmaking with {User}");
+        //     var matchmakingResult = await Matchmaker.Matchmake(User.Data);
+        //     if (matchmakingResult.result == MatchmakerPollingResult.Success)
+        //         BeginConnection(matchmakingResult.ip, matchmakingResult.port);
+        //     else
+        //         Debug.LogWarning($"{matchmakingResult.result} : {matchmakingResult.resultMessage}");
+        //     return matchmakingResult.result;
+        // }
 
         public async Task<MatchmakingResult> GetMatchAsyncInLobby()
         {

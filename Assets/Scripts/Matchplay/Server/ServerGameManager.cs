@@ -1,8 +1,10 @@
+#if UNITY_SERVER
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using Random = UnityEngine.Random;
 
 
@@ -227,4 +229,4 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         }
     }
 }
-
+#endif

@@ -26,7 +26,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
+
+#pragma warning disable 4014
             m_LobbyServiceFacade.EndTracking();
+#pragma warning restore 4014
+
             m_ConnectionManager.NetworkManager.Shutdown();
             m_ConnectionManager.IsConnecting = false;
             if (SceneManager.GetActiveScene().name != k_MainMenuSceneName)

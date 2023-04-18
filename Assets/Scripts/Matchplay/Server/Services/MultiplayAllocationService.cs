@@ -1,3 +1,4 @@
+#if UNITY_SERVER
 using System;
 using Unity.Services.Matchmaker.Models;
 using Unity.Services.Multiplay;
@@ -106,4 +107,4 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         }
     }
 }
-
+#endif

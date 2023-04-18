@@ -1,5 +1,5 @@
 using Unity.Netcode;
-namespace BattleCruisers.Network.Multiplay.Matchplay.Server
+namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
     public enum NetworkMessage
     {

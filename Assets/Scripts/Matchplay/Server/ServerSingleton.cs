@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_SERVER
 using System.Threading.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -68,9 +66,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                 networkManager
             );
         }
-
-
-
     }
 }
-
+#endif

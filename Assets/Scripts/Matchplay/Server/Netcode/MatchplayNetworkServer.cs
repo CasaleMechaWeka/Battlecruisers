@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 {
@@ -30,7 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         public MatchplayNetworkServer(NetworkManager networkManager)
         {
             m_NetworkManager = networkManager;
-
             m_NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             m_NetworkManager.OnServerStarted += OnNetworkReady;
         }

@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.Client;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
