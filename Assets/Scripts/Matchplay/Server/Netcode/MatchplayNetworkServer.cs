@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Network.Multiplay.Matchplay.Networking;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Server

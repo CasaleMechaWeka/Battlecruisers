@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Network.Multiplay.Matchplay.Client;
 
 
 namespace BattleCruisers.Utils.Fetchers.Sprites

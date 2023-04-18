@@ -4,9 +4,10 @@ using System.Text;
 using UnityEngine;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Random = UnityEngine.Random;
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
+namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 {
     public enum Map
     {
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData(NameGenerator.GetName(tmepId), tmepId, 0, new GameInfo());
+            Data = new UserData("Random User" + Random.Range(1, 9999).ToString(), tmepId, 0, new GameInfo());
 
 
             //cheat code

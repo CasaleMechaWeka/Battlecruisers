@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
+namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 {
     public class ApplicationData
     {

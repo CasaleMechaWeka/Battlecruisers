@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using Random = UnityEngine.Random;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Server
@@ -43,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             m_NetworkServer = new MatchplayNetworkServer(manager);
             m_MultiplayAllocationService = new MultiplayAllocationService();
             m_MultiplayServerQueryService = new MultiplayServerQueryService();
-            m_ServerName = NameGenerator.GetName(Guid.NewGuid().ToString());
+            m_ServerName = "RandomeServerName" + Random.Range(1, 9999).ToString();
         }
 
         public async Task StartGameServerAsync(GameInfo startingGameInfo)

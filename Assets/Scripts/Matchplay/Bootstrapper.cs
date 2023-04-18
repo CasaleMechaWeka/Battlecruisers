@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         [SerializeField]
         ServerSingleton m_ServerPrefab;
         [SerializeField]
-        BCNetworkManager m_NetworkManagerPrefab;
+        NetworkManager m_NetworkManagerPrefab;
 
         ApplicationData m_AppData;
         void Start()

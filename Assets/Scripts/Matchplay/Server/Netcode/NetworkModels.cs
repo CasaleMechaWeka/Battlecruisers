@@ -2,7 +2,7 @@ using Unity.Collections;
 using Unity.Netcode;
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Networking
+namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 {
     public enum MatchplayConnectStatus
     {

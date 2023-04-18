@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Networking
+namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 {
     public class DisconnectReason
     {

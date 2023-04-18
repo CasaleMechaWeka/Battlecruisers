@@ -1,7 +1,7 @@
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System.Threading.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Network.Multiplay.Matchplay.Client;
 
 
 namespace BattleCruisers.Utils.Fetchers.Sprites

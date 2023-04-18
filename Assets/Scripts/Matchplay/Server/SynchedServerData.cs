@@ -1,10 +1,8 @@
 using System;
 using UnityEngine;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.Networking;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
+namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 {
     public class SynchedServerData : NetworkBehaviour
     {
