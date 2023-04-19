@@ -25,7 +25,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         const int k_MaxConnectPayload = 1024;
 
         Dictionary<string, UserData> m_clientData = new Dictionary<string, UserData>();
-
         Dictionary<ulong, string> m_NetworkIdToAuth = new Dictionary<ulong, string>();
 
         public MatchplayNetworkServer(NetworkManager networkManager)

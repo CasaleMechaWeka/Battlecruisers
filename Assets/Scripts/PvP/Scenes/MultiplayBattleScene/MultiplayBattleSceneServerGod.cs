@@ -1,4 +1,5 @@
-using System.Collections;
+using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -13,7 +14,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
+        List<ulong> m_clients = new List<ulong>();
 
+        Action onClientEntered;
+        Action onClientExit;
+        const int MaxConnectedPlayers = 2;
 
         private void Awake()
         {
@@ -21,16 +26,53 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
         }
 
+        private void Start()
+        {
+
+        }
+
+        void OnClientEntered()
+        {
+            if (m_clients.Count == MaxConnectedPlayers)
+            {
+                //Spawn Players for 2 clients;
+
+            }
+        }
+        void OnClientExit()
+        {
+
+        }
+
+
+        async void PreloadPrefabs()
+        {
+
+        }
+
         void OnNetworkSpawn()
         {
+
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                enabled = false;
+                return;
+            }
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoadEventCompleted;
             NetworkManager.Singleton.SceneManager.OnSynchronizeComplete += OnSynchronizeComplete;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+            onClientEntered += OnClientEntered;
+            onClientExit += OnClientExit;
         }
 
         void OnNetworkDespawn()
         {
+
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadEventCompleted;
             NetworkManager.Singleton.SceneManager.OnSynchronizeComplete -= OnSynchronizeComplete;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+            onClientEntered -= OnClientEntered;
+            onClientExit -= OnClientExit;
         }
 
         void OnDestroy()
@@ -45,14 +87,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
-            Debug.Log("===== OnLoadEventCompleted");
+
+        }
+
+        void OnClientDisconnect(ulong clientId)
+        {
+            m_clients.Remove(clientId);
+            onClientExit?.Invoke();
         }
 
 
         // this is a Late Join scenario
         void OnSynchronizeComplete(ulong clientId)
         {
-            Debug.Log("===== OnSynchronizeComplete");
+            m_clients.Add(clientId);
+            onClientEntered?.Invoke();
         }
 
 
