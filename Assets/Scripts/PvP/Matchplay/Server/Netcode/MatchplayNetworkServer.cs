@@ -31,6 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         public MatchplayNetworkServer(NetworkManager networkManager)
         {
             m_NetworkManager = networkManager;
+            m_NetworkManager.NetworkConfig.ConnectionApproval = true;
             m_NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             m_NetworkManager.OnServerStarted += OnNetworkReady;
         }
@@ -129,12 +130,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             response.Rotation = Quaternion.identity;
             response.Pending = false;
 
-            var schedular = TaskScheduler.FromCurrentSynchronizationContext();
-            Task.Factory.StartNew(
-                async () => await SetupPlayerPrefab(request.ClientNetworkId, userData.userName),
-                System.Threading.CancellationToken.None,
-                TaskCreationOptions.None, schedular
-            );
+            // var schedular = TaskScheduler.FromCurrentSynchronizationContext();
+            // Task.Factory.StartNew(
+            //     async () => await SetupPlayerPrefab(request.ClientNetworkId, userData.userName),
+            //     System.Threading.CancellationToken.None,
+            //     TaskCreationOptions.None, schedular
+            // );
         }
 
         private void OnClientDisconnect(ulong networkId)

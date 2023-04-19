@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_SERVER || UNITY_EDITOR
 using UnityEngine;
 using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
-#if UNITY_SERVER || UNITY_EDITOR
 using BattleCruisers.Network.Multiplay.Matchplay.Server;
-#endif
 using Unity.Netcode;
 
 
@@ -13,47 +9,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
     public class Bootstrapper : MonoBehaviour
     {
-#if UNITY_SERVER || UNITY_EDITOR
         [SerializeField]
         ServerSingleton m_ServerPrefab;
         ApplicationData m_AppData;
-#endif
-
         [SerializeField]
         NetworkManager m_NetworkManagerPrefab;
         void Start()
         {
-            if (Application.isEditor)
-                return;
-
-            LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
+            LaunchInMode();
         }
 
 
-        void LaunchInMode(bool isServer)
+        void LaunchInMode()
         {
-            if (isServer)
-            {
-                Debug.Log("called AAA");
-                // SceneManager.LoadScene("MultiplayServerStartup");
-#if UNITY_SERVER || UNITY_EDITOR
 #pragma warning disable 4014
-                LaunchServer();
+            LaunchServer();
 #pragma warning restore 4014
-#endif
-            }
-            else
-            {
-                SceneManager.LoadScene("LandingScene");
-            }
+
         }
 
-        public void OnParellSyncStarted(bool isServer)
-        {
-            LaunchInMode(isServer);
-        }
 
-#if UNITY_SERVER || UNITY_EDITOR
         async Task LaunchServer()
         {
             // Debug.Log("You called server");
@@ -70,7 +45,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             // NetworkManager.Singleton.StartServer();
             await serverSingletone.Manager.StartGameServerAsync(defaultGameInfo);
         }
-#endif
     }
-
 }
+#endif

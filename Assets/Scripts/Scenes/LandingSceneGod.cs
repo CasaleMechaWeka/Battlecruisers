@@ -32,6 +32,9 @@ namespace BattleCruisers.Scenes
         [Header("For testing")]
         public bool testCreditsScene = false;
 
+        [Header("For testing")]
+        public bool testCutScene = false;
+
         public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
         public static string LoadingScreenHint { get; private set; }
@@ -96,6 +99,10 @@ namespace BattleCruisers.Scenes
                 if (testCreditsScene)
                 {
                     GoToScene(SceneNames.CREDITS_SCENE, true);
+                }
+                else if (testCutScene)
+                {
+                    GoToScene(SceneNames.CUTSCENE_SCENE, true);
                 }
                 else
                 {
