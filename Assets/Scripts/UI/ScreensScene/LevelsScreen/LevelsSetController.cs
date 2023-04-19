@@ -24,14 +24,14 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public int LastLevelNum { get; private set; }
 
         public async Task InitialiseAsync(
-            IScreensSceneGod screensSceneGod,
-            LevelsScreenController levelsScreen,
-            IList<LevelInfo> allLevels,
-            int numOfLevelsUnlocked,
-            ISingleSoundPlayer soundPlayer,
-            IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkProvider trashDataList,
-            int setIndex)
+    IScreensSceneGod screensSceneGod,
+    LevelsScreenController levelsScreen,
+    IList<LevelInfo> allLevels,
+    int numOfLevelsUnlocked,
+    ISingleSoundPlayer soundPlayer,
+    IDifficultySpritesProvider difficultySpritesProvider,
+    ITrashTalkProvider trashDataList,
+    int setIndex)
         {
             Assert.IsNotNull(navigationFeedbackButton);
             Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider, trashDataList);
@@ -71,16 +71,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             bool hasUnlockedLevels = numOfLevelsUnlocked > firstLevelIndex;
             navigationFeedbackButton.Initialise(levelsScreen, setIndex, hasUnlockedLevels);
 
-            // Check if level 31 has been passed and enable the corresponding secret level button
-            if (numOfLevelsUnlocked >= 32 && setIndex < secretLevelButtons.Length)
+            if (numOfLevelsUnlocked >= 32)
             {
-                GameObject secretLevelButton = secretLevelButtons[setIndex];
-                secretLevelButton.SetActive(true);
+                for (int i = 0; i < secretLevelButtons.Length; ++i)
+                {
+                    SecretLevelButtonController secretLevelButton = secretLevelButtons[i].GetComponent<SecretLevelButtonController>();
+                    LevelInfo secretLevel = allLevels[31 + i];
+                    ITrashTalkData secretLevelTrashTalkData = await trashDataList.GetTrashTalkAsync(secretLevel.Num);
 
-                SecretLevelButtonController secretLevelButtonController = secretLevelButton.GetComponent<SecretLevelButtonController>();
-                LevelInfo secretLevel = allLevels[31 + setIndex]; // Assuming secret levels are added to allLevels list
-                ITrashTalkData secretTrashTalkData = await trashDataList.GetTrashTalkAsync(secretLevel.Num);
-                await secretLevelButtonController.InitialiseAsync(soundPlayer, secretLevel, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, secretTrashTalkData, levelsScreen);
+                    await secretLevelButton.InitialiseAsync(soundPlayer, secretLevel, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, secretLevelTrashTalkData, levelsScreen);
+                    secretLevelButtons[i].SetActive(true);
+                }
             }
             else
             {
@@ -90,6 +91,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                     secretLevelButton.SetActive(false);
                 }
             }
+
+
         }
 
         public bool ContainsLevel(int levelNum)
