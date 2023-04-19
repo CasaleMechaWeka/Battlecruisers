@@ -71,30 +71,25 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         }
 
         private async Task InitialiseLevelSetsAsync(
-       ISingleSoundPlayer soundPlayer,
-       IScreensSceneGod screensSceneGod,
-       IList<LevelInfo> levels,
-       int numOfLevelsUnlocked,
-       IDifficultySpritesProvider difficultySpritesProvider,
-       ITrashTalkProvider trashDataList)
+            ISingleSoundPlayer soundPlayer,
+            IScreensSceneGod screensSceneGod, 
+            IList<LevelInfo> levels, 
+            int numOfLevelsUnlocked, 
+            IDifficultySpritesProvider difficultySpritesProvider,
+            ITrashTalkProvider trashDataList)
         {
             LevelsSetController[] levelSets = GetComponentsInChildren<LevelsSetController>();
 
             _levelSets = new List<LevelsSetController>(levelSets.Length);
 
-            // Calculate the number of secret levels unlocked
-            int secretLevelsUnlocked = numOfLevelsUnlocked >= 31 ? 8 : 0;
-
             for (int j = 0; j < levelSets.Length; j++)
             {
                 LevelsSetController levelsSet = levelSets[j];
-                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j, secretLevelsUnlocked);
+                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }
         }
-
-
 
         public override void OnPresenting(object activationParameter)
         {
