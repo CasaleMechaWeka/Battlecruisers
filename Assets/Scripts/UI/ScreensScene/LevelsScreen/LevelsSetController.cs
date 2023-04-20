@@ -19,15 +19,31 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public int SetIndex { get; private set; }
         public int LastLevelNum { get; private set; }
 
+
+        public int expectedNumberOfTrails;
+
+
+        public async Task InitialiseSecretLevelButton(int secretLevelNum, IScreensSceneGod screensSceneGod, ISingleSoundPlayer soundPlayer)
+        {
+            SecretLevelButtonController secretLevelButton = GetComponentInChildren<SecretLevelButtonController>();
+            if (secretLevelButton != null)
+            {
+                await secretLevelButton.InitialiseSecretLevelButton(secretLevelNum, screensSceneGod, soundPlayer);
+            }
+        }
+
+
+
+
         public async Task InitialiseAsync(
-            IScreensSceneGod screensSceneGod,
-            LevelsScreenController levelsScreen,
-            IList<LevelInfo> allLevels, 
-            int numOfLevelsUnlocked, 
-            ISingleSoundPlayer soundPlayer,
-            IDifficultySpritesProvider difficultySpritesProvider,
-            ITrashTalkProvider trashDataList,
-            int setIndex)
+                   IScreensSceneGod screensSceneGod,
+                   LevelsScreenController levelsScreen,
+                   IList<LevelInfo> allLevels,
+                   int numOfLevelsUnlocked,
+                   ISingleSoundPlayer soundPlayer,
+                   IDifficultySpritesProvider difficultySpritesProvider,
+                   ITrashTalkProvider trashDataList,
+                   int setIndex)
         {
             Assert.IsNotNull(navigationFeedbackButton);
             Helper.AssertIsNotNull(screensSceneGod, allLevels, soundPlayer, difficultySpritesProvider, trashDataList);
@@ -36,7 +52,20 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             // Set up levels
             LevelButtonController[] levelButtons = GetComponentsInChildren<LevelButtonController>();
-            _numOfLevels = levelButtons.Length;
+            int directLevelButtonChildren = 0;
+
+            foreach (LevelButtonController levelButton in levelButtons)
+            {
+                if (levelButton.transform.parent == transform)
+                {
+                    directLevelButtonChildren++;
+                }
+            }
+
+            _numOfLevels = directLevelButtonChildren;
+
+            _numOfLevels = directLevelButtonChildren;
+
 
             Assert.IsTrue(firstLevelIndex >= 0);
             Assert.IsTrue(firstLevelIndex + _numOfLevels <= allLevels.Count);
@@ -54,7 +83,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();
-            int expectedNumberOfTrails = _numOfLevels -1;
+            int expectedNumberOfTrails = _numOfLevels - 1;
             Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
 
             for (int i = 0; i < trails.Length; ++i)
@@ -74,5 +103,5 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelNum > firstLevelIndex
                 && levelNum <= firstLevelIndex + _numOfLevels;
         }
-	}
+    }
 }

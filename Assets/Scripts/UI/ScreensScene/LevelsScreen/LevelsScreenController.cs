@@ -26,6 +26,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         private LevelsSetController VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
+        private ISingleSoundPlayer soundPlayer;
+
+
         private int _visibleSetIndex;
         public int VisibleSetIndex 
         { 
@@ -40,6 +43,20 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 VisibleSetChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public void CheckAndUnlockSecretLevels()
+        {
+            if (_numOfLevelsUnlocked > 31)
+            {
+                int secretLevelNum = 32;
+                foreach (LevelsSetController levelsSet in _levelSets)
+                {
+                    levelsSet.InitialiseSecretLevelButton(secretLevelNum, _screensSceneGod, soundPlayer);
+                    secretLevelNum++;
+                }
+            }
+        }
+
 
         public event EventHandler VisibleSetChanged;
 
@@ -97,6 +114,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             int levelNumToShow = _nextLevelHelper.FindNextLevel();
             ShowLastPlayedLevelSet(_levelSets, levelNumToShow);
+            CheckAndUnlockSecretLevels();
         }
 
         private void ShowLastPlayedLevelSet(IList<LevelsSetController> levelSets, int levelToShow)
