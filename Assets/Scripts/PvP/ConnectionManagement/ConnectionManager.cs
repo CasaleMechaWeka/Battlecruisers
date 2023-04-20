@@ -137,6 +137,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 m_Resolver.Inject(connectionState);
             }
             m_CurrentState = m_Offline;
+            // Here, we keep ForceSamePrefabs disabled. This will allow us to dynamically add network prefabs to Netcode
+            // for GameObject after establishing a connection.
+            NetworkManager.NetworkConfig.ForceSamePrefabs = false;
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
             // NetworkManager.OnServerStarted += OnServerStarted;

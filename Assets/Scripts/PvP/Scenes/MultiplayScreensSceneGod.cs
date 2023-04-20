@@ -232,9 +232,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     ["Skill"] = new DataObject(DataObject.VisibilityOptions.Public, "33", DataObject.IndexOptions.N1),
                     ["Rank"] = new DataObject(DataObject.VisibilityOptions.Public, "22", DataObject.IndexOptions.N2)
                 };
-
-
-
                 var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                 if (lobbyCreationAttemp.Success)
                 {
@@ -245,12 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
                         m_LobbyServiceFacade.BeginTracking();
                     }
-
-
                 }
-
-
-
             }
             // if (lobbyQuickJoinAttemp.Success)
             // {

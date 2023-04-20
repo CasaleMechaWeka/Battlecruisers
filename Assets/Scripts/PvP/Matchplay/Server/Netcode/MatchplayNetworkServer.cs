@@ -31,6 +31,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         {
             m_NetworkManager = networkManager;
             m_NetworkManager.NetworkConfig.ConnectionApproval = true;
+            // Here, we keep ForceSamePrefabs disabled. This will allow us to dynamically add network prefabs to Netcode
+            // for GameObject after establishing a connection.
+            m_NetworkManager.NetworkConfig.ForceSamePrefabs = false;
             m_NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             m_NetworkManager.OnServerStarted += OnNetworkReady;
         }

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     [RequireComponent(typeof(NetcodeHooks))]
-    public class MultiplayBattleSceneServerGod : MonoBehaviour
+    public class MultiplayBattleSceneServer : MonoBehaviour
     {
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -20,6 +20,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         Action onClientExit;
         const int MaxConnectedPlayers = 2;
 
+        ServerAuthoritativeLoadAllAsyncManager m_ServerAuthoritativeLoadAllAsync;
+
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -28,16 +30,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Start()
         {
-
+            m_ServerAuthoritativeLoadAllAsync = GetComponent<ServerAuthoritativeLoadAllAsyncManager>();
         }
 
         void OnClientEntered()
         {
-            if (m_clients.Count == MaxConnectedPlayers)
-            {
-                //Spawn Players for 2 clients;
+            // if (m_clients.Count == MaxConnectedPlayers)
+            // {
 
-            }
+            m_ServerAuthoritativeLoadAllAsync.LoadMultiplayBattleSceneGodOnClientRpc();
+            // }
         }
         void OnClientExit()
         {
@@ -45,10 +47,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
 
-        async void PreloadPrefabs()
-        {
+        // void PreloadPrefabs()
+        // {
 
-        }
+        // }
 
         void OnNetworkSpawn()
         {
@@ -67,7 +69,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         void OnNetworkDespawn()
         {
-
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadEventCompleted;
             NetworkManager.Singleton.SceneManager.OnSynchronizeComplete -= OnSynchronizeComplete;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
