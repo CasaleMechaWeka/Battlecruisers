@@ -30,9 +30,10 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             SecretLevelButtonController secretLevelButton = GetComponentInChildren<SecretLevelButtonController>();
             if (secretLevelButton != null)
             {
-                await secretLevelButton.InitialiseAsync(secretLevel, screensSceneGod, soundPlayer);
+                secretLevelButton.Initialise(screensSceneGod, soundPlayer);
             }
         }
+
 
 
 
