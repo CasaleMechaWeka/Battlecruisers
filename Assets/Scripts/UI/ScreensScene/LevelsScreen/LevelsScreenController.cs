@@ -29,6 +29,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private ISingleSoundPlayer soundPlayer;
 
 
+        [SerializeField]
+        private List<LevelInfo> secretLevels;
+
         private int _visibleSetIndex;
         public int VisibleSetIndex 
         { 
@@ -48,14 +51,18 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             if (_numOfLevelsUnlocked > 31)
             {
-                int secretLevelNum = 32;
-                foreach (LevelsSetController levelsSet in _levelSets)
+                for (int i = 0; i < _levelSets.Count; i++)
                 {
-                    levelsSet.InitialiseSecretLevelButton(secretLevelNum, _screensSceneGod, soundPlayer);
-                    secretLevelNum++;
+                    if (i < secretLevels.Count)
+                    {
+                        LevelInfo secretLevel = secretLevels[i];
+                        _levelSets[i].InitialiseSecretLevelButton(secretLevel, _screensSceneGod, soundPlayer);
+                    }
                 }
             }
         }
+
+
 
 
         public event EventHandler VisibleSetChanged;

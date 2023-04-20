@@ -22,15 +22,19 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public int expectedNumberOfTrails;
 
+        public SecretLevelButtonController secretLevelButton;
 
-        public async Task InitialiseSecretLevelButton(int secretLevelNum, IScreensSceneGod screensSceneGod, ISingleSoundPlayer soundPlayer)
+
+        public async Task InitialiseSecretLevelButton(LevelInfo secretLevel, IScreensSceneGod screensSceneGod, ISingleSoundPlayer soundPlayer)
         {
             SecretLevelButtonController secretLevelButton = GetComponentInChildren<SecretLevelButtonController>();
             if (secretLevelButton != null)
             {
-                await secretLevelButton.InitialiseSecretLevelButton(secretLevelNum, screensSceneGod, soundPlayer);
+                await secretLevelButton.InitialiseAsync(secretLevel, screensSceneGod, soundPlayer);
             }
         }
+
+
 
 
 
