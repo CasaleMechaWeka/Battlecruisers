@@ -20,7 +20,7 @@ namespace BattleCruisers.Data.Static
         private readonly IList<UnitKey> _allUnits;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
-        public const int NUM_OF_LEVELS = 39;
+        public const int NUM_OF_LEVELS = 40;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
 
 #if IS_DEMO
@@ -275,7 +275,8 @@ namespace BattleCruisers.Data.Static
                 new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
                 new Level(37, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
                 new Level(38, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(39, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise)
+                new Level(39, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
+                new Level(40, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise) //TODO: Change to new boss broadsword
             };
 		}
 
