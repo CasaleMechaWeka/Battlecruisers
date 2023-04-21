@@ -1,10 +1,10 @@
 ﻿namespace BattleCruisers.Utils
 {
-	public static class Constants
-	{
-		public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
-		public const float PI = 3.14f;
-		public const int MS_PER_S = 1000;
+    public static class Constants
+    {
+        public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
+        public const float PI = 3.14f;
+        public const int MS_PER_S = 1000;
         public const float MAX_ACCURACY = 1;
         public const float DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S = 0.5f;
         public const int POPULATION_LIMIT = 30;
@@ -19,7 +19,7 @@
 
     public static class Alpha
     {
-		public const float DISABLED = 0.4f;
+        public const float DISABLED = 0.4f;
         public const float PRESSED = 0.6f;
         public const float HOVER = 0.8f;
         public const float ENABLED = 1.0f;
@@ -36,22 +36,24 @@
         public const float ONE_AND_A_HALF_DEFAULT = 3;
         public const float DEFAULT_TUTORIAL = 3;
         public const float FAST = 50;
-		public const float VERY_FAST = 500;
+        public const float VERY_FAST = 500;
     }
 
-	public static class SceneNames
-	{
-		public const string LANDING_SCENE = "LandingScene";
-		public const string LOADING_SCENE = "LoadingScene";
-		public const string BATTLE_SCENE = "BattleScene";
-		public const string SCREENS_SCENE = "ScreensScene";
-		public const string CREDITS_SCENE = "LonelyCreditsScene";
+    public static class SceneNames
+    {
+        public const string LANDING_SCENE = "LandingScene";
+        public const string LOADING_SCENE = "LoadingScene";
+        public const string BATTLE_SCENE = "BattleScene";
+        public const string SCREENS_SCENE = "ScreensScene";
+        public const string CREDITS_SCENE = "LonelyCreditsScene";
         public const string CUTSCENE_SCENE = "HuntressCutscene";
         public const string DESTRUCTION_SCENE = "DestructionScene";
         public const string STAGE_INTERSTITIAL_SCENE = "StageInterstitialScene";
         public const string MULTIPLAY_SCREENS_SCENE = "MultiplayScreensScene";
         public const string MATCHMAKING_SCREENS_SCENE = "MatchmakingScreensScene";
         public const string MULTIPLAY_STARTUP_SCENE = "MultiplayStartupScene";
+        public const string MULTIPLAY_MATCHMAKER_SCENE = "Matchmaker";
+        public const string MULTIPLAY_MATCHMAKING_LOADING_SCENE = "MultiplayMatchmakingLoadingScene";
     }
 
     public static class GameObjectTags
@@ -72,6 +74,6 @@
         public const int STAGE_6 = 18;
         public const int STAGE_7 = 22;
         public const int STAGE_8 = 26;
-        public static int[] STAGE_STARTS = {STAGE_1, STAGE_2, STAGE_3, STAGE_4, STAGE_5, STAGE_6, STAGE_7, STAGE_8};
+        public static int[] STAGE_STARTS = { STAGE_1, STAGE_2, STAGE_3, STAGE_4, STAGE_5, STAGE_6, STAGE_7, STAGE_8 };
     }
 }

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.Sound.Players
 
         public async Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false)
         {
-            Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");
+            Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");       
 
             IAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
             PlaySound(soundToPlay, loop);

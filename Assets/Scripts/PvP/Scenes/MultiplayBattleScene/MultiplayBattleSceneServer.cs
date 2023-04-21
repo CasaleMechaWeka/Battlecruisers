@@ -1,0 +1,110 @@
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.Netcode;
+using Unity.Multiplayer.Samples.Utilities;
+using UnityEngine.SceneManagement;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
+{
+    [RequireComponent(typeof(NetcodeHooks))]
+    public class MultiplayBattleSceneServer : MonoBehaviour
+    {
+        [SerializeField]
+        NetcodeHooks m_NetcodeHooks;
+
+        List<ulong> m_clients = new List<ulong>();
+
+        Action onClientEntered;
+        Action onClientExit;
+        const int MaxConnectedPlayers = 2;
+
+        ServerAuthoritativeLoadAllAsyncManager m_ServerAuthoritativeLoadAllAsync;
+
+        private void Awake()
+        {
+            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
+        }
+
+        private void Start()
+        {
+            m_ServerAuthoritativeLoadAllAsync = GetComponent<ServerAuthoritativeLoadAllAsyncManager>();
+        }
+
+        void OnClientEntered()
+        {
+            // if (m_clients.Count == MaxConnectedPlayers)
+            // {
+
+            m_ServerAuthoritativeLoadAllAsync.LoadMultiplayBattleSceneGodOnClientRpc();
+            // }
+        }
+        void OnClientExit()
+        {
+
+        }
+
+
+        // void PreloadPrefabs()
+        // {
+
+        // }
+
+        void OnNetworkSpawn()
+        {
+
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                enabled = false;
+                return;
+            }
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoadEventCompleted;
+            NetworkManager.Singleton.SceneManager.OnSynchronizeComplete += OnSynchronizeComplete;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+            onClientEntered += OnClientEntered;
+            onClientExit += OnClientExit;
+        }
+
+        void OnNetworkDespawn()
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadEventCompleted;
+            NetworkManager.Singleton.SceneManager.OnSynchronizeComplete -= OnSynchronizeComplete;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+            onClientEntered -= OnClientEntered;
+            onClientExit -= OnClientExit;
+        }
+
+        void OnDestroy()
+        {
+            if (m_NetcodeHooks)
+            {
+                m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
+                m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
+            }
+        }
+
+
+        void OnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+        {
+
+        }
+
+        void OnClientDisconnect(ulong clientId)
+        {
+            m_clients.Remove(clientId);
+            onClientExit?.Invoke();
+        }
+
+
+        // this is a Late Join scenario
+        void OnSynchronizeComplete(ulong clientId)
+        {
+            m_clients.Add(clientId);
+            onClientEntered?.Invoke();
+        }
+
+
+    }
+}

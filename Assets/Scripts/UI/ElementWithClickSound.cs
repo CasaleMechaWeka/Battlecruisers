@@ -3,6 +3,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using System;
 using UnityEngine.Assertions;
+using UnityEngine;
 
 namespace BattleCruisers.UI
 {
@@ -14,12 +15,11 @@ namespace BattleCruisers.UI
         protected virtual ISoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual void Initialise(
-            ISingleSoundPlayer soundPlayer, 
+            ISingleSoundPlayer soundPlayer,
             Action clickAction = null,
             IDismissableEmitter parent = null)
         {
             base.Initialise();
-
             Assert.IsNotNull(soundPlayer);
 
             _soundPlayer = soundPlayer;
@@ -41,6 +41,8 @@ namespace BattleCruisers.UI
         {
             if (ClickSound != null)
             {
+                if (_soundPlayer == null)
+                    Debug.Log("Sound player is null");
                 _soundPlayer.PlaySoundAsync(ClickSound);
             }
 

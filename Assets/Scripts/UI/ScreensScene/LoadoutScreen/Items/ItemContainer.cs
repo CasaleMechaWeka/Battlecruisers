@@ -26,6 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IGameModel _gameModel;
         private NewItemMark _newItemMark;
 
+
         public IItemButton Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
@@ -50,7 +51,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             bool isItemUnlocked = IsUnlocked(gameModel);
             //lockedItem.IsVisible = !isItemUnlocked;
             itemButton.IsVisible = isItemUnlocked;
-
             UpdateNewItemMarkVisibility();
 
             return itemButton;

@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Loading
 
         async void Start()
         {
-            
+
             Helper.AssertIsNotNull(root, loadingText);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -41,8 +41,8 @@ namespace BattleCruisers.UI.Loading
                 subTitle = commonStrings.GetString("GameNameSubtitle").ToUpper();
             }
 #if FREE_EDITION
-            
-               
+
+
 #else
             //if premium version set here 
             applicationModel.DataProvider.GameModel.PremiumEdition = true;
@@ -52,14 +52,14 @@ namespace BattleCruisers.UI.Loading
             SubTitle.text = subTitle;
 
             _defaultLoadingText = commonStrings.GetString("UI/LoadingScreen/DefaultLoadingText");
-            startingText  = commonStrings.GetString("UI/LoadingScreen/StartingText");
+            startingText = commonStrings.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();
             Instance = this;
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
             Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
-            foreach(Transform t in ts)
+            foreach (Transform t in ts)
             {
                 if (t.gameObject.name == locName)
                 {
@@ -73,19 +73,19 @@ namespace BattleCruisers.UI.Loading
 
         void Update()
         {
-/*            AudioListener[] listeners = GameObject.FindObjectsOfType<AudioListener>();
-            if (listeners.Length == 0)
-            {
-                gameObject.AddComponent<AudioListener>();
-            }
-            if (listeners.Length > 1)
-            {
-                AudioListener audioListener = gameObject.GetComponent<AudioListener>();
-                if (audioListener != null)
-                {
-                    Destroy(audioListener);
-                }
-            }*/
+            /*            AudioListener[] listeners = GameObject.FindObjectsOfType<AudioListener>();
+                        if (listeners.Length == 0)
+                        {
+                            gameObject.AddComponent<AudioListener>();
+                        }
+                        if (listeners.Length > 1)
+                        {
+                            AudioListener audioListener = gameObject.GetComponent<AudioListener>();
+                            if (audioListener != null)
+                            {
+                                Destroy(audioListener);
+                            }
+                        }*/
         }
 
         private string FindLoadingText()
@@ -103,6 +103,7 @@ namespace BattleCruisers.UI.Loading
         public void Destroy()
         {
             Destroy(gameObject);
+            // enabled = false;
         }
     }
 }
