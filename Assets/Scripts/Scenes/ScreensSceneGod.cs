@@ -64,7 +64,7 @@ namespace BattleCruisers.Scenes
         public bool goToPostBattleScreen = false;
         [Header("For testing the levels screen")]
         public bool testLevelsScreen = false;
-        [Range(1, 25)]
+        [Range(1, 45)]
         public int numOfLevelsUnlocked = 1;
         [Header("For testing the trash talk screen")]
         public bool testTrashTalkScreen = false;

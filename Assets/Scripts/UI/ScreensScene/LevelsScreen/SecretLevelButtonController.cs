@@ -21,9 +21,14 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             _screensSceneGod = screensSceneGod;
 
-            // Call the base class Initialise method
-            Initialise(soundPlayer);
+            // Call the base class Initialise method with the required parameters
+            base.Initialise(soundPlayer);
+
+            // Set the sound player
+            _soundPlayer = soundPlayer;
         }
+
+
 
         protected override void OnClicked()
         {
