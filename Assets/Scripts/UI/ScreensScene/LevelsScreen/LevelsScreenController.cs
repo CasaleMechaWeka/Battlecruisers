@@ -49,18 +49,26 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public void CheckAndUnlockSecretLevels()
         {
+            Debug.Log("Num of Levels Unlocked: " + _numOfLevelsUnlocked);
+            Debug.Log("Level Sets Count: " + _levelSets.Count);
+            Debug.Log("Secret Levels Count: " + secretLevels.Count);
+
             if (_numOfLevelsUnlocked > 31)
             {
                 for (int i = 0; i < _levelSets.Count; i++)
                 {
+                    Debug.Log("Checking Level Set: " + i);
+
                     if (i < secretLevels.Count)
                     {
                         LevelInfo secretLevel = secretLevels[i];
                         _levelSets[i].InitialiseSecretLevelButton(secretLevel, _screensSceneGod, soundPlayer);
+
                     }
                 }
             }
         }
+
 
 
 
@@ -76,6 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             ITrashTalkProvider trashDataList,
             INextLevelHelper nextLevelHelper)
         {
+            this.soundPlayer = soundPlayer;
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(nextSetButton, previousSetButton, cancelButton);
@@ -112,7 +121,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, difficultySpritesProvider, trashDataList, setIndex: j);
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
+
+                // Add this debug statement
+                Debug.Log("Initialized Level Set " + j + ": " + levelsSet);
             }
+
+            CheckAndUnlockSecretLevels();
         }
 
         public override void OnPresenting(object activationParameter)

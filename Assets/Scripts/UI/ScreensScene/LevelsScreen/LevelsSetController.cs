@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public SecretLevelButtonController secretLevelButton;
 
 
-        public async Task InitialiseSecretLevelButton(LevelInfo secretLevel, IScreensSceneGod screensSceneGod, ISingleSoundPlayer soundPlayer)
+        public void InitialiseSecretLevelButton(LevelInfo secretLevel, IScreensSceneGod screensSceneGod, ISingleSoundPlayer soundPlayer)
         {
             SecretLevelButtonController secretLevelButton = GetComponentInChildren<SecretLevelButtonController>();
             if (secretLevelButton != null)
@@ -33,6 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 secretLevelButton.Initialise(screensSceneGod, soundPlayer);
             }
         }
+
 
 
 
