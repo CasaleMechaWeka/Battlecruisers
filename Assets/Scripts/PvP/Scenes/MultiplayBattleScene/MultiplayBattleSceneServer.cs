@@ -1,5 +1,5 @@
 using System;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -14,11 +14,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
+        [SerializeField]
+        PvPPlayerManager m_PvPPlayerManagerPrefab;
+
         List<ulong> m_clients = new List<ulong>();
 
         Action onClientEntered;
         Action onClientExit;
-        const int MaxConnectedPlayers = 2;
+        const int MaxConnectedPlayers = 1;
 
         private void Awake()
         {
@@ -35,9 +38,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (m_clients.Count == MaxConnectedPlayers)
             {
-
-
+                foreach (ulong id in m_clients)
+                {
+                    StartCoroutine(iLoadPvPPlayerManager(id));
+                }
             }
+        }
+
+        IEnumerator iLoadPvPPlayerManager(ulong clientID)
+        {
+            yield return null;
+            var pvpPlayerManager = Instantiate(m_PvPPlayerManagerPrefab);
+            pvpPlayerManager.NetworkObject.SpawnWithOwnership(clientID, false);
         }
         void OnClientExit()
         {
