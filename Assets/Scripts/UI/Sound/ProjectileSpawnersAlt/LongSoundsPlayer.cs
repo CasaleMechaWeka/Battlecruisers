@@ -3,6 +3,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
+
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
     /// <summary>
@@ -20,10 +21,10 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         private const int MIN_BURST_SIZE = 2;
 
         public LongSoundPlayer(
-            IAudioClipWrapper audioClip, 
+            IAudioClipWrapper audioClip,
             IAudioSource audioSource,
-            IDeferrer deferrer, 
-            int burstSize, 
+            IDeferrer deferrer,
+            int burstSize,
             float burstEndDelayInS)
             : base(audioClip, audioSource)
         {

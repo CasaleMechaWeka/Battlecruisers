@@ -15,6 +15,7 @@ using UnityEngine.EventSystems;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Scenes.BattleScene;
 
+
 namespace BattleCruisers.Cruisers.Slots
 {
     public class Slot : MonoBehaviour, ISlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
@@ -48,7 +49,7 @@ namespace BattleCruisers.Cruisers.Slots
         public ITransform Transform { get; private set; }
         public Vector3 BuildingPlacementPoint { get; private set; }
         public Vector2 Position => transform.position;
-        
+
         private ISettableBroadcastingProperty<IBuilding> _baseBuilding;
         public IBroadcastingProperty<IBuilding> Building { get; private set; }
 
@@ -77,7 +78,8 @@ namespace BattleCruisers.Cruisers.Slots
 
         }
 
-        public void stopBuildingPlacementFeedback() {
+        public void stopBuildingPlacementFeedback()
+        {
             _buildingPlacementFeedback.gameObject.SetActive(false);
             _renderer.gameObject.SetActive(false);
         }
@@ -113,14 +115,14 @@ namespace BattleCruisers.Cruisers.Slots
         public event EventHandler Clicked;
 
         public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer)
-		{
+        {
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, buildingPlacer);
 
             _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
             _buildingPlacer = buildingPlacer;
 
-			_renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
+            _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _explosion = _explosionController.Initialise();
             Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
             BuildingPlacementPoint = buildingPlacementPoint.position;
@@ -146,13 +148,14 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
 
-        public void OnDrop(PointerEventData eventData) {
+        public void OnDrop(PointerEventData eventData)
+        {
             OnPointerClick(eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-         //do nothing here
+            //do nothing here
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -169,7 +172,7 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         public void OnPointerClick(PointerEventData eventData)
-		{
+        {
             Logging.LogMethod(Tags.SLOTS);
 
             if (IsVisible && IsFree)
@@ -178,14 +181,14 @@ namespace BattleCruisers.Cruisers.Slots
             }
 
             Clicked?.Invoke(this, EventArgs.Empty);
-		}
+        }
 
-		private void OnBuildingDestroyed(object sender, EventArgs e)
-		{
+        private void OnBuildingDestroyed(object sender, EventArgs e)
+        {
             _explosion.Activate(Transform.Position);
             Invoke("NullifySlotBuilding", 1f);
-            
-		}
+
+        }
 
         private void NullifySlotBuilding()
         {

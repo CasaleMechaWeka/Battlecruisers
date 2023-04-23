@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     /// receives half the turret stats' damage).
     /// </summary>
     public class ShellTurretBarrelController : BarrelController
-	{
+    {
         private ShellSpawner[] _shellSpawners;
         private ShellSpawner _middleSpawner;
 
@@ -22,33 +22,35 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public override bool CanFireWithoutTarget => true;
 
         public override void StaticInitialise()
-		{
-			base.StaticInitialise();
+        {
+            base.StaticInitialise();
 
-			_shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
-			Assert.IsNotNull(_shellSpawners);
+            _shellSpawners = gameObject.GetComponentsInChildren<ShellSpawner>();
+            Assert.IsNotNull(_shellSpawners);
             Assert.IsTrue(_shellSpawners.Length != 0);
 
             _middleSpawner = _shellSpawners.Middle();
         }
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
-		{
+        {
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
                 await spawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, args.TargetFilter);
             }
-		}
+        }
 
         public override void Fire(float angleInDegrees)
-		{
-			foreach (ShellSpawner spawner in _shellSpawners)
+        {
+
+            foreach (ShellSpawner spawner in _shellSpawners)
             {
+
                 spawner.SpawnShell(angleInDegrees, IsSourceMirrored);
-			}
-		}
-	}
+            }
+        }
+    }
 }
 

@@ -15,18 +15,4 @@ namespace BattleCruisers
             _commonStrings = commonStrings;
         }
     }
-
-    public class NetPrefab : NetworkBehaviour, IPrefab
-    {
-        protected ILocTable _commonStrings;
-
-        public virtual void StaticInitialise(ILocTable commonStrings)
-        {
-            Assert.IsNotNull(commonStrings);
-            _commonStrings = commonStrings;
-        }
-    }
-
-
-
 }

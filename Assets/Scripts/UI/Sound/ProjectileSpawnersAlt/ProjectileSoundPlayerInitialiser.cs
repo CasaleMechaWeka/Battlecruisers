@@ -11,8 +11,8 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     public abstract class ProjectileSoundPlayerInitialiser : MonoBehaviour, IProjectileSoundPlayerInitialiser
     {
         public async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory, 
-            ISoundKey firingSound, 
+            ISoundPlayerFactory soundPlayerFactory,
+            ISoundKey firingSound,
             int burstSize,
             ISettingsManager settingsManager)
         {
@@ -20,7 +20,8 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 
             AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
-            IAudioSource audioSourceWrapper 
+
+            IAudioSource audioSourceWrapper
                 = new EffectVolumeAudioSource(
                     new AudioSourceBC(audioSource),
                     settingsManager);
@@ -29,9 +30,9 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         }
 
         protected abstract Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory, 
-            ISoundKey firingSound, 
-            int burstSize, 
+            ISoundPlayerFactory soundPlayerFactory,
+            ISoundKey firingSound,
+            int burstSize,
             IAudioSource audioSource);
     }
 }

@@ -164,8 +164,6 @@ namespace BattleCruisers.Projectiles
                 && _targetToDamage == null)
             {
                 _targetToDamage = target;
-
-
             }
         }
 

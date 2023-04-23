@@ -19,13 +19,13 @@ namespace BattleCruisers.Projectiles.Spawners
         where TProjectile : ProjectileControllerBase<TProjectileArgs, TStats>
         where TProjectileArgs : ProjectileActivationArgs<TStats>
         where TStats : IProjectileStats
-	{
+    {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         private IPool<TProjectile, TProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
-		protected IFactoryProvider _factoryProvider;
+        protected IFactoryProvider _factoryProvider;
         protected ICruiserSpecificFactories _cruiserSpecificFactories;
         protected ICruiser _enemyCruiser;
 
@@ -49,27 +49,27 @@ namespace BattleCruisers.Projectiles.Spawners
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer 
+            _soundPlayer
                 = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-                    args.FactoryProvider.Sound.SoundPlayerFactory, 
-                    firingSound, 
+                    args.FactoryProvider.Sound.SoundPlayerFactory,
+                    firingSound,
                     args.BurstSize,
                     args.FactoryProvider.SettingsManager);
         }
 
-		protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
-		{
-			float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
+        protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
+        {
+            float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
 
-			int xDirectionMultiplier = isSourceMirrored ? -1 : 1;
+            int xDirectionMultiplier = isSourceMirrored ? -1 : 1;
 
-			float velocityX = velocityInMPerS * Mathf.Cos(angleInRadians) * xDirectionMultiplier;
-			float velocityY = velocityInMPerS * Mathf.Sin(angleInRadians);
+            float velocityX = velocityInMPerS * Mathf.Cos(angleInRadians) * xDirectionMultiplier;
+            float velocityY = velocityInMPerS * Mathf.Sin(angleInRadians);
 
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"angleInDegrees: {angleInDegrees}  isSourceMirrored: {isSourceMirrored}  =>  velocityX: {velocityX}  velocityY: {velocityY}");
 
-			return new Vector2(velocityX, velocityY);
-		}
+            return new Vector2(velocityX, velocityY);
+        }
 
         protected void SpawnProjectile(TProjectileArgs projectileActivationArgs)
         {
@@ -80,7 +80,8 @@ namespace BattleCruisers.Projectiles.Spawners
             {
                 _soundPlayer.OnProjectileFired();
             }
-            else{
+            else
+            {
                 Debug.Log("Warning, soundplayer was null when spawn projectile was called");
             }
         }
