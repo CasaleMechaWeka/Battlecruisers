@@ -20,8 +20,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         Action onClientExit;
         const int MaxConnectedPlayers = 2;
 
-        ServerAuthoritativeLoadAllAsyncManager m_ServerAuthoritativeLoadAllAsync;
-
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -30,28 +28,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void Start()
         {
-            m_ServerAuthoritativeLoadAllAsync = GetComponent<ServerAuthoritativeLoadAllAsyncManager>();
+
         }
 
         void OnClientEntered()
         {
-            // if (m_clients.Count == MaxConnectedPlayers)
-            // {
+            if (m_clients.Count == MaxConnectedPlayers)
+            {
 
-            m_ServerAuthoritativeLoadAllAsync.LoadMultiplayBattleSceneGodOnClientRpc();
-            // }
+
+            }
         }
         void OnClientExit()
         {
 
         }
-
-
-        // void PreloadPrefabs()
-        // {
-
-        // }
-
         void OnNetworkSpawn()
         {
 
