@@ -36,16 +36,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override void OnClicked()
         {
             base.OnClicked();
-
-            if (_comparingFamiltyTracker.ComparingFamily.Value == null)
+            _comparingFamiltyTracker.SetComparingFamily(ItemFamily.Buildings);
+            if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
                 _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
+                _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
             {
-                _itemDetailsManager.CompareWithSelectedItem(_buildingPrefab.Buildable);
-                _comparingFamiltyTracker.SetComparingFamily(null);
+                //_itemDetailsManager.CompareWithSelectedItem(_buildingPrefab.Buildable);
+                //_comparingFamiltyTracker.SetComparingFamily(null);
             }
+        }
+
+        public override void ShowDetails()
+        {
+            _itemDetailsManager.ShowDetails(_buildingPrefab.Buildable);
         }
     }
 }

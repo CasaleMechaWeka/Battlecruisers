@@ -61,16 +61,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             base.OnClicked();
             //clickedFeedBack.SetActive(true);
 
-
-            if (_comparingFamiltyTracker.ComparingFamily.Value == null)
+            _comparingFamiltyTracker.SetComparingFamily(itemFamily);
+            if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
                 _itemDetailsManager.ShowDetails(_cruiserPrefab);
+                _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
             {
-                _itemDetailsManager.CompareWithSelectedItem(_cruiserPrefab);
-                _comparingFamiltyTracker.SetComparingFamily(null);
+                //_itemDetailsManager.CompareWithSelectedItem(_cruiserPrefab);
+                //_comparingFamiltyTracker.SetComparingFamily(null);
             }
+        }
+
+        public override void ShowDetails()
+        {
+            _itemDetailsManager.ShowDetails(_cruiserPrefab);
         }
     }
 }

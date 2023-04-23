@@ -65,5 +65,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
         }
+
+        public override void ShowDetails()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

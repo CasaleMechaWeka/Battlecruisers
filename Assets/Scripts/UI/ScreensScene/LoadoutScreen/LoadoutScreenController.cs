@@ -87,7 +87,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     prefabFactory);
 
             _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
-            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons);
+            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
 
             ShowPlayerHull();

@@ -15,86 +15,108 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using TMPro;
+using Unity.Services.Analytics;
+using BattleCruisers.Buildables.Buildings;
+using UnityEditorInternal;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class SelectButtonContoller : CanvasGroupButton
     {
-        private readonly IItemDetailsManager _itemDetailsManager;
-        private IItemDetailsDisplayer<IBuildable> _buildingDetails;
+        private IItemDetailsDisplayer<IBuilding> _buildingDetails;
         private IItemDetailsDisplayer<IUnit> _unitDetails;
-
+        private IBuildingNameToKey _buildingNameToKey;
         private IDataProvider _dataProvider;
-        private RectTransform _selectedText;
-        private RectTransform _deselectedText;
-        private List<BuildableKey> _buildList;
-        private List<UnitKey> _unitList;
-        public ItemPanelsController itemPanelsController;
+        private IBroadcastingProperty<ItemFamily?> _comparingFamily;
 
         public TextMeshProUGUI limit;
         public GameObject selectText;
         public GameObject deselectText;
 
+        private bool _selected;
+        private bool flag;
+
         protected override bool ToggleVisibility => true;
 
         public void Initialise(ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider)
+            IDataProvider dataProvider,
+            IItemDetailsDisplayer<IBuilding> buildingDetails,
+            IBuildingNameToKey buildingName,
+            IBroadcastingProperty<ItemFamily?> _itemFamily)
         {
             base.Initialise(soundPlayer);
-            Helper.AssertIsNotNull(dataProvider);
+            Helper.AssertIsNotNull(dataProvider, buildingDetails, buildingName, _itemFamily);
 
             _dataProvider = dataProvider;
-            //_selectedText = transform.FindNamedComponent<RectTransform>("SelectText");
-            //_deselectedText = transform.FindNamedComponent<RectTransform>("DeselectText");
+            _buildingDetails = buildingDetails;
+            _comparingFamily = _itemFamily;
+            _comparingFamily.ValueChanged += UpdateSelectBuildingButton;
+            _buildingDetails.SelectedItem.ValueChanged += DisplayChange;
+            _buildingNameToKey = buildingName;
+
+            UpdateSelectText();
+            Enabled = ShouldBeEnabled();
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
 
-            ItemType itemType = GetItem();
-            if(itemType == ItemType.Hull)
+            IBuilding displayBuilding = _buildingDetails.SelectedItem.Value;
+            Assert.IsNotNull(displayBuilding);
+            BuildingKey buildingKey = _buildingNameToKey.GetKey(displayBuilding.Name);
+
+            Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            List<BuildingKey> buildingKeys = playerLoadout.GetBuildingKeys(displayBuilding.Category);
+            Assert.IsNotNull(buildingKeys);
+            if(!buildingKeys.Contains(buildingKey))
             {
-                //nothing
-            } 
-            else if (itemType == ItemType.Aircraft || itemType == ItemType.Ship)
-            {
-                AddUnit(itemType);
-                
+                playerLoadout.AddbuildItem(displayBuilding.Category, buildingKey);
+                limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
+                _selected = true;
             }
-            else
+            UpdateSelectText();
+        }
+
+        private void UpdateSelectText()
+        {
+            if (selectText.activeSelf)
             {
-               Addbuild(itemType);
+                selectText.SetActive(false);
+                deselectText.SetActive(true);
+            }
+            else 
+            {
+                selectText.SetActive(true);
+                deselectText.SetActive(false);
             }
         }
-
-        private ItemType GetItem()
+        
+        private bool ShouldBeEnabled()
         {
-            IItemsPanel itemsPanel = itemPanelsController.CurrentlyShownPanel;
-            ItemType type = itemsPanel.ItemType;
-            return type;
+            
+            Debug.Log("it is comparing");
+            Debug.Log(_comparingFamily.Value);
+            if (_comparingFamily.Value == ItemFamily.Buildings)
+                flag = true;
+            else if (_comparingFamily.Value == ItemFamily.Units || _comparingFamily.Value == ItemFamily.Hulls)
+                flag = false;
+            else if (_comparingFamily.Value == null)
+            {
+                //do nothing
+            }
+               
+            return flag;
         }
 
-        private void Addbuild(ItemType itemType)
+        private void UpdateSelectBuildingButton(object sender, EventArgs e)
         {
-            List<BuildingKey> buildList = _dataProvider.GameModel.PlayerLoadout.GetBuildingKeys(itemType);
-            Assert.IsNotNull(buildList);
-            if (_dataProvider.GameModel.PlayerLoadout.GetBuildingListSize(itemType) <= 5)
-                _dataProvider.GameModel.PlayerLoadout.AddbuildItem(itemType, (BuildingKey)_itemDetailsManager.SelectedItem.Value);
-            limit.text = _dataProvider.GameModel.PlayerLoadout.GetBuildingListSize(itemType).ToString();
-            selectText.SetActive(false);
-            deselectText.SetActive(true);
+            Enabled = ShouldBeEnabled();
         }
-
-        private void AddUnit(ItemType itemType)
+        private void DisplayChange(object sender, EventArgs e)
         {
-            List<UnitKey> unitList = _dataProvider.GameModel.PlayerLoadout.GetUnitKeys(itemType);
-            Assert.IsNotNull(unitList);
-            if (_dataProvider.GameModel.PlayerLoadout.GetUnitListSize(itemType) <= 4)
-                _dataProvider.GameModel.PlayerLoadout.AddUnitItem(itemType, (UnitKey)_itemDetailsManager.SelectedItem.Value);
-            limit.text = _dataProvider.GameModel.PlayerLoadout.GetBuildingListSize(itemType).ToString();
-            selectText.SetActive(false);
-            deselectText.SetActive(true);
+            Enabled = ShouldBeEnabled();
+            UpdateSelectText();
         }
     }
 }

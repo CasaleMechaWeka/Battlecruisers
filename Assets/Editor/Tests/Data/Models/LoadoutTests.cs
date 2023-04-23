@@ -31,11 +31,11 @@ namespace BattleCruisers.Tests.Data.Models
             _shipUnitKey2 = new UnitKey(UnitCategory.Naval, "Frigate");
             _aircraftUnitKey = new UnitKey(UnitCategory.Aircraft, "Turtle Gunship");
 
-            _loadout
+            /*_loadout
                 = new Loadout(
                     _hullKey1,
                     new List<BuildingKey>() { _offensiveBuildingKey, _defensiveBuildingKey },
-                    new List<UnitKey>() { _shipUnitKey1, _aircraftUnitKey });
+                    new List<UnitKey>() { _shipUnitKey1, _aircraftUnitKey });*/
         }
 
         #region Hull

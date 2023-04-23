@@ -77,6 +77,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
             CurrentlyShownPanel = _typeToPanel[itemType];
+            IItemsPanel itemsPanel = _typeToPanel[itemType];
+            itemsPanel.GetFirstItemButton().ShowDetails();
         }
 
         public IItemsPanel GetPanel(ItemType itemType)

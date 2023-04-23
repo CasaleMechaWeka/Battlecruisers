@@ -14,6 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public class ItemsPanel : Panel, IItemsPanel
     {
+        private IList<IItemButton> _button;
+
         public ItemType itemType;
         public ItemType ItemType => itemType;
 
@@ -41,8 +43,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
                 itemContainer.gameObject.SetActive(button.IsUnlocked);
             }
-
+            _button = buttons;
             return buttons;
+        }
+
+        public IItemButton GetFirstItemButton()
+        {
+            return _button[0];
         }
     }
 }

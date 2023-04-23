@@ -23,9 +23,9 @@ namespace BattleCruisers.Data.Models
 		[SerializeField]
 		private List<BuildingKey> _buildings;
 
-		private Dictionary<ItemType, List<BuildingKey>> _builds = new();
+		private Dictionary<BuildingCategory, List<BuildingKey>> _builds;
 
-		
+		/*
         [SerializeField]
         private List<BuildingKey> _factories;
 
@@ -39,12 +39,12 @@ namespace BattleCruisers.Data.Models
         private List<BuildingKey> _tactical;
 
         [SerializeField]
-        private List<BuildingKey> _ultra;
+        private List<BuildingKey> _ultra; */
 
 		[SerializeField]
 		private List<UnitKey> _units;
 
-		private Dictionary<ItemType, List<UnitKey>> _unit = new();
+		private Dictionary<UnitCategory, List<UnitKey>> _unit;
 
         public HullKey Hull
 		{
@@ -59,12 +59,15 @@ namespace BattleCruisers.Data.Models
 		public Loadout(
 			HullKey hull,
 			List<BuildingKey> buildings,
-			List<UnitKey> units)
+			List<UnitKey> units,
+			Dictionary<BuildingCategory, List<BuildingKey>> buildLimt,
+			Dictionary<UnitCategory, List<UnitKey>> unitLimit)
 		{
 			Hull = hull;
 			_buildings = buildings;
 			_units = units;
-			AddList();
+			_builds = buildLimt;
+			_unit = unitLimit;
 		}
 
 		public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
@@ -106,21 +109,21 @@ namespace BattleCruisers.Data.Models
         }
 
 		//functions to handle the lists for the buildables
-		public void AddbuildItem(ItemType category, BuildingKey keyToAdd)
+		public void AddbuildItem(BuildingCategory category, BuildingKey keyToAdd)
 		{
 			List<BuildingKey> builds = _builds[category];
 			builds.Add(keyToAdd);
 			_builds[category] = builds;
 		}
 
-        public void AddUnitItem(ItemType category, UnitKey keyToAdd)
+        public void AddUnitItem(UnitCategory category, UnitKey keyToAdd)
         {
             List<UnitKey> unitList = _unit[category];
             unitList.Add(keyToAdd);
             _unit[category] = unitList;
         }
 
-		public void RemoveBuildItem(ItemType category, BuildingKey keyToRemove)
+		public void RemoveBuildItem(BuildingCategory category, BuildingKey keyToRemove)
 		{
             List<BuildingKey> builds = _builds[category];
             bool removedSuccessfully = builds.Remove(keyToRemove);
@@ -128,7 +131,7 @@ namespace BattleCruisers.Data.Models
             _builds[category] = builds;
         }
 
-        public void RemoveUnitItem(ItemType category, UnitKey keyToRemove)
+        public void RemoveUnitItem(UnitCategory category, UnitKey keyToRemove)
         {
             List<UnitKey> unitList = _unit[category];
             bool removedSuccessfully = unitList.Remove(keyToRemove);
@@ -136,43 +139,29 @@ namespace BattleCruisers.Data.Models
             _unit[category] = unitList;
         }
 
-		public List<BuildingKey> GetBuildingKeys(ItemType buildingCategory)
+		public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
 		{
             List<BuildingKey> builds = _builds[buildingCategory].ToList();
 			Assert.IsNotNull(builds);
 			return builds;
         }
 
-        public List<UnitKey> GetUnitKeys(ItemType unitCategory)
+        public List<UnitKey> GetUnitKeys(UnitCategory unitCategory)
         {
             List<UnitKey> unitList = _unit[unitCategory];
             return unitList;
         }
 
-		public int GetBuildingListSize(ItemType category)
+		public int GetBuildingListSize(BuildingCategory category)
 		{
             List<BuildingKey> builds = _builds[category];
             return builds.Count;
 		}
 
-        public int GetUnitListSize(ItemType category)
+        public int GetUnitListSize(UnitCategory category)
 		{
             List<UnitKey> unitList = _unit[category];
 			return unitList.Count;
-        }
-
-		public void AddList()
-		{
-			List<BuildingKey> buildlist = new List<BuildingKey>();
-			_builds.Add(ItemType.Factory, buildlist);
-            _builds.Add(ItemType.Defense, buildlist);
-            _builds.Add(ItemType.Offensive, buildlist);
-            _builds.Add(ItemType.Tactical, buildlist);
-            _builds.Add(ItemType.Ultra, buildlist);
-
-			List<UnitKey> unitKeys = new List<UnitKey>();
-			_unit.Add(ItemType.Ship, unitKeys);
-			_unit.Add(ItemType.Aircraft, unitKeys);	
         }
 
         public override bool Equals(object obj)

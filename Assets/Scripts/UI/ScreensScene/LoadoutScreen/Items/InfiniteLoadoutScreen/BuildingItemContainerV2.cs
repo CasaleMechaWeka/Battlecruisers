@@ -57,5 +57,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             gameModel.NewBuildings.RemoveItem(Key);
         }
+
+        public BuildingKey GetKey()
+        {
+            return Key;
+        }
     }
 }

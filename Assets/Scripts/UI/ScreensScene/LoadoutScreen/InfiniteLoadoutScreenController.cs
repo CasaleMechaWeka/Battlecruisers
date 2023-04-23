@@ -77,7 +77,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
                     _dataProvider);
 
-            selectButtonContoller.Initialise(soundPlayer, dataProvider);
+            selectButtonContoller.Initialise(
+                soundPlayer,
+                dataProvider,
+                buildingDetails,
+                new BuildingNameToKey(_dataProvider.GameModel.UnlockedBuildings, prefabFactory),
+                _comparingFamilyTracker.ComparingFamily);
 
             IList<IItemButton> itemButtons
                 = itemPanels.Initialise(
@@ -90,7 +95,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     prefabFactory);
 
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
-            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons);
+            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
 
             ShowPlayerHull();
