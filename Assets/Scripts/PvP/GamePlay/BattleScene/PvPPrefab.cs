@@ -1,11 +1,11 @@
-﻿using BattleCruisers.Utils.Localisation;
-using UnityEngine;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
-using Unity.Netcode;
+using UnityEngine;
 
-namespace BattleCruisers
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
-    public class Prefab : MonoBehaviour, IPrefab
+    public class PvPPrefab : MonoBehaviour, IPrefab
     {
         protected ILocTable _commonStrings;
 
@@ -15,5 +15,5 @@ namespace BattleCruisers
             _commonStrings = commonStrings;
         }
     }
-
 }
+
