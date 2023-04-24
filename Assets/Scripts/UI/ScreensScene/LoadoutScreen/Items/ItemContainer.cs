@@ -9,6 +9,7 @@ using System;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -45,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _newItemMark = GetComponentInChildren<NewItemMark>(includeInactive: true);
             Assert.IsNotNull(_newItemMark);
 
-            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, prefabFactory);
+            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, prefabFactory,gameModel);
             itemButton.Clicked += ItemButton_Clicked;
 
             bool isItemUnlocked = IsUnlocked(gameModel);
@@ -61,7 +62,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory);
+            IPrefabFactory prefabFactory,
+            IGameModel gameModel);
 
         private void ItemButton_Clicked(object sender, EventArgs e)
         {

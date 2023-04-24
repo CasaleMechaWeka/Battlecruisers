@@ -27,8 +27,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CategoryButtonsPanel categoryButtonsPanel;
         public CompareButton compareButton;
         public SelectCruiserButton selectCruiserButton;
-        public SelectButtonContoller selectButtonContoller;
+        public SelectBuildingButton selectBuildingButton;
+        public SelectUnitButton selectUnitButton;
         public CancelButtonController homeButton;
+        public LimitDisplayer limitDisplayer;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -77,12 +79,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
                     _dataProvider);
 
-            selectButtonContoller.Initialise(
+            selectBuildingButton.Initialise(
                 soundPlayer,
                 dataProvider,
                 buildingDetails,
                 new BuildingNameToKey(_dataProvider.GameModel.UnlockedBuildings, prefabFactory),
-                _comparingFamilyTracker.ComparingFamily);
+                _comparingFamilyTracker.ComparingFamily,
+                _comparingFamilyTracker);
+
+            selectUnitButton.Initialise(
+                soundPlayer,
+                dataProvider,
+                unitDetails,
+                new UnitNameToKey(_dataProvider.GameModel.UnlockedUnits, prefabFactory),
+                _comparingFamilyTracker.ComparingFamily,
+                _comparingFamilyTracker);
+
+            limitDisplayer.Initialise(dataProvider,
+                buildingDetails,
+                unitDetails,
+                _comparingFamilyTracker);
 
             IList<IItemButton> itemButtons
                 = itemPanels.Initialise(

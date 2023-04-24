@@ -21,19 +21,20 @@ using UnityEditorInternal;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class SelectButtonContoller : CanvasGroupButton
+    public class SelectBuildingButton : CanvasGroupButton
     {
         private IItemDetailsDisplayer<IBuilding> _buildingDetails;
-        private IItemDetailsDisplayer<IUnit> _unitDetails;
         private IBuildingNameToKey _buildingNameToKey;
         private IDataProvider _dataProvider;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
+        private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
         public TextMeshProUGUI limit;
         public GameObject selectText;
         public GameObject deselectText;
+        public int buildingLimit;
+        public GameObject checkBox;
 
-        private bool _selected;
         private bool flag;
 
         protected override bool ToggleVisibility => true;
@@ -42,20 +43,22 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IDataProvider dataProvider,
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IBuildingNameToKey buildingName,
-            IBroadcastingProperty<ItemFamily?> _itemFamily)
+            IBroadcastingProperty<ItemFamily?> _itemFamily,
+            IComparingItemFamilyTracker comparingItemFamily)
         {
             base.Initialise(soundPlayer);
             Helper.AssertIsNotNull(dataProvider, buildingDetails, buildingName, _itemFamily);
 
             _dataProvider = dataProvider;
             _buildingDetails = buildingDetails;
+            _comparingItemFamilyTracker = comparingItemFamily;
             _comparingFamily = _itemFamily;
             _comparingFamily.ValueChanged += UpdateSelectBuildingButton;
-            _buildingDetails.SelectedItem.ValueChanged += DisplayChange;
+            _buildingDetails.SelectedItem.ValueChanged += DisplayedBuildingChanged;
             _buildingNameToKey = buildingName;
 
-            UpdateSelectText();
-            Enabled = ShouldBeEnabled();
+            UpdateSelectText(true);
+            Enabled = IsOverLimit();
         }
 
         protected override void OnClicked()
@@ -71,22 +74,36 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(buildingKeys);
             if(!buildingKeys.Contains(buildingKey))
             {
-                playerLoadout.AddbuildItem(displayBuilding.Category, buildingKey);
+                if(playerLoadout.GetBuildingListSize(displayBuilding.Category) <= buildingLimit)
+                    playerLoadout.AddbuildItem(displayBuilding.Category, buildingKey);
+                _dataProvider.SaveGame();
                 limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
-                _selected = true;
+                UpdateSelectText(true);
             }
-            UpdateSelectText();
+            else
+            {
+                playerLoadout.RemoveBuildItem(displayBuilding.Category, buildingKey);
+                _dataProvider.SaveGame();
+                limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
+                UpdateSelectText(false);
+            }
+            _comparingItemFamilyTracker.SetComparingFamily(ItemFamily.Buildings);
+            _comparingItemFamilyTracker.SetComparingFamily(null);
         }
 
-        private void UpdateSelectText()
+        private void UpdateSelectText(bool value)
         {
-            if (selectText.activeSelf)
+            if (value)
             {
+                checkBox.SetActive(true);
+                Enabled = IsOverLimit();
                 selectText.SetActive(false);
                 deselectText.SetActive(true);
             }
             else 
             {
+                checkBox.SetActive(false);
+                Enabled = IsOverLimit();
                 selectText.SetActive(true);
                 deselectText.SetActive(false);
             }
@@ -94,9 +111,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         
         private bool ShouldBeEnabled()
         {
-            
-            Debug.Log("it is comparing");
-            Debug.Log(_comparingFamily.Value);
             if (_comparingFamily.Value == ItemFamily.Buildings)
                 flag = true;
             else if (_comparingFamily.Value == ItemFamily.Units || _comparingFamily.Value == ItemFamily.Hulls)
@@ -113,10 +127,35 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             Enabled = ShouldBeEnabled();
         }
-        private void DisplayChange(object sender, EventArgs e)
+        private void DisplayedBuildingChanged(object sender, EventArgs e)
         {
-            Enabled = ShouldBeEnabled();
-            UpdateSelectText();
+            Debug.Log("it is checking");
+            IBuilding displayBuilding = _buildingDetails.SelectedItem.Value;
+            Debug.Log(displayBuilding);
+            Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            
+            //Assert.IsNotNull(displayBuilding);
+            if (displayBuilding != null)
+            {
+                BuildingKey buildingKey = _buildingNameToKey.GetKey(displayBuilding.Name);
+                limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
+
+                List<BuildingKey> buildingKeys = playerLoadout.GetBuildingKeys(displayBuilding.Category);
+                Assert.IsNotNull(buildingKeys);
+                if (buildingKeys.Contains(buildingKey))
+                    UpdateSelectText(true);
+                else
+                    UpdateSelectText(false);
+            }
+        }
+
+        private bool IsOverLimit()
+        {
+            Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
+            if(_buildingDetails != null)
+                if (ShouldBeEnabled() && loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) <= buildingLimit)
+                    return true;
+            return false;
         }
     }
 }

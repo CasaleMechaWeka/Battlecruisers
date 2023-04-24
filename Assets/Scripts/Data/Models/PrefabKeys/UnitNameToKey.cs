@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Units;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -19,8 +20,8 @@ namespace BattleCruisers.Data.Models.PrefabKeys
 
             foreach (UnitKey key in keys)
             {
-                IUnit unitPrefab = (IUnit)prefabFactory.GetUnitWrapperPrefab(key);
-                _unitNameToKey.Add(unitPrefab.Name, key);
+                IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(key);
+                _unitNameToKey.Add(unitPrefab.Buildable.Name, key);
             }
         }
 

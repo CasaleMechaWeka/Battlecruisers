@@ -25,22 +25,6 @@ namespace BattleCruisers.Data.Models
 
 		private Dictionary<BuildingCategory, List<BuildingKey>> _builds;
 
-		/*
-        [SerializeField]
-        private List<BuildingKey> _factories;
-
-        [SerializeField]
-        private List<BuildingKey> _defence;
-
-        [SerializeField]
-        private List<BuildingKey> _offensive;
-
-        [SerializeField]
-        private List<BuildingKey> _tactical;
-
-        [SerializeField]
-        private List<BuildingKey> _ultra; */
-
 		[SerializeField]
 		private List<UnitKey> _units;
 
@@ -162,6 +146,22 @@ namespace BattleCruisers.Data.Models
 		{
             List<UnitKey> unitList = _unit[category];
 			return unitList.Count;
+        }
+
+		public bool IsBuildingInList(BuildingCategory category, BuildingKey key)
+		{
+			List<BuildingKey> buildingKeys = _builds[category];
+			if(buildingKeys.Contains(key))
+				return true;
+			return false;
+		}
+
+        public bool IsUnitInList(UnitCategory category, UnitKey key)
+        {
+            List<UnitKey> unitKeys = _unit[category];
+            if (unitKeys.Contains(key))
+                return true;
+            return false;
         }
 
         public override bool Equals(object obj)
