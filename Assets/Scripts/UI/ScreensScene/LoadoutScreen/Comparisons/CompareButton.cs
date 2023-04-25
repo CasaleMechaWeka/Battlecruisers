@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private IComparisonStateTracker _comparisonStateTracker;
 
-        protected override bool ToggleVisibility => true;
+        protected override bool ToggleVisibility => false;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,

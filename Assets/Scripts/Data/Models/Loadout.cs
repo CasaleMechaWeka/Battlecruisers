@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Utils;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models
 {
-    [Serializable]
+	[Serializable]
 	public class Loadout : ILoadout
 	{
 		[SerializeField]
@@ -19,10 +23,14 @@ namespace BattleCruisers.Data.Models
 		[SerializeField]
 		private List<BuildingKey> _buildings;
 
+		private Dictionary<BuildingCategory, List<BuildingKey>> _builds;
+
 		[SerializeField]
 		private List<UnitKey> _units;
 
-		public HullKey Hull
+		private Dictionary<UnitCategory, List<UnitKey>> _unit;
+
+        public HullKey Hull
 		{
 			get { return _hull; }
 			set 
@@ -35,11 +43,15 @@ namespace BattleCruisers.Data.Models
 		public Loadout(
 			HullKey hull,
 			List<BuildingKey> buildings,
-			List<UnitKey> units)
+			List<UnitKey> units,
+			Dictionary<BuildingCategory, List<BuildingKey>> buildLimt,
+			Dictionary<UnitCategory, List<UnitKey>> unitLimit)
 		{
 			Hull = hull;
 			_buildings = buildings;
 			_units = units;
+			_builds = buildLimt;
+			_unit = unitLimit;
 		}
 
 		public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
@@ -80,7 +92,79 @@ namespace BattleCruisers.Data.Models
             Assert.IsTrue(removedSuccessfully);
         }
 
-		public override bool Equals(object obj)
+		//functions to handle the lists for the buildables
+		public void AddbuildItem(BuildingCategory category, BuildingKey keyToAdd)
+		{
+			List<BuildingKey> builds = _builds[category];
+			builds.Add(keyToAdd);
+			_builds[category] = builds;
+		}
+
+        public void AddUnitItem(UnitCategory category, UnitKey keyToAdd)
+        {
+            List<UnitKey> unitList = _unit[category];
+            unitList.Add(keyToAdd);
+            _unit[category] = unitList;
+        }
+
+		public void RemoveBuildItem(BuildingCategory category, BuildingKey keyToRemove)
+		{
+            List<BuildingKey> builds = _builds[category];
+            bool removedSuccessfully = builds.Remove(keyToRemove);
+            Assert.IsTrue(removedSuccessfully);
+            _builds[category] = builds;
+        }
+
+        public void RemoveUnitItem(UnitCategory category, UnitKey keyToRemove)
+        {
+            List<UnitKey> unitList = _unit[category];
+            bool removedSuccessfully = unitList.Remove(keyToRemove);
+            Assert.IsTrue(removedSuccessfully);
+            _unit[category] = unitList;
+        }
+
+		public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
+		{
+            List<BuildingKey> builds = _builds[buildingCategory].ToList();
+			Assert.IsNotNull(builds);
+			return builds;
+        }
+
+        public List<UnitKey> GetUnitKeys(UnitCategory unitCategory)
+        {
+            List<UnitKey> unitList = _unit[unitCategory];
+            return unitList;
+        }
+
+		public int GetBuildingListSize(BuildingCategory category)
+		{
+            List<BuildingKey> builds = _builds[category];
+            return builds.Count;
+		}
+
+        public int GetUnitListSize(UnitCategory category)
+		{
+            List<UnitKey> unitList = _unit[category];
+			return unitList.Count;
+        }
+
+		public bool IsBuildingInList(BuildingCategory category, BuildingKey key)
+		{
+			List<BuildingKey> buildingKeys = _builds[category];
+			if(buildingKeys.Contains(key))
+				return true;
+			return false;
+		}
+
+        public bool IsUnitInList(UnitCategory category, UnitKey key)
+        {
+            List<UnitKey> unitKeys = _unit[category];
+            if (unitKeys.Contains(key))
+                return true;
+            return false;
+        }
+
+        public override bool Equals(object obj)
 		{
 			Loadout other = obj as Loadout;
 

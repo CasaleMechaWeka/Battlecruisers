@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -181,7 +183,7 @@ namespace BattleCruisers.Data.Static
         {
             HullKey initialHull = GetInitialHull();
             // TEMP  For final game, don't add ALL the prefabs :D
-            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
+            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits(),GetInitialbuildingLimit(),GetInitialUnitLimit());
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
 
             bool hasAttemptedTutorial = false;
@@ -201,6 +203,69 @@ namespace BattleCruisers.Data.Static
                 //unlockedUnits: AllUnitKeys());
         }
 
+        private Dictionary<BuildingCategory,List<BuildingKey>> GetInitialbuildingLimit()
+        {
+            List<BuildingKey> limit = GetInitialBuildings();
+            List<BuildingKey> factories = new List<BuildingKey>();
+            List<BuildingKey> defence = new List<BuildingKey>();
+            List<BuildingKey> offense = new List<BuildingKey>();
+            List<BuildingKey> tactical = new List<BuildingKey>();
+            List<BuildingKey> Ultra = new List<BuildingKey>();
+            foreach (BuildingKey key in limit)
+            {
+                switch(key.BuildingCategory)
+                {
+                    case BuildingCategory.Factory:
+                        factories.Add(key);
+                        break;
+                    case BuildingCategory.Defence:
+                        defence.Add(key);
+                        break;
+                    case BuildingCategory.Offence:
+                        offense.Add(key);
+                        break;
+                    case BuildingCategory.Tactical:
+                        tactical.Add(key);
+                        break;
+                    case BuildingCategory.Ultra:
+                        Ultra.Add(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
+            {
+                { BuildingCategory.Factory, factories },
+                { BuildingCategory.Defence, defence },
+                { BuildingCategory.Offence, offense },
+                { BuildingCategory.Tactical, tactical },
+                { BuildingCategory.Ultra, Ultra }
+            };
+            return buildables;
+        }
+
+        private Dictionary<UnitCategory, List<UnitKey>> GetInitialUnitLimit()
+        {
+            List<UnitKey> units = GetInitialUnits();
+            List<UnitKey> ships = new();
+            List<UnitKey> aircraft = new();
+            foreach(UnitKey unit in units)
+            {
+                if (unit.UnitCategory == UnitCategory.Naval)
+                    ships.Add(unit);
+                else if (unit.UnitCategory == UnitCategory.Aircraft)
+                    aircraft.Add(unit);
+                else
+                    break;
+            }
+            Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
+            {
+                {UnitCategory.Naval, ships },
+                {UnitCategory.Aircraft, aircraft }
+            };
+            return unitlimit;
+        }
         private HullKey GetInitialHull()
         {
             return StaticPrefabKeys.Hulls.Trident;

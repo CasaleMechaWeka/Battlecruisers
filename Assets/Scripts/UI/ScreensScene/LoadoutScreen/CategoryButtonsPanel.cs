@@ -5,6 +5,7 @@ using BattleCruisers.Utils;
 using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -17,7 +18,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             ISingleSoundPlayer soundPlayer,
             IGameModel gameModel,
-            IList<IItemButton> itemButtons)
+            IList<IItemButton> itemButtons,
+            IComparingItemFamilyTracker itemFamilyTracker)
         {
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, soundPlayer, gameModel, itemButtons);
 
@@ -25,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             foreach (ItemCategoryButton button in _buttons)
             {
-                button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel, itemButtons);
+                button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel, itemButtons,itemFamilyTracker);
             }
         }
 

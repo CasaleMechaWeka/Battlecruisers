@@ -51,6 +51,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             }
         }
 
+        //for the build list
+        public ItemFamily GetItemFamily()
+        {
+            return ItemFamily.Buildings;
+        }
+
+        public ItemType GetItemType()
+        {
+            return itemType;
+        }
+
         protected override void CleanUp(IGameModel gameModel)
         {
             gameModel.NewBuildings.Items.Parse<INotifyCollectionChanged>().CollectionChanged -= BuildingItemsCagetoryButton_CollectionChanged;

@@ -20,5 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         ItemType ItemType { get; }
         bool HasUnlockedItem { get; }
+
+        IItemButton GetFirstItemButton();
     }
 }

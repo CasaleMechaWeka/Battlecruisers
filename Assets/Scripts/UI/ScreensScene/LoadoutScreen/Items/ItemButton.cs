@@ -23,6 +23,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public bool IsUnlocked => IsVisible;
         public abstract IComparableItem Item { get; }
 
+        public abstract void ShowDetails();
+
         public Color Color
         {
             set

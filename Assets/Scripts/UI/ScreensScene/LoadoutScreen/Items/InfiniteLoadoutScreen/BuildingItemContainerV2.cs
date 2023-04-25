@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -34,12 +35,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker, 
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer, 
-            IPrefabFactory prefabFactory)
+            IPrefabFactory prefabFactory,
+            IGameModel gameModel)
         {
             IBuildableWrapper<IBuilding> buildingPrefab = prefabFactory.GetBuildingWrapperPrefab(Key);
             BuildingButtonV2 buildingButton = GetComponentInChildren<BuildingButtonV2>(includeInactive: true);
             Assert.IsNotNull(buildingButton);
-            buildingButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, buildingPrefab, buildingKeyName);
+            buildingButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, buildingPrefab, gameModel, Key);
             return buildingButton;
         }
 
@@ -56,6 +58,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         protected override void MakeOld(IGameModel gameModel)
         {
             gameModel.NewBuildings.RemoveItem(Key);
+        }
+
+        public BuildingKey GetKey()
+        {
+            return Key;
         }
     }
 }

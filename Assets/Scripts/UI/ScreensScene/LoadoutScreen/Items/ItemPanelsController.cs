@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IDictionary<ItemType, IItemsPanel> _typeToPanel;
 
         private IItemsPanel _currentlyShownPanel;
-        private IItemsPanel CurrentlyShownPanel
+        public IItemsPanel CurrentlyShownPanel
         {
             get { return _currentlyShownPanel; }
             set
@@ -77,6 +77,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
             CurrentlyShownPanel = _typeToPanel[itemType];
+            IItemsPanel itemsPanel = _typeToPanel[itemType];
+            itemsPanel.GetFirstItemButton().ShowDetails();
         }
 
         public IItemsPanel GetPanel(ItemType itemType)
