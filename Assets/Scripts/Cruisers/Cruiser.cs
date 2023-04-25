@@ -195,7 +195,7 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
-#if LOG_ANALYTICS
+/*#if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -207,7 +207,7 @@ namespace BattleCruisers.Cruisers
                 catch(ConsentCheckException e)
                 {
                     Debug.Log(e.Message);
-                }
+                }*/
                 
             }
 
@@ -266,7 +266,7 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = building.PrefabName.ToUpper().Replace("(CLONE)", "");
-#if LOG_ANALYTICS
+/*#if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -278,7 +278,7 @@ namespace BattleCruisers.Cruisers
                 catch (ConsentCheckException ex)
                 {
                     Debug.Log(ex.Message);
-                }              
+                }*/              
             }
 
             return building;
