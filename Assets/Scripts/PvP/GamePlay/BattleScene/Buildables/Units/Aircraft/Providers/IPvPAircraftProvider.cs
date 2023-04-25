@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable.Units.Aircraft.Providers
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers
 {
     public interface IPvPAircraftProvider
     {

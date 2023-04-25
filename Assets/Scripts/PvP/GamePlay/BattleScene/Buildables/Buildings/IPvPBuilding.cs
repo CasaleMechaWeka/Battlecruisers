@@ -1,8 +1,9 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Pools;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable.Buildings
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
     public enum BuildingCategory
     {
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         Shield = 3
     }
 
-    public interface IPvPBuilding : IPvPBuildable, IPvPPoolable<BuildingActivationArgs>
+    public interface IPvPBuilding : IPvPBuildable, IPvPPoolable<PvPBuildingActivationArgs>
     {
         BuildingCategory Category { get; }
         IPvPSlotSpecification SlotSpecification { get; }

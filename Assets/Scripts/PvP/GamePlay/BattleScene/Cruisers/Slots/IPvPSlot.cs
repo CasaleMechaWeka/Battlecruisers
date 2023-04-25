@@ -2,7 +2,8 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -57,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
         /// </summary>
         ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; }
 
-        void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<IPvPSlot> neighbouringSlots, IBuildingPlacer buildingPlacer);
+        void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<IPvPSlot> neighbouringSlots, IPvPBuildingPlacer buildingPlacer);
         void SetBuilding(IBuilding building);
 
         void controlBuildingPlacementFeedback(bool active);

@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Pools
 {
-    public class PvPBuildingActivationArgs : BuildableActivationArgs
+    public class PvPBuildingActivationArgs : PvPBuildableActivationArgs
     {
         public IPvPSlot ParentSlot { get; }
-        public IDoubleClickHandler<IPvPBuilding> DoubleClickHandler { get; }
+        public IPvPDoubleClickHandler<IPvPBuilding> DoubleClickHandler { get; }
 
         public PvPBuildingActivationArgs(
             IPvPCruiser parentCruiser,

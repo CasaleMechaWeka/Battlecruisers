@@ -1,17 +1,17 @@
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public enum Faction
+    public enum PvPFaction
     {
         Blues, Reds
     }
 
-    public enum TargetType
+    public enum PvPTargetType
     {
         Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite, PaddleMine
     }
@@ -19,22 +19,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// <summary>
     /// Used for prioritising targets, so do NOT change order!
     /// </summary>
-    public enum TargetValue
+    public enum PvPTargetValue
     {
         Low, Medium, High
     }
 
     public interface IPvPTarget : IPvPDamagable, IRepairable, IHighlightable
     {
-        Faction Faction { get; }
-        TargetType TargetType { get; }
+        PvPFaction Faction { get; }
+        PvPTargetType TargetType { get; }
         Vector2 Velocity { get; }
-        ReadOnlyCollection<TargetType> AttackCapabilities { get; }
-        TargetValue TargetValue { get; }
+        ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; }
+        PvPTargetValue TargetValue { get; }
         Color Color { set; }
         bool IsInScene { get; }
         Vector2 Size { get; }
-        ITransform Transform { get; }
+        IPvPTransform Transform { get; }
 
         Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }

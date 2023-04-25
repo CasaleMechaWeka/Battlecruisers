@@ -1,15 +1,15 @@
 using System;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
 {
-    public interface IPvPPoolable<TArgs>
+    public interface IPvPPoolable<TPvPArgs>
     {
         event EventHandler Deactivated;
 
-        void Activate(TArgs activationArgs);
+        void Activate(TPvPArgs activationArgs);
 
-        void Activate(TArgs activationArgs, Faction faction);
+        void Activate(TPvPArgs activationArgs, PvPFaction faction);
     }
 }

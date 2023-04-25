@@ -13,7 +13,7 @@ using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
     public enum BuildableState
     {

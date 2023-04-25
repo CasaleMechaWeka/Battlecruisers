@@ -15,17 +15,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
         }
 
         // For in battle scene use
-        public ISlotAccessor Initialise(ICruiser parentCruiser)
+        public IPvPSlotAccessor Initialise(IPvPCruiser parentCruiser)
         {
             Assert.IsNotNull(parentCruiser);
 
-            IBuildingPlacer buildingPlacer
-                = new BuildingPlacer(
-                    new BuildingPlacerCalculator());
-            ISlotInitialiser slotInitialiser = new SlotInitialiser();
-            IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+            IPvPBuildingPlacer buildingPlacer
+                = new PvPBuildingPlacer(
+                    new PVPBuildingPlacerCalculator());
+            IPVPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
+            IDictionary<SlotType, ReadOnlyCollection<IPvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
-            return new SlotAccessor(typeToSlots);
+            return new PVPSlotAccessor(typeToSlots);
         }
 
         public int GetSlotCount(SlotType type)

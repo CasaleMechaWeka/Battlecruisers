@@ -1,23 +1,23 @@
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public class DestroyedEventArgs : EventArgs
+    public class PvPDestroyedEventArgs : EventArgs
     {
         public IPvPTarget DestroyedTarget { get; }
 
-        public DestroyedEventArgs(IPvPTarget destroyedTarget)
+        public PvPDestroyedEventArgs(IPvPTarget destroyedTarget)
         {
             DestroyedTarget = destroyedTarget;
         }
     }
 
-    public class DamagedEventArgs : EventArgs
+    public class PvPDamagedEventArgs : EventArgs
     {
         public IPvPTarget DamageSource { get; }
 
-        public DamagedEventArgs(IPvPTarget damageSource)
+        public PvPDamagedEventArgs(IPvPTarget damageSource)
         {
             DamageSource = damageSource;
         }
@@ -32,10 +32,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         GameObject GameObject { get; }
         IPvPTarget LastDamagedSource { get; }
 
-        event EventHandler<DamagedEventArgs> Damaged;
+        event EventHandler<PvPDamagedEventArgs> Damaged;
         event EventHandler HealthChanged;
         // When health reaches 0
-        event EventHandler<DestroyedEventArgs> Destroyed;
+        event EventHandler<PvPDestroyedEventArgs> Destroyed;
 
         void TakeDamage(float damageAmount, IPvPTarget damageSource);
         void Destroy();

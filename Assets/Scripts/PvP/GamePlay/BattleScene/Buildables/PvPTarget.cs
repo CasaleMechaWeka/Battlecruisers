@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Buildables;
-using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Localisation;
@@ -11,26 +11,27 @@ using BattleCruisers.Tutorial.Highlighting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildable
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public abstract class PvPTarget : PvPPrefab, ITarget, ITargetProxy
+    public abstract class PvPTarget : PvPPrefab, IPvPTarget, IPvPTargetProxy
     {
-        protected IHealthTracker _healthTracker;
+        protected IPvPHealthTracker _healthTracker;
         protected ITime _time;
 
         public float maxHealth;
 
         public float MaxHealth => maxHealth;
         public bool IsDestroyed => Health == 0;
-        public Faction Faction { get; protected set; }
+        public PvPFaction Faction { get; protected set; }
         public GameObject GameObject => gameObject;
-        public abstract TargetType TargetType { get; }
-        public virtual TargetValue TargetValue => TargetValue.Low;
+        public abstract PvPTargetType TargetType { get; }
+        public virtual PvPTargetValue TargetValue => PvPTargetValue.Low;
         public virtual Vector2 Velocity => new Vector2(0, 0);
         public abstract Vector2 Size { get; }
         public virtual Vector2 DroneAreaSize => Size;
 
-        public ITransform Transform { get; private set; }
+        public IPvPTransform Transform { get; private set; }
 
         public Quaternion Rotation
         {
@@ -53,8 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // For buildables ranges from 0.75 (tesla coil) to 5 (broadsides)
         private const float DEFAULT_HEALTH_GAIN_PER_DRONE_S = 0.667f;
 
-        public event EventHandler<DestroyedEventArgs> Destroyed;
-        public event EventHandler<DamagedEventArgs> Damaged;
+        public event EventHandler<PvPDestroyedEventArgs> Destroyed;
+        public event EventHandler<PvPDamagedEventArgs> Damaged;
 
         public event EventHandler HealthChanged
         {
@@ -66,15 +67,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual Color Color { set { /* empty */ } }
         public bool IsInScene => gameObject.scene.IsValid();
         public float Health => _healthTracker.Health;
-        public IRepairCommand RepairCommand { get; private set; }
+        public IPvPRepairCommand RepairCommand { get; private set; }
         public float HealthGainPerDroneS { get; protected set; }
 
-        private List<TargetType> _attackCapabilities;
-        public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
-        public ITarget LastDamagedSource { get; private set; }
-        ITarget ITargetProxy.Target => this;
+        private List<PvPTargetType> _attackCapabilities;
+        public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
+        public IPvPTarget LastDamagedSource { get; private set; }
+        IPvPTarget IPvPTargetProxy.Target => this;
 
-        protected void AddAttackCapability(TargetType attackCapability)
+        protected void AddAttackCapability(PvPTargetType attackCapability)
         {
             if (!_attackCapabilities.Contains(attackCapability))
             {
@@ -86,16 +87,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(commonStrings);
 
-            _healthTracker = new HealthTracker(maxHealth);
+            _healthTracker = new PvPHealthTracker(maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
 
-            _time = TimeBC.Instance;
-            _attackCapabilities = new List<TargetType>();
-            AttackCapabilities = new ReadOnlyCollection<TargetType>(_attackCapabilities);
-            RepairCommand = new RepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
+            _time = PvPTimeBC.Instance;
+            _attackCapabilities = new List<PvPTargetType>();
+            AttackCapabilities = new ReadOnlyCollection<PvPTargetType>(_attackCapabilities);
+            RepairCommand = new PvPRepairCommand(RepairCommandExecute, CanRepairCommandExecute, this);
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
-            Transform = new TransformBC(transform);
+            Transform = new PvPTransformBC(transform);
         }
 
         private void _health_HealthGone(object sender, EventArgs e)
@@ -129,10 +130,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Logging.Log(Tags.TARGET, $"{this} destroyed :/");
 
-            Destroyed?.Invoke(this, new DestroyedEventArgs(this));
+            Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
         }
 
-        public void TakeDamage(float damageAmount, ITarget damageSource)
+        public void TakeDamage(float damageAmount, IPvPTarget damageSource)
         {
             if (IsBuildingImmune())
             {
@@ -147,7 +148,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 OnTakeDamage();
 
-                Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
+                Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
 
                 if (wasFullHealth)
                 {
@@ -176,7 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return Health < maxHealth;
         }
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public PvPHighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
         }
