@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemFamilyTracker = comparingItemFamily;
             _gameModel = gameModel;
             _unitkey = key;
-
+            _unitName.text = (unitPrefab.Buildable.Name).ToString();
             _itemFamilyTracker.ComparingFamily.ValueChanged += OnUnitListChange;
             Assert.IsNotNull(unitPrefab);
             _unitPrefab = unitPrefab;

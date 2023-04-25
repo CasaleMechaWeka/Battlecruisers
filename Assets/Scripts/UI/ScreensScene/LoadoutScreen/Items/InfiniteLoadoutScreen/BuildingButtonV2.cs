@@ -43,6 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _buildingKey = buildingKey; 
             Assert.IsNotNull(buildingPrefab);
             _buildingPrefab = buildingPrefab;
+            _buildingName.text = (buildingPrefab.Buildable.Name).ToString();
 
             UpdateSelectedFeedback();
         }

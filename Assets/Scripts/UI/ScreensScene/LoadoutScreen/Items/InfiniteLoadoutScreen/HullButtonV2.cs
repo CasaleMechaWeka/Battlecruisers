@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
-            _unitName.text = (hullKeyName.ToString()).Replace("Hull_", string.Empty);
+            _unitName.text = (cruiserPrefab.Name).ToString();
 
             UpdateSelectedFeedback();
         }
