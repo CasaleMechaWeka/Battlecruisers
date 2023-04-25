@@ -65,11 +65,24 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new RushStrategy(),
                 new BoomStrategy(),
 
+
+                // Set 7: Levels 27-31
                 new BasicBOOMStrategy(),
                 new BasicBOOMStrategy(),
                 new RushStrategy(),
                 new BasicBOOMStrategy(),
-                new BalancedStrategy()
+                new BalancedStrategy(),
+
+                // Set 7: Levels 32-40
+                new BasicTurtleStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicRushStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicTurtleStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicRushStrategy(),
+                new BasicTurtleStrategy()
             };
         }
 
@@ -119,10 +132,22 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicRushStrategy(),
                 new BasicBoomAggressiveStrategy(),
 
+                 // Set 7: Levels 27-31
                 new BasicTurtleStrategy(),
                 new BasicBoomDefensiveStrategy(),
                 new BasicRushStrategy(),
                 new BasicBoomAggressiveStrategy(),
+                new BasicTurtleStrategy(),
+
+                // Set 7: Levels 32-40
+                new BasicTurtleStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicRushStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicTurtleStrategy(),
+                new BasicBoomAggressiveStrategy(),
+                new BasicBoomDefensiveStrategy(),
+                new BasicRushStrategy(),
                 new BasicTurtleStrategy()
             };
 		}
@@ -286,7 +311,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
 
-                //New enemies
+                //BCUMIE enemies
                 new IOffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -313,7 +338,68 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
+                new IOffensiveRequest[] //Huntress Prime
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+
+                // Enemies for levels 32 - 40
+
                 new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                 new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+                new IOffensiveRequest[]
+                {
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
+                },
+
+                new IOffensiveRequest[] //Broadsword
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 }
