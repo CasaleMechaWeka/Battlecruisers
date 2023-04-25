@@ -51,7 +51,7 @@ using Unity.Services.Analytics;
 // DLC      => For DLC
 // PERF     => Potential performance hit
 
-//Comments with no spaces after // => made by Dean :)
+
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
