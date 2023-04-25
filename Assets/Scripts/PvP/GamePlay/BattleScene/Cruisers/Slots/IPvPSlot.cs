@@ -1,19 +1,19 @@
 
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Tutorial.Highlighting;
-using BattleCruisers.UI;
-using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System.Collections.ObjectModel;
-using BattleCruisers.Utils.Properties;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public enum SlotType
+    public enum PvPSlotType
     {
         Utility = 1,
         Mast = 2,
@@ -21,22 +21,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
         Platform = 4,
         Deck = 5
     }
-    public interface IPvPSlot : IClickableEmitter, IHighlightable
+    public interface IPvPSlot : IPvPClickableEmitter, IPvPHighlightable
     {
         bool IsFree { get; }
-        SlotType Type { get; }
+        PvPSlotType Type { get; }
         /// <summary>
         /// The type of building this slot is well positioned for.  Eg, for AntiShip
         /// buildings that is the cruiser front.  For shields that is spread accross
         /// the cruiser.
         /// </summary>
-        BuildingFunction BuildingFunctionAffinity { get; }
-        Direction Direction { get; }
-        IBroadcastingProperty<IBuilding> Building { get; }
-        ObservableCollection<IBoostProvider> BoostProviders { get; }
+        PvPBuildingFunction BuildingFunctionAffinity { get; }
+        PvPDirection Direction { get; }
+        IPvPBroadcastingProperty<IPvPBuilding> Building { get; }
+        ObservableCollection<IPvPBoostProvider> BoostProviders { get; }
         bool IsVisible { get; set; }
         Vector2 Position { get; }
-        ITransform Transform { get; }
+        IPvPTransform Transform { get; }
 
         /// <summary>
         /// Reference point used to line up buildings with.
@@ -59,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
         ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; }
 
         void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<IPvPSlot> neighbouringSlots, IPvPBuildingPlacer buildingPlacer);
-        void SetBuilding(IBuilding building);
+        void SetBuilding(IPvPBuilding building);
 
         void controlBuildingPlacementFeedback(bool active);
 

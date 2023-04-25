@@ -5,7 +5,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Tutorial.Explanation;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Manager
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
     public interface IPvPUIManager
     {

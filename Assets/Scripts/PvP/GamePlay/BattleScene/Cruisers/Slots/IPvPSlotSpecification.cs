@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
     public interface IPvPSlotSpecification
     {
-        BuildingFunction BuildingFunction { get; }
+        PvPBuildingFunction BuildingFunction { get; }
         bool PreferFromFront { get; }
-        SlotType SlotType { get; }
+        PvPSlotType SlotType { get; }
     }
 }
 

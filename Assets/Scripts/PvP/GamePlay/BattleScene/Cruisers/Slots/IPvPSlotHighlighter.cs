@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables.Buildings;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
     public interface IPvPSlotHighlighter
     {

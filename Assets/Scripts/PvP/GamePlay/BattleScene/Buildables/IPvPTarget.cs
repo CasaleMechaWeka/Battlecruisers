@@ -1,5 +1,5 @@
-using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Tutorial.Highlighting;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         Low, Medium, High
     }
 
-    public interface IPvPTarget : IPvPDamagable, IRepairable, IHighlightable
+    public interface IPvPTarget : IPvPDamagable, IPvPRepairable, IPvPHighlightable
     {
         PvPFaction Faction { get; }
         PvPTargetType TargetType { get; }

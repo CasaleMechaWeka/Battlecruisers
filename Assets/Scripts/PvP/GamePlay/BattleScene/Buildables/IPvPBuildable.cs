@@ -15,48 +15,48 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public enum BuildableState
+    public enum PvPBuildableState
     {
         NotStarted, InProgress, Paused, Completed
     }
 
-    public class BuildProgressEventArgs : EventArgs
+    public class PvPBuildProgressEventArgs : EventArgs
     {
         public IPvPBuildable Buildable { get; }
 
-        public BuildProgressEventArgs(IPvPBuildable buildable)
+        public PvPBuildProgressEventArgs(IPvPBuildable buildable)
         {
             Buildable = buildable;
         }
     }
 
-    public interface IPvPBuildable : IPvPTarget, IComparableItem, IClickableEmitter
+    public interface IPvPBuildable : IPvPTarget, IPvPComparableItem, IPvPClickableEmitter
     {
         /// <summary>
         /// 0-1
         /// </summary>
         float BuildProgress { get; }
-        BuildableState BuildableState { get; }
+        PvPBuildableState BuildableState { get; }
         int NumOfDronesRequired { get; }
         float BuildTimeInS { get; }
-        IDroneConsumer DroneConsumer { get; }
-        ICommand ToggleDroneConsumerFocusCommand { get; }
+        IPvPDroneConsumer DroneConsumer { get; }
+        IPvPCommand ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
-        ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
-        IBoostable BuildProgressBoostable { get; }
+        ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
+        IPvPBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
-        ICruiser ParentCruiser { get; }
-        ICruiser EnemyCruiser { get; }
-        IHealthBar HealthBar { get; }
+        IPvPCruiser ParentCruiser { get; }
+        IPvPCruiser EnemyCruiser { get; }
+        IPvPHealthBar HealthBar { get; }
         string PrefabName { get; }
         string keyName { get; set; }
         event EventHandler StartedConstruction;
         event EventHandler CompletedBuildable;
-        event EventHandler<BuildProgressEventArgs> BuildableProgress;
-        event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
+        event EventHandler<PvPBuildProgressEventArgs> BuildableProgress;
+        event EventHandler<PvPDroneNumChangedEventArgs> DroneNumChanged;
 
-        void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings);
-        void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider);
+        void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings);
+        void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider);
         void StartConstruction();
     }
 }

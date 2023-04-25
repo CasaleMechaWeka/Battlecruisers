@@ -1,8 +1,11 @@
-using System.Collections;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
     public class PvPSlotWrapperController : MonoBehaviour, IPvPSlotNumProvider
     {
@@ -21,17 +24,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
 
             IPvPBuildingPlacer buildingPlacer
                 = new PvPBuildingPlacer(
-                    new PVPBuildingPlacerCalculator());
-            IPVPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
-            IDictionary<SlotType, ReadOnlyCollection<IPvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+                    new PvPBuildingPlacerCalculator());
+            IPvPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
+            IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
-            return new PVPSlotAccessor(typeToSlots);
+            return new PvPSlotAccessor(typeToSlots);
         }
 
-        public int GetSlotCount(SlotType type)
+        public int GetSlotCount(PvPSlotType type)
         {
             return _slots.Count(slot => slot.Type == type);
         }
     }
-
 }

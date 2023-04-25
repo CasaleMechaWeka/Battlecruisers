@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
     public interface IPvPSlotAccessor
     {
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
         /// </returns>
         ReadOnlyCollection<IPvPSlot> GetSlots(IPvPSlotSpecification slotSpecification);
 
-        IList<IPvPSlot> GetFreeSlots(SlotType slotType);
+        IList<IPvPSlot> GetFreeSlots(PvPSlotType slotType);
         IPvPSlot GetFreeSlot(IPvPSlotSpecification slotSpecification);
 
         /// <returns>
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Slots
         /// </returns>
         IPvPSlot GetSlot(IPvPBuilding building);
 
-        int GetSlotCount(SlotType slotType);
+        int GetSlotCount(PvPSlotType slotType);
     }
 }
 

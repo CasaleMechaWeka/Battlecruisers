@@ -1,15 +1,15 @@
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Cruisers.Fog;
-using BattleCruisers.Cruisers.Helpers;
-using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
@@ -17,20 +17,20 @@ using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Common.Click;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -40,15 +40,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected IPvPCruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
-        private ICruiserHelper _helper;
-        private SlotWrapperController _slotWrapperController;
-        private IClickHandler _clickHandler;
-        private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
-        private IDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
-        private IAudioClipWrapper _selectedSound;
+        private IPvPCruiserHelper _helper;
+        private PvPSlotWrapperController _slotWrapperController;
+        private IPvPClickHandler _clickHandler;
+        private IPvPDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
+        private IPvPDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
+        private IPvPAudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
+        private IPvPManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public string stringKeyBase;
@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Vector2 trashTalkScreenPosition;
 
         // ITarget
-        public override TargetType TargetType => TargetType.Cruiser;
+        public override PvPTargetType TargetType => PvPTargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
         public override Vector2 Size => _collider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
@@ -72,42 +72,42 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
-        public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
-        public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
-        public Direction Direction { get; private set; }
+        public IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
+        public IPvPDroneConsumerProvider DroneConsumerProvider { get; private set; }
+        public PvPDirection Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public IFactoryProvider FactoryProvider { get; private set; }
-        public ICruiserSpecificFactories CruiserSpecificFactories { get; private set; }
-        private FogOfWar _fog;
-        public IGameObject Fog => _fog;
-        public IRepairManager RepairManager { get; private set; }
+        public IPvPFactoryProvider FactoryProvider { get; private set; }
+        public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
+        private PvPFogOfWar _fog;
+        public IPvPGameObject Fog => _fog;
+        public IPvPRepairManager RepairManager { get; private set; }
         public int NumOfDrones => numOfDrones;
-        public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
+        public IPvPBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
-        public CruiserDeathExplosion deathPrefab;
-        public CruiserDeathExplosion DeathPrefab => deathPrefab;
+        public PvPCruiserDeathExplosion deathPrefab;
+        public PvPCruiserDeathExplosion DeathPrefab => deathPrefab;
 
 
         // ICruiserController
         public bool IsAlive => !IsDestroyed;
-        public ISlotAccessor SlotAccessor { get; private set; }
-        public ISlotHighlighter SlotHighlighter { get; private set; }
-        public ISlotNumProvider SlotNumProvider { get; private set; }
-        public IDroneManager DroneManager { get; private set; }
-        public IDroneFocuser DroneFocuser { get; private set; }
-        public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
-        public ICruiserUnitMonitor UnitMonitor { get; private set; }
-        public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
-        public IUnitTargets UnitTargets { get; private set; }
-        public ITargetTracker BlockedShipsTracker { get; private set; }
+        public IPvPSlotAccessor SlotAccessor { get; private set; }
+        public IPvPSlotHighlighter SlotHighlighter { get; private set; }
+        public IPvPSlotNumProvider SlotNumProvider { get; private set; }
+        public IPvPDroneManager DroneManager { get; private set; }
+        public IPvPDroneFocuser DroneFocuser { get; private set; }
+        public IPvPCruiserBuildingMonitor BuildingMonitor { get; private set; }
+        public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
+        public IPvPPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
+        public IPvPUnitTargets UnitTargets { get; private set; }
+        public IPvPTargetTracker BlockedShipsTracker { get; private set; }
 
-        public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
-        public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
-        public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
+        public event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
+        public event EventHandler<PvPBuildingCompletedEventArgs> BuildingCompleted;
+        public event EventHandler<PvPBuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
         private int updateCnt = 0;
-        public bool isCruiser = true;
+        public bool isPvPCruiser = true;
 
         public override void StaticInitialise(ILocTable commonStrings)
         {
@@ -122,15 +122,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(_collider);
 
 
-            _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
+            _slotWrapperController = GetComponentInChildren<PvPSlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
             _slotWrapperController.StaticInitialise();
             SlotNumProvider = _slotWrapperController;
 
-            _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
+            _fog = GetComponentInChildren<PvPFogOfWar>(includeInactive: true);
             Assert.IsNotNull(_fog);
 
-            ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
+            PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
             Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
@@ -138,17 +138,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
 
-            BuildingMonitor = new CruiserBuildingMonitor(this);
-            UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
-            PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
-            UnitTargets = new UnitTargets(UnitMonitor);
+            BuildingMonitor = new PvPCruiserBuildingMonitor(this);
+            UnitMonitor = new PvPCruiserUnitMonitor(BuildingMonitor);
+            PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
+            UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
 
         }
 
-        public async virtual void Initialise(ICruiserArgs args)
+        public async virtual void Initialise(IPvPCruiserArgs args)
         {
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
@@ -170,21 +170,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _fog.Initialise(args.FogStrength);
 
             SlotAccessor = _slotWrapperController.Initialise(this);
-            SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
+            SlotHighlighter = new PvPSlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
 
-            EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponentInChildren<EnemyShipBlockerInitialiser>();
+            PvPEnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponentInChildren<PvPEnemyShipBlockerInitialiser>();
             Assert.IsNotNull(enemyShipBlockerInitialiser);
             BlockedShipsTracker
                 = enemyShipBlockerInitialiser.Initialise(
                     args.FactoryProvider.Targets,
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
-                    Helper.GetOppositeFaction(Faction));
+                    Helper.GetOppositeFaction(PvPFaction));
 
-            UnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<UnitReadySignalInitialiser>();
+            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
             Assert.IsNotNull(unitReadySignalInitialiser);
             _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
 
-            DroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<DroneSoundFeedbackInitialiser>();
+            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
             Assert.IsNotNull(droneSoundFeedbackInitialiser);
             _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
 
@@ -231,7 +231,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
+        public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
         {
             Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
@@ -239,14 +239,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return ConstructSelectedBuilding(slot);
         }
 
-        public IBuilding ConstructSelectedBuilding(ISlot slot)
+        public IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot)
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
+            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
 
             building.Activate(
-                new BuildingActivationArgs(
+                new PvPBuildingActivationArgs(
                     this,
                     _enemyCruiser,
                     CruiserSpecificFactories,
@@ -261,7 +261,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             building.StartConstruction();
             _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
-            BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
+            BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
 
             slot.controlBuildingPlacementFeedback(true);
 
@@ -288,20 +288,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
-            IBuilding completedBuilding = sender.Parse<IBuilding>();
+            IPvPBuilding completedBuilding = sender.Parse<IPvPBuilding>();
             completedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
-            BuildingCompleted?.Invoke(this, new BuildingCompletedEventArgs(completedBuilding));
+            BuildingCompleted?.Invoke(this, new PvPBuildingCompletedEventArgs(completedBuilding));
         }
 
-        private void Building_Destroyed(object sender, DestroyedEventArgs e)
+        private void Building_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
-            IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
+            IPvPBuilding destroyedBuilding = e.DestroyedTarget.Parse<IPvPBuilding>();
             destroyedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
-            BuildingDestroyed?.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));
+            BuildingDestroyed?.Invoke(this, new PvPBuildingDestroyedEventArgs(destroyedBuilding));
         }
 
         public virtual void Update()
@@ -321,10 +321,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public void MakeInvincible()
         {
-            _healthTracker.State = HealthTrackerState.Immutable;
+            _healthTracker.State = PvPHealthTrackerState.Immutable;
         }
 
-        public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)
+        public virtual void AdjustStatsByDifficulty(PvPDifficulty AIDifficulty)
         {
 
         }
@@ -332,18 +332,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-            if (Faction == Faction.Reds)
+            if (Faction == PvPFaction.Reds)
             {
                 //Debug.Log(maxHealth);
-                BattleSceneGod.AddDeadBuildable(TargetType, (int)(maxHealth));
+                BattleSceneGod.AddDeadBuildable(PvPTargetType, (int)(maxHealth));
                 //Debug.Log(maxHealth);
                 //BattleSceneGod.ShowDeadBuildableStats();
             }
         }
 
-        public bool IsCruiser()
+        public bool IsPvPCruiser()
         {
-            return isCruiser;
+            return isPvPCruiser;
         }
     }
 
