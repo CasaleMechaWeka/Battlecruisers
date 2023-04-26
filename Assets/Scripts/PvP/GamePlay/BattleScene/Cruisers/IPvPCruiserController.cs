@@ -1,9 +1,9 @@
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Cruisers.Construction;
-using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using System;
 
 
@@ -12,20 +12,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public interface IPvPCruiserController
     {
         bool IsAlive { get; }
-        ISlotAccessor SlotAccessor { get; }
-        ISlotHighlighter SlotHighlighter { get; }
-        ISlotNumProvider SlotNumProvider { get; }
-        IDroneManager DroneManager { get; }
-        IDroneFocuser DroneFocuser { get; }
-        ICruiserBuildingMonitor BuildingMonitor { get; }
-        ICruiserUnitMonitor UnitMonitor { get; }
-        IPopulationLimitMonitor PopulationLimitMonitor { get; }
-        IUnitTargets UnitTargets { get; }
-        ITargetTracker BlockedShipsTracker { get; }
+        IPvPSlotAccessor SlotAccessor { get; }
+        IPvPSlotHighlighter SlotHighlighter { get; }
+        IPvPSlotNumProvider SlotNumProvider { get; }
+        IPvPDroneManager DroneManager { get; }
+        IPvPDroneFocuser DroneFocuser { get; }
+        IPvPCruiserBuildingMonitor BuildingMonitor { get; }
+        IPvPCruiserUnitMonitor UnitMonitor { get; }
+        IPvPPopulationLimitMonitor PopulationLimitMonitor { get; }
+        IPvPUnitTargets UnitTargets { get; }
+        IPvPTargetTracker BlockedShipsTracker { get; }
 
-        event EventHandler<BuildingStartedEventArgs> BuildingStarted;
+        event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
 
-        IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
+        IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot);
     }
 }
 

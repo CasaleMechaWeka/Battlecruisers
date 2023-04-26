@@ -1,10 +1,10 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Buildables.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
@@ -15,12 +15,12 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Scenes.BattleScene;
-using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
+// using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -178,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 = enemyShipBlockerInitialiser.Initialise(
                     args.FactoryProvider.Targets,
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
-                    Helper.GetOppositeFaction(PvPFaction));
+                    PvPHelper.GetOppositeFaction(Faction));
 
             PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
             Assert.IsNotNull(unitReadySignalInitialiser);
@@ -217,7 +217,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
-            Logging.LogMethod(Tags.CRUISER);
+            // Logging.LogMethod(Tags.CRUISER);
 
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
@@ -233,7 +233,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
         {
-            Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
+            // Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
             SelectedBuildingPrefab = buildingPrefab;
             return ConstructSelectedBuilding(slot);
@@ -324,7 +324,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _healthTracker.State = PvPHealthTrackerState.Immutable;
         }
 
-        public virtual void AdjustStatsByDifficulty(PvPDifficulty AIDifficulty)
+        public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)
         {
 
         }
@@ -335,7 +335,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (Faction == PvPFaction.Reds)
             {
                 //Debug.Log(maxHealth);
-                BattleSceneGod.AddDeadBuildable(PvPTargetType, (int)(maxHealth));
+
+                // BattleSceneGod.AddDeadBuildable(PvPTargetType, (int)(maxHealth));
+
+
                 //Debug.Log(maxHealth);
                 //BattleSceneGod.ShowDeadBuildableStats();
             }

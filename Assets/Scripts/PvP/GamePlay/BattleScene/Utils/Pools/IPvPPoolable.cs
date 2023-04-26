@@ -2,7 +2,7 @@ using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Pools
 {
     public interface IPvPPoolable<TPvPArgs>
     {

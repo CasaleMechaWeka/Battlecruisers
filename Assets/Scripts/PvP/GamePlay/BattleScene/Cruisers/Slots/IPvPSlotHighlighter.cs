@@ -1,4 +1,4 @@
-using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         void HighlightSlots(IPvPSlotSpecification slotSpecification);
 
         void UnhighlightSlots();
-        void HighlightBuildingSlot(IBuilding building);
+        void HighlightBuildingSlot(IPvPBuilding building);
         void HighlightAvailableSlotsCurrent();
     }
 }

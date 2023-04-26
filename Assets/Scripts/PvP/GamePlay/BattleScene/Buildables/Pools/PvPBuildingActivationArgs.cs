@@ -8,7 +8,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Pools
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
     public class PvPBuildingActivationArgs : PvPBuildableActivationArgs
     {
