@@ -12,6 +12,9 @@ namespace BattleCruisers.Data.Models
         IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnits(UnitCategory unitCategory);
 
+        List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory);
+        List<UnitKey> GetUnitKeys(UnitCategory unitCategory);
+
         void AddBuilding(BuildingKey buildingToAdd);
         void RemoveBuilding(BuildingKey buildingToRemove);
 

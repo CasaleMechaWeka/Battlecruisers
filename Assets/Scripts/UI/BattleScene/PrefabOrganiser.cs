@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.BattleScene
 
             foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
 			{
-				IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
+				List<BuildingKey> buildingKeys = loadout.GetBuildingKeys(category);
 
 				IList<IBuildableWrapper<IBuilding>> buildings = new List<IBuildableWrapper<IBuilding>>();
                 categoryToBuildings.Add(category, buildings);
@@ -84,7 +84,7 @@ namespace BattleCruisers.UI.BattleScene
 
 			foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
 			{
-				IList<UnitKey> unitKeys = _playerLoadout.GetUnits(unitCategory);
+				List<UnitKey> unitKeys = _playerLoadout.GetUnitKeys(unitCategory);
 
 				if (unitKeys.Count != 0)
 				{
