@@ -54,7 +54,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             // Set up Secret levels
             SecretLevelButtonController secretLevelButton = GetComponentInChildren<SecretLevelButtonController>();
-            secretLevelButton.Initialise(screensSceneGod,soundPlayer,numOfLevelsUnlocked);
+            if(secretLevelButton != null)
+            {
+                secretLevelButton.Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked);
+            }
+            
             
 
             // Set up trails

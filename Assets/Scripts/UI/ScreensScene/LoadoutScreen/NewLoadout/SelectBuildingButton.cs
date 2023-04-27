@@ -124,7 +124,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectBuildingButton(object sender, EventArgs e)
         {
-            Enabled = IsOverLimit();
+            Enabled = ShouldBeEnabled();
         }
         private void DisplayedBuildingChanged(object sender, EventArgs e)
         {
@@ -153,12 +153,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
             if(_buildingDetails != null)
             {
-                BuildingKey key = _buildingNameToKey.GetKey(_buildingDetails.SelectedItem.Value.Name);
+                //BuildingKey key = _buildingNameToKey.GetKey(_buildingDetails.SelectedItem.Value.Name);
                 if (ShouldBeEnabled() && (loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) <= buildingLimit))
-                    if(loadout.IsBuildingInList(_buildingDetails.SelectedItem.Value.Category, key))
-                    {
+                    //if(loadout.IsBuildingInList(_buildingDetails.SelectedItem.Value.Category, key))
+                    //{
                         return true;
-                    }
+                    //}
             }    
             return false;
         }
