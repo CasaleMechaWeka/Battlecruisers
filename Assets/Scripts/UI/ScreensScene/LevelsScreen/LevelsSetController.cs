@@ -52,6 +52,15 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 await button.InitialiseAsync(soundPlayer, level, screensSceneGod, difficultySpritesProvider, numOfLevelsUnlocked, trashTalkData, levelsScreen);
             }
 
+            // Set up Secret levels
+            SecretLevelButtonController secretLevelButton = GetComponentInChildren<SecretLevelButtonController>();
+            if(secretLevelButton != null)
+            {
+                secretLevelButton.Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked);
+            }
+            
+            
+
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();
             int expectedNumberOfTrails = _numOfLevels -1;

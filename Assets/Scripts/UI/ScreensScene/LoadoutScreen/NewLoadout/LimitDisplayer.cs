@@ -17,8 +17,6 @@ using BattleCruisers.Buildables.Units;
 using TMPro;
 using Unity.Services.Analytics;
 using BattleCruisers.Buildables.Buildings;
-using UnityEditorInternal;
-using UnityEngine.UI;
 using static BattleCruisers.Effects.Smoke.StaticSmokeStats;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen

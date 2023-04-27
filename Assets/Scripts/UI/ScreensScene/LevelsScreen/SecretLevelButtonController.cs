@@ -17,13 +17,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         protected override ISoundKey ClickSound => SoundKeys.UI.Click;
 
-        public void Initialise(IScreensSceneGod screensSceneGod, ISingleSoundPlayer soundPlayer)
+        public void Initialise(
+            IScreensSceneGod screensSceneGod,
+            ISingleSoundPlayer soundPlayer,
+            int numOfLevelUnlocked)
         {
             _screensSceneGod = screensSceneGod;
 
             // Call the base class Initialise method with the required parameters
             base.Initialise(soundPlayer);
 
+            Enabled = numOfLevelUnlocked >= _levelNum;
         }
 
 

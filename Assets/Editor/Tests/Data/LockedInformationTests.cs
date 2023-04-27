@@ -111,7 +111,7 @@ namespace BattleCruisers.Tests.Data
                 new UnitKey(UnitCategory.Aircraft, "Messerschmitt"),
                 new UnitKey(UnitCategory.Aircraft, "Schmetterling"),
                 new UnitKey(UnitCategory.Naval, "Rubber Ducky"),
-                new UnitKey(UnitCategory.Untouchable, "Sun")
+                //new UnitKey(UnitCategory.Untouchable, "Sun")
             });
             _staticData.UnitKeys.Returns(allUnits);
 

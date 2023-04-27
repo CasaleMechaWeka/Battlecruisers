@@ -19,8 +19,8 @@ namespace BattleCruisers.Tests.Buildables.Pools
             _unitPoolProvider = Substitute.For<IUnitPoolProvider>();
             _map = new UnitToPoolMap(_unitPoolProvider);
 
-            _invalid = Substitute.For<IUnit>();
-            _invalid.Category.Returns(UnitCategory.Untouchable);
+            //_invalid = Substitute.For<IUnit>();
+            //_invalid.Category.Returns(UnitCategory.Untouchable);
 
             _aircraft = Substitute.For<IUnit>();
             _aircraft.Category.Returns(UnitCategory.Aircraft);

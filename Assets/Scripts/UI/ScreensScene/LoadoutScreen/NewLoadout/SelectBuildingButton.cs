@@ -17,7 +17,6 @@ using BattleCruisers.Buildables.Units;
 using TMPro;
 using Unity.Services.Analytics;
 using BattleCruisers.Buildables.Buildings;
-using UnityEditorInternal;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -153,8 +152,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
             if(_buildingDetails != null)
-                if (ShouldBeEnabled() && loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) <= buildingLimit)
-                    return true;
+            {
+                //BuildingKey key = _buildingNameToKey.GetKey(_buildingDetails.SelectedItem.Value.Name);
+                if (ShouldBeEnabled() && (loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) <= buildingLimit))
+                    //if(loadout.IsBuildingInList(_buildingDetails.SelectedItem.Value.Category, key))
+                    //{
+                        return true;
+                    //}
+            }    
             return false;
         }
     }
