@@ -1,11 +1,12 @@
 using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 using UnityEngine;
+using Unity.Netcode;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
-    public class PvPPrefab : MonoBehaviour, IPrefab
+    public class PvPPrefab : NetworkBehaviour, IPrefab
     {
         protected ILocTable _commonStrings;
 
