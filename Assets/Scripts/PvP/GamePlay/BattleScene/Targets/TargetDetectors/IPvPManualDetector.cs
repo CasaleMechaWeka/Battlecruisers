@@ -1,4 +1,4 @@
-namespace BattleCruisers.Network.Multiplay.Matchplay.Targets.TargetDetectors
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors
 {
     public interface IPvPManualDetector
     {

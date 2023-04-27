@@ -2,7 +2,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -44,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void Factory_StartedBuildingUnit(object sender, PvPUnitStartedEventArgs e)
         {
-            Logging.Log(Tags.UNIT_MONITOR, $"_aliveUnits.Count: {_aliveUnits.Count}  e.StartedUnit: {e.StartedUnit}");
+            // Logging.Log(Tags.UNIT_MONITOR, $"_aliveUnits.Count: {_aliveUnits.Count}  e.StartedUnit: {e.StartedUnit}");
 
             Assert.IsFalse(_aliveUnits.Contains(e.StartedUnit));
             _aliveUnits.Add(e.StartedUnit);
@@ -61,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void Unit_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
-            Logging.Log(Tags.UNIT_MONITOR, $"_aliveUnits.Count: {_aliveUnits.Count}  e.DestroyedTarget: {e.DestroyedTarget}");
+            // Logging.Log(Tags.UNIT_MONITOR, $"_aliveUnits.Count: {_aliveUnits.Count}  e.DestroyedTarget: {e.DestroyedTarget}");
 
             IPvPUnit destroyedUnit = e.DestroyedTarget.Parse<IPvPUnit>();
             destroyedUnit.Destroyed -= Unit_Destroyed;

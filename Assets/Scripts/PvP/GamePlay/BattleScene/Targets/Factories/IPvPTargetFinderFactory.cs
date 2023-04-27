@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetFinderFactory
     {
         IPvPTargetFinder CreateRangedTargetFinder(IPvPTargetDetector targetDetector, IPvPTargetFilter targetFilter);
-        IPvPTargetFinder CreateMinRangeTargetFinder(IPvPTargetDetector maxRangeTargetDetector, IPvPTargetDetector minRangeTargetDetector, ITargetFilter targetFilter);
+        IPvPTargetFinder CreateMinRangeTargetFinder(IPvPTargetDetector maxRangeTargetDetector, IPvPTargetDetector minRangeTargetDetector, IPvPTargetFilter targetFilter);
         IPvPTargetFinder CreateAttackingTargetFinder(IPvPDamagable parentDamagable, IPvPTargetFilter targetFilter);
     }
 }

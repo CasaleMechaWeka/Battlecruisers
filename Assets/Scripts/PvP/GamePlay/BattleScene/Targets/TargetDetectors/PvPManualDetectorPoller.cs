@@ -1,5 +1,5 @@
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Update;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors

@@ -1,40 +1,40 @@
-using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.BuildProgress;
-using BattleCruisers.Buildables.Repairables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Effects.Explosions;
-using BattleCruisers.UI;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.LoadoutScreen.Comparisons;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public interface IPvPCruiser : IPvPCruiserController, ITarget, IComparableItem, IClickableEmitter
+    public interface IPvPCruiser : IPvPCruiserController, IPvPTarget, IPvPComparableItem, IPvPClickableEmitter
     {
-        IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
-        IDroneConsumerProvider DroneConsumerProvider { get; }
-        Direction Direction { get; }
+        IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
+        IPvPDroneConsumerProvider DroneConsumerProvider { get; }
+        PvPDirection Direction { get; }
         float YAdjustmentInM { get; }
         Vector2 TrashTalkScreenPosition { get; }
-        IGameObject Fog { get; }
-        IRepairManager RepairManager { get; }
+        IPvPGameObject Fog { get; }
+        IPvPRepairManager RepairManager { get; }
         int NumOfDrones { get; }
-        IBuildProgressCalculator BuildProgressCalculator { get; }
-        IFactoryProvider FactoryProvider { get; }
-        ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        IPvPBuildProgressCalculator BuildProgressCalculator { get; }
+        IPvPFactoryProvider FactoryProvider { get; }
+        IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
-        CruiserDeathExplosion DeathPrefab { get; }
+        PvPCruiserDeathExplosion DeathPrefab { get; }
 
-        IBuilding ConstructSelectedBuilding(ISlot slot);
+        IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot);
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
-        bool IsCruiser();
+        bool IsPvPCruiser();
     }
 }
 
