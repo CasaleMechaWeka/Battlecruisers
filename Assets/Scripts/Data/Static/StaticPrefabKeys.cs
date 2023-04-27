@@ -58,7 +58,7 @@ namespace BattleCruisers.Data.Static
                         // Defence
                         AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil,
                         // Offence
-                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar,
+                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, //railgun = LasCannon! 
                         // Ultras
                         DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides
                     };
