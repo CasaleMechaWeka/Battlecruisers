@@ -25,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private IComparingItemFamilyTracker _itemFamilyTracker;
 
+        public Vector2 buttonWidth;
         public ItemType itemType;
 
         protected abstract ItemFamily ItemFamily { get; }
@@ -105,7 +106,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             if (_itemPanels.IsMatch(itemType))
             {
-                _itemCategoryButton.sizeDelta = new Vector2(300, 150);
+                _itemCategoryButton.sizeDelta = buttonWidth;
             }
             else
             {
