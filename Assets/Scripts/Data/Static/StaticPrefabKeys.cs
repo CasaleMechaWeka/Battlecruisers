@@ -29,13 +29,16 @@ namespace BattleCruisers.Data.Static
 			public static BuildingKey Mortar { get; } = new BuildingKey(BuildingCategory.Defence, "Mortar");
 			public static BuildingKey SamSite { get; } = new BuildingKey(BuildingCategory.Defence, "SamSite");
 			public static BuildingKey TeslaCoil { get; } = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
+            public static BuildingKey Coastguard { get; } = new BuildingKey(BuildingCategory.Defence, "Coastguard");//new
 
-			// Offence
-			public static BuildingKey Artillery { get; } = new BuildingKey(BuildingCategory.Offence, "Artillery");
+            // Offence
+            public static BuildingKey Artillery { get; } = new BuildingKey(BuildingCategory.Offence, "Artillery");
 			public static BuildingKey RocketLauncher { get; } = new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
 			public static BuildingKey Railgun { get; } = new BuildingKey(BuildingCategory.Offence, "Railgun");
             public static BuildingKey MLRS { get; } = new BuildingKey(BuildingCategory.Offence, "MLRS");
             public static BuildingKey GatlingMortar { get; } = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
+            public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");//new
+            public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");//new
 
 
 			// Ultras
@@ -44,6 +47,7 @@ namespace BattleCruisers.Data.Static
 			public static BuildingKey Ultralisk { get; } = new BuildingKey(BuildingCategory.Ultra, "Ultralisk");
             public static BuildingKey KamikazeSignal { get; } = new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal");
             public static BuildingKey Broadsides { get; } = new BuildingKey(BuildingCategory.Ultra, "Broadsides");
+            public static BuildingKey NovaArtillery { get; } = new BuildingKey(BuildingCategory.Ultra, "NovaArtillery");//new
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -56,11 +60,11 @@ namespace BattleCruisers.Data.Static
                         // Tactical
                         ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower,
                         // Defence
-                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil,
+                        AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard,
                         // Offence
-                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, //railgun = LasCannon! 
+                        Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, //railgun = LasCannon! 
                         // Ultras
-                        DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides
+                        DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery,
                     };
                 }
             }

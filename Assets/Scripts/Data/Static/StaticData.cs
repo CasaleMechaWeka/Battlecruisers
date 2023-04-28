@@ -124,6 +124,7 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Buildings.Mortar,
 				StaticPrefabKeys.Buildings.SamSite,
 				StaticPrefabKeys.Buildings.TeslaCoil,
+                StaticPrefabKeys.Buildings.Coastguard,//new
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
@@ -131,13 +132,16 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Buildings.RocketLauncher,
                 StaticPrefabKeys.Buildings.MLRS,
                 StaticPrefabKeys.Buildings.GatlingMortar,
+                StaticPrefabKeys.Buildings.MissilePod,//new
+                StaticPrefabKeys.Buildings.IonCannon,//new
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
 				StaticPrefabKeys.Buildings.NukeLauncher,
 				StaticPrefabKeys.Buildings.Ultralisk,
 				StaticPrefabKeys.Buildings.KamikazeSignal,
-                StaticPrefabKeys.Buildings.Broadsides
+                StaticPrefabKeys.Buildings.Broadsides,
+                StaticPrefabKeys.Buildings.NovaArtillery//new
 			};
 		}
 
@@ -378,6 +382,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Mortar, 3 },
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
+                { StaticPrefabKeys.Buildings.Coastguard, 33 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
@@ -385,13 +390,16 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
                 { StaticPrefabKeys.Buildings.MLRS, 29},
                 { StaticPrefabKeys.Buildings.GatlingMortar, 32},
+                { StaticPrefabKeys.Buildings.MissilePod, 36 },
+                { StaticPrefabKeys.Buildings.IonCannon, 37 },
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
                 { StaticPrefabKeys.Buildings.NukeLauncher, 10 },
                 { StaticPrefabKeys.Buildings.Ultralisk, 14 },
                 { StaticPrefabKeys.Buildings.KamikazeSignal, 22 },
-                { StaticPrefabKeys.Buildings.Broadsides, 25 }
+                { StaticPrefabKeys.Buildings.Broadsides, 25 },
+                { StaticPrefabKeys.Buildings.NovaArtillery, 39 }
             };
         }
 

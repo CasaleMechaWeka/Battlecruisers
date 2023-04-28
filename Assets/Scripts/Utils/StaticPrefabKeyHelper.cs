@@ -46,6 +46,7 @@ namespace BattleCruisers.Utils
         Building_Mortar,
         Building_SamSite,
         Building_TeslaCoil,
+        Building_Coastguard,
 
         // Offence
         Building_Artillery,
@@ -53,6 +54,8 @@ namespace BattleCruisers.Utils
         Building_Railgun,
         Building_MLRS,
         Building_GatlingMortar,
+        Building_MissilePod,
+        Building_IonCannon,
 
         // Ultras
         Building_DeathstarLauncher,
@@ -60,6 +63,7 @@ namespace BattleCruisers.Utils
         Building_Ultralisk,
         Building_KamikazeSignal,
         Building_Broadsides,
+        Building_NovaArtillery,
 
 
         // === Units ===
