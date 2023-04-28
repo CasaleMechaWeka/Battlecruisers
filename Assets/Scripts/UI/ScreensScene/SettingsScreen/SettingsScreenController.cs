@@ -20,14 +20,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public ResolutionDropdown resolutionDropdown;
         public SliderController zoomSlider, scrollSlider;
         public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle;
         public SaveButton saveButton;
         public CancelButton cancelButton;
         public CanvasGroupButton resetHotkeysButton;
 
-        public Panel gameSettingsPanel, audioPanel, videoPanel;
+        public Panel gameSettingsPanel, audioPanel, videoPanel, premiumPanel;
         public HotkeysPanel hotkeysPanel;
-        public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton;
+        public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton, premiumButton;
 
         public bool showGameSettingsFirst = true;
 
@@ -88,6 +88,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             altDroneSoundsToggle.Initialise(_settingsManager.AltDroneSounds);
             fullScreenToggle.Initialise(_settingsManager.FullScreen);
             VSyncToggle.Initialise(_settingsManager.VSync);
+            adsToggle.Initialise(_settingsManager.ShowAds);
 
             hotkeysPanel.Initialise(hotkeysModel);
 
@@ -113,6 +114,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     altDroneSoundsToggle.IsChecked,
                     fullScreenToggle.IsChecked,
                     VSyncToggle.IsChecked,
+                    adsToggle.IsChecked,
                     hotkeysPanel);
 
             cancelButton.Initialise(soundPlayer, this);
@@ -122,6 +124,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
             audioButton.Initialise(soundPlayer, ShowAudioSettings, this);
             languageButton.Initialise(soundPlayer, ShowLanguageSettings, this);
+            premiumButton.Initialise(soundPlayer, ShowPremiumSettings, this);
 
             ShowTab();
         }
@@ -154,6 +157,24 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _screensSceneGod.GoToHomeScreen();
         }
 
+        public void ShowPremiumSettings()
+        {
+            hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
+
+            audioButton.IsSelected = false;
+            audioPanel.Hide();
+            languageButton.IsSelected = false;
+            videoPanel.Hide();
+
+            gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+
+            premiumPanel.Show();
+            premiumButton.IsSelected = true;
+        }
+
         public void ShowGameSettings()
         {
             hotkeysPanel.Hide();
@@ -164,6 +185,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             audioPanel.Hide();
             languageButton.IsSelected = false;
             videoPanel.Hide();
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
 
 
             gameSettingsPanel.Show();
@@ -181,9 +205,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             languageButton.IsSelected = false;
             videoPanel.Hide();
 
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
+
             hotkeysPanel.Show();
             hotkeysButton.IsSelected = true;
             resetHotkeysButton.IsVisible = true;
+
         }
 
         public void ShowAudioSettings()
@@ -195,6 +223,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gameSettingsButton.IsSelected = false;
             languageButton.IsSelected = false;
             videoPanel.Hide();
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
 
             audioButton.IsSelected = true;
             audioPanel.Show();
@@ -212,7 +243,10 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gameSettingsButton.IsSelected = false;
             audioButton.IsSelected = false;
             audioPanel.Hide();
-            
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
+
             languageButton.IsSelected = true;
             videoPanel.Show();
 
@@ -239,6 +273,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             fullScreenToggle.ResetToDefaults(_settingsManager.FullScreen);
             resolutionDropdown.ResetToDefaults(_settingsManager.Resolution);
             altDroneSoundsToggle.ResetToDefaults(_settingsManager.AltDroneSounds);
+            adsToggle.ResetToDefaults(_settingsManager.ShowAds);
         }
     }
 }

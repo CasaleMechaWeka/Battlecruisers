@@ -33,6 +33,7 @@ namespace BattleCruisers.Data.Settings
         bool FullScreen { get; set; }
         string Language { get; set; }
         Vector2 Resolution { get; set; }
+        bool ShowAds { get; set; }
 
         void Save();
     }

@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private RectTransform _transform;
         private Vector2 _defaulteSizeDelta;
 
-        private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.7f;
+        private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.9f;
 
         public bool IsSelected
         {
