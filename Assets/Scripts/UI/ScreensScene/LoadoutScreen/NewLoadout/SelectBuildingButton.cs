@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _buildingNameToKey = buildingName;
 
             UpdateSelectText(true);
-            Enabled = IsOverLimit();
+            Enabled = ShouldBeEnabled();
         }
 
         protected override void OnClicked()
@@ -95,7 +95,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             if (value)
             {
                 checkBox.SetActive(true);
-                Enabled = IsOverLimit();
                 selectText.SetActive(false);
                 deselectText.SetActive(true);
             }
@@ -124,7 +123,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectBuildingButton(object sender, EventArgs e)
         {
-            Enabled = ShouldBeEnabled();
+            if(ShouldBeEnabled())
+            {
+                Enabled = IsOverLimit();
+            }
+            else
+            {
+                Enabled = false;
+            }
+            Debug.Log("select button call");
         }
         private void DisplayedBuildingChanged(object sender, EventArgs e)
         {
@@ -144,23 +151,24 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 if (buildingKeys.Contains(buildingKey))
                     UpdateSelectText(true);
                 else
+                {
                     UpdateSelectText(false);
+                }
+                    
             }
         }
 
         private bool IsOverLimit()
         {
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
-            if(_buildingDetails != null)
+            if(_buildingDetails.SelectedItem.Value != null)
             {
-                //BuildingKey key = _buildingNameToKey.GetKey(_buildingDetails.SelectedItem.Value.Name);
-                if (ShouldBeEnabled() && (loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) <= buildingLimit))
-                    //if(loadout.IsBuildingInList(_buildingDetails.SelectedItem.Value.Category, key))
-                    //{
-                        return true;
-                    //}
+                if ((loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) == buildingLimit) && selectText.activeSelf)
+                {
+                    return false;
+                }
             }    
-            return false;
+            return true;
         }
     }
 }

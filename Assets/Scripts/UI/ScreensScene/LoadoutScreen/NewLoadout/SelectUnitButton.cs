@@ -94,7 +94,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             if (value)
             {
                 checkBox.SetActive(true);
-                Enabled = IsOverLimit();
                 selectText.SetActive(false);
                 deselectText.SetActive(true);
             }
@@ -123,7 +122,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectUnitButton(object sender, EventArgs e)
         {
-            Enabled = ShouldBeEnabled();
+            if(ShouldBeEnabled())
+            {
+                Enabled = IsOverLimit();
+            }
+            else
+            {
+                Enabled = false;
+            }
         }
         private void DisplayedUnitChanged(object sender, EventArgs e)
         {
@@ -149,10 +155,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private bool IsOverLimit()
         {
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
-            if(_unitDetails != null)
-                if (ShouldBeEnabled() && loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) <= unitLimit)
-                    return true;
-            return false;
+            if (_unitDetails.SelectedItem.Value != null)
+            {
+                if ((loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) == unitLimit) && selectText.activeSelf)
+                {
+                    return false;
+                } 
+            } 
+            return true;
         }
     }
 }
