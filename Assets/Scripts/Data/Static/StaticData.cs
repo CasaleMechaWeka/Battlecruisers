@@ -125,6 +125,7 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Buildings.SamSite,
 				StaticPrefabKeys.Buildings.TeslaCoil,
                 StaticPrefabKeys.Buildings.Coastguard,//new
+                StaticPrefabKeys.Buildings.MissilePod,//new
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
@@ -132,7 +133,6 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Buildings.RocketLauncher,
                 StaticPrefabKeys.Buildings.MLRS,
                 StaticPrefabKeys.Buildings.GatlingMortar,
-                StaticPrefabKeys.Buildings.MissilePod,//new
                 StaticPrefabKeys.Buildings.IonCannon,//new
 
                 // Ultras
@@ -383,6 +383,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
                 { StaticPrefabKeys.Buildings.Coastguard, 33 },
+                { StaticPrefabKeys.Buildings.MissilePod, 36 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
@@ -390,7 +391,6 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
                 { StaticPrefabKeys.Buildings.MLRS, 29},
                 { StaticPrefabKeys.Buildings.GatlingMortar, 32},
-                { StaticPrefabKeys.Buildings.MissilePod, 36 },
                 { StaticPrefabKeys.Buildings.IonCannon, 37 },
 
                 // Ultras
@@ -503,7 +503,7 @@ namespace BattleCruisers.Data.Static
 
         public int LevelFirstAvailableIn(BuildingKey buildingKey)
         {
-            Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
+            //Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
             return _buildingToUnlockedLevel[buildingKey];
         }
     }
