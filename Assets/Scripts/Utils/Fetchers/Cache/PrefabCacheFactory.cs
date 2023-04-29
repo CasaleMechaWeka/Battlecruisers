@@ -102,7 +102,8 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
             prefabContainer.Prefab.StaticInitialise(_commonStrings);
-            keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
+            if(!keyToPrefab.ContainsKey(prefabKey))
+                keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
 
         private async Task GetPrefab<TPrefab>(

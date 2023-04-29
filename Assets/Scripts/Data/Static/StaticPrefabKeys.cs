@@ -136,7 +136,9 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<IPrefabKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil, UltraRaptor
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil,
+                        //Ultra
+                        UltraRaptor, UltraTrident, UltraMegalodon, UltraRockjaw, UltraHammerhead, UltraLongbow, UltraBullshark, UltraEagle
                     };
                 }
             }
@@ -147,7 +149,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<HullKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil, UltraRaptor
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil//, UltraRaptor
                     };
                 }
             }
