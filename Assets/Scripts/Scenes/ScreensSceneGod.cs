@@ -139,7 +139,7 @@ namespace BattleCruisers.Scenes
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
-                fullScreenads.OpenAdvert();//<Aaron> Loads full screen adds after player win a battle
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
             else if (levelToShowCutscene == 0)
@@ -195,10 +195,6 @@ namespace BattleCruisers.Scenes
         }
 
 
-/*        private void OnEnable()
-        {
-            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
-        }*/
 
 
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)

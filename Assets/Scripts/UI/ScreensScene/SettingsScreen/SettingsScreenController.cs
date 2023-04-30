@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Panels;
@@ -30,10 +31,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton, premiumButton;
 
         public bool showGameSettingsFirst = true;
+        public GameObject premiumTab;
+
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod, 
-            ISingleSoundPlayer soundPlayer, 
+            IScreensSceneGod screensSceneGod,
+            ISingleSoundPlayer soundPlayer,
             ISettingsManager settingsManager,
             IHotkeysModel hotkeysModel,
             ILocTable commonLocTable)
@@ -58,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             languageDropdown.Initialise(_settingsManager.Language, commonLocTable);
             resolutionDropdown.Initialise(_settingsManager.Resolution, commonLocTable);
 
-            
+
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
@@ -126,7 +129,21 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             languageButton.Initialise(soundPlayer, ShowLanguageSettings, this);
             premiumButton.Initialise(soundPlayer, ShowPremiumSettings, this);
 
-            ShowTab();
+            ShowTab(); //Hotkeys tab - only show for keyboard devices
+
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+
+#if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
+            if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            {
+                premiumTab.SetActive(true);
+            }
+            else
+            {
+                premiumTab.SetActive(false);
+            }
+#endif
+
         }
 
         private void ShowTab()
@@ -229,7 +246,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             audioButton.IsSelected = true;
             audioPanel.Show();
-            
+
 
         }
 
