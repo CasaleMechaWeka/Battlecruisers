@@ -1,9 +1,12 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using UnityEngine.Assertions;
 
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
+    /// <summary>
+    /// Perks:
+    /// + Increases drone station and ultralisk build speed.
+    /// </summary>
     public class PvPEagle : PvPCruiser
     {
         public float droneBuildingBuildRateBoost;
@@ -19,4 +22,3 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
     }
 }
-
