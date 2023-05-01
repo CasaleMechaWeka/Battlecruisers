@@ -85,16 +85,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Hulls.BlackRig,
                 StaticPrefabKeys.Hulls.Rickshaw,
                 StaticPrefabKeys.Hulls.TasDevil,
-                StaticPrefabKeys.Hulls.Yeti,
-                //Ultra Cruisers
-                StaticPrefabKeys.Hulls.UltraTrident,
-                StaticPrefabKeys.Hulls.UltraBullshark,
-                StaticPrefabKeys.Hulls.UltraRaptor,
-                StaticPrefabKeys.Hulls.UltraRockjaw,
-                StaticPrefabKeys.Hulls.UltraEagle,
-                StaticPrefabKeys.Hulls.UltraHammerhead,
-                StaticPrefabKeys.Hulls.UltraLongbow,
-                StaticPrefabKeys.Hulls.UltraMegalodon
+                StaticPrefabKeys.Hulls.Yeti
             };
 		}
 
@@ -438,15 +429,6 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.TasDevil, 35 },
                 { StaticPrefabKeys.Hulls.BlackRig, 38 },
                 { StaticPrefabKeys.Hulls.Yeti, 40 },
-                //un-obtainable
-                { StaticPrefabKeys.Hulls.UltraTrident, 99999 },
-                { StaticPrefabKeys.Hulls.UltraRaptor, 99999 },
-                { StaticPrefabKeys.Hulls.UltraBullshark, 99999 },
-                { StaticPrefabKeys.Hulls.UltraRockjaw, 99999 },
-                { StaticPrefabKeys.Hulls.UltraEagle, 99999 },
-                { StaticPrefabKeys.Hulls.UltraHammerhead, 99999 },
-                { StaticPrefabKeys.Hulls.UltraLongbow, 99999 },
-                { StaticPrefabKeys.Hulls.UltraMegalodon, 99999 },
             };
         }
 
