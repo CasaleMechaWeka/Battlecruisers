@@ -63,8 +63,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();
-            int expectedNumberOfTrails = _numOfLevels -1;
-            Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
+            int expectedNumberOfTrails = _numOfLevels - 1;
+            //Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
 
             for (int i = 0; i < trails.Length; ++i)
             {

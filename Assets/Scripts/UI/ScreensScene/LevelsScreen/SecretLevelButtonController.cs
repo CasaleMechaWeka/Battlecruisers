@@ -5,6 +5,7 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.UIElements;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -14,6 +15,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         [SerializeField]
         private int _levelNum;
+
+        public GameObject captainImage;
 
         protected override ISoundKey ClickSound => SoundKeys.UI.Click;
 
@@ -30,12 +33,20 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             Enabled = numOfLevelUnlocked >= _levelNum;
         }
 
-
-
         protected override void OnClicked()
         {
             base.OnClicked();
             _screensSceneGod.GoToTrashScreen(_levelNum);
+        }
+
+        protected override void ShowEnabledState()
+        {
+            captainImage.SetActive(Enabled);
+        }
+
+        protected override void ShowDisabledState()
+        {
+            captainImage.SetActive(false);
         }
     }
 }
