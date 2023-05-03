@@ -136,11 +136,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
             if (applicationModel.DataProvider.GameModel.PremiumEdition)
             {
-                premiumTab.SetActive(true);
+                //premiumTab.SetActive(true);
             }
             else
             {
-                premiumTab.SetActive(false);
+                //premiumTab.SetActive(false);
             }
 #endif
 
