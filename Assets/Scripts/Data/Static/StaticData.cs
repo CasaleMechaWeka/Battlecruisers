@@ -116,7 +116,6 @@ namespace BattleCruisers.Data.Static
 				StaticPrefabKeys.Buildings.SamSite,
 				StaticPrefabKeys.Buildings.TeslaCoil,
                 StaticPrefabKeys.Buildings.Coastguard,//new
-                StaticPrefabKeys.Buildings.MissilePod,//new
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
@@ -125,6 +124,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.MLRS,
                 StaticPrefabKeys.Buildings.GatlingMortar,
                 StaticPrefabKeys.Buildings.IonCannon,//new
+                StaticPrefabKeys.Buildings.MissilePod,//new
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
@@ -428,7 +428,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Rickshaw, 34 },
                 { StaticPrefabKeys.Hulls.TasDevil, 35 },
                 { StaticPrefabKeys.Hulls.BlackRig, 38 },
-                { StaticPrefabKeys.Hulls.Yeti, 40 },
+                { StaticPrefabKeys.Hulls.Yeti, 40 }
             };
         }
 
