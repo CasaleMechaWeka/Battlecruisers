@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton, premiumButton;
 
         public bool showGameSettingsFirst = true;
-        public GameObject premiumTab;
+        //public GameObject premiumTab;
 
 
         public void Initialise(
