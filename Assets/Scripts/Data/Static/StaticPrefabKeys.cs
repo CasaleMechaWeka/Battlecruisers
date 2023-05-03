@@ -119,15 +119,6 @@ namespace BattleCruisers.Data.Static
             public static HullKey Rickshaw { get; } = new HullKey("Rickshaw");
             public static HullKey BlackRig { get; } = new HullKey("BlackRig");
             
-            //Ultra versions
-            public static HullKey UltraBullshark { get; } = new HullKey("UltraBullshark");
-            public static HullKey UltraEagle { get; } = new HullKey("UltraEagle");
-            public static HullKey UltraHammerhead { get; } = new HullKey("UltraHammerhead");
-            public static HullKey UltraLongbow { get; } = new HullKey("UltraLongbow");
-            public static HullKey UltraMegalodon { get; } = new HullKey("UltraMegalodon");
-            public static HullKey UltraRaptor { get; } = new HullKey("UltraRaptor");
-            public static HullKey UltraRockjaw { get; } = new HullKey("UltraRockjaw");
-            public static HullKey UltraTrident { get; } = new HullKey("UltraTrident");
 
 
             public static IList<IPrefabKey> AllKeys
@@ -137,8 +128,6 @@ namespace BattleCruisers.Data.Static
                     return new List<IPrefabKey>()
                     {
                         Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss, BlackRig, Yeti, Rickshaw, TasDevil,
-                        //Ultra
-                        UltraRaptor, UltraTrident, UltraMegalodon, UltraRockjaw, UltraHammerhead, UltraLongbow, UltraBullshark, UltraEagle
                     };
                 }
             }
@@ -149,7 +138,7 @@ namespace BattleCruisers.Data.Static
                 {
                     return new List<HullKey>()
                     {
-                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil//, UltraRaptor
+                        Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, BlackRig, Yeti, Rickshaw, TasDevil
                     };
                 }
             }
