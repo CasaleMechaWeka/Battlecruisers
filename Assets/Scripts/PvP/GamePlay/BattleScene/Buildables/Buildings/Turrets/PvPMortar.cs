@@ -6,6 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPMortar : PvPDefenseTurret
     {
         protected override IPvPSoundKey FiringSound => PvPSoundKeys.PvPFiring.Artillery;
-        protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.Completed.Buildings.Mortar;
+        protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.Mortar;
     }
 }

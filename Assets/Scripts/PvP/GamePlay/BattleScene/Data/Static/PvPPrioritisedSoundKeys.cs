@@ -4,9 +4,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 {
     public static class PvPPrioritisedSoundKeys
     {
-        public static class Completed
+        public static class PvPCompleted
         {
-            public static class Buildings
+            public static class PvPBuildings
             {
                 public static PvPPrioritisedSoundKey AirFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AirFactory, PvPSoundPriority.VeryLow);
                 public static PvPPrioritisedSoundKey AntiAirTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AntiAirTurret, PvPSoundPriority.VeryLow);
@@ -29,16 +29,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPPrioritisedSoundKey Ultra = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Ultra, PvPSoundPriority.VeryHigh);
         }
 
-        public static class Events
+        public static class PvPEvents
         {
-            public static class Cruiser
+            public static class PvPCruiser
             {
                 public static PvPPrioritisedSoundKey UnderAttack = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.CruiserUnderAttack, PvPSoundPriority.Normal);
                 public static PvPPrioritisedSoundKey SignificantlyDamaged = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.CruiserSignificantlyDamaged, PvPSoundPriority.High);
                 public static PvPPrioritisedSoundKey NoBuildingSlotsLeft = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.NoBuildingSlotsLeft, PvPSoundPriority.VeryHigh);
             }
 
-            public static class Drones
+            public static class PvPDrones
             {
                 public static PvPPrioritisedSoundKey NewDronesReady = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNewDronesReady, PvPSoundPriority.VeryLow);
                 public static PvPPrioritisedSoundKey Idle = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesIdle, PvPSoundPriority.Normal);
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 public static PvPPrioritisedSoundKey Dispersing = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesDispersing, PvPSoundPriority.High);
             }
 
-            public static class Targetting
+            public static class PvPTargetting
             {
                 public static PvPPrioritisedSoundKey NewTarget = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.TargettingNewTarget, PvPSoundPriority.Normal);
                 public static PvPPrioritisedSoundKey TargetCleared = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.TargettingDeselected, PvPSoundPriority.Normal);
@@ -64,113 +64,113 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
         {
             if (usingDroneWhistles)
             {
-                Completed.Buildings.AirFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.AntiAirTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.AntiShipTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Artillery = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Booster = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.ControlTower = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.DroneStation = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Mortar = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.NavalFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Railgun = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.RocketLauncher = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.SamSite = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Shields = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.SpySatellite = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.StealthGenerator = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
-                Completed.Buildings.TeslaCoil = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.AirFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.AntiAirTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.AntiShipTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Artillery = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Booster = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.ControlTower = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.DroneStation = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Mortar = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.NavalFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Railgun = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.RocketLauncher = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.SamSite = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Shields = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.SpySatellite = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.StealthGenerator = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.TeslaCoil = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildingReadyAlt, PvPSoundPriority.VeryLow);
 
-                Completed.Ultra = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.UltraReadyAlt, PvPSoundPriority.VeryHigh);//missing file
-
-
-                Events.Cruiser.UnderAttack = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.CruiserUnderAttackAlt, PvPSoundPriority.Normal);
-
-                Events.Cruiser.SignificantlyDamaged = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.CruiserSignificantlyDamagedAlt, PvPSoundPriority.High);
-
-                Events.Cruiser.NoBuildingSlotsLeft = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.NowhereToBuildAlt, PvPSoundPriority.VeryHigh);
+                PvPCompleted.Ultra = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.UltraReadyAlt, PvPSoundPriority.VeryHigh);//missing file
 
 
-                Events.Drones.AllFocused = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.AllDronesFocused, PvPSoundPriority.High);
+                PvPEvents.PvPCruiser.UnderAttack = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.CruiserUnderAttackAlt, PvPSoundPriority.Normal);
 
-                Events.Drones.Dispersing = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.DispersingAlt, PvPSoundPriority.High);
+                PvPEvents.PvPCruiser.SignificantlyDamaged = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.CruiserSignificantlyDamagedAlt, PvPSoundPriority.High);
 
-                Events.Drones.Focusing = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.FocusingAlt, PvPSoundPriority.High);
-
-                Events.Drones.Idle = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.DronesIdleAlt, PvPSoundPriority.Normal);
-
-                Events.Drones.NewDronesReady = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildersReadyAlt, PvPSoundPriority.VeryLow);
-
-                Events.Drones.NotEnoughDronesToBuild = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.InsufficientBuildersAlt, PvPSoundPriority.VeryHigh);
-
-                Events.Drones.NotEnoughDronesToFocus = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.InsufficientBuildersAlt, PvPSoundPriority.High);
+                PvPEvents.PvPCruiser.NoBuildingSlotsLeft = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.NowhereToBuildAlt, PvPSoundPriority.VeryHigh);
 
 
-                Events.Targetting.NewTarget = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.TargetingAlt, PvPSoundPriority.Normal);
+                PvPEvents.PvPDrones.AllFocused = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.AllDronesFocused, PvPSoundPriority.High);
 
-                Events.Targetting.TargetCleared = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.UntargetAlt, PvPSoundPriority.Normal);
+                PvPEvents.PvPDrones.Dispersing = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.DispersingAlt, PvPSoundPriority.High);
+
+                PvPEvents.PvPDrones.Focusing = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.FocusingAlt, PvPSoundPriority.High);
+
+                PvPEvents.PvPDrones.Idle = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.DronesIdleAlt, PvPSoundPriority.Normal);
+
+                PvPEvents.PvPDrones.NewDronesReady = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.BuildersReadyAlt, PvPSoundPriority.VeryLow);
+
+                PvPEvents.PvPDrones.NotEnoughDronesToBuild = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.InsufficientBuildersAlt, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.PvPDrones.NotEnoughDronesToFocus = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.InsufficientBuildersAlt, PvPSoundPriority.High);
 
 
-                Events.EnemyStartedUltra = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.EnemyBuildingUltraAlt, PvPSoundPriority.VeryHigh);
+                PvPEvents.PvPTargetting.NewTarget = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.TargetingAlt, PvPSoundPriority.Normal);
 
-                Events.IncompleteFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.WaitForFactoryToCompleteAlt, PvPSoundPriority.VeryHigh);
+                PvPEvents.PvPTargetting.TargetCleared = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.UntargetAlt, PvPSoundPriority.Normal);
 
-                Events.PopulationLimitReached = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.PopCapReachedAlt, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.EnemyStartedUltra = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.EnemyBuildingUltraAlt, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.IncompleteFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.WaitForFactoryToCompleteAlt, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.PopulationLimitReached = new PvPPrioritisedSoundKey(PvPSoundKeys.AltDrones.PopCapReachedAlt, PvPSoundPriority.VeryHigh);
             }
             else
             {
-                Completed.Buildings.AirFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AircraftReady, PvPSoundPriority.VeryLow);
-                Completed.Buildings.AntiAirTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AntiAirTurret, PvPSoundPriority.VeryLow);
-                Completed.Buildings.AntiShipTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AntiShipTurret, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Artillery = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Artillery, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Booster = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Booster, PvPSoundPriority.VeryLow);
-                Completed.Buildings.ControlTower = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.ControlTower, PvPSoundPriority.VeryLow);
-                Completed.Buildings.DroneStation = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.DroneStation, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Mortar = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Mortar, PvPSoundPriority.VeryLow);
-                Completed.Buildings.NavalFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.NavalFactory, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Railgun = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Railgun, PvPSoundPriority.VeryLow);
-                Completed.Buildings.RocketLauncher = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.RocketLauncher, PvPSoundPriority.VeryLow);
-                Completed.Buildings.SamSite = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.SamSite, PvPSoundPriority.VeryLow);
-                Completed.Buildings.Shields = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Shields, PvPSoundPriority.VeryLow);
-                Completed.Buildings.SpySatellite = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.SpySatellite, PvPSoundPriority.VeryLow);
-                Completed.Buildings.StealthGenerator = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.StealthGenerator, PvPSoundPriority.VeryLow);
-                Completed.Buildings.TeslaCoil = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.TeslaCoil, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.AirFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AircraftReady, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.AntiAirTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AntiAirTurret, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.AntiShipTurret = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.AntiShipTurret, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Artillery = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Artillery, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Booster = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Booster, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.ControlTower = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.ControlTower, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.DroneStation = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.DroneStation, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Mortar = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Mortar, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.NavalFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.NavalFactory, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Railgun = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Railgun, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.RocketLauncher = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.RocketLauncher, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.SamSite = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.SamSite, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.Shields = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Shields, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.SpySatellite = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.SpySatellite, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.StealthGenerator = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.StealthGenerator, PvPSoundPriority.VeryLow);
+                PvPCompleted.PvPBuildings.TeslaCoil = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.TeslaCoil, PvPSoundPriority.VeryLow);
 
-                Completed.Ultra = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Ultra, PvPSoundPriority.VeryHigh);
-
-
-                Events.Cruiser.UnderAttack = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.CruiserUnderAttack, PvPSoundPriority.Normal);
-
-                Events.Cruiser.SignificantlyDamaged = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.CruiserSignificantlyDamaged, PvPSoundPriority.High);
-
-                Events.Cruiser.NoBuildingSlotsLeft = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.NoBuildingSlotsLeft, PvPSoundPriority.VeryHigh);
+                PvPCompleted.Ultra = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPCompleted.Ultra, PvPSoundPriority.VeryHigh);
 
 
-                Events.Drones.AllFocused = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesAllFocused, PvPSoundPriority.High);
+                PvPEvents.PvPCruiser.UnderAttack = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.CruiserUnderAttack, PvPSoundPriority.Normal);
 
-                Events.Drones.Dispersing = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesDispersing, PvPSoundPriority.High);
+                PvPEvents.PvPCruiser.SignificantlyDamaged = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.CruiserSignificantlyDamaged, PvPSoundPriority.High);
 
-                Events.Drones.Focusing = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesFocusing, PvPSoundPriority.High);
-
-                Events.Drones.Idle = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesIdle, PvPSoundPriority.Normal);
-
-                Events.Drones.NewDronesReady = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNewDronesReady, PvPSoundPriority.VeryLow);
-
-                Events.Drones.NotEnoughDronesToBuild = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNotEnoughDronesToBuild, PvPSoundPriority.VeryHigh);
-
-                Events.Drones.NotEnoughDronesToFocus = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNotEnoughDronesToFocus, PvPSoundPriority.High);
+                PvPEvents.PvPCruiser.NoBuildingSlotsLeft = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.NoBuildingSlotsLeft, PvPSoundPriority.VeryHigh);
 
 
-                Events.Targetting.NewTarget = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.TargettingNewTarget, PvPSoundPriority.Normal);
+                PvPEvents.PvPDrones.AllFocused = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesAllFocused, PvPSoundPriority.High);
 
-                Events.Targetting.TargetCleared = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.TargettingDeselected, PvPSoundPriority.Normal);
+                PvPEvents.PvPDrones.Dispersing = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesDispersing, PvPSoundPriority.High);
+
+                PvPEvents.PvPDrones.Focusing = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesFocusing, PvPSoundPriority.High);
+
+                PvPEvents.PvPDrones.Idle = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesIdle, PvPSoundPriority.Normal);
+
+                PvPEvents.PvPDrones.NewDronesReady = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNewDronesReady, PvPSoundPriority.VeryLow);
+
+                PvPEvents.PvPDrones.NotEnoughDronesToBuild = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNotEnoughDronesToBuild, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.PvPDrones.NotEnoughDronesToFocus = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.DronesNotEnoughDronesToFocus, PvPSoundPriority.High);
 
 
-                Events.EnemyStartedUltra = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.EnemyStartedUltra, PvPSoundPriority.VeryHigh);
+                PvPEvents.PvPTargetting.NewTarget = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.TargettingNewTarget, PvPSoundPriority.Normal);
 
-                Events.IncompleteFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.FactoryIncomplete, PvPSoundPriority.VeryHigh);
+                PvPEvents.PvPTargetting.TargetCleared = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.TargettingDeselected, PvPSoundPriority.Normal);
 
-                Events.PopulationLimitReached = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.PopulationLimitReached, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.EnemyStartedUltra = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.EnemyStartedUltra, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.IncompleteFactory = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.FactoryIncomplete, PvPSoundPriority.VeryHigh);
+
+                PvPEvents.PopulationLimitReached = new PvPPrioritisedSoundKey(PvPSoundKeys.PvPEvents.PopulationLimitReached, PvPSoundPriority.VeryHigh);
             }
         }
     }

@@ -6,6 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPAntiShipTurret : PvPDefenseTurret
     {
         protected override IPvPSoundKey FiringSound => PvPSoundKeys.PvPFiring.BigCannon;
-        protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.Completed.Buildings.AntiShipTurret;
+        protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.AntiShipTurret;
     }
 }
