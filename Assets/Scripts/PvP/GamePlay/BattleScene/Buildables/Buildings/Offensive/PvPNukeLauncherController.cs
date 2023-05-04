@@ -1,76 +1,76 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Buildables.Buildings.Offensive
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Offensive
 {
-    public class NukeLauncherController : Building
+    public class PvPNukeLauncherController : PvPBuilding
     {
-        private NukeSpinner _spinner;
-        private INukeStats _nukeStats;
-        private NukeController _launchedNuke;
+        private PvPNukeSpinner _spinner;
+        private IPvPNukeStats _nukeStats;
+        private PvPNukeController _launchedNuke;
 
-        public SiloHalfController leftSiloHalf, rightSiloHalf;
-        public NukeController nukeMissilePrefab;
+        public PvPSiloHalfController leftSiloHalf, rightSiloHalf;
+        public PvPNukeController nukeMissilePrefab;
 
-        private IAudioClipWrapper _nukeImpactSound;
+        private IPvPAudioClipWrapper _nukeImpactSound;
         public AudioClip nukeImpactSound;
 
         private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
         private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
         private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
-        public override TargetValue TargetValue => TargetValue.High;
+        protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.Ultra;
+        public override PvPTargetValue TargetValue => PvPTargetValue.High;
 
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
+            IPvPGlobalBoostProviders globalBoostProviders,
+            IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(parent, healthBar, commonStrings);
 
-            Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
+            PvPHelper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
             leftSiloHalf.StaticInitialise();
             rightSiloHalf.StaticInitialise();
 
-            _spinner = gameObject.GetComponentInChildren<NukeSpinner>();
+            _spinner = gameObject.GetComponentInChildren<PvPNukeSpinner>();
             Assert.IsNotNull(_spinner);
             _spinner.StaticInitialise();
 
-            _nukeStats = GetComponent<NukeProjectileStats>();
+            _nukeStats = GetComponent<PvPNukeProjectileStats>();
             Assert.IsNotNull(_nukeStats);
-            AddAttackCapability(TargetType.Cruiser);
-            AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
+            AddAttackCapability(PvPTargetType.Cruiser);
+            AddDamageStats(new PvPDamageCapability(_nukeStats.Damage, AttackCapabilities));
 
             Assert.IsNotNull(nukeImpactSound);
-            _nukeImpactSound = new AudioClipWrapper(nukeImpactSound);
+            _nukeImpactSound = new PvPAudioClipWrapper(nukeImpactSound);
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 
@@ -100,10 +100,10 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         {
             _launchedNuke = Instantiate(nukeMissilePrefab);
 
-            ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
+            IPvPTargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise(_commonStrings, _factoryProvider);
             _launchedNuke.Activate(
-                new TargetProviderActivationArgs<INukeStats>(
+                new PvPTargetProviderActivationArgs<IPvPNukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,
                     _nukeStats,
                     Vector2.zero,
