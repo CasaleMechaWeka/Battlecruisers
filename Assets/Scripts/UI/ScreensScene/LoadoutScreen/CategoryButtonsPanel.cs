@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             foreach (ItemCategoryButton button in _buttons)
             {
-                button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel, itemButtons,itemFamilyTracker);
+                button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel, itemButtons, itemFamilyTracker);
             }
         }
 

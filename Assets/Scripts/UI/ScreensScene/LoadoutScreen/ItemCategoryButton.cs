@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private bool _hasUnlockedItem;
         private GameObject _selectedFeedback;
         private NewItemMark _newItemMark;
-        private RectTransform _itemCategoryButton;
+        // private RectTransform _itemCategoryButton;
 
         private IComparingItemFamilyTracker _itemFamilyTracker;
 
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(_canvasGroup);
 
             _selectedFeedback = transform.FindNamedComponent<Transform>("SelectedFeedback").gameObject;
-            _itemCategoryButton = GetComponent<RectTransform>();
+            // _itemCategoryButton = GetComponent<RectTransform>();
             UpdateSelectedFeedback();
 
             _newItemMark = GetComponentInChildren<NewItemMark>();
@@ -104,14 +104,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectedFeedback()
         {
-            if (_itemPanels.IsMatch(itemType))
+           /* if (_itemPanels.IsMatch(itemType))
             {
                 _itemCategoryButton.sizeDelta = buttonWidth;
             }
             else
             {
                 _itemCategoryButton.sizeDelta = new Vector2(150, 150);
-            }
+            } */
             IsSelected = _itemPanels.IsMatch(itemType);
         }
 
