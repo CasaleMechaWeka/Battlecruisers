@@ -157,7 +157,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
             if (_unitDetails.SelectedItem.Value != null)
             {
-                if ((loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) == unitLimit) && selectText.activeSelf)
+                if (((loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) == unitLimit) && selectText.activeSelf) ||
+                    ((loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) == 1 && deselectText.activeSelf)))
                 {
                     return false;
                 } 
