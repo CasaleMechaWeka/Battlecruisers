@@ -118,8 +118,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-            _itemFamilyTracker.SetComparingFamily(ItemFamily);
             _itemPanels.ShowItemsPanel(itemType);
+            _itemFamilyTracker.SetComparingFamily(ItemFamily);
             _itemFamilyTracker.SetComparingFamily(null);
         }
 
