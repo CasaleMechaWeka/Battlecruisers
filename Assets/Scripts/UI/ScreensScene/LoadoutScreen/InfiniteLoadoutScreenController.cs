@@ -123,6 +123,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
             _itemDetailsManager.ShowDetails(playerCruiser);
+            _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
+            _comparingFamilyTracker.SetComparingFamily(null);
         }
 
         public override void Cancel()
