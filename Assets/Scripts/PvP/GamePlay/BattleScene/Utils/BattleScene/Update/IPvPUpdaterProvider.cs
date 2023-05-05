@@ -1,4 +1,4 @@
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Update
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update
 {
     public interface IPvPUpdaterProvider
     {
