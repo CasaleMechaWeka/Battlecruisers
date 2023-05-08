@@ -53,11 +53,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         void OnClientExit()
         {
-
         }
         void OnNetworkSpawn()
         {
-
             if (!NetworkManager.Singleton.IsServer)
             {
                 enabled = false;
