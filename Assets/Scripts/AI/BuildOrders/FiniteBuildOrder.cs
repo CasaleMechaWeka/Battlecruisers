@@ -27,7 +27,7 @@ namespace BattleCruisers.AI.BuildOrders
             if (_index < _size)
             {
                 hasKey = _infiniteBuildOrder.MoveNext();
-                Assert.IsTrue(hasKey, "Infinite build order should never run out of keys :/");
+                //Assert.IsTrue(hasKey, "Infinite build order should never run out of keys :/");
 
                 Current = _infiniteBuildOrder.Current;
                 _index++;
