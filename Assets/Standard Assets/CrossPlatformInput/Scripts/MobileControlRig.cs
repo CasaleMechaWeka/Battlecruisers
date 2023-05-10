@@ -88,9 +88,13 @@ namespace UnityStandardAssets.CrossPlatformInput
         {
             foreach (Transform t in transform)
             {
-                t.gameObject.SetActive(enabled);
+                if (t != null && t.gameObject != null)
+                {
+                    t.gameObject.SetActive(enabled);
+                }
             }
         }
+
 
 #if UNITY_EDITOR
         public void OnActiveBuildTargetChanged(BuildTarget previousTarget, BuildTarget newTarget)
