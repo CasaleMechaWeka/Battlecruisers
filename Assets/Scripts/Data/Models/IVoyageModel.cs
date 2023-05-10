@@ -21,6 +21,5 @@ namespace BattleCruisers.Data.Models
 
         // Whether the current voyage is in progress
         bool VoyageInProgress { get; set; }
-
     }
 }
