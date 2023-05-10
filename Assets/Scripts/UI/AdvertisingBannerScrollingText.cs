@@ -44,7 +44,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         StartPlatformSpecificAds();
 
         HideIAPButton();
-
+        /* Commented out the transform scale for the banner
         float xAdjustment = transform.localScale.x;
         float yAdjustment = transform.localScale.y;
 
@@ -65,7 +65,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             yAdjustment *= scaleAdjustment;
             transform.localScale = new Vector3(xAdjustment, yAdjustment);
         }
-
+        */
 
         _TextBox = ScrollingTextBox.GetComponent<TMP_Text>();
         boxCollider = TextMask.GetComponent<BoxCollider2D>();
