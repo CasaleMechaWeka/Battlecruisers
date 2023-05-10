@@ -10,6 +10,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class FullScreenAdverts : MonoBehaviour
@@ -23,8 +24,7 @@ public class FullScreenAdverts : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-        settingsManager = applicationModel.DataProvider.SettingsManager;
+        
 
         StartPlatformSpecficAds();
         Button btn = closeButton.GetComponent<Button>();
@@ -49,6 +49,7 @@ public class FullScreenAdverts : MonoBehaviour
     void StartPlatformSpecficAds()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+        settingsManager = applicationModel.DataProvider.SettingsManager;
 
 #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
@@ -57,6 +58,7 @@ public class FullScreenAdverts : MonoBehaviour
         }
         else
         {
+            Assert.IsNotNull(settingsManager);
             // For premium users, show ads only if ShowAds setting is enabled
             gameObject.SetActive(settingsManager.ShowAds);
         }
