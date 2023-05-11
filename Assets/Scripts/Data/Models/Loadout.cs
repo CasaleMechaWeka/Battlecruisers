@@ -54,7 +54,72 @@ namespace BattleCruisers.Data.Models
 			_unit = unitLimit;
 		}
 
-		public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
+        public bool Is_buildsNull()
+        {
+            return _builds == null;
+        }
+
+        public void Create_buildsAnd_units()
+        {
+            List<BuildingKey> limit = _buildings;
+            List<BuildingKey> factories = new List<BuildingKey>();
+            List<BuildingKey> defence = new List<BuildingKey>();
+            List<BuildingKey> offense = new List<BuildingKey>();
+            List<BuildingKey> tactical = new List<BuildingKey>();
+            List<BuildingKey> Ultra = new List<BuildingKey>();
+            foreach (BuildingKey key in limit)
+            {
+                switch (key.BuildingCategory)
+                {
+                    case BuildingCategory.Factory:
+                        factories.Add(key);
+                        break;
+                    case BuildingCategory.Defence:
+                        defence.Add(key);
+                        break;
+                    case BuildingCategory.Offence:
+                        offense.Add(key);
+                        break;
+                    case BuildingCategory.Tactical:
+                        tactical.Add(key);
+                        break;
+                    case BuildingCategory.Ultra:
+                        Ultra.Add(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
+            {
+                { BuildingCategory.Factory, factories },
+                { BuildingCategory.Defence, defence },
+                { BuildingCategory.Offence, offense },
+                { BuildingCategory.Tactical, tactical },
+                { BuildingCategory.Ultra, Ultra }
+            };
+            _builds = buildables;
+
+            List<UnitKey> units = _units;
+            List<UnitKey> ships = new();
+            List<UnitKey> aircraft = new();
+            foreach (UnitKey unit in units)
+            {
+                if (unit.UnitCategory == UnitCategory.Naval)
+                    ships.Add(unit);
+                else if (unit.UnitCategory == UnitCategory.Aircraft)
+                    aircraft.Add(unit);
+                else
+                    break;
+            }
+            Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
+            {
+                {UnitCategory.Naval, ships },
+                {UnitCategory.Aircraft, aircraft }
+            };
+            _unit = unitlimit;
+        }
+        public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
 		{
 			return _buildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
 		}

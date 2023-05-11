@@ -30,6 +30,11 @@ namespace BattleCruisers.Data
 			if (_serializer.DoesSavedGameExist())
 			{
                 _gameModel = _serializer.LoadGame();
+                if (_gameModel.PlayerLoadout.Is_buildsNull())
+                {
+                    _gameModel.PlayerLoadout.Create_buildsAnd_units();
+                }
+                SaveGame();
             }
             else
             {
