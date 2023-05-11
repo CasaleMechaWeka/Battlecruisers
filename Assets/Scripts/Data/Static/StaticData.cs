@@ -373,7 +373,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Mortar, 3 },
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
-                { StaticPrefabKeys.Buildings.Coastguard, 33 },
+                { StaticPrefabKeys.Buildings.Coastguard, 39 },
                 { StaticPrefabKeys.Buildings.MissilePod, 36 },
 
                 // Offence
@@ -390,7 +390,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Ultralisk, 14 },
                 { StaticPrefabKeys.Buildings.KamikazeSignal, 22 },
                 { StaticPrefabKeys.Buildings.Broadsides, 25 },
-                { StaticPrefabKeys.Buildings.NovaArtillery, 39 }
+                { StaticPrefabKeys.Buildings.NovaArtillery, 33 }
             };
         }
 
