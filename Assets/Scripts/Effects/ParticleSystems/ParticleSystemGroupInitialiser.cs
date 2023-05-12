@@ -1,10 +1,15 @@
 ﻿using BattleCruisers.Effects.Explosions;
 using UnityEngine.Assertions;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Data;
+using UnityEngine;
 
 namespace BattleCruisers.Effects.ParticleSystems
 {
     public class ParticleSystemGroupInitialiser : MonoBehaviourWrapper, IParticleSystemGroupInitialiser
     {
+        AudioSource audioSource;
+        private ISettingsManager _settingsManager;
         public IParticleSystemGroup CreateParticleSystemGroup()
         {
             return
@@ -36,6 +41,14 @@ namespace BattleCruisers.Effects.ParticleSystems
             }
 
             return synchronizedSystems;
+        }
+
+        private void Awake()
+        {
+            _settingsManager = ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager;
+            audioSource = GetComponentInChildren<AudioSource>();
+            if (audioSource != null)
+                audioSource.volume = _settingsManager.EffectVolume * _settingsManager.MasterVolume;
         }
     }
 }
