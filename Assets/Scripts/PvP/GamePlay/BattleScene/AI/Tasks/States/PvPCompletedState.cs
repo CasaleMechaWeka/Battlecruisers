@@ -1,0 +1,29 @@
+using System;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States
+{
+    public class PvPCompletedState : PvPBaseState
+    {
+        public PvPCompletedState(IPvPTask task, IPvPCompletedEventEmitter eventEmitter)
+            : base(task, eventEmitter)
+        {
+            _eventEmitter.EmitCompletedEvent();
+        }
+
+        public override IPvPState Start()
+        {
+            _eventEmitter.EmitCompletedEvent();
+            return this;
+        }
+
+        public override IPvPState Stop()
+        {
+            return this;
+        }
+
+        public override IPvPState OnCompleted()
+        {
+            throw new Exception("Should never complete from the CompletedState :(");
+        }
+    }
+}
