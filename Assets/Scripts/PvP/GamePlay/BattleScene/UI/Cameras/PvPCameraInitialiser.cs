@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -311,5 +312,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     settings,
                     navigationButtonsPanel);
         }
+
+        private void Awake()
+        {
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                Destroy(gameObject);
+            }
+        }
+
     }
 }
