@@ -55,11 +55,11 @@ namespace BattleCruisers.Cruisers
             switch (AIDifficulty)
             {
                 case Difficulty.Normal:
-                    unit.maxHealth = 8000;
+                    unit.maxHealth = 20000;
                     break;
 
                 case Difficulty.Hard:
-                    unit.maxHealth = 20000;
+                    unit.maxHealth = 35000;
                     unit.minigunStats.damage *= 1.5f;
                     break;
 
