@@ -343,9 +343,9 @@ namespace BattleCruisers.Data.Static
                 new Level(35, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
                 new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
                 new Level(37, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
-                new Level(38, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(39, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
-                new Level(40, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise) //TODO: Change to new boss broadsword
+                new Level(38, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning) //Intimid8r
+              //  new Level(39, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise), //Yaybot
+             //  new Level(40, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise) //TODO: Change to new boss broadsword
             };
 		}
 
