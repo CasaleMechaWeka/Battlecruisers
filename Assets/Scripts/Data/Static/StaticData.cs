@@ -334,7 +334,7 @@ namespace BattleCruisers.Data.Static
                 new Level(28, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
                 new Level(29, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
                 new Level(30, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
-                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
+                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise), //HUNTRESS PRIME
 
                  // Set 9:  Secret Levels
                 new Level(32, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
