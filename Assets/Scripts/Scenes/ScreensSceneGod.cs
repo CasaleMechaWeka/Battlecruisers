@@ -367,7 +367,7 @@ namespace BattleCruisers.Scenes
             CleanUp();
         }
 
-         public void LoadCutsceneScene()
+        public void LoadCutsceneScene()
         {
             _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
             CleanUp();
