@@ -6,7 +6,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class MissileLauncher : DefenseTurret
 	{
         // DLC  Have own sound
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.TeslaCoil;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.RocketLauncher;
         protected override bool HasSingleSprite => true;
 	}
 }
