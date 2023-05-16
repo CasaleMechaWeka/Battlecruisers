@@ -21,8 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         Action onClientEntered;
         Action onClientExit;
-        const int MaxConnectedPlayers = 1;
-
+        const int MaxConnectedPlayers = 2;
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -38,19 +37,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (m_clients.Count == MaxConnectedPlayers)
             {
-                foreach (ulong id in m_clients)
-                {
-                    StartCoroutine(iLoadPvPPlayerManager(id));
-                }
+                // StartCoroutine(iLoadPvPPlayerManager(id));
+
             }
         }
 
-        IEnumerator iLoadPvPPlayerManager(ulong clientID)
-        {
-            yield return null;
-            var pvpPlayerManager = Instantiate(m_PvPPlayerManagerPrefab);
-            pvpPlayerManager.NetworkObject.SpawnWithOwnership(clientID, false);
-        }
+        // IEnumerator iLoadPvPPlayerManager(ulong clientID)
+        // {
+        //     yield return null;
+        //     var pvpPlayerManager = Instantiate(m_PvPPlayerManagerPrefab);
+        //     pvpPlayerManager.NetworkObject.SpawnWithOwnership(clientID, false);
+        // }
+
         void OnClientExit()
         {
         }

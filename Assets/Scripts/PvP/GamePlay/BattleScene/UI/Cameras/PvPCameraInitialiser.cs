@@ -315,7 +315,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         private void Awake()
         {
-            if (!NetworkManager.Singleton.IsServer)
+
+            if (NetworkManager.Singleton.IsServer)
             {
                 Destroy(gameObject);
             }

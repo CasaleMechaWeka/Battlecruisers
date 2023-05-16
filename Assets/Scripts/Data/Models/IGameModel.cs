@@ -9,8 +9,8 @@ namespace BattleCruisers.Data.Models
     public interface IGameModel
     {
         int NumOfLevelsCompleted { get; }
-        long LifetimeDestructionScore { get; set;}
-        long BestDestructionScore { get; set;}
+        long LifetimeDestructionScore { get; set; }
+        long BestDestructionScore { get; set; }
         bool HasAttemptedTutorial { get; set; }
         bool FirstNonTutorialBattle { get; }
         Loadout PlayerLoadout { get; set; }
@@ -19,6 +19,7 @@ namespace BattleCruisers.Data.Models
         public bool PremiumEdition { get; set; }
         SettingsModel Settings { get; set; }
         int SelectedLevel { get; set; }
+        int SelectedPvPLevel { get; set; }
         HotkeysModel Hotkeys { get; }
         SkirmishModel Skirmish { get; set; }
 

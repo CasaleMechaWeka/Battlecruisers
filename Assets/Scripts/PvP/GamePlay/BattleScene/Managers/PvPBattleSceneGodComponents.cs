@@ -1,98 +1,74 @@
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Hotkeys;
-using BattleCruisers.UI;
-using BattleCruisers.UI.BattleScene;
-using BattleCruisers.UI.BattleScene.Clouds;
-using BattleCruisers.UI.Cameras;
-using BattleCruisers.UI.Music;
-using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.UI.Sound.Wind;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Lifetime;
-using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.Threading;
-using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Unity.Netcode;
+
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     [RequireComponent(typeof(NetcodeHooks))]
-    public class PvPBattleSceneGodComponents : MonoBehaviour, IBattleSceneGodComponents
+    public class PvPBattleSceneGodComponents : MonoBehaviour, IPvPBattleSceneGodComponents
     {
-        [SerializeField]
-        NetcodeHooks m_NetcodeHooks;
-        public IDeferrer Deferrer { get; private set; }
-        public IDeferrer RealTimeDeferrer { get; private set; }
+
+        public IPvPDeferrer Deferrer { get; private set; }
+        public IPvPDeferrer RealTimeDeferrer { get; private set; }
 
         public AudioSource prioritisedSoundPlayerAudioSource;
-        public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
+        public IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
 
         public AudioSource uiSoundsAudioSource;
-        public IAudioSource UISoundsAudioSource { get; private set; }
+        public IPvPAudioSource UISoundsAudioSource { get; private set; }
 
-        public LayeredMusicPlayerInitialiser musicPlayerInitialiser;
-        public LayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;
+        public PvPLayeredMusicPlayerInitialiser musicPlayerInitialiser;
+        public PvPLayeredMusicPlayerInitialiser MusicPlayerInitialiser => musicPlayerInitialiser;
 
-        public WindInitialiser windInitialiser;
-        public WindInitialiser WindInitialiser => windInitialiser;
+        public PvPWindInitialiser windInitialiser;
+        public PvPWindInitialiser WindInitialiser => windInitialiser;
 
-        public CloudInitialiser cloudInitialiser;
-        public CloudInitialiser CloudInitialiser => cloudInitialiser;
+        public PvPCloudInitialiser cloudInitialiser;
+        public PvPCloudInitialiser CloudInitialiser => cloudInitialiser;
 
-        public SkyboxInitialiser SkyboxInitialiser { get; private set; }
-        public ILifetimeEventBroadcaster LifetimeEvents { get; private set; }
+        public PvPSkyboxInitialiser SkyboxInitialiser { get; private set; }
+        public IPvPLifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
-        private UpdaterProvider _updaterProvider;
-        public IUpdaterProvider UpdaterProvider => _updaterProvider;
+        private PvPUpdaterProvider _updaterProvider;
+        public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;
 
-        public ClickableEmitter backgroundClickableEmitter;
-        public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
+        public PvPClickableEmitter backgroundClickableEmitter;
+        public IPvPClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
-        public TargetIndicatorController targetIndicator;
-        public ITargetIndicator TargetIndicator => targetIndicator;
+        public PvPTargetIndicatorController targetIndicator;
+        public IPvPTargetIndicator TargetIndicator => targetIndicator;
 
-        public HotkeyInitialiser hotkeyInitialiser;
-        public HotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
+        public PvPHotkeyInitialiser hotkeyInitialiser;
+        public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
         private void Awake()
         {
-            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
-        }
-
-
-        void OnNetworkSpawn()
-        {
-
-            if (NetworkManager.Singleton.IsServer)
-            {
-                enabled = false;
-                return;
-            }
-
-        }
-
-        void OnNetworkDespawn()
-        {
-
         }
 
         void OnDestroy()
         {
-            if (m_NetcodeHooks)
-            {
-                m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
-                m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
-            }
+
         }
 
         public void Initialise(ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(
+            PvPHelper.AssertIsNotNull(
                 backgroundClickableEmitter,
                 targetIndicator,
                 prioritisedSoundPlayerAudioSource,
@@ -103,29 +79,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 hotkeyInitialiser);
             Assert.IsNotNull(settingsManager);
 
-            Deferrer = GetComponent<TimeScaleDeferrer>();
+            Deferrer = GetComponent<PvPTimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
 
-            RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
+            RealTimeDeferrer = GetComponent<PvPRealTimeDeferrer>();
             Assert.IsNotNull(RealTimeDeferrer);
 
             PrioritisedSoundPlayerAudioSource
-                = new EffectVolumeAudioSource(
-                    new AudioSourceBC(prioritisedSoundPlayerAudioSource),
+                = new PvPEffectVolumeAudioSource(
+                    new PvPAudioSourceBC(prioritisedSoundPlayerAudioSource),
                     settingsManager, 0);
             UISoundsAudioSource
-                = new EffectVolumeAudioSource(
-                    new AudioSourceBC(uiSoundsAudioSource),
+                = new PvPEffectVolumeAudioSource(
+                    new PvPAudioSourceBC(uiSoundsAudioSource),
                     settingsManager, 1);
 
-            SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
+            SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);
 
-            _updaterProvider = GetComponentInChildren<UpdaterProvider>();
+            _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
             _updaterProvider.Initialise();
 
-            LifetimeEventBroadcaster lifetimeEvents = GetComponent<LifetimeEventBroadcaster>();
+            PvPLifetimeEventBroadcaster lifetimeEvents = GetComponent<PvPLifetimeEventBroadcaster>();
             Assert.IsNotNull(lifetimeEvents);
             LifetimeEvents = lifetimeEvents;
 

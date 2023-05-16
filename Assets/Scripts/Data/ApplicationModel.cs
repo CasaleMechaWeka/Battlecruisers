@@ -4,12 +4,22 @@ namespace BattleCruisers.Data
 {
     public class ApplicationModel : IApplicationModel
     {
-        public int SelectedLevel 
+        public int SelectedLevel
         {
             get => DataProvider.GameModel.SelectedLevel;
             set
             {
                 DataProvider.GameModel.SelectedLevel = value;
+                DataProvider.SaveGame();
+            }
+        }
+
+        public int SelectedPvPLevel
+        {
+            get => DataProvider.GameModel.SelectedPvPLevel;
+            set
+            {
+                DataProvider.GameModel.SelectedPvPLevel = value;
                 DataProvider.SaveGame();
             }
         }

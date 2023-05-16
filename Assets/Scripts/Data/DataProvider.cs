@@ -4,31 +4,33 @@ using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
 {
     public class DataProvider : IDataProvider
-	{
-		private readonly ISerializer _serializer;
-		
+    {
+        private readonly ISerializer _serializer;
+
         public IStaticData StaticData { get; }
-		public IList<ILevel> Levels => StaticData.Levels;
+        public IList<ILevel> Levels => StaticData.Levels;
+        public IList<IPvPLevel> PvPLevels => StaticData.PvPLevels;
         public ISettingsManager SettingsManager { get; }
-		public ILockedInformation LockedInfo { get; }
+        public ILockedInformation LockedInfo { get; }
 
         private readonly GameModel _gameModel;
         public IGameModel GameModel => _gameModel;
 
         public DataProvider(IStaticData staticData, ISerializer serializer)
-		{
+        {
             Helper.AssertIsNotNull(staticData, serializer);
 
-			StaticData = staticData;
-			_serializer = serializer;
+            StaticData = staticData;
+            _serializer = serializer;
 
-			if (_serializer.DoesSavedGameExist())
-			{
+            if (_serializer.DoesSavedGameExist())
+            {
                 _gameModel = _serializer.LoadGame();
             }
             else
@@ -36,23 +38,29 @@ namespace BattleCruisers.Data
                 // First time run
                 _gameModel = StaticData.InitialGameModel;
                 SaveGame();
-			}
+            }
 
             SettingsManager = new SettingsManager(this);
 
             LockedInfo = new LockedInformation(GameModel, StaticData);
-		}
+        }
 
-		public ILevel GetLevel(int levelNum)
-		{
-			Assert.IsTrue(levelNum > 0 && levelNum <= Levels.Count);
-			return Levels[levelNum - 1];
-		}
+        public ILevel GetLevel(int levelNum)
+        {
+            Assert.IsTrue(levelNum > 0 && levelNum <= Levels.Count);
+            return Levels[levelNum - 1];
+        }
 
-		public void SaveGame()
-		{
+        public IPvPLevel GetPvPLevel(int levelNum)
+        {
+            Assert.IsTrue(levelNum > 0 && levelNum <= PvPLevels.Count);
+            return PvPLevels[levelNum - 1];
+        }
+
+        public void SaveGame()
+        {
             _serializer.SaveGame(_gameModel);
-		}
+        }
 
         public void Reset()
         {

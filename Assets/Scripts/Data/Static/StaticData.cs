@@ -2,6 +2,8 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +13,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Static
 {
     public class StaticData : IStaticData
-	{
+    {
         private readonly IDictionary<BuildingKey, int> _buildingToUnlockedLevel;
         private readonly IDictionary<UnitKey, int> _unitToUnlockedLevel;
         private readonly IDictionary<HullKey, int> _hullToUnlockedLevel;
@@ -21,6 +23,7 @@ namespace BattleCruisers.Data.Static
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
         public const int NUM_OF_LEVELS = 31;
+        public const int NUM_OF_PvPLEVELS = 9;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
 
 #if IS_DEMO
@@ -37,15 +40,16 @@ namespace BattleCruisers.Data.Static
 
         public GameModel InitialGameModel { get; }
         public ReadOnlyCollection<ILevel> Levels { get; }
-		public ReadOnlyCollection<HullKey> HullKeys { get; }
-		public ReadOnlyCollection<UnitKey> UnitKeys { get; }
+        public ReadOnlyCollection<IPvPLevel> PvPLevels { get; }
+        public ReadOnlyCollection<HullKey> HullKeys { get; }
+        public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         public int LastLevelWithLoot => 31;
         public ILevelStrategies Strategies { get; }
 
         public StaticData()
-		{
+        {
             HullKeys = AllHullKeys().AsReadOnly();
 
             _allBuildings = AllBuildingKeys();
@@ -61,74 +65,75 @@ namespace BattleCruisers.Data.Static
             Strategies = new LevelStrategies();
 
             AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());
-			
+
             InitialGameModel = CreateInitialGameModel();
             Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
-		}
+            PvPLevels = new ReadOnlyCollection<IPvPLevel>(CreatePvPLevels());
+        }
 
-		private List<HullKey> AllHullKeys()
-		{
+        private List<HullKey> AllHullKeys()
+        {
             // In order they are available to the user.  Means the loadout
             // screen order is nice :)
-			return new List<HullKey>()
-			{
-				StaticPrefabKeys.Hulls.Trident,
-				StaticPrefabKeys.Hulls.Bullshark,
-				StaticPrefabKeys.Hulls.Raptor,
-				StaticPrefabKeys.Hulls.Rockjaw,
-				StaticPrefabKeys.Hulls.Eagle,
-				StaticPrefabKeys.Hulls.Hammerhead,
-				StaticPrefabKeys.Hulls.Longbow,
-				StaticPrefabKeys.Hulls.Megalodon,
+            return new List<HullKey>()
+            {
+                StaticPrefabKeys.Hulls.Trident,
+                StaticPrefabKeys.Hulls.Bullshark,
+                StaticPrefabKeys.Hulls.Raptor,
+                StaticPrefabKeys.Hulls.Rockjaw,
+                StaticPrefabKeys.Hulls.Eagle,
+                StaticPrefabKeys.Hulls.Hammerhead,
+                StaticPrefabKeys.Hulls.Longbow,
+                StaticPrefabKeys.Hulls.Megalodon,
                 StaticPrefabKeys.Hulls.BlackRig,
                 StaticPrefabKeys.Hulls.Rickshaw,
                 StaticPrefabKeys.Hulls.TasDevil,
                 StaticPrefabKeys.Hulls.Yeti
             };
-		}
+        }
 
-		private List<BuildingKey> AllBuildingKeys()
-		{
+        private List<BuildingKey> AllBuildingKeys()
+        {
             // Buildings in a category (eg:  Factories) are in the order they 
             // become available to the user.  Means the loadout screen order is nice :)
             return new List<BuildingKey>()
-			{
+            {
                 // Factories
                 StaticPrefabKeys.Buildings.AirFactory,
-				StaticPrefabKeys.Buildings.NavalFactory,
-				StaticPrefabKeys.Buildings.DroneStation,
+                StaticPrefabKeys.Buildings.NavalFactory,
+                StaticPrefabKeys.Buildings.DroneStation,
                 StaticPrefabKeys.Buildings.DroneStation4,
                 StaticPrefabKeys.Buildings.DroneStation8,
 
                 // Tactical
                 StaticPrefabKeys.Buildings.ShieldGenerator,
-				StaticPrefabKeys.Buildings.LocalBooster,
+                StaticPrefabKeys.Buildings.LocalBooster,
                 StaticPrefabKeys.Buildings.ControlTower,
                 StaticPrefabKeys.Buildings.StealthGenerator,
-				StaticPrefabKeys.Buildings.SpySatelliteLauncher,
+                StaticPrefabKeys.Buildings.SpySatelliteLauncher,
 
                 // Defence
                 StaticPrefabKeys.Buildings.AntiShipTurret,
-				StaticPrefabKeys.Buildings.AntiAirTurret,
-				StaticPrefabKeys.Buildings.Mortar,
-				StaticPrefabKeys.Buildings.SamSite,
-				StaticPrefabKeys.Buildings.TeslaCoil,
+                StaticPrefabKeys.Buildings.AntiAirTurret,
+                StaticPrefabKeys.Buildings.Mortar,
+                StaticPrefabKeys.Buildings.SamSite,
+                StaticPrefabKeys.Buildings.TeslaCoil,
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
-				StaticPrefabKeys.Buildings.Railgun,
-				StaticPrefabKeys.Buildings.RocketLauncher,
+                StaticPrefabKeys.Buildings.Railgun,
+                StaticPrefabKeys.Buildings.RocketLauncher,
                 StaticPrefabKeys.Buildings.MLRS,
                 StaticPrefabKeys.Buildings.GatlingMortar,
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
-				StaticPrefabKeys.Buildings.NukeLauncher,
-				StaticPrefabKeys.Buildings.Ultralisk,
-				StaticPrefabKeys.Buildings.KamikazeSignal,
+                StaticPrefabKeys.Buildings.NukeLauncher,
+                StaticPrefabKeys.Buildings.Ultralisk,
+                StaticPrefabKeys.Buildings.KamikazeSignal,
                 StaticPrefabKeys.Buildings.Broadsides
-			};
-		}
+            };
+        }
 
         private IList<BuildingKey> CreateAIBannedUltraKeys()
         {
@@ -150,25 +155,25 @@ namespace BattleCruisers.Data.Static
         }
 
         private List<UnitKey> AllUnitKeys()
-		{
+        {
             // Units in a category (eg:  Aircraft) are in the order they 
             // become available to the user.  Means the loadout screen order is nice :)
-			return new List<UnitKey>()
-			{
+            return new List<UnitKey>()
+            {
                 // Aircraft
                 StaticPrefabKeys.Units.Bomber,
                 StaticPrefabKeys.Units.Gunship,
-				StaticPrefabKeys.Units.Fighter,
+                StaticPrefabKeys.Units.Fighter,
                 StaticPrefabKeys.Units.SteamCopter,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
-				StaticPrefabKeys.Units.Frigate,
+                StaticPrefabKeys.Units.Frigate,
                 StaticPrefabKeys.Units.Destroyer,
                 StaticPrefabKeys.Units.ArchonBattleship,
                 StaticPrefabKeys.Units.AttackRIB
-			};
-		}
+            };
+        }
 
         /// <summary>
         /// Creates the initial game model.
@@ -196,9 +201,9 @@ namespace BattleCruisers.Data.Static
                 unlockedHulls: new List<HullKey>() { initialHull },
                 unlockedBuildings: GetInitialBuildings(),
                 unlockedUnits: GetInitialUnits());
-                //unlockedHulls: AllHullKeys(),
-                //unlockedBuildings: AllBuildingKeys(),
-                //unlockedUnits: AllUnitKeys());
+            //unlockedHulls: AllHullKeys(),
+            //unlockedBuildings: AllBuildingKeys(),
+            //unlockedUnits: AllUnitKeys());
         }
 
         private HullKey GetInitialHull()
@@ -216,10 +221,10 @@ namespace BattleCruisers.Data.Static
             return GetUnitsFirstAvailableIn(levelFirstAvailableIn: 1).ToList();
         }
 
-		private IList<ILevel> CreateLevels()
-		{
-			return new List<ILevel>()
-			{
+        private IList<ILevel> CreateLevels()
+        {
+            return new List<ILevel>()
+            {
                 // Set 1:  Raptor
                 new Level(1, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
                 new Level(2, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
@@ -267,8 +272,61 @@ namespace BattleCruisers.Data.Static
                 new Level(30, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
                 new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)
             };
-		}
+        }
 
+
+        private IList<IPvPLevel> CreatePvPLevels()
+        {
+            return new List<IPvPLevel>()
+            {
+                // Set 1:  Raptor
+                new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
+                new PvPLevel(2, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
+                new PvPLevel(3, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Dusk),
+                
+                // Set 2:  Bullshark
+                new PvPLevel(4, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new PvPLevel(5, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
+                new PvPLevel(6, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
+                new PvPLevel(7, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
+
+                // Set 3:  Rockjaw
+                new PvPLevel(8, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning),
+                new PvPLevel(10, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Againagain, SkyMaterials.Purple),
+
+                // Set 4:  Eagle
+                new PvPLevel(11, PvPStaticPrefabKeys.PvPHulls.PvPLongbow, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
+                new PvPLevel(12, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
+                new PvPLevel(13, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
+                new PvPLevel(14, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
+                new PvPLevel(15, PvPStaticPrefabKeys.PvPHulls.PvPManOfWarBoss, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+
+                // Set 5:  Hammerhead
+                new PvPLevel(16, PvPStaticPrefabKeys.PvPHulls.PvPLongbow, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
+                new PvPLevel(17, PvPStaticPrefabKeys.PvPHulls.PvPMegalodon, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
+                new PvPLevel(18, PvPStaticPrefabKeys.PvPHulls.PvPRickshaw, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
+
+                // Set 6:  Longbow
+                new PvPLevel(19, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
+                new PvPLevel(20, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Againagain, SkyMaterials.Midnight),
+                new PvPLevel(21, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
+                new PvPLevel(22, PvPStaticPrefabKeys.PvPHulls.PvPBlackRig, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
+
+                // Set 7:  Megolodon
+                new PvPLevel(23, PvPStaticPrefabKeys.PvPHulls.PvPMegalodon, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
+                new PvPLevel(24, PvPStaticPrefabKeys.PvPHulls.PvPLongbow, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
+                new PvPLevel(25, PvPStaticPrefabKeys.PvPHulls.PvPRickshaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
+                new PvPLevel(26, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
+				
+			     // Set 8:  Huntress Prime
+                new PvPLevel(27, PvPStaticPrefabKeys.PvPHulls.PvPMegalodon, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new PvPLevel(28, PvPStaticPrefabKeys.PvPHulls.PvPBlackRig, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
+                new PvPLevel(29, PvPStaticPrefabKeys.PvPHulls.PvPRickshaw, PvPSoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
+                new PvPLevel(30, PvPStaticPrefabKeys.PvPHulls.PvPYeti, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
+                new PvPLevel(31, PvPStaticPrefabKeys.PvPHulls.PvPHuntressBoss, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)
+            };
+        }
         private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()
         {
             return new Dictionary<BuildingKey, int>()
@@ -379,19 +437,19 @@ namespace BattleCruisers.Data.Static
             return GetBuildablesFirstAvailableIn(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
 
-		/// <summary>
-		/// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
-		/// (ie, the starting level, where we have multiple buildables available).
-		/// </summary>
+        /// <summary>
+        /// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
+        /// (ie, the starting level, where we have multiple buildables available).
+        /// </summary>
         private IList<TKey> GetBuildablesFirstAvailableIn<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
             where TKey : IPrefabKey
-		{
-			return
-				buildableToUnlockedLevel
-					.Where(buildableToLevel => buildableToLevel.Value == levelFirstAvailableIn)
-					.Select(buildableToLevel => buildableToLevel.Key)
-					.ToList();
-		}
+        {
+            return
+                buildableToUnlockedLevel
+                    .Where(buildableToLevel => buildableToLevel.Value == levelFirstAvailableIn)
+                    .Select(buildableToLevel => buildableToLevel.Key)
+                    .ToList();
+        }
 
         private IList<HullKey> GetHullsFirstAvailableIn(int levelFirstAvailableIn)
         {

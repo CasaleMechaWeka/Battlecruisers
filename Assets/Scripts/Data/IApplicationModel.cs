@@ -13,6 +13,7 @@
     public interface IApplicationModel
     {
         int SelectedLevel { get; set; }
+        int SelectedPvPLevel { get; set; }
         bool ShowPostBattleScreen { get; set; }
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }

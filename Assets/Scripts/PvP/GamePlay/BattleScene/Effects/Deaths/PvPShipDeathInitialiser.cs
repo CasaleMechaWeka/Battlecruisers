@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths
 {
-    public class PvPShipDeathInitialiser : MonoBehaviourWrapper
+    public class PvPShipDeathInitialiser : PvPMonoBehaviourWrapper
     {
         public IPvPShipDeath CreateShipDeath()
         {

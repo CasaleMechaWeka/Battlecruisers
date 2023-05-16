@@ -6,7 +6,7 @@ using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
-    public class PvPPrefab : NetworkBehaviour, IPrefab
+    public class PvPPrefab : NetworkBehaviour, IPvPPrefab
     {
         protected ILocTable _commonStrings;
 

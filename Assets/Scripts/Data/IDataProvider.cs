@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 
 namespace BattleCruisers.Data
 {
@@ -14,6 +15,7 @@ namespace BattleCruisers.Data
         ISettingsManager SettingsManager { get; }
 
         ILevel GetLevel(int levelNum);
+        IPvPLevel GetPvPLevel(int levelNum);
         void SaveGame();
 
         /// <summary>
@@ -23,4 +25,3 @@ namespace BattleCruisers.Data
         void Reset();
     }
 }
-	
