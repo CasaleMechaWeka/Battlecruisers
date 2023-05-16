@@ -9,11 +9,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
     {
         private static class PvPBuildingFolderNames
         {
-            public const string FACTORIES = "PvPFactories";
-            public const string TACTICAL = "PvPTactical";
-            public const string DEFENCE = "PvPDefence";
-            public const string OFFENCE = "PvPOffence";
-            public const string ULTRAS = "PvPUltras";
+            public const string FACTORIES = "Factories";
+            public const string TACTICAL = "Tactical";
+            public const string DEFENCE = "Defence";
+            public const string OFFENCE = "Offence";
+            public const string ULTRAS = "Ultras";
         }
 
         [SerializeField]

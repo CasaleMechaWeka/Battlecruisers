@@ -5,7 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
     [Serializable]
     public class PvPHullKey : PvPPrefabKey
     {
-        private const string HULLS_FOLDER_NAME = "PvPHulls";
+        private const string HULLS_FOLDER_NAME = "Hulls";
 
         protected override string PrefabPathPrefix
         {

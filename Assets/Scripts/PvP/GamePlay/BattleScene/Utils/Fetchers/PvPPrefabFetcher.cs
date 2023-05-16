@@ -15,6 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IPvPPrefabContainer<TPrefab>> GetPrefabAsync<TPrefab>(IPvPPrefabKey prefabKey) where TPrefab : class
         {
             string addressableKey = PREFAB_ROOT_DIR + prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
+            Debug.Log("Prefab Path = " + addressableKey);
 
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
 

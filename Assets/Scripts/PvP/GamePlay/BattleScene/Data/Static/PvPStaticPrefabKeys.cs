@@ -146,17 +146,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
         public static class PvPExplosions
         {
-            public static PvPExplosionKey PvPBulletImpact { get; } = new PvPExplosionKey("BulletImpact");
-            public static PvPExplosionKey PvPHighCalibreBulletImpact { get; } = new PvPExplosionKey("HighCalibreBulletImpact");
-            public static PvPExplosionKey PvPTinyBulletImpact { get; } = new PvPExplosionKey("TinyBulletImpact");
-            public static PvPExplosionKey PvPNovaShellImpact { get; } = new PvPExplosionKey("NovaShellImpact");
-            public static PvPExplosionKey PvPRocketShellImpact { get; } = new PvPExplosionKey("RocketShellImpact");
-            public static PvPExplosionKey PvPBombExplosion { get; } = new PvPExplosionKey("ExplosionBomb");
-            public static PvPExplosionKey PvPFlakExplosion { get; } = new PvPExplosionKey("ExplosionSAM");
-            public static PvPExplosionKey PvPExplosion75 { get; } = new PvPExplosionKey("Explosion0.75");
-            public static PvPExplosionKey PvPExplosion100 { get; } = new PvPExplosionKey("Explosion1.0");
-            public static PvPExplosionKey PvPExplosion150 { get; } = new PvPExplosionKey("Explosion1.5");
-            public static PvPExplosionKey PvPExplosion500 { get; } = new PvPExplosionKey("Explosion5.0");
+            public static PvPExplosionKey PvPBulletImpact { get; } = new PvPExplosionKey("PvPBulletImpact");
+            public static PvPExplosionKey PvPHighCalibreBulletImpact { get; } = new PvPExplosionKey("PvPHighCalibreBulletImpact");
+            public static PvPExplosionKey PvPTinyBulletImpact { get; } = new PvPExplosionKey("PvPTinyBulletImpact");
+            public static PvPExplosionKey PvPNovaShellImpact { get; } = new PvPExplosionKey("PvPNovaShellImpact");
+            public static PvPExplosionKey PvPRocketShellImpact { get; } = new PvPExplosionKey("PvPRocketShellImpact");
+            public static PvPExplosionKey PvPBombExplosion { get; } = new PvPExplosionKey("PvPExplosionBomb");
+            public static PvPExplosionKey PvPFlakExplosion { get; } = new PvPExplosionKey("PvPExplosionSAM");
+            public static PvPExplosionKey PvPExplosion75 { get; } = new PvPExplosionKey("PvPExplosion0.75");
+            public static PvPExplosionKey PvPExplosion100 { get; } = new PvPExplosionKey("PvPExplosion1.0");
+            public static PvPExplosionKey PvPExplosion150 { get; } = new PvPExplosionKey("PvPExplosion1.5");
+            public static PvPExplosionKey PvPExplosion500 { get; } = new PvPExplosionKey("PvPExplosion5.0");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -184,10 +184,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPMissileLarge { get; } = new PvPProjectileKey("PvPMissileLarge");
             public static PvPProjectileKey PvPMissileSmart { get; } = new PvPProjectileKey("PvPMissileSmart");
 
-            public static PvPProjectileKey PvPBomb { get; } = new PvPProjectileKey("Bomb");
-            public static PvPProjectileKey PvPNuke { get; } = new PvPProjectileKey("Nuke");
-            public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("Rocket");
-            public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("RocketSmall");
+            public static PvPProjectileKey PvPBomb { get; } = new PvPProjectileKey("PvPBomb");
+            public static PvPProjectileKey PvPNuke { get; } = new PvPProjectileKey("PvPNuke");
+            public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("PvPRocket");
+            public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("PvPRocketSmall");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -205,11 +205,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
         public static class PvPShipDeaths
         {
-            public static PvPShipDeathKey PvPAttackBoat { get; } = new PvPShipDeathKey("AttackBoat");
-            public static PvPShipDeathKey PvPAttackRIB { get; } = new PvPShipDeathKey("AttackRIB");
-            public static PvPShipDeathKey PvPFrigate { get; } = new PvPShipDeathKey("Frigate");
-            public static PvPShipDeathKey PvPDestroyer { get; } = new PvPShipDeathKey("Destroyer");
-            public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("Archon");
+            public static PvPShipDeathKey PvPAttackBoat { get; } = new PvPShipDeathKey("PvPAttackBoat");
+            public static PvPShipDeathKey PvPAttackRIB { get; } = new PvPShipDeathKey("PvPAttackRIB");
+            public static PvPShipDeathKey PvPFrigate { get; } = new PvPShipDeathKey("PvPFrigate");
+            public static PvPShipDeathKey PvPDestroyer { get; } = new PvPShipDeathKey("PvPDestroyer");
+            public static PvPShipDeathKey PvPArchon { get; } = new PvPShipDeathKey("PvPArchon");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -227,6 +227,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             }
         }
 
-        public static IPvPPrefabKey AudioSource { get; } = new PvPGenericKey("AudioSource", "UI/Sound");
+        public static IPvPPrefabKey AudioSource { get; } = new PvPGenericKey("PvPAudioSource", "UI/Sound");
     }
 }

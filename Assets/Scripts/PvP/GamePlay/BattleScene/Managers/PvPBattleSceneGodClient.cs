@@ -11,15 +11,51 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.Bat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Multiplayer.Samples.Utilities;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
-    public class PvPBattleSceneGod : MonoBehaviour
+    [RequireComponent(typeof(NetcodeHooks))]
+    public class PvPBattleSceneGodClient : MonoBehaviour
     {
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
-        private PvPBattleSceneGodComponents components;
+        private PvPBattleSceneGodComponentsClient components;
         private PvPNavigationPermitters navigationPermitters;
+        [SerializeField]
+        NetcodeHooks m_NetcodeHooks;
+
+        void Awake()
+        {
+            if (m_NetcodeHooks)
+            {
+                m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
+                m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
+            }
+        }
+
+        void OnNetworkSpawn()
+        {
+            if (NetworkManager.Singleton.IsServer)
+            {
+                enabled = false;
+                return;
+            }
+        }
+        void OnNetworkDespawn()
+        {
+
+        }
+        void OnDestroy()
+        {
+            if (m_NetcodeHooks)
+            {
+                m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
+                m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
+            }
+        }
+
         private async void Start()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -35,17 +71,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabFactory prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             navigationPermitters = new PvPNavigationPermitters();
 
-            components = GetComponent<PvPBattleSceneGodComponents>();
-            Assert.IsNotNull(components);
 
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
-            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
-            IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
+            // components = GetComponent<PvPBattleSceneGodComponentsServer>();
+            // Assert.IsNotNull(components);
 
-            IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+            // components.Initialise(applicationModel.DataProvider.SettingsManager);
+            // components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
-            // components.cloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, );
+            // IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
+
+            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+
+
 
 
         }

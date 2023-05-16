@@ -1,4 +1,4 @@
-using BattleCruisers.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPSkyboxInitialiser : MonoBehaviour
     {
-        public async Task InitialiseAsync(Skybox skybox, ILevel level)
+        public async Task InitialiseAsync(Skybox skybox, IPvPLevel level)
         {
             PvPHelper.AssertIsNotNull(skybox, level);
 
