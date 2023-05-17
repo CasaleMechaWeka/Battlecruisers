@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public HotkeyRow factoriesRow;
         public HotkeyRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
         
-        [FormerlySerializedAs("droneStationRow")] [Header("Buildables")] //TODO this needs to be synced with the unity editor
+        [FormerlySerializedAs("droneStationRow")] [Header("Buildables")]
         public HotkeyRow BuildablesRow;
         public HotkeyRow Buildable1, Buildable2, Buildable3, Buildable4, Buildable5;
 
