@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void MakeBig()
         {
-            if (_rectTransform.sizeDelta == _defaulteSizeDelta)
+            if (_rectTransform.sizeDelta.y == _defaulteSizeDelta.y)
             {
                 _rectTransform.sizeDelta /= NOT_SELECTED_SIZE_MULTIPLIER;
             }
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void MakeSmall()
         {
-            if (_rectTransform.sizeDelta.magnitude > _defaulteSizeDelta.magnitude)
+            if (_rectTransform.sizeDelta.y > _defaulteSizeDelta.y)
             {
                 _rectTransform.sizeDelta *= NOT_SELECTED_SIZE_MULTIPLIER;
             }
