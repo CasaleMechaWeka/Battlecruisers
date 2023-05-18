@@ -5,6 +5,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data
@@ -15,7 +16,7 @@ namespace BattleCruisers.Data
 
         public IStaticData StaticData { get; }
         public IList<ILevel> Levels => StaticData.Levels;
-        public IList<IPvPLevel> PvPLevels => StaticData.PvPLevels;
+        public IDictionary<Map, IPvPLevel> PvPLevels => StaticData.PvPLevels;
         public ISettingsManager SettingsManager { get; }
         public ILockedInformation LockedInfo { get; }
 
@@ -51,10 +52,10 @@ namespace BattleCruisers.Data
             return Levels[levelNum - 1];
         }
 
-        public IPvPLevel GetPvPLevel(int levelNum)
+        public IPvPLevel GetPvPLevel(Map map)
         {
-            Assert.IsTrue(levelNum > 0 && levelNum <= PvPLevels.Count);
-            return PvPLevels[levelNum - 1];
+            // Assert.IsTrue(levelNum > 0 && levelNum <= PvPLevels.Count);
+            return PvPLevels[map];
         }
 
         public void SaveGame()

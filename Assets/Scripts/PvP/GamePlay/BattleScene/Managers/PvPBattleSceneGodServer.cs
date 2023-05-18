@@ -20,6 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
+        private IApplicationModel applicationModel;
         private PvPBattleSceneGodComponentsServer components;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -56,6 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private async void Start()
         {
 
+            applicationModel = ApplicationModelProvider.ApplicationModel;
+
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
@@ -65,16 +68,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
 
-            // components = GetComponent<PvPBattleSceneGodComponentsServer>();
-            // Assert.IsNotNull(components);
+            components = GetComponent<PvPBattleSceneGodComponentsServer>();
+            Assert.IsNotNull(components);
+            components.Initialise();
+            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
-            // components.Initialise(applicationModel.DataProvider.SettingsManager);
-            // components.UpdaterProvider.SwitchableUpdater.Enabled = false;
+            IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
 
-            // IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
-
-            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
-
+            IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
         }
 
 
@@ -83,7 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
             IPvPDeferrer deferrer,
-            PvPNavigationPermitters navigationPermitters,
+            // PvPNavigationPermitters navigationPermitters,
             ILocTable storyStrings
         )
         {

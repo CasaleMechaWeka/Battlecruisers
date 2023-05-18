@@ -9,6 +9,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
@@ -19,10 +21,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodClient : MonoBehaviour
     {
+        public PvPCameraInitialiser cameraInitialiser;
+
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
+        private PvPFactoryProvider factoryProvider;
         private PvPBattleSceneGodComponentsClient components;
         private PvPNavigationPermitters navigationPermitters;
+        private IPvPCameraComponents cameraComponents;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -73,18 +79,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
 
-            // components = GetComponent<PvPBattleSceneGodComponentsServer>();
-            // Assert.IsNotNull(components);
-
-            // components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components = GetComponent<PvPBattleSceneGodComponentsClient>();
+            Assert.IsNotNull(components);
+            components.Initialise(applicationModel.DataProvider.SettingsManager);
             // components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
-            // IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
+            IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
 
-            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+            IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
-
-
+            // components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater,);
 
         }
 

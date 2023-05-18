@@ -4,6 +4,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
@@ -17,5 +21,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPvPTargetIndicator TargetIndicator { get; }
         PvPWindInitialiser WindInitialiser { get; }
         PvPHotkeyInitialiser HotkeyInitialiser { get; }
+
+
+        IPvPDeferrer Deferrer { get; }
+        IPvPDeferrer RealTimeDeferrer { get; }
+
+        IPvPUpdaterProvider UpdaterProvider { get; }
+
+        IPvPLifetimeEventBroadcaster LifetimeEvents { get; }
     }
 }

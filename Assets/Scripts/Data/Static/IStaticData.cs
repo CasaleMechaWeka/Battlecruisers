@@ -3,6 +3,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Data.Static
@@ -19,7 +20,7 @@ namespace BattleCruisers.Data.Static
         bool HasAsserts { get; }
         GameModel InitialGameModel { get; }
         ReadOnlyCollection<ILevel> Levels { get; }
-        ReadOnlyCollection<IPvPLevel> PvPLevels { get; }
+        ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
         ReadOnlyCollection<HullKey> HullKeys { get; }
         ReadOnlyCollection<UnitKey> UnitKeys { get; }
         ReadOnlyCollection<BuildingKey> BuildingKeys { get; }

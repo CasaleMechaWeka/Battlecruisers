@@ -11,6 +11,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -46,6 +48,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public PvPHotkeyInitialiser hotkeyInitialiser;
         public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
+
+
+
+
+
+        public IPvPDeferrer Deferrer { get; private set; }
+        public IPvPDeferrer RealTimeDeferrer { get; private set; }
+
+        public IPvPLifetimeEventBroadcaster LifetimeEvents { get; private set; }
+
+        private PvPUpdaterProvider _updaterProvider;
+        public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;
+
+
+
+
         [SerializeField] NetcodeHooks m_NetcodeHooks;
 
         private void Awake()
@@ -101,9 +119,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);
 
-
             PvPLifetimeEventBroadcaster lifetimeEvents = GetComponent<PvPLifetimeEventBroadcaster>();
+            Assert.IsNotNull(lifetimeEvents);
+            LifetimeEvents = lifetimeEvents;
             targetIndicator.Initialise();
+
+
+
+            Deferrer = GetComponent<PvPTimeScaleDeferrer>();
+            Assert.IsNotNull(Deferrer);
+
+            RealTimeDeferrer = GetComponent<PvPRealTimeDeferrer>();
+            Assert.IsNotNull(RealTimeDeferrer);
+
+            _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
+            Assert.IsNotNull(_updaterProvider);
+            _updaterProvider.Initialise();
+
+
         }
 
         void Start()

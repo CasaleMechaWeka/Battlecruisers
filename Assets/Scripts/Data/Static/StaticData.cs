@@ -4,6 +4,7 @@ using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace BattleCruisers.Data.Static
 
         public GameModel InitialGameModel { get; }
         public ReadOnlyCollection<ILevel> Levels { get; }
-        public ReadOnlyCollection<IPvPLevel> PvPLevels { get; }
+        public ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; }
         public ReadOnlyCollection<HullKey> HullKeys { get; }
         public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
@@ -68,7 +69,7 @@ namespace BattleCruisers.Data.Static
 
             InitialGameModel = CreateInitialGameModel();
             Levels = new ReadOnlyCollection<ILevel>(CreateLevels());
-            PvPLevels = new ReadOnlyCollection<IPvPLevel>(CreatePvPLevels());
+            PvPLevels = new ReadOnlyDictionary<Map, IPvPLevel>(CreatePvPLevels());
         }
 
         private List<HullKey> AllHullKeys()
@@ -275,56 +276,28 @@ namespace BattleCruisers.Data.Static
         }
 
 
-        private IList<IPvPLevel> CreatePvPLevels()
+        private IDictionary<Map, IPvPLevel> CreatePvPLevels()
         {
-            return new List<IPvPLevel>()
+            return new Dictionary<Map, IPvPLevel>()
             {
-                // Set 1:  Raptor
-                new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Morning),
-                new PvPLevel(2, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple),
-                new PvPLevel(3, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Dusk),
-                
-                // Set 2:  Bullshark
-                new PvPLevel(4, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new PvPLevel(5, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
-                new PvPLevel(6, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
-                new PvPLevel(7, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
-
-                // Set 3:  Rockjaw
-                new PvPLevel(8, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning),
-                new PvPLevel(10, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Againagain, SkyMaterials.Purple),
-
-                // Set 4:  Eagle
-                new PvPLevel(11, PvPStaticPrefabKeys.PvPHulls.PvPLongbow, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
-                new PvPLevel(12, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
-                new PvPLevel(13, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
-                new PvPLevel(14, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
-                new PvPLevel(15, PvPStaticPrefabKeys.PvPHulls.PvPManOfWarBoss, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-
-                // Set 5:  Hammerhead
-                new PvPLevel(16, PvPStaticPrefabKeys.PvPHulls.PvPLongbow, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
-                new PvPLevel(17, PvPStaticPrefabKeys.PvPHulls.PvPMegalodon, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
-                new PvPLevel(18, PvPStaticPrefabKeys.PvPHulls.PvPRickshaw, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
-
-                // Set 6:  Longbow
-                new PvPLevel(19, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Purple),
-                new PvPLevel(20, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Againagain, SkyMaterials.Midnight),
-                new PvPLevel(21, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
-                new PvPLevel(22, PvPStaticPrefabKeys.PvPHulls.PvPBlackRig, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
-
-                // Set 7:  Megolodon
-                new PvPLevel(23, PvPStaticPrefabKeys.PvPHulls.PvPMegalodon, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
-                new PvPLevel(24, PvPStaticPrefabKeys.PvPHulls.PvPLongbow, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-                new PvPLevel(25, PvPStaticPrefabKeys.PvPHulls.PvPRickshaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new PvPLevel(26, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
-				
-			     // Set 8:  Huntress Prime
-                new PvPLevel(27, PvPStaticPrefabKeys.PvPHulls.PvPMegalodon, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
-                new PvPLevel(28, PvPStaticPrefabKeys.PvPHulls.PvPBlackRig, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
-                new PvPLevel(29, PvPStaticPrefabKeys.PvPHulls.PvPRickshaw, PvPSoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
-                new PvPLevel(30, PvPStaticPrefabKeys.PvPHulls.PvPYeti, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
-                new PvPLevel(31, PvPStaticPrefabKeys.PvPHulls.PvPHuntressBoss, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)
+                // Practice Wreckyards
+             {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Morning)},
+                // Oz Penitentiary
+             {Map.OzPenitentiary,   new PvPLevel(2, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Purple)},
+                // San Francisco Fight Club
+            {Map.SanFranciscoFightClub, new PvPLevel(3, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Experimental, SkyMaterials.Dusk)},
+                // UAC Battle Night
+            {Map.UACBattleNight, new PvPLevel(4, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold) },
+                // Nuclear Dome
+            {Map.NuclearDome,  new PvPLevel(5, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, PvPSoundKeys.Music.Background.Confusion, SkyMaterials.Midday)},
+                // UAC Arena
+            {Map.UACArena, new PvPLevel(6, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, PvPSoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight)},
+                // Rio Battlesport
+            {Map.RioBattlesport, new PvPLevel(7, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, PvPSoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)},
+                // UAC Ultimate
+            {Map.UACUltimate,  new PvPLevel(8, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, PvPSoundKeys.Music.Background.Nothing, SkyMaterials.Cold)},
+                // Mercenary One
+            {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, PvPSoundKeys.Music.Background.Juggernaut, SkyMaterials.Morning)},
             };
         }
         private IDictionary<BuildingKey, int> CreateBuildingAvailabilityMap()

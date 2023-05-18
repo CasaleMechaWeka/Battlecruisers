@@ -4,6 +4,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using UnityEngine;
 
 
@@ -15,6 +16,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPDeferrer _deferrer;
 
+
+        private readonly PvPBuildingCategoryFilter _buildingCategoryFilter;
+        public override IPvPBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+
         public PvPBattleHelper(
             IApplicationModel appModel,
             IPvPPrefabFetcher prefabFetcher,
@@ -25,6 +30,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
+
+
+            // For the real game want to enable all building categories :)
+            _buildingCategoryFilter = new PvPBuildingCategoryFilter();
+            _buildingCategoryFilter.AllowAllCategories();
         }
     }
 }
