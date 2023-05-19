@@ -90,7 +90,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public static string enemyCruiserName;
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
-        public GameObject nukeButton;
+        public GameObject ultraPanel;
         private IApplicationModel applicationModel;
 
         public GameObject[] ilegalTutorialSettings;
@@ -353,9 +353,13 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
-                if (nukeButton != null)
+                foreach(Transform button in ultraPanel.transform)
                 {
-                    nukeButton.SetActive(false);
+                    BuildingButtonController temp = button.GetComponent<BuildingButtonController>();
+                    if(temp.buildableName.text.Equals("Nuke Launcher"))
+                    {
+                        button.gameObject.SetActive(false);
+                    }
                 }
                 //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
             }
