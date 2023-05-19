@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private GameObject _parent;
         private IPvPDroneFeedback _droneFeedback;
 
-        protected IPvPUIManager _uiManager;
+        // protected IPvPUIManager _uiManager;
         protected IPvPDroneConsumerProvider _droneConsumerProvider;
         protected IPvPTargetFactoriesProvider _targetFactories;
         protected IPvPMovementControllerFactory _movementControllerFactory;
@@ -237,14 +237,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        public virtual void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public virtual void Initialise(IPvPFactoryProvider factoryProvider)
         {
             Logging.Log(Tags.BUILDABLE, this);
 
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
-            Helper.AssertIsNotNull(uiManager, factoryProvider);
+            Helper.AssertIsNotNull(factoryProvider);
 
-            _uiManager = uiManager;
+            // _uiManager = uiManager;
             _factoryProvider = factoryProvider;
             _targetFactories = _factoryProvider.Targets;
             _movementControllerFactory = _factoryProvider.MovementControllerFactory;
@@ -438,9 +438,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (ConstructionCompletedSoundKey != null)
             {
-                _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+                // _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
             }
-
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             RepairCommand.EmitCanExecuteChanged();
         }
@@ -481,7 +480,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
 
-            _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+            // _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
 
             if (Faction == PvPFaction.Reds)
             {

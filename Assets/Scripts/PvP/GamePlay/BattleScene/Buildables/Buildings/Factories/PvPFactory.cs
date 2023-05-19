@@ -118,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (Faction == PvPFaction.Blues)
             {
-                _uiManager.ShowFactoryUnits(this);
+                // _uiManager.ShowFactoryUnits(this);
             }
         }
 

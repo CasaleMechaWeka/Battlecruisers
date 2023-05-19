@@ -9,6 +9,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
@@ -21,7 +25,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
         private IApplicationModel applicationModel;
+        private IDataProvider dataProvider;
         private PvPBattleSceneGodComponentsServer components;
+        private PvPFactoryProvider factoryProvider;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -58,6 +64,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
 
             applicationModel = ApplicationModelProvider.ApplicationModel;
+            dataProvider = applicationModel.DataProvider;
+
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
@@ -65,15 +73,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPvPPrefabFactory prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
-
+            IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
 
 
             components = GetComponent<PvPBattleSceneGodComponentsServer>();
             Assert.IsNotNull(components);
             components.Initialise();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-
             IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
+            IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
+            factoryProvider.Initialise();
+            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+
 
             IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
         }

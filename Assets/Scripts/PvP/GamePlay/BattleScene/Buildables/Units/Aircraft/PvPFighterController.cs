@@ -71,9 +71,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(_barrelController.DamageCapability);
         }
 
-        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public override void Initialise( /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise( /* uiManager,*/ factoryProvider);
             _angleHelper = _factoryProvider.Turrets.AngleCalculatorFactory.CreateAngleHelper();
         }
 

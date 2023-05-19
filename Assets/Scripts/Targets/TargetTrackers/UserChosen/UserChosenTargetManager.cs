@@ -44,7 +44,6 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         }
 
         public RankedTarget HighestPriorityTarget { get; private set; }
-
         public event EventHandler HighestPriorityTargetChanged;
 
         private void _userChosenTarget_Destroyed(object sender, DestroyedEventArgs e)

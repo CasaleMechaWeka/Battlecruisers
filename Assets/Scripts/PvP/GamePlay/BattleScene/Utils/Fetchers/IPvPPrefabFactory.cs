@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPBuilding CreateBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab, IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider);
 
         IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey);
-        IPvPUnit CreateUnit(IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab, IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider);
+        IPvPUnit CreateUnit(IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab, /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider);
 
         PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey);
         PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab);

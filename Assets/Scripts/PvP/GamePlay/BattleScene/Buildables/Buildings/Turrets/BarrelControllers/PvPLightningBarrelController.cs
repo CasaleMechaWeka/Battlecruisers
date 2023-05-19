@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.TargetFilter,
                     _projectileStats.Damage,
                     args.Parent,
-                    args.FactoryProvider.SettingsManager);
+                   /* args.FactoryProvider.SettingsManager */  null);
         }
 #pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 

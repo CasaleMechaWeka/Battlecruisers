@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted();
 
-            _satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, _uiManager, _factoryProvider);
+            _satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
             _satellite.Position = transform.position + SpawnPositionAdjustment;
 
             _satellite.Activate(

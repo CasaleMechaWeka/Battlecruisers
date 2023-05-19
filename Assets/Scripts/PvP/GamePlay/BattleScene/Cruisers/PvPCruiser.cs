@@ -186,10 +186,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
             Assert.IsNotNull(droneSoundFeedbackInitialiser);
-            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
+            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones,  /* FactoryProvider.SettingsManager*/ null);
 
             IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
-            _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+            // _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
@@ -221,7 +221,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _uiManager.ShowCruiserDetails(this);
             _helper.FocusCameraOnCruiser();
-            FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
+            // FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
 
             Clicked?.Invoke(this, EventArgs.Empty);
         }

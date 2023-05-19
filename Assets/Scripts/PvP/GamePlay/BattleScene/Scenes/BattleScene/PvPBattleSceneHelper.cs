@@ -6,15 +6,22 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-
-
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
     public abstract class PvPBattleSceneHelper : IPvPBattleSceneHelper
     {
         protected readonly IApplicationModel _appModel;
+        protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
+        public virtual IPvPPrefabKey PlayerCruiser => /* _appModel.DataProvider.GameModel.PlayerLoadout.Hull */ new PvPHullKey("dummy prefab");
         public abstract IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        public abstract IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
+        public abstract IPvPSlotFilter CreateHighlightableSlotFilter();
+        public abstract IPvPBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
+
 
         protected PvPBattleSceneHelper(
             IApplicationModel appModel,
@@ -29,6 +36,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return _appModel.DataProvider.GetPvPLevel(Map.PracticeWreckyards);
             // return _appModel.DataProvider.GetPvPLevel();
         }
+
+
     }
 }
 

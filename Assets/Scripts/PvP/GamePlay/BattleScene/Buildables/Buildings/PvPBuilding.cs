@@ -71,14 +71,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (ParentCruiser.IsPlayerCruiser)
             {
-                _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+                // _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
             }
         }
 
         protected override void OnSingleClick()
         {
             // Logging.LogMethod(Tags.BUILDING);
-            _uiManager.SelectBuilding(this);
+            // _uiManager.SelectBuilding(this);
         }
 
         protected override void OnDoubleClick()

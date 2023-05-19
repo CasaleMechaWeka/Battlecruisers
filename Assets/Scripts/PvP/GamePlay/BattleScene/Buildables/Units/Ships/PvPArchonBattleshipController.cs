@@ -54,17 +54,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(/* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(/* uiManager,*/ factoryProvider);
 
-            _unfurlAudioGroup
-                = new PvPAudioSourceGroup(
-                    factoryProvider.SettingsManager,
-                    new PvPAudioSourceBC(bellowAudioSource),
-                    new PvPAudioSourceBC(crankAudioSource),
-                    new PvPAudioSourceBC(chainAudioSource),
-                    new PvPAudioSourceBC(dieselAudioSource));
+            // _unfurlAudioGroup
+            //     = new PvPAudioSourceGroup(
+            //         factoryProvider.SettingsManager,
+            //         new PvPAudioSourceBC(bellowAudioSource),
+            //         new PvPAudioSourceBC(crankAudioSource),
+            //         new PvPAudioSourceBC(chainAudioSource),
+            //         new PvPAudioSourceBC(dieselAudioSource));
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)

@@ -96,9 +96,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftTrail = transform.FindNamedComponent<TrailRenderer>("AircraftTrail");
         }
 
-        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public override void Initialise( /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise( /* uiManager, */ factoryProvider);
 
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _fuzziedMaxVelocityInMPerS = PvPRandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, PvPChangeDirection.Both);

@@ -38,15 +38,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public PvPPoolProviders(
             IPvPFactoryProvider factoryProvider,
-            IPvPUIManager uiManager,
+            // IPvPUIManager uiManager,
             IPvPDroneFactory droneFactory)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
+            PvPHelper.AssertIsNotNull(factoryProvider, droneFactory);
 
             _explosionPoolProvider = new PvPExplosionPoolProvider(factoryProvider.PrefabFactory);
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider(factoryProvider.PrefabFactory);
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
-            _unitPoolProvider = new PvPUnitPoolProvider(uiManager, factoryProvider);
+            _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
             _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
 
             IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);

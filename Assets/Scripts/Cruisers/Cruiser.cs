@@ -33,8 +33,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IComparableItem
-	{
-		protected IUIManager _uiManager;
+    {
+        protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
@@ -59,7 +59,7 @@ namespace BattleCruisers.Cruisers
         public override Color Color { set { _renderer.color = value; } }
         public override Vector2 Size => _collider.bounds.size;
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
-        
+
         private Vector2 _droneAreaSize;
         public override Vector2 DroneAreaSize => _droneAreaSize;
 
@@ -79,7 +79,7 @@ namespace BattleCruisers.Cruisers
         public ICruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private FogOfWar _fog;
         public IGameObject Fog => _fog;
-		public IRepairManager RepairManager { get; private set; }
+        public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones => numOfDrones;
         public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
@@ -114,12 +114,12 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(deathPrefab);
 
             _renderer = GetComponent<SpriteRenderer>();
-			Assert.IsNotNull(_renderer);
+            Assert.IsNotNull(_renderer);
 
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
-            
-            
+
+
             _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
             _slotWrapperController.StaticInitialise();
@@ -133,8 +133,8 @@ namespace BattleCruisers.Cruisers
             _clickHandler = clickHandlerWrapper.GetClickHandler();
             Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
             Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
-            
-            
+
+
 
             BuildingMonitor = new CruiserBuildingMonitor(this);
             UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
@@ -143,7 +143,7 @@ namespace BattleCruisers.Cruisers
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
-            
+
         }
 
         public async virtual void Initialise(ICruiserArgs args)
@@ -204,11 +204,10 @@ namespace BattleCruisers.Cruisers
                     AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
-                catch(ConsentCheckException e)
+                catch (ConsentCheckException e)
                 {
                     Debug.Log(e.Message);
                 }
-                
             }
 
         }
@@ -233,12 +232,12 @@ namespace BattleCruisers.Cruisers
         {
             Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
-			SelectedBuildingPrefab = buildingPrefab;
-			return ConstructSelectedBuilding(slot);
-		}
+            SelectedBuildingPrefab = buildingPrefab;
+            return ConstructSelectedBuilding(slot);
+        }
 
         public IBuilding ConstructSelectedBuilding(ISlot slot)
-		{
+        {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
@@ -253,13 +252,13 @@ namespace BattleCruisers.Cruisers
 
             slot.SetBuilding(building);
 
-			building.CompletedBuildable += Building_CompletedBuildable;
+            building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
 
-			building.StartConstruction();
+            building.StartConstruction();
             _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
-			BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
+            BuildingStarted?.Invoke(this, new BuildingStartedEventArgs(building));
 
             slot.controlBuildingPlacementFeedback(true);
 
@@ -272,17 +271,17 @@ namespace BattleCruisers.Cruisers
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
+                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException ex)
                 {
                     Debug.Log(ex.Message);
-                }              
+                }
             }
 
             return building;
-		}
+        }
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
@@ -296,7 +295,7 @@ namespace BattleCruisers.Cruisers
         {
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
-			IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
+            IBuilding destroyedBuilding = e.DestroyedTarget.Parse<IBuilding>();
             destroyedBuilding.CompletedBuildable -= Building_CompletedBuildable;
 
             BuildingDestroyed?.Invoke(this, new BuildingDestroyedEventArgs(destroyedBuilding));

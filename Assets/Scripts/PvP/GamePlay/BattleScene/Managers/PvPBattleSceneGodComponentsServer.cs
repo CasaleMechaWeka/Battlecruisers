@@ -1,8 +1,8 @@
-
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Lifetime;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -22,6 +22,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private PvPUpdaterProvider _updaterProvider;
         public IPvPUpdaterProvider UpdaterProvider => _updaterProvider;
+
+
+        public AudioSource prioritisedSoundPlayerAudioSource;
+        public IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
+
+        public AudioSource uiSoundsAudioSource;
+        public IPvPAudioSource UISoundsAudioSource { get; private set; }
+
         [SerializeField] NetcodeHooks m_NetcodeHooks;
 
         private void Awake()

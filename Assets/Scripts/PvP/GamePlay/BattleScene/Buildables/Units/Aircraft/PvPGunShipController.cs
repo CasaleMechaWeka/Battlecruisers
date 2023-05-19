@@ -68,9 +68,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(_barrelWrapper.DamageCapability);
         }
 
-        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public override void Initialise( /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(/* uiManager,*/ factoryProvider);
 
             _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 

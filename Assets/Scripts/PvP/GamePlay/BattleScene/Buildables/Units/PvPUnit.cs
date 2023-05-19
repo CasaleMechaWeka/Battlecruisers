@@ -61,11 +61,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Description = _commonStrings.GetString($"Buildables/Units/{stringKeyName}Description");
         }
 
-        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(factoryProvider);
 
-            _engineAudioSource = new PvPEffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+            // _engineAudioSource = new PvPEffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnSingleClick()
         {
-            _uiManager.ShowUnitDetails(this);
+            // _uiManager.ShowUnitDetails(this);
         }
 
         protected virtual void OnDirectionChange()

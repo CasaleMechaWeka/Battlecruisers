@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPUIManager uiManager,
             IPvPFactoryProvider factoryProvider)
         {
-            return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager, factoryProvider);
+            return CreateBuildable(buildingWrapperPrefab.UnityObject, factoryProvider);
         }
 
         public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey)
@@ -56,23 +56,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IPvPUnit CreateUnit(
             IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab,
-            IPvPUIManager uiManager,
+            /* IPvPUIManager uiManager , */
             IPvPFactoryProvider factoryProvider)
         {
-            return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
+            return CreateBuildable(unitWrapperPrefab.UnityObject, factoryProvider);
         }
 
         private TBuildable CreateBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
-            IPvPUIManager uiManager,
             IPvPFactoryProvider factoryProvider) where TBuildable : class, IPvPBuildable
         {
-            PvPHelper.AssertIsNotNull(buildableWrapperPrefab, uiManager, factoryProvider);
+            PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
 
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.StaticInitialise(_commonStrings);
-            buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
+            buildableWrapper.Buildable.Initialise(factoryProvider);
 
             // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
             return buildableWrapper.Buildable;

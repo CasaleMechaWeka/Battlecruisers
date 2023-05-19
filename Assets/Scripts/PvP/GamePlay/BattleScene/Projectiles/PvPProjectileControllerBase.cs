@@ -180,7 +180,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
+            // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
         private void AdjustGameObjectDirection()

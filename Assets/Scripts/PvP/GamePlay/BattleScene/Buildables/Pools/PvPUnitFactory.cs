@@ -12,17 +12,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPPrefabKey _unitKey;
-        private readonly IPvPUIManager _uiManager;
+        // private readonly IPvPUIManager _uiManager;
         private readonly IPvPFactoryProvider _factoryProvider;
         private readonly IPvPBuildableWrapper<IPvPUnit> _unitPrefab;
 
-        public PvPUnitFactory(IPvPPrefabFactory prefabFactory, IPvPPrefabKey unitKey, IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public PvPUnitFactory(IPvPPrefabFactory prefabFactory, IPvPPrefabKey unitKey, /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
-            PvPHelper.AssertIsNotNull(prefabFactory, unitKey, uiManager, factoryProvider);
+            PvPHelper.AssertIsNotNull(prefabFactory, unitKey, factoryProvider);
 
             _prefabFactory = prefabFactory;
             _unitKey = unitKey;
-            _uiManager = uiManager;
+            // _uiManager = uiManager;
             _factoryProvider = factoryProvider;
 
             _unitPrefab = prefabFactory.GetUnitWrapperPrefab(unitKey);
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             return
                 _prefabFactory
-                    .CreateUnit(_unitPrefab, _uiManager, _factoryProvider)
+                    .CreateUnit(_unitPrefab, /* _uiManager */ _factoryProvider)
                     .Parse<PvPUnit>();
         }
 

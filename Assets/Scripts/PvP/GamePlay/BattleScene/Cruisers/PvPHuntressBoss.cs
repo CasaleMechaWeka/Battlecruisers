@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             isPvPCruiser = false;
             base.Initialise(args);
-            unit.Initialise(_uiManager, FactoryProvider);
+            unit.Initialise(/* _uiManager,*/ FactoryProvider);
             unit.Activate(this, _enemyCruiser, CruiserSpecificFactories);
             started = true;
             maxHealth = 0 + unit.maxHealth;

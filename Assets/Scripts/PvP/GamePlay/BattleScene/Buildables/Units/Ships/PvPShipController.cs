@@ -104,9 +104,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     .ToList();
         }
 
-        public override void Initialise(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(/* IPvPUIManager uiManager, */ IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(/* uiManager ,*/ factoryProvider);
 
             IPvPShipDeathPoolChooser shipDeathPoolChooser = GetComponent<IPvPShipDeathPoolChooser>();
             Assert.IsNotNull(shipDeathPoolChooser);

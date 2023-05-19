@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.TargetFilter,
                     _laserTurretStats.damagePerS,
                     args.Parent,
-                    args.FactoryProvider.SettingsManager,
+                   /* args.FactoryProvider.SettingsManager,*/ null,
                     args.Updater,
                     args.FactoryProvider.DeferrerProvider.Deferrer);
 

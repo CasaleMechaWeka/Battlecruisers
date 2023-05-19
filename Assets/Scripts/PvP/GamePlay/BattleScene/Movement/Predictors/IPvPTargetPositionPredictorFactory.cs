@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         IPvPTargetPositionPredictor CreateMortarPredictor();
     }
 
-    public class TargetPositionPredictorFactory : IPvPTargetPositionPredictorFactory
+    public class PvPTargetPositionPredictorFactory : IPvPTargetPositionPredictorFactory
     {
         public IPvPTargetPositionPredictor CreateDummyPredictor()
         {

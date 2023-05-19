@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPUnitPoolProvider : IPvPUnitPoolProvider
     {
-        private readonly IPvPUIManager _uiManager;
+        // private readonly IPvPUIManager _uiManager;
         private readonly IPvPFactoryProvider _factoryProvider;
         private readonly IList<IPvPPool<PvPUnit, PvPBuildableActivationArgs>> _pools;
 
@@ -35,11 +35,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> DestroyerPool { get; }
         public IPvPPool<PvPUnit, PvPBuildableActivationArgs> ArchonPool { get; }
 
-        public PvPUnitPoolProvider(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public PvPUnitPoolProvider(IPvPFactoryProvider factoryProvider)
         {
-            PvPHelper.AssertIsNotNull(uiManager, factoryProvider);
+            PvPHelper.AssertIsNotNull(factoryProvider);
 
-            _uiManager = uiManager;
+            // _uiManager = uiManager;
             _factoryProvider = factoryProvider;
             _pools = new List<IPvPPool<PvPUnit, PvPBuildableActivationArgs>>();
 
@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     new PvPUnitFactory(
                         _factoryProvider.PrefabFactory,
                         unitKey,
-                        _uiManager,
+                        // _uiManager,
                         _factoryProvider));
             _pools.Add(pool);
             return pool;
