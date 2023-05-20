@@ -7,6 +7,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Data.Settings;
 using UnityEngine;
 
@@ -59,6 +61,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             return Difficulty.Harder;
         }
+
+        public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+    IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
+    // IPrioritisedSoundPlayer soundPlayer,
+    // ITargetIndicator targetIndicator
+    )
+        {
+            PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
+
+            return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager /*, soundPlayer, targetIndicator*/);
+        }
+
     }
 }
 

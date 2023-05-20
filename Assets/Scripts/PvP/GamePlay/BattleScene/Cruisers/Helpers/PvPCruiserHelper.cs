@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected readonly IPvPUIManager _uiManager;
         protected readonly IPvPCameraFocuser _cameraFocuser;
 
-        protected PvPCruiserHelper(IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser)
+        protected PvPCruiserHelper(/* IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
         {
-            PvPHelper.AssertIsNotNull(uIManager, cameraFocuser);
+            // PvPHelper.AssertIsNotNull(uIManager, cameraFocuser);
 
-            _uiManager = uIManager;
-            _cameraFocuser = cameraFocuser;
+            // _uiManager = uIManager;
+            // _cameraFocuser = cameraFocuser;
         }
 
         public abstract void FocusCameraOnCruiser();

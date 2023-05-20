@@ -7,19 +7,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPCruiserFactory
     {
-        PvPCruiser CreatePlayerCruiser();
-        PvPCruiser CreateAICruiser(IPvPPrefabKey aiCruiserKey);
+        PvPCruiser CreatePlayerACruiser();
+        PvPCruiser CreatePlayerBCruiser();
 
-        void InitialisePlayerCruiser(
-            PvPCruiser playerCruiser,
-            PvPCruiser aiCruiser,
-            IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker);
+        void InitialisePlayerACruiser(
+            PvPCruiser playerACruiser,
+            PvPCruiser playerBCruiser,
+            // IPvPCameraFocuser cameraFocuser,
+            IPvPRankedTargetTracker userChosenTargetTracker
+           /* IPvPUserChosenTargetHelper userChosenTargetHelper*/ );
 
-        void InitialiseAICruiser(
-            PvPCruiser playerCruiser,
-            PvPCruiser aiCruiser,
-            IPvPCameraFocuser cameraFocuser,
+        void InitialisePlayerBCruiser(
+            PvPCruiser playerBCruiser,
+            PvPCruiser playerACruiser,
+            // IPvPCameraFocuser cameraFocuser,
             IPvPRankedTargetTracker userChosenTargetTracker,
             IPvPUserChosenTargetHelper userChosenTargetHelper);
     }

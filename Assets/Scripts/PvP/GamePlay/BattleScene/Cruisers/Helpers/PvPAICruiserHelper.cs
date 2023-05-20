@@ -5,10 +5,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers
 {
-    public class PvPAICruiserHelper : PvPCruiserHelper
+    public class PvPPlayerBCruiserHelper : PvPCruiserHelper
     {
-        public PvPAICruiserHelper(IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser)
-            : base(uIManager, cameraFocuser)
+        public PvPPlayerBCruiserHelper(/*IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
+            : base(/*uIManager, cameraFocuser*/)
         {
         }
 

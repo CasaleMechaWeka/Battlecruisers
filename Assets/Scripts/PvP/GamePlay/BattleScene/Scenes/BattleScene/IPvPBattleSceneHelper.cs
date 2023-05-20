@@ -5,6 +5,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using UnityEngine;
 
 
@@ -12,12 +14,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
     public interface IPvPBattleSceneHelper
     {
-        IPvPPrefabKey PlayerCruiser { get; }
+        IPvPPrefabKey PlayerACruiser { get; }
+        IPvPPrefabKey PlayerBCruiser { get; }
         IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
         IPvPSlotFilter CreateHighlightableSlotFilter();
         IPvPBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
+        IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+                             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager
+                             // IPvPPrioritisedSoundPlayer soundPlayer,
+                             //  IPvPTargetIndicator targetIndicator
+                             );
     }
 }
 

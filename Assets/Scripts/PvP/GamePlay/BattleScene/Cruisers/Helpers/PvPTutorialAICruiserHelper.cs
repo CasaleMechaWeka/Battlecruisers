@@ -7,8 +7,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPTutorialAICruiserHelper : PvPCruiserHelper
     {
-        public PvPTutorialAICruiserHelper(IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser)
-            : base(uIManager, cameraFocuser)
+        public PvPTutorialAICruiserHelper(/* IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser */)
+            : base(/* uIManager, cameraFocuser */)
         {
         }
 

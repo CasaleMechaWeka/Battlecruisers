@@ -28,6 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IDataProvider dataProvider;
         private PvPBattleSceneGodComponentsServer components;
         private PvPFactoryProvider factoryProvider;
+        private PvPCruiser playerACruiser;
+        private PvPCruiser playerBCruiser;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -82,12 +84,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
             IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
+            IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
+                playerACruiserUserChosenTargetManager
+                /* playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                components.TargetIndicator */);
             IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
             factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            playerACruiser = cruiserFactory.CreatePlayerACruiser();
+            playerBCruiser = cruiserFactory.CreatePlayerBCruiser();
 
-
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager, playerBCruiseruserChosenTargetHelper);
             IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
         }
 
