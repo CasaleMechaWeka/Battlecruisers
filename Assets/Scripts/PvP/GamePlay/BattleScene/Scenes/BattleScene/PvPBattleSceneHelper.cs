@@ -19,6 +19,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     {
         protected readonly IApplicationModel _appModel;
         protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
+        private readonly IPvPPrefabFetcher _prefabFetcher;
+        private readonly ILocTable _storyStrings;
         public virtual IPvPPrefabKey PlayerACruiser => /* _appModel.DataProvider.GameModel.PlayerLoadout.Hull */ new PvPHullKey("PvPYeti");
         public virtual IPvPPrefabKey PlayerBCruiser => /* _appModel.DataProvider.GameModel.PlayerLoadout.Hull */ new PvPHullKey("PvPRaptor");
         public abstract IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
@@ -35,6 +37,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             )
         {
             _appModel = appModel;
+            _prefabFetcher = prefabFetcher;
+            _storyStrings = storyString;
+            _calculatorFactory
+                 = new PvPBuildProgressCalculatorFactory(
+                   new PvPBuildSpeedCalculator());
         }
         public virtual IPvPLevel GetPvPLevel()
         {

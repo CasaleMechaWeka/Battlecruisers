@@ -20,6 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
         protected override float GetVolume(ISettingsManager settingsManager)
         {
+
+            if (settingsManager == null) // it means server
+                return 0f;
             if (_type == 0)
             {
                 return settingsManager.AlertVolume * settingsManager.MasterVolume;

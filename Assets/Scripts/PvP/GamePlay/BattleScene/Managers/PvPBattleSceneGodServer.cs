@@ -95,9 +95,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerACruiser = cruiserFactory.CreatePlayerACruiser();
             playerBCruiser = cruiserFactory.CreatePlayerBCruiser();
 
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
-            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager, playerBCruiseruserChosenTargetHelper);
-            IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+            // cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
+            // cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager, playerBCruiseruserChosenTargetHelper);
+            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
         }
 
 
