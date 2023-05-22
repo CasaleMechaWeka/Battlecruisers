@@ -65,7 +65,9 @@ public class FullScreenAdverts : MonoBehaviour
 #elif UNITY_EDITOR && FREE_EDITION
     gameObject.SetActive(true);
 #else
-    gameObject.SetActive(false);
+        Assert.IsNotNull(settingsManager);
+        gameObject.SetActive(settingsManager.ShowAds);
+    //gameObject.SetActive(false);
 #endif
     }
 
