@@ -12,6 +12,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -58,7 +59,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         // Expose barrel wrappers to editor
         [SerializeField]
-        private List<BarrelWrapper> barrelWrappers;
+        private List<AircraftBarrelWrapper> barrelWrappers;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
         {
@@ -73,6 +74,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 AddDamageStats(barrelWrapper.DamageCapability);
             }
         }
+
 
 
         public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
@@ -102,7 +104,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             foreach (var barrelWrapper in barrelWrappers)
             {
-                barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+                ISoundKey soundKey;
+                switch (barrelWrapper.firingSoundKey)
+                {
+                    case "AttackBoat":
+                        soundKey = SoundKeys.Firing.AttackBoat;
+                        break;
+                    case "Missile":
+                        soundKey = SoundKeys.Firing.Missile;
+                        break;
+                    // Add more cases for other sound keys as needed
+                    default:
+                        soundKey = SoundKeys.Firing.AttackBoat; // default sound key if no match is found
+                        break;
+                }
+                barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
             }
 
 

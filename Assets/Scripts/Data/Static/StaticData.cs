@@ -167,6 +167,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Units.Gunship,
 				StaticPrefabKeys.Units.Fighter,
                 StaticPrefabKeys.Units.SteamCopter,
+                StaticPrefabKeys.Units.Broadsword,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
@@ -355,7 +356,7 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<BuildingKey, int>()
             {
                 // Factories
-                { StaticPrefabKeys.Buildings.AirFactory, 1 },
+                { StaticPrefabKeys.Buildings.AirFactory, 1 },  //The number represents the first level you get this item, so it unlocks when you win the previous level.
                 { StaticPrefabKeys.Buildings.NavalFactory, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation4, 27 },
@@ -404,6 +405,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Gunship, 5 },
                 { StaticPrefabKeys.Units.Fighter, 12 },
                 { StaticPrefabKeys.Units.SteamCopter, 28 },
+                { StaticPrefabKeys.Units.Broadsword, 41 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },

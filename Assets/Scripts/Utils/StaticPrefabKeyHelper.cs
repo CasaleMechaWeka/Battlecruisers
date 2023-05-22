@@ -72,6 +72,7 @@ namespace BattleCruisers.Utils
         Unit_Fighter,
         Unit_Gunship,
         Unit_SteamCopter,
+        Unit_Broadsword,
 
         // Ships
         Unit_AttackBoat,
