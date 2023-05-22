@@ -98,7 +98,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private void SetSpeed(PvPBuildSpeed buildSpeed)
         {
-            PvPBuildProgressCalculatorFactory.playerBuildSpeed.BuildSpeed = buildSpeed;
+            PvPBuildProgressCalculatorFactory.playerABuildSpeed.BuildSpeed = buildSpeed;
+            PvPBuildProgressCalculatorFactory.playerBBuildSpeed.BuildSpeed = buildSpeed;
             PvPBuildProgressCalculatorFactory.aiBuildSpeed.BuildSpeed = buildSpeed;
         }
 

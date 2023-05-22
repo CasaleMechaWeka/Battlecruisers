@@ -66,6 +66,41 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 maxY: SAFE_ZONE_MAX_Y);
         }
 
+        public PvPAircraftProvider(
+    Vector2 parentCruiserPosition,
+    Vector2 enemyCruiserPosition,
+    IPvPRandomGenerator random
+   )
+        {
+            _parentCruiserPosition = parentCruiserPosition;
+            _enemyCruiserPosition = enemyCruiserPosition;
+
+            Assert.IsNotNull(random);
+            _random = random;
+            // _isTutorial = isTutorial;
+
+            float minX, maxX;
+
+            if (IsEnemyToTheRight)
+            {
+                // Enemy is to the right
+                minX = parentCruiserPosition.x - SAFE_ZONE_PARENT_CRUISER_OVERLAP;
+                maxX = enemyCruiserPosition.x - SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
+            }
+            else
+            {
+                // Enemy is to the left
+                minX = enemyCruiserPosition.x + SAFE_ZONE_ENEMY_CRUISER_AVOIDANCE;
+                maxX = parentCruiserPosition.x + SAFE_ZONE_PARENT_CRUISER_OVERLAP;
+            }
+
+            FighterSafeZone = new PvPRectangle(
+                minX: minX,
+                maxX: maxX,
+                minY: SAFE_ZONE_MIN_Y,
+                maxY: SAFE_ZONE_MAX_Y);
+        }
+
         public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
         {
             if (_isTutorial)

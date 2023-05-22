@@ -121,10 +121,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser();
-            // playerBCruiser = cruiserFactory.CreatePlayerBCruiser();
+            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser();
 
-            // cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
-            // cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager, playerBCruiseruserChosenTargetHelper);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
 

@@ -4,8 +4,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public interface IPvPBuildProgressCalculatorFactory
     {
-        IPvPBuildProgressCalculator CreatePlayerCruiserCalculator();
-        IPvPBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty);
+        IPvPBuildProgressCalculator CreatePlayerACruiserCalculator();
+        IPvPBuildProgressCalculator CreatePlayerBCruiserCalculator();
         IPvPBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum);
     }
 }

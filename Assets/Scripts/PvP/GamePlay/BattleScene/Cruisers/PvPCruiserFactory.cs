@@ -72,7 +72,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerBCruiserPrefab);
 
-            playerBCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerBCruiser.YAdjustmentInM, 0);
+            playerBCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, playerBCruiser.YAdjustmentInM, 0);
+            Quaternion rotation = playerBCruiser.Rotation;
+            rotation.eulerAngles = new Vector3(0, 180, 0);
+            playerBCruiser.Rotation = rotation;
             return playerBCruiser;
         }
 
@@ -96,17 +99,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             InitialiseCruiser(
                 playerACruiser,
                 playerBCruiser,
-                _uiManager,
+                // _uiManager,
                 helper,
                 faction,
                 facingDirection,
                 fogStrength,
                 _highlightableSlotFilter,
-                _helper.CreatePlayerCruiserBuildProgressCalculator(),
+                _helper.CreatePlayerACruiserBuildProgressCalculator(),
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.PlayerCruiserHasActiveDrones,
+                _factoryProvider.DroneMonitor.PlayerACruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -114,40 +117,40 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
             // IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker,
-            IPvPUserChosenTargetHelper userChosenTargetHelper)
+            IPvPRankedTargetTracker userChosenTargetTracker
+            /* IPvPUserChosenTargetHelper userChosenTargetHelper */)
         {
-            PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker, userChosenTargetHelper);
+            PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 
             IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager, cameraFocuser*/);
             PvPFaction faction = PvPFaction.Reds;
             PvPDirection facingDirection = PvPDirection.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
 
-            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPAIBuildingDoubleClickHandler(userChosenTargetHelper);
-            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPAICruiserDoubleClickHandler(userChosenTargetHelper);
+            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
+            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
 
             InitialiseCruiser(
                 playerBCruiser,
                 playerACruiser,
-                _uiManager,
+                // _uiManager,
                 helper,
                 faction,
                 facingDirection,
                 fogStrength,
                 _highlightableSlotFilter,
-                _helper.CreateAICruiserBuildProgressCalculator(),
+                _helper.CreatePlayerBCruiserBuildProgressCalculator(),
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.AICruiserHasActiveDrones,
-                isPlayerCruiser: false);
+                _factoryProvider.DroneMonitor.PlayerBCruiserHasActiveDrones,
+                isPlayerCruiser: true);
         }
 
         private void InitialiseCruiser(
             PvPCruiser cruiser,
             IPvPCruiser enemyCruiser,
-            IPvPUIManager uiManager,
+            // IPvPUIManager uiManager,
             IPvPCruiserHelper helper,
             PvPFaction faction,
             PvPDirection facingDirection,
@@ -160,6 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             bool isPlayerCruiser)
         {
+
             IPvPCruiserSpecificFactories cruiserSpecificFactories
                 = new PvPCruiserSpecificFactories(
                     _factoryProvider,
@@ -167,8 +171,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     enemyCruiser,
                     userChosenTargetTracker,
                     _factoryProvider.UpdaterProvider,
-                    faction,
-                    _applicationModel.IsTutorial);
+                    faction);
 
             IPvPDroneManager droneManager = new PvPDroneManager();
             IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.PrioritisedSoundPlayer*/);
@@ -185,7 +188,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 = new PvPCruiserArgs(
                     faction,
                     enemyCruiser,
-                    uiManager,
+                    // uiManager,
                     droneManager,
                     droneFocuser,
                     droneConsumerProvider,

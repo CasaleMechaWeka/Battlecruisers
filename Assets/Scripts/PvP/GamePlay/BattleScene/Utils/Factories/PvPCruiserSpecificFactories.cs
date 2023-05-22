@@ -43,5 +43,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     new PvPSpawnPositionFinder(PvPRandomGenerator.Instance, Constants.WATER_LINE),
                     faction);
         }
+
+        public PvPCruiserSpecificFactories(
+    IPvPFactoryProvider factoryProvider,
+    IPvPCruiser parentCruiser,
+    IPvPCruiser enemyCruiser,
+    IPvPRankedTargetTracker userChosenTargetTracker,
+    IPvPUpdaterProvider updaterProvider,
+    PvPFaction faction)
+        {
+            PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
+
+            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, PvPRandomGenerator.Instance);
+            GlobalBoostProviders = new PvPGlobalBoostProviders();
+            TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
+            // BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
+            Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
+
+            DroneFeedbackFactory
+                = new PvPDroneFeedbackFactory(
+                    factoryProvider.PoolProviders.DronePool,
+                    new PvPSpawnPositionFinder(PvPRandomGenerator.Instance, Constants.WATER_LINE),
+                    faction);
+        }
     }
 }

@@ -52,9 +52,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel);
         }
 
-        public override IPvPBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
+        public override IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator()
         {
-            return _calculatorFactory.CreatePlayerCruiserCalculator();
+            return _calculatorFactory.CreatePlayerACruiserCalculator();
+        }
+
+        public override IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator()
+        {
+            return _calculatorFactory.CreatePlayerBCruiserCalculator();
         }
 
         protected virtual Difficulty FindDifficulty()

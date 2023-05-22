@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private readonly IPvPBuildSpeedCalculator _buildSpeedCalculator;
 
         // For cheating :)
-        public static IPvPBuildSpeedController playerBuildSpeed, aiBuildSpeed;
+        public static IPvPBuildSpeedController playerABuildSpeed, playerBBuildSpeed, aiBuildSpeed;
 
         public const float BOOST_PER_LEVEL = 0.01f;
 
@@ -19,24 +19,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildSpeedCalculator = buildSpeedCalculator;
         }
 
-        public IPvPBuildProgressCalculator CreatePlayerCruiserCalculator()
+        public IPvPBuildProgressCalculator CreatePlayerACruiserCalculator()
         {
 #if ENABLE_CHEATS
             PvPCompositeCalculator calculator = CreateCompositeCalculator(BuildSpeedMultipliers.DEFAULT);
-            playerBuildSpeed = calculator;
+            playerABuildSpeed = calculator;
             return calculator;
 #endif
             return new PvPLinearCalculator(BuildSpeedMultipliers.DEFAULT);
         }
 
-        public IPvPBuildProgressCalculator CreateAICruiserCalculator(Difficulty difficulty)
+        public IPvPBuildProgressCalculator CreatePlayerBCruiserCalculator()
         {
 #if ENABLE_CHEATS
-            PvPCompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
-            aiBuildSpeed = calculator;
+            PvPCompositeCalculator calculator = CreateCompositeCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
+            playerBBuildSpeed = calculator;
             return calculator;
 #endif
-            return new PvPLinearCalculator(_buildSpeedCalculator.FindAIBuildSpeed(difficulty));
+            return new PvPLinearCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
         }
 
         public IPvPBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)

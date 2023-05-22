@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
             // IPvPCameraFocuser cameraFocuser,
-            IPvPRankedTargetTracker userChosenTargetTracker,
-            IPvPUserChosenTargetHelper userChosenTargetHelper);
+            IPvPRankedTargetTracker userChosenTargetTracker
+            /*IPvPUserChosenTargetHelper userChosenTargetHelper*/);
     }
 }

@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public interface IPvPDroneMonitor
     {
         IReadOnlyDictionary<PvPFaction, int> FactionToActiveDroneNum { get; }
-        IPvPBroadcastingProperty<bool> PlayerCruiserHasActiveDrones { get; }
-        IPvPBroadcastingProperty<bool> AICruiserHasActiveDrones { get; }
+        IPvPBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
+        IPvPBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
     }
 }

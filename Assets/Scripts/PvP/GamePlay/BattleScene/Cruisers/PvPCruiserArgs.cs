@@ -93,5 +93,63 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FogOfWarManager = fogOfWarManager;
             HasActiveDrones = parentCruiserHasActiveDrones;
         }
+
+
+        public PvPCruiserArgs(
+            PvPFaction faction,
+            IPvPCruiser enemyCruiser,
+            // IPvPUIManager uiManager,
+            IPvPDroneManager droneManager,
+            IPvPDroneFocuser droneFocuser,
+            IPvPDroneConsumerProvider droneConsumerProvider,
+            IPvPFactoryProvider factoryProvider,
+            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            PvPDirection facingDirection,
+            IPvPRepairManager repairManager,
+            PvPFogStrength fogStrength,
+            IPvPCruiserHelper helper,
+            IPvPSlotFilter highlightableFilter,
+            IPvPBuildProgressCalculator buildProgressCalculator,
+            IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
+            IPvPDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
+            IPvPManagedDisposable fogOfWarManager,
+            IPvPBroadcastingProperty<bool> parentCruiserHasActiveDrones)
+        {
+            BCUtils.Helper.AssertIsNotNull(
+                enemyCruiser,
+                // uiManager,
+                droneManager,
+                droneFocuser,
+                droneConsumerProvider,
+                factoryProvider,
+                cruiserSpecificFactories,
+                repairManager,
+                helper,
+                highlightableFilter,
+                buildProgressCalculator,
+                buildingDoubleClickHandler,
+                cruiserDoubleClickHandler,
+                fogOfWarManager,
+                parentCruiserHasActiveDrones);
+
+            Faction = faction;
+            EnemyCruiser = enemyCruiser;
+            // UiManager = uiManager;
+            DroneManager = droneManager;
+            DroneFocuser = droneFocuser;
+            DroneConsumerProvider = droneConsumerProvider;
+            FactoryProvider = factoryProvider;
+            CruiserSpecificFactories = cruiserSpecificFactories;
+            FacingDirection = facingDirection;
+            RepairManager = repairManager;
+            FogStrength = fogStrength;
+            Helper = helper;
+            HighlightableFilter = highlightableFilter;
+            BuildProgressCalculator = buildProgressCalculator;
+            BuildingDoubleClickHandler = buildingDoubleClickHandler;
+            CruiserDoubleClickHandler = cruiserDoubleClickHandler;
+            FogOfWarManager = fogOfWarManager;
+            HasActiveDrones = parentCruiserHasActiveDrones;
+        }
     }
 }

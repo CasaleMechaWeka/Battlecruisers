@@ -20,11 +20,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private readonly IDictionary<PvPFaction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<PvPFaction, int> FactionToActiveDroneNum { get; }
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _playerCruiserHasActiveDrones;
-        public IPvPBroadcastingProperty<bool> PlayerCruiserHasActiveDrones { get; }
+        private readonly IPvPSettableBroadcastingProperty<bool> _playerACruiserHasActiveDrones;
+        public IPvPBroadcastingProperty<bool> PlayerACruiserHasActiveDrones { get; }
 
-        private readonly IPvPSettableBroadcastingProperty<bool> _aiCruiserHasActiveDrones;
-        public IPvPBroadcastingProperty<bool> AICruiserHasActiveDrones { get; }
+        private readonly IPvPSettableBroadcastingProperty<bool> _playerBCruiserHasActiveDrones;
+        public IPvPBroadcastingProperty<bool> PlayerBCruiserHasActiveDrones { get; }
 
         public PvPDroneMonitor(IPvPDroneFactory droneFactory)
         {
@@ -40,11 +40,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
             FactionToActiveDroneNum = new ReadOnlyDictionary<PvPFaction, int>(_factionToActiveDroneNum);
 
-            _playerCruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
-            PlayerCruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerCruiserHasActiveDrones);
+            _playerACruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
+            PlayerACruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerACruiserHasActiveDrones);
 
-            _aiCruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
-            AICruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_aiCruiserHasActiveDrones);
+            _playerBCruiserHasActiveDrones = new PvPSettableBroadcastingProperty<bool>(false);
+            PlayerBCruiserHasActiveDrones = new PvPBroadcastingProperty<bool>(_playerBCruiserHasActiveDrones);
         }
 
         private void _droneFactory_DroneCreated(object sender, PvPDroneCreatedEventArgs e)
@@ -71,8 +71,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void UpdateDroneActiveness()
         {
-            _playerCruiserHasActiveDrones.Value = _factionToActiveDroneNum[PvPFaction.Blues] != 0;
-            _aiCruiserHasActiveDrones.Value = _factionToActiveDroneNum[PvPFaction.Reds] != 0;
+            _playerACruiserHasActiveDrones.Value = _factionToActiveDroneNum[PvPFaction.Blues] != 0;
+            _playerBCruiserHasActiveDrones.Value = _factionToActiveDroneNum[PvPFaction.Reds] != 0;
         }
     }
 }
