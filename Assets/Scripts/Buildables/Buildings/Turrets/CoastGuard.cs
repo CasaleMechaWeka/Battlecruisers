@@ -6,6 +6,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class CoastGuard : DefenseTurret
 	{
         protected override ISoundKey FiringSound => SoundKeys.Firing.Artillery;
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Mortar;
+        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AntiShipTurret;
     }
 }
