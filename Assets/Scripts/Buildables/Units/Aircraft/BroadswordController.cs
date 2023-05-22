@@ -100,8 +100,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             SetupTargetDetection();
 
-            _rocketBarrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-            _minigunBarrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _rocketBarrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
+            _minigunBarrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+
             List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
             foreach (Sprite sprite in allSprites)
             {
