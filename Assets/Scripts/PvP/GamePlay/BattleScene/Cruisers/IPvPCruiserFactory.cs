@@ -2,13 +2,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
     public interface IPvPCruiserFactory
     {
-        PvPCruiser CreatePlayerACruiser();
-        PvPCruiser CreatePlayerBCruiser();
+        Task<PvPCruiser> CreatePlayerACruiser();
+        Task<PvPCruiser> CreatePlayerBCruiser();
 
         void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,

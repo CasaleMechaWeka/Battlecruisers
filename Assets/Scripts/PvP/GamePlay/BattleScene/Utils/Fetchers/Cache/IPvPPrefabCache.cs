@@ -23,6 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         PvPCruiser GetCruiser(IPvPPrefabKey key);
         PvPExplosionController GetExplosion(IPvPPrefabKey key);
         PvPShipDeathInitialiser GetShipDeath(IPvPPrefabKey key);
+        PvPPrefab GetPrefab(string prefabPath);
 
         // Multiple untyped prefab caches
         TProjectile GetProjectile<TProjectile>(IPvPPrefabKey prefabKey) where TProjectile : PvPProjectile;

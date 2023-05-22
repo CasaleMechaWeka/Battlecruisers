@@ -18,6 +18,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -85,6 +86,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab)
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab);
+            cruiser.GetComponent<NetworkObject>().Spawn();
             cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }
@@ -129,6 +131,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+        }
+
+        public PvPPrefab GetPrefab(string prefabPath)
+        {
+            return _prefabCache.GetPrefab(prefabPath);
         }
     }
 }

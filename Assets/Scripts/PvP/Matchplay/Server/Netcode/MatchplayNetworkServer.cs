@@ -6,6 +6,7 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine.SceneManagement;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Network.Multiplay.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Server
 {
@@ -36,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             m_NetworkManager.NetworkConfig.ForceSamePrefabs = false;
             m_NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             m_NetworkManager.OnServerStarted += OnNetworkReady;
+            DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
         }
 
 
@@ -111,6 +113,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             var payload = System.Text.Encoding.UTF8.GetString(request.Payload);
             var userData = JsonUtility.FromJson<UserData>(payload);
             userData.networkId = request.ClientNetworkId;
+            if (m_clientData.Count == 0)
+            {
+                m_SynchedServerData.playerAPrefabName.Value = userData.hullPrefabName;
+            }
+            else if (m_clientData.Count == 1)
+            {
+                m_SynchedServerData.playerBPrefabName.Value = userData.hullPrefabName;
+            }
+
             Debug.Log($"Host ApprovalCheck: connecting client: ({request.ClientNetworkId}) - {userData}");
 
             if (m_clientData.ContainsKey(userData.userAuthId))
@@ -131,6 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             response.Position = Vector3.zero;
             response.Rotation = Quaternion.identity;
             response.Pending = false;
+            response.CreatePlayerObject = false;
 
             // var schedular = TaskScheduler.FromCurrentSynchronizationContext();
             // Task.Factory.StartNew(

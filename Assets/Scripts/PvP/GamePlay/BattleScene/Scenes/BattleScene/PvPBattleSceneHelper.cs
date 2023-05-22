@@ -21,8 +21,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
         private readonly IPvPPrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
-        public virtual IPvPPrefabKey PlayerACruiser => /* _appModel.DataProvider.GameModel.PlayerLoadout.Hull */ new PvPHullKey("PvPYeti");
-        public virtual IPvPPrefabKey PlayerBCruiser => /* _appModel.DataProvider.GameModel.PlayerLoadout.Hull */ new PvPHullKey("PvPRaptor");
+        public virtual IPvPPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
+        public virtual IPvPPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
         public abstract IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public abstract IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         public abstract IPvPSlotFilter CreateHighlightableSlotFilter();
@@ -39,17 +39,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _appModel = appModel;
             _prefabFetcher = prefabFetcher;
             _storyStrings = storyString;
+            // _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabPat
+            // PlayerACruiser = new PvPHullKey("PvPYeti");
+            // PlayerBCruiser = new PvPHullKey("PvPRaptor");
             _calculatorFactory
                  = new PvPBuildProgressCalculatorFactory(
                    new PvPBuildSpeedCalculator());
         }
+
         public virtual IPvPLevel GetPvPLevel()
         {
             return _appModel.DataProvider.GetPvPLevel(Map.PracticeWreckyards);
             // return _appModel.DataProvider.GetPvPLevel();
         }
-
-
     }
 }
 

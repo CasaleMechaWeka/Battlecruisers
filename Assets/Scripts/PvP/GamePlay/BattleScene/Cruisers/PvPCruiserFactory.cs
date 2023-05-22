@@ -19,8 +19,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
-using UnityEngine.Assertions;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -51,28 +52,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _fogVisibilityDecider = new PvPFogVisibilityDecider();
         }
 
-        public PvPCruiser CreatePlayerACruiser()
+        public async Task<PvPCruiser> CreatePlayerACruiser()
         {
             PvPCruiser playerACruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
-            PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerACruiserPrefab);
-            playerACruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerACruiser.YAdjustmentInM, 0);
 
+            await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerACruiser, playerACruiserPrefab);
+
+            PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerACruiserPrefab);
+
+            playerACruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerACruiser.YAdjustmentInM, 0);
             return playerACruiser;
         }
 
-        public PvPCruiser CreatePlayerBCruiser()
+        public async Task<PvPCruiser> CreatePlayerBCruiser()
         {
-            // Assert.IsNotNull(aiCruiserKey);
+            PvPCruiser playerBCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
 
-            PvPCruiser aiCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
-            PvPCruiser aiCruiser = _factoryProvider.PrefabFactory.CreateCruiser(aiCruiserPrefab);
+            await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(_helper.PlayerBCruiser, playerBCruiserPrefab);
 
-            aiCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
-            Quaternion rotation = aiCruiser.Rotation;
-            rotation.eulerAngles = new Vector3(0, 180, 0);
-            aiCruiser.Rotation = rotation;
+            PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerBCruiserPrefab);
 
-            return aiCruiser;
+            playerBCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerBCruiser.YAdjustmentInM, 0);
+            return playerBCruiser;
         }
 
         public void InitialisePlayerACruiser(

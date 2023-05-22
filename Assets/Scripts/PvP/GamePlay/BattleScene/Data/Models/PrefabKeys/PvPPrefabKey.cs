@@ -9,6 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
         [SerializeField]
         private string _prefabName;
 
+
         private const string PREFABS_BASE_PATH = "Prefabs/PvP/BattleScene/";
         protected const char PATH_SEPARATOR = '/';
 
@@ -27,6 +28,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
                 return PrefabPathPrefix + _prefabName;
             }
         }
+
+        public string PrefabName
+        {
+            get
+            {
+                return _prefabName;
+            }
+        }
+
+
 
         protected PvPPrefabKey(string prefabName)
         {

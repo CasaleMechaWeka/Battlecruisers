@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
@@ -25,12 +26,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
-        private PvPFactoryProvider factoryProvider;
+        public PvPFactoryProvider factoryProvider;
         private PvPBattleSceneGodComponentsClient components;
         private PvPNavigationPermitters navigationPermitters;
         private IPvPCameraComponents cameraComponents;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
+
+        public static PvPBattleSceneGodClient Instance
+        {
+            get
+            {
+                if (s_pvpBattleSceneGodClient == null)
+                {
+                    s_pvpBattleSceneGodClient = FindObjectOfType<PvPBattleSceneGodClient>();
+                }
+                if (s_pvpBattleSceneGodClient == null)
+                {
+                    Debug.LogError("No ServerSingleton in scene, did you run this from the bootstrap scene?");
+                    return null;
+                }
+                return s_pvpBattleSceneGodClient;
+            }
+        }
+
+
+
+        static PvPBattleSceneGodClient s_pvpBattleSceneGodClient;
 
         void Awake()
         {
@@ -75,7 +97,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
             IPvPPrefabFactory prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
-            navigationPermitters = new PvPNavigationPermitters();
+            IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
+            // navigationPermitters = new PvPNavigationPermitters();
 
 
 
@@ -85,6 +108,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             // components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
+            factoryProvider.Initialise();
+
+
 
             IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 

@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
-    public class PvPBuildableWrapper<TPvPBuildable> : Prefab, IPvPBuildableWrapper<TPvPBuildable> where TPvPBuildable : class, IPvPBuildable
+    public class PvPBuildableWrapper<TPvPBuildable> : PvPPrefab, IPvPBuildableWrapper<TPvPBuildable> where TPvPBuildable : class, IPvPBuildable
     {
         public TPvPBuildable Buildable { get; private set; }
 

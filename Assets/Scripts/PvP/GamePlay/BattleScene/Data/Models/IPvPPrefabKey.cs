@@ -3,5 +3,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
     public interface IPvPPrefabKey
     {
         string PrefabPath { get; }
+        string PrefabName { get; }
     }
 }

@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
@@ -27,12 +29,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
         private PvPBattleSceneGodComponentsServer components;
-        private PvPFactoryProvider factoryProvider;
+        public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
+
+
+
+        public static PvPBattleSceneGodServer Instance
+        {
+            get
+            {
+                if (s_pvpBattleSceneGodServer == null)
+                {
+                    s_pvpBattleSceneGodServer = FindObjectOfType<PvPBattleSceneGodServer>();
+                }
+                if (s_pvpBattleSceneGodServer == null)
+                {
+                    Debug.LogError("No ServerSingleton in scene, did you run this from the bootstrap scene?");
+                    return null;
+                }
+                return s_pvpBattleSceneGodServer;
+            }
+        }
+
+
+
+        static PvPBattleSceneGodServer s_pvpBattleSceneGodServer;
         void Awake()
         {
             if (m_NetcodeHooks)
@@ -62,12 +87,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
         }
-        private async void Start()
+        public async void Initialise()
+        {
+            await _Initialise();
+        }
+        private async Task _Initialise()
         {
 
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
-
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
@@ -92,12 +120,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
             factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            playerACruiser = cruiserFactory.CreatePlayerACruiser();
-            playerBCruiser = cruiserFactory.CreatePlayerBCruiser();
+            playerACruiser = await cruiserFactory.CreatePlayerACruiser();
+            // playerBCruiser = cruiserFactory.CreatePlayerBCruiser();
 
             // cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
             // cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager, playerBCruiseruserChosenTargetHelper);
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+
+
         }
 
 

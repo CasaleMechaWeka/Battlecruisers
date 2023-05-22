@@ -20,5 +20,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
             return _prefabs[prefabKey];
         }
+
+        public ICollection<IPvPPrefabKey> GetKeys()
+        {
+            return _prefabs.Keys;
+        }
+
+        public ICollection<TPrefab> GetValues()
+        {
+            return _prefabs.Values;
+        }
+
     }
 }

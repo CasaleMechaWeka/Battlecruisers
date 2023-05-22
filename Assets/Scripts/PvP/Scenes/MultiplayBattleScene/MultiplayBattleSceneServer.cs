@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         Action onClientEntered;
         Action onClientExit;
-        const int MaxConnectedPlayers = 2;
+        const int MaxConnectedPlayers = 1;
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -37,8 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (m_clients.Count == MaxConnectedPlayers)
             {
-                // StartCoroutine(iLoadPvPPlayerManager(id));
-
+                GetComponent<PvPBattleSceneGodServer>().Initialise();
             }
         }
 

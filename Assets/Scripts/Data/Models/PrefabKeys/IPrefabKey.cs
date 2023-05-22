@@ -3,5 +3,6 @@
     public interface IPrefabKey
     {
         string PrefabPath { get; }
+        string PrefabName { get; }
     }
 }

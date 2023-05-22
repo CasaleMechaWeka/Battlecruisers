@@ -65,6 +65,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPContainer<PvPAudioSourceInitialiser> audioSourceContainer = new PvPContainer<PvPAudioSourceInitialiser>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, PvPStaticPrefabKeys.AudioSource, audioSourceContainer));
 
+
+
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
             // Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After retrieve all prefabs task");

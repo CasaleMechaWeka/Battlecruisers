@@ -8,6 +8,7 @@ using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.Client;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using BattleCruisers.Network.Multiplay.Utils;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -146,6 +147,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             // NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.OnTransportFailure += OnTransportFailure;
             m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
+            DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
         }
 
         void OnDestroy()

@@ -24,5 +24,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             return prefab;
         }
+
+        public ICollection<IPvPPrefabKey> GetKeys()
+        {
+            return _prefabs.Keys;
+        }
+
+        public ICollection<TBase> GetValues()
+        {
+            return _prefabs.Values;
+        }
     }
 }

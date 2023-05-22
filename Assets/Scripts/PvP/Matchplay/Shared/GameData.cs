@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using BattleCruisers.Data;
 using Random = UnityEngine.Random;
 
 
@@ -42,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData("Random User" + Random.Range(1, 9999).ToString(), tmepId, 0, new GameInfo());
+            Data = new UserData("Random User" + Random.Range(1, 9999).ToString(), tmepId, 0, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo());
 
 
             //cheat code
@@ -113,13 +114,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public string userName;
         public string userAuthId;
         public ulong networkId;
+        public string hullPrefabName;
         // public string lobbyId;
         public GameInfo userGamePreferences;
-        public UserData(string userName, string userAuthId, ulong networkId, GameInfo userGamePreferences)
+        public UserData(string userName, string userAuthId, ulong networkId, string hullPrefabName, GameInfo userGamePreferences)
         {
             this.userName = userName;
             this.userAuthId = userAuthId;
             this.networkId = networkId;
+            this.hullPrefabName = hullPrefabName;
             this.userGamePreferences = userGamePreferences;
             // this.lobbyId = lobbyId;
         }

@@ -26,6 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey);
         PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab);
+        PvPPrefab GetPrefab(string prefabPath);
 
         IPvPExplosion CreateExplosion(PvPExplosionKey explosionKey);
         IPvPShipDeath CreateShipDeath(PvPShipDeathKey shipDeathKey);

@@ -20,7 +20,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPFactoryProvider : IPvPFactoryProvider
     {
-        private readonly IPvPBattleSceneGodComponentsServer _components;
+        private readonly IPvPBattleSceneGodComponentsServer _components_server;
+        private readonly IPvPBattleSceneGodComponentsClient _components_client;
 
         public IPvPBoostFactory BoostFactory { get; }
         public IPvPDamageApplierFactory DamageApplierFactory { get; }
@@ -41,6 +42,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPPoolProviders PoolProviders { get; private set; }
         // public IPvPSoundFactoryProvider Sound { get; private set; }
 
+
+        public PvPFactoryProvider(
+            IPvPBattleSceneGodComponentsClient components,
+            IPvPPrefabFactory prefabFactory,
+            IPvPSpriteProvider spriteProvider
+        )
+        {
+            PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider /*, settingsManager*/);
+
+            _components_client = components;
+            PrefabFactory = prefabFactory;
+            // SettingsManager = settingsManager;
+            Targets = new PvPTargetFactoriesProvider();
+            TargetPositionPredictorFactory = new PvPTargetPositionPredictorFactory();
+            MovementControllerFactory = new PvPMovementControllerFactory();
+            FlightPointsProviderFactory = new PvPFlightPointsProviderFactory();
+            BoostFactory = new PvPBoostFactory();
+            DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
+            SpriteChooserFactory
+                = new PvPSpriteChooserFactory(
+                    new PvPAssignerFactory(),
+                    spriteProvider);
+            DeferrerProvider = new PvPDeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
+            SpawnDeciderFactory = new PvPSpawnDeciderFactory();
+            UpdaterProvider = components.UpdaterProvider;
+
+            Turrets = new PvPTurretFactoryProvider();
+        }
+
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponentsServer components,
             IPvPPrefabFactory prefabFactory,
@@ -50,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider /*, settingsManager*/);
 
-            _components = components;
+            _components_server = components;
             PrefabFactory = prefabFactory;
             // SettingsManager = settingsManager;
             Targets = new PvPTargetFactoriesProvider();

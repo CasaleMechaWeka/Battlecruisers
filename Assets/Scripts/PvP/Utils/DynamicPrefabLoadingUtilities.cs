@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Utils
 {
@@ -18,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Utils
 
         public static int HashOfDynamicPrefabGUIDs { get; private set; } = k_EmptyDynamicPrefabHash;
 
-        static Dictionary<AddressableGUID, AsyncOperationHandle<GameObject>> s_LoadedDynamicPrefabResourceHandles = new Dictionary<AddressableGUID, AsyncOperationHandle<GameObject>>(new AddressableGUIDEqualityComparer());
+        static Dictionary<AddressableGUID, PvPPrefab> s_LoadedDynamicPrefabResourceHandles = new Dictionary<AddressableGUID, PvPPrefab>(new AddressableGUIDEqualityComparer());
 
         static List<AddressableGUID> s_DynamicPrefabGUIDs = new List<AddressableGUID>();
 
@@ -31,12 +32,12 @@ namespace BattleCruisers.Network.Multiplay.Utils
         public static bool IsPrefabLoadedOnAllClients(AddressableGUID assetGuid) =>
             s_LoadedDynamicPrefabResourceHandles.ContainsKey(assetGuid);
 
-        public static bool TryGetLoadedGameObjectFromGuid(AddressableGUID assetGuid, out AsyncOperationHandle<GameObject> loadedGameObject)
+        public static bool TryGetLoadedGameObjectFromGuid(AddressableGUID assetGuid, out PvPPrefab loadedGameObject)
         {
             return s_LoadedDynamicPrefabResourceHandles.TryGetValue(assetGuid, out loadedGameObject);
         }
 
-        public static Dictionary<AddressableGUID, AsyncOperationHandle<GameObject>> LoadedDynamicPrefabResourceHandles => s_LoadedDynamicPrefabResourceHandles;
+        public static Dictionary<AddressableGUID, PvPPrefab> LoadedDynamicPrefabResourceHandles => s_LoadedDynamicPrefabResourceHandles;
 
         public static int LoadedPrefabCount => s_LoadedDynamicPrefabResourceHandles.Count;
 
@@ -91,50 +92,49 @@ namespace BattleCruisers.Network.Multiplay.Utils
             return JsonUtility.ToJson(rejectionPayload);
         }
 
-        public static async Task<GameObject> LoadDynamicPrefab(AddressableGUID guid, int artificialDelayMilliseconds,
+        public static PvPPrefab LoadDynamicPrefab(AddressableGUID guid, PvPPrefab iPrefab,/*, int artificialDelayMilliseconds,*/
             bool recomputeHash = true)
         {
             if (s_LoadedDynamicPrefabResourceHandles.ContainsKey(guid))
             {
                 Debug.Log($"Prefab has already been loaded, skipping loading this time | {guid}");
-                return s_LoadedDynamicPrefabResourceHandles[guid].Result;
+                return s_LoadedDynamicPrefabResourceHandles[guid];
             }
 
             Debug.Log($"Loading dynamic prefab {guid.Value}");
-            var op = Addressables.LoadAssetAsync<GameObject>(guid.ToString());
-            var prefab = await op.Task;
+            // var op = Addressables.LoadAssetAsync<GameObject>(guid.ToString());
+            // var prefab = await op.Task;
 
-#if ENABLE_ARTIFICIAL_DELAY
-            // THIS IS FOR EDUCATIONAL PURPOSES AND SHOULDN'T BE INCLUDED IN YOUR PROJECT
-            await Task.Delay(artificialDelayMilliseconds);
-#endif
-
-            s_NetworkManager.AddNetworkPrefab(prefab);
-            s_LoadedDynamicPrefabResourceHandles.Add(guid, op);
+            // #if ENABLE_ARTIFICIAL_DELAY
+            //             // THIS IS FOR EDUCATIONAL PURPOSES AND SHOULDN'T BE INCLUDED IN YOUR PROJECT
+            //             await Task.Delay(artificialDelayMilliseconds);
+            // #endif
+            s_NetworkManager.AddNetworkPrefab(iPrefab.gameObject);
+            s_LoadedDynamicPrefabResourceHandles.Add(guid, iPrefab);
 
             if (recomputeHash)
             {
                 CalculateDynamicPrefabArrayHash();
             }
 
-            return prefab;
+            return iPrefab;
         }
 
-        public static async Task<IList<GameObject>> LoadDynamicPrefabs(AddressableGUID[] guids,
-            int artificialDelaySeconds = 0)
-        {
-            var tasks = new List<Task<GameObject>>();
+        // public static async Task<IList<GameObject>> LoadDynamicPrefabs(AddressableGUID[] guids,
+        //     int artificialDelaySeconds = 0)
+        // {
+        //     var tasks = new List<Task<GameObject>>();
 
-            foreach (var guid in guids)
-            {
-                tasks.Add(LoadDynamicPrefab(guid, artificialDelaySeconds, recomputeHash: false));
-            }
+        //     foreach (var guid in guids)
+        //     {
+        //         tasks.Add(LoadDynamicPrefab(guid /*, artificialDelaySeconds*/, recomputeHash: false));
+        //     }
 
-            var prefabs = await Task.WhenAll(tasks);
-            CalculateDynamicPrefabArrayHash();
+        //     var prefabs = await Task.WhenAll(tasks);
+        //     CalculateDynamicPrefabArrayHash();
 
-            return prefabs;
-        }
+        //     return prefabs;
+        // }
 
         public static void RefreshLoadedPrefabGuids()
         {
@@ -170,11 +170,22 @@ namespace BattleCruisers.Network.Multiplay.Utils
 
             foreach (var handle in s_LoadedDynamicPrefabResourceHandles.Values)
             {
-                s_NetworkManager.RemoveNetworkPrefab(handle.Result);
-                Addressables.Release(handle);
+                s_NetworkManager.RemoveNetworkPrefab(handle.gameObject);
+                // Addressables.Release(handle);
             }
 
             s_LoadedDynamicPrefabResourceHandles.Clear();
+        }
+
+        public static void UnloadAndReleasePrefab(AddressableGUID assetGuid, bool recomputeHash = true)
+        {
+            var handle = s_LoadedDynamicPrefabResourceHandles[assetGuid];
+            if (handle != null)
+            {
+                s_NetworkManager.RemoveNetworkPrefab(handle.gameObject);
+                if (recomputeHash)
+                    CalculateDynamicPrefabArrayHash();
+            }
         }
     }
 }
