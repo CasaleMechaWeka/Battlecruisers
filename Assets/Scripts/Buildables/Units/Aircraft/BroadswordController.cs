@@ -164,13 +164,25 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             UpdateMovementController();
         }
 
-		protected override IList<IPatrolPoint> GetPatrolPoints()
-		{
-            IList<Vector2> patrolPositions = _aircraftProvider.FindGunshipPatrolPoints(cruisingAltitudeInM);
-            return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
-		}
+        protected override IList<IPatrolPoint> GetPatrolPoints()
+        {
+            IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 
-		private void OnFirstPatrolPointReached()
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(1)
+            {
+
+                new PatrolPoint(patrolPositions[1], removeOnceReached: true)
+            };
+
+            for (int i = 2; i < patrolPositions.Count; ++i)
+            {
+                patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
+            }
+
+            return patrolPoints;
+        }
+
+        private void OnFirstPatrolPointReached()
 		{
 			_isAtCruisingHeight = true;
             UpdateMovementController();
