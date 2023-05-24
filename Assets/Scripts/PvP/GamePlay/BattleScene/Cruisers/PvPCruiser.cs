@@ -109,6 +109,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private int updateCnt = 0;
         public bool isPvPCruiser = true;
 
+
+
+
         public override void StaticInitialise(ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);

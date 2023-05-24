@@ -13,12 +13,12 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Scenes.BattleScene;
+using Unity.Netcode;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlot : MonoBehaviour, IPvPSlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
+    public class PvPSlot : NetworkBehaviour, IPvPSlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
     {
         private IPvPCruiser _parentCruiser;
         private SpriteRenderer _renderer;
@@ -64,7 +64,60 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public bool IsVisible
         {
             get { return _renderer.gameObject.activeSelf; }
-            set { _renderer.gameObject.SetActive(value); }
+            set
+            {
+                _renderer.gameObject.SetActive(value);
+                if (IsServer)
+                    pvp_IsVisible.Value = value;
+            }
+        }
+
+
+
+        private const bool pvp_b_InitialValue = false;
+        public NetworkVariable<bool> pvp_IsVisible = new NetworkVariable<bool>();
+
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsServer)
+            {
+                pvp_IsVisible.Value = pvp_b_InitialValue;
+            }
+            else
+            {
+                Initialise_Client();
+                if (pvp_IsVisible.Value != pvp_b_InitialValue)
+                {
+                    Debug.Log($"NetworkVariable was {pvp_IsVisible.Value} upon being spawned" + $" when it should have been {pvp_b_InitialValue}");
+                }
+                else
+                {
+                    Debug.Log($"NetworkVariable is {pvp_IsVisible.Value} when spawned.");
+                    IsVisible = pvp_IsVisible.Value;
+                }
+                pvp_IsVisible.OnValueChanged += OnPvPIsVisibleValueChanged;
+            }
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            pvp_IsVisible.OnValueChanged -= OnPvPIsVisibleValueChanged;
+        }
+
+
+        private void Initialise_Client()
+        {
+            _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
+        }
+
+
+        private void OnPvPIsVisibleValueChanged(bool previous, bool current)
+        {
+            if (IsClient)
+            {
+                IsVisible = current;
+            }
         }
 
         public void controlBuildingPlacementFeedback(bool active)   // let's describe a publicly-accessible function that returns nothing, 
@@ -206,5 +259,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(building);
             SlotBuilding = building;
         }
+
+
     }
 }
