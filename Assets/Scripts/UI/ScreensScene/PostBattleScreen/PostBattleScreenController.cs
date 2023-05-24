@@ -341,7 +341,17 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private bool CanNextCommandExecute()
         {
-            return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
+            // If this was the final campaign level, NEXT should not be displayed.
+            // All subsequent levels are bonuses that users can find on their own:
+            if (BattleResult.LevelNum == StaticData.NUM_OF_STANDARD_LEVELS)
+            {
+                return false;
+            }
+            // The rest of the time we do the normal thing:
+            else
+            {
+                return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked;
+            }
         }
 
         private void ClockedGameCommandExecute()
