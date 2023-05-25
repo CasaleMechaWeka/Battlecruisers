@@ -353,12 +353,15 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
-                foreach(Transform button in ultraPanel.transform)
+                if(ultraPanel != null)
                 {
-                    BuildingButtonController temp = button.GetComponent<BuildingButtonController>();
-                    if(temp.buildableName.text.Equals("Nuke Launcher"))
+                    foreach (Transform button in ultraPanel.transform)
                     {
-                        button.gameObject.SetActive(false);
+                        BuildingButtonController temp = button.GetComponent<BuildingButtonController>();
+                        if (temp.buildableName.text.Equals("Nuke Launcher"))
+                        {
+                            button.gameObject.SetActive(false);
+                        }
                     }
                 }
                 //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
