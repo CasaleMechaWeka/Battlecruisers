@@ -70,6 +70,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 enabled = false;
                 return;
             }
+
+            StaticInitialiseAsync();
+
         }
         void OnNetworkDespawn()
         {
@@ -84,7 +87,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        private async void Start()
+
+        private async void StaticInitialiseAsync()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
@@ -113,9 +117,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
 
-            IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+            // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
             // components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater,);
+
+        }
+
+        public async void InitialiseAsync()
+        {
+
+        }
+
+        private async void Start()
+        {
 
         }
 

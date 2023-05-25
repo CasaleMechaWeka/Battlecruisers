@@ -1,33 +1,45 @@
+using UnityEngine;
 using Unity.Netcode;
+using Unity.Multiplayer.Samples.Utilities;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
-    public class DestroyOnPlatform : NetworkBehaviour
+    [RequireComponent(typeof(NetcodeHooks))]
+    public class DestroyOnPlatform : MonoBehaviour
     {
+        [SerializeField]
+        NetcodeHooks m_NetcodeHooks;
         public enum TargetPlatform
         {
             Server,
             Client
         }
 
-        public TargetPlatform platform;
-        public override void OnNetworkSpawn()
+        public TargetPlatform targetPlatform;
+
+
+        private void Awake()
         {
-            base.OnNetworkSpawn();
-            if (IsServer && platform == TargetPlatform.Server)
+            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
+            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
+        }
+        public void OnNetworkSpawn()
+        {
+
+            if (NetworkManager.Singleton.IsServer && targetPlatform != TargetPlatform.Server)
             {
                 Destroy(gameObject);
             }
 
-            if (IsClient && platform == TargetPlatform.Client)
+            if (NetworkManager.Singleton.IsClient && targetPlatform != TargetPlatform.Client)
             {
                 Destroy(gameObject);
             }
         }
 
-        public override void OnNetworkDespawn()
+        public void OnNetworkDespawn()
         {
-            base.OnNetworkDespawn();
+
 
         }
 

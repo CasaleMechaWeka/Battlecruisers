@@ -17,10 +17,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public NetworkVariable<Map> map = new NetworkVariable<Map>();
         public NetworkVariable<GameMode> gameMode = new NetworkVariable<GameMode>();
         public NetworkVariable<GameQueue> gameQueue = new NetworkVariable<GameQueue>();
-        [HideInInspector]
+
         public NetworkVariable<NetworkString> playerAPrefabName = new NetworkVariable<NetworkString>();
-        [HideInInspector]
+        public NetworkVariable<ulong> playerAClientNetworkId = new NetworkVariable<ulong>();
+
         public NetworkVariable<NetworkString> playerBPrefabName = new NetworkVariable<NetworkString>();
+        public NetworkVariable<ulong> playerBClientNetworkId = new NetworkVariable<ulong>();
         public Action OnNetworkSpawned;
 
 

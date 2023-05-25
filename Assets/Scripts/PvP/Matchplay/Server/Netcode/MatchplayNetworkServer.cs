@@ -116,10 +116,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             if (m_clientData.Count == 0)
             {
                 m_SynchedServerData.playerAPrefabName.Value = userData.hullPrefabName;
+                m_SynchedServerData.playerAClientNetworkId.Value = userData.networkId;
+                Debug.Log("playerAclientnetworkId = " + userData.networkId);
             }
             else if (m_clientData.Count == 1)
             {
                 m_SynchedServerData.playerBPrefabName.Value = userData.hullPrefabName;
+                m_SynchedServerData.playerBClientNetworkId.Value = userData.networkId;
+                Debug.Log("playerBclientnetworkId = " + userData.networkId);
             }
 
             Debug.Log($"Host ApprovalCheck: connecting client: ({request.ClientNetworkId}) - {userData}");

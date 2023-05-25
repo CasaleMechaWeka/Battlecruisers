@@ -351,6 +351,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             return isPvPCruiser;
         }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+
+        }
     }
 
 }

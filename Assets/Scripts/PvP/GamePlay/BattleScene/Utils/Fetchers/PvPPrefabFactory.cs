@@ -83,10 +83,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _prefabCache.GetCruiser(hullKey);
         }
 
-        public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab)
+        public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId)
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab);
-            cruiser.GetComponent<NetworkObject>().Spawn();
+            cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId);
             cruiser.StaticInitialise(_commonStrings);
             return cruiser;
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private readonly IPvPMultiCache<PvPExplosionController> _explosions;
         private readonly IPvPMultiCache<PvPShipDeathInitialiser> _shipDeaths;
         private readonly IPvPUntypedMultiCache<PvPProjectile> _projectiles;
-        private readonly IPvPMultiCache<PvPPrefab> _allPrefabs;
+        IDictionary<string, PvPPrefab> _allPrefabs = new Dictionary<string, PvPPrefab>();
 
         public PvPDroneController Drone { get; }
         public PvPAudioSourceInitialiser AudioSource { get; }
@@ -44,7 +45,39 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _projectiles = projectiles;
             Drone = drone;
             AudioSource = audioSource;
+
+            foreach (IPvPPrefabKey key in _buildings.GetKeys())
+            {
+                _allPrefabs.Add(key.PrefabPath, _buildings.GetPrefab(key));
+            }
+
+            foreach (IPvPPrefabKey key in _units.GetKeys())
+            {
+                _allPrefabs.Add(key.PrefabPath, _units.GetPrefab(key));
+            }
+
+            foreach (IPvPPrefabKey key in _cruisers.GetKeys())
+            {
+                _allPrefabs.Add(key.PrefabPath, _cruisers.GetPrefab(key));
+            }
+
+            foreach (IPvPPrefabKey key in _explosions.GetKeys())
+            {
+                _allPrefabs.Add(key.PrefabPath, _explosions.GetPrefab(key));
+            }
+
+            foreach (IPvPPrefabKey key in _shipDeaths.GetKeys())
+            {
+                _allPrefabs.Add(key.PrefabPath, _shipDeaths.GetPrefab(key));
+            }
+
+            foreach (IPvPPrefabKey key in _projectiles.GetKeys())
+            {
+                _allPrefabs.Add(key.PrefabPath, _projectiles.GetPrefab<PvPProjectile>(key));
+            }
         }
+
+
 
 
         public PvPBuildableWrapper<IPvPBuilding> GetBuilding(IPvPPrefabKey key)
@@ -79,57 +112,59 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public PvPPrefab GetPrefab(string _prefabPath)
         {
-            PvPPrefab retVal = null;
-            foreach (var iPrefabKey in _buildings.GetKeys())
-            {
-                if (iPrefabKey.PrefabPath == _prefabPath)
-                {
-                    retVal = _buildings.GetPrefab(iPrefabKey);
-                }
-            }
 
-            foreach (var iPrefabKey in _units.GetKeys())
-            {
-                if (iPrefabKey.PrefabPath == _prefabPath)
-                {
-                    retVal = _units.GetPrefab(iPrefabKey);
-                }
-            }
+            return _allPrefabs[_prefabPath];
+            // PvPPrefab retVal = null;
+            // foreach (var iPrefabKey in _buildings.GetKeys())
+            // {
+            //     if (iPrefabKey.PrefabPath == _prefabPath)
+            //     {
+            //         retVal = _buildings.GetPrefab(iPrefabKey);
+            //     }
+            // }
 
-            foreach (var iPrefabKey in _cruisers.GetKeys())
-            {
-                if (iPrefabKey.PrefabPath == _prefabPath)
-                {
-                    retVal = _cruisers.GetPrefab(iPrefabKey);
-                }
-            }
+            // foreach (var iPrefabKey in _units.GetKeys())
+            // {
+            //     if (iPrefabKey.PrefabPath == _prefabPath)
+            //     {
+            //         retVal = _units.GetPrefab(iPrefabKey);
+            //     }
+            // }
 
-            foreach (var iPrefabKey in _explosions.GetKeys())
-            {
-                if (iPrefabKey.PrefabPath == _prefabPath)
-                {
-                    retVal = _explosions.GetPrefab(iPrefabKey);
-                }
-            }
+            // foreach (var iPrefabKey in _cruisers.GetKeys())
+            // {
+            //     if (iPrefabKey.PrefabPath == _prefabPath)
+            //     {
+            //         retVal = _cruisers.GetPrefab(iPrefabKey);
+            //     }
+            // }
+
+            // foreach (var iPrefabKey in _explosions.GetKeys())
+            // {
+            //     if (iPrefabKey.PrefabPath == _prefabPath)
+            //     {
+            //         retVal = _explosions.GetPrefab(iPrefabKey);
+            //     }
+            // }
 
 
-            foreach (var iPrefabKey in _shipDeaths.GetKeys())
-            {
-                if (iPrefabKey.PrefabPath == _prefabPath)
-                {
-                    retVal = _shipDeaths.GetPrefab(iPrefabKey);
-                }
-            }
+            // foreach (var iPrefabKey in _shipDeaths.GetKeys())
+            // {
+            //     if (iPrefabKey.PrefabPath == _prefabPath)
+            //     {
+            //         retVal = _shipDeaths.GetPrefab(iPrefabKey);
+            //     }
+            // }
 
-            foreach (var iPrefabKey in _projectiles.GetKeys())
-            {
-                if (iPrefabKey.PrefabPath == _prefabPath)
-                {
-                    retVal = _projectiles.GetPrefab<PvPProjectile>(iPrefabKey);
-                }
-            }
+            // foreach (var iPrefabKey in _projectiles.GetKeys())
+            // {
+            //     if (iPrefabKey.PrefabPath == _prefabPath)
+            //     {
+            //         retVal = _projectiles.GetPrefab<PvPProjectile>(iPrefabKey);
+            //     }
+            // }
 
-            return retVal;
+            // return retVal;
 
         }
     }
