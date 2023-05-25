@@ -1,5 +1,7 @@
-﻿using BattleCruisers.Buildables.Boost;
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace BattleCruisers.Cruisers
 {
@@ -11,19 +13,19 @@ namespace BattleCruisers.Cruisers
     public class Longbow : Cruiser
     {
         public float airFactoryBuildRateBoost;
-        public float aircarftBuildRateBoost;
+        [FormerlySerializedAs("aircarftBuildRateBoost")] public float aircraftBuildRateBoost;
 
         public override void Initialise(ICruiserArgs args)
         {
             base.Initialise(args);
 
             Assert.IsTrue(airFactoryBuildRateBoost > 0);
-            Assert.IsTrue(aircarftBuildRateBoost > 0);
+            Assert.IsTrue(aircraftBuildRateBoost > 0);
 
             IBoostProvider factoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(airFactoryBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders.Add(factoryBoostProvider);
 
-            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(aircarftBuildRateBoost);
+            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(aircraftBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.AircraftProviders.Add(aircraftBoostProvider);
         }
     }
