@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 		public InGameSettingsPanel settingsPanel;
 		public GameSpeedButton[] speedButtons;
 		private int lastClicked = 2;
+		private bool menuIsOpen;
 
 		private ISettableBroadcastingProperty<bool> _isVisible;
 		public IBroadcastingProperty<bool> IsVisible { get; private set; }
@@ -39,6 +40,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			IsVisible = new BroadcastingProperty<bool>(_isVisible);
 
 			HideMenu();
+			menuIsOpen = false;
 		}
 
 		public void ShowMenu()
@@ -47,14 +49,18 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			_isVisible.Value = true;
 			buttonsPanel.Show();
 			settingsPanel.Hide();
-			for (int i = 0; i < 4; i++)
+			if (menuIsOpen == false) // corrects for edge cases where the menu might be called twice
 			{
-				if (speedButtons[i].selectedFeedback.gameObject.activeInHierarchy)
+				for (int i = 0; i < 4; i++)
 				{
-					lastClicked = i;
+					if (speedButtons[i].selectedFeedback.gameObject.activeInHierarchy)
+					{
+						lastClicked = i;
+					}
 				}
 			}
 			speedButtons[0].TriggerClick();
+			menuIsOpen = true;
 		}
 
 		public void HideMenu()
@@ -62,6 +68,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			_canvas.enabled = false;
 			_isVisible.Value = false;
 			speedButtons[lastClicked].TriggerClick();
+			menuIsOpen = false;
 		}
 
         public void ShowSettings()
