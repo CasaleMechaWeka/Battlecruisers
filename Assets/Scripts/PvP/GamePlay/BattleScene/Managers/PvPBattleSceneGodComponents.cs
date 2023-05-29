@@ -22,7 +22,7 @@ using Unity.Netcode;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     [RequireComponent(typeof(NetcodeHooks))]
-    public class PvPBattleSceneGodComponentsClient : MonoBehaviour, IPvPBattleSceneGodComponentsClient
+    public class PvPBattleSceneGodComponents : MonoBehaviour, IPvPBattleSceneGodComponents
     {
         public AudioSource prioritisedSoundPlayerAudioSource;
         public IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        public void Initialise(ISettingsManager settingsManager)
+        public void Initialise_Client(ISettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(
                 backgroundClickableEmitter,
@@ -115,6 +115,52 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 = new PvPEffectVolumeAudioSource(
                     new PvPAudioSourceBC(uiSoundsAudioSource),
                     settingsManager, 1);
+
+            SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
+            Assert.IsNotNull(SkyboxInitialiser);
+
+            PvPLifetimeEventBroadcaster lifetimeEvents = GetComponent<PvPLifetimeEventBroadcaster>();
+            Assert.IsNotNull(lifetimeEvents);
+            LifetimeEvents = lifetimeEvents;
+            targetIndicator.Initialise();
+
+
+
+            Deferrer = GetComponent<PvPTimeScaleDeferrer>();
+            Assert.IsNotNull(Deferrer);
+
+            RealTimeDeferrer = GetComponent<PvPRealTimeDeferrer>();
+            Assert.IsNotNull(RealTimeDeferrer);
+
+            _updaterProvider = GetComponentInChildren<PvPUpdaterProvider>();
+            Assert.IsNotNull(_updaterProvider);
+            _updaterProvider.Initialise();
+
+
+        }
+
+
+        public void Initialise_Server()
+        {
+            PvPHelper.AssertIsNotNull(
+                backgroundClickableEmitter,
+                targetIndicator,
+                prioritisedSoundPlayerAudioSource,
+                uiSoundsAudioSource,
+                musicPlayerInitialiser,
+                windInitialiser,
+                cloudInitialiser,
+                hotkeyInitialiser);
+            // Assert.IsNotNull(settingsManager);
+
+            // PrioritisedSoundPlayerAudioSource
+            //     = new PvPEffectVolumeAudioSource(
+            //         new PvPAudioSourceBC(prioritisedSoundPlayerAudioSource),
+            //         settingsManager, 0);
+            // UISoundsAudioSource
+            //     = new PvPEffectVolumeAudioSource(
+            //         new PvPAudioSourceBC(uiSoundsAudioSource),
+            //         settingsManager, 1);
 
             SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);

@@ -3,11 +3,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using System;
 
+
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public enum PvPIndirectFocusTarget
     {
-        None, PlayerCruiser, AICruiser
+        None, PlayerCruiser, EnemyCruiser
     }
 
     /// <summary>
@@ -49,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     _coreFocuser.FocusOnPlayerCruiser();
                     break;
 
-                case PvPIndirectFocusTarget.AICruiser:
+                case PvPIndirectFocusTarget.EnemyCruiser:
                     _coreFocuser.FocusOnAICruiser();
                     break;
             }
@@ -68,13 +70,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             else
             {
                 // Indirect
-                _indirectFocusTarget = PvPIndirectFocusTarget.AICruiser;
+                _indirectFocusTarget = PvPIndirectFocusTarget.EnemyCruiser;
                 _coreFocuser.FocusOnOverview();
             }
         }
 
         public void FocusOnPlayerCruiser()
         {
+
+
             if (_camera.Position.x - INDIRECTION_BUFFER_IN_M < 0)
             {
                 // Direct

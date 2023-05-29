@@ -2,6 +2,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
+
+
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
     public class PvPCameraFocuser : IPvPCameraFocuser
@@ -27,6 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void FocusOnPlayerCruiser()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
+
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
             _defaultCameraTargetProvider.SetTarget(_targets.PlayerCruiserTarget);
         }
@@ -49,21 +52,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
-            _defaultCameraTargetProvider.SetTarget(_targets.AICruiserTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.EnemyCruiserTarget);
         }
 
         public void FocusOnAICruiserDeath()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
-            _trumpCameraTargetProvider.SetTarget(_targets.AICruiserDeathTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.EnemyCruiserDeathTarget);
         }
 
         public void FocusOnAINavalFactory()
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetNormalTransitionSpeed();
-            _defaultCameraTargetProvider.SetTarget(_targets.AINavalFactoryTarget);
+            _defaultCameraTargetProvider.SetTarget(_targets.EnemyNavalFactoryTarget);
         }
 
         public void FocusMidLeft()
@@ -91,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             // Logging.LogMethod(Tags.CAMERA_FOCUSER);
             _cameraTransitionSpeedManager.SetSlowTransitionSpeed();
-            _trumpCameraTargetProvider.SetTarget(_targets.AICruiserNukedTarget);
+            _trumpCameraTargetProvider.SetTarget(_targets.EnemyCruiserNukedTarget);
         }
     }
 }

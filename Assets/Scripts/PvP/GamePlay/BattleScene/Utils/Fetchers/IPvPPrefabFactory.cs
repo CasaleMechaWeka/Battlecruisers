@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPUnit CreateUnit(IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab, /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider);
 
         PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey);
-        PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId);
+        PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x);
         PvPPrefab GetPrefab(string prefabPath);
 
         IPvPExplosion CreateExplosion(PvPExplosionKey explosionKey);

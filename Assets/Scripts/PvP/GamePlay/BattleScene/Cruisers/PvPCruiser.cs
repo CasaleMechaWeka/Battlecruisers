@@ -20,7 +20,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
-// using BattleCruisers.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -110,6 +110,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public bool isPvPCruiser = true;
 
 
+        private void Start()
+        {
+            if (IsClient && IsOwner)
+                PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
+            else if (IsClient && !IsOwner)
+                PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
+        }
 
 
         public override void StaticInitialise(ILocTable commonStrings)
@@ -150,6 +157,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         }
+
+
 
         public async virtual void Initialise(IPvPCruiserArgs args)
         {
@@ -356,6 +365,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             base.OnNetworkSpawn();
 
+            Initialise_Client_PvP();
+        }
+
+        private void Initialise_Client_PvP()
+        {
+            _renderer = GetComponent<SpriteRenderer>();
+            Assert.IsNotNull(_renderer);
+
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
         }
 
         public override void OnNetworkDespawn()

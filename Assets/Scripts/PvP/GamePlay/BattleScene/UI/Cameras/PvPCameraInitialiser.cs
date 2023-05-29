@@ -54,16 +54,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private IPvPTime time;
         private PvPCameraTransitionSpeedManager cameraTransitionSpeedManager;
 
+        private IPvPCruiser _playerCruiser;
+        private IPvPCruiser _enemyCruiser;
+
         public IPvPCameraComponents Initialise(
             ISettingsManager settingsManager,
             IPvPCruiser playerCruiser,
-            IPvPCruiser aiCruiser,
+            IPvPCruiser enemyCruiser,
             PvPNavigationPermitters navigationPermitters,
             IPvPSwitchableUpdater switchableUpdater,
             IPvPSingleSoundPlayer uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
-            PvPHelper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater, uiSoundPlayer);
+            PvPHelper.AssertIsNotNull(settingsManager, playerCruiser, enemyCruiser, navigationPermitters, switchableUpdater, uiSoundPlayer);
 
             switchableUpdater.Updated += SwitchableUpdater_Updated;
 
@@ -73,13 +76,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
             trumpCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 6);
+            _playerCruiser = playerCruiser;
+            _enemyCruiser = enemyCruiser;
 
             targets
                 = new PvPCameraTargets(
                     cameraCalculator,
                     settings,
-                    playerCruiser,
-                    aiCruiser,
+                    _playerCruiser,
+                    _enemyCruiser,
                     icamera);
 
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
@@ -137,6 +142,90 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     navigationButtonsPanel);
         }
 
+
+
+        public IPvPCameraComponents Initialise(
+            ISettingsManager settingsManager,
+            IPvPCruiser playerCruiser,
+            IPvPCruiser enemyCruiser,
+            // PvPNavigationPermitters navigationPermitters,
+            IPvPSwitchableUpdater switchableUpdater,
+            IPvPSingleSoundPlayer uiSoundPlayer)
+        {
+            PvPHelper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
+            PvPHelper.AssertIsNotNull(settingsManager, playerCruiser, enemyCruiser, /* navigationPermitters, */ switchableUpdater, uiSoundPlayer);
+
+            switchableUpdater.Updated += SwitchableUpdater_Updated;
+
+            icamera = new PvPCameraBC(mainCamera);
+            // dragTracker.Initialise(navigationPermitters.SwipeFilter);
+
+            IPvPCameraCalculatorSettings settings = new PvPCameraCalculatorSettings(settingsManager, icamera.Aspect);
+            IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
+            trumpCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 6);
+
+            targets
+                = new PvPCameraTargets(
+                    cameraCalculator,
+                    settings,
+                    playerCruiser,
+                    enemyCruiser,
+                    icamera);
+
+            defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
+            defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
+
+            IPvPCameraTargetProvider cameraTargetProvider
+                = CreateCameraTargetProvider(
+                    icamera,
+                    cameraCalculator,
+                    settingsManager,
+                    settings,
+                    /*   navigationPermitters,*/
+                    trumpCameraTargetProvider,
+                    defaultCameraTargetProvider);
+
+            time = PvPTimeBC.Instance;
+            cameraTransitionSpeedManager = new PvPCameraTransitionSpeedManager(normalCameraSmoothTime, slowCameraSmoothTime);
+
+            _cameraAdjuster
+                = new PvPSmoothCameraAdjuster(
+                    cameraTargetProvider,
+                    new PvPSmoothZoomAdjuster(icamera, time, cameraTransitionSpeedManager),
+                    new PvPSmoothPositionAdjuster(icamera, time, cameraTransitionSpeedManager));
+
+            PvPCameraFocuser coreCameraFocuser
+                = new PvPCameraFocuser(
+                    targets,
+                    trumpCameraTargetProvider,
+                    defaultCameraTargetProvider,
+                    cameraTransitionSpeedManager);
+
+            cameraFocuser
+                = new PvPIndirectCameraFocuser(
+                    coreCameraFocuser,
+                    icamera,
+                    new PvPCameraTargetTracker(
+                        icamera,
+                        targets.OverviewTarget,
+                        new PvPCameraTargetEqualityCalculator(
+                            overviewPositionEqualityMarginInM,
+                            overviewOrthographicSizeEqualityMargin)));
+
+            // navigationButtonsPanel.Initialise(navigationPermitters.NavigationButtonsFilter, cameraFocuser, uiSoundPlayer);
+            //these must all be private variables.
+            //cameraAdjuster must be reset using the new cameraTargetProvider
+            //then camera components must be reassigned in battlescenegod
+            return
+                new PvPCameraComponents(
+                    icamera,
+                    _cameraAdjuster,
+                    cameraFocuser,
+                    new PvPCruiserDeathCameraFocuser(cameraFocuser),
+                    skybox,
+                    settings,
+                    navigationButtonsPanel);
+        }
         private IPvPCameraTargetProvider CreateCameraTargetProvider(
             IPvPCamera camera,
             IPvPCameraCalculator cameraCalculator,
@@ -149,6 +238,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
+
+            IList<IPvPUserInputCameraTargetProvider> cameraTargetProviders
+                = CreateCameraTargetProviders(
+                    camera,
+                    cameraCalculator,
+                    settingsManager,
+                    settings,
+                    updater,
+                    trumpCameraTargetProvider);
+
+            return
+                new PvPCompositeCameraTargetProvider(
+                    defaultCameraTargetProvider,
+                    cameraTargetProviders);
+        }
+
+
+        private IPvPCameraTargetProvider CreateCameraTargetProvider(
+            IPvPCamera camera,
+            IPvPCameraCalculator cameraCalculator,
+            ISettingsManager settingsManager,
+            IPvPCameraCalculatorSettings settings,
+            // PvPNavigationPermitters navigationPermitters,
+            IPvPStaticCameraTargetProvider trumpCameraTargetProvider,
+            IPvPStaticCameraTargetProvider defaultCameraTargetProvider
+        )
+        {
+            PvPTogglableUpdater updater = GetComponent<PvPTogglableUpdater>();
+            Assert.IsNotNull(updater);
+            // updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
             IList<IPvPUserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(

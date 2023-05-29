@@ -12,7 +12,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
-    public interface IPvPBattleSceneGodComponentsClient
+    public interface IPvPBattleSceneGodComponents
     {
         IPvPAudioSource PrioritisedSoundPlayerAudioSource { get; }
         IPvPAudioSource UISoundsAudioSource { get; }

@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     {
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
-        private PvPBattleSceneGodComponentsServer components;
+        private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
@@ -106,9 +106,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
 
 
-            components = GetComponent<PvPBattleSceneGodComponentsServer>();
+            components = GetComponent<PvPBattleSceneGodComponents>();
             Assert.IsNotNull(components);
-            components.Initialise();
+            components.Initialise_Server();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
             IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
@@ -127,6 +127,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
+
+
+
+            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
 
         }

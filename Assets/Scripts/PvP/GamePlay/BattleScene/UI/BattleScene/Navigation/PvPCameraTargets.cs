@@ -10,15 +10,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCameraTargets : IPvPCameraTargets
     {
-        public IPvPCameraTarget PlayerCruiserTarget { get; }
+        public IPvPCameraTarget PlayerCruiserTarget
+        {
+            get
+            {
+                return FindCruiserTarget(_camera, _cameraCalculator, _playerCruiser);
+            }
+        }
         public IPvPCameraTarget PlayerCruiserDeathTarget { get; }
         public IPvPCameraTarget PlayerCruiserNukedTarget { get; }
         public IPvPCameraTarget PlayerNavalFactoryTarget { get; }
 
-        public IPvPCameraTarget AICruiserTarget { get; }
-        public IPvPCameraTarget AICruiserDeathTarget { get; }
-        public IPvPCameraTarget AICruiserNukedTarget { get; }
-        public IPvPCameraTarget AINavalFactoryTarget { get; }
+        public IPvPCameraTarget EnemyCruiserTarget
+        {
+            get
+            {
+                return FindCruiserTarget(_camera, _cameraCalculator, _enemyCruiser);
+            }
+        }
+        public IPvPCameraTarget EnemyCruiserDeathTarget { get; }
+        public IPvPCameraTarget EnemyCruiserNukedTarget { get; }
+        public IPvPCameraTarget EnemyNavalFactoryTarget { get; }
 
         public IPvPCameraTarget MidLeftTarget { get; }
         public IPvPCameraTarget OverviewTarget { get; }
@@ -27,17 +39,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private const float MID_ORTHOGRAPHIC_SIZE = 15;
         private const float NUKE_ORTHOGRAPHIC_SIZE = 30;
 
+        private IPvPCruiser _playerCruiser;
+        private IPvPCruiser _enemyCruiser;
+        private IPvPCameraCalculator _cameraCalculator;
+        private IPvPCamera _camera;
+
         public PvPCameraTargets(
             IPvPCameraCalculator cameraCalculator,
             IPvPCameraCalculatorSettings cameraCalculatorSettings,
             IPvPCruiser playerCruiser,
-            IPvPCruiser aiCruiser,
+            IPvPCruiser enemyCruiser,
             IPvPCamera camera)
         {
-            PvPHelper.AssertIsNotNull(cameraCalculator, cameraCalculatorSettings, playerCruiser, aiCruiser, camera);
+            PvPHelper.AssertIsNotNull(cameraCalculator, cameraCalculatorSettings, playerCruiser, enemyCruiser, camera);
+            _playerCruiser = playerCruiser;
+            _enemyCruiser = enemyCruiser;
+            _camera = camera;
+            _cameraCalculator = cameraCalculator;
 
-            PlayerCruiserTarget = FindCruiserTarget(camera, cameraCalculator, playerCruiser);
-            AICruiserTarget = FindCruiserTarget(camera, cameraCalculator, aiCruiser);
+            // PlayerCruiserTarget = FindCruiserTarget(camera, cameraCalculator, playerCruiser);
+            // EnemyCruiserTarget = FindCruiserTarget(camera, cameraCalculator, enemyCruiser);
 
             // Overview
             Vector3 overviewPosition = camera.Position;
@@ -52,14 +73,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PlayerNavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, playerCruiserBowSlotXPosition);
 
             // AI cruiser naval factory
-            float aiCruiserBowSlotXPosition = aiCruiser.Position.x - aiCruiser.Size.x / 2;
-            AINavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
+            float aiCruiserBowSlotXPosition = enemyCruiser.Position.x - enemyCruiser.Size.x / 2;
+            EnemyNavalFactoryTarget = CreateTarget(camera, cameraCalculator, cameraCalculatorSettings.ValidOrthographicSizes.Min, aiCruiserBowSlotXPosition);
 
             PlayerCruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
             PlayerCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, playerCruiser.Position.x);
 
-            AICruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
-            AICruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
+            EnemyCruiserDeathTarget = CreateTarget(camera, cameraCalculator, CRUISER_DEATH_ORTHOGRAPHIC_SIZE, enemyCruiser.Position.x);
+            EnemyCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, enemyCruiser.Position.x);
         }
 
         private IPvPCameraTarget FindCruiserTarget(IPvPCamera camera, IPvPCameraCalculator cameraCalculator, IPvPCruiser cruiser)

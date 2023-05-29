@@ -9,10 +9,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         IPvPCameraTarget PlayerCruiserNukedTarget { get; }
         IPvPCameraTarget PlayerNavalFactoryTarget { get; }
 
-        IPvPCameraTarget AICruiserTarget { get; }
-        IPvPCameraTarget AICruiserDeathTarget { get; }
-        IPvPCameraTarget AICruiserNukedTarget { get; }
-        IPvPCameraTarget AINavalFactoryTarget { get; }
+        IPvPCameraTarget EnemyCruiserTarget { get; }
+        IPvPCameraTarget EnemyCruiserDeathTarget { get; }
+        IPvPCameraTarget EnemyCruiserNukedTarget { get; }
+        IPvPCameraTarget EnemyNavalFactoryTarget { get; }
 
         IPvPCameraTarget MidLeftTarget { get; }
         IPvPCameraTarget OverviewTarget { get; }
