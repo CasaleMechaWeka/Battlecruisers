@@ -44,7 +44,7 @@ namespace BattleCruisers.Data.Static
 		public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
-        public int LastLevelWithLoot => 38;
+        public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
 
         public StaticData()
@@ -347,7 +347,7 @@ namespace BattleCruisers.Data.Static
                 new Level(37, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
                 new Level(38, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
                 new Level(39, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
-                new Level(40, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise) //TODO: Change to new boss broadsword
+                new Level(40, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight) //TODO: Change to new boss broadsword
             };
 		}
 
