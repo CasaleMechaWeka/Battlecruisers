@@ -41,6 +41,8 @@ namespace BattleCruisers.Scenes
         private Text timeValueText;
         [SerializeField]
         private TextMeshProUGUI allTimeDamageValueText;
+        [SerializeField]
+        private Text scoreText;
 
         // Damage values to interpolate damaged caused with:
         private long aircraftVal;
@@ -48,6 +50,7 @@ namespace BattleCruisers.Scenes
         private long cruiserVal;
         private long buildingsVal;
         private long allTimeVal;
+        private long prevAllTimeVal;
 
         // Time value to interpolate with:
         private float levelTimeInSeconds;
@@ -57,6 +60,10 @@ namespace BattleCruisers.Scenes
         private Slider levelBar;
         private int nextLevelXP;
         private int currentXP;
+        private long levelScore;
+        private bool xpIsTicking;
+
+        private float timeStep; // used as the basis for all WaitForSeconds() returns 
 
         // Start is called before the first frame update
         void Start()
@@ -86,12 +93,12 @@ namespace BattleCruisers.Scenes
             // TODO: Check if level time is already tracked? Doesn't seem to be a gettable field yet.
             // Here's a random number to test with for now:
             Debug.LogWarning("TIME value is fake! This should not be shipped!");
-            levelTimeInSeconds = UnityEngine.Random.Range(0.0f, 3000.0f);
+            levelTimeInSeconds = UnityEngine.Random.Range(440.0f, 1200.0f);
 
             // TODO: Same issue as time, but for player XP:
             Debug.LogWarning("PLAYER XP value is fake! This should not be shipped!");
             currentXP = Mathf.FloorToInt(UnityEngine.Random.Range(0.0f, 1000.0f));
-            nextLevelXP = Mathf.FloorToInt(UnityEngine.Random.Range((currentXP * 5.0f), (currentXP * 15.0f)));
+            nextLevelXP = Mathf.FloorToInt(UnityEngine.Random.Range((currentXP * 1.5f), (currentXP * 3.0f)));
 
             //### Screen Setup ###
 
@@ -101,6 +108,8 @@ namespace BattleCruisers.Scenes
                 destructionCards[i].gameObject.SetActive(false);
             }
 
+            timeStep = cardRevealAnim.length;
+
             // Set XP bar current/max values:
             levelBar.maxValue = nextLevelXP;
             levelBar.value = currentXP;
@@ -108,7 +117,9 @@ namespace BattleCruisers.Scenes
             // Set value texts:
             damageCausedValueText.text = "0";
             timeValueText.text = "00:00";
-            allTimeDamageValueText.text = FormatNumber(allTimeVal);
+            prevAllTimeVal = allTimeVal - (aircraftVal + shipsVal + cruiserVal + buildingsVal);
+            allTimeDamageValueText.text = FormatNumber(prevAllTimeVal);
+            scoreText.text = "";
 
             // Start animating:
             StartCoroutine(AnimateScreen());
@@ -116,7 +127,7 @@ namespace BattleCruisers.Scenes
 
         IEnumerator AnimateScreen()
         {
-            yield return new WaitForSeconds(cardRevealAnim.length * 4.0f);
+            yield return new WaitForSeconds(timeStep * 2.0f);
 
             // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
             long damageRunningTotal = 0;
@@ -127,75 +138,71 @@ namespace BattleCruisers.Scenes
 
                 // Interpolate the Damage Caused value, from the current running total to that + the card's damage value
                 // by the specified number of steps. Steps are divided over time so the length of the animation remains constant:
-                StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10, returnValue =>
-                {
-                    damageRunningTotal += returnValue;
-                }));
+                StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
+                damageRunningTotal += destructionValues[i];
 
                 // Increase XP counter:
+                xpIsTicking = true;
                 int xpToAdd = Convert.ToInt32(destructionValues[i]);
                 // If the bar would fill up here, it needs some special handling:
                 int xpRunningTotal = currentXP;
                 StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, 60, returnValue =>
                 {
-                    if (xpRunningTotal + returnValue < nextLevelXP)
+                    if (returnValue < nextLevelXP)
                     {
                         xpRunningTotal += returnValue;
                     }
                     else
                     {
-                        // do level pop
-                        // TODO: StartCoroutine(DoLevelPop);
-
                         xpRunningTotal = 0;
                         currentXP = 0;
+                        levelBar.value = 0;
                     }
                 }));
                 currentXP += xpToAdd;
 
-
                 // Pause for a moment to catch our breath:
-                yield return new WaitForSeconds(cardRevealAnim.length * 1.5f);
+                yield return new WaitForSeconds(timeStep * 1.5f);
             }
 
             // Interpolate time counter:
             StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
+            yield return new WaitForSeconds(timeStep * 2.0f);
 
-            // TODO: game score (damage * time, or something along those lines)
+            // Interpolate game score:
+            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
+            StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // TODO: level rating (maybe?)
 
             // Interpolate Lifetime Damage (same deal as regular damage)
-            StartCoroutine(InterpolateLifetimeDamageValue(damageRunningTotal, allTimeVal + damageRunningTotal, 10));
+            StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
 
             //yield return null;
         }
 
-        IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps, System.Action<long> callback = null)
+        IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
         {
             long interpStep = (endVal - startVal)/steps;
-            long curVal = startVal;
-            float stepPeriod = (cardRevealAnim.length) / steps;
+            float stepPeriod = (timeStep) / steps;
 
             for (int i = 1; i <= steps; i++)
             {
-                curVal += interpStep;
-                damageCausedValueText.text = FormatNumber(curVal);
+                startVal += interpStep;
+                damageCausedValueText.text = FormatNumber(startVal);
                 yield return new WaitForSeconds(stepPeriod);
             }
-            callback.Invoke(curVal);
         }
 
         IEnumerator InterpolateLifetimeDamageValue(long startVal, long endVal, int steps)
         {
             long interpStep = (endVal - startVal) / steps;
-            long curVal = startVal;
-            float stepPeriod = (cardRevealAnim.length) / steps;
+            float stepPeriod = (timeStep) / steps;
 
             for (int i = 1; i <= steps; i++)
             {
-                curVal += interpStep;
-                allTimeDamageValueText.text = FormatNumber(curVal);
+                startVal += interpStep;
+                allTimeDamageValueText.text = FormatNumber(startVal);
                 yield return new WaitForSeconds(stepPeriod);
             }
         }
@@ -203,30 +210,75 @@ namespace BattleCruisers.Scenes
         IEnumerator InterpolateTimeValue(float startVal, float endVal, int steps)
         {
             float interpStep = (endVal - startVal) / steps;
-            float curVal = startVal;
-            float stepPeriod = (cardRevealAnim.length * 2.0f) / steps; // timestamps look a bit nicer if they interp a bit slower
+            float stepPeriod = (timeStep * 2.0f) / steps; // timestamps look a bit nicer if they interp a bit slower
 
             for (int i = 1; i <= steps; i++)
             {
-                curVal += interpStep;
-                timeValueText.text = FormatTime(curVal);
+                startVal += interpStep;
+                timeValueText.text = FormatTime(startVal);
                 yield return new WaitForSeconds(stepPeriod);
             }
         }
 
         IEnumerator InterpolateXPBar(int startVal, int endVal, int steps, System.Action<int> callback = null)
         {
-            int interpStep = (endVal - startVal) / steps;
-            int curVal = startVal;
-            float stepPeriod = (cardRevealAnim.length) / steps;
+            while (xpIsTicking) // Uh-oh scary while loop
+            {
+                int interpStep = (endVal - startVal) / steps;
+                float stepPeriod = (timeStep) / steps;
+
+                for (int i = 1; i <= steps; i++)
+                {
+                    startVal += interpStep;
+                    if (startVal >= nextLevelXP)
+                    {
+                        // do level pop
+                        StartCoroutine(DisplayRankUpModal());
+                        levelBar.value = nextLevelXP;
+                        yield return new WaitForSeconds(timeStep);
+                        levelBar.value = 0 + (nextLevelXP - startVal);
+                        startVal = 0;
+                    }
+                    else
+                    {
+                        levelBar.value = startVal;
+                    }
+                    if (startVal >= endVal || interpStep == 0)
+                    {
+                        xpIsTicking = false;
+                    }
+                    yield return new WaitForSeconds(stepPeriod);
+                }
+            }
+            callback(startVal);
+        }
+
+        IEnumerator InterpolateScore(long startVal, long endVal, int steps)
+        {
+            long interpStep = (endVal - startVal) / steps;
+            float stepPeriod = (timeStep) / steps;
 
             for (int i = 1; i <= steps; i++)
             {
-                curVal += interpStep;
-                levelBar.value = curVal;
+                startVal += interpStep;
+                scoreText.text = startVal.ToString();
                 yield return new WaitForSeconds(stepPeriod);
             }
-            callback.Invoke(curVal);
+        }
+
+        IEnumerator DisplayRankUpModal()
+        {
+            // Display modal
+            // Do a quick bit of animation
+            Debug.Log("Rank Up Modal!");
+            yield return new WaitForSeconds(timeStep * 3.0f);
+        }
+
+        private long CalculateScore(float time, long damage)
+        {
+            // feels weird to make this a method but I don't like doing it in the animation methods:
+            long score = ((damage * 1000) / ((long)time^2 / (long)100));
+            return score;
         }
 
         // TODO: Allow animation to be skipped, set all fields to their final state.
