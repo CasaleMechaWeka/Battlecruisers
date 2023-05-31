@@ -73,10 +73,10 @@ namespace BattleCruisers.Scenes
             if (sceneNavigator == null)
             {
                 // Fake data for testing:
-                aircraftVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 1000.0f));
-                shipsVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 1000.0f));
-                cruiserVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 1000.0f));
-                buildingsVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 1000.0f));
+                aircraftVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 10000.0f));
+                shipsVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 10000.0f));
+                cruiserVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 10000.0f));
+                buildingsVal = Convert.ToInt64(UnityEngine.Random.Range(1.0f, 10000.0f));
                 allTimeVal = Convert.ToInt64(UnityEngine.Random.Range(10000.0f, 1000000.0f));
             }
             else
@@ -93,7 +93,7 @@ namespace BattleCruisers.Scenes
             // TODO: Check if level time is already tracked? Doesn't seem to be a gettable field yet.
             // Here's a random number to test with for now:
             Debug.LogWarning("TIME value is fake! This should not be shipped!");
-            levelTimeInSeconds = UnityEngine.Random.Range(440.0f, 1200.0f);
+            levelTimeInSeconds = UnityEngine.Random.Range(200.0f, 800.0f);
 
             // TODO: Same issue as time, but for player XP:
             Debug.LogWarning("PLAYER XP value is fake! This should not be shipped!");
@@ -277,7 +277,7 @@ namespace BattleCruisers.Scenes
         private long CalculateScore(float time, long damage)
         {
             // feels weird to make this a method but I don't like doing it in the animation methods:
-            long score = ((damage * 1000) / ((long)time^2 / (long)100));
+            long score = damage / (long)time^2 / (long)10;
             return score;
         }
 
