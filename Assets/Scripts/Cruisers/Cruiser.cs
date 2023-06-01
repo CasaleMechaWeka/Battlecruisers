@@ -369,12 +369,12 @@ namespace BattleCruisers.Cruisers
         {
             if (args.Faction == Faction.Reds)
             {
-                Debug.Log("Enemy utility value: "+cruiserBaseUtility * UltraCruiserUtilityModifier);
+                //Debug.Log("Enemy utility value: "+cruiserBaseUtility * UltraCruiserUtilityModifier);
                 return cruiserBaseUtility * UltraCruiserUtilityModifier;
             }
             else
             {
-                Debug.Log("Player utility value: "+cruiserBaseUtility);
+                //Debug.Log("Player utility value: "+cruiserBaseUtility);
                 return cruiserBaseUtility;
             }
         }
