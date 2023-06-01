@@ -27,14 +27,18 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using Unity.Services.Analytics;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SocialPlatforms;
 
 namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IComparableItem
 	{
-		protected IUIManager _uiManager;
+        protected readonly float UltraCruiserUtilityModifier = 2.0f; //UltraCruiser base utility stat modifier
+        protected readonly float UltraCruiserHealthModifier = 1.25f; //UltraCruiser base health stat modifier
+        protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
@@ -343,5 +347,37 @@ namespace BattleCruisers.Cruisers
         {
             return isCruiser;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected void SetUltraCruiserHealth(ICruiserArgs args)
+        {
+            if (args.Faction == Faction.Reds)
+            {
+                float health = UltraCruiserHealthModifier * this.MaxHealth;
+                this._healthTracker.MaxHealth = health;
+                //Debug.Log("Enemy health value: "+health);
+            }
+            else
+            {
+                this._healthTracker.MaxHealth = base.maxHealth;
+                //Debug.Log("Player health value: "+maxHealth);
+            }
+        }
+
+        protected float SetUltraCruiserUtility(ICruiserArgs args, float cruiserBaseUtility)
+        {
+            if (args.Faction == Faction.Reds)
+            {
+                Debug.Log("Enemy utility value: "+cruiserBaseUtility * UltraCruiserUtilityModifier);
+                return cruiserBaseUtility * UltraCruiserUtilityModifier;
+            }
+            else
+            {
+                Debug.Log("Player utility value: "+cruiserBaseUtility);
+                return cruiserBaseUtility;
+            }
+        }
+
     }
 }

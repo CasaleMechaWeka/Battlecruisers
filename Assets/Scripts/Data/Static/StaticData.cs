@@ -339,14 +339,14 @@ namespace BattleCruisers.Data.Static
                 new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise), //HUNTRESS PRIME
 
                  // Set 9:  Secret Levels
-                new Level(32, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
-                new Level(33, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
-                new Level(34, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
-                new Level(35, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
+                new Level(32, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(33, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
+                new Level(34, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
+                new Level(35, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
                 new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
-                new Level(37, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
-                new Level(38, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(39, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
+                new Level(37, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
+                new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
+                new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
                 new Level(40, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight) //TODO: Change to new boss broadsword
             };
 		}
