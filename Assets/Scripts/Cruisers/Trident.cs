@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers
                 SetUltraCruiserHealth(args);
                 tacticalsBuildRateBoost = SetUltraCruiserUtility(args, tacticalsBuildRateBoost);
             }
-
+            base.Initialise(args);
             Assert.IsTrue(tacticalsBuildRateBoost > 0);
 
             IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
