@@ -29,9 +29,9 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _buildingCategoryHotkeyListener 
                 = new BuildingCategoryHotkeyListener(
                     hotkeyDetector, 
-                    factoriesButton, 
-                    defensivesButton, 
-                    offensivesButton, 
+                    UseNullButtonIfNeeded(factoriesButton), 
+                    UseNullButtonIfNeeded(defensivesButton), 
+                    UseNullButtonIfNeeded(offensivesButton), 
                     UseNullButtonIfNeeded(tacticalsButton), 
                     UseNullButtonIfNeeded(ultrasButton));
         }

@@ -25,11 +25,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _kamikazeSignalButton = kamikazeSignalButton;
             _broadsidesButton = broadsidesButton;
 
-            _hotkeyDetector.Deathstar += _hotkeyDetector_Deathstar;
-            _hotkeyDetector.NukeLauncher += _hotkeyDetector_NukeLauncher;
-            _hotkeyDetector.Ultralisk += _hotkeyDetector_Ultralisk;
-            _hotkeyDetector.KamikazeSignal += _hotkeyDetector_KamikazeSignal;
-            _hotkeyDetector.Broadsides += _hotkeyDetector_Broadsides;
+            _hotkeyDetector.UltraButton1 += _hotkeyDetector_Deathstar;
+            _hotkeyDetector.UltraButton2 += _hotkeyDetector_NukeLauncher;
+            _hotkeyDetector.UltraButton3 += _hotkeyDetector_Ultralisk;
+            _hotkeyDetector.UltraButton4 += _hotkeyDetector_KamikazeSignal;
+            _hotkeyDetector.UltraButton5 += _hotkeyDetector_Broadsides;
         }
 
         private void _hotkeyDetector_Deathstar(object sender, EventArgs e)
@@ -59,11 +59,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.Deathstar -= _hotkeyDetector_Deathstar;
-            _hotkeyDetector.NukeLauncher -= _hotkeyDetector_NukeLauncher;
-            _hotkeyDetector.Ultralisk -= _hotkeyDetector_Ultralisk;
-            _hotkeyDetector.KamikazeSignal -= _hotkeyDetector_KamikazeSignal;
-            _hotkeyDetector.Broadsides -= _hotkeyDetector_Broadsides;
+            _hotkeyDetector.UltraButton1 -= _hotkeyDetector_Deathstar;
+            _hotkeyDetector.UltraButton2 -= _hotkeyDetector_NukeLauncher;
+            _hotkeyDetector.UltraButton3 -= _hotkeyDetector_Ultralisk;
+            _hotkeyDetector.UltraButton4 -= _hotkeyDetector_KamikazeSignal;
+            _hotkeyDetector.UltraButton5 -= _hotkeyDetector_Broadsides;
         }
     }
 }

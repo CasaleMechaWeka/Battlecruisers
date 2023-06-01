@@ -25,11 +25,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _spySatelliteButton = spySatelliteButton;
             _controlTowerButon = controlToworButton;
 
-            _hotkeyDetector.Shield += _hotkeyDetector_Shield;
-            _hotkeyDetector.Booster += _hotkeyDetector_Booster;
-            _hotkeyDetector.StealthGenerator += _hotkeyDetector_StealthGenerator;
-            _hotkeyDetector.SpySatellite += _hotkeyDetector_SpySatellite;
-            _hotkeyDetector.ControlTower += _hotkeyDetector_ControlTower;
+            _hotkeyDetector.TacticalButton1 += _hotkeyDetector_Shield;
+            _hotkeyDetector.TacticalButton2 += _hotkeyDetector_Booster;
+            _hotkeyDetector.TacticalButton3 += _hotkeyDetector_StealthGenerator;
+            _hotkeyDetector.TacticalButton4 += _hotkeyDetector_SpySatellite;
+            _hotkeyDetector.TacticalButton5 += _hotkeyDetector_ControlTower;
         }
 
         private void _hotkeyDetector_Shield(object sender, EventArgs e)
@@ -59,11 +59,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.Shield -= _hotkeyDetector_Shield;
-            _hotkeyDetector.Booster -= _hotkeyDetector_Booster;
-            _hotkeyDetector.StealthGenerator -= _hotkeyDetector_StealthGenerator;
-            _hotkeyDetector.SpySatellite -= _hotkeyDetector_SpySatellite;
-            _hotkeyDetector.ControlTower -= _hotkeyDetector_ControlTower;
+            _hotkeyDetector.TacticalButton1  -= _hotkeyDetector_Shield;
+            _hotkeyDetector.TacticalButton2 -= _hotkeyDetector_Booster;
+            _hotkeyDetector.TacticalButton3 -= _hotkeyDetector_StealthGenerator;
+            _hotkeyDetector.TacticalButton4 -= _hotkeyDetector_SpySatellite;
+            _hotkeyDetector.TacticalButton5 -= _hotkeyDetector_ControlTower;
         }
     }
 }

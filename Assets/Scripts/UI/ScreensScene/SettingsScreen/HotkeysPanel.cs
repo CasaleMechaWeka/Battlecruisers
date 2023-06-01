@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         [Header("Aircraft")]
         public HotkeyRow bomberRow;
-        public HotkeyRow gunshipRow, fighterRow, steamCopterRow;
+        public HotkeyRow gunshipRow, fighterRow, steamCopterRow, broadswordRow;
 
         [Header("Ships")]
         public HotkeyRow attackBoatRow;
@@ -259,6 +259,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(steamCopterRow);
             steamCopterRow.Initialise(InputBC.Instance, _hotkeysModel.SteamCopter, this);
+
+            rows.Add(broadswordRow);
+            broadswordRow.Initialise(InputBC.Instance, _hotkeysModel.Broadsword, this);
         }
 
         private void SetupShipRows(IList<HotkeyRow> rows)
@@ -344,6 +347,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || gunshipRow.Value.Key.Value != _hotkeysModel.Gunship
                 || fighterRow.Value.Key.Value != _hotkeysModel.Fighter
                 || steamCopterRow.Value.Key.Value != _hotkeysModel.SteamCopter
+                || broadswordRow.Value.Key.Value != _hotkeysModel.Broadsword
                 // Ships
                 || attackBoatRow.Value.Key.Value != _hotkeysModel.AttackBoat
                 || frigateRow.Value.Key.Value != _hotkeysModel.Frigate
@@ -414,6 +418,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Gunship = gunshipRow.Value.Key.Value;
             _hotkeysModel.Fighter = fighterRow.Value.Key.Value;
             _hotkeysModel.SteamCopter = steamCopterRow.Value.Key.Value;
+            _hotkeysModel.Broadsword = broadswordRow.Value.Key.Value;
 
             // Ships
             _hotkeysModel.AttackBoat = attackBoatRow.Value.Key.Value;
@@ -501,6 +506,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gunshipRow.ResetToDefaults(hotkeysModel.Gunship);
             fighterRow.ResetToDefaults(hotkeysModel.Fighter);
             steamCopterRow.ResetToDefaults(hotkeysModel.SteamCopter);
+            broadswordRow.ResetToDefaults(hotkeysModel.Broadsword);
 
             // Ships
             attackBoatRow.ResetToDefaults(hotkeysModel.AttackBoat);

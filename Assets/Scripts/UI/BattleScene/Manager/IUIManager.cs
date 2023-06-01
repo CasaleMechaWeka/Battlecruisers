@@ -24,5 +24,6 @@ namespace BattleCruisers.UI.BattleScene.Manager
 
         void SetExplanationPanel(IExplanationPanel explanationPanelValue);
 
+        BuildingCategory GetBuildingCategory();
     }
 }

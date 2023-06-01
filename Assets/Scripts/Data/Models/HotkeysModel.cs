@@ -355,6 +355,14 @@ namespace BattleCruisers.Data.Models
             get => _steamCopter;
             set => _steamCopter = value;
         }
+
+        [SerializeField]
+        private KeyCode _broadsword;
+        public KeyCode Broadsword
+        {
+            get => _broadsword;
+            set => _broadsword = value;
+        }
         #endregion Aircraft
 
         #region Ships
@@ -464,6 +472,7 @@ namespace BattleCruisers.Data.Models
             Gunship = KeyCode.W;
             Fighter = KeyCode.E;
             SteamCopter = KeyCode.R;
+            Broadsword = KeyCode.T;
 
             // Ships
             AttackBoat = KeyCode.Q;

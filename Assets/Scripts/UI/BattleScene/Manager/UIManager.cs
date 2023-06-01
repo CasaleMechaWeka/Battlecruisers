@@ -32,6 +32,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private ITarget _shownItem;
         private IExplanationPanel _explanationPanel;
         private IHintDisplayer _hintDisplayer;
+        private BuildingCategory _currentBuildingCategory;
 
         public void SetExplanationPanel(IExplanationPanel explanationPanelValue) {
             _explanationPanel = explanationPanelValue;
@@ -108,6 +109,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             Logging.LogMethod(Tags.UI_MANAGER);
 
             HideItemDetails();
+            _currentBuildingCategory = buildingCategory;
             _buildMenu.ShowBuildingGroupMenu(buildingCategory);
         }
 
@@ -232,6 +234,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
             else{
                 _detailsManager.HideDetails();
             }
+        }
+
+        public BuildingCategory GetBuildingCategory()
+        {
+            return _currentBuildingCategory;
         }
     }
 }

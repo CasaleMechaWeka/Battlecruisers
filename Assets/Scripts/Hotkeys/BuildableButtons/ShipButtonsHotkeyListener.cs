@@ -25,11 +25,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _archonButton = archonButton;
             _attackRIBButton = attackRIBButton;
 
-            _hotkeyDetector.AttackBoat += _hotkeyDetector_AttackBoat;
-            _hotkeyDetector.Frigate += _hotkeyDetector_Frigate;
-            _hotkeyDetector.Destroyer += _hotkeyDetector_Destroyer;
-            _hotkeyDetector.Archon += _hotkeyDetector_Archon;
-            _hotkeyDetector.AttackRIB += _hotkeyDetector_AttackRIB;
+            _hotkeyDetector.ShipButton1 += _hotkeyDetector_AttackBoat;
+            _hotkeyDetector.ShipButton2 += _hotkeyDetector_Frigate;
+            _hotkeyDetector.ShipButton3 += _hotkeyDetector_Destroyer;
+            _hotkeyDetector.ShipButton4 += _hotkeyDetector_Archon;
+            _hotkeyDetector.ShipButton5 += _hotkeyDetector_AttackRIB;
         }
 
         private void _hotkeyDetector_AttackBoat(object sender, EventArgs e)
@@ -59,11 +59,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.AttackBoat -= _hotkeyDetector_AttackBoat;
-            _hotkeyDetector.Frigate -= _hotkeyDetector_Frigate;
-            _hotkeyDetector.Destroyer -= _hotkeyDetector_Destroyer;
-            _hotkeyDetector.Archon -= _hotkeyDetector_Archon;
-            _hotkeyDetector.AttackRIB -= _hotkeyDetector_AttackRIB;
+            _hotkeyDetector.ShipButton1 -= _hotkeyDetector_AttackBoat;
+            _hotkeyDetector.ShipButton2 -= _hotkeyDetector_Frigate;
+            _hotkeyDetector.ShipButton3 -= _hotkeyDetector_Destroyer;
+            _hotkeyDetector.ShipButton4 -= _hotkeyDetector_Archon;
+            _hotkeyDetector.ShipButton5 -= _hotkeyDetector_AttackRIB;
         }
     }
 }

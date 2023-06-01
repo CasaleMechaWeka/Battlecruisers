@@ -293,7 +293,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 navigationPermitters.HotkeyFilter,
                 cameraComponents.CameraFocuser,
                 rightPanelComponents.SpeedComponents,
-                rightPanelComponents.MainMenuManager);
+                rightPanelComponents.MainMenuManager,
+                uiManager);
             _gameEndMonitor
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(
