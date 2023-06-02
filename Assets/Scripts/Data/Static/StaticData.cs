@@ -347,7 +347,7 @@ namespace BattleCruisers.Data.Static
                 new Level(37, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
                 new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
                 new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
-                new Level(40, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight) //TODO: Change to new boss broadsword
+                new Level(40, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight) //TODO: Change to new boss broadsword
             };
 		}
 
