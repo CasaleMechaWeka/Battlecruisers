@@ -29,7 +29,7 @@ namespace BattleCruisers.Cruisers
             _healthTracker.SetHealth(0 + unit.maxHealth);
             spriteRenderer.sprite = null;
             unit.RearingStarted += _RearingStarted;
-            Debug.Log(maxHealth);
+            //Debug.Log(maxHealth);
         }
 
         public override void Update()
@@ -40,7 +40,7 @@ namespace BattleCruisers.Cruisers
                 {
                     _healthTracker.SetHealth(0 + unit.Health);
                 }
-                Debug.Log(unit.Health);
+                //Debug.Log(unit.Health);
                 
             }
         }
