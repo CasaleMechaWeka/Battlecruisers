@@ -131,13 +131,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 Enabled = false;
             }
-            Debug.Log("select button call");
         }
         private void DisplayedBuildingChanged(object sender, EventArgs e)
         {
-            Debug.Log("it is checking");
             IBuilding displayBuilding = _buildingDetails.SelectedItem.Value;
-            Debug.Log(displayBuilding);
             Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
             
             //Assert.IsNotNull(displayBuilding);

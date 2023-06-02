@@ -133,10 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         }
         private void DisplayedUnitChanged(object sender, EventArgs e)
         {
-            Debug.Log("it is checking");
             IUnit displayUnit = _unitDetails.SelectedItem.Value;
-            Debug.Log(displayUnit);
-            //Assert.IsNotNull(displayBuilding);
             if (displayUnit != null)
             {
                 UnitKey unitKey = _unitNameToKey.GetKey(displayUnit.Name);
