@@ -423,7 +423,7 @@ namespace BattleCruisers.Data.Models
             SlowMotion = KeyCode.Alpha1;
             NormalSpeed = KeyCode.Alpha2;
             FastForward = KeyCode.Alpha3;
-            ToggleSpeed = KeyCode.Space;
+            //ToggleSpeed = KeyCode.Space;
 
             // Building categories
             Factories = KeyCode.A;
