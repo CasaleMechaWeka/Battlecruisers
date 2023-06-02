@@ -25,6 +25,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                 slowMotion,
                 normalSpeed,
                 fastForward,
+                pause
             };
 
             foreach (GameSpeedButton speedButton in speedButtons)
@@ -44,7 +45,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                     speedButtonGroup,
                     slowMotion,
                     normalSpeed,
-                    fastForward
+                    fastForward,
+                    pause
                 );
         }
     }

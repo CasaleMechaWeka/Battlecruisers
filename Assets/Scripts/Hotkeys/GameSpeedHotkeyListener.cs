@@ -16,7 +16,7 @@ namespace BattleCruisers.Hotkeys
             _hotkeyDetector = hotkeyDetector;
             _speedComponents = speedComponents;
 
-            //_hotkeyDetector.PauseSpeed += _hotkeyDetector_PauseSpeed;
+            _hotkeyDetector.PauseSpeed += _hotkeyDetector_PauseSpeed;
             _hotkeyDetector.SlowMotion += _hotkeyDetector_SlowMotion;
             _hotkeyDetector.NormalSpeed += _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward += _hotkeyDetector_FastForward;
@@ -45,18 +45,19 @@ namespace BattleCruisers.Hotkeys
 
         private void _hotkeyDetector_ToggleSpeed(object sender, EventArgs e)
         {
-            //if (_speedComponents.PauseButton.IsSelected)
-            //{
-            //    _speedComponents.NormalSpeedButton.TriggerClick();
-            //}
-            //else{
-            //    _speedComponents.PauseButton.TriggerClick();
-            //}
-           
+            if (_speedComponents.PauseButton.IsSelected)
+            {
+                _speedComponents.NormalSpeedButton.TriggerClick();
+            }
+            else
+            {
+                _speedComponents.PauseButton.TriggerClick();
+            }
         }
 
         public void DisposeManagedState()
         {
+            _hotkeyDetector.PauseSpeed -= _hotkeyDetector_PauseSpeed;
             _hotkeyDetector.SlowMotion -= _hotkeyDetector_SlowMotion;
             _hotkeyDetector.NormalSpeed -= _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward -= _hotkeyDetector_FastForward;

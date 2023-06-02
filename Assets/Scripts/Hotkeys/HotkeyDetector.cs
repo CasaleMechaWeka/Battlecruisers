@@ -90,11 +90,11 @@ namespace BattleCruisers.Hotkeys
             }
 
             // Game speed
-            /*if (_input.GetKeyUp(_hotkeyList.PauseSpeed))
+            if (_input.GetKeyUp(_hotkeyList.PauseSpeed))
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SlowMotion: {_hotkeyList.PauseSpeed}");
                 PauseSpeed?.Invoke(this, EventArgs.Empty);
-            }*/
+            }
             if (_input.GetKeyUp(_hotkeyList.SlowMotion))
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SlowMotion: {_hotkeyList.SlowMotion}");
@@ -110,11 +110,11 @@ namespace BattleCruisers.Hotkeys
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.FastForward: {_hotkeyList.FastForward}");
                 FastForward?.Invoke(this, EventArgs.Empty);
             }
-            if (_input.GetKeyUp(_hotkeyList.ToggleSpeed))
-            {
-                Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.FastForward: {_hotkeyList.ToggleSpeed}");
-                ToggleSpeed?.Invoke(this, EventArgs.Empty);
-            }
+            //if (_input.GetKeyUp(_hotkeyList.ToggleSpeed))
+            //{
+            //    Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.FastForward: {_hotkeyList.ToggleSpeed}");
+            //    ToggleSpeed?.Invoke(this, EventArgs.Empty);
+            //}
 
             // Building categories
             if (_input.GetKeyUp(_hotkeyList.Factories))
