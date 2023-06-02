@@ -90,11 +90,11 @@ namespace BattleCruisers.Hotkeys
             }
 
             // Game speed
-            if (_input.GetKeyUp(_hotkeyList.PauseSpeed))
+            /*if (_input.GetKeyUp(_hotkeyList.PauseSpeed))
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SlowMotion: {_hotkeyList.PauseSpeed}");
                 PauseSpeed?.Invoke(this, EventArgs.Empty);
-            }
+            }*/
             if (_input.GetKeyUp(_hotkeyList.SlowMotion))
             {
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.SlowMotion: {_hotkeyList.SlowMotion}");

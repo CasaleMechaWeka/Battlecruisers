@@ -419,10 +419,10 @@ namespace BattleCruisers.Data.Models
             EnemyCruiser = KeyCode.C;
 
             // Game speed
-            PauseSpeed = KeyCode.Alpha1;
-            SlowMotion = KeyCode.Alpha2;
-            NormalSpeed = KeyCode.Alpha3;
-            FastForward = KeyCode.Alpha4;
+            //PauseSpeed = KeyCode.Alpha1;
+            SlowMotion = KeyCode.Alpha1;
+            NormalSpeed = KeyCode.Alpha2;
+            FastForward = KeyCode.Alpha3;
             ToggleSpeed = KeyCode.Space;
 
             // Building categories

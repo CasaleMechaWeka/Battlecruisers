@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public HotkeyRow overviewRow, enemyCruiserRow;
 
         [Header("Game speed")]
-        public HotkeyRow pauseSpeedRow, slowMotionRow;
+        public HotkeyRow slowMotionRow;
         public HotkeyRow normalSpeedRow, fastForwardRow, toggleSpeedRow;
 
         [Header("Building categories")]
@@ -127,8 +127,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void SetupGameSpeedRows(IList<HotkeyRow> rows)
         {
-            rows.Add(pauseSpeedRow);
-            pauseSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.PauseSpeed, this);
+            //rows.Add(pauseSpeedRow);
+           // pauseSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.PauseSpeed, this);
 
             rows.Add(slowMotionRow);
             slowMotionRow.Initialise(InputBC.Instance, _hotkeysModel.SlowMotion, this);
@@ -324,7 +324,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || overviewRow.Value.Key.Value != _hotkeysModel.Overview
                 || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
                 // Game speed
-                || pauseSpeedRow.Value.Key.Value != _hotkeysModel.PauseSpeed
+                //|| pauseSpeedRow.Value.Key.Value != _hotkeysModel.PauseSpeed
                 || slowMotionRow.Value.Key.Value != _hotkeysModel.SlowMotion
                 || normalSpeedRow.Value.Key.Value != _hotkeysModel.NormalSpeed
                 || fastForwardRow.Value.Key.Value != _hotkeysModel.FastForward
@@ -387,7 +387,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
 
             // Game speed
-            _hotkeysModel.PauseSpeed = pauseSpeedRow.Value.Key.Value;
+            //_hotkeysModel.PauseSpeed = pauseSpeedRow.Value.Key.Value;
             _hotkeysModel.SlowMotion = slowMotionRow.Value.Key.Value;
             _hotkeysModel.NormalSpeed = normalSpeedRow.Value.Key.Value;
             _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
@@ -475,7 +475,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             enemyCruiserRow.ResetToDefaults(hotkeysModel.EnemyCruiser);
             
             // Game speed
-            pauseSpeedRow.ResetToDefaults(hotkeysModel.PauseSpeed);
+            //pauseSpeedRow.ResetToDefaults(hotkeysModel.PauseSpeed);
             slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);
             normalSpeedRow.ResetToDefaults(hotkeysModel.NormalSpeed);
             fastForwardRow.ResetToDefaults(hotkeysModel.FastForward);
