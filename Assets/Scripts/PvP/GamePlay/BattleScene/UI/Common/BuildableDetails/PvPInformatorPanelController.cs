@@ -63,6 +63,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             dismissButton.Initialise(soundPlayer, uiManager, new PvPStaticBroadcastingFilter(isMatch: true));
         }
 
+
+
+        public void Initialise(
+            IPvPUIManager uiManager,
+            IPvPCruiser playerCruiser,
+            // IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IPvPButtonVisibilityFilters visibilityFilters,
+            IPvPSingleSoundPlayer soundPlayer)
+        {
+            base.Initialise();
+            PvPHelper.AssertIsNotNull(uiManager, playerCruiser, visibilityFilters, soundPlayer);
+            PvPHelper.AssertIsNotNull(informatorPanelExtended, buttons, buildingDetails, unitDetails, cruiserDetails);
+
+            informatorPanelExtended.Initialise();
+            buttons
+                .Initialise(
+                    // playerCruiser.DroneFocuser,
+                    // playerCruiser.RepairManager,
+                    // userChosenTargetHelper,
+                    visibilityFilters,
+                    soundPlayer,
+                    informatorPanelExtended,
+                    playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
+                    uiManager);
+
+            buildingDetails.Initialise();
+            unitDetails.Initialise();
+            cruiserDetails.Initialise();
+            dismissButton.Initialise(soundPlayer, uiManager, new PvPStaticBroadcastingFilter(isMatch: true));
+        }
+
         public override void Hide()
         {
             base.Hide();

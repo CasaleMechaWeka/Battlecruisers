@@ -32,6 +32,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;
         }
 
+
+        public PvPDronesDisplayer(
+            IPvPNumberDisplay numberDisplay,
+            IPvPGameObject idleFeedback)
+        {
+            PvPHelper.AssertIsNotNull(numberDisplay, idleFeedback);
+
+            // _droneManager = droneManager;
+            // _droneManagerMonitor = droneManagerMonitor;
+            _numberDisplay = numberDisplay;
+            _idleFeedback = idleFeedback;
+
+            // _numberDisplay.Num = _droneManager.NumOfDrones;
+
+            // _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+            // _droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
+            // _droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;
+        }
+
         private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
         {
             _numberDisplay.Num = _droneManager.NumOfDrones;

@@ -10,27 +10,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPTopPanelInitialiser : MonoBehaviour
     {
+        public Text playerHealthBarHelpLabel;
         public Text enemyHealthBarHelpLabel;
 
         public PvPTopPanelComponents Initialise(
             IPvPCruiser playerCruiser,
-            IPvPCruiser aiCruiser,
+            IPvPCruiser enemyCruiser,
+            string playerName,
             string enemyName)
         {
-            Assert.IsNotNull(enemyHealthBarHelpLabel);
-            PvPHelper.AssertIsNotNull(playerCruiser, aiCruiser);
+            PvPHelper.AssertIsNotNull(playerHealthBarHelpLabel, enemyHealthBarHelpLabel);
+            PvPHelper.AssertIsNotNull(playerName, enemyName);
+            PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
 
             PvPCruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
             Assert.IsNotNull(playerHealthInitialiser);
             IPvPHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser);
 
-            PvPCruiserHealthBarInitialiser aiHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("AICruiserHealth/Foreground");
-            Assert.IsNotNull(aiHealthInitialiser);
-            IPvPHighlightable aiCruiserHealthBar = aiHealthInitialiser.Initialise(aiCruiser);
+            PvPCruiserHealthBarInitialiser enemyHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("EnemyCruiserHealth/Foreground");
+            Assert.IsNotNull(enemyHealthInitialiser);
+            IPvPHighlightable enemyCruiserHealthBar = enemyHealthInitialiser.Initialise(enemyCruiser);
 
+            playerHealthBarHelpLabel.text = playerName;
             enemyHealthBarHelpLabel.text = enemyName;
 
-            return new PvPTopPanelComponents(playerCruiserHealthBar, aiCruiserHealthBar);
+            return new PvPTopPanelComponents(playerCruiserHealthBar, enemyCruiserHealthBar);
         }
     }
 }

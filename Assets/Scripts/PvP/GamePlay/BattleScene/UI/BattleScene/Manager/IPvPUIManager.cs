@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         void UnpeakUnitDetails();
         void UnpeakBuildingDetails();
 
-        void SetExplanationPanel(IPvPExplanationPanel explanationPanelValue);
+        // void SetExplanationPanel(IPvPExplanationPanel explanationPanelValue);
     }
 }
 

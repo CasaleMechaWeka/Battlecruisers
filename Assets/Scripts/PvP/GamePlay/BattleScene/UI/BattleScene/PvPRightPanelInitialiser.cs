@@ -53,9 +53,48 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 soundPlayer,
                 navigationPermitterManager);
 
-            IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, buttonVisibilityFilters, soundPlayer);
             PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
+            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
+            SetupMainMenuButtons(soundPlayer, mainMenuManager);
+            makeRightBackgroundPanelFit();
+            return
+                new PvPRightPanelComponents(
+                    informator,
+                    mainMenuManager,
+                    modalMenu,
+                    speedComponents,
+                    helpButton);
+        }
+
+
+        public PvPRightPanelComponents Initialise(
+            IApplicationModel applicationModel,
+            IPvPUIManager uiManager,
+            IPvPCruiser playerCruiser,
+            // IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            // IPvPPauseGameManager pauseGameManager,
+            IPvPBattleCompletionHandler battleCompletionHandler,
+            IPvPSingleSoundPlayer soundPlayer
+            )
+        {
+            PvPHelper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
+            PvPHelper.AssertIsNotNull(
+                applicationModel,
+                uiManager,
+                playerCruiser,
+                // userChosenTargetHelper,
+                buttonVisibilityFilters,
+                // pauseGameManager,
+                battleCompletionHandler,
+                soundPlayer
+                );
+
+            IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, buttonVisibilityFilters, soundPlayer);
+            PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
+            IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             makeRightBackgroundPanelFit();
@@ -71,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPInformatorPanel SetupInformator(
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
-            IPvPUserChosenTargetHelper userChosenTargetHelper,
+            // IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPSingleSoundPlayer soundPlayer)
         {
@@ -82,7 +121,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 .Initialise(
                     uiManager,
                     playerCruiser,
-                    userChosenTargetHelper,
+                    // userChosenTargetHelper,
                     buttonVisibilityFilters,
                     soundPlayer);
 

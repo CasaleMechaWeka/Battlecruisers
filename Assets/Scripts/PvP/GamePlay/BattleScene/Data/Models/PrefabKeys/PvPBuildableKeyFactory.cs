@@ -7,12 +7,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
     {
         public PvPUnitKey CreateUnitKey(IPvPUnit unit)
         {
-            return new PvPUnitKey(unit.Category, unit.PrefabName);
+            return new PvPUnitKey(unit.Category, "PvP" + unit.PrefabName);
         }
 
         public PvPBuildingKey CreateBuildingKey(IPvPBuilding building)
         {
-            return new PvPBuildingKey(building.Category, building.PrefabName);
+            return new PvPBuildingKey(building.Category, "PvP" + building.PrefabName);
         }
     }
 }

@@ -55,6 +55,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }
 
+
+        public PvPPoolProviders(
+    IPvPFactoryProvider factoryProvider,
+    IPvPUIManager uiManager,
+    IPvPDroneFactory droneFactory)
+        {
+            PvPHelper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
+
+            _explosionPoolProvider = new PvPExplosionPoolProvider(factoryProvider.PrefabFactory);
+            _shipDeathPoolProvider = new PvPShipDeathPoolProvider(factoryProvider.PrefabFactory);
+            _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
+            _unitPoolProvider = new PvPUnitPoolProvider(uiManager, factoryProvider);
+            _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
+
+            IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
+            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);
+
+            UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
+        }
+
         // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
         public void SetInitialCapacities()
         {

@@ -15,6 +15,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
+using BattleCruisers.Scenes;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
@@ -26,9 +34,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodClient : MonoBehaviour
     {
         public PvPCameraInitialiser cameraInitialiser;
+        public PvPTopPanelInitialiser topPanelInitialiser;
+        public PvPLeftPanelInitialiser leftPanelInitialiser;
+        public PvPRightPanelInitialiser rightPanelInitialiser;
 
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
+        private IPvPPrefabFactory prefabFactory;
+        private IPvPSpriteProvider spriteProvider;
         public PvPFactoryProvider factoryProvider;
         private PvPBattleSceneGodComponents components;
         private PvPNavigationPermitters navigationPermitters;
@@ -37,6 +50,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPCruiser enemyCruiser;
         private IPvPBattleSceneHelper pvpBattleHelper;
         private IPvPLevel currentLevel;
+        private IPvPUIManager uiManager;
+        private ILocTable commonStrings;
+
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -104,12 +120,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             PvPPrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
 
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
+            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            IPvPPrefabFactory prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
+            prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             // navigationPermitters = new PvPNavigationPermitters();
 
@@ -121,10 +137,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
+            uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
-            factoryProvider.Initialise();
+            factoryProvider.Initialise(uiManager);
 
             currentLevel = pvpBattleHelper.GetPvPLevel();
+
 
 
             // components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater,);
@@ -134,7 +152,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private async void InitialiseAsync()
         {
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
-
+            playerCruiser.StaticInitialise(commonStrings);
+            enemyCruiser.StaticInitialise(commonStrings);
 
             cameraComponents = cameraInitialiser.Initialise(
                 dataProvider.SettingsManager,
@@ -148,6 +167,49 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
             cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
+            IPvPButtonVisibilityFilters buttonVisibilityFilters = pvpBattleHelper.CreateButtonVisibilityFilters();
+            ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
+            IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
+            PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
+            PvPLeftPanelComponents leftPanelComponents
+                = leftPanelInitialiser.Initialise(
+                    uiManager,
+                    pvpBattleHelper.GetPlayerLoadout(),
+                    prefabFactory,
+                    spriteProvider,
+                    buttonVisibilityFilters,
+                    new PvPPlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
+                    // pvpBattleHelper.GetBuildableButtonSoundPlayer(playerCruiser),
+                    factoryProvider.Sound.PrioritisedSoundPlayer,
+                    factoryProvider.Sound.UISoundPlayer,
+                    playerCruiser.PopulationLimitMonitor,
+                    dataProvider.StaticData);
+
+            PvPRightPanelComponents rightPanelComponents
+                = rightPanelInitialiser.Initialise(
+                    applicationModel,
+                    uiManager,
+                    playerCruiser,
+                    // userChosenTargetHelper,
+                    buttonVisibilityFilters,
+                    // pauseGameManager,
+                    battleCompletionHandler,
+                    factoryProvider.Sound.UISoundPlayer
+                );
+
+            IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
+
+            PvPManagerArgs args
+                = new PvPManagerArgs(
+                    playerCruiser,
+                    enemyCruiser,
+                    leftPanelComponents.BuildMenu,
+                    itemDetailsManager,
+                    factoryProvider.Sound.PrioritisedSoundPlayer,
+                    factoryProvider.Sound.UISoundPlayer);
+            pvpBattleHelper.InitialiseUIManager(args);
+
+
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
         }

@@ -33,5 +33,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             highlightable.Initialise();
             return highlightable;
         }
+
+
+        public IPvPHighlightable Initialise()
+        {
+            PvPHelper.AssertIsNotNull(highlight);
+
+            IPvPGameObject highlightGameObject = new PvPGameObjectBC(highlight.gameObject);
+
+            PvPNumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<PvPNumOfDronesPanelInitialiser>();
+            IPvPNumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();
+
+            _dronesDisplayer = new PvPDronesDisplayer(twoDigitDisplayer, highlightGameObject);
+
+            PvPHighlightable highlightable = GetComponent<PvPHighlightable>();
+            Assert.IsNotNull(highlightable);
+            highlightable.Initialise();
+            return highlightable;
+        }
     }
 }

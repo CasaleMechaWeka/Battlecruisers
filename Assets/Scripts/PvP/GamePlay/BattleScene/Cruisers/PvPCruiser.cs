@@ -154,8 +154,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
-
-
         }
 
 

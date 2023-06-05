@@ -12,7 +12,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -31,8 +35,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPSlotFilter CreateHighlightableSlotFilter();
         public abstract IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         public abstract IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
+        public abstract IPvPUIManager CreateUIManager();
+        public abstract void InitialiseUIManager(PvPManagerArgs args);
+        public abstract ILoadout GetPlayerLoadout();
+        public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IPvPDroneManager droneManager);
+        public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters();
         public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager /*, IPvPPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator*/);
-
+        public abstract IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
 
         protected PvPBattleSceneHelper(
             IApplicationModel appModel,

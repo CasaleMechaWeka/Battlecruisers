@@ -21,6 +21,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _navigationPermitterManager = navigationPermitterManager;
         }
 
+        protected PvPModalManager(
+             // IPvPNavigationPermitterManager navigationPermitterManager,
+             //  IPvPPauseGameManager pauseGameManager
+             )
+        {
+            // PvPHelper.AssertIsNotNull(pauseGameManager);
+
+            // _pauseGameManager = pauseGameManager;
+            // _navigationPermitterManager = navigationPermitterManager;
+        }
+
         protected void ShowModal()
         {
             if (_stateOnShowMenu == null)

@@ -30,6 +30,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _battleCompletionHandler = battleCompletionHandler;
         }
 
+
+
+        public PvPMainMenuManager(
+            // IPvPNavigationPermitterManager navigationPermitterManager,
+            // IPvPPauseGameManager pauseGameManager,
+            IPvPModalMenu modalMenu,
+            IPvPBattleCompletionHandler battleCompletionHandler)
+            : base()
+        {
+            PvPHelper.AssertIsNotNull(modalMenu, battleCompletionHandler);
+
+            _modalMenu = modalMenu;
+            _battleCompletionHandler = battleCompletionHandler;
+        }
+
         public void ShowMenu()
         {
             base.ShowModal();

@@ -20,6 +20,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
+using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPDroneManager droneManager,
             IPvPDroneManagerMonitor droneManagerMonitor,
             IPvPUIManager uiManager,
-            IPvPLoadout playerLoadout,
+            ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
             IPvPSpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
@@ -89,14 +90,64 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
         }
 
+
+        public PvPLeftPanelComponents Initialise(
+            IPvPUIManager uiManager,
+            ILoadout playerLoadout,
+            IPvPPrefabFactory prefabFactory,
+            IPvPSpriteProvider spriteProvider,
+            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
+            IPvPPrioritisedSoundPlayer eventSoundPlayer,
+            IPvPSingleSoundPlayer uiSoundPlayer,
+            IPvPPopulationLimitMonitor populationLimitMonitor,
+            IStaticData staticData)
+        {
+            PvPHelper.AssertIsNotNull(
+                uiManager,
+                playerLoadout,
+                prefabFactory,
+                spriteProvider,
+                buttonVisibilityFilters,
+                playerCruiserFocusHelper,
+                eventSoundPlayer,
+                uiSoundPlayer,
+                populationLimitMonitor,
+                staticData);
+            PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
+
+            IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel();
+            IPvPBuildMenu buildMenu
+                = SetupBuildMenuController(
+                    uiManager,
+                    playerLoadout,
+                    prefabFactory,
+                    spriteProvider,
+                    buttonVisibilityFilters,
+                    playerCruiserFocusHelper,
+                    eventSoundPlayer,
+                    uiSoundPlayer,
+                    populationLimitMonitor,
+                    staticData);
+
+            makeLeftBackgroundPanelFit();
+
+            return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
+        }
+
         private IPvPHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
         {
-            return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
+            return dronesPanelInitialiser.Initialise();
+        }
+
+        private IPvPHighlightable SetupDronesPanel()
+        {
+            return dronesPanelInitialiser.Initialise();
         }
 
         private IPvPBuildMenu SetupBuildMenuController(
             IPvPUIManager uiManager,
-            IPvPLoadout playerLoadout,
+            ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
             IPvPSpriteProvider spriteProvider,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,

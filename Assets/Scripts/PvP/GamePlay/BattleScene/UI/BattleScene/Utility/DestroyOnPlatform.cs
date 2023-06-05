@@ -1,14 +1,13 @@
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Multiplayer.Samples.Utilities;
+
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
-    [RequireComponent(typeof(NetcodeHooks))]
+
     public class DestroyOnPlatform : MonoBehaviour
     {
-        [SerializeField]
-        NetcodeHooks m_NetcodeHooks;
+
         public enum TargetPlatform
         {
             Server,
@@ -20,12 +19,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         private void Awake()
         {
-            m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
-            m_NetcodeHooks.OnNetworkDespawnHook += OnNetworkDespawn;
-        }
-        public void OnNetworkSpawn()
-        {
 
+        }
+
+
+
+        void Start()
+        {
             if (NetworkManager.Singleton.IsServer && targetPlatform != TargetPlatform.Server)
             {
                 Destroy(gameObject);
@@ -35,12 +35,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 Destroy(gameObject);
             }
-        }
-
-        public void OnNetworkDespawn()
-        {
-
-
         }
 
 
