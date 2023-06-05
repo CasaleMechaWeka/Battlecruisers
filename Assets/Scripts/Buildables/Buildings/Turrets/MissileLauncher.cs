@@ -3,7 +3,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class MissileLauncher : DefenseTurret
+    public class MissileLauncher : OffenseTurret
 	{
         // DLC  Have own sound
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.RocketLauncher;
