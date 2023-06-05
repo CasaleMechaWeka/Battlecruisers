@@ -362,9 +362,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private bool CanClockedGameCommandExecute()
         {
             return
-                BattleResult.WasVictory
-                && BattleResult.LevelNum == StaticData.NUM_OF_LEVELS
-                || BattleResult.WasVictory
+                //BattleResult.WasVictory
+                //&& BattleResult.LevelNum == StaticData.NUM_OF_LEVELS
+                /*||*/ BattleResult.WasVictory
                 && BattleResult.LevelNum == StaticData.NUM_OF_STANDARD_LEVELS;
         }
 
