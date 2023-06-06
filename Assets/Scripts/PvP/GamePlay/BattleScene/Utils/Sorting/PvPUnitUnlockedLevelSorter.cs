@@ -17,12 +17,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IList<IPvPBuildableWrapper<IPvPUnit>> Sort(IList<IPvPBuildableWrapper<IPvPUnit>> units)
         {
-            Debug.Log(" --------------------------- ");
-            foreach (IPvPBuildableWrapper<IPvPUnit> unit in units)
-            {
-                Debug.Log(unit.Buildable.Category + " --- " + unit.Buildable.PrefabName);
-            }
-
             return
                 units
                       //   .OrderBy(unit => _staticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))

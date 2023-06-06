@@ -2,6 +2,7 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
@@ -15,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private ISettingsManager _settingsManager;
         private IPvPBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IPvPBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
-        private IPvPBroadcastingProperty<bool> _showToolTips;
+        private IBroadcastingProperty<bool> _showToolTips;
         // public BattleSceneGod god;
 
         private CanvasGroup _canvasGroup;
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPBroadcastingProperty<float> alertVolume,
             IPvPBroadcastingProperty<float> interfaceVolume,
             IPvPBroadcastingProperty<float> ambientVolume,
-            IPvPBroadcastingProperty<bool> showToolTips)
+            IBroadcastingProperty<bool> showToolTips)
         {
             base.Initialise(soundPlayer, parent: mainMenuManager);
 

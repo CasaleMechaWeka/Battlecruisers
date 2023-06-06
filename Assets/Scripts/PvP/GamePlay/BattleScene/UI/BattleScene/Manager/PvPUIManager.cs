@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPUIManager : IPvPUIManager
     {
-        private IPvPCruiser _playerCruiser, _aiCruiser;
+        private IPvPCruiser _playerCruiser, _enemyCruiser;
         private IPvPBuildMenu _buildMenu;
         private IPvPItemDetailsManager _detailsManager;
         private IPvPPrioritisedSoundPlayer _soundPlayer;
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _buildMenu = args.BuildMenu;
             _detailsManager = args.DetailsManager;
             _playerCruiser = args.PlayerCruiser;
-            _aiCruiser = args.EnemyCruiser;
+            _enemyCruiser = args.EnemyCruiser;
             _soundPlayer = args.SoundPlayer;
             _uiSoundPlayer = args.UISoundPlayer;
         }
@@ -81,8 +81,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.HideDetails();
-            _playerCruiser.SlotHighlighter.UnhighlightSlots();
-            _aiCruiser.SlotHighlighter.UnhighlightSlots();
+
+            // _playerCruiser.SlotHighlighter.UnhighlightSlots();
+            // _enemyCruiser.SlotHighlighter.UnhighlightSlots();
+
             ShownItem = null;
             lastClickedBuilding = null;
             lastClickedUnit = null;
@@ -95,7 +97,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Logging.LogMethod(Tags.UI_MANAGER);
 
             _detailsManager.HideDetails();
-            _playerCruiser.SlotHighlighter.UnhighlightSlots();
+
+            // _playerCruiser.SlotHighlighter.UnhighlightSlots();
+
             _buildMenu.HideCurrentlyShownMenu();
             ShownItem = null;
             lastClickedBuilding = null;

@@ -76,5 +76,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             // repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
             deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
         }
+
+        public void Initialise(
+            // IPvPDroneFocuser droneFocuser,
+            // IPvPRepairManager repairManager,
+            // IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            IPvPSingleSoundPlayer soundPlayer,
+            IPvPSlidingPanel informatorPanel,
+            // IPvPUpdater updater,
+            IPvPUIManager uiManager)
+        {
+            PvPHelper.AssertIsNotNull(buttonVisibilityFilters, soundPlayer, informatorPanel, uiManager);
+            PvPHelper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);
+
+            // extendButton.Initialise(soundPlayer, informatorPanel);
+            // toggleDronesButton.Initialise(soundPlayer);
+            // chooseTargetButton.Initialise(soundPlayer, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            // repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
+            // deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
+        }
     }
 }

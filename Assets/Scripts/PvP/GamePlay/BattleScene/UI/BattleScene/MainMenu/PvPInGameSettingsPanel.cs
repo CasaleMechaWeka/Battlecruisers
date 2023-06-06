@@ -5,6 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Screens
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.DataStrctures;
+using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPInGameSaveButton saveButton;
         public PvPCanvasGroupButton cancelButton;
         public PvPFloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
-        public PvPToggleController showToolTipsToggle;
+        public ToggleController showToolTipsToggle;
         public PvPSliderController zoomSlider, scrollSlider;
 
         public void Initialise(

@@ -85,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                     visibilityFilters,
                     soundPlayer,
                     informatorPanelExtended,
-                    playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
+                    // playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
                     uiManager);
 
             buildingDetails.Initialise();
