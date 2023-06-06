@@ -61,7 +61,13 @@ namespace BattleCruisers.Scenes
         private int nextLevelXP;
         private int currentXP;
         private long levelScore;
-        private bool xpIsTicking;
+
+        [SerializeField]
+        private GameObject levelUpModal;
+        [SerializeField]
+        private AnimationClip levelUpModalAnim;
+
+        private bool barIsAnimating = false;
 
         private float timeStep; // used as the basis for all WaitForSeconds() returns 
 
@@ -98,7 +104,7 @@ namespace BattleCruisers.Scenes
             // TODO: Same issue as time, but for player XP:
             Debug.LogWarning("PLAYER XP value is fake! This should not be shipped!");
             currentXP = Mathf.FloorToInt(UnityEngine.Random.Range(0.0f, 1000.0f));
-            nextLevelXP = Mathf.FloorToInt(UnityEngine.Random.Range((currentXP * 1.5f), (currentXP * 3.0f)));
+            nextLevelXP = Mathf.FloorToInt(UnityEngine.Random.Range(currentXP * 2.0f, currentXP * 10.0f));
 
             //### Screen Setup ###
 
@@ -127,8 +133,6 @@ namespace BattleCruisers.Scenes
 
         IEnumerator AnimateScreen()
         {
-            yield return new WaitForSeconds(timeStep * 2.0f);
-
             // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
             long damageRunningTotal = 0;
             for (int i = 0; i < destructionCards.Length; i++)
@@ -142,28 +146,48 @@ namespace BattleCruisers.Scenes
                 damageRunningTotal += destructionValues[i];
 
                 // Increase XP counter:
-                xpIsTicking = true;
                 int xpToAdd = Convert.ToInt32(destructionValues[i]);
-                // If the bar would fill up here, it needs some special handling:
                 int xpRunningTotal = currentXP;
-                StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, 60, returnValue =>
-                {
-                    if (returnValue < nextLevelXP)
-                    {
-                        xpRunningTotal += returnValue;
-                    }
-                    else
-                    {
-                        xpRunningTotal = 0;
-                        currentXP = 0;
-                        levelBar.value = 0;
-                    }
-                }));
-                currentXP += xpToAdd;
+                int steps = 30;
+                float stepPeriod = (timeStep) / steps;
 
-                // Pause for a moment to catch our breath:
-                yield return new WaitForSeconds(timeStep * 1.5f);
+                // If the bar would fill up, it needs some special handling.
+                if (xpToAdd + currentXP >= nextLevelXP)
+                {
+                    while (xpToAdd > 0)
+                    {
+                        if (xpToAdd > nextLevelXP)
+                        {
+                            StartCoroutine(InterpolateXPBar(xpRunningTotal, nextLevelXP, steps, stepPeriod));
+
+                            // do level pop
+                            StartCoroutine(DisplayRankUpModal());
+                            yield return new WaitForSeconds(stepPeriod * steps * 3.0f); // this multiplier is chosen at random
+
+                            xpToAdd -= (nextLevelXP - xpRunningTotal);
+                            xpRunningTotal = 0;
+
+                            // TODO: get the NEXT level's XP and overwrite the nextLevelXP var
+                        }
+                        else
+                        {
+                            StartCoroutine(InterpolateXPBar(xpRunningTotal, xpToAdd, steps, stepPeriod));
+                            yield return new WaitForSeconds(stepPeriod * steps * 3.0f); // this multiplier is chosen at random
+                            xpRunningTotal = xpToAdd;
+                            xpToAdd = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                    currentXP += xpToAdd;
+                    yield return new WaitForSeconds(stepPeriod * steps * 3.0f); // this multiplier is chosen at random
+                }
             }
+
+            // Pause for a moment to catch our breath:
+            yield return new WaitForSeconds(timeStep * 1.5f);
 
             // Interpolate time counter:
             StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
@@ -220,37 +244,19 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        IEnumerator InterpolateXPBar(int startVal, int endVal, int steps, System.Action<int> callback = null)
+        IEnumerator InterpolateXPBar(float startVal, float endVal, int steps, float stepPeriod)
         {
-            while (xpIsTicking) // Uh-oh scary while loop
-            {
-                int interpStep = (endVal - startVal) / steps;
-                float stepPeriod = (timeStep) / steps;
+            barIsAnimating = true;
+            float interpStep = (endVal - startVal) / steps;
 
-                for (int i = 1; i <= steps; i++)
-                {
-                    startVal += interpStep;
-                    if (startVal >= nextLevelXP)
-                    {
-                        // do level pop
-                        StartCoroutine(DisplayRankUpModal());
-                        levelBar.value = nextLevelXP;
-                        yield return new WaitForSeconds(timeStep);
-                        levelBar.value = 0 + (nextLevelXP - startVal);
-                        startVal = 0;
-                    }
-                    else
-                    {
-                        levelBar.value = startVal;
-                    }
-                    if (startVal >= endVal || interpStep == 0)
-                    {
-                        xpIsTicking = false;
-                    }
-                    yield return new WaitForSeconds(stepPeriod);
-                }
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                levelBar.value = startVal;
+                yield return new WaitForSeconds(stepPeriod);
             }
-            callback(startVal);
+
+            barIsAnimating = false;
         }
 
         IEnumerator InterpolateScore(long startVal, long endVal, int steps)
@@ -270,14 +276,14 @@ namespace BattleCruisers.Scenes
         {
             // Display modal
             // Do a quick bit of animation
-            Debug.Log("Rank Up Modal!");
+
             yield return new WaitForSeconds(timeStep * 3.0f);
         }
 
         private long CalculateScore(float time, long damage)
         {
             // feels weird to make this a method but I don't like doing it in the animation methods:
-            long score = damage / (long)time^2 / (long)10;
+            long score = damage / (long)Mathf.Pow(time, 2.0f) / (long)10;
             return score;
         }
 
