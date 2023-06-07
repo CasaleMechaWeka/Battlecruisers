@@ -42,7 +42,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             IPvPSingleSoundPlayer soundPlayer,
             IPvPUIManager uiManager,
             IPvPFilter<IPvPTarget> buttonVisibilityFilter,
-            IPvPUpdater updater)
+            IPvPUpdater updater
+            )
         {
             base.Initialise(soundPlayer);
 

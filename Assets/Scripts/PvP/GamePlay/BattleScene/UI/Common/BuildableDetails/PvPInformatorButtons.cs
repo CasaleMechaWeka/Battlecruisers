@@ -80,21 +80,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public void Initialise(
             // IPvPDroneFocuser droneFocuser,
             // IPvPRepairManager repairManager,
-            // IPvPUserChosenTargetHelper userChosenTargetHelper,
+            IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPSingleSoundPlayer soundPlayer,
             IPvPSlidingPanel informatorPanel,
-            // IPvPUpdater updater,
+            IPvPUpdater updater,
             IPvPUIManager uiManager)
         {
             PvPHelper.AssertIsNotNull(buttonVisibilityFilters, soundPlayer, informatorPanel, uiManager);
             PvPHelper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);
 
-            // extendButton.Initialise(soundPlayer, informatorPanel);
-            // toggleDronesButton.Initialise(soundPlayer);
-            // chooseTargetButton.Initialise(soundPlayer, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
-            // repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
-            // deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
+            extendButton.Initialise(soundPlayer, informatorPanel);
+            toggleDronesButton.Initialise(soundPlayer);
+            chooseTargetButton.Initialise(soundPlayer, userChosenTargetHelper, buttonVisibilityFilters.ChooseTargetButtonVisiblityFilter);
+            repairButton.Initialise(soundPlayer /*, droneFocuser, repairManager*/);
+            deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
         }
     }
 }

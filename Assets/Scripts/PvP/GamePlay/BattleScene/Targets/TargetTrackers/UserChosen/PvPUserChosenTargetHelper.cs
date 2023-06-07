@@ -32,6 +32,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             _userChosenTargetManager.HighestPriorityTargetChanged += _userChosenTargetManager_HighestPriorityTargetChanged;
         }
 
+
+        public PvPUserChosenTargetHelper(
+            IPvPUserChosenTargetManager userChosenTargetManager,
+            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPvPTargetIndicator targetIndicator
+    )
+        {
+            PvPHelper.AssertIsNotNull(userChosenTargetManager, soundPlayer, targetIndicator);
+
+            _userChosenTargetManager = userChosenTargetManager;
+            _soundPlayer = soundPlayer;
+            _targetIndicator = targetIndicator;
+
+            _userChosenTargetManager.HighestPriorityTargetChanged += _userChosenTargetManager_HighestPriorityTargetChanged;
+        }
+
         private void _userChosenTargetManager_HighestPriorityTargetChanged(object sender, EventArgs e)
         {
             // Logging.Log(Tags.USER_CHOSEN_TARGET, $"Highest priority target: {_userChosenTargetManager.HighestPriorityTarget}");

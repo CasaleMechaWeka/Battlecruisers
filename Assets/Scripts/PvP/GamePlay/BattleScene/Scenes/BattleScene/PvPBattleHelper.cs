@@ -12,6 +12,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
@@ -138,6 +139,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
 
             return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager /*, soundPlayer, targetIndicator*/);
+        }
+
+
+
+        public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
+            IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager,
+            IPvPPrioritisedSoundPlayer soundPlayer,
+            IPvPTargetIndicator targetIndicator)
+        {
+            PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
+
+            return new PvPUserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
         }
 
 

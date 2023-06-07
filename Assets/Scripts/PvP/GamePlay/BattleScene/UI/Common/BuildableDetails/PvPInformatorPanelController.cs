@@ -10,6 +10,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Panels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
@@ -34,41 +35,42 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public IPvPInformatorButtons Buttons => buttons;
 
 
+        // public void Initialise(
+        //     IPvPUIManager uiManager,
+        //     IPvPCruiser playerCruiser,
+        //     IPvPUserChosenTargetHelper userChosenTargetHelper,
+        //     IPvPButtonVisibilityFilters visibilityFilters,
+        //     IPvPSingleSoundPlayer soundPlayer)
+        // {
+        //     base.Initialise();
+        //     PvPHelper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);
+        //     PvPHelper.AssertIsNotNull(informatorPanelExtended, buttons, buildingDetails, unitDetails, cruiserDetails);
+
+        //     informatorPanelExtended.Initialise();
+        //     buttons
+        //         .Initialise(
+        //             playerCruiser.DroneFocuser,
+        //             playerCruiser.RepairManager,
+        //             userChosenTargetHelper,
+        //             visibilityFilters,
+        //             soundPlayer,
+        //             informatorPanelExtended,
+        //             playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
+        //             uiManager);
+
+        //     buildingDetails.Initialise();
+        //     unitDetails.Initialise();
+        //     cruiserDetails.Initialise();
+        //     dismissButton.Initialise(soundPlayer, uiManager, new PvPStaticBroadcastingFilter(isMatch: true));
+        // }
+
+
+
         public void Initialise(
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
+            IPvPUpdater perFrameUpdater,
             IPvPUserChosenTargetHelper userChosenTargetHelper,
-            IPvPButtonVisibilityFilters visibilityFilters,
-            IPvPSingleSoundPlayer soundPlayer)
-        {
-            base.Initialise();
-            PvPHelper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);
-            PvPHelper.AssertIsNotNull(informatorPanelExtended, buttons, buildingDetails, unitDetails, cruiserDetails);
-
-            informatorPanelExtended.Initialise();
-            buttons
-                .Initialise(
-                    playerCruiser.DroneFocuser,
-                    playerCruiser.RepairManager,
-                    userChosenTargetHelper,
-                    visibilityFilters,
-                    soundPlayer,
-                    informatorPanelExtended,
-                    playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
-                    uiManager);
-
-            buildingDetails.Initialise();
-            unitDetails.Initialise();
-            cruiserDetails.Initialise();
-            dismissButton.Initialise(soundPlayer, uiManager, new PvPStaticBroadcastingFilter(isMatch: true));
-        }
-
-
-
-        public void Initialise(
-            IPvPUIManager uiManager,
-            IPvPCruiser playerCruiser,
-            // IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters visibilityFilters,
             IPvPSingleSoundPlayer soundPlayer)
         {
@@ -81,11 +83,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
                 .Initialise(
                     // playerCruiser.DroneFocuser,
                     // playerCruiser.RepairManager,
-                    // userChosenTargetHelper,
+                    userChosenTargetHelper,
                     visibilityFilters,
+
                     soundPlayer,
                     informatorPanelExtended,
-                    // playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
+                    perFrameUpdater,
                     uiManager);
 
             buildingDetails.Initialise();

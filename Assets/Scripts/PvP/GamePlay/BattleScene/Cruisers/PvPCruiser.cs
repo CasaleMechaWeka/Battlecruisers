@@ -113,9 +113,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void Start()
         {
             if (IsClient && IsOwner)
+            {
                 PvPBattleSceneGodClient.Instance.RegisterAsPlayer(this);
+            }
+
             else if (IsClient && !IsOwner)
+            {
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
+            }
+
+        }
+
+
+        public void Initialise_Client_PvP()
+        {
+            SlotAccessor = _slotWrapperController.Initialise(this);
         }
 
 
@@ -154,6 +166,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
+
+            if (IsClient && IsOwner)
+            {
+                Initialise_Client_PvP();
+            }
+
         }
 
 
@@ -363,17 +381,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             base.OnNetworkSpawn();
 
-            Initialise_Client_PvP();
+            // Initialise_Client_PvP();
         }
 
-        private void Initialise_Client_PvP()
-        {
-            _renderer = GetComponent<SpriteRenderer>();
-            Assert.IsNotNull(_renderer);
 
-            _collider = GetComponent<Collider2D>();
-            Assert.IsNotNull(_collider);
-        }
 
         public override void OnNetworkDespawn()
         {

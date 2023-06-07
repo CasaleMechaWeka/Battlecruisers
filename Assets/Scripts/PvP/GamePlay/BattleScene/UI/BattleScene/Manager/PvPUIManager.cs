@@ -121,9 +121,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Logging.LogMethod(Tags.UI_MANAGER);
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            //_detailsManager.ShowDetails(buildingWrapper.Buildable);
-            bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
-            ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
+            _detailsManager.ShowDetails(buildingWrapper.Buildable);
+
+            // bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
+            // ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
+
             // if (_explanationPanel != null)
             // {
             //     if (_hintDisplayer == null)
@@ -132,11 +134,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             //     }
             //     _hintDisplayer.ShowHint(_commonStrings.GetString("Steps/Touchdrag"));
             // }
-            if (!wasAnySlotHighlighted)
-            {
-                _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
-                _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
-            }
+
+
+            // if (!wasAnySlotHighlighted)
+            // {
+            //     _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
+            //     _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
+            // }
         }
 
         public virtual void SelectBuilding(IPvPBuilding building)
