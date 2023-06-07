@@ -160,7 +160,7 @@ namespace BattleCruisers.Scenes
                 {
                     while (xpToAdd > 0)
                     {
-                        if (xpToAdd > nextLevelXP)
+                        if (xpToAdd + currentXP > nextLevelXP)
                         {
                             yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, nextLevelXP, steps, stepPeriod));
                             yield return StartCoroutine(DisplayRankUpModal(modalPeriod));
