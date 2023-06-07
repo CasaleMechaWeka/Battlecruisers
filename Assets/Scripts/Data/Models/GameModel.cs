@@ -211,31 +211,6 @@ namespace BattleCruisers.Data.Models
         set => _rank = value;
     }
 
-    // Outdated values to store for postgame screens,
-    // so we have something to populate UI with before
-    // new values are revealed:
-    private int _outdatedXpToNextLevel;
-    public int OutdatedXPToNextLevel
-    {
-        get => _outdatedXpToNextLevel;
-        set => _outdatedXpToNextLevel = value;
-    }
-
-    [SerializeField]
-    private int _outdatedrank;
-    public int OutdatedRank
-    {
-        get => _outdatedrank;
-        set => _outdatedrank = value;
-    }
-
-    private long _outdatedlifetimeDestructionScore;
-    public long OutdatedLifetimeDestructionScore
-    {
-        get => _outdatedlifetimeDestructionScore;
-        set => _outdatedlifetimeDestructionScore = value;
-    }
-
     private bool _PremiumEdition;
     public bool PremiumEdition
     {
