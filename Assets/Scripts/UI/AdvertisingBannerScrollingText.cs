@@ -155,12 +155,12 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             if (!applicationModel.DataProvider.GameModel.PremiumEdition)
             {
                 ShowIAPButton();
-                PlayThankYouAnimation();
                 startAdvert();
             }
             else
             {
                 HideIAPButton();
+                PlayThankYouAnimation();
                 stopAdvert();
             }
         }

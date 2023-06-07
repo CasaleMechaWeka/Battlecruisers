@@ -43,6 +43,7 @@ namespace BattleCruisers.Scenes
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
+        private bool _isPlaying;
 
         public HomeScreenController homeScreen;
 		public LevelsScreenController levelsScreen;      
@@ -57,6 +58,7 @@ namespace BattleCruisers.Scenes
         public AdvertisingBannerScrollingText AdvertisingBanner;
         public FullScreenAdverts fullScreenads;
 
+        public Animator thankYouPlane;
         [SerializeField]
         private AudioSource _uiAudioSource;
 
@@ -107,6 +109,7 @@ namespace BattleCruisers.Scenes
             
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
             trashDataList.Initialise(storyStrings);
+            _isPlaying = false;
 
             // TEMP  For showing PostBattleScreen :)
             if (goToPostBattleScreen)
@@ -189,11 +192,16 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
+            if(_gameModel.PremiumEdition)
+            {
+                thankYouPlane.SetTrigger("Play");
+                _isPlaying = true;
+            }
+
             
             
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
-
 
 
 
@@ -391,6 +399,18 @@ namespace BattleCruisers.Scenes
             {
                 _currentScreen?.Cancel();
             }
+
+            if(_gameModel != null)
+            {
+                if (_gameModel.PremiumEdition)
+                {
+                    if (!_isPlaying)
+                    {
+                        thankYouPlane.SetTrigger("Play");
+                    }
+                }
+            }
+            
         }
     }
 }
