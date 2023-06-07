@@ -103,7 +103,7 @@ namespace BattleCruisers.Scenes
             // TODO: Same issue as time, but for player XP:
             Debug.LogWarning("PLAYER XP value is fake! This should not be shipped!");
             currentXP = Mathf.FloorToInt(UnityEngine.Random.Range(100.0f, 10000.0f));
-            nextLevelXP = Mathf.FloorToInt(UnityEngine.Random.Range(currentXP * 2.0f, currentXP * 10.0f));
+            nextLevelXP = Mathf.FloorToInt(UnityEngine.Random.Range(currentXP * 1.5f, currentXP * 5.0f));
 
             //### Screen Setup ###
 
@@ -137,58 +137,53 @@ namespace BattleCruisers.Scenes
 
             // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
             long damageRunningTotal = 0;
+            int steps = 30;
+            float stepPeriod = timeStep / steps;
+
             for (int i = 0; i < destructionCards.Length; i++)
             {
                 // Enable a card (playing its animation in the process):
                 destructionCards[i].gameObject.SetActive(true);
 
                 // Interpolate the Damage Caused value, from the current running total to that + the card's damage value
-                // by the specified number of steps. Steps are divided over time so the length of the animation remains constant:
-                StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
+                // by the specified number of steps. Steps are divided over time:
+                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
                 damageRunningTotal += destructionValues[i];
                 yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
 
                 // Increase XP counter:
                 int xpToAdd = Convert.ToInt32(destructionValues[i]);
                 int xpRunningTotal = currentXP;
-                int steps = 30;
-                float stepPeriod = (timeStep) / steps;
 
                 // If the bar would fill up, it needs some special handling.
                 if (xpToAdd + currentXP >= nextLevelXP)
                 {
                     while (xpToAdd > 0)
                     {
-                        if (xpToAdd >= nextLevelXP)
+                        if (xpToAdd + currentXP > nextLevelXP)
                         {
-                            StartCoroutine(InterpolateXPBar(xpRunningTotal, nextLevelXP, steps, stepPeriod));
-                            yield return new WaitForSeconds(stepPeriod * steps * 1.1f);
-
-                            // do level pop
-                            StartCoroutine(DisplayRankUpModal(modalPeriod));
+                            yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, nextLevelXP, steps, stepPeriod));
+                            yield return StartCoroutine(DisplayRankUpModal(modalPeriod));
 
                             xpToAdd -= (nextLevelXP - xpRunningTotal);
-                            xpRunningTotal = 0; // we only need this value on the first loop, to account for not starting from 0xp
-                            currentXP = (int)levelBar.value; //ugly
-                            yield return new WaitForSeconds(modalPeriod * 1.1f);
+                            xpRunningTotal = 0;
+                            currentXP = 0;
 
                             // TODO: get the NEXT level's XP and overwrite the nextLevelXP var
                         }
                         else
                         {
-                            StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                            yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
                             xpRunningTotal += xpToAdd;
                             currentXP = xpRunningTotal;
                             xpToAdd = 0;
-                            yield return new WaitForSeconds(stepPeriod * steps * 1.1f);
                         }
                     }
                 }
                 else
                 {
-                    StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                    yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
                     currentXP += xpToAdd;
-                    yield return new WaitForSeconds(stepPeriod * steps * 1.1f);
                 }
             }
 
@@ -196,19 +191,17 @@ namespace BattleCruisers.Scenes
             yield return new WaitForSeconds(timeStep * 1.5f);
 
             // Interpolate time counter:
-            StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
+            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
             yield return new WaitForSeconds(timeStep * 2.0f);
 
             // Interpolate game score:
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
-            StartCoroutine(InterpolateScore(0, levelScore, 25));
+            yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // TODO: level rating (maybe?)
 
             // Interpolate Lifetime Damage (same deal as regular damage)
-            StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
-
-            //yield return null;
+            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
         }
 
         IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
