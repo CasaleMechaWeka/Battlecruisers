@@ -181,6 +181,14 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
+        private bool _showAds;
+        public bool ShowAds
+        {
+            get => _showAds;
+            set => _showAds = value;
+        }
+
+        [SerializeField]
         private bool _VSync;
         public bool VSync
         {
@@ -244,7 +252,8 @@ namespace BattleCruisers.Data.Models
             MasterVolume = 0.5f;
             ShowInGameHints = true;
             ShowToolTips = true;
-            
+            ShowAds = false;
+
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
             InitialiseGraphicsSettings();
             

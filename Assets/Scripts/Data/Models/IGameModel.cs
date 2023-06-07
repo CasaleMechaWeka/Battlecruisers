@@ -31,6 +31,7 @@ namespace BattleCruisers.Data.Models
         NewItems<HullKey> NewHulls { get; }
         NewItems<BuildingKey> NewBuildings { get; }
         NewItems<UnitKey> NewUnits { get; }
+        //NewItems<CaptainKey> NewCaptains { get; }
 
         Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult);
 

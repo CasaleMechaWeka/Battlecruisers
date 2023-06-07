@@ -77,7 +77,8 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         protected override void HandleClick(bool isButtonEnabled)
         {
-          //we are now controlling the selection via OnPointerDown
+            //we are now controlling the selection via OnPointerDown
+            _clickHandler.HandleClick(IsMatch, _buildingWrapper);
 		}
 
         public override void HandleHover()

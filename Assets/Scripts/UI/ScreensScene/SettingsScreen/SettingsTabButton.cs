@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private RectTransform _transform;
         private Vector2 _defaulteSizeDelta;
 
-        private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.7f;
+        private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.9f;
 
         public bool IsSelected
         {
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void MakeBig()
         {
-            if (_rectTransform.sizeDelta == _defaulteSizeDelta)
+            if (_rectTransform.sizeDelta.y == _defaulteSizeDelta.y)
             {
                 _rectTransform.sizeDelta /= NOT_SELECTED_SIZE_MULTIPLIER;
             }
@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void MakeSmall()
         {
-            if (_rectTransform.sizeDelta.magnitude > _defaulteSizeDelta.magnitude)
+            if (_rectTransform.sizeDelta.y > _defaulteSizeDelta.y)
             {
                 _rectTransform.sizeDelta *= NOT_SELECTED_SIZE_MULTIPLIER;
             }

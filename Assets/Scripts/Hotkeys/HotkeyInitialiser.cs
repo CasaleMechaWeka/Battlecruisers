@@ -3,6 +3,7 @@ using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.HelpLabels;
 using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
@@ -29,13 +30,14 @@ namespace BattleCruisers.Hotkeys
             IBroadcastingFilter hotkeyFilter,
             ICameraFocuser cameraFocuser,
             ISpeedComponents speedComponents,
-            IMainMenuManager mainMenuManager)
+            IMainMenuManager mainMenuManager,
+            IUIManager uIManager)
         {
             Helper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
             Helper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager);
             
             // Hotkeys (only for PC)
-            IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
+            IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter, uIManager);
 
             _navigationHotkeyListener = new NavigationHotkeyListener(hotkeyDetector, cameraFocuser);
             _gameSpeedHotkeyListener = new GameSpeedHotkeyListener(hotkeyDetector, speedComponents);
@@ -47,7 +49,7 @@ namespace BattleCruisers.Hotkeys
             _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
+        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter, IUIManager uIManager)
         {
             if (SystemInfoBC.Instance.IsHandheld)
             {
@@ -56,7 +58,7 @@ namespace BattleCruisers.Hotkeys
             }
             else
             {
-                return new HotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
+                return new HotkeyDetector(hotkeyList, input, updater, hotkeyFilter, uIManager);
             }
         }
     }

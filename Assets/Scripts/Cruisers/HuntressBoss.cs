@@ -29,6 +29,7 @@ namespace BattleCruisers.Cruisers
             _healthTracker.SetHealth(0 + unit.maxHealth);
             spriteRenderer.sprite = null;
             unit.RearingStarted += _RearingStarted;
+            //Debug.Log(maxHealth);
         }
 
         public override void Update()
@@ -39,7 +40,8 @@ namespace BattleCruisers.Cruisers
                 {
                     _healthTracker.SetHealth(0 + unit.Health);
                 }
-                //Debug.Log(maxHealth);
+                //Debug.Log(unit.Health);
+                
             }
         }
 
@@ -55,11 +57,11 @@ namespace BattleCruisers.Cruisers
             switch (AIDifficulty)
             {
                 case Difficulty.Normal:
-                    unit.maxHealth = 8000;
+                    unit.maxHealth = 20000;
                     break;
 
                 case Difficulty.Hard:
-                    unit.maxHealth = 20000;
+                    unit.maxHealth = 35000;
                     unit.minigunStats.damage *= 1.5f;
                     break;
 
@@ -74,7 +76,7 @@ namespace BattleCruisers.Cruisers
             }
             unit.SetHealthToMax();
             maxHealth = 0 + unit.maxHealth;
-            unit.SetHealthToMax();
+            //unit.SetHealthToMax();
             _healthTracker.SetHealth(0 + unit.Health);
             unit.buildTimeInS = maxHealth;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
+using UnityEngine.UI;
 
 public class ToolTipActivator : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class ToolTipActivator : MonoBehaviour
     {
         if (started)
         {
+            Image temp = gameObject.GetComponent<Image>();
+            temp.enabled = toggleController.IsChecked.Value;
             toolTipTextDisplay.SetActive(toggleController.IsChecked.Value);
         }
     }

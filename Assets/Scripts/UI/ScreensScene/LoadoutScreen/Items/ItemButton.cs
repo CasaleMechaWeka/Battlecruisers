@@ -3,6 +3,7 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -22,6 +23,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public bool IsUnlocked => IsVisible;
         public abstract IComparableItem Item { get; }
+
+        public abstract void ShowDetails();
 
         public Color Color
         {
@@ -64,6 +67,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Enabled 
                 = _comparingFamiltyTracker.ComparingFamily.Value == null
                     || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
+        }
+
+        protected override void ShowHoverState()
+        {
+            ShowEnabledState();
+        }
+
+        protected override void ShowClickedState()
+        {
+            ShowEnabledState();
         }
     }
 }

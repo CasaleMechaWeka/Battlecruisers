@@ -63,6 +63,7 @@ namespace BattleCruisers.Hotkeys
         KeyCode Gunship { get; }
         KeyCode Fighter { get; }
         KeyCode SteamCopter { get; }
+        KeyCode Broadsword { get; }
 
         // Boats
         KeyCode AttackBoat { get; }

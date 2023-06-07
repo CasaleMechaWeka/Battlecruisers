@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.UI.Commands;
+using BattleCruisers.Data;
 using BattleCruisers.UI.Common;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -15,7 +16,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ICommand nextCommand, 
             ICommand clockedGameCommand,
             ISingleSoundPlayer soundPlayer,
-            bool wasVictory)
+            bool wasVictory,
+            IDataProvider dataProvider)
         {
             base.Initialise(postBattleScreen, soundPlayer);
 
@@ -38,6 +40,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             nextButton.Initialise(soundPlayer, nextCommand);
+            if(dataProvider.GameModel.SelectedLevel >= 32)
+            {
+                Destroy(nextButton.gameObject);
+            }
             clockedGameButton.Initialise(soundPlayer, clockedGameCommand);
         }
     }

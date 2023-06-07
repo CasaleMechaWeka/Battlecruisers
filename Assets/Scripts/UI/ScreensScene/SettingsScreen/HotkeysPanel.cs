@@ -30,13 +30,17 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public HotkeyRow overviewRow, enemyCruiserRow;
 
         [Header("Game speed")]
-        public HotkeyRow pauseSpeedRow, slowMotionRow;
+        public HotkeyRow slowMotionRow;
         public HotkeyRow normalSpeedRow, fastForwardRow, toggleSpeedRow;
 
         [Header("Building categories")]
         public HotkeyRow factoriesRow;
         public HotkeyRow defensivesRow, offensivesRow, tacticalsRow, ultrasRow;
-        
+
+        [Header("Buildable Slot")]
+        public HotkeyRow Slot1;
+        public HotkeyRow Slot2, Slot3, Slot4, Slot5;
+        /*
         [Header("Factories")]
         public HotkeyRow droneStationRow;
         public HotkeyRow airFactoryRow, navalFactoryRow, droneStation4Row, droneStation8Row;
@@ -59,11 +63,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         [Header("Aircraft")]
         public HotkeyRow bomberRow;
-        public HotkeyRow gunshipRow, fighterRow, steamCopterRow;
+        public HotkeyRow gunshipRow, fighterRow, steamCopterRow, broadswordRow;
 
         [Header("Ships")]
         public HotkeyRow attackBoatRow;
-        public HotkeyRow frigateRow, destroyerRow, archonRow, attackRIBRow;
+        public HotkeyRow frigateRow, destroyerRow, archonRow, attackRIBRow;*/
 
         private ISettableBroadcastingProperty<bool> _isDirty;
         public IBroadcastingProperty<bool> IsDirty { get; private set; }
@@ -72,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public void Initialise(IHotkeysModel hotkeysModel)
         {
-            Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
+            /*Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
             Helper.AssertIsNotNull(slowMotionRow, normalSpeedRow, fastForwardRow);
             Helper.AssertIsNotNull(droneStationRow, airFactoryRow, navalFactoryRow);
             Helper.AssertIsNotNull(shipTurretRow, airTurretRow, mortarRow, samSiteRow, teslaCoilRow);
@@ -80,7 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Helper.AssertIsNotNull(shieldRow, boosterRow, stealthGeneratorRow, spySatelliteRow, controlTowerRow);
             Helper.AssertIsNotNull(deathstarRow, nukeLauncherRow, ultraliskRow, kamikazeSignalRow, broadsidesRow);
             Helper.AssertIsNotNull(bomberRow, gunshipRow, fighterRow);
-            Helper.AssertIsNotNull(attackBoatRow, frigateRow, destroyerRow, archonRow);
+            Helper.AssertIsNotNull(attackBoatRow, frigateRow, destroyerRow, archonRow);*/
             Assert.IsNotNull(hotkeysModel);
 
             _hotkeysModel = hotkeysModel;
@@ -93,13 +97,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             SetupNavigationRows(rows);
             SetupGameSpeedRows(rows);
             SetupBulidingCategoryRows(rows);
-            SetupFactoryRows(rows);
+            SetupBuildableSlotRows(rows);
+            /*SetupFactoryRows(rows);
             SetupDefensiveRows(rows);
             SetupOffensivesRows(rows);
             SetupTacticalsRows(rows);
             SetupUltrasRows(rows);
             SetupAircraftRows(rows);
-            SetupShipRows(rows);
+            SetupShipRows(rows);*/
 
             foreach (HotkeyRow row in rows)
             {
@@ -122,8 +127,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void SetupGameSpeedRows(IList<HotkeyRow> rows)
         {
-            rows.Add(pauseSpeedRow);
-            pauseSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.PauseSpeed, this);
+            //rows.Add(pauseSpeedRow);
+           // pauseSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.PauseSpeed, this);
 
             rows.Add(slowMotionRow);
             slowMotionRow.Initialise(InputBC.Instance, _hotkeysModel.SlowMotion, this);
@@ -156,7 +161,25 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ultrasRow.Initialise(InputBC.Instance, _hotkeysModel.Ultras, this);
         }
 
-        private void SetupFactoryRows(IList<HotkeyRow> rows)
+        private void SetupBuildableSlotRows(IList<HotkeyRow> rows)
+        {
+            rows.Add(Slot1);
+            Slot1.Initialise(InputBC.Instance, _hotkeysModel.DroneStation, this);
+
+            rows.Add(Slot2);
+            Slot2.Initialise(InputBC.Instance, _hotkeysModel.AirFactory, this);
+
+            rows.Add(Slot3);
+            Slot3.Initialise(InputBC.Instance, _hotkeysModel.NavalFactory, this);
+
+            rows.Add(Slot4);
+            Slot4.Initialise(InputBC.Instance, _hotkeysModel.DroneStation4, this);
+
+            rows.Add(Slot5);
+            Slot5.Initialise(InputBC.Instance, _hotkeysModel.DroneStation8, this);
+        }
+
+        /*private void SetupFactoryRows(IList<HotkeyRow> rows)
         {
             rows.Add(droneStationRow);
             droneStationRow.Initialise(InputBC.Instance, _hotkeysModel.DroneStation, this);
@@ -259,6 +282,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(steamCopterRow);
             steamCopterRow.Initialise(InputBC.Instance, _hotkeysModel.SteamCopter, this);
+
+            rows.Add(broadswordRow);
+            broadswordRow.Initialise(InputBC.Instance, _hotkeysModel.Broadsword, this);
         }
 
         private void SetupShipRows(IList<HotkeyRow> rows)
@@ -277,7 +303,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             rows.Add(attackRIBRow);
             attackRIBRow.Initialise(InputBC.Instance, _hotkeysModel.AttackRIB, this);
-        }
+        }*/
 
         private void Row_Enabled(object sender, EventArgs e)
         {
@@ -298,7 +324,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || overviewRow.Value.Key.Value != _hotkeysModel.Overview
                 || enemyCruiserRow.Value.Key.Value != _hotkeysModel.EnemyCruiser
                 // Game speed
-                || pauseSpeedRow.Value.Key.Value != _hotkeysModel.PauseSpeed
+                //|| pauseSpeedRow.Value.Key.Value != _hotkeysModel.PauseSpeed
                 || slowMotionRow.Value.Key.Value != _hotkeysModel.SlowMotion
                 || normalSpeedRow.Value.Key.Value != _hotkeysModel.NormalSpeed
                 || fastForwardRow.Value.Key.Value != _hotkeysModel.FastForward
@@ -310,46 +336,47 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || tacticalsRow.Value.Key.Value != _hotkeysModel.Tacticals
                 || ultrasRow.Value.Key.Value != _hotkeysModel.Ultras
                 // Factories
-                || droneStationRow.Value.Key.Value != _hotkeysModel.DroneStation
-                || airFactoryRow.Value.Key.Value != _hotkeysModel.AirFactory
-                || navalFactoryRow.Value.Key.Value != _hotkeysModel.NavalFactory
-                || droneStation4Row.Value.Key.Value != _hotkeysModel.DroneStation4
-                || droneStation8Row.Value.Key.Value != _hotkeysModel.DroneStation8
+                || Slot1.Value.Key.Value != _hotkeysModel.DroneStation
+                || Slot2.Value.Key.Value != _hotkeysModel.AirFactory
+                || Slot3.Value.Key.Value != _hotkeysModel.NavalFactory
+                || Slot4.Value.Key.Value != _hotkeysModel.DroneStation4
+                || Slot5.Value.Key.Value != _hotkeysModel.DroneStation8
                 // Defensives
-                || shipTurretRow.Value.Key.Value != _hotkeysModel.ShipTurret
-                || airTurretRow.Value.Key.Value != _hotkeysModel.AirTurret
-                || mortarRow.Value.Key.Value != _hotkeysModel.Mortar
-                || samSiteRow.Value.Key.Value != _hotkeysModel.SamSite
-                || teslaCoilRow.Value.Key.Value != _hotkeysModel.TeslaCoil
+                || Slot1.Value.Key.Value != _hotkeysModel.ShipTurret
+                || Slot2.Value.Key.Value != _hotkeysModel.AirTurret
+                || Slot3.Value.Key.Value != _hotkeysModel.Mortar
+                || Slot4.Value.Key.Value != _hotkeysModel.SamSite
+                || Slot5.Value.Key.Value != _hotkeysModel.TeslaCoil
                 // Offensives
-                || artilleryRow.Value.Key.Value != _hotkeysModel.Artillery
-                || railgunRow.Value.Key.Value != _hotkeysModel.Railgun
-                || rocketLauncherRow.Value.Key.Value != _hotkeysModel.RocketLauncher
-                || MLRSRow.Value.Key.Value != _hotkeysModel.MLRS
-                || gatlingMortarRow.Value.Key.Value != _hotkeysModel.GatlingMortar
+                || Slot1.Value.Key.Value != _hotkeysModel.Artillery
+                || Slot2.Value.Key.Value != _hotkeysModel.Railgun
+                || Slot3.Value.Key.Value != _hotkeysModel.RocketLauncher
+                || Slot4.Value.Key.Value != _hotkeysModel.MLRS
+                || Slot5.Value.Key.Value != _hotkeysModel.GatlingMortar
                 // Tacticals
-                || shieldRow.Value.Key.Value != _hotkeysModel.Shield
-                || boosterRow.Value.Key.Value != _hotkeysModel.Booster
-                || stealthGeneratorRow.Value.Key.Value != _hotkeysModel.StealthGenerator
-                || spySatelliteRow.Value.Key.Value != _hotkeysModel.SpySatellite
-                || controlTowerRow.Value.Key.Value != _hotkeysModel.ControlTower
+                || Slot1.Value.Key.Value != _hotkeysModel.Shield
+                || Slot2.Value.Key.Value != _hotkeysModel.Booster
+                || Slot3.Value.Key.Value != _hotkeysModel.StealthGenerator
+                || Slot4.Value.Key.Value != _hotkeysModel.SpySatellite
+                || Slot5.Value.Key.Value != _hotkeysModel.ControlTower
                 // Ultras
-                || deathstarRow.Value.Key.Value != _hotkeysModel.Deathstar
-                || nukeLauncherRow.Value.Key.Value != _hotkeysModel.NukeLauncher
-                || ultraliskRow.Value.Key.Value != _hotkeysModel.Ultralisk
-                || kamikazeSignalRow.Value.Key.Value != _hotkeysModel.KamikazeSignal
-                || broadsidesRow.Value.Key.Value != _hotkeysModel.Broadsides
+                || Slot1.Value.Key.Value != _hotkeysModel.Deathstar
+                || Slot2.Value.Key.Value != _hotkeysModel.NukeLauncher
+                || Slot3.Value.Key.Value != _hotkeysModel.Ultralisk
+                || Slot4.Value.Key.Value != _hotkeysModel.KamikazeSignal
+                || Slot5.Value.Key.Value != _hotkeysModel.Broadsides
                 // Aircraft
-                || bomberRow.Value.Key.Value != _hotkeysModel.Bomber
-                || gunshipRow.Value.Key.Value != _hotkeysModel.Gunship
-                || fighterRow.Value.Key.Value != _hotkeysModel.Fighter
-                || steamCopterRow.Value.Key.Value != _hotkeysModel.SteamCopter
+                || Slot1.Value.Key.Value != _hotkeysModel.Bomber
+                || Slot2.Value.Key.Value != _hotkeysModel.Gunship
+                || Slot3.Value.Key.Value != _hotkeysModel.Fighter
+                || Slot4.Value.Key.Value != _hotkeysModel.SteamCopter
+                || Slot5.Value.Key.Value != _hotkeysModel.Broadsword
                 // Ships
-                || attackBoatRow.Value.Key.Value != _hotkeysModel.AttackBoat
-                || frigateRow.Value.Key.Value != _hotkeysModel.Frigate
-                || destroyerRow.Value.Key.Value != _hotkeysModel.Destroyer
-                || archonRow.Value.Key.Value != _hotkeysModel.Archon
-                || attackRIBRow.Value.Key.Value != _hotkeysModel.AttackRIB;
+                || Slot1.Value.Key.Value != _hotkeysModel.AttackBoat
+                || Slot2.Value.Key.Value != _hotkeysModel.Frigate
+                || Slot3.Value.Key.Value != _hotkeysModel.Destroyer
+                || Slot4.Value.Key.Value != _hotkeysModel.Archon
+                || Slot5.Value.Key.Value != _hotkeysModel.AttackRIB;
         }
 
         public void UpdateHokeysModel()
@@ -360,7 +387,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.EnemyCruiser = enemyCruiserRow.Value.Key.Value;
 
             // Game speed
-            _hotkeysModel.PauseSpeed = pauseSpeedRow.Value.Key.Value;
+            //_hotkeysModel.PauseSpeed = pauseSpeedRow.Value.Key.Value;
             _hotkeysModel.SlowMotion = slowMotionRow.Value.Key.Value;
             _hotkeysModel.NormalSpeed = normalSpeedRow.Value.Key.Value;
             _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
@@ -375,52 +402,52 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Ultras = ultrasRow.Value.Key.Value;
 
             // Factories
-            _hotkeysModel.DroneStation = droneStationRow.Value.Key.Value;
-            _hotkeysModel.AirFactory = airFactoryRow.Value.Key.Value;
-            _hotkeysModel.NavalFactory = navalFactoryRow.Value.Key.Value;
-            _hotkeysModel.DroneStation4 = droneStation4Row.Value.Key.Value;
-            _hotkeysModel.DroneStation8 = droneStation8Row.Value.Key.Value;
+            _hotkeysModel.DroneStation = Slot1.Value.Key.Value;
+            _hotkeysModel.AirFactory = Slot2.Value.Key.Value;
+            _hotkeysModel.NavalFactory = Slot3.Value.Key.Value;
+            _hotkeysModel.DroneStation4 = Slot4.Value.Key.Value;
+            _hotkeysModel.DroneStation8 = Slot5.Value.Key.Value;
 
             // Defensives
-            _hotkeysModel.ShipTurret = shipTurretRow.Value.Key.Value;
-            _hotkeysModel.AirTurret= airTurretRow.Value.Key.Value;
-            _hotkeysModel.Mortar = mortarRow.Value.Key.Value;
-            _hotkeysModel.SamSite = samSiteRow.Value.Key.Value;
-            _hotkeysModel.TeslaCoil = teslaCoilRow.Value.Key.Value;
+            _hotkeysModel.ShipTurret = Slot1.Value.Key.Value;
+            _hotkeysModel.AirTurret= Slot2.Value.Key.Value;
+            _hotkeysModel.Mortar = Slot3.Value.Key.Value;
+            _hotkeysModel.SamSite = Slot4.Value.Key.Value;
+            _hotkeysModel.TeslaCoil = Slot5.Value.Key.Value;
 
             // Offensives
-            _hotkeysModel.Artillery = artilleryRow.Value.Key.Value;
-            _hotkeysModel.Railgun = railgunRow.Value.Key.Value;
-            _hotkeysModel.RocketLauncher = rocketLauncherRow.Value.Key.Value;
-            _hotkeysModel.MLRS = MLRSRow.Value.Key.Value;
-            _hotkeysModel.GatlingMortar = gatlingMortarRow.Value.Key.Value;
-
+            _hotkeysModel.Artillery = Slot1.Value.Key.Value;
+            _hotkeysModel.Railgun = Slot2.Value.Key.Value;
+            _hotkeysModel.RocketLauncher = Slot3.Value.Key.Value;
+            _hotkeysModel.MLRS = Slot4.Value.Key.Value;
+            _hotkeysModel.GatlingMortar = Slot5.Value.Key.Value;
             // Tacticals
-            _hotkeysModel.Shield = shieldRow.Value.Key.Value;
-            _hotkeysModel.Booster= boosterRow.Value.Key.Value;
-            _hotkeysModel.StealthGenerator = stealthGeneratorRow.Value.Key.Value;
-            _hotkeysModel.SpySatellite = spySatelliteRow.Value.Key.Value;
-            _hotkeysModel.ControlTower = controlTowerRow.Value.Key.Value;
+            _hotkeysModel.Shield = Slot1.Value.Key.Value;
+            _hotkeysModel.Booster= Slot2.Value.Key.Value;
+            _hotkeysModel.StealthGenerator = Slot3.Value.Key.Value;
+            _hotkeysModel.SpySatellite = Slot4.Value.Key.Value;
+            _hotkeysModel.ControlTower = Slot5.Value.Key.Value;
 
             // Ultras
-            _hotkeysModel.Deathstar = deathstarRow.Value.Key.Value;
-            _hotkeysModel.NukeLauncher = nukeLauncherRow.Value.Key.Value;
-            _hotkeysModel.Ultralisk = ultraliskRow.Value.Key.Value;
-            _hotkeysModel.KamikazeSignal = kamikazeSignalRow.Value.Key.Value;
-            _hotkeysModel.Broadsides = broadsidesRow.Value.Key.Value;
+            _hotkeysModel.Deathstar = Slot1.Value.Key.Value;
+            _hotkeysModel.NukeLauncher = Slot2.Value.Key.Value;
+            _hotkeysModel.Ultralisk = Slot3.Value.Key.Value;
+            _hotkeysModel.KamikazeSignal = Slot4.Value.Key.Value;
+            _hotkeysModel.Broadsides = Slot5.Value.Key.Value;
 
             // Aircraft
-            _hotkeysModel.Bomber = bomberRow.Value.Key.Value;
-            _hotkeysModel.Gunship = gunshipRow.Value.Key.Value;
-            _hotkeysModel.Fighter = fighterRow.Value.Key.Value;
-            _hotkeysModel.SteamCopter = steamCopterRow.Value.Key.Value;
+            _hotkeysModel.Bomber = Slot1.Value.Key.Value;
+            _hotkeysModel.Gunship = Slot2.Value.Key.Value;
+            _hotkeysModel.Fighter = Slot3.Value.Key.Value;
+            _hotkeysModel.SteamCopter = Slot4.Value.Key.Value;
+            _hotkeysModel.Broadsword = Slot5.Value.Key.Value;
 
             // Ships
-            _hotkeysModel.AttackBoat = attackBoatRow.Value.Key.Value;
-            _hotkeysModel.Frigate = frigateRow.Value.Key.Value;
-            _hotkeysModel.Destroyer= destroyerRow.Value.Key.Value;
-            _hotkeysModel.Archon = archonRow.Value.Key.Value;
-            _hotkeysModel.AttackRIB = attackRIBRow.Value.Key.Value;
+            _hotkeysModel.AttackBoat = Slot1.Value.Key.Value;
+            _hotkeysModel.Frigate = Slot2.Value.Key.Value;
+            _hotkeysModel.Destroyer= Slot3.Value.Key.Value;
+            _hotkeysModel.Archon = Slot4.Value.Key.Value;
+            _hotkeysModel.AttackRIB = Slot5.Value.Key.Value;
 
             _isDirty.Value = FindIsDirty();
         }
@@ -448,7 +475,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             enemyCruiserRow.ResetToDefaults(hotkeysModel.EnemyCruiser);
             
             // Game speed
-            pauseSpeedRow.ResetToDefaults(hotkeysModel.PauseSpeed);
+            //pauseSpeedRow.ResetToDefaults(hotkeysModel.PauseSpeed);
             slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);
             normalSpeedRow.ResetToDefaults(hotkeysModel.NormalSpeed);
             fastForwardRow.ResetToDefaults(hotkeysModel.FastForward);
@@ -462,13 +489,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ultrasRow.ResetToDefaults(hotkeysModel.Ultras);
 
             // Factories
-            droneStationRow.ResetToDefaults(hotkeysModel.DroneStation);
-            airFactoryRow.ResetToDefaults(hotkeysModel.AirFactory);
-            navalFactoryRow.ResetToDefaults(hotkeysModel.NavalFactory);
-            droneStation4Row.ResetToDefaults(hotkeysModel.DroneStation4);
-            droneStation8Row.ResetToDefaults(hotkeysModel.DroneStation8);
+            Slot1.ResetToDefaults(hotkeysModel.DroneStation);
+            Slot2.ResetToDefaults(hotkeysModel.AirFactory);
+            Slot3.ResetToDefaults(hotkeysModel.NavalFactory);
+            Slot4.ResetToDefaults(hotkeysModel.DroneStation4);
+            Slot5.ResetToDefaults(hotkeysModel.DroneStation8);
 
             // Defensives
+            /*
             shipTurretRow.ResetToDefaults(hotkeysModel.ShipTurret);
             airTurretRow.ResetToDefaults(hotkeysModel.AirFactory);
             mortarRow.ResetToDefaults(hotkeysModel.Mortar);
@@ -501,13 +529,14 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             gunshipRow.ResetToDefaults(hotkeysModel.Gunship);
             fighterRow.ResetToDefaults(hotkeysModel.Fighter);
             steamCopterRow.ResetToDefaults(hotkeysModel.SteamCopter);
+            broadswordRow.ResetToDefaults(hotkeysModel.Broadsword);
 
             // Ships
             attackBoatRow.ResetToDefaults(hotkeysModel.AttackBoat);
             frigateRow.ResetToDefaults(hotkeysModel.Frigate);
             destroyerRow.ResetToDefaults(hotkeysModel.Destroyer);
             archonRow.ResetToDefaults(hotkeysModel.Archon);
-            attackRIBRow.ResetToDefaults(hotkeysModel.AttackRIB);
+            attackRIBRow.ResetToDefaults(hotkeysModel.AttackRIB);*/
         }
     }
 }

@@ -355,6 +355,14 @@ namespace BattleCruisers.Data.Models
             get => _steamCopter;
             set => _steamCopter = value;
         }
+
+        [SerializeField]
+        private KeyCode _broadsword;
+        public KeyCode Broadsword
+        {
+            get => _broadsword;
+            set => _broadsword = value;
+        }
         #endregion Aircraft
 
         #region Ships
@@ -411,11 +419,11 @@ namespace BattleCruisers.Data.Models
             EnemyCruiser = KeyCode.C;
 
             // Game speed
-            PauseSpeed = KeyCode.Alpha1;
-            SlowMotion = KeyCode.Alpha2;
-            NormalSpeed = KeyCode.Alpha3;
-            FastForward = KeyCode.Alpha4;
-            ToggleSpeed = KeyCode.Space;
+            //PauseSpeed = KeyCode.Alpha1;
+            SlowMotion = KeyCode.Alpha1;
+            NormalSpeed = KeyCode.Alpha2;
+            FastForward = KeyCode.Alpha3;
+            //ToggleSpeed = KeyCode.Space;
 
             // Building categories
             Factories = KeyCode.A;
@@ -464,6 +472,7 @@ namespace BattleCruisers.Data.Models
             Gunship = KeyCode.W;
             Fighter = KeyCode.E;
             SteamCopter = KeyCode.R;
+            Broadsword = KeyCode.T;
 
             // Ships
             AttackBoat = KeyCode.Q;

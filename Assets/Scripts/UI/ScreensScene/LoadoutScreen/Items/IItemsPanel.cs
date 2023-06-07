@@ -4,7 +4,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public enum ItemType
     {
+        // Cruisers
         Hull,
+        // Captains
+        Captains,
         // Buildings
         Factory, Defense, Offensive, Tactical, Ultra,
         // Units
@@ -13,12 +16,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
     public enum ItemFamily
     {
-        Hulls, Buildings, Units
+        Hulls, Captains, Buildings, Units
     }
 
     public interface IItemsPanel : IPanel
     {
         ItemType ItemType { get; }
         bool HasUnlockedItem { get; }
+
+        IItemButton GetFirstItemButton();
     }
 }

@@ -9,6 +9,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -31,6 +32,8 @@ namespace BattleCruisers.Projectiles.Spawners
 
         protected IAudioClipWrapper _impactSound;
         public AudioClip impactSound;
+
+        public List<TargetType> AttackCapabilities { get; set; }
 
         public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound)
         {
@@ -71,11 +74,11 @@ namespace BattleCruisers.Projectiles.Spawners
             return new Vector2(velocityX, velocityY);
         }
 
-        protected void SpawnProjectile(TProjectileArgs projectileActivationArgs)
+        protected TProjectile SpawnProjectile(TProjectileArgs projectileActivationArgs)
         {
             Assert.IsNotNull(projectileActivationArgs);
 
-            _projectilePool.GetItem(projectileActivationArgs);
+            TProjectile projectile = _projectilePool.GetItem(projectileActivationArgs);
             if (_soundPlayer != null)
             {
                 _soundPlayer.OnProjectileFired();
@@ -84,6 +87,9 @@ namespace BattleCruisers.Projectiles.Spawners
             {
                 Debug.Log("Warning, soundplayer was null when spawn projectile was called");
             }
+
+            return projectile;
         }
+
     }
 }

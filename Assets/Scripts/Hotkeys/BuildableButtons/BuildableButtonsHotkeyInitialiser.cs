@@ -34,7 +34,7 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         [Header("Aircraft")]
         public UnitButtonController bomberButton;
-        public UnitButtonController gunshipButton, fighterButton, steamCopterButton;
+        public UnitButtonController gunshipButton, fighterButton, steamCopterButton, broadsword;
 
         [Header("Ships")]
         public UnitButtonController attackBoatButton;
@@ -64,15 +64,15 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _defensivesListener 
                 = new DefensiveButtonsHotkeyListener(
                     hotkeyDetector, 
-                    shipTurretButton, // always unlocked
-                    airTurretButton, // always unlocked
+                    UseNullButtonIfNeeded(shipTurretButton), // always unlocked
+                    UseNullButtonIfNeeded(airTurretButton), // always unlocked
                     UseNullButtonIfNeeded(mortarButton),
                     UseNullButtonIfNeeded(samSiteButton),
                     UseNullButtonIfNeeded(teslaCoilButton));
             _offensivesListener 
                 = new OffensiveButtonsHotkeyListener(
                     hotkeyDetector, 
-                    artilleryButton, // always unlocked
+                    UseNullButtonIfNeeded(artilleryButton), // always unlocked
                     UseNullButtonIfNeeded(railgunButton),
                     UseNullButtonIfNeeded(rocketLauncherButton),
                     UseNullButtonIfNeeded(MLRSButton),
@@ -99,7 +99,8 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
                     bomberButton, // always unlocked
                     UseNullButtonIfNeeded(gunshipButton),
                     UseNullButtonIfNeeded(fighterButton),
-                    UseNullButtonIfNeeded(steamCopterButton));
+                    UseNullButtonIfNeeded(steamCopterButton),
+                    UseNullButtonIfNeeded(broadsword));
             _shipsListener 
                 = new ShipButtonsHotkeyListener(
                     hotkeyDetector, 

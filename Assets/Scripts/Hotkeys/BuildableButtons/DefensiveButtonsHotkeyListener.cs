@@ -25,11 +25,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _samSiteButton = samSiteButton;
             _teslaCoilButton = teslaCoilButton;
 
-            _hotkeyDetector.ShipTurret += _hotkeyDetector_ShipTurret;
-            _hotkeyDetector.AirTurret += _hotkeyDetector_AirTurret;
-            _hotkeyDetector.Mortar += _hotkeyDetector_Mortar;
-            _hotkeyDetector.SamSite += _hotkeyDetector_SamSite;
-            _hotkeyDetector.TeslaCoil += _hotkeyDetector_TeslaCoil;
+            _hotkeyDetector.DefensiveButton1 += _hotkeyDetector_ShipTurret;
+            _hotkeyDetector.DefensiveButton2 += _hotkeyDetector_AirTurret;
+            _hotkeyDetector.DefensiveButton3 += _hotkeyDetector_Mortar;
+            _hotkeyDetector.DefensiveButton4 += _hotkeyDetector_SamSite;
+            _hotkeyDetector.DefensiveButton5 += _hotkeyDetector_TeslaCoil;
         }
 
         private void _hotkeyDetector_ShipTurret(object sender, EventArgs e)
@@ -59,11 +59,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.ShipTurret -= _hotkeyDetector_ShipTurret;
-            _hotkeyDetector.AirTurret -= _hotkeyDetector_AirTurret;
-            _hotkeyDetector.Mortar -= _hotkeyDetector_Mortar;
-            _hotkeyDetector.SamSite -= _hotkeyDetector_SamSite;
-            _hotkeyDetector.TeslaCoil -= _hotkeyDetector_TeslaCoil;
+            _hotkeyDetector.DefensiveButton1 -= _hotkeyDetector_ShipTurret;
+            _hotkeyDetector.DefensiveButton2 -= _hotkeyDetector_AirTurret;
+            _hotkeyDetector.DefensiveButton3 -= _hotkeyDetector_Mortar;
+            _hotkeyDetector.DefensiveButton4 -= _hotkeyDetector_SamSite;
+            _hotkeyDetector.DefensiveButton5 -= _hotkeyDetector_TeslaCoil;
         }
     }
 }

@@ -79,6 +79,13 @@ namespace BattleCruisers.Data.Settings
             get => _settings.AltDroneSounds;
             set => _settings.AltDroneSounds = value;
         }
+
+        public bool ShowAds
+        {
+            get => _settings.ShowAds;
+            set => _settings.ShowAds = value;
+        }
+
         public bool VSync
         {
             get => _settings.VSync;

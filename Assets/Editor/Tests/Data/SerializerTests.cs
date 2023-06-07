@@ -22,8 +22,10 @@ namespace BattleCruisers.Tests.Data
 		private IModelFilePathProvider _filePathProvider;
 		private GameModel _originalGameModel;
 		private string _filePath;
+		Dictionary<BuildingCategory, List<BuildingKey>> builds = new();
+		Dictionary<UnitCategory, List<UnitKey>> unitkey = new();
 
-		[SetUp]
+        [SetUp]
 		public void SetuUp()
 		{
             string fileName = "sweetTestFile" + Random.value;
@@ -80,7 +82,9 @@ namespace BattleCruisers.Tests.Data
 			return new Loadout(
 				hull: new HullKey("Schule"),
 				buildings: CreateUnlockedBuildings(),
-				units: CreateUnlockedUnits());
+				units: CreateUnlockedUnits(),
+				builds,
+				unitkey);
 		}
 
 		private BattleResult CreateBattleResult()

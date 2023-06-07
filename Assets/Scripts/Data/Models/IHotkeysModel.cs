@@ -56,6 +56,7 @@ namespace BattleCruisers.Data.Models
         KeyCode Gunship { get; set; }
         KeyCode Fighter { get; set; }
         KeyCode SteamCopter { get; set; }
+        KeyCode Broadsword { get; set; }
 
         // Defensives
         KeyCode ShipTurret { get; set; }

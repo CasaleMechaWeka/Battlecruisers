@@ -11,7 +11,7 @@ public class SafeAreaUI : MonoBehaviour
     RectTransform rectTransform;
     Rect safeArea;
     Vector2 minAnchor, maxAnchor;
-#if UNITY_IOS
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -27,5 +27,4 @@ public class SafeAreaUI : MonoBehaviour
         rectTransform.anchorMin = minAnchor;
         rectTransform.anchorMax = maxAnchor;
     }
-#endif
 }

@@ -27,7 +27,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CategoryButtonsPanel categoryButtonsPanel;
         public CompareButton compareButton;
         public SelectCruiserButton selectCruiserButton;
+        public SelectBuildingButton selectBuildingButton;
+        public SelectUnitButton selectUnitButton;
         public CancelButtonController homeButton;
+        public LimitDisplayer limitDisplayer;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -76,6 +79,27 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
                     _dataProvider);
 
+            selectBuildingButton.Initialise(
+                soundPlayer,
+                dataProvider,
+                buildingDetails,
+                new BuildingNameToKey(_dataProvider.GameModel.UnlockedBuildings, prefabFactory),
+                _comparingFamilyTracker.ComparingFamily,
+                _comparingFamilyTracker);
+
+            selectUnitButton.Initialise(
+                soundPlayer,
+                dataProvider,
+                unitDetails,
+                new UnitNameToKey(_dataProvider.GameModel.UnlockedUnits, prefabFactory),
+                _comparingFamilyTracker.ComparingFamily,
+                _comparingFamilyTracker);
+
+            limitDisplayer.Initialise(dataProvider,
+                buildingDetails,
+                unitDetails,
+                _comparingFamilyTracker);
+
             IList<IItemButton> itemButtons
                 = itemPanels.Initialise(
                     _itemDetailsManager,
@@ -87,7 +111,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     prefabFactory);
 
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
-            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons);
+            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
 
             ShowPlayerHull();
@@ -99,6 +123,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
             _itemDetailsManager.ShowDetails(playerCruiser);
+            _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
+            _comparingFamilyTracker.SetComparingFamily(null);
         }
 
         public override void Cancel()

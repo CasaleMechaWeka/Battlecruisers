@@ -34,8 +34,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     return UnitCategory.Aircraft;
                 case PvPUnitCategory.Naval:
                     return UnitCategory.Naval;
-                case PvPUnitCategory.Untouchable:
-                    return UnitCategory.Untouchable;
+                // case PvPUnitCategory.Untouchable:
+                //     return UnitCategory.Untouchable;
                 default:
                     throw new NullReferenceException();
             }

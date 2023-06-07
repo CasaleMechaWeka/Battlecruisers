@@ -5,24 +5,28 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections.Generic;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
     public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         private ITargetFilter _targetFilter;
+        public List<TargetType> AttackCapabilities { get; private set; }
 
-        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter, List<TargetType> attackCapabilities)
         {
             await base.InitialiseAsync(args, firingSound);
 
             Helper.AssertIsNotNull(targetFilter);
             _targetFilter = targetFilter;
+            AttackCapabilities = attackCapabilities;
         }
 
-        public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
-		{
-			Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
+        public ProjectileController SpawnShell(float angleInDegrees, bool isSourceMirrored)
+        {
+            Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
             ProjectileActivationArgs<IProjectileStats> activationArgs
                 = new ProjectileActivationArgs<IProjectileStats>(
                     transform.position,
@@ -31,7 +35,10 @@ namespace BattleCruisers.Projectiles.Spawners
                     _targetFilter,
                     _parent,
                     _impactSound);
-            base.SpawnProjectile(activationArgs);
-		}
-	}
+            ProjectileController projectile = base.SpawnProjectile(activationArgs);
+            projectile.AttackCapabilities = AttackCapabilities;
+            return projectile;
+        }
+
+    }
 }

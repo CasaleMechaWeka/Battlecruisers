@@ -46,7 +46,8 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                     slowMotion,
                     normalSpeed,
                     fastForward,
-                    pause);
+                    pause
+                );
         }
     }
 }

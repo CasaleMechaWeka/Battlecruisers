@@ -8,6 +8,8 @@ using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -19,7 +21,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private bool _hasUnlockedItem;
         private GameObject _selectedFeedback;
         private NewItemMark _newItemMark;
+        // private RectTransform _itemCategoryButton;
 
+        private IComparingItemFamilyTracker _itemFamilyTracker;
+
+        public Vector2 buttonWidth;
         public ItemType itemType;
 
         protected abstract ItemFamily ItemFamily { get; }
@@ -40,7 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IItemPanelsController itemPanels, 
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IGameModel gameModel,
-            IList<IItemButton> itemButtons)
+            IList<IItemButton> itemButtons,
+            IComparingItemFamilyTracker itemFamilyTracker)
         {
             base.Initialise(soundPlayer);
 
@@ -48,6 +55,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             _itemPanels = itemPanels;
             _itemPanels.PotentialMatchChange += _itemPanels_PotentialMatchChange;
+
+            
+            _itemFamilyTracker = itemFamilyTracker;
 
             _itemFamilyToCompare = itemFamilyToCompare;
             _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
@@ -59,6 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(_canvasGroup);
 
             _selectedFeedback = transform.FindNamedComponent<Transform>("SelectedFeedback").gameObject;
+            // _itemCategoryButton = GetComponent<RectTransform>();
             UpdateSelectedFeedback();
 
             _newItemMark = GetComponentInChildren<NewItemMark>();
@@ -93,6 +104,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectedFeedback()
         {
+           /* if (_itemPanels.IsMatch(itemType))
+            {
+                _itemCategoryButton.sizeDelta = buttonWidth;
+            }
+            else
+            {
+                _itemCategoryButton.sizeDelta = new Vector2(150, 150);
+            } */
             IsSelected = _itemPanels.IsMatch(itemType);
         }
 
@@ -100,6 +119,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             base.OnClicked();
             _itemPanels.ShowItemsPanel(itemType);
+            _itemFamilyTracker.SetComparingFamily(ItemFamily);
+            _itemFamilyTracker.SetComparingFamily(null);
         }
 
         protected abstract void SetupNewMarkVisibilityCallback(IGameModel gameModel);

@@ -25,7 +25,7 @@ namespace BattleCruisers.Cruisers.Damage
             Assert.IsNotNull(damagable);
             Assert.IsTrue(thresholdProportion > MIN_THRESHOLD);
             Assert.IsTrue(thresholdProportion < MAX_THRESHOLD);
-            Assert.AreEqual(damagable.MaxHealth, damagable.Health);
+            //Assert.AreEqual(damagable.MaxHealth, damagable.Health); //No longer needed as of UltraCruisers
 
             _damagable = damagable;
             _threshold = thresholdProportion * damagable.MaxHealth;

@@ -165,7 +165,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
             if (UnitUnderConstruction.ParentCruiser.IsPlayerCruiser) {
                 string logName = UnitUnderConstruction.PrefabName.ToUpper().Replace("(CLONE)","");
-#if LOG_ANALYTICS
+/*#if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -177,7 +177,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 catch (ConsentCheckException ex)
                 { 
                     Debug.Log(ex.Message);
-                }
+                }*/
                
             }
 

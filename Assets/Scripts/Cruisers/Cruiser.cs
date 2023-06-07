@@ -10,7 +10,6 @@ using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Cruisers.Fog;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Explosions;
@@ -34,6 +33,8 @@ namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IComparableItem
     {
+        protected readonly float UltraCruiserUtilityModifier = 2.0f; //UltraCruiser base utility stat modifier
+        protected readonly float UltraCruiserHealthModifier = 1.25f; //UltraCruiser base health stat modifier        
         protected IUIManager _uiManager;
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
@@ -195,19 +196,20 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-                try
-                {
-                    AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException e)
-                {
-                    Debug.Log(e.Message);
-                }
+                /*#if LOG_ANALYTICS
+                    Debug.Log("Analytics: " + logName);
+                #endif
+                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                try
+                                {
+                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.Flush();
+                                }
+                                catch(ConsentCheckException e)
+                                {
+                                    Debug.Log(e.Message);
+                                }*/
+
             }
 
         }
@@ -265,19 +267,19 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = building.PrefabName.ToUpper().Replace("(CLONE)", "");
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-                try
-                {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                    AnalyticsService.Instance.Flush();
-                }
-                catch (ConsentCheckException ex)
-                {
-                    Debug.Log(ex.Message);
-                }
+                /*#if LOG_ANALYTICS
+                    Debug.Log("Analytics: " + logName);
+                #endif
+                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                try
+                                {
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
+                                    AnalyticsService.Instance.Flush();
+                                }
+                                catch (ConsentCheckException ex)
+                                {
+                                    Debug.Log(ex.Message);
+                                }*/
             }
 
             return building;
@@ -342,5 +344,37 @@ namespace BattleCruisers.Cruisers
         {
             return isCruiser;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        protected void SetUltraCruiserHealth(ICruiserArgs args)
+        {
+            if (args.Faction == Faction.Reds)
+            {
+                float health = UltraCruiserHealthModifier * this.MaxHealth;
+                this._healthTracker.MaxHealth = health;
+                //Debug.Log("Enemy health value: "+health);
+            }
+            else
+            {
+                this._healthTracker.MaxHealth = base.maxHealth;
+                //Debug.Log("Player health value: "+maxHealth);
+            }
+        }
+
+        protected float SetUltraCruiserUtility(ICruiserArgs args, float cruiserBaseUtility)
+        {
+            if (args.Faction == Faction.Reds)
+            {
+                //Debug.Log("Enemy utility value: "+cruiserBaseUtility * UltraCruiserUtilityModifier);
+                return cruiserBaseUtility * UltraCruiserUtilityModifier;
+            }
+            else
+            {
+                //Debug.Log("Player utility value: "+cruiserBaseUtility);
+                return cruiserBaseUtility;
+            }
+        }
+
     }
 }

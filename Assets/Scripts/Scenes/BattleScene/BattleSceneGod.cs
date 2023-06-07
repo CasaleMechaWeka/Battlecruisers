@@ -51,7 +51,7 @@ using Unity.Services.Analytics;
 // DLC      => For DLC
 // PERF     => Potential performance hit
 
-//Comments with no spaces after // => made by Dean :)
+
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
@@ -90,7 +90,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public static string enemyCruiserName;
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
-        public GameObject nukeButton;
+        public GameObject ultraPanel;
         private IApplicationModel applicationModel;
 
         public GameObject[] ilegalTutorialSettings;
@@ -293,7 +293,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 navigationPermitters.HotkeyFilter,
                 cameraComponents.CameraFocuser,
                 rightPanelComponents.SpeedComponents,
-                rightPanelComponents.MainMenuManager);
+                rightPanelComponents.MainMenuManager,
+                uiManager);
             _gameEndMonitor
                 = new GameEndMonitor(
                     new CruiserDestroyedMonitor(
@@ -353,9 +354,16 @@ namespace BattleCruisers.Scenes.BattleScene
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
-                if (nukeButton != null)
+                if(ultraPanel != null)
                 {
-                    nukeButton.SetActive(false);
+                    foreach (Transform button in ultraPanel.transform)
+                    {
+                        BuildingButtonController temp = button.GetComponent<BuildingButtonController>();
+                        if (temp.buildableName.text.Equals("Nuke Launcher"))
+                        {
+                            button.gameObject.SetActive(false);
+                        }
+                    }
                 }
                 //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
             }

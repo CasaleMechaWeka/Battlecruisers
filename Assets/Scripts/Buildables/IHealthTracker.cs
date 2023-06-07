@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables
     public interface IHealthTracker
     {
         float Health { get; }
-        float MaxHealth { get; }
+        float MaxHealth { get; set; }
         HealthTrackerState State { set; }
 
         event EventHandler HealthChanged;

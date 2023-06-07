@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Data;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
@@ -13,6 +14,12 @@ namespace BattleCruisers.Cruisers
 
         public override void Initialise(ICruiserArgs args)
         {
+            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            if (applicationModel.SelectedLevel == 36) //This is where UltraCruiser Level is designated
+            {
+                SetUltraCruiserHealth(args);
+                droneBuildingBuildRateBoost = SetUltraCruiserUtility(args, droneBuildingBuildRateBoost);
+            }
             base.Initialise(args);
 
             Assert.IsTrue(droneBuildingBuildRateBoost > 0);

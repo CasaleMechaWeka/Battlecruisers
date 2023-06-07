@@ -45,6 +45,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             return new SpriteChooser(_assignerFactory, copterSprites, maxVelocityProvider);
         }
 
+        public async Task<ISpriteChooser> CreateBroadswordSpriteChooserAsync(IVelocityProvider maxVelocityProvider)
+        {
+            IList<ISpriteWrapper> broadswordSprites = await _spriteProvider.GetBroadswordSpritesAsync();
+            return new SpriteChooser(_assignerFactory, broadswordSprites, maxVelocityProvider);
+        }
+
         public ISpriteChooser CreateDummySpriteChooser(Sprite sprite)
         {
             return new DummySpriteChooser(sprite);

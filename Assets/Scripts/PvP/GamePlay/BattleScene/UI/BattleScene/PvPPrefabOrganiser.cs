@@ -135,8 +135,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     return new PvPUnitKey(PvPUnitCategory.Aircraft, "PvP" + uKey.PrefabName);
                 case UnitCategory.Naval:
                     return new PvPUnitKey(PvPUnitCategory.Naval, "PvP" + uKey.PrefabName);
-                case UnitCategory.Untouchable:
-                    return new PvPUnitKey(PvPUnitCategory.Untouchable, "PvP" + uKey.PrefabName);
+                // case UnitCategory.Untouchable:
+                //     return new PvPUnitKey(PvPUnitCategory.Untouchable, "PvP" + uKey.PrefabName);
                 default:
                     throw new NullReferenceException();
             }
@@ -150,8 +150,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     return PvPUnitCategory.Aircraft;
                 case UnitCategory.Naval:
                     return PvPUnitCategory.Naval;
-                case UnitCategory.Untouchable:
-                    return PvPUnitCategory.Untouchable;
+                // case UnitCategory.Untouchable:
+                //     return PvPUnitCategory.Untouchable;
                 default:
                     throw new NullReferenceException();
             }

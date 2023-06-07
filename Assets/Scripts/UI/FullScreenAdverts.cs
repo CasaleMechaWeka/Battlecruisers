@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
@@ -9,6 +10,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class FullScreenAdverts : MonoBehaviour
@@ -16,15 +18,19 @@ public class FullScreenAdverts : MonoBehaviour
     public DefaultAdvertController defaultAd;
     public Button closeButton;
 
+    private ISettingsManager settingsManager; // For fullscreen ads on premium :)
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //gameObject.SetActive(false);
+        
+
         StartPlatformSpecficAds();
         Button btn = closeButton.GetComponent<Button>();
         btn.onClick.AddListener(CloseAdvert);
     }
+
 
     // Update is called once per frame
 
@@ -43,6 +49,8 @@ public class FullScreenAdverts : MonoBehaviour
     void StartPlatformSpecficAds()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+        settingsManager = applicationModel.DataProvider.SettingsManager;
+
 #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
@@ -50,14 +58,22 @@ public class FullScreenAdverts : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            Assert.IsNotNull(settingsManager);
+            // For premium users, show ads only if ShowAds setting is enabled
+            gameObject.SetActive(settingsManager.ShowAds);
         }
 #elif UNITY_EDITOR && FREE_EDITION
-        gameObject.SetActive(true);
+    gameObject.SetActive(true);
 #else
-        gameObject.SetActive(false);
+        Assert.IsNotNull(settingsManager);
+        gameObject.SetActive(settingsManager.ShowAds);
+    //gameObject.SetActive(false);
 #endif
     }
+
+
+
+
 
     public static float DeviceDiagonalSizeInInches()
     {

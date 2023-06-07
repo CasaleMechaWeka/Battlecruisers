@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
@@ -34,7 +35,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker, 
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer, 
-            IPrefabFactory prefabFactory)
+            IPrefabFactory prefabFactory,
+            IGameModel gameModel)
         {
             IBuildableWrapper<IBuilding> buildingPrefab = prefabFactory.GetBuildingWrapperPrefab(Key);
             BuildingButton buildingButton = GetComponentInChildren<BuildingButton>(includeInactive: true);

@@ -25,11 +25,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
             _MLRSButton = MLRSButton;
             _gatlingMortarButton = gatlingMortarButton;
 
-            _hotkeyDetector.Artillery += _hotkeyDetector_Artillery;
-            _hotkeyDetector.Railgun += _hotkeyDetector_Railgun;
-            _hotkeyDetector.RocketLauncher += _hotkeyDetector_RocketLauncher;
-            _hotkeyDetector.MLRS += _hotkeyDetector_MLRS;
-            _hotkeyDetector.GatlingMortar += _hotkeyDetector_GatlingMortar;
+            _hotkeyDetector.OffensiveButton1 += _hotkeyDetector_Artillery;
+            _hotkeyDetector.OffensiveButton2 += _hotkeyDetector_Railgun;
+            _hotkeyDetector.OffensiveButton3 += _hotkeyDetector_RocketLauncher;
+            _hotkeyDetector.OffensiveButton4 += _hotkeyDetector_MLRS;
+            _hotkeyDetector.OffensiveButton5 += _hotkeyDetector_GatlingMortar;
         }
 
         private void _hotkeyDetector_Artillery(object sender, EventArgs e)
@@ -59,11 +59,11 @@ namespace BattleCruisers.Hotkeys.BuildableButtons
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.Artillery -= _hotkeyDetector_Artillery;
-            _hotkeyDetector.Railgun -= _hotkeyDetector_Railgun;
-            _hotkeyDetector.RocketLauncher -= _hotkeyDetector_RocketLauncher;
-            _hotkeyDetector.MLRS -= _hotkeyDetector_MLRS;
-            _hotkeyDetector.GatlingMortar -= _hotkeyDetector_GatlingMortar;
+            _hotkeyDetector.OffensiveButton1 -= _hotkeyDetector_Artillery;
+            _hotkeyDetector.OffensiveButton2 -= _hotkeyDetector_Railgun;
+            _hotkeyDetector.OffensiveButton3 -= _hotkeyDetector_RocketLauncher;
+            _hotkeyDetector.OffensiveButton4 -= _hotkeyDetector_MLRS;
+            _hotkeyDetector.OffensiveButton5 -= _hotkeyDetector_GatlingMortar;
         }
     }
 }

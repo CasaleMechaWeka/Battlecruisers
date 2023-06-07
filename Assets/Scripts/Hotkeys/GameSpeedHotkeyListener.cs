@@ -49,18 +49,19 @@ namespace BattleCruisers.Hotkeys
             {
                 _speedComponents.NormalSpeedButton.TriggerClick();
             }
-            else{
+            else
+            {
                 _speedComponents.PauseButton.TriggerClick();
             }
-           
         }
 
         public void DisposeManagedState()
         {
+            _hotkeyDetector.PauseSpeed -= _hotkeyDetector_PauseSpeed;
             _hotkeyDetector.SlowMotion -= _hotkeyDetector_SlowMotion;
             _hotkeyDetector.NormalSpeed -= _hotkeyDetector_NormalSpeed;
             _hotkeyDetector.FastForward -= _hotkeyDetector_FastForward;
-            _hotkeyDetector.ToggleSpeed += _hotkeyDetector_ToggleSpeed;
+            _hotkeyDetector.ToggleSpeed -= _hotkeyDetector_ToggleSpeed;
         }
     }
 }

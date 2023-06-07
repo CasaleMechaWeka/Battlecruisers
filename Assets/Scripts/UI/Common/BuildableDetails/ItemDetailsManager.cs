@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _informatorPanel.Show(building);
             _buildingDetails.ShowItemDetails(building);
-            //_selectedItem.Value = building;
+            _selectedItem.Value = building;
         }
 
         public void SelectBuilding(IBuilding building)
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             _informatorPanel.Show(unit);
             _unitDetails.ShowItemDetails(unit);
-            //_selectedItem.Value = unit;
+            _selectedItem.Value = unit;
         }
 
         public void SelectUnit(IUnit unit)

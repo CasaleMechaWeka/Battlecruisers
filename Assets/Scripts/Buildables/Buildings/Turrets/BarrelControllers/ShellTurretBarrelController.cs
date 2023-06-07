@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,8 +8,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     /// <summary>
-    /// Supports mutliple shell spawners (barrels).  The turret stats damage
-    /// is spread accross the barrels (ie, if there are 2 barrels, each barrel
+    /// Supports multiple shell spawners (barrels). The turret stats damage
+    /// is spread across the barrels (i.e., if there are 2 barrels, each barrel
     /// receives half the turret stats' damage).
     /// </summary>
     public class ShellTurretBarrelController : BarrelController
@@ -38,13 +39,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                await spawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, args.TargetFilter);
+                await spawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, args.TargetFilter, TurretStats.AttackCapabilities.ToList());
             }
         }
 
         public override void Fire(float angleInDegrees)
         {
-
             foreach (ShellSpawner spawner in _shellSpawners)
             {
 
@@ -53,4 +53,3 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         }
     }
 }
-

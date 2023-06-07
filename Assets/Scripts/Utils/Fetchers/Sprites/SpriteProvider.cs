@@ -18,6 +18,8 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         private const int NUM_OF_GUNSHIP_SPRITES = 7;
         private const string STEAMCOPTER_SPRITE_NAME = "SteamCopter";
         private const int NUM_OF_STEAMCOPTER_SPRITES = 7;
+        private const string BROADSWORD_SPRITE_NAME = "Broadsword";
+        private const int NUM_OF_BROADSWORD_SPRITES = 10;
         private const string UNIT_SPRITES_PATH = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/";
         private const string SPRITES_FILE_EXTENSION = ".png";
 
@@ -45,6 +47,10 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         public async Task<IList<ISpriteWrapper>> GetSteamCopterSpritesAsync()
         {
             return await GetAircraftSpritesAsync(GetSpritePath(STEAMCOPTER_SPRITE_NAME), NUM_OF_STEAMCOPTER_SPRITES);
+        }
+        public async Task<IList<ISpriteWrapper>> GetBroadswordSpritesAsync()
+        {
+            return await GetAircraftSpritesAsync(GetSpritePath(BROADSWORD_SPRITE_NAME), NUM_OF_BROADSWORD_SPRITES);
         }
 
         private string GetSpritePath(string spriteName)

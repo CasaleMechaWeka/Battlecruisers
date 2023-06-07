@@ -8,7 +8,9 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -37,6 +39,10 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected virtual int NumOfBarrels => 1;
         public Transform Transform => transform;
         public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
+
+
+        protected List<TargetType> attackCapabilities;
+
 
         public SpriteRenderer[] Renderers { get; private set; }
 
@@ -83,10 +89,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             TurretStats turretStats = gameObject.GetComponent<TurretStats>();
             Assert.IsNotNull(turretStats);
             turretStats.Initialise();
+
+            // Get the attack capabilities from the BasicTurretStats component
+            attackCapabilities = turretStats.AttackCapabilities.ToList();
+
             return turretStats;
         }
-		
-		protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
+
+
+        protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
 		{
 			FireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<FireIntervalManagerInitialiser>();
 			Assert.IsNotNull(fireIntervalManagerInitialiser);
@@ -96,8 +107,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected virtual IDamageCapability FindDamageCapabilities()
         {
             float damagePerS = NumOfBarrels * _projectileStats.Damage * TurretStats.MeanFireRatePerS;
-            return new DamageCapability(damagePerS, TurretStats.AttackCapabilities);
+            return new DamageCapability(damagePerS, attackCapabilities);
         }
+
 
         public async Task InitialiseAsync(IBarrelControllerArgs args)
         {

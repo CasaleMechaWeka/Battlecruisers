@@ -1,4 +1,6 @@
-﻿using BattleCruisers.Data.Models;
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -23,8 +25,9 @@ namespace BattleCruisers.Data.Static
         private readonly IList<UnitKey> _allUnits;
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
-        public const int NUM_OF_LEVELS = 31;
+        public const int NUM_OF_LEVELS = 40;
         public const int NUM_OF_PvPLEVELS = 9;
+        public const int NUM_OF_STANDARD_LEVELS = 31;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
 
 #if IS_DEMO
@@ -46,7 +49,7 @@ namespace BattleCruisers.Data.Static
         public ReadOnlyCollection<UnitKey> UnitKeys { get; }
         public ReadOnlyCollection<BuildingKey> BuildingKeys { get; }
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
-        public int LastLevelWithLoot => 31;
+        public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
 
         public StaticData()
@@ -119,6 +122,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.Mortar,
                 StaticPrefabKeys.Buildings.SamSite,
                 StaticPrefabKeys.Buildings.TeslaCoil,
+                StaticPrefabKeys.Buildings.Coastguard,//new
 
                 // Offence
                 StaticPrefabKeys.Buildings.Artillery,
@@ -126,14 +130,17 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Buildings.RocketLauncher,
                 StaticPrefabKeys.Buildings.MLRS,
                 StaticPrefabKeys.Buildings.GatlingMortar,
+                StaticPrefabKeys.Buildings.IonCannon,//new
+                StaticPrefabKeys.Buildings.MissilePod,//new
 
                 // Ultras
                 StaticPrefabKeys.Buildings.DeathstarLauncher,
                 StaticPrefabKeys.Buildings.NukeLauncher,
                 StaticPrefabKeys.Buildings.Ultralisk,
                 StaticPrefabKeys.Buildings.KamikazeSignal,
-                StaticPrefabKeys.Buildings.Broadsides
-            };
+                StaticPrefabKeys.Buildings.Broadsides,
+                StaticPrefabKeys.Buildings.NovaArtillery//new
+			};
         }
 
         private IList<BuildingKey> CreateAIBannedUltraKeys()
@@ -166,6 +173,7 @@ namespace BattleCruisers.Data.Static
                 StaticPrefabKeys.Units.Gunship,
                 StaticPrefabKeys.Units.Fighter,
                 StaticPrefabKeys.Units.SteamCopter,
+                StaticPrefabKeys.Units.Broadsword,
 
                 // Ships
                 StaticPrefabKeys.Units.AttackBoat,
@@ -187,7 +195,7 @@ namespace BattleCruisers.Data.Static
         {
             HullKey initialHull = GetInitialHull();
             // TEMP  For final game, don't add ALL the prefabs :D
-            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits());
+            Loadout playerLoadout = new Loadout(initialHull, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
 
             bool hasAttemptedTutorial = false;
@@ -207,6 +215,69 @@ namespace BattleCruisers.Data.Static
             //unlockedUnits: AllUnitKeys());
         }
 
+        private Dictionary<BuildingCategory, List<BuildingKey>> GetInitialbuildingLimit()
+        {
+            List<BuildingKey> limit = GetInitialBuildings();
+            List<BuildingKey> factories = new List<BuildingKey>();
+            List<BuildingKey> defence = new List<BuildingKey>();
+            List<BuildingKey> offense = new List<BuildingKey>();
+            List<BuildingKey> tactical = new List<BuildingKey>();
+            List<BuildingKey> Ultra = new List<BuildingKey>();
+            foreach (BuildingKey key in limit)
+            {
+                switch (key.BuildingCategory)
+                {
+                    case BuildingCategory.Factory:
+                        factories.Add(key);
+                        break;
+                    case BuildingCategory.Defence:
+                        defence.Add(key);
+                        break;
+                    case BuildingCategory.Offence:
+                        offense.Add(key);
+                        break;
+                    case BuildingCategory.Tactical:
+                        tactical.Add(key);
+                        break;
+                    case BuildingCategory.Ultra:
+                        Ultra.Add(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
+            {
+                { BuildingCategory.Factory, factories },
+                { BuildingCategory.Defence, defence },
+                { BuildingCategory.Offence, offense },
+                { BuildingCategory.Tactical, tactical },
+                { BuildingCategory.Ultra, Ultra }
+            };
+            return buildables;
+        }
+
+        private Dictionary<UnitCategory, List<UnitKey>> GetInitialUnitLimit()
+        {
+            List<UnitKey> units = GetInitialUnits();
+            List<UnitKey> ships = new();
+            List<UnitKey> aircraft = new();
+            foreach (UnitKey unit in units)
+            {
+                if (unit.UnitCategory == UnitCategory.Naval)
+                    ships.Add(unit);
+                else if (unit.UnitCategory == UnitCategory.Aircraft)
+                    aircraft.Add(unit);
+                else
+                    break;
+            }
+            Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
+            {
+                {UnitCategory.Naval, ships },
+                {UnitCategory.Aircraft, aircraft }
+            };
+            return unitlimit;
+        }
         private HullKey GetInitialHull()
         {
             return StaticPrefabKeys.Hulls.Trident;
@@ -235,7 +306,7 @@ namespace BattleCruisers.Data.Static
                 new Level(4, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
                 new Level(5, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
                 new Level(6, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
-                new Level(7, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
+                new Level(7, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
 
                 // Set 3:  Rockjaw
                 new Level(8, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Cold),
@@ -244,14 +315,14 @@ namespace BattleCruisers.Data.Static
 
                 // Set 4:  Eagle
                 new Level(11, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midnight),
-                new Level(12, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
-                new Level(13, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
+                new Level(12, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
+                new Level(13, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Dusk),
                 new Level(14, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
                 new Level(15, StaticPrefabKeys.Hulls.ManOfWarBoss, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
 
                 // Set 5:  Hammerhead
                 new Level(16, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Experimental, SkyMaterials.Morning),
-                new Level(17, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
+                new Level(17, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Nothing, SkyMaterials.Midday),
                 new Level(18, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Dusk),
 
                 // Set 6:  Longbow
@@ -261,17 +332,28 @@ namespace BattleCruisers.Data.Static
                 new Level(22, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Confusion, SkyMaterials.Sunrise),
 
                 // Set 7:  Megolodon
-                new Level(23, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
+                new Level(23, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Bobby, SkyMaterials.Dusk),
                 new Level(24, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Midnight),
-                new Level(25, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
-                new Level(26, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
+                new Level(25, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
+                new Level(26, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Confusion, SkyMaterials.Midday),
 				
 			     // Set 8:  Huntress Prime
-                new Level(27, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(27, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
                 new Level(28, StaticPrefabKeys.Hulls.BlackRig, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
                 new Level(29, StaticPrefabKeys.Hulls.Rickshaw, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
                 new Level(30, StaticPrefabKeys.Hulls.Yeti, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
-                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise)
+                new Level(31, StaticPrefabKeys.Hulls.HuntressBoss, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise), //HUNTRESS PRIME
+
+                 // Set 9:  Secret Levels
+                new Level(32, StaticPrefabKeys.Hulls.Trident, SoundKeys.Music.Background.Experimental, SkyMaterials.Purple),
+                new Level(33, StaticPrefabKeys.Hulls.Raptor, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Cold),
+                new Level(34, StaticPrefabKeys.Hulls.Bullshark, SoundKeys.Music.Background.Againagain, SkyMaterials.Dusk),
+                new Level(35, StaticPrefabKeys.Hulls.Rockjaw, SoundKeys.Music.Background.Confusion, SkyMaterials.Midnight),
+                new Level(36, StaticPrefabKeys.Hulls.Eagle, SoundKeys.Music.Background.Bobby, SkyMaterials.Sunrise),
+                new Level(37, StaticPrefabKeys.Hulls.Hammerhead, SoundKeys.Music.Background.Sleeper, SkyMaterials.Midday),
+                new Level(38, StaticPrefabKeys.Hulls.Longbow, SoundKeys.Music.Background.Nothing, SkyMaterials.Morning),
+                new Level(39, StaticPrefabKeys.Hulls.Megalodon, SoundKeys.Music.Background.Juggernaut, SkyMaterials.Sunrise),
+                new Level(40, StaticPrefabKeys.Hulls.TasDevil, SoundKeys.Music.Background.Againagain, SkyMaterials.Midnight) //TODO: Change to new boss broadsword
             };
         }
 
@@ -305,7 +387,7 @@ namespace BattleCruisers.Data.Static
             return new Dictionary<BuildingKey, int>()
             {
                 // Factories
-                { StaticPrefabKeys.Buildings.AirFactory, 1 },
+                { StaticPrefabKeys.Buildings.AirFactory, 1 },  //The number represents the first level you get this item, so it unlocks when you win the previous level.
                 { StaticPrefabKeys.Buildings.NavalFactory, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation, 1 },
                 { StaticPrefabKeys.Buildings.DroneStation4, 27 },
@@ -324,6 +406,8 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Mortar, 3 },
                 { StaticPrefabKeys.Buildings.SamSite, 5 },
                 { StaticPrefabKeys.Buildings.TeslaCoil, 21 },
+                { StaticPrefabKeys.Buildings.Coastguard, 39 },
+                { StaticPrefabKeys.Buildings.MissilePod, 36 },
 
                 // Offence
                 { StaticPrefabKeys.Buildings.Artillery, 1 },
@@ -331,13 +415,15 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Buildings.Railgun, 6 },
                 { StaticPrefabKeys.Buildings.MLRS, 29},
                 { StaticPrefabKeys.Buildings.GatlingMortar, 32},
+                { StaticPrefabKeys.Buildings.IonCannon, 37 },
 
                 // Ultras
                 { StaticPrefabKeys.Buildings.DeathstarLauncher, 7 },
                 { StaticPrefabKeys.Buildings.NukeLauncher, 10 },
                 { StaticPrefabKeys.Buildings.Ultralisk, 14 },
                 { StaticPrefabKeys.Buildings.KamikazeSignal, 22 },
-                { StaticPrefabKeys.Buildings.Broadsides, 25 }
+                { StaticPrefabKeys.Buildings.Broadsides, 25 },
+                { StaticPrefabKeys.Buildings.NovaArtillery, 33 }
             };
         }
 
@@ -350,6 +436,7 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Units.Gunship, 5 },
                 { StaticPrefabKeys.Units.Fighter, 12 },
                 { StaticPrefabKeys.Units.SteamCopter, 28 },
+                { StaticPrefabKeys.Units.Broadsword, 41 },
                 
                 // Ships
                 { StaticPrefabKeys.Units.AttackBoat, 1 },
@@ -372,10 +459,10 @@ namespace BattleCruisers.Data.Static
                 { StaticPrefabKeys.Hulls.Hammerhead, 19 },
                 { StaticPrefabKeys.Hulls.Longbow, 23 },
                 { StaticPrefabKeys.Hulls.Megalodon, 26 },
-                { StaticPrefabKeys.Hulls.BlackRig, 32 },
-                { StaticPrefabKeys.Hulls.TasDevil, 32 },
-                { StaticPrefabKeys.Hulls.Yeti, 32 },
-                { StaticPrefabKeys.Hulls.Rickshaw, 32 }
+                { StaticPrefabKeys.Hulls.Rickshaw, 34 },
+                { StaticPrefabKeys.Hulls.TasDevil, 35 },
+                { StaticPrefabKeys.Hulls.BlackRig, 38 },
+                { StaticPrefabKeys.Hulls.Yeti, 40 }
             };
         }
 
@@ -441,7 +528,7 @@ namespace BattleCruisers.Data.Static
 
         public int LevelFirstAvailableIn(BuildingKey buildingKey)
         {
-            Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
+            //Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
             return _buildingToUnlockedLevel[buildingKey];
         }
     }

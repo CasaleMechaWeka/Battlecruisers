@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         public TPrefab GetPrefab(IPrefabKey prefabKey)
         {
             Assert.IsNotNull(prefabKey);
-            Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
+            //Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
             return _prefabs[prefabKey];
         }
     }
