@@ -16,14 +16,15 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class GameModel : IGameModel, IVoyageModel, IPlayerModel
     {
+
+        // Voyage properties - These are for ROGUE voyages, currently unused.
+
         private int _voyageNumber;
         public int VoyageNumber
         {
             get => _voyageNumber;
             set => _voyageNumber = value;
         }
-
-        // Voyage properties
 
         private int _legNumber;
         public int LegNumber
@@ -53,7 +54,7 @@ namespace BattleCruisers.Data.Models
             set => _voyageInProgress = value;
         }
 
-        // Player properties
+        // Player properties - for determining ROGUE player strength
 
 
         private int _totalUpgrades;
