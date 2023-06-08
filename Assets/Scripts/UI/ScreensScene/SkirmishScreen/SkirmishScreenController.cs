@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         public StringDropdown strategyDropdown, playerCruiserDropdown, aiCruiserDropdown;
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod, 
+            IScreensSceneGod screensSceneGod,
             IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
             ILocTable commonStrings,
@@ -169,7 +169,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
         public void Home()
         {
             SaveSkirmishSettings();
-            _screensSceneGod.GoToHomeScreen();
+            _screensSceneGod.GotoHubScreen();
         }
 
         private void SaveSkirmishSettings()

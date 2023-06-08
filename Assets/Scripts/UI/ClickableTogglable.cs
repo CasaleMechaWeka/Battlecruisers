@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI
@@ -15,6 +16,14 @@ namespace BattleCruisers.UI
     {
         private bool _isPressed = false;
         private bool _isHover = false;
+        protected GameObject _selectedFeedback;
+        public bool IsSelected
+        {
+            set
+            {
+                _selectedFeedback?.SetActive(value);
+            }
+        }
 
         public event EventHandler Clicked;
         public event EventHandler PointerDown;
@@ -26,8 +35,8 @@ namespace BattleCruisers.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             Logging.Verbose(Tags.UI, $"id: {gameObject.GetInstanceID()}  name: {gameObject.name}");
-
             OnClicked();
+            IsSelected = true;
             Clicked?.Invoke(this, EventArgs.Empty);
         }
 
@@ -74,7 +83,7 @@ namespace BattleCruisers.UI
 
             _isHover = true;
 
-            if (Enabled 
+            if (Enabled
                 && ShowHoverFeedback
                 && !_isPressed)
             {
@@ -88,7 +97,7 @@ namespace BattleCruisers.UI
 
             _isHover = false;
 
-            if (Enabled 
+            if (Enabled
                 && ShowHoverFeedback
                 && !_isPressed)
             {

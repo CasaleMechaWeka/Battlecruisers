@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class LevelsScreenController : ScreenController
-	{
+    {
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
         private int _numOfLevelsUnlocked;
@@ -27,8 +27,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private LevelsSetController VisibleLevelsSet => _levelSets[VisibleSetIndex];
 
         private int _visibleSetIndex;
-        public int VisibleSetIndex 
-        { 
+        public int VisibleSetIndex
+        {
             get { return _visibleSetIndex; }
             private set
             {
@@ -43,11 +43,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
-		public async Task InitialiseAsync(
+        public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IList<LevelInfo> levels, 
-            int numOfLevelsUnlocked, 
+            IList<LevelInfo> levels,
+            int numOfLevelsUnlocked,
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashDataList,
             INextLevelHelper nextLevelHelper)
@@ -72,9 +72,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         private async Task InitialiseLevelSetsAsync(
             ISingleSoundPlayer soundPlayer,
-            IScreensSceneGod screensSceneGod, 
-            IList<LevelInfo> levels, 
-            int numOfLevelsUnlocked, 
+            IScreensSceneGod screensSceneGod,
+            IList<LevelInfo> levels,
+            int numOfLevelsUnlocked,
             IDifficultySpritesProvider difficultySpritesProvider,
             ITrashTalkProvider trashDataList)
         {
@@ -124,17 +124,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             VisibleLevelsSet.IsVisible = true;
         }
 
-		private void NextSetCommandExecute()
-		{
-			ShowSet(VisibleSetIndex + 1);
-		}
+        private void NextSetCommandExecute()
+        {
+            ShowSet(VisibleSetIndex + 1);
+        }
 
-		private bool CanNextSetCommandExecute()
-		{
+        private bool CanNextSetCommandExecute()
+        {
             return
                 VisibleSetIndex < _levelSets.Count - 1
                 && VisibleLevelsSet.LastLevelNum < _numOfLevelsUnlocked;
-		}
+        }
 
         private void PreviousSetCommandExecute()
         {
@@ -148,7 +148,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public override void Cancel()
         {
-            _screensSceneGod.GoToHomeScreen();
+            _screensSceneGod.GotoHubScreen();
         }
     }
 }

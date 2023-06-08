@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void StartBattleHub()
         {
-
+            _screensSceneGod.GotoHubScreen();
         }
 
         public void GoToLevelsScreen()

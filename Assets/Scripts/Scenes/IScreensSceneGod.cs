@@ -1,10 +1,12 @@
-﻿namespace BattleCruisers.Scenes
+﻿using BattleCruisers.UI.ScreensScene;
+namespace BattleCruisers.Scenes
 {
     public interface IScreensSceneGod
     {
         void GoToLevelsScreen();
         void GoToHomeScreen();
         void GoToLoadoutScreen();
+        void GotoHubScreen();
         void GoToSettingsScreen();
         void GoToChooseDifficultyScreen();
         void GoToSkirmishScreen();
@@ -16,4 +18,3 @@
         void LoadMultiplayScene();
     }
 }
-	

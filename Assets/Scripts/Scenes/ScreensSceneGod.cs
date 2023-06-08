@@ -12,6 +12,7 @@ using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.SettingsScreen;
 using BattleCruisers.UI.ScreensScene.SkirmishScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -51,6 +52,7 @@ namespace BattleCruisers.Scenes
         //public LoadoutScreenController loadoutScreen;
         public InfiniteLoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
+        public BattleHubScreensController hubScreen;
         public TrashScreenController trashScreen;
         public TrashTalkDataList trashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
@@ -83,7 +85,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -131,6 +133,7 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
@@ -225,6 +228,12 @@ namespace BattleCruisers.Scenes
         }
 
 
+        public void GotoHubScreen()
+        {
+            GoToScreen(hubScreen);
+        }
+
+
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {
@@ -264,11 +273,6 @@ namespace BattleCruisers.Scenes
         public void GoToLoadoutScreen()
         {
             GoToScreen(loadoutScreen);
-        }
-
-        public void GoToBattleHub()
-        {
-
         }
 
         public void GoToSettingsScreen()

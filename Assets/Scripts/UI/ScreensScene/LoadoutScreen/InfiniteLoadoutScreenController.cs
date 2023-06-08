@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             _dataProvider.SaveGame();
             _comparingFamilyTracker.SetComparingFamily(null);
-            _screensSceneGod.GoToHomeScreen();
+            _screensSceneGod.GotoHubScreen();
         }
 
         public void DisposeManagedState()
