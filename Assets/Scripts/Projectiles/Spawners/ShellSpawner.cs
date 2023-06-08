@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Spawners
     public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         private ITargetFilter _targetFilter;
-        public List<TargetType> AttackCapabilities { get; private set; }
+        public new List<TargetType> AttackCapabilities { get; private set; }
 
         public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter, List<TargetType> attackCapabilities)
         {

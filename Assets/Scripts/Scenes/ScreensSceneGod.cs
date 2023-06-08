@@ -34,20 +34,20 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
-	{
-		private IPrefabFactory _prefabFactory;
-		private ScreenController _currentScreen;
+    {
+        private IPrefabFactory _prefabFactory;
+        private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
-		private IGameModel _gameModel;
+        private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
 
         public HomeScreenController homeScreen;
-		public LevelsScreenController levelsScreen;      
-		public PostBattleScreenController postBattleScreen;
+        public LevelsScreenController levelsScreen;
+        public PostBattleScreenController postBattleScreen;
         //public LoadoutScreenController loadoutScreen;
         public InfiniteLoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
@@ -78,10 +78,10 @@ namespace BattleCruisers.Scenes
         public bool testSkirmishScreen = false;
         [Header("For testing the loadout screen")]
         public bool testLoadoutScreen = false;
-        public DestructionRanker ranker;        
+        public DestructionRanker ranker;
 
         async void Start()
-		{
+        {
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, trashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
@@ -90,14 +90,14 @@ namespace BattleCruisers.Scenes
             ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
-            
+
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
-			_dataProvider = _applicationModel.DataProvider;
-			_gameModel = _dataProvider.GameModel;
+            _dataProvider = _applicationModel.DataProvider;
+            _gameModel = _dataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
@@ -106,7 +106,7 @@ namespace BattleCruisers.Scenes
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
-            
+
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
             trashDataList.Initialise(storyStrings);
             _isPlaying = false;
@@ -126,7 +126,7 @@ namespace BattleCruisers.Scenes
                 _musicPlayer = Substitute.For<IMusicPlayer>();
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
-         
+
             SpriteFetcher spriteFetcher = new SpriteFetcher();
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
@@ -138,7 +138,7 @@ namespace BattleCruisers.Scenes
 
             if (_applicationModel.ShowPostBattleScreen)
             {
-				_applicationModel.ShowPostBattleScreen = false;
+                _applicationModel.ShowPostBattleScreen = false;
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync(difficultySpritesProvider, screensSceneStrings);
@@ -182,7 +182,7 @@ namespace BattleCruisers.Scenes
             else if (testSkirmishScreen)
             {
                 GoToSkirmishScreen();
-            } 
+            }
             else if (testLoadoutScreen)
             {
                 GoToLoadoutScreen();
@@ -192,14 +192,14 @@ namespace BattleCruisers.Scenes
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
-            if(_gameModel.PremiumEdition)
+            if (_gameModel.PremiumEdition)
             {
                 thankYouPlane.SetTrigger("Play");
                 _isPlaying = true;
             }
 
-            
-            
+
+
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
@@ -224,18 +224,18 @@ namespace BattleCruisers.Scenes
             GoToScreen(levelsScreen);
         }
 
- 
+
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
 
             await levelsScreen.InitialiseAsync(
-                this, 
-                _soundPlayer, 
-                levels, 
-                testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
-                difficultySpritesProvider, 
+                this,
+                _soundPlayer,
+                levels,
+                testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
+                difficultySpritesProvider,
                 trashDataList,
                 nextLevelHelper);
         }
@@ -261,9 +261,14 @@ namespace BattleCruisers.Scenes
             return levels;
         }
 
-		public void GoToLoadoutScreen()
-		{
+        public void GoToLoadoutScreen()
+        {
             GoToScreen(loadoutScreen);
+        }
+
+        public void GoToBattleHub()
+        {
+
         }
 
         public void GoToSettingsScreen()
@@ -272,32 +277,33 @@ namespace BattleCruisers.Scenes
         }
 
         private static int levelToShowCutscene = 0;
-		public void GoToTrashScreen(int levelNum)
+        public void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-			_applicationModel.SelectedLevel = levelNum;
+            _applicationModel.SelectedLevel = levelNum;
 
             if (_applicationModel.Mode == GameMode.Campaign)
             {
-                if (LevelStages.STAGE_STARTS.Contains(levelNum-1) && levelToShowCutscene != levelNum)
+                if (LevelStages.STAGE_STARTS.Contains(levelNum - 1) && levelToShowCutscene != levelNum)
                 {
                     levelToShowCutscene = levelNum;
                     //GoToScreen(trashScreen, playDefaultMusic: false);
                     _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
-                else{
+                else
+                {
                     levelToShowCutscene = 0;
                     //_musicPlayer.PlayTrashMusic();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
 
                 }
-                
+
             }
             else
             {
@@ -306,14 +312,14 @@ namespace BattleCruisers.Scenes
         }
 
         public void GoStraightToTrashScreen(int levelNum)
-		{
+        {
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked, 
+                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-			_applicationModel.SelectedLevel = levelNum;
+            _applicationModel.SelectedLevel = levelNum;
 
             if (_applicationModel.Mode == GameMode.Campaign)
             {
@@ -338,22 +344,22 @@ namespace BattleCruisers.Scenes
         }
 
         private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
-		{
+        {
             AdvertisingBanner.stopAdvert();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
 
             Assert.AreNotEqual(_currentScreen, destinationScreen);
 
-			if (_currentScreen != null)
-			{
+            if (_currentScreen != null)
+            {
                 _currentScreen.OnDismissing();
-				_currentScreen.gameObject.SetActive(false);
+                _currentScreen.gameObject.SetActive(false);
                 _soundPlayer.PlaySoundAsync(SoundKeys.UI.ScreenChange);
-			}
+            }
 
-			_currentScreen = destinationScreen;
-			_currentScreen.gameObject.SetActive(true);
+            _currentScreen = destinationScreen;
+            _currentScreen.gameObject.SetActive(true);
             _currentScreen.OnPresenting(activationParameter: null);
 
             if (playDefaultMusic)
@@ -400,7 +406,7 @@ namespace BattleCruisers.Scenes
                 _currentScreen?.Cancel();
             }
 
-            if(_gameModel != null)
+            if (_gameModel != null)
             {
                 if (_gameModel.PremiumEdition)
                 {
@@ -410,7 +416,7 @@ namespace BattleCruisers.Scenes
                     }
                 }
             }
-            
+
         }
     }
 }

@@ -10,17 +10,17 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
     public class HomeScreenController : ScreenController, IHomeScreen
-	{
-		private BattleResult _lastBattleResult;
+    {
+        private BattleResult _lastBattleResult;
         private INextLevelHelper _nextLevelHelper;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer, 
+            ISingleSoundPlayer soundPlayer,
             IDataProvider dataProvider,
             INextLevelHelper nextLevelHelper)
-		{
-			base.Initialise(screensSceneGod);
+        {
+            base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(dataProvider, nextLevelHelper);
 
@@ -57,17 +57,23 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         }
 
         public void Continue()
-		{
+        {
             Assert.IsNotNull(_lastBattleResult);
 
             int nextLevelToPlay = _nextLevelHelper.FindNextLevel();
-			_screensSceneGod.GoToTrashScreen(nextLevelToPlay);
-		}
+            _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
+        }
+
+
+        public void StartBattleHub()
+        {
+
+        }
 
         public void GoToLevelsScreen()
-		{
+        {
             _screensSceneGod.GoToLevelsScreen();
-		}
+        }
 
         public void GoToMultiplayScreen()
         {
@@ -75,9 +81,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         }
 
         public void GoToLoadoutScreen()
-		{
+        {
             _screensSceneGod.GoToLoadoutScreen();
-		}
+        }
 
         public void GoToSettingsScreen()
         {
@@ -91,9 +97,9 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         }
 
         public void Quit()
-		{
-			Application.Quit();
-		}
+        {
+            Application.Quit();
+        }
 
         public void GoToChooseDifficultyScreen()
         {
