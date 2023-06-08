@@ -6,8 +6,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         // Cruisers
         Hull,
-        // Captains
-        Captains,
         // Buildings
         Factory, Defense, Offensive, Tactical, Ultra,
         // Units
@@ -16,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
     public enum ItemFamily
     {
-        Hulls, Captains, Buildings, Units
+        Hulls, Buildings, Units
     }
 
     public interface IItemsPanel : IPanel
