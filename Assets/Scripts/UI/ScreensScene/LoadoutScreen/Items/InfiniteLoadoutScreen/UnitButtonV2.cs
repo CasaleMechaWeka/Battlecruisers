@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private UnitKey _unitkey;
         public override IComparableItem Item => _unitPrefab.Buildable;
         public TextMeshProUGUI _unitName;
-        private new RectTransform _selectedFeedback;
+        private RectTransform _selectedFeedback;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,

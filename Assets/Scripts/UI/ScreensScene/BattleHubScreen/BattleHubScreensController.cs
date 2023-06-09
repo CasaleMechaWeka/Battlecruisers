@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
@@ -13,6 +14,7 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Ping = UnityEngine.Ping;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -32,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
 
-        public CanvasGroupButton continueButton, levelsButton, skirmishButton;
+        public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -60,6 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             continueButton.Initialise(_soundPlayer, Continue);
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
             skirmishButton.Initialise(_soundPlayer, GoToSkirmishScreen);
+            battleButton.Initialise(_soundPlayer, GotoBattleMode);
 
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
@@ -144,6 +147,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoToSkirmishScreen()
         {
             _screensSceneGod.GoToSkirmishScreen();
+        }
+
+        public void GotoBattleMode()
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                _screensSceneGod.LoadBattle1v1Mode();
+            }
+            else
+            {
+                _screensSceneGod.LoadMultiplayScene();
+            }
         }
 
 

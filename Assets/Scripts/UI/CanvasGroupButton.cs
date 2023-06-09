@@ -21,7 +21,7 @@ namespace BattleCruisers.UI
 
             _canvasGroup = GetComponent<CanvasGroup>();
             if (hasFeedback)
-                _selectedFeedback = transform.FindNamedComponent<Transform>("SelectedFeedback").gameObject;
+                _selectedFeedbackIcon = transform.FindNamedComponent<Transform>("SelectedFeedback").gameObject;
             Assert.IsNotNull(_canvasGroup);
         }
     }

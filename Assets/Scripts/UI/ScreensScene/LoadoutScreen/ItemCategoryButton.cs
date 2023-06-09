@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IGameModel _gameModel;
         private bool _hasUnlockedItem;
-        private new GameObject _selectedFeedback;
+        private GameObject _selectedFeedback;
         private NewItemMark _newItemMark;
         // private RectTransform _itemCategoryButton;
 

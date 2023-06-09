@@ -390,6 +390,10 @@ namespace BattleCruisers.Scenes
             CleanUp();
         }
 
+        public void LoadBattle1v1Mode()
+        {
+
+        }
         private void CleanUp()
         {
             loadoutScreen.DisposeManagedState();

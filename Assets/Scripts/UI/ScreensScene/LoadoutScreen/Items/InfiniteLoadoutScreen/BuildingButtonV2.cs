@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private BuildingKey _buildingKey;
         public override IComparableItem Item => _buildingPrefab.Buildable;
         public TextMeshProUGUI _buildingName;
-        private new RectTransform _selectedFeedback;
+        private RectTransform _selectedFeedback;
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
