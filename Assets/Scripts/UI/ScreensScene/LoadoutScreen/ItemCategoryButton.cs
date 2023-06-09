@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IGameModel _gameModel;
         private bool _hasUnlockedItem;
-        private GameObject _selectedFeedback;
+        private new GameObject _selectedFeedback;
         private NewItemMark _newItemMark;
         // private RectTransform _itemCategoryButton;
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected abstract ItemFamily ItemFamily { get; }
 
-        private bool IsSelected
+        private new bool IsSelected
         {
             set
             {
@@ -42,8 +42,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer, 
-            IItemPanelsController itemPanels, 
+            ISingleSoundPlayer soundPlayer,
+            IItemPanelsController itemPanels,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             IGameModel gameModel,
             IList<IItemButton> itemButtons,
@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemPanels = itemPanels;
             _itemPanels.PotentialMatchChange += _itemPanels_PotentialMatchChange;
 
-            
+
             _itemFamilyTracker = itemFamilyTracker;
 
             _itemFamilyToCompare = itemFamilyToCompare;
@@ -104,14 +104,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectedFeedback()
         {
-           /* if (_itemPanels.IsMatch(itemType))
-            {
-                _itemCategoryButton.sizeDelta = buttonWidth;
-            }
-            else
-            {
-                _itemCategoryButton.sizeDelta = new Vector2(150, 150);
-            } */
+            /* if (_itemPanels.IsMatch(itemType))
+             {
+                 _itemCategoryButton.sizeDelta = buttonWidth;
+             }
+             else
+             {
+                 _itemCategoryButton.sizeDelta = new Vector2(150, 150);
+             } */
             IsSelected = _itemPanels.IsMatch(itemType);
         }
 

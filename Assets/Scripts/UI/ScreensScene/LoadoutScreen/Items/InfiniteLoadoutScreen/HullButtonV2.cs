@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         private HullKey _hullKey;
         private IBroadcastingProperty<HullKey> _selectedHull;
-        private RectTransform _selectedFeedback;
+        private new RectTransform _selectedFeedback;
         public TextMeshProUGUI _unitName;
 
         private Cruiser _cruiserPrefab;
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IItemDetailsManager itemDetailsManager, 
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             Cruiser cruiserPrefab,

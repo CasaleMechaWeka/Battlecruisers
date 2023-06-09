@@ -23,11 +23,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private BuildingKey _buildingKey;
         public override IComparableItem Item => _buildingPrefab.Buildable;
         public TextMeshProUGUI _buildingName;
-        private RectTransform _selectedFeedback;
+        private new RectTransform _selectedFeedback;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer, 
-            IItemDetailsManager itemDetailsManager, 
+            ISingleSoundPlayer soundPlayer,
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBuildableWrapper<IBuilding> buildingPrefab,
             IGameModel gameModel,
@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemFamilyTracker = comparingFamiltyTracker;
             _itemFamilyTracker.ComparingFamily.ValueChanged += OnListChange;
             _gameModel = gameModel;
-            _buildingKey = buildingKey; 
+            _buildingKey = buildingKey;
             Assert.IsNotNull(buildingPrefab);
             _buildingPrefab = buildingPrefab;
             _buildingName.text = (buildingPrefab.Buildable.Name).ToString();
