@@ -33,6 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
+        public ArenaSelectPanelScreenController arenaSelectPanel;
 
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
@@ -68,8 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             shopPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-
-
+            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
         }
 
 
@@ -157,8 +157,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             else
             {
-                _screensSceneGod.LoadMultiplayScene();
+                GoToScreen(arenaSelectPanel);
+                // _screensSceneGod.LoadMultiplayScene();
             }
+        
         }
 
 

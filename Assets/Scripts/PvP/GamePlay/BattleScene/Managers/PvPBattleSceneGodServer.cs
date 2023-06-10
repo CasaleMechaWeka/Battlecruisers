@@ -128,8 +128,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
-
-
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
 
