@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
 
         }
-        public void Initialise(IMultiplayScreensSceneGod matchmakingLoadingSceneGod,
+        public void Initialise(IScreensSceneGod matchmakingLoadingSceneGod,
                            ISingleSoundPlayer soundPlayer,
                            IDataProvider dataProvider)
         {

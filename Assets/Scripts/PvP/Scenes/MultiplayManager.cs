@@ -43,7 +43,7 @@ using Random = UnityEngine.Random;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
-    public class MultiplayScreensSceneGod : GameStateBehaviour, IMultiplayScreensSceneGod
+    public class MultiplayManager : GameStateBehaviour, IMultiplayScreensSceneGod
     {
 
         public override GameState ActiveState { get { return GameState.MultiplayScreenScene; } }
@@ -63,9 +63,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private string k_DefaultLobbyName;
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // screens
-        public MultiplayScreenController multiplayScreen;
-        public MatchmakingScreenController matchmakingScreen;
 
         public int defaultLevel;
 
@@ -149,13 +146,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private void onMatchmakingFailed()
         {
-            GoToScreen(multiplayScreen);
-            matchmakingScreen.ResetMatchmakingAnimation();
+
         }
 
         private void onMatchmakingStarted()
         {
-            matchmakingScreen.StartMatchmaking();
+          
         }
 
         private async Task JoinWithLobbyRequest()
@@ -373,7 +369,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async void Start()
         {
-            Helper.AssertIsNotNull(multiplayScreen, _uiAudioSource, trashDataList);
+            Helper.AssertIsNotNull( _uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -416,14 +412,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
 
-            multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
-            matchmakingScreen.Initialise(this, _soundPlayer, _dataProvider);
 
 
-            multiplayScreen.gameObject.SetActive(true);
-            matchmakingScreen.gameObject.SetActive(false);
 
-            _currentScreen = multiplayScreen;
+   
+
+ 
 
 
             // Temp only because I am starting the scene without a previous choose level scene
@@ -433,7 +427,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            sceneNavigator.SceneLoaded(SceneNames.MULTIPLAY_SCREENS_SCENE);
+       //     sceneNavigator.SceneLoaded(SceneNames.MULTIPLAY_SCREENS_SCENE);
 
 
 
@@ -461,8 +455,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         public void GotoMatchmakingScreen()
         {
             if (AuthenticationService.Instance.IsAuthorized)
-            {
-                GoToScreen(matchmakingScreen);
+            {             
                 StartCoroutine(iStartPvP());
             }
         }

@@ -386,7 +386,7 @@ namespace BattleCruisers.Scenes
         public void LoadMultiplayScene()
         {
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);
+         //   _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);
             CleanUp();
         }
 

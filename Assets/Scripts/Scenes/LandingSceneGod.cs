@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Analytics;
+using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
@@ -46,6 +47,11 @@ namespace BattleCruisers.Scenes
                 var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    Debug.Log("you login as " + AuthenticationService.Instance.PlayerId);
+                }
                 List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
             }
             catch (ConsentCheckException e)
@@ -150,10 +156,9 @@ namespace BattleCruisers.Scenes
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
-            if (sceneName == SceneNames.MULTIPLAY_SCREENS_SCENE)
-                yield return LoadScene(SceneNames.MULTIPLAY_STARTUP_SCENE, LoadSceneMode.Single);
-            else
-                yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+
+            yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+
             yield return LoadScene(sceneName, LoadSceneMode.Additive);
 
             Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);
@@ -167,7 +172,11 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
 
             // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
+
+
             LoadingScreenController.Instance.Destroy();
+
+
         }
 
         private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)

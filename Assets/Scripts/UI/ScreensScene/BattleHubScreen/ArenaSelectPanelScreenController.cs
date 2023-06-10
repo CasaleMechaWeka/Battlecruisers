@@ -66,9 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             navLeftButton.Initialise(soundPlayer, _previousSetCommand);
 
-            DOTween.Init();
-            if (!AuthenticationService.Instance.IsAuthorized)
-                InitializeAndSignInAsync();
+            DOTween.Init();            
         }
 
 
@@ -133,16 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         }
 
-        private void OnEnable()
-        {
-            if (!AuthenticationService.Instance.IsAuthorized)
-                InitializeAndSignInAsync();
-        }
 
-        private void OnDisable()
-        {
-            
-        }
 
 
 
@@ -155,6 +144,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    Debug.Log("you login as " + AuthenticationService.Instance.PlayerId);
                 }
             }
             catch (Exception e)
@@ -166,12 +156,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
 
         private void StartBattle()
-        { 
-
+        {
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                _screenSceneGod.LoadMultiplayScene();
+            }
         }
-
-
-
-
     }
 }
