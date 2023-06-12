@@ -233,7 +233,10 @@ namespace BattleCruisers.Scenes
             GoToScreen(hubScreen);
         }
 
-
+        public void GotoShopScreen()
+        {
+            //place holder for now
+        }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {

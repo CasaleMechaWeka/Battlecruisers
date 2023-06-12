@@ -11,6 +11,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ShopPanelScreenController : ScreenController
     {
+        public CanvasGroupButton backButton;
+
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
@@ -19,6 +21,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             INextLevelHelper nextLevelHelper)
         {
             base.Initialise(screensSceneGod);
+            backButton.Initialise(soundPlayer, Home, this);
+        }
+
+        public void Home()
+        {
+            _screensSceneGod.GotoHubScreen();
         }
     }
 }

@@ -99,7 +99,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         private void OpenShop()
         {
-            GoToScreen(shopPanel);
+            //GoToScreen(shopPanel);
+            _screensSceneGod.GotoShopScreen();
 
             UnselectAll();
 
