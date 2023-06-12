@@ -213,7 +213,7 @@ namespace BattleCruisers.Scenes
 
         private void OnEnable()
         {
-            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+            //LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
         }
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {

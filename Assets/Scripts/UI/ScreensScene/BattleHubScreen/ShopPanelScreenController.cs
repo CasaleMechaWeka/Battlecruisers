@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ShopPanelScreenController : ScreenController
     {
-        public CanvasGroupButton backButton;
+        public CanvasGroupButton backButton,buyButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -27,6 +27,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Home()
         {
             _screensSceneGod.GotoHubScreen();
+        }
+        public void Buy()
+        {
+           //
         }
     }
 }
