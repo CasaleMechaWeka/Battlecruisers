@@ -21,6 +21,12 @@ using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using System;
+using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.UI.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -34,6 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
+        private PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -137,11 +144,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
             droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;
 
+            IPvPTime time = PvPTimeBC.Instance;
+            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerACruiser);
+
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
-
-
         }
 
+
+        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)
+        {
+            return
+                new PvPPopulationLimitAnnouncer(
+                    playerCruiser,
+                    playerCruiser.PopulationLimitMonitor
+                    );
+        }
         private void _droneManagerMonitor_IdleDronesStarted(object sender, EventArgs e)
         {
             playerACruiser.pvp_IdleDronesStarted.Value = true;

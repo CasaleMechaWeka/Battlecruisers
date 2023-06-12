@@ -34,6 +34,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using Unity.Netcode;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Cruisers;
+using BattleCruisers.Cruisers.Construction;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -118,7 +119,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_DroneNumIncreased = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_IdleDronesStarted = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
+        public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool> { };
 
+        private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
 
         private void Start()
         {
