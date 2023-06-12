@@ -177,6 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
             PvPLeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
+                    playerCruiser,
                     uiManager,
                     pvpBattleHelper.GetPlayerLoadout(),
                     prefabFactory,
@@ -222,7 +223,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             pvpBattleHelper.InitialiseUIManager(args);
 
 
- 
+
 
             MatchmakingScreenController.Instance.FoundCompetitor();
 

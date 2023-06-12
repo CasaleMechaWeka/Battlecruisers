@@ -19,6 +19,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -35,7 +37,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
-
+        // Hold reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private PvPDroneManagerMonitor droneManagerMonitor;
+#pragma warning restore CS0414  // Variable is assigned but never used
 
 
         public static PvPBattleSceneGodServer Instance
@@ -128,12 +133,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
+            droneManagerMonitor = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
+            droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;
+
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
 
         }
 
+        private void _droneManagerMonitor_IdleDronesStarted(object sender, EventArgs e)
+        {
+            playerACruiser.pvp_IdleDronesStarted.Value = true;
+        }
 
+        private void _droneManagerMonitor_IdleDronesEnded(object sender, EventArgs e)
+        {
+            playerACruiser.pvp_IdleDronesEnded.Value = false;
+        }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
             IPvPPrefabFetcher prefabFetcher,

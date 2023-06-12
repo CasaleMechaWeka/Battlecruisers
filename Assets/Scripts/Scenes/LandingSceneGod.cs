@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes
                 await UnityServices.InitializeAsync(options);
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();                         
                     Debug.Log("you login as " + AuthenticationService.Instance.PlayerId);
                 }
                 List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
@@ -89,7 +89,8 @@ namespace BattleCruisers.Scenes
                 if (!dataProvider.GameModel.Settings.InitialisedGraphics)
                 {
                     dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
-                }
+                }   
+                
                 Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 // Persist this game object across scenes
@@ -171,7 +172,7 @@ namespace BattleCruisers.Scenes
             {
                 yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
             }
-           
+
 
             yield return LoadScene(sceneName, LoadSceneMode.Additive);
 
@@ -195,7 +196,7 @@ namespace BattleCruisers.Scenes
             {
                 LoadingScreenController.Instance.Destroy();
             }
-          
+
 
 
         }

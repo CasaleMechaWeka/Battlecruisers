@@ -335,7 +335,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     uiManager,
                     _gameEndMonitor);
             await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
-            if (helper.ShowInGameHints) { 
+            if (helper.ShowInGameHints)
+            {
                 uiManager.SetExplanationPanel(tutorialInitialiser.explanationPanel);
             }
             // Do not enable updates until asynchronous loading is complete.
@@ -347,14 +348,14 @@ namespace BattleCruisers.Scenes.BattleScene
             //Make sure to add more images to the EnemyCharacterImages prefab if more enemies are added
             Image[] enemyImages = enemyCharacterImages.GetComponentsInChildren<Image>(true);
             Assert.IsTrue(enemyImages.Length >= currentLevel.Num);
-            enemyImages[currentLevel.Num-1].enabled = true;
+            enemyImages[currentLevel.Num - 1].enabled = true;
 
             toolTipActivator.Initialise();
 
             if (!aiCruiser.isCruiser)
             {
                 aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
-                if(ultraPanel != null)
+                if (ultraPanel != null)
                 {
                     foreach (Transform button in ultraPanel.transform)
                     {
@@ -387,7 +388,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
 
-            
+
 
             GameOver = false;
             string logName = "Battle_Begin";
@@ -399,23 +400,23 @@ namespace BattleCruisers.Scenes.BattleScene
                 AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.Log(ex.Message);
             }
-      
+
         }
 
 
-/*        private void OnEnable()
-        {
-            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
-        }*/
+        /*        private void OnEnable()
+                {
+                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
+                }*/
 
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel,
             IPrefabFetcher prefabFetcher,
-            IPrefabFactory prefabFactory, 
+            IPrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters,
             ILocTable storyStrings)
@@ -444,7 +445,7 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 return;
             }
-            cameraComponents =  cameraInitialiser.UpdateCamera(
+            cameraComponents = cameraInitialiser.UpdateCamera(
                     dataProvider.SettingsManager,
                     navigationPermitters);
             Debug.Log("camera changed");
@@ -458,7 +459,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 {
                     return;
                 }
-                deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier*((float)value)));
+                deadBuildables[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == TargetType.Cruiser)
                 {
@@ -469,12 +470,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public static void ShowDeadBuildableStats()
         {
-            foreach(KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
+            foreach (KeyValuePair<TargetType, DeadBuildableCounter> kvp in deadBuildables)
             {
                 Debug.Log(kvp.Key);
                 Debug.Log("Destroyed: " + kvp.Value.GetTotalDestroyed());
                 Debug.Log("Damage in credits: " + kvp.Value.GetTotalDamageInCredits());
             }
         }
-   }
+    }
 }

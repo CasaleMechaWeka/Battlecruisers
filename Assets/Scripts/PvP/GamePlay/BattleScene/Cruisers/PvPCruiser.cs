@@ -31,6 +31,9 @@ using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using Unity.Netcode;
+using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.UI.BattleScene.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -109,6 +112,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private int updateCnt = 0;
         public bool isPvPCruiser = true;
 
+        // network variables
+
+        public NetworkVariable<int> pvp_NumOfDrones = new NetworkVariable<int>();
+        public NetworkVariable<bool> pvp_DroneNumIncreased = new NetworkVariable<bool>();
+        public NetworkVariable<bool> pvp_IdleDronesStarted = new NetworkVariable<bool>();
+        public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
+
 
         private void Start()
         {
@@ -174,15 +184,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
+        private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        {
+            pvp_NumOfDrones.Value = DroneManager.NumOfDrones;
+        }
 
-
-        public async virtual void Initialise(IPvPCruiserArgs args)
+        public virtual void Initialise(IPvPCruiserArgs args)
         {
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
             DroneManager = args.DroneManager;
             DroneFocuser = args.DroneFocuser;
+            // pvp code
+            DroneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+            //......
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
             FactoryProvider = args.FactoryProvider;
