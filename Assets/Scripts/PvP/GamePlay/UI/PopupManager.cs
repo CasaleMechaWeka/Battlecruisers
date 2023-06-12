@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using UnityEngine.Events;
 
 namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 {
@@ -20,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 
         List<PopupPanel> m_PopupPanels = new List<PopupPanel>();
 
-        static PopupManager s_Instance;
+       public static PopupManager s_Instance;
 
         const float k_Offset = 30;
         const float k_MaxOffset = 200;
@@ -48,23 +49,23 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
         /// <param name="titleText">The title text at the top of the panel</param>
         /// <param name="mainText"> The text just under the title- the main body of text</param>
         /// <param name="closeableByUser"></param>
-        public static PopupPanel ShowPopupPanel(string titleText, string mainText, bool closeableByUser = true)
+        public static PopupPanel ShowPopupPanel(string titleText, string mainText, bool closeableByUser = true, UnityAction action = null)
         {
             if (s_Instance != null)
             {
-                return s_Instance.DisplayPopupPanel(titleText, mainText, closeableByUser);
+                return s_Instance.DisplayPopupPanel(titleText, mainText, closeableByUser, action);
             }
 
             Debug.LogError($"No PopupPanel instance found. Cannot display message: {titleText}: {mainText}");
             return null;
         }
 
-        PopupPanel DisplayPopupPanel(string titleText, string mainText, bool closeableByUser)
+        PopupPanel DisplayPopupPanel(string titleText, string mainText, bool closeableByUser, UnityAction action = null)
         {
             var popup = GetNextAvailablePopupPanel();
             if (popup != null)
             {
-                popup.SetupPopupPanel(titleText, mainText, closeableByUser);
+                popup.SetupPopupPanel(titleText, mainText, closeableByUser, action);
             }
             return popup;
         }

@@ -2,6 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -143,6 +144,12 @@ namespace BattleCruisers.Scenes
             {
                 hint = _hintProvider.GetHint();
             }
+            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+            {
+                // should be replace with PvP
+                hint = _hintProvider.GetHint();
+            }
+
             LoadingScreenHint = hint;
 
             if (stopMusic)
@@ -156,8 +163,15 @@ namespace BattleCruisers.Scenes
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
-
-            yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+            if (sceneName == SceneNames.PvP_BOOT_SCENE)
+            {
+                yield return LoadScene(SceneNames.PvP_INITIALIZE_SCENE, LoadSceneMode.Single);
+            }
+            else
+            {
+                yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+            }
+           
 
             yield return LoadScene(sceneName, LoadSceneMode.Additive);
 
@@ -173,8 +187,15 @@ namespace BattleCruisers.Scenes
 
             // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
 
-
-            LoadingScreenController.Instance.Destroy();
+            if (sceneName == SceneNames.PvP_BOOT_SCENE)
+            {
+                MatchmakingScreenController.Instance.Destroy();
+            }
+            else
+            {
+                LoadingScreenController.Instance.Destroy();
+            }
+          
 
 
         }

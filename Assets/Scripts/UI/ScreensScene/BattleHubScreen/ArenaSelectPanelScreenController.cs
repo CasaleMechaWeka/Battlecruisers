@@ -159,7 +159,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             if (AuthenticationService.Instance.IsSignedIn)
             {
-                _screenSceneGod.LoadMultiplayScene();
+                _screenSceneGod.LoadPvPBattleScene();
             }
         }
     }

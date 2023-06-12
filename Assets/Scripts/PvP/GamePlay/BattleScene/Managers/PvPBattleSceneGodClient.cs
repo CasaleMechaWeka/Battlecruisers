@@ -28,6 +28,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -53,6 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPLevel currentLevel;
         private IPvPUIManager uiManager;
         private ILocTable commonStrings;
+        ISceneNavigator sceneNavigator;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -168,9 +170,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabContainer<PvPBackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
-            cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
+            //  cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
             IPvPButtonVisibilityFilters buttonVisibilityFilters = pvpBattleHelper.CreateButtonVisibilityFilters();
-            ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
+            sceneNavigator = LandingSceneGod.SceneNavigator;
             IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
             PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
             PvPLeftPanelComponents leftPanelComponents
@@ -220,8 +222,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             pvpBattleHelper.InitialiseUIManager(args);
 
 
-            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+ 
 
+            MatchmakingScreenController.Instance.FoundCompetitor();
+
+            StartCoroutine(iLoadedPvPScene());
+        }
+
+        IEnumerator iLoadedPvPScene()
+        {
+            yield return new WaitForSeconds(5f);
+            sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
+            cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
+            components.UpdaterProvider.SwitchableUpdater.Enabled = true;
         }
 
         public void RegisterAsPlayer(PvPCruiser _cruiser)

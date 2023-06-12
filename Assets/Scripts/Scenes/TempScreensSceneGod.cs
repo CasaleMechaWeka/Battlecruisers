@@ -383,7 +383,7 @@ namespace BattleCruisers.Scenes
             CleanUp();
         }
 
-        public void LoadMultiplayScene()
+        public void LoadPvPBattleScene()
         {
             AdvertisingBanner.stopAdvert();
          //   _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);

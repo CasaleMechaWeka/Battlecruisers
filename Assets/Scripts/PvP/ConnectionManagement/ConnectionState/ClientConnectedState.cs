@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     class ClientConnectedState : ConnectionState
@@ -14,10 +16,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void Enter()
         {
             if (m_lobbyServiceFacade.CurrentUnityLobby != null)
-            {
+            {              
                 m_lobbyServiceFacade.BeginTracking();
             }
-
         }
 
         public override void Exit() { }

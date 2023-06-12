@@ -4,6 +4,7 @@ using Unity.Multiplayer.Samples.Utilities;
 using VContainer;
 using System;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -43,6 +44,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         protected void StartingClientFailedAsync()
         {
+            MatchmakingScreenController.Instance.NotFound();
             var disconnectReason = m_ConnectionManager.NetworkManager.DisconnectReason;
             if (string.IsNullOrEmpty(disconnectReason))
             {
@@ -62,10 +64,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 await m_ConnectionMethod.SetupClientConnectionAsync();
                 if (!m_ConnectionManager.NetworkManager.StartClient())
-                {
+                {                
                     throw new System.Exception("NetworkManager StartClient failed");
                 }
-                SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
+              //  SceneLoaderWrapper.Instance.AddOnSceneEventCallback();
             }
             catch (Exception e)
             {
