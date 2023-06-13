@@ -115,10 +115,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         // network variables
 
-        public NetworkVariable<int> pvp_NumOfDrones = new NetworkVariable<int> ();
-        public NetworkVariable<bool> pvp_DroneNumIncreased = new NetworkVariable<bool> ();
-        public NetworkVariable<bool> pvp_IdleDronesStarted = new NetworkVariable<bool> ();
-        public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool> ();
+        public NetworkVariable<int> pvp_NumOfDrones = new NetworkVariable<int>();
+        public NetworkVariable<bool> pvp_DroneNumIncreased = new NetworkVariable<bool>();
+        public NetworkVariable<bool> pvp_IdleDronesStarted = new NetworkVariable<bool>();
+        public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
 
         private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
@@ -135,14 +135,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 PvPBattleSceneGodClient.Instance.RegisterAsEnemy(this);
             }
 
-            if(NetworkManager.Singleton.IsServer)
-            _healthTracker.SetMaxHealth();
+            if (NetworkManager.Singleton.IsServer)
+                _healthTracker.SetMaxHealth();
         }
 
 
         public void Initialise_Client_PvP()
         {
-            SlotAccessor = _slotWrapperController.Initialise(this);    
+            SlotAccessor = _slotWrapperController.Initialise(this);
         }
 
 
