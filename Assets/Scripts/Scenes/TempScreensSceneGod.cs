@@ -30,6 +30,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 namespace BattleCruisers.Scenes
 {
@@ -43,19 +44,23 @@ namespace BattleCruisers.Scenes
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
+        private bool _isPlaying;
 
         public HomeScreenController homeScreen;
         public LevelsScreenController levelsScreen;
         public PostBattleScreenController postBattleScreen;
         public InfiniteLoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
+        public BattleHubScreensController hubScreen;
         public TrashScreenController trashScreen;
         public TrashTalkDataList trashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
         public FullScreenAdverts fullScreenads;
+        public ShopPanelScreenController shopPanelScreen;
 
+        public Animator thankYouPlane;
         [SerializeField]
         private AudioSource _uiAudioSource;
 
@@ -75,6 +80,8 @@ namespace BattleCruisers.Scenes
         public bool testSkirmishScreen = false;
         [Header("For testing the loadout screen")]
         public bool testLoadoutScreen = false;
+        [Header("For testing Shop screen")]
+        public bool testShopScreen = false;
         public DestructionRanker ranker;
 
         async void Start()
@@ -127,10 +134,12 @@ namespace BattleCruisers.Scenes
             IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
             INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
             homeScreen.Initialise(this, _soundPlayer, _dataProvider, nextLevelHelper);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
             settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -183,12 +192,20 @@ namespace BattleCruisers.Scenes
             {
                 GoToLoadoutScreen();
             }
+            else if(testShopScreen)
+            {
+                GotoShopScreen();
+            }
 
             ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
 
             _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
-
+            if (_gameModel.PremiumEdition)
+            {
+                thankYouPlane.SetTrigger("Play");
+                _isPlaying = true;
+            }
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
@@ -196,7 +213,7 @@ namespace BattleCruisers.Scenes
 
         private void OnEnable()
         {
-            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+            //LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
         }
         private async Task GoToPostBattleScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, ILocTable screensSceneStrings)
         {
@@ -222,10 +239,13 @@ namespace BattleCruisers.Scenes
 
         public void GotoHubScreen()
         {
-            // dummy to avoid compile error
+            GoToScreen(hubScreen);
         }
 
-
+        public void GotoShopScreen()
+        {
+            GoToScreen(shopPanelScreen);
+        }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {
@@ -404,6 +424,17 @@ namespace BattleCruisers.Scenes
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 _currentScreen?.Cancel();
+            }
+
+            if (_gameModel != null)
+            {
+                if (_gameModel.PremiumEdition)
+                {
+                    if (!_isPlaying)
+                    {
+                        thankYouPlane.SetTrigger("Play");
+                    }
+                }
             }
         }
     }
