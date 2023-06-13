@@ -10,7 +10,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using UnityEngine;
 using UnityEngine.Assertions;
-
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -32,6 +32,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual Vector2 DroneAreaSize => Size;
 
         public IPvPTransform Transform { get; private set; }
+
+
+        // network variables
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = 0f};
+        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };
 
         public Quaternion Rotation
         {
@@ -87,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(commonStrings);
 
-            _healthTracker = new PvPHealthTracker(maxHealth);
+            _healthTracker = new PvPHealthTracker(this, maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
 
             _time = PvPTimeBC.Instance;
@@ -129,7 +134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected void InvokeDestroyedEvent()
         {
             // Logging.Log(Tags.TARGET, $"{this} destroyed :/");
-
+            pvp_Destroyed.Value = true;
             Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
         }
 

@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public Text enemyHealthBarHelpLabel;
 
         public PvPTopPanelComponents Initialise(
-            IPvPCruiser playerCruiser,
-            IPvPCruiser enemyCruiser,
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
             string playerName,
             string enemyName)
         {

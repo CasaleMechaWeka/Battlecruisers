@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPHealthStateMonitor : IPvPHealthStateMonitor
     {
-        private readonly IPvPDamagable _damagable;
+        private readonly PvPTarget _damagable;
 
         private PvPHealthState _healthState;
         public PvPHealthState HealthState
@@ -28,20 +28,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public event EventHandler HealthStateChanged;
 
-        public PvPHealthStateMonitor(IPvPDamagable damagable)
+        public PvPHealthStateMonitor(PvPTarget damagable)
         {
             Assert.IsNotNull(damagable);
 
             _damagable = damagable;
             _healthState = PvPHealthState.FullHealth;
 
-            _damagable.HealthChanged += _damagable_HealthChanged;
-            _damagable.Destroyed += _damagable_Destroyed;
+            _damagable.pvp_Health.OnValueChanged += _damagable_HealthChanged;
+            _damagable.pvp_Destroyed.OnValueChanged += _damagable_Destroyed;
         }
 
-        private void _damagable_HealthChanged(object sender, EventArgs e)
+        private void _damagable_HealthChanged(float oldVal, float newVal)
         {
-            float healthProportionRemaining = _damagable.Health / _damagable.MaxHealth;
+            float healthProportionRemaining = newVal / _damagable.MaxHealth;
             HealthState = FindHealthState(healthProportionRemaining);
         }
 
@@ -65,12 +65,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private void _damagable_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _damagable_Destroyed(bool oldVal, bool newVal)
         {
             HealthState = PvPHealthState.NoHealth;
 
-            _damagable.HealthChanged -= _damagable_HealthChanged;
-            _damagable.Destroyed -= _damagable_Destroyed;
+            _damagable.pvp_Health.OnValueChanged -= _damagable_HealthChanged;
+            _damagable.pvp_Destroyed.OnValueChanged -= _damagable_Destroyed;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         private PvPSmokeEmitter _smokeEmitter;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
-        public void Initialise(IPvPDamagable parentDamagable, bool showSmokeWhenDestroyed)
+        public void Initialise(PvPTarget parentDamagable, bool showSmokeWhenDestroyed)
         {
             PvPSmoke smoke = GetComponent<PvPSmoke>();
             Assert.IsNotNull(smoke);

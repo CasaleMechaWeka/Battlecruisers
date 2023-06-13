@@ -1,3 +1,4 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
@@ -19,22 +20,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPDamageTakenIndicator damageTakenIndicator;
         private IPvPHealthStateMonitor _cruiserHealthMonitor;
 
-        public IPvPHighlightable Initialise(IPvPCruiser cruiser)
+        public IPvPHighlightable Initialise(PvPCruiser cruiser)
         {
             Assert.IsNotNull(cruiser);
 
             return SetupHealthBar(cruiser);
         }
 
-        private PvPHighlightable SetupHealthBar(IPvPCruiser cruiser)
+        private PvPHighlightable SetupHealthBar(PvPCruiser cruiser)
         {
             Image platformFillableImage = GetComponent<Image>();
             Assert.IsNotNull(platformFillableImage);
             IPvPFillableImage fillableImage = new PvPFillableImage(platformFillableImage);
 
-            IPvPFilter<IPvPCruiser> visibilityFilter = new PvPStaticFilter<IPvPCruiser>(isMatch: true);
+            IPvPFilter<PvPTarget> visibilityFilter = new PvPStaticFilter<PvPTarget>(isMatch: true);
 
-            IPvPHealthDial<IPvPCruiser> healthDial = new PvPHealthDial<IPvPCruiser>(fillableImage, visibilityFilter, damageTakenIndicator);
+            IPvPHealthDial healthDial = new PvPHealthDial(fillableImage, visibilityFilter, damageTakenIndicator);
             healthDial.Damagable = cruiser;
 
             //_lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
