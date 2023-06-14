@@ -39,6 +39,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
 using System;
+using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -66,6 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private ILocTable commonStrings;
         private PvPLeftPanelComponents leftPanelComponents;
         private IPvPTime time;
+        private IPvPPauseGameManager pauseGameManager;
         private IPvPDebouncer _debouncer;
         ISceneNavigator sceneNavigator;
 
@@ -203,6 +207,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     playerCruiser.PopulationLimitMonitor,
                     dataProvider.StaticData);
             time = PvPTimeBC.Instance;
+            IPvPPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
             _debouncer = new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
 
@@ -213,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             factoryProvider.Sound.PrioritisedSoundPlayer,
                             components.TargetIndicator);
 
-
+            PvPNavigationPermitterManager navigationPermitterManager = new PvPNavigationPermitterManager(navigationPermitters);
             PvPRightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
                     applicationModel,
@@ -222,8 +227,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     userChosenTargetHelper,
                     buttonVisibilityFilters,
                     factoryProvider.UpdaterProvider.PerFrameUpdater,
+                    pauseGameManager,
                     battleCompletionHandler,
-                    factoryProvider.Sound.UISoundPlayer
+                    factoryProvider.Sound.UISoundPlayer,
+                    navigationPermitterManager
                 );
 
             IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
@@ -249,7 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void IsPopulationLimitReached_ValueChanged(bool oldVal, bool newVal)
         {
-            if(newVal)
+            if (newVal)
             {
                 _debouncer.Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PopulationLimitReached));
             }
