@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (m_clients.Count == MaxConnectedPlayers)
             {
-                GetComponent<PvPBattleSceneGodServer>().Initialise();
+                GetComponent<PvPBattleSceneGodServer>().Initialise();                
             }
         }
 
