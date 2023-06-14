@@ -20,6 +20,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 namespace BattleCruisers.Scenes
 {
@@ -27,35 +28,75 @@ namespace BattleCruisers.Scenes
     {
         private ISceneNavigator _sceneNavigator;
         public DestructionCard [] destructionCards;
-        public Text postBattleDestructionScoreText;
-        public Text lifetimeDestructionScoreText;
-        public DestructionRanker ranker;
         public CanvasGroupButton nextButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
         private ISingleSoundPlayer _soundPlayer;
         public Text million, billion, trillion, quadrillion;
+
+        private long[] destructionValues;
+
+        [SerializeField]
+        private AnimationClip cardRevealAnim;
+        [SerializeField]
+        private TextMeshProUGUI damageCausedValueText; //<-- Damage totals are TextMeshPro for better formatting. Everything else could be too, but that takes effort.
+        [SerializeField]
+        private Text timeValueText;
+        [SerializeField]
+        private TextMeshProUGUI allTimeDamageValueText;
+        [SerializeField]
+        private Text scoreText;
+        [SerializeField]
+        private Text rankText;
+        [SerializeField]
+        private Text rankNumber;
+        [SerializeField]
+        private Image rankGraphic;
+        [SerializeField]
+        private Text modalOldRankText;
+        [SerializeField]
+        private Text modalNewRankText;
+        [SerializeField]
+        private Image modalOldRankGraphic;
+        [SerializeField]
+        private Image modalNewRankGraphic;
+
+        // Damage values to interpolate damaged caused with:
+        private long aircraftVal;
+        private long shipsVal;
+        private long cruiserVal;
+        private long buildingsVal;
+        private long allTimeVal;
+        private long prevAllTimeVal;
+
+        // Time value to interpolate with:
+        private float levelTimeInSeconds;
+
+        // Level and XP tracking:
+        [SerializeField]
+        private Slider levelBar;
+        private int nextLevelXP;
+        private int currentXP;
+        private long levelScore;
+        private int rank;
+        public DestructionRanker ranker;
+
+        [SerializeField]
+        private GameObject levelUpModal;
+        [SerializeField]
+        private AnimationClip levelUpModalAnim;
+        private float modalPeriod; // length of levelUpModalAnim
+
+        private float timeStep; // used as the basis for all WaitForSeconds() returns 
+
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
-            
-
-            long totalDestruction = 0;
-            for (int i = 0; i < destructionCards.Length; i++)
-            {
-                destructionCards[i].destructionValue.text = FormatNumber(BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDamageInCredits());
-                destructionCards[i].numberOfUnitsDestroyed.text = i== 2 ? "1" : "" + BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDestroyed();
-                totalDestruction += BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDamageInCredits();
-            }
-
-            postBattleDestructionScoreText.text = FormatNumber(totalDestruction);
-            lifetimeDestructionScoreText.text = FormatNumber(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-
-            destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
-            destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
-
-            ranker.DisplayRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            // TODO: Check if level time is already tracked? Doesn't seem to be a gettable field yet.
+            // Here's a random number to test with for now:
+            Debug.LogWarning("TIME value is fake! This should not be shipped!");
+            levelTimeInSeconds = UnityEngine.Random.Range(200.0f, 800.0f);
             
             LandingSceneGod.MusicPlayer.PlayVictoryMusic();
 
@@ -66,15 +107,262 @@ namespace BattleCruisers.Scenes
                         new AudioSourceBC(_uiAudioSource),
                         ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
 
-
             nextButton.Initialise(_soundPlayer, Done);
             _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
+
+            // Get some values from GameModel and its friends:
+            allTimeVal = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].destructionValue.text = FormatNumber(BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDamageInCredits());
+                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDestroyed();
+            }
+
+            destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
+            destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
+
+            aircraftVal = BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();
+            shipsVal = BattleSceneGod.deadBuildables[TargetType.Ships].GetTotalDamageInCredits();
+            cruiserVal = BattleSceneGod.deadBuildables[TargetType.Cruiser].GetTotalDamageInCredits();
+            buildingsVal = BattleSceneGod.deadBuildables[TargetType.Buildings].GetTotalDamageInCredits();
+
+            // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
+            destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
+
+            //### Screen Setup ###
+
+            // Turn cards off by default:
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].gameObject.SetActive(false);
+            }
+
+            timeStep = cardRevealAnim.length;
+            modalPeriod = levelUpModalAnim.length;
+
+            // Set value texts:
+            damageCausedValueText.text = "0";
+            timeValueText.text = "00:00";
+            prevAllTimeVal = allTimeVal - (aircraftVal + shipsVal + cruiserVal + buildingsVal);
+            allTimeDamageValueText.text = FormatNumber(prevAllTimeVal);
+            scoreText.text = "";
+
+            // Set starting rank values:
+            rank = ranker.CalculateRank(prevAllTimeVal);
+            if(rank == 0)
+            {
+                rank = 1;
+            }
+            currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
+            nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+            rankNumber.text = rank.ToString();
+            rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+
+            // Set XP bar current/max values:
+            levelBar.maxValue = nextLevelXP;
+            levelBar.value = currentXP;
+
+            // Start animating:
+            StartCoroutine(AnimateScreen());
         }
 
-/*        private void OnEnable()
+        /*        private void OnEnable()
+                {
+                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
+                }*/
+
+        IEnumerator AnimateScreen()
         {
-            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-        }*/
+            yield return new WaitForSeconds(1.0f);
+
+            // Enable a card, interpolate its total into the Damage Total, add XP to bar, repeat
+            long damageRunningTotal = 0;
+            int steps = 30;
+            float stepPeriod = timeStep / steps;
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                // Enable a card (playing its animation in the process):
+                destructionCards[i].gameObject.SetActive(true);
+
+                // Interpolate the Damage Caused value, from the current running total to that + the card's damage value
+                // by the specified number of steps. Steps are divided over time:
+                yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
+                damageRunningTotal += destructionValues[i];
+                yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
+
+                // Increase XP counter:
+
+                // TODO: Check if it's max rank already
+
+                int xpToAdd = Convert.ToInt32(destructionValues[i]);
+                int xpRunningTotal = currentXP;
+
+                // If the bar would fill up, it needs some special handling.
+                if (xpToAdd + currentXP >= nextLevelXP)
+                {
+                    // Only deal with it if the player isn't max rank:
+                    if (ranker.CalculateRank(allTimeVal) < ranker.destructionRanks.Length - 1)
+                    {
+                        while (xpToAdd > 0)
+                        {
+                            if (xpToAdd + currentXP > nextLevelXP)
+                            {
+                                yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, nextLevelXP, steps, stepPeriod));
+
+                                // Update rank text elements (on screen and in following modal):
+                                rank++;
+                                string oldRankText = rankText.text;
+                                string newRankText = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+                                Sprite oldRankImage = rankGraphic.sprite;
+                                Sprite newRankImage = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+                                modalOldRankText.text = oldRankText;
+                                modalNewRankText.text = newRankText;
+                                modalOldRankGraphic.sprite = oldRankImage;
+                                modalNewRankGraphic.sprite = newRankImage;
+
+                                yield return StartCoroutine(DisplayRankUpModal(modalPeriod));
+
+                                rankText.text = newRankText;
+                                rankNumber.text = rank.ToString();
+                                rankGraphic.sprite = newRankImage;
+
+                                xpToAdd -= (nextLevelXP - xpRunningTotal);
+                                xpRunningTotal = 0;
+                                currentXP = 0;
+
+                                // Get the next level's XP and overwrite the nextLevelXP var
+                                rank++;
+                                nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+                                levelBar.maxValue = nextLevelXP;
+                            }
+                            else
+                            {
+                                // finish the while loop by interp'ing the remaining overflow XP:
+                                yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                                xpRunningTotal += xpToAdd;
+                                currentXP = xpRunningTotal;
+                                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = xpRunningTotal;
+                                xpToAdd = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // TODO: any extra handling for max rank.
+                    }
+                }
+                else
+                {
+                    yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
+                    currentXP += xpToAdd;
+                    ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = currentXP;
+                }
+            }
+
+            // Pause for a moment to catch our breath:
+            //yield return new WaitForSeconds(timeStep * 1.5f);
+
+            // Interpolate time counter:
+            //yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
+            //yield return new WaitForSeconds(timeStep * 2.0f);
+
+            // Interpolate game score:
+            //levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
+            //yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
+
+            // TODO: level rating (maybe?)
+
+            // Interpolate Lifetime Damage (same deal as regular damage)
+            yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
+
+
+            // TODO: Update GameModel vars
+        }
+
+        IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
+        {
+            long interpStep = (endVal - startVal) / steps;
+            float stepPeriod = (timeStep) / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                damageCausedValueText.text = FormatNumber(startVal);
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateLifetimeDamageValue(long startVal, long endVal, int steps)
+        {
+            long interpStep = (endVal - startVal) / steps;
+            float stepPeriod = (timeStep) / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                allTimeDamageValueText.text = FormatNumber(startVal);
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateTimeValue(float startVal, float endVal, int steps)
+        {
+            float interpStep = (endVal - startVal) / steps;
+            float stepPeriod = (timeStep * 2.0f) / steps; // timestamps look a bit nicer if they interp a bit slower
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                timeValueText.text = FormatTime(startVal);
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateXPBar(float startVal, float endVal, int steps, float stepPeriod)
+        {
+            float interpStep = (endVal - startVal) / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                levelBar.value = startVal;
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator InterpolateScore(long startVal, long endVal, int steps)
+        {
+            long interpStep = (endVal - startVal) / steps;
+            float stepPeriod = (timeStep) / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                startVal += interpStep;
+                scoreText.text = startVal.ToString();
+                yield return new WaitForSeconds(stepPeriod);
+            }
+        }
+
+        IEnumerator DisplayRankUpModal(float stepPeriod)
+        {
+            // Get old level (graphic + name)
+            // Get new level (graphic + name)
+
+            // Display modal
+            levelUpModal.SetActive(true);
+            yield return new WaitForSeconds(stepPeriod);
+            levelUpModal.SetActive(false);
+        }
+
+        private long CalculateScore(float time, long damage)
+        {
+            // feels weird to make this a method but I don't like doing it directly in the animation methods:
+            long score = damage / (long)Mathf.Pow(time, 2.0f) / (long)10;
+            return score;
+        }
 
         void Update()
         {
@@ -85,7 +373,6 @@ namespace BattleCruisers.Scenes
                 Done();
             }
         }
-
         private void Done()
         {
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
@@ -108,6 +395,25 @@ namespace BattleCruisers.Scenes
 
             return "$" + num.ToString("#,0");
         }
-    }
-        
+
+        private string FormatTime(float num)
+        {
+            TimeSpan time = TimeSpan.FromSeconds(num);
+
+            // less than an hour (filtering these values is probably not necessary but WHO KNOWS):
+            if (num <= 3659.0f)
+            {
+                return time.ToString("mm':'ss");
+            }
+            // less than 23:59:59, the maximum of the clock:
+            else if (num > 3659.0f && num <= 86399.0f)
+            {
+                return time.ToString("hh':'mm':'ss");
+            }
+            else
+            {
+                return "Owwww";
+            }
+        }
+    }       
 }

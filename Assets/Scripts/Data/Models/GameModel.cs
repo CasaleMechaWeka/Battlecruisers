@@ -204,14 +204,6 @@ namespace BattleCruisers.Data.Models
             set => _xpToNextLevel = value;
         }
 
-        [SerializeField]
-        private int _rank;
-        public int Rank
-        {
-            get => _rank;
-            set => _rank = value;
-        }
-
         private bool _PremiumEdition;
         public bool PremiumEdition
         {
