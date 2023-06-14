@@ -42,6 +42,8 @@ using System;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -71,6 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPTime time;
         private IPvPPauseGameManager pauseGameManager;
         private IPvPDebouncer _debouncer;
+        private PvPInformatorDismisser _informatorDismisser;
         ISceneNavigator sceneNavigator;
 
         [SerializeField]
@@ -244,12 +247,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     factoryProvider.Sound.PrioritisedSoundPlayer,
                     factoryProvider.Sound.UISoundPlayer);
             pvpBattleHelper.InitialiseUIManager(args);
-
-
+            _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager);
 
 
             MatchmakingScreenController.Instance.FoundCompetitor();
-
             StartCoroutine(iLoadedPvPScene());
         }
 
