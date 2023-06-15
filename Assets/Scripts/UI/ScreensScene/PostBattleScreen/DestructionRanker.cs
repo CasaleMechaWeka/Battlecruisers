@@ -24,7 +24,7 @@ namespace BattleCruisers.PostBattleScreen
             destructionRanks[CalculateRank(score)].SetActive(true);
         }
 
-        private int CalculateRank(long score)
+        public int CalculateRank(long score)
         {
             
             for(int i = 0; i < destructionRanks.Length-1; i++)
@@ -39,6 +39,12 @@ namespace BattleCruisers.PostBattleScreen
             return destructionRanks.Length-1;
         }
 
+        // return what the x value will be in CalculateRank()
+        // used for setting the max val of any XP progress bars
+        public long CalculateLevelXP(int i)
+        {
+            long x = 2500 + 2500 * i * i;
+            return x;
+        }
     }
-
 }

@@ -145,6 +145,13 @@ namespace BattleCruisers.Data.Models
             set => _credits = value;
         }
 
+        private int _coins;
+        public int Coins
+        {
+            get => _coins;
+            set => _coins = value;
+        }
+
 
         private int _totalVoyages;
         public int TotalVoyages
@@ -202,14 +209,6 @@ namespace BattleCruisers.Data.Models
         {
             get => _xpToNextLevel;
             set => _xpToNextLevel = value;
-        }
-
-        [SerializeField]
-        private int _rank;
-        public int Rank
-        {
-            get => _rank;
-            set => _rank = value;
         }
 
         private bool _PremiumEdition;
