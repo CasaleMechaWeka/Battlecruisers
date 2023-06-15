@@ -11,6 +11,7 @@ namespace BattleCruisers.Data.Models
         public int Coins { get; set; }
 
         int NumOfLevelsCompleted { get; }
+        int XPToNextLevel { get; set; }
         long LifetimeDestructionScore { get; set; }
         long BestDestructionScore { get; set; }
         bool HasAttemptedTutorial { get; set; }

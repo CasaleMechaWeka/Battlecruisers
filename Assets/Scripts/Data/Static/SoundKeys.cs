@@ -15,6 +15,8 @@ namespace BattleCruisers.Data.Static
             public static ISoundKey Laser { get; } = new SoundKey(SoundType.Firing, "laser");
             public static ISoundKey RocketLauncher { get; } = new SoundKey(SoundType.Firing, "rocket-launcher");
             public static ISoundKey Missile { get; } = new SoundKey(SoundType.Firing, "SAMFiring");
+
+            public static ISoundKey PneumaticSlug { get; } = new SoundKey(SoundType.Firing, "PneumaticSlug");
         }
 
         public static class Explosions

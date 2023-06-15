@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static
@@ -15,6 +16,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static IPvPSoundKey Laser { get; } = new PvPSoundKey(PvPSoundType.Firing, "laser");
             public static IPvPSoundKey RocketLauncher { get; } = new PvPSoundKey(PvPSoundType.Firing, "rocket-launcher");
             public static IPvPSoundKey Missile { get; } = new PvPSoundKey(PvPSoundType.Firing, "SAMFiring");
+
+            public static ISoundKey PneumaticSlug { get; } = new SoundKey(SoundType.Firing, "PneumaticSlug");
         }
 
         public static class PvPExplosions
