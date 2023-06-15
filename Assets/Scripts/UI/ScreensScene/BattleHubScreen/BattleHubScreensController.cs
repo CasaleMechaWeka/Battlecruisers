@@ -13,6 +13,7 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -22,9 +23,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private INextLevelHelper _nextLevelHelper;
         private ScreenController _currentScreen;
         private ISingleSoundPlayer _soundPlayer;
+        private IDataProvider _dataProvider;
 
 
         public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton;
+        public GameObject coins;
 
         public BattlePanelScreenController battlePanel;
         public InfiniteLoadoutScreenController loadoutPanel;
@@ -49,6 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _lastBattleResult = dataProvider.GameModel.LastBattleResult;
             _nextLevelHelper = nextLevelHelper;
             _soundPlayer = soundPlayer;
+            _dataProvider = dataProvider;
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
@@ -67,8 +71,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //shopPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
 
+
+            Text coinsText = coins.GetComponent<Text>();
+            coinsText.text = (dataProvider.GameModel.Coins).ToString();
         }
 
+        private void Update()
+        {
+            Text coinsText = coins.GetComponent<Text>();
+            if(_dataProvider != null)
+            {
+                coinsText.text = (_dataProvider.GameModel.Coins).ToString();
+            }
+        }
 
 
         private void GoHome()

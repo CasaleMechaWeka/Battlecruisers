@@ -37,8 +37,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             //temp testing purpose
             Text coins = PlayerCoinAmount.GetComponent<Text>();
-            if(_dataProvider != null)
+            if (_dataProvider != null)
+            {
                 coins.text = (_dataProvider.GameModel.Coins).ToString();
+            }
+
         }
 
         public void Home()
