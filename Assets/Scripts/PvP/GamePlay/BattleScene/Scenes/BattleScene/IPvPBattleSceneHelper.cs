@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPvPUIManager CreateUIManager();
         void InitialiseUIManager(PvPManagerArgs args);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IPvPDroneManager droneManager);
-        IPvPButtonVisibilityFilters CreateButtonVisibilityFilters();
+        IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
         IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
         IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(
                              IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager

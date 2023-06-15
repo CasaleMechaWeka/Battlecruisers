@@ -113,11 +113,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPStaticBroadcastingFilter(isMatch: true));
         }
 
-        public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters()
+        public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser)
         {
             return
                 new PvPButtonVisibilityFilters(
-                    new PvPAffordableBuildableFilter(),
+                    new PvPAffordableBuildableFilter(playerCruiser),
                     _buildingCategoryFilter,
                     new PvPChooseTargetButtonVisibilityFilter(),
                     new PvPDeleteButtonVisibilityFilter(),

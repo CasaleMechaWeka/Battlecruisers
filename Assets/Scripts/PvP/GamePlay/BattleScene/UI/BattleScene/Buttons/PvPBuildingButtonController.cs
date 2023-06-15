@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPBuildingClickHandler _clickHandler;
         private Transform _clickAndDragIcon;
         private Vector3 _originalClickAndDragPosition;
-        private BuildableClickAndDrag _buildableClickAndDrag;
+        private PvPBuildableClickAndDrag _buildableClickAndDrag;
         public void Initialise(
             IPvPSingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapper,
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _originalClickAndDragPosition = transform.position;
             Image clickAndDragIcon = _clickAndDragIcon.GetComponent<Image>();
             clickAndDragIcon.sprite = buildableImage.sprite;
-            _buildableClickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<BuildableClickAndDrag>();
+            _buildableClickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<PvPBuildableClickAndDrag>();
         }
 
         public void Update()
