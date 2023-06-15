@@ -145,6 +145,13 @@ namespace BattleCruisers.Data.Models
             set => _credits = value;
         }
 
+        private int _coins;
+        public int Coins
+        {
+            get => _coins;
+            set => _coins = value;
+        }
+
 
         private int _totalVoyages;
         public int TotalVoyages

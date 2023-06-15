@@ -159,5 +159,23 @@ namespace BattleCruisers.Utils.Debugging
 
             dataProvider.SaveGame();
         }
+
+        public void AddMoney()
+        {
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            dataProvider.GameModel.Coins += 1000;
+            dataProvider.SaveGame();
+        }
+
+        public void RemoveMoney()
+        {
+            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            dataProvider.GameModel.Coins -= 1000;
+            if(dataProvider.GameModel.Coins < 0)
+            {
+                dataProvider.GameModel.Coins = 0;
+            }
+            dataProvider.SaveGame();
+        }
     }
 }
