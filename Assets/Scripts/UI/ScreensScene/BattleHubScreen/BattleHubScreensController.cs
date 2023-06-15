@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public BattlePanelScreenController battlePanel;
         public InfiniteLoadoutScreenController loadoutPanel;
-        public ShopPanelScreenController shopPanel;
+        //public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            shopPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            //shopPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
 
         }
