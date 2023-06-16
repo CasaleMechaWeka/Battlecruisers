@@ -8,8 +8,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPCruiserFactory
     {
-        Task<PvPCruiser> CreatePlayerACruiser();
-        Task<PvPCruiser> CreatePlayerBCruiser();
+        Task<PvPCruiser> CreatePlayerACruiser(Team team);
+        Task<PvPCruiser> CreatePlayerBCruiser(Team team);
 
         void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,

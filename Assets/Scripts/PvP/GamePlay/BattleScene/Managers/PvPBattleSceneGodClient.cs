@@ -46,6 +46,7 @@ using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -187,7 +188,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 enemyCruiser,
                 navigationPermitters,
                 components.UpdaterProvider.SwitchableUpdater,
-                factoryProvider.Sound.UISoundPlayer
+                factoryProvider.Sound.UISoundPlayer,
+                SynchedServerData.Instance.GetTeam()
             );
 
             IPvPPrefabContainer<PvPBackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
@@ -241,7 +243,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
             _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
-            
+
             PvPManagerArgs args
                 = new PvPManagerArgs(
                     playerCruiser,
@@ -274,7 +276,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             yield return new WaitForSeconds(5f);
             sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
-            cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();
+            else
+            {
+                cameraComponents.CameraFocuser.FocusOnRightPlayerCruiser();
+            }
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
         }
 

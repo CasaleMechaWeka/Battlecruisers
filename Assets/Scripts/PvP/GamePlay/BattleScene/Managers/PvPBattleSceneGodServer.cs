@@ -132,8 +132,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
             factoryProvider.Initialise();
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            playerACruiser = await cruiserFactory.CreatePlayerACruiser();
-            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser();
+            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
 
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);

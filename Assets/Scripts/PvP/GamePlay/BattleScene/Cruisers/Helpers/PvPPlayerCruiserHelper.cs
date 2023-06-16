@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public override void FocusCameraOnCruiser()
         {
-            _cameraFocuser.FocusOnPlayerCruiser();
+            _cameraFocuser.FocusOnLeftPlayerCruiser();
         }
 
         public override void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter)

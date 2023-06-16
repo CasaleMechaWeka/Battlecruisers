@@ -18,6 +18,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
@@ -54,16 +55,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private IPvPTime time;
         private PvPCameraTransitionSpeedManager cameraTransitionSpeedManager;
 
-        private IPvPCruiser _playerCruiser;
-        private IPvPCruiser _enemyCruiser;
+        private PvPCruiser _playerCruiser;
+        private PvPCruiser _enemyCruiser;
 
         public IPvPCameraComponents Initialise(
             ISettingsManager settingsManager,
-            IPvPCruiser playerCruiser,
-            IPvPCruiser enemyCruiser,
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
             PvPNavigationPermitters navigationPermitters,
             IPvPSwitchableUpdater switchableUpdater,
-            IPvPSingleSoundPlayer uiSoundPlayer)
+            IPvPSingleSoundPlayer uiSoundPlayer,
+            Team team)
         {
             PvPHelper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
             PvPHelper.AssertIsNotNull(settingsManager, playerCruiser, enemyCruiser, navigationPermitters, switchableUpdater, uiSoundPlayer);
@@ -79,13 +81,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _playerCruiser = playerCruiser;
             _enemyCruiser = enemyCruiser;
 
-            targets
-                = new PvPCameraTargets(
+            if (team == Team.LEFT)
+            {
+                targets
+                    = new PvPCameraTargets(
+                        cameraCalculator,
+                        settings,
+                        _playerCruiser,
+                        _enemyCruiser,
+                        icamera);
+            }
+            else
+            {
+                targets
+                   = new PvPCameraTargets(
                     cameraCalculator,
                     settings,
-                    _playerCruiser,
                     _enemyCruiser,
+                    _playerCruiser,
                     icamera);
+            }
+
+
+
+
 
             defaultCameraTargetProvider = new PvPStaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);

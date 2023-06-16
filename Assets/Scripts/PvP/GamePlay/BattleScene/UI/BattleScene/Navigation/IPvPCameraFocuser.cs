@@ -2,14 +2,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public interface IPvPCameraFocuser
     {
-        void FocusOnPlayerCruiser();
-        void FocusOnPlayerCruiserDeath();
-        void FocusOnPlayerCruiserNuke();
-        void FocusOnPlayerNavalFactory();
-        void FocusOnAICruiser();
-        void FocusOnAICruiserDeath();
-        void FocusOnAICruiserNuke();
-        void FocusOnAINavalFactory();
+        void FocusOnLeftPlayerCruiser();
+        void FocusOnLeftPlayerCruiserDeath();
+        void FocusOnLeftPlayerCruiserNuke();
+        void FocusOnLeftPlayerNavalFactory();
+        void FocusOnRightPlayerCruiser();
+        void FocusOnRightPlayerCruiserDeath();
+        void FocusOnRightPlayerCruiserNuke();
+        void FocusOnRightPlayerNavalFactory();
         void FocusMidLeft();
         void FocusOnOverview();
     }

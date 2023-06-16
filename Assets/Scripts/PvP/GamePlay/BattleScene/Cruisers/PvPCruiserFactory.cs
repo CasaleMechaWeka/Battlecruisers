@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _fogVisibilityDecider = new PvPFogVisibilityDecider();
         }
 
-        public async Task<PvPCruiser> CreatePlayerACruiser()
+        public async Task<PvPCruiser> CreatePlayerACruiser(Team team)
         {
             PvPCruiser playerACruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
 
@@ -65,7 +65,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return playerACruiser;
         }
 
-        public async Task<PvPCruiser> CreatePlayerBCruiser()
+        public async Task<PvPCruiser> CreatePlayerBCruiser(Team team)
         {
             PvPCruiser playerBCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
 

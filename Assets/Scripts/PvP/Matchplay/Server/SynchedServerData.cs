@@ -6,7 +6,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
@@ -32,6 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         int m_SynchronousSpawnAckCount = 0;
         float m_SynchronousSpawnTimeoutTimer;
 
+
         public override void OnNetworkSpawn()
         {
             OnNetworkSpawned?.Invoke();
@@ -41,6 +42,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             // DynamicPrefabLoadingUtilities.Init(NetworkManager.Singleton);
         }
 
+
+        public Team GetTeam()
+        {
+            if (NetworkManager.Singleton.LocalClientId == playerAClientNetworkId.Value)
+                return Team.LEFT;
+            return Team.RIGHT;
+        }
         public static SynchedServerData Instance
         {
             get

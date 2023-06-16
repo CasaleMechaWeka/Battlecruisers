@@ -158,7 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             base.StaticInitialise(commonStrings);
 
-            Assert.IsNotNull(deathPrefab);
+            Assert.IsNotNull(deathPrefab);       
 
             _renderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(_renderer);
@@ -191,14 +191,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
 
-
-
             if (IsClient && IsOwner)
             {
                 Initialise_Client_PvP();
             }
-
         }
+ 
 
         private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
         {
@@ -458,5 +456,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
     }
+
+    public enum Team { LEFT, RIGHT}
 
 }

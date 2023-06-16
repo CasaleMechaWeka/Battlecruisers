@@ -20,22 +20,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 if (IsNukeCauseOfDeath(losingCruiser))
                 {
-                    _cameraFocuser.FocusOnPlayerCruiserNuke();
+                    _cameraFocuser.FocusOnLeftPlayerCruiserNuke();
                 }
                 else
                 {
-                    _cameraFocuser.FocusOnPlayerCruiserDeath();
+                    _cameraFocuser.FocusOnLeftPlayerCruiserDeath();
                 }
             }
             else
             {
                 if (IsNukeCauseOfDeath(losingCruiser))
                 {
-                    _cameraFocuser.FocusOnAICruiserNuke();
+                    _cameraFocuser.FocusOnRightPlayerCruiserNuke();
                 }
                 else
                 {
-                    _cameraFocuser.FocusOnAICruiserDeath();
+                    _cameraFocuser.FocusOnRightPlayerCruiserDeath();
                 }
             }
         }
