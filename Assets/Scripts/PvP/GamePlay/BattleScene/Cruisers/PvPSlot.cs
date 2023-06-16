@@ -114,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void OnPvPIsVisibleValueChanged(bool previous, bool current)
         {
-            if (IsClient)
+            if (IsClient && IsOwner)
             {
                 IsVisible = current;
             }
