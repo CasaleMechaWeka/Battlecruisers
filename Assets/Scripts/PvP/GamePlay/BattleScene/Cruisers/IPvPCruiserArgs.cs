@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         PvPDirection FacingDirection { get; }
         IPvPRepairManager RepairManager { get; }
         PvPFogStrength FogStrength { get; }
-        IPvPCruiserHelper Helper { get; }
+        // IPvPCruiserHelper Helper { get; }
         IPvPSlotFilter HighlightableFilter { get; }
         IPvPBuildProgressCalculator BuildProgressCalculator { get; }
         IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }

@@ -47,12 +47,19 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Cruisers.Helpers;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
+using BattleCruisers.Buildables.Colours;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodClient : MonoBehaviour
     {
+        private PvPUserTargetTracker _userTargetTracker;
+
         public PvPCameraInitialiser cameraInitialiser;
         public PvPTopPanelInitialiser topPanelInitialiser;
         public PvPLeftPanelInitialiser leftPanelInitialiser;
@@ -182,6 +189,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser.StaticInitialise(commonStrings);
             enemyCruiser.StaticInitialise(commonStrings);
 
+ 
+
             cameraComponents = cameraInitialiser.Initialise(
                 dataProvider.SettingsManager,
                 playerCruiser,
@@ -191,6 +200,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 factoryProvider.Sound.UISoundPlayer,
                 SynchedServerData.Instance.GetTeam()
             );
+
+            IPvPCruiserHelper helper = CreatePlayerHelper(uiManager, cameraComponents.CameraFocuser);
+            playerCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
+            enemyCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
 
             IPvPPrefabContainer<PvPBackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
@@ -242,6 +255,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 );
 
             IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
+            _userTargetTracker = new PvPUserTargetTracker(itemDetailsManager.SelectedItem, new PvPUserTargetsColourChanger());
             _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
 
             PvPManagerArgs args
@@ -260,6 +274,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             StartCoroutine(iLoadedPvPScene());
         }
 
+
+        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
+        {
+
+                return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
+          
+        }
 
         private void IsPopulationLimitReached_ValueChanged(bool oldVal, bool newVal)
         {
