@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
             else
             {
-                //_uiManager.SelectBuilding(buildingClicked.Buildable);
+                _uiManager.SelectBuilding(buildingClicked.Buildable);
                 PlayUnaffordableSound();
             }
         }

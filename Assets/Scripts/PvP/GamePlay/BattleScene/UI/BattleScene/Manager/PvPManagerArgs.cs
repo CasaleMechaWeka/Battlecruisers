@@ -8,16 +8,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPManagerArgs
     {
-        public IPvPCruiser PlayerCruiser { get; }
-        public IPvPCruiser EnemyCruiser { get; }
+        public PvPCruiser PlayerCruiser { get; }
+        public PvPCruiser EnemyCruiser { get; }
         public IPvPBuildMenu BuildMenu { get; }
         public IPvPItemDetailsManager DetailsManager { get; }
         public IPvPPrioritisedSoundPlayer SoundPlayer { get; }
         public IPvPSingleSoundPlayer UISoundPlayer { get; }
 
         public PvPManagerArgs(
-            IPvPCruiser playerCruiser,
-            IPvPCruiser enemyCruiser,
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
             IPvPBuildMenu buildMenu,
             IPvPItemDetailsManager detailsManager,
             IPvPPrioritisedSoundPlayer soundPlayer,

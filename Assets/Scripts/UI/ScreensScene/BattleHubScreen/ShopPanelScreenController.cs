@@ -29,8 +29,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             backButton.Initialise(soundPlayer, Home, this);
 
-            Text coins = PlayerCoinAmount.GetComponent<Text>();
-            coins.text = (dataProvider.GameModel.Coins).ToString();
+/*            Text coins = PlayerCoinAmount.GetComponent<Text>();
+            coins.text = (dataProvider.GameModel.Coins).ToString();*/
         }
 
         public void Update()

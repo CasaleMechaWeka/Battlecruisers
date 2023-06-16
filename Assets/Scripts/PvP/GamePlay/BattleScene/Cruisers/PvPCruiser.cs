@@ -35,6 +35,14 @@ using Unity.Netcode;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.BattleScene.Cruisers;
 using BattleCruisers.Cruisers.Construction;
+using System.Linq;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Utils.Factories;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -121,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
 
-        private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
+
 
         private void Start()
         {
@@ -181,6 +189,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
+
+
+
 
             if (IsClient && IsOwner)
             {
@@ -242,6 +253,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
+
+
+
 
             if (IsPlayerCruiser)
             {
@@ -412,6 +426,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             base.OnNetworkDespawn();
 
         }
+
+        [ServerRpc(RequireOwnership = true)]
+        public void PvP_HighlightAvailableSlotsServerRpc(PvPSlotType SlotType, PvPBuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
+        {
+            PvPSlotSpecification SlotSpecification = new PvPSlotSpecification(SlotType, BuildingFunction, PreferFromFront);
+            var clientId = serverRpcParams.Receive.SenderClientId;
+            if (NetworkManager.ConnectedClientsIds.Contains(clientId))
+            {
+                bool wasAnySlotHighlighted = SlotHighlighter.HighlightAvailableSlots(SlotSpecification);
+                if (!wasAnySlotHighlighted)
+                { 
+                    PvP_PrioritisedSoundClientRpc(PvPSoundType.Events, "no-building-slots-left", PvPSoundPriority.VeryHigh);                   
+                    SlotHighlighter.HighlightSlots(SlotSpecification);
+                }
+            }
+        }
+
+
+        [ClientRpc]
+        private void PvP_PrioritisedSoundClientRpc(PvPSoundType soundType, string name, PvPSoundPriority priority)
+        {
+
+            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new PvPSoundKey(soundType, "no-building-slots-left"), priority));
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        public void PvP_UnhighlightSlotsServerRpc()
+        {
+            SlotHighlighter.UnhighlightSlots();
+        }
+
     }
 
 }

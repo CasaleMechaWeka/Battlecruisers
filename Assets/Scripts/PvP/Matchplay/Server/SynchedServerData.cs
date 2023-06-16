@@ -91,15 +91,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 Debug.Log("Loading dynamic prefab on the clients...");
                 LoadAddressableClientRpc(iKey.PrefabPath);
 
-                // server is starting to load a prefab, update UI
-                // m_InGameUI.ClientLoadedPrefabStatusChanged(NetworkManager.ServerClientId, assetGuid.GetHashCode(), "Undefined", InGameUI.LoadStatus.Loading);
+
 
                 //load the prefab on the server, so that any late-joiner will need to load that prefab also
                 DynamicPrefabLoadingUtilities.LoadDynamicPrefab(assetGuid /*, m_InGameUI.ArtificialDelayMilliseconds*/, iPrefab);
 
-                // server loaded a prefab, update UI with the loaded asset's name
-                // DynamicPrefabLoadingUtilities.TryGetLoadedGameObjectFromGuid(assetGuid, out var loadedGameObject);
-                // m_InGameUI.ClientLoadedPrefabStatusChanged(NetworkManager.ServerClientId, assetGuid.GetHashCode(), loadedGameObject.Result.name, InGameUI.LoadStatus.Loaded);
 
                 var requiredAcknowledgementsCount = IsHost ? NetworkManager.Singleton.ConnectedClients.Count - 1 :
                     NetworkManager.Singleton.ConnectedClients.Count;
@@ -125,28 +121,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
             return false;
 
-            // NetworkObject Spawn(AddressableGUID assetGuid)
-            // {
-            //     if (!DynamicPrefabLoadingUtilities.TryGetLoadedGameObjectFromGuid(assetGuid, out var prefab))
-            //     {
-            //         Debug.LogWarning($"GUID {assetGuid} is not a GUID of a previously loaded prefab. Failed to spawn a prefab.");
-            //         return null;
-            //     }
-            //     var obj = Instantiate(prefab.Result, position, rotation).GetComponent<NetworkObject>();
-            //     obj.Spawn();
-            //     Debug.Log("Spawned dynamic prefab");
-
-            //     // every client loaded dynamic prefab, their respective ClientUIs in case they loaded first
-            //     // foreach (var client in NetworkManager.Singleton.ConnectedClients.Keys)
-            //     // {
-            //     //     m_InGameUI.ClientLoadedPrefabStatusChanged(client,
-            //     //         assetGuid.GetHashCode(),
-            //     //         prefab.Result.name,
-            //     //         InGameUI.LoadStatus.Loading);
-            //     // }
-
-            //     return obj;
-            // }
         }
 
 
@@ -160,8 +134,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
             void Load(string _prefabPath)
             {
-                // loading prefab as a client, update UI
-                // m_InGameUI.ClientLoadedPrefabStatusChanged(m_NetworkManager.LocalClientId, assetGuid.GetHashCode(), "Undefined", InGameUI.LoadStatus.Loading);
 
                 Debug.Log("Loading dynamic prefab on the client..." + _prefabPath);
                 PvPPrefab iPrefab = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetPrefab(_prefabPath);
@@ -174,9 +146,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 DynamicPrefabLoadingUtilities.LoadDynamicPrefab(assetGuid, iPrefab /*, m_InGameUI.ArtificialDelayMilliseconds*/);
                 Debug.Log("Client loaded dynamic prefab" + _prefabPath);
 
-                // DynamicPrefabLoadingUtilities.TryGetLoadedGameObjectFromGuid(assetGuid, out var loadedGameObject);
-                // m_InGameUI.ClientLoadedPrefabStatusChanged(m_NetworkManager.LocalClientId, assetGuid.GetHashCode(), loadedGameObject.Result.name, InGameUI.LoadStatus.Loaded);
-
                 AcknowledgeSuccessfulPrefabLoadServerRpc(assetGuid.GetHashCode());
             }
         }
@@ -188,28 +157,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             Debug.Log($"Client acknowledged successful prefab load with hash: {prefabHash}");
             DynamicPrefabLoadingUtilities.RecordThatClientHasLoadedAPrefab(prefabHash,
                 rpcParams.Receive.SenderClientId);
-
-            // a quick way to grab a matching prefab reference's name via its prefabHash
-            // var loadedPrefabName = "Undefined";
-            // foreach (var prefabReference in m_DynamicPrefabReferences)
-            // {
-            //     var prefabReferenceGuid = new AddressableGUID() { Value = prefabReference.AssetGUID };
-            //     if (prefabReferenceGuid.GetHashCode() == prefabHash)
-            //     {
-            //         // found the matching prefab reference
-            //         if (DynamicPrefabLoadingUtilities.LoadedDynamicPrefabResourceHandles.TryGetValue(
-            //                 prefabReferenceGuid,
-            //                 out var loadedGameObject))
-            //         {
-            //             // if it is loaded on the server, update the name on the ClientUI
-            //             loadedPrefabName = loadedGameObject.Result.name;
-            //         }
-            //         break;
-            //     }
-            // }
-
-            // client has successfully loaded a prefab, update UI
-            // m_InGameUI.ClientLoadedPrefabStatusChanged(rpcParams.Receive.SenderClientId, prefabHash, loadedPrefabName, InGameUI.LoadStatus.Loaded);
         }
 
     }

@@ -265,7 +265,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 OnSignInFailed();
                 return;
             }
-            if (!AuthenticationService.Instance.IsSignedIn)
+       //     if (!AuthenticationService.Instance.IsSignedIn)
                 TrySignIn();
         }
 
@@ -287,7 +287,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     try
                     {
-                        unityAuthenticationInitOptions.SetProfile($"{profile} {LocalProfileTool.LocalProfileSuffix}");
+                        /*{LocalProfileTool.LocalProfileSuffix}*/
+                        unityAuthenticationInitOptions.SetProfile($"{profile}");
+
                     }
                     catch (Exception e)
                     {
@@ -396,12 +398,25 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
             m_LobbyServiceFacade.OnMatchMakingStarted += onMatchmakingStarted;
 
-            if (AuthenticationService.Instance.IsAuthorized)
-            {                
-                StartCoroutine(iStartPvP());
-            }
+            m_AuthServiceFacade.AddActionToSignedInEvent(OnSignedIn);
+
+
+
         }
 
+
+        private void OnSignedIn()
+        {
+            var IsAuthorized = m_AuthServiceFacade.EnsurePlayerIsAuthorized();
+            if (IsAuthorized.Result)
+                StartCoroutine(iStartPvP());
+        }
+
+
+        private void OnSignedFailed()
+        {
+            
+        }
 
 
     }

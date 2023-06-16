@@ -38,12 +38,14 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Plat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using System;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Buttons;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -73,6 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPTime time;
         private IPvPPauseGameManager pauseGameManager;
         private IPvPDebouncer _debouncer;
+        private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
         ISceneNavigator sceneNavigator;
 
@@ -237,7 +240,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 );
 
             IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
-
+            _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
+            
             PvPManagerArgs args
                 = new PvPManagerArgs(
                     playerCruiser,

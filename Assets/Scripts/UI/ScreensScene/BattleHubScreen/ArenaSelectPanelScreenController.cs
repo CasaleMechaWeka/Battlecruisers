@@ -23,8 +23,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public RectTransform[] arenas;
         private int indexCurrentArena = 0;
         private ICommand _nextSetCommand, _previousSetCommand;
-        public int IndexCurrentArena {
-            get { 
+        public int IndexCurrentArena
+        {
+            get
+            {
                 return indexCurrentArena;
             }
             set
@@ -52,8 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(battleButton, navRightButton, navLeftButton);
-            
-            _screenSceneGod = screensSceneGod; 
+
+            _screenSceneGod = screensSceneGod;
             _singleSoundPlayer = soundPlayer;
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
@@ -66,7 +68,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _previousSetCommand = new Command(PreviousSetCommandExecute, CanPreviousSetCommandExecute);
             navLeftButton.Initialise(soundPlayer, _previousSetCommand);
 
-            DOTween.Init();            
+            DOTween.Init();
         }
 
 
@@ -113,7 +115,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 arenas[IndexCurrentArena].DOAnchorPosX(0f, 0.3f)
                     .OnComplete(() =>
                     {
-                        arenas[cur_idx].gameObject.SetActive(false);                     
+                        arenas[cur_idx].gameObject.SetActive(false);
                     });
             }
             else if (cur_idx < IndexCurrentArena)
@@ -135,32 +137,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
 
 
-        private async void InitializeAndSignInAsync()
-        {
-            var unityAuthenticationInitOptions = new InitializationOptions();
-            try
-            {
-                await Unity.Services.Core.UnityServices.InitializeAsync(unityAuthenticationInitOptions);
-                if (!AuthenticationService.Instance.IsSignedIn)
-                {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    Debug.Log("you login as " + AuthenticationService.Instance.PlayerId);
-                }
-            }
-            catch (Exception e)
-            { 
-                Debug.LogException(e);
-            }
-        }
+
 
 
 
         private void StartBattle()
         {
-            if (AuthenticationService.Instance.IsSignedIn)
-            {
-                _screenSceneGod.LoadPvPBattleScene();
-            }
+            //  if (AuthenticationService.Instance.IsSignedIn)
+            //  {
+            _screenSceneGod.LoadPvPBattleScene();
+            //  }
         }
     }
 }

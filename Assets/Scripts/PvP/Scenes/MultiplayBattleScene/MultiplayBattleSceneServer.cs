@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         Action onClientEntered;
         Action onClientExit;
-        const int MaxConnectedPlayers = 1;
+        const int MaxConnectedPlayers = 2;
         private void Awake()
         {
             m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
