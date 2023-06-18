@@ -9,11 +9,11 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public Sprite captainImage;
         public Sprite CaptainImage => captainImage;
 
-        public int captainCost;
-        public int CaptainCost => captainCost;
-
         public string captainName = "Charlie";
         public string CaptainName => captainName;
+
+        public int captainCost;
+        public int CaptainCost => captainCost;
 
         public string stringKeyBase;
         public string StringKeyBase => stringKeyBase;
