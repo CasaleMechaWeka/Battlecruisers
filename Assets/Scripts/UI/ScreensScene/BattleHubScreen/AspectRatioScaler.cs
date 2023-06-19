@@ -22,18 +22,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         [SerializeField, Range(0, 2)]
         private float maxScale = 1.5f;
 
-        [Header("Position Settings")]
-        [Tooltip("The amount the object's Y position should change as the screen's aspect ratio narrows.")]
-        [SerializeField]
-        private float yPosChange = 10f;
-
-        private Vector3 originalPosition;
-
-        private void Awake()
-        {
-            originalPosition = transform.position;
-        }
-
         private void Update()
         {
             float currentAspect = (float)Screen.width / Screen.height;
@@ -43,15 +31,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 float ratioDifference = (targetAspect - currentAspect) / (targetAspect - 1);
                 float adjustedScale = Mathf.Clamp(1 + ratioDifference, 1, maxScale);
-                float adjustedYPos = originalPosition.y + yPosChange * ratioDifference;
 
                 transform.localScale = Vector3.one * adjustedScale;
-                transform.position = new Vector3(originalPosition.x, adjustedYPos, originalPosition.z);
             }
             else
             {
                 transform.localScale = Vector3.one;
-                transform.position = originalPosition;
             }
         }
     }
