@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     [RequireComponent(typeof(RectTransform))]
     [AddComponentMenu("BattleCruisers/UI/AspectRatioScaler")]
     public class AspectRatioScaler : MonoBehaviour
-    {
+    { 
         [Header("General Function:")]
         [TextArea]
         [SerializeField]
