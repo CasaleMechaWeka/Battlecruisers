@@ -40,6 +40,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Random = UnityEngine.Random;
+using UnityEditor.PackageManager;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -215,7 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                     {
                         Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                        m_LobbyServiceFacade.BeginTracking();           
+                        m_LobbyServiceFacade.BeginTracking();
                     }
                 }
             }
@@ -260,13 +261,15 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             base.Awake();
 
-            if (string.IsNullOrEmpty(Application.cloudProjectId))
-            {
-                OnSignInFailed();
-                return;
-            }
-       //     if (!AuthenticationService.Instance.IsSignedIn)
-                TrySignIn();
+
+            //---> should be enabled in Production
+            /*            if (string.IsNullOrEmpty(Application.cloudProjectId))
+                        {
+                            OnSignInFailed();
+                            return;
+                        }
+
+                        TrySignIn();*/
         }
 
 
@@ -394,14 +397,14 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
 
-
             m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
             m_LobbyServiceFacade.OnMatchMakingStarted += onMatchmakingStarted;
 
-            m_AuthServiceFacade.AddActionToSignedInEvent(OnSignedIn);
+            //---> should be enabled in Production
+            // m_AuthServiceFacade.AddActionToSignedInEvent(OnSignedIn);
 
-
-
+            //---> to play without internet connection for local test, should be removed in Production
+            StartCoroutine(iStartPvP());
         }
 
 
@@ -415,7 +418,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private void OnSignedFailed()
         {
-            
+
         }
 
 

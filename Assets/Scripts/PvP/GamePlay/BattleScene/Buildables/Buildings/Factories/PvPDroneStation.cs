@@ -55,15 +55,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (IsServer)
             {
-                
-                PvP_Position.Value = Position;
-                PvP_Rotation.Value = Rotation;
-                if (HealthBar is not null)
+                if (PvP_Position.Value != Position)
+                    PvP_Position.Value = Position;
+                if (PvP_Rotation.Value != Rotation)
+                    PvP_Rotation.Value = Rotation;
+                if (HealthBar is not null && PvP_Offset.Value != HealthBar.Offset)
                     PvP_Offset.Value = HealthBar.Offset;
-                PvP_IsEnabledRenderers.Value = isEnabledRenderers;
-                PvP_IsEnabledBuildableProgressController.Value = _buildableProgress.gameObject.activeSelf;
-                PvP_BuildProgress.Value = BuildProgress;
-                PvP_BuildableState.Value = BuildableState;
+
+                if (PvP_IsEnabledRenderers.Value != isEnabledRenderers)
+                    PvP_IsEnabledRenderers.Value = isEnabledRenderers;
+                if (PvP_IsEnabledBuildableProgressController.Value != _buildableProgress.gameObject.activeSelf)
+                    PvP_IsEnabledBuildableProgressController.Value = _buildableProgress.gameObject.activeSelf;
+
+                if (PvP_BuildProgress.Value != BuildProgress)
+                    PvP_BuildProgress.Value = BuildProgress;
+                if (PvP_BuildableState.Value != BuildableState)
+                    PvP_BuildableState.Value = BuildableState;
             }
             if (IsClient)
             {

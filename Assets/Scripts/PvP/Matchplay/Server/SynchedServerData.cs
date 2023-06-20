@@ -148,7 +148,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
             void Load(string _prefabPath)
             {
-
                 Debug.Log("Loading dynamic prefab on the client..." + _prefabPath);
                 PvPPrefab iPrefab = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetPrefab(_prefabPath);
                 if (iPrefab == null)

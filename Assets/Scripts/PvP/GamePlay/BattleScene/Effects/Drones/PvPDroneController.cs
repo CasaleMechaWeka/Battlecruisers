@@ -10,26 +10,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPDroneController : PvPPrefab, IPvPDroneController
     {
-        private Animation _animation;
+        public Animation _animation;
 
         public PvPFaction Faction { get; private set; }
 
         public event EventHandler Activated;
         public event EventHandler Deactivated;
-        public NetworkVariable<bool> PvP_IsEnabled = new NetworkVariable<bool>();
-        public NetworkVariable<Vector3> PvP_Position = new NetworkVariable<Vector3>();
+        public GameObject _drone;
+
         public bool IsEnabled
         {
-            get {
-                return gameObject.activeSelf;
-            }
-            set 
+            get
             {
-                gameObject.SetActive(value);
-                if (IsServer)
-                {
-                    PvP_IsEnabled.Value = value;
-                }
+                return _drone.activeSelf;
+            }
+            set
+            {     
+                _drone.SetActive(value);
+
             }
         }
 
@@ -37,22 +35,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             base.StaticInitialise(commonStrings);
 
-            _animation = GetComponentInChildren<Animation>();
             Assert.IsNotNull(_animation);
-
-          //  gameObject.SetActive(false);
+            Assert.IsNotNull(_drone);
             IsEnabled = false;
-
         }
 
+
+
+
         public void Activate(PvPDroneActivationArgs activationArgs)
-        {         
-
-            gameObject.transform.position = activationArgs.Position;
-            PvP_Position.Value = activationArgs.Position;
-          //  gameObject.SetActive(true);
+        {
             IsEnabled = true;
-
+            // clientRpc
+         //   OnChangedEnabledValueClientRpc(IsEnabled);
+            gameObject.transform.position = activationArgs.Position;
+            // clientRpc
+        //    OnChangedPositionClientRpc(activationArgs.Position);
             Faction = activationArgs.Faction;
 
             AnimationState state = _animation["BuilderDrone"];
@@ -69,41 +67,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public void Deactivate()
         {
-         //   gameObject.SetActive(false);
             IsEnabled = false;
+            // clientRpc
+         //   OnChangedEnabledValueClientRpc(IsEnabled);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
-        private void Start()
+        [ClientRpc]
+        private void OnChangedEnabledValueClientRpc(bool isEnabled)
         {
-            if (IsClient)
-            {
-                PvP_IsEnabled.OnValueChanged += OnPvPIsEnabledChanged;
-                PvP_Position.OnValueChanged += OnPvPPositionChanged;
-            }
-
+            IsEnabled = isEnabled;
         }
 
-        private void OnPvPIsEnabledChanged(bool oldVal, bool newVal)
+        [ClientRpc]
+        private void OnChangedPositionClientRpc(Vector3 pos)
         {
-            IsEnabled = newVal;
+            gameObject.transform.position = pos;
         }
 
-        private void OnPvPPositionChanged(Vector3 oldVal, Vector3 newVal)
-        {
-            gameObject.transform.position = newVal;
-        }
-/*        private void Update()
-        {
-
-            if (IsServer)
-            {
-                PvP_IsEnabled.Value = IsEnabled;                
-            }
-            if (IsClient)
-            {
-                IsEnabled = PvP_IsEnabled.Value;
-            }
-        }*/
     }
 }

@@ -45,15 +45,11 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                var options = new InitializationOptions();
+                //---> should be enabled in Production
+/*                var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);
-                // if (!AuthenticationService.Instance.IsSignedIn)
-                // {
-                //     await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                //     Debug.Log("you login as " + AuthenticationService.Instance.PlayerId);
-                // }
-                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();*/
             }
             catch (ConsentCheckException e)
             {
