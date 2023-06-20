@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Utils;
 using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -29,6 +30,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         void OnTriggerEnter2D(Collider2D collider)
         {
+            if (NetworkManager.Singleton.IsClient)
+                return;
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             IPvPTarget target = GetTarget(collider);
@@ -37,6 +40,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         void OnTriggerExit2D(Collider2D collider)
         {
+            if (NetworkManager.Singleton.IsClient)
+                return;
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             IPvPTarget target = GetTarget(collider);

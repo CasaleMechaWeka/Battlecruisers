@@ -89,6 +89,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         void FixedUpdate()
         {
+            if (IsClient)
+                return;
             if (!IsDestroyed)
             {
                 OnFixedUpdate();
