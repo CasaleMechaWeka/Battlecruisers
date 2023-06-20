@@ -83,14 +83,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
-            // IPvPCameraFocuser cameraFocuser,
+         //   IPvPCameraFocuser cameraFocuser,
             IPvPRankedTargetTracker userChosenTargetTracker
             // IPvPUserChosenTargetHelper userChosenTargetHelper
             )
         {
-            PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser, /*cameraFocuser,*/ userChosenTargetTracker);
+            PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser,/* cameraFocuser,*/ userChosenTargetTracker);
 
-           // IPvPCruiserHelper helper = CreatePlayerHelper(_uiManager , cameraFocuser);
+            IPvPCruiserHelper helper = CreatePlayerHelper(/*_uiManager , cameraFocuser*/);
             PvPFaction faction = PvPFaction.Blues;
             PvPDirection facingDirection = PvPDirection.Right;
             PvPFogStrength fogStrength = PvPFogStrength.Weak;
@@ -101,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 playerACruiser,
                 playerBCruiser,
                 // _uiManager,
-             //   helper,
+                helper,
                 faction,
                 facingDirection,
                 fogStrength,
@@ -117,13 +117,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void InitialisePlayerBCruiser(
             PvPCruiser playerBCruiser,
             PvPCruiser playerACruiser,
-            // IPvPCameraFocuser cameraFocuser,
+        //    IPvPCameraFocuser cameraFocuser,
             IPvPRankedTargetTracker userChosenTargetTracker
             /* IPvPUserChosenTargetHelper userChosenTargetHelper */)
         {
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 
-           // IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager, cameraFocuser*/);
+           IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
             PvPFaction faction = PvPFaction.Reds;
             PvPDirection facingDirection = PvPDirection.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 playerBCruiser,
                 playerACruiser,
                 // _uiManager,
-               // helper,
+                helper,
                 faction,
                 facingDirection,
                 fogStrength,
@@ -152,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser cruiser,
             IPvPCruiser enemyCruiser,
             // IPvPUIManager uiManager,
-         //   IPvPCruiserHelper helper,
+            IPvPCruiserHelper helper,
             PvPFaction faction,
             PvPDirection facingDirection,
             PvPFogStrength fogStrength,
@@ -198,7 +198,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     facingDirection,
                     repairManager,
                     fogStrength,
-                //    helper,
+                    helper,
                     highlightableFilter,
                     buildProgressCalculator,
                     buildingDoubleClickHandler,
@@ -233,6 +233,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
+        private IPvPCruiserHelper CreatePlayerBHelper(/*IPvPUIManager uiManager  , IPvPCameraFocuser cameraFocuser*/)
+        {
+            // if (_applicationModel.IsTutorial)
+            // {
+            //     return new PvPTutorialAICruiserHelper(uiManager, cameraFocuser);
+            // }
+            // else
+            // {
+            return new PvPPlayerBCruiserHelper(/*uiManager , cameraFocuser*/);
+            // }
+        }
+
         private IPvPCruiserHelper CreatePlayerHelper( IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser )
         {
             // if (_applicationModel.IsTutorial)
@@ -242,6 +254,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // else
             // {
             return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
+            // }
+        }
+
+
+        private IPvPCruiserHelper CreatePlayerHelper(/*IPvPUIManager uiManager , IPvPCameraFocuser cameraFocuser*/)
+        {
+            // if (_applicationModel.IsTutorial)
+            // {
+            //     return new PvPTutorialPlayerCruiserHelper(uiManager, cameraFocuser);
+            // }
+            // else
+            // {
+            return new PvPPlayerCruiserHelper(/*uiManager , cameraFocuser*/);
             // }
         }
     }

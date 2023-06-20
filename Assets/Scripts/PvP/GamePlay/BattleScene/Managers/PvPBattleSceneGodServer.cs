@@ -130,12 +130,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 components.TargetIndicator */);
             IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
-            factoryProvider.Initialise();
+            await factoryProvider.Initialise();
+            // StartCoroutine(iInitialiseFactoryProvider());
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
 
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser , /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
@@ -148,6 +149,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerACruiser);
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+        }
+
+
+        IEnumerator iInitialiseFactoryProvider()
+        {
+            yield return null;
+            factoryProvider.Initialise();
         }
 
 

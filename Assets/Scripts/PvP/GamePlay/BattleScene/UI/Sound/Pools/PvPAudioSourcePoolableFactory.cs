@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools
 {
@@ -17,9 +18,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
             _realTimeDeferrer = realTimeDeferrer;
         }
 
-        public IPvPAudioSourcePoolable CreateItem()
+        public async Task<IPvPAudioSourcePoolable> CreateItem()
         {
-            return _prefabFactory.CreateAudioSource(_realTimeDeferrer);
+            return await _prefabFactory.CreateAudioSource(_realTimeDeferrer);
         }
     }
 }

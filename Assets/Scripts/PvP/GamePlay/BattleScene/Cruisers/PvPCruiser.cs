@@ -43,6 +43,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Utils.Fetchers;
+using System.Threading.Tasks;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -67,6 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public int numOfDrones;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
+
 
         // ITarget
         public override PvPTargetType TargetType => PvPTargetType.Cruiser;
@@ -102,6 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         // ICruiserController
+
         public bool IsAlive => !IsDestroyed;
         public IPvPSlotAccessor SlotAccessor { get; private set; }
         public IPvPSlotHighlighter SlotHighlighter { get; private set; }
@@ -150,8 +154,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public async void Initialise_Client_PvP(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
-            if (IsClient && IsOwner)
-            {
+        //  if (IsClient && IsOwner)
+        //    {
                 FactoryProvider = factoryProvider;
                 _uiManager = uiManager;
                 _helper = helper;
@@ -162,7 +166,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
                 IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
                 _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
-            }
+         //   }
         }
 
 
@@ -170,7 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             base.StaticInitialise(commonStrings);
 
-            Assert.IsNotNull(deathPrefab);       
+            Assert.IsNotNull(deathPrefab);
 
             _renderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(_renderer);
@@ -203,9 +207,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
 
-    
+
         }
- 
+
+        public PvPSlotWrapperController GetSlotWrapperController()
+        {
+            return _slotWrapperController;
+        }
 
         private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
         {
@@ -227,7 +235,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FactoryProvider = args.FactoryProvider;
             CruiserSpecificFactories = args.CruiserSpecificFactories;
             Direction = args.FacingDirection;
-          //  _helper = args.Helper;
+            _helper = args.Helper;
             BuildProgressCalculator = args.BuildProgressCalculator;
             _buildingDoubleClickHandler = args.BuildingDoubleClickHandler;
             _cruiserDoubleClickHandler = args.CruiserDoubleClickHandler;
@@ -297,7 +305,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
+        public Task<IPvPBuilding> ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
         {
             // Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
@@ -305,11 +313,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return ConstructSelectedBuilding(slot);
         }
 
-        public IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot)
-        {
+        public async Task<IPvPBuilding> ConstructSelectedBuilding(IPvPSlot slot)
+        {         
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
+            IPvPBuilding building = await FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
+      
 
             building.Activate(
                 new PvPBuildingActivationArgs(
@@ -321,16 +330,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             slot.SetBuilding(building);
 
+      
+
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
-
+    
             building.StartConstruction();
-            _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
+         //   _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
+     
             BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
-
+      
             slot.controlBuildingPlacementFeedback(true);
-
+       
             if (IsPlayerCruiser)
             {
                 string logName = building.PrefabName.ToUpper().Replace("(CLONE)", "");
@@ -458,6 +470,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void PvP_UnhighlightSlotsServerRpc()
         {
             SlotHighlighter.UnhighlightSlots();
+        }
+
+
+        [ServerRpc(RequireOwnership = true)]
+        public void PvP_SelectedBuildingPrefabServerRpc(PvPBuildingCategory category, string prefabName, ServerRpcParams serverRpcParams = default)
+        {
+            var clientId = serverRpcParams.Receive.SenderClientId;
+            if (NetworkManager.ConnectedClientsIds.Contains(clientId))
+            {
+                PvPBuildingKey buildingKey = new PvPBuildingKey(category, prefabName);
+                SelectedBuildingPrefab = FactoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+            }
         }
 
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks.States
 {
@@ -9,9 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         {
         }
 
-        public override IPvPState Start()
+        public override async Task<IPvPState> Start()
         {
-            if (_task.Start())
+            var isStart = await _task.Start();
+            if (isStart)
             {
                 return new PvPInProgressState(_task, _eventEmitter);
             }

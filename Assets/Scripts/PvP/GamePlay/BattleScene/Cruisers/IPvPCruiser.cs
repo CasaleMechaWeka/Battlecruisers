@@ -12,11 +12,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Loadout
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
     public interface IPvPCruiser : IPvPCruiserController, IPvPTarget, IPvPComparableItem, IPvPClickableEmitter
     {
+        
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
         IPvPDroneConsumerProvider DroneConsumerProvider { get; }
         PvPDirection Direction { get; }
@@ -31,10 +33,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         bool IsPlayerCruiser { get; }
         PvPCruiserDeathExplosion DeathPrefab { get; }
 
-        IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot);
+        Task<IPvPBuilding> ConstructSelectedBuilding(IPvPSlot slot);
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
         bool IsPvPCruiser();
+        PvPSlotWrapperController GetSlotWrapperController();
     }
 }
 

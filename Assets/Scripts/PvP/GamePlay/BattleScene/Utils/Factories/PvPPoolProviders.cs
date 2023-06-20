@@ -7,6 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -36,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const int DRONES_INITIAL_CAPACITY = 32;
         private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
+
         public PvPPoolProviders(
             IPvPFactoryProvider factoryProvider,
             // IPvPUIManager uiManager,
@@ -48,18 +50,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
             _dronePool = new PvPPool<IPvPDroneController, PvPDroneActivationArgs>(droneFactory);
-
+/*
             IPvPAudioSourcePoolableFactory audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);
+            _audioSourcePool = new PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }
 
 
         public PvPPoolProviders(
-    IPvPFactoryProvider factoryProvider,
-    IPvPUIManager uiManager,
-    IPvPDroneFactory droneFactory)
+            IPvPFactoryProvider factoryProvider,
+            IPvPUIManager uiManager,
+            IPvPDroneFactory droneFactory)
         {
             PvPHelper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 
@@ -76,14 +78,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
-        public void SetInitialCapacities()
+        public async Task SetInitialCapacities()
         {
-            _explosionPoolProvider.SetInitialCapacity();
-            _shipDeathPoolProvider.SetInitialCapacity();
-            _projectilePoolProvider.SetInitialCapacity();
-            _unitPoolProvider.SetInitialCapacity();
-            _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
-            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
+            await _explosionPoolProvider.SetInitialCapacity();
+            await _shipDeathPoolProvider.SetInitialCapacity();
+            await _projectilePoolProvider.SetInitialCapacity();
+            await _unitPoolProvider.SetInitialCapacity();
+            await _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
+        //    _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
         }
     }
 }

@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -35,13 +36,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                         shipDeathKey));
         }
 
-        public void SetInitialCapacity()
+        public async Task SetInitialCapacity()
         {
-            AttackBoatPool.AddCapacity(PvPInitialCapacity.ATTACK_BOAT);
-            AttackRIBPool.AddCapacity(PvPInitialCapacity.ATTACK_RIB);
-            FrigatePool.AddCapacity(PvPInitialCapacity.FRIGATE);
-            DestroyerPool.AddCapacity(PvPInitialCapacity.DESTROYFER);
-            ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
+            await AttackBoatPool.AddCapacity(PvPInitialCapacity.ATTACK_BOAT);
+            await AttackRIBPool.AddCapacity(PvPInitialCapacity.ATTACK_RIB);
+            await FrigatePool.AddCapacity(PvPInitialCapacity.FRIGATE);
+            await DestroyerPool.AddCapacity(PvPInitialCapacity.DESTROYFER);
+            await ArchonPool.AddCapacity(PvPInitialCapacity.ARCHON);
         }
     }
 }

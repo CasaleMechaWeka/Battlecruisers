@@ -21,11 +21,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _cameraFocuser.FocusOnRightPlayerCruiser();
         }
 
+        public PvPPlayerCruiserHelper(/*IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
+    : base(/*uIManager, cameraFocuser*/)
+        {
+
+        }
+
+
         public override void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter)
         {
             if (!slotAccessor.IsSlotAvailableForPlayer(buildingStarted.SlotSpecification))
             {
-                _uiManager.HideCurrentlyShownMenu();
+                _uiManager?.HideCurrentlyShownMenu();
             }
             else
             {

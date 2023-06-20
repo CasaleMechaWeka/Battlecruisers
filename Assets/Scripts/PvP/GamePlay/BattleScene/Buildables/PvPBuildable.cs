@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -69,8 +71,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float MAX_BUILD_PROGRESS = 1;
 
         #region Properties
-        public PvPBuildableState BuildableState { get; private set; }
-        public float BuildProgress { get; private set; }
+        public PvPBuildableState BuildableState { get;  set; }
+        public float BuildProgress { get;  set; }
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
         public IPvPBoostable BuildProgressBoostable { get; private set; }
@@ -111,6 +113,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        private bool _isEnabledRenderers = false;
+        public bool isEnabledRenderers
+        {
+            set
+            {
+                _isEnabledRenderers = value;
+                if (IsClient)
+                {
+                    EnableRenderers(value);
+                }
+            }
+            get
+            {
+                return _isEnabledRenderers;
+            }
+        }
         private IList<SpriteRenderer> _inGameRenderers;
         private IList<SpriteRenderer> InGameRenderers
         {
@@ -176,6 +194,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler Clicked;
         public event EventHandler Deactivated;
 
+
+
+
+
+
+
+
+
+
         public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);
@@ -203,6 +230,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsNotNull(deathSound);
             _deathSound = new PvPAudioClipWrapper(deathSound);
+
+
+
+            //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
+        }
+
+
+        public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
+        {
+
+            Helper.AssertIsNotNull(parent, healthBar);
+
+            _parent = parent;
+            _healthBar = healthBar;
+
+            _buildableProgress = gameObject.GetComponentInChildren<PvPBuildableProgressController>(includeInactive: true);
+            Assert.IsNotNull(_buildableProgress);
+            _buildableProgress.Initialise();
+
+            ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
+
+            PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
+            Assert.IsNotNull(clickHandlerWrapper);
+            _clickHandler = clickHandlerWrapper.GetClickHandler();
+
+            _damageCapabilities = new List<IPvPDamageCapability>();
+            this.DamageCapabilities = new ReadOnlyCollection<IPvPDamageCapability>(_damageCapabilities);
+
+            _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
+            Assert.IsNotNull(_smokeInitialiser);
+
+            Assert.IsNotNull(deathSound);
+            _deathSound = new PvPAudioClipWrapper(deathSound);
+
+
+
+            //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
 
         protected void AddDamageStats(IPvPDamageCapability statsToAdd)
@@ -223,6 +287,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+
+        /*        public void SetHealthBarPosition(Vector2 offset)
+                {
+                    PvP_HealthbarOffset.Value = offset;
+                }*/
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
@@ -259,11 +328,45 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
             _parent.SetActive(false);
+            if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
+            }
+
+        }
+
+        public virtual void Initialise(/*IPvPFactoryProvider factoryProvider*/)
+        {
+            /*        Logging.Log(Tags.BUILDABLE, this);
+
+                    Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
+                    Helper.AssertIsNotNull(factoryProvider);
+
+                    // _uiManager = uiManager;
+                    _factoryProvider = factoryProvider;
+                    _targetFactories = _factoryProvider.Targets;
+                    _movementControllerFactory = _factoryProvider.MovementControllerFactory;*/
+
+            _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+            HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
+            //   BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+
+            _clickHandler.SingleClick += ClickHandler_SingleClick;
+            _clickHandler.DoubleClick += ClickHandler_DoubleClick;
+
+            _healthBar.Initialise(this);
+
+            Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
+            //  _parent.SetActive(false);
         }
 
         public virtual void Activate(IPvPCruiser parentCruiser, IPvPCruiser enemyCruiser, IPvPCruiserSpecificFactories cruiserSpecificFactories)
         {
             _parent.SetActive(true);
+            if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPBuildingWrapper>().IsVisible = true;
+            }
             ParentCruiser = parentCruiser;
             EnemyCruiser = enemyCruiser;
             _cruiserSpecificFactories = cruiserSpecificFactories;
@@ -285,7 +388,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsFalse(_parent.activeSelf);
             _parent.SetActive(true);
-
+            if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPBuildingWrapper>().IsVisible = true;
+            }
             ParentCruiser = activationArgs.ParentCruiser;
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
@@ -393,34 +499,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // PERF  Doesn't need to be every update :)
         public void Update()
         {
-            if (BuildableState == PvPBuildableState.InProgress)
+            if(IsServer)
             {
-                Assert.IsTrue(DroneConsumer.State != PvPDroneConsumerState.Idle);
-
-                // Find build progress
-                float buildProgressInDroneS = ParentCruiser.BuildProgressCalculator.CalculateBuildProgressInDroneS(this, _time.DeltaTime);
-                _cumulativeBuildProgressInDroneS += buildProgressInDroneS;
-
-                BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;
-
-                if (BuildProgress > MAX_BUILD_PROGRESS)
+                if (BuildableState == PvPBuildableState.InProgress)
                 {
-                    BuildProgress = MAX_BUILD_PROGRESS;
+                    Assert.IsTrue(DroneConsumer.State != PvPDroneConsumerState.Idle);
+
+                    // Find build progress
+                    float buildProgressInDroneS = ParentCruiser.BuildProgressCalculator.CalculateBuildProgressInDroneS(this, _time.DeltaTime);
+                    _cumulativeBuildProgressInDroneS += buildProgressInDroneS;
+
+                    BuildProgress = _cumulativeBuildProgressInDroneS / _buildTimeInDroneSeconds;
+
+                    if (BuildProgress > MAX_BUILD_PROGRESS)
+                    {
+                        BuildProgress = MAX_BUILD_PROGRESS;
+                    }
+
+                    // Increase health with build progress
+                    float buildProgressIncrement = buildProgressInDroneS / _buildTimeInDroneSeconds;
+                    _healthTracker.AddHealth(buildProgressIncrement * MaxHealth);
+
+                    BuildableProgress?.Invoke(this, new PvPBuildProgressEventArgs(this));
+
+                    if (_cumulativeBuildProgressInDroneS >= _buildTimeInDroneSeconds)
+                    {
+                        OnBuildableCompleted();
+                    }
                 }
 
-                // Increase health with build progress
-                float buildProgressIncrement = buildProgressInDroneS / _buildTimeInDroneSeconds;
-                _healthTracker.AddHealth(buildProgressIncrement * MaxHealth);
-
-                BuildableProgress?.Invoke(this, new PvPBuildProgressEventArgs(this));
-
-                if (_cumulativeBuildProgressInDroneS >= _buildTimeInDroneSeconds)
-                {
-                    OnBuildableCompleted();
-                }
+                OnUpdate();
             }
 
-            OnUpdate();
+            if (IsClient)
+            {
+                _buildableProgress.FillableImage.fillAmount = BuildProgress;
+            }
+
         }
 
         protected virtual void OnUpdate() { }
@@ -446,6 +561,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void EnableRenderers(bool enabled)
         {
+            if (IsServer)
+                isEnabledRenderers = enabled;
             Logging.Log(Tags.BUILDING, $"Renderer count: {InGameRenderers.Count}  enabled: {enabled}");
 
             foreach (Renderer renderer in InGameRenderers)
@@ -465,6 +582,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsTrue(_parent.activeSelf);
             _parent.SetActive(false);
+            if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
+            }
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 

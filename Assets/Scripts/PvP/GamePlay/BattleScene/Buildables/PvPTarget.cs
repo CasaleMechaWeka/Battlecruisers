@@ -35,22 +35,48 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPTransform Transform { get; private set; }
 
 
+
         // network variables
-        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = 0f};
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = 0f };
         public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };
 
         public Quaternion Rotation
         {
             get { return transform.rotation; }
-            set { transform.rotation = value; }
+            set
+            {
+
+                transform.rotation = value;
+
+            }
         }
+
+
 
         public virtual Vector2 DroneAreaPosition => Position;
         public Vector2 Position
         {
             get { return transform.position; }
-            set { transform.position = value; }
+            set
+            {
+       
+                transform.position = value;
+  
+            }
         }
+
+
+
+
+
+
+        public Vector2 HealthBarOffset
+        {
+            get;set;
+        }
+
+
+
 
         // IMaskHighlightable
         protected virtual Vector2 MaskHighlightableSize => Size;
@@ -123,6 +149,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsDestroyed)
             {
                 _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
+   /*             PvP_Rotation.OnValueChanged -= OnPvPRotationChanged;
+                PvP_Position.OnValueChanged -= OnPvPPositionChanged;*/
             }
         }
 
@@ -163,6 +191,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
             }
         }
+
+/*        private void LateUpdate()
+        {
+            if (IsClient)
+            {
+                
+                Position = PvP_Position.Value;
+                Rotation = PvP_Rotation.Value;
+                Debug.Log("aaa");
+            }
+        }*/
 
         protected virtual void OnTakeDamage() { }
 

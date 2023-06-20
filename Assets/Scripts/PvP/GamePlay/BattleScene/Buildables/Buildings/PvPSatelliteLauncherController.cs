@@ -21,11 +21,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(satellitePrefab);
         }
 
-        protected override void OnBuildableCompleted()
+        protected override async void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
-            _satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
+            _satellite = await _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
             _satellite.Position = transform.position + SpawnPositionAdjustment;
 
             _satellite.Activate(

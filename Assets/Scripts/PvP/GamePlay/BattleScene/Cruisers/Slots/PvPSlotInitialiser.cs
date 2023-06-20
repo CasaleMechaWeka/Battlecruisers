@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
-        public IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<IPvPSlot> slots, IPvPBuildingPlacer buildingPlacer)
+        public IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<PvPSlot> slots, IPvPBuildingPlacer buildingPlacer)
         {
             Helper.AssertIsNotNull(parentCruiser, slots);
 
@@ -27,13 +27,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 IPvPSlot slot = slots[i];
                 ReadOnlyCollection<IPvPSlot> neighbouringSlots = FindSlotNeighbours(slots, i);
                 slot.Initialise(parentCruiser, neighbouringSlots, buildingPlacer);
-                slot.IsVisible = false;
+                slot.IsVisibleRederer = false;
             }
 
             return CreateSlotsMap(slots);
         }
 
-        private ReadOnlyCollection<IPvPSlot> FindSlotNeighbours(IList<IPvPSlot> slots, int slotIndex)
+        private ReadOnlyCollection<IPvPSlot> FindSlotNeighbours(IList<PvPSlot> slots, int slotIndex)
         {
             List<IPvPSlot> neighbouringSlots = new List<IPvPSlot>(DEFAULT_NUM_OF_NEIGHBOURS);
 
@@ -52,13 +52,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return neighbouringSlots.AsReadOnly();
         }
 
-        private IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> CreateSlotsMap(IList<IPvPSlot> slots)
+        private IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> CreateSlotsMap(IList<PvPSlot> slots)
         {
-            IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> typeToSlots = new Dictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>>();
+            IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = new Dictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>>();
 
             foreach (PvPSlotType slotType in (PvPSlotType[])Enum.GetValues(typeof(PvPSlotType)))
             {
-                ReadOnlyCollection<IPvPSlot> slotsOfType
+                ReadOnlyCollection<PvPSlot> slotsOfType
                     = slots
                         .Where(slot => slot.Type == slotType)
                         .ToList()

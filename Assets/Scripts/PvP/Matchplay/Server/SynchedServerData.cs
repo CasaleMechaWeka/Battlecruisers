@@ -49,6 +49,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 return Team.LEFT;
             return Team.RIGHT;
         }
+
+        public ulong LocalClientID {
+            get { 
+                return NetworkManager.Singleton.LocalClientId;
+            }
+        }
         public static SynchedServerData Instance
         {
             get

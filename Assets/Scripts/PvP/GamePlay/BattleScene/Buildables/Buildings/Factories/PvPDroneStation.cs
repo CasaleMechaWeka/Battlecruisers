@@ -4,12 +4,23 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.Netcode;
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
     public class PvPDroneStation : PvPBuilding
     {
+
         public int numOfDronesProvided;
+
+        public NetworkVariable<Quaternion> PvP_Rotation = new NetworkVariable<Quaternion>();
+        public NetworkVariable<Vector2> PvP_Position = new NetworkVariable<Vector2>();
+        public NetworkVariable<Vector2> PvP_Offset = new NetworkVariable<Vector2>();
+        public NetworkVariable<bool> PvP_IsEnabledRenderers = new NetworkVariable<bool>();
+        public NetworkVariable<bool> PvP_IsEnabledBuildableProgressController = new NetworkVariable<bool>();
+        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
+        public NetworkVariable<PvPBuildableState> PvP_BuildableState = new NetworkVariable<PvPBuildableState>();
 
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.DroneStation;
         public override PvPTargetValue TargetValue => PvPTargetValue.Medium;
@@ -37,6 +48,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
 
             base.OnDestroyed();
+        }
+
+        private void LateUpdate()
+        {
+
+            if (IsServer)
+            {
+                
+                PvP_Position.Value = Position;
+                PvP_Rotation.Value = Rotation;
+                if (HealthBar is not null)
+                    PvP_Offset.Value = HealthBar.Offset;
+                PvP_IsEnabledRenderers.Value = isEnabledRenderers;
+                PvP_IsEnabledBuildableProgressController.Value = _buildableProgress.gameObject.activeSelf;
+                PvP_BuildProgress.Value = BuildProgress;
+                PvP_BuildableState.Value = BuildableState;
+            }
+            if (IsClient)
+            {
+                Position = PvP_Position.Value;
+                Rotation = PvP_Rotation.Value;
+                if (HealthBar is not null)
+                    HealthBar.Offset = PvP_Offset.Value;
+                isEnabledRenderers = PvP_IsEnabledRenderers.Value;
+                _buildableProgress.gameObject.SetActive(PvP_IsEnabledBuildableProgressController.Value);
+                BuildProgress = PvP_BuildProgress.Value;
+                BuildableState = PvP_BuildableState.Value;
+            }
         }
     }
 }

@@ -18,9 +18,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         /// If looking for non anti-ship slots returns all slots of that SlotType
         /// (eg: all deck slots).
         /// </returns>
-        ReadOnlyCollection<IPvPSlot> GetSlots(IPvPSlotSpecification slotSpecification);
+        ReadOnlyCollection<PvPSlot> GetSlots(IPvPSlotSpecification slotSpecification);
 
-        IList<IPvPSlot> GetFreeSlots(PvPSlotType slotType);
+        IList<PvPSlot> GetFreeSlots(PvPSlotType slotType);
         IPvPSlot GetFreeSlot(IPvPSlotSpecification slotSpecification);
 
         /// <returns>

@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
@@ -38,9 +39,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         Vector2 Position { get; set; }
         Quaternion Rotation { get; set; }
+   
 
         bool IsShield();
         void SetBuildingImmunity(bool boo);
         bool IsBuildingImmune();
+        
     }
 }

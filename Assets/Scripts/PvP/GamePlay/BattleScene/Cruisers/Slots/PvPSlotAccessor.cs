@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPSlotAccessor : IPvPSlotAccessor
     {
-        private readonly IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> _slots;
-        private readonly ReadOnlyCollection<IPvPSlot> _antiShipSlots;
+        private readonly IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> _slots;
+        private readonly ReadOnlyCollection<PvPSlot> _antiShipSlots;
 
-        public PvPSlotAccessor(IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> slots)
+        public PvPSlotAccessor(IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> slots)
         {
             Assert.IsNotNull(slots);
 
@@ -32,11 +32,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public bool IsSlotAvailableForPlayer(IPvPSlotSpecification slotSpecification)
         {
-            ReadOnlyCollection<IPvPSlot> slots = GetSlots(slotSpecification);
+            ReadOnlyCollection<PvPSlot> slots = GetSlots(slotSpecification);
             return slots.Any(slot => slot.IsFree);
         }
 
-        public ReadOnlyCollection<IPvPSlot> GetSlots(IPvPSlotSpecification slotSpecification)
+        public ReadOnlyCollection<PvPSlot> GetSlots(IPvPSlotSpecification slotSpecification)
         {
             Assert.IsNotNull(slotSpecification);
             Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public IList<IPvPSlot> GetFreeSlots(PvPSlotType slotType)
+        public IList<PvPSlot> GetFreeSlots(PvPSlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
 

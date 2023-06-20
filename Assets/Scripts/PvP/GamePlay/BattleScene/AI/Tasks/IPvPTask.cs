@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks
 {
@@ -12,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         /// ConstructBuildingTask this may be because there are no slots available
         /// to constructo the given building.
         /// </returns>
-        bool Start();
+        Task<bool> Start();
 
         // Currently Stop() and Resume() are not implemented anywhere, but could
         // come in handy if an AI task needs to perform some action to stop :)

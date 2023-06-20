@@ -19,6 +19,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
              _cameraFocuser = cameraFocuser;
         }
 
+        protected PvPCruiserHelper(/*IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
+        {
+        //    PvPHelper.AssertIsNotNull(uIManager /*, cameraFocuser*/);
+
+        //    _uiManager = uIManager;
+        //    _cameraFocuser = cameraFocuser;
+        }
+
         public abstract void FocusCameraOnCruiser();
         public abstract void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter);
     }

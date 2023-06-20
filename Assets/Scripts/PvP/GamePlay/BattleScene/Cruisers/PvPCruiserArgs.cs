@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPDirection FacingDirection { get; }
         public IPvPRepairManager RepairManager { get; }
         public PvPFogStrength FogStrength { get; }
-     //   public IPvPCruiserHelper Helper { get; }
+        public IPvPCruiserHelper Helper { get; }
         public IPvPSlotFilter HighlightableFilter { get; }
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; }
         public IPvPDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
            PvPDirection facingDirection,
             IPvPRepairManager repairManager,
             PvPFogStrength fogStrength,
-          //  IPvPCruiserHelper helper,
+            IPvPCruiserHelper helper,
             IPvPSlotFilter highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 factoryProvider,
                 cruiserSpecificFactories,
                 repairManager,
-              //  helper,
+                helper,
                 highlightableFilter,
                 buildProgressCalculator,
                 buildingDoubleClickHandler,
@@ -85,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FacingDirection = facingDirection;
             RepairManager = repairManager;
             FogStrength = fogStrength;
-          //  Helper = helper;
+            Helper = helper;
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;
             BuildingDoubleClickHandler = buildingDoubleClickHandler;
@@ -107,7 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPDirection facingDirection,
             IPvPRepairManager repairManager,
             PvPFogStrength fogStrength,
-           // IPvPCruiserHelper helper,
+            IPvPCruiserHelper helper,
             IPvPSlotFilter highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IPvPDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 factoryProvider,
                 cruiserSpecificFactories,
                 repairManager,
-                // helper,
+                helper,
                 highlightableFilter,
                 buildProgressCalculator,
                 buildingDoubleClickHandler,
@@ -143,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FacingDirection = facingDirection;
             RepairManager = repairManager;
             FogStrength = fogStrength;
-          //  Helper = helper;
+            Helper = helper;
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;
             BuildingDoubleClickHandler = buildingDoubleClickHandler;

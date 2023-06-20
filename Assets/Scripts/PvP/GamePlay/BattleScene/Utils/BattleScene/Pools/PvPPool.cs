@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using UnityEngine.Assertions;
 
@@ -20,21 +21,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _items = new Stack<TPoolable>();
         }
 
-        public void AddCapacity(int capacityToAdd)
+        public async Task AddCapacity(int capacityToAdd)
         {
             // Logging.Verbose(Tags.POOLS, $"{typeof(TPoolable)}:  {capacityToAdd} items");
 
             for (int i = 0; i < capacityToAdd; ++i)
             {
-                _items.Push(_itemFactory.CreateItem());
+                var item = await _itemFactory.CreateItem();
+                //_items.Push(_itemFactory.CreateItem());
+                _items.Push(item);
             }
         }
 
-        public TPoolable GetItem(TArgs activationArgs)
+        public async Task<TPoolable> GetItem(TArgs activationArgs)
         {
             if (_items.Count < MaxLimit)
             {
-                TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
+                TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
                 // Logging.Verbose(Tags.POOLS, $"{item}");
 
                 item.Activate(activationArgs);
@@ -43,20 +46,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return null;
         }
 
-        public TPoolable GetItem(TArgs activationArgs, PvPFaction faction)
+        public async Task<TPoolable> GetItem(TArgs activationArgs, PvPFaction faction)
         {
-            TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
+            TPoolable item = _items.Count != 0 ? _items.Pop() : await CreateItem();
             // Logging.Verbose(Tags.POOLS, $"{item}");
 
             item.Activate(activationArgs, faction);
             return item;
         }
 
-        private TPoolable CreateItem()
+        private async Task<TPoolable> CreateItem()
         {
             // Logging.Verbose(Tags.POOLS, $"{typeof(TPoolable)}: {_itemFactory} {++_createCount}");
 
-            TPoolable item = _itemFactory.CreateItem();
+            TPoolable item = await _itemFactory.CreateItem();
             item.Deactivated += Item_Deactivated;
             return item;
         }

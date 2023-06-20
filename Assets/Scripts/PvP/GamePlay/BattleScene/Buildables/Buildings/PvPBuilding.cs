@@ -54,10 +54,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
             Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
+
+
+
+        }
+
+
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
+            _placementSound = new PvPAudioClipWrapper(placementSound);
         }
 
         public override void Activate(PvPBuildingActivationArgs activationArgs)
         {
+        
             base.Activate(activationArgs);
 
             _parentSlot = activationArgs.ParentSlot;

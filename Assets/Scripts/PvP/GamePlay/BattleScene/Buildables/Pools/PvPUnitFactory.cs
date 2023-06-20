@@ -5,6 +5,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using System.Threading.Tasks;
+//using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
@@ -28,12 +30,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _unitPrefab = prefabFactory.GetUnitWrapperPrefab(unitKey);
         }
 
-        public PvPUnit CreateItem()
+        public async Task<PvPUnit> CreateItem()
         {
-            return
-                _prefabFactory
-                    .CreateUnit(_unitPrefab, /* _uiManager */ _factoryProvider)
-                    .Parse<PvPUnit>();
+            var unit = await _prefabFactory
+                    .CreateUnit(_unitPrefab, /* _uiManager */ _factoryProvider);
+            return unit.Parse<PvPUnit>();
+        /*        _prefabFactory
+                    .CreateUnit(_unitPrefab, *//* _uiManager *//* _factoryProvider)
+                    .Parse<PvPUnit>();*/
         }
 
         public override string ToString()

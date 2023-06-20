@@ -27,7 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         }
 
         public void Activate(PvPDroneActivationArgs activationArgs)
-        {
+        {         
+
             gameObject.transform.position = activationArgs.Position;
             gameObject.SetActive(true);
 

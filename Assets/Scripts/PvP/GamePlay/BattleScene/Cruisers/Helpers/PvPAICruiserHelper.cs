@@ -12,6 +12,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
         }
 
+        public PvPPlayerBCruiserHelper(/*IPvPUIManager uIManager , IPvPCameraFocuser cameraFocuser*/)
+    : base(/*uIManager , cameraFocuser*/)
+        {
+        }
+
         public override void FocusCameraOnCruiser()
         {
             _cameraFocuser.FocusOnRightPlayerCruiser();

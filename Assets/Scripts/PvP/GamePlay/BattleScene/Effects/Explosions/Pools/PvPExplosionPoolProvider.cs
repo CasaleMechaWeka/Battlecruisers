@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -48,19 +49,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                         explosionKey));
         }
 
-        public void SetInitialCapacity()
+        public async Task SetInitialCapacity()
         {
-            TinyBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
-            HighCalibreBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
-            BulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
-            BombExplosionPool.AddCapacity(PvPInitialCapacity.BOMB);
-            FlakExplosionsPool.AddCapacity(PvPInitialCapacity.FLAK);
-            SmallExplosionsPool.AddCapacity(PvPInitialCapacity.SMALL);
-            MediumExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM);
-            LargeExplosionsPool.AddCapacity(PvPInitialCapacity.LARGE);
-            NovaShellImpactPool.AddCapacity(PvPInitialCapacity.LARGE);
-            RocketShellImpactPool.AddCapacity(PvPInitialCapacity.MEDIUM);
-            HugeExplosionsPool.AddCapacity(PvPInitialCapacity.HUGE);
+            await TinyBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
+            await HighCalibreBulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
+            await BulletImpactPool.AddCapacity(PvPInitialCapacity.BULLET_IMPACT);
+            await BombExplosionPool.AddCapacity(PvPInitialCapacity.BOMB);
+            await FlakExplosionsPool.AddCapacity(PvPInitialCapacity.FLAK);
+            await SmallExplosionsPool.AddCapacity(PvPInitialCapacity.SMALL);
+            await MediumExplosionsPool.AddCapacity(PvPInitialCapacity.MEDIUM);
+            await LargeExplosionsPool.AddCapacity(PvPInitialCapacity.LARGE);
+            await NovaShellImpactPool.AddCapacity(PvPInitialCapacity.LARGE);
+            await RocketShellImpactPool.AddCapacity(PvPInitialCapacity.MEDIUM);
+            await HugeExplosionsPool.AddCapacity(PvPInitialCapacity.HUGE);
         }
     }
 }
