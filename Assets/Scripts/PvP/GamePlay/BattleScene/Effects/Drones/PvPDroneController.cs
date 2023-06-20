@@ -47,10 +47,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             IsEnabled = true;
             // clientRpc
-         //   OnChangedEnabledValueClientRpc(IsEnabled);
+            OnChangedEnabledValueClientRpc(IsEnabled);
             gameObject.transform.position = activationArgs.Position;
             // clientRpc
-        //    OnChangedPositionClientRpc(activationArgs.Position);
+            OnChangedPositionClientRpc(activationArgs.Position);
             Faction = activationArgs.Faction;
 
             AnimationState state = _animation["BuilderDrone"];
@@ -69,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             IsEnabled = false;
             // clientRpc
-         //   OnChangedEnabledValueClientRpc(IsEnabled);
+            OnChangedEnabledValueClientRpc(IsEnabled);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
