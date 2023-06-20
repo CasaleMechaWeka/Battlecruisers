@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
         }
 
-        public override void FocusCameraOnCruiser()
+        public override void FocusCameraOnCruiser(bool isOwner, Team team)
         {
             // Disabled for tutorial
         }

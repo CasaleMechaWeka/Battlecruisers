@@ -294,7 +294,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // Logging.LogMethod(Tags.CRUISER);
 
             _uiManager.ShowCruiserDetails(this);
-            _helper.FocusCameraOnCruiser();
+            _helper.FocusCameraOnCruiser(IsOwner, SynchedServerData.Instance.GetTeam());
 
             FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
             Clicked?.Invoke(this, EventArgs.Empty);

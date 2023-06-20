@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         //    _cameraFocuser = cameraFocuser;
         }
 
-        public abstract void FocusCameraOnCruiser();
+        public abstract void FocusCameraOnCruiser(bool isOwner, Team team);
         public abstract void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter);
     }
 }

@@ -150,13 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
         }
-
-
-        IEnumerator iInitialiseFactoryProvider()
-        {
-            yield return null;
-            factoryProvider.Initialise();
-        }
+ 
 
 
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)

@@ -13,12 +13,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
         }
 
-        public override void FocusCameraOnCruiser()
+        public override void FocusCameraOnCruiser(bool isOwner, Team team)
         {
-            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-                _cameraFocuser.FocusOnLeftPlayerCruiser();
+            if (isOwner)
+            {
+                if (team == Team.LEFT)
+                    _cameraFocuser.FocusOnLeftPlayerCruiser();
+                else
+                    _cameraFocuser.FocusOnRightPlayerCruiser();
+            }
             else
-                _cameraFocuser.FocusOnRightPlayerCruiser();
+            {
+                if (team == Team.LEFT)
+                    _cameraFocuser.FocusOnRightPlayerCruiser();
+                else
+                    _cameraFocuser.FocusOnLeftPlayerCruiser();
+            }
         }
 
         public PvPPlayerCruiserHelper(/*IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
