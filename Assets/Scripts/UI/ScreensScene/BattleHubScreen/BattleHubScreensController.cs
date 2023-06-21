@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public InfiniteLoadoutScreenController loadoutPanel;
         //public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
-        public ProfilePanelScreenController profilePanel;
+       // public ProfilePanelScreenController profilePanel;
 
         public CanvasGroupButton continueButton, levelsButton, skirmishButton;
 
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             loadoutButton.Initialise(_soundPlayer, OpenLoadout);
             shopButton.Initialise(_soundPlayer, OpenShop);
             leaderboardButton.Initialise(_soundPlayer, OpenLeaderboard);
-            profileButton.Initialise(_soundPlayer, OpenProfile);
+            //profileButton.Initialise(_soundPlayer, OpenProfile);
 
             continueButton.Initialise(_soundPlayer, Continue);
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
@@ -67,8 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            //shopPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            //profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
 
 
@@ -130,13 +129,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
 
 
-        private void OpenProfile()
+        /*private void OpenProfile()
         {
             GoToScreen(profilePanel);
 
             UnselectAll();
 
-        }
+        }*/
 
         public void Continue()
         {
