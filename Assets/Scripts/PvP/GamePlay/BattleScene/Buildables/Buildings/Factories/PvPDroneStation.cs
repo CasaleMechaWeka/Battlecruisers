@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
         {
-            base.ShareIsDroneConsumerFocusableValueWithClient(isFocusable);
+            //    base.ShareIsDroneConsumerFocusableValueWithClient(isFocusable);
             OnShareIsDroneConsumerFocusableValueWithClientRpc(isFocusable);
         }
         protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
@@ -46,10 +46,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         protected override void OnBuildableCompleted()
         {
-            ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;
-
-            base.OnBuildableCompleted();
+            if (IsServer)
+            {
+                ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;        
+                base.OnBuildableCompleted();
+                OnBuildableCompletedClientRpc();
+            //    Invoke("OnBuildableCompletedClientRpc", 0.1f);
+            }
+            if (IsClient)
+                OnBuildableCompleted_PvPClient();
         }
+
+
 
         protected override void OnDestroyed()
         {
@@ -60,6 +68,40 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             base.OnDestroyed();
         }
+
+        protected override void PlayPlacementSound()
+        {
+            base.PlayPlacementSound();
+
+            if (IsServer)
+                PlayPlacementSoundClientRpc();
+        }
+
+
+        protected override void DestroyMe()
+        {
+            if (IsServer)
+                base.DestroyMe();
+            if (IsClient)
+                OnDestroyMeServerRpc();
+        }
+
+        protected override void CallRpc_PlayDeathSound()
+        {
+            if (IsClient)
+                base.CallRpc_PlayDeathSound();
+            if (IsServer)
+                OnPlayDeathSoundClientRpc();
+        }
+
+        protected override void PlayBuildableConstructionCompletedSound()
+        {
+            if (IsClient)
+                base.PlayBuildableConstructionCompletedSound();
+            if (IsServer)
+                PlayBuildableConstructionCompletedSoundClientRpc();
+        }
+
 
         private void LateUpdate()
         {
@@ -96,10 +138,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        private void Start()
+        {
+            if (IsClient && IsOwner)
+                Faction = PvPFaction.Blues;
+            if (IsClient && !IsOwner)
+                Faction = PvPFaction.Reds;
+        }
+
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
-        { 
-            Debug.Log("IsDroneConsumerFocusable_PvPClient ===> " + (IsDroneConsumerFocusable_PvPClient == isFocusable));
+        {
             IsDroneConsumerFocusable_PvPClient = isFocusable;
         }
 
@@ -108,5 +157,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             CallRpc_ToggleDroneConsumerFocusCommandExecute();
         }
+
+        [ClientRpc]
+        private void PlayPlacementSoundClientRpc()
+        {
+            PlayPlacementSound();
+        }
+
+
+        [ServerRpc(RequireOwnership = true)]
+        private void OnDestroyMeServerRpc()
+        {
+            DestroyMe();
+        }
+
+
+        [ClientRpc]
+        private void OnPlayDeathSoundClientRpc()
+        {
+            CallRpc_PlayDeathSound();
+        }
+
+        [ClientRpc]
+        private void PlayBuildableConstructionCompletedSoundClientRpc()
+        {
+            PlayBuildableConstructionCompletedSound();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            OnBuildableCompleted();
+        }
+
     }
 }

@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
         public IPvPPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IPvPUnitTargets UnitTargets { get; private set; }
-        public IPvPTargetTracker BlockedShipsTracker { get; private set; }        
+        public IPvPTargetTracker BlockedShipsTracker { get; private set; }
 
         public event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<PvPBuildingCompletedEventArgs> BuildingCompleted;
@@ -154,19 +154,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public async void Initialise_Client_PvP(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
-        //  if (IsClient && IsOwner)
-        //    {
-                FactoryProvider = factoryProvider;
-                _uiManager = uiManager;
-                _helper = helper;
-                SlotAccessor = _slotWrapperController.Initialise(this);
+            //  if (IsClient && IsOwner)
+            //    {
+            FactoryProvider = factoryProvider;
+            _uiManager = uiManager;
+            _helper = helper;
+            SlotAccessor = _slotWrapperController.Initialise(this);
 
-                _clickHandler.SingleClick += _clickHandler_SingleClick;
-                _clickHandler.DoubleClick += _clickHandler_DoubleClick;
+            _clickHandler.SingleClick += _clickHandler_SingleClick;
+            _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
-                IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
-                _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
-         //   }
+            IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
+            _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+            //   }
         }
 
 
@@ -224,7 +224,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Faction = args.Faction;
             // client rpc call
-            PvP_SetFactionClientRpc(Faction);
+            PvP_SetFactionClientRpc();
 
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
@@ -317,11 +317,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         public async Task<IPvPBuilding> ConstructSelectedBuilding(IPvPSlot slot)
-        {         
+        {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IPvPBuilding building = await FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
-      
+
 
             building.Activate(
                 new PvPBuildingActivationArgs(
@@ -333,19 +333,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             slot.SetBuilding(building);
 
-      
+
 
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
-    
+
             building.StartConstruction();
 
-         //   _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
-     
+            //   _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
+
             BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
-      
+
             slot.controlBuildingPlacementFeedback(true);
-       
+
             if (IsPlayerCruiser)
             {
                 string logName = building.PrefabName.ToUpper().Replace("(CLONE)", "");
@@ -454,8 +454,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 bool wasAnySlotHighlighted = SlotHighlighter.HighlightAvailableSlots(SlotSpecification);
                 if (!wasAnySlotHighlighted)
-                { 
-                    PvP_PrioritisedSoundClientRpc(PvPSoundType.Events, "no-building-slots-left", PvPSoundPriority.VeryHigh);                   
+                {
+                    PvP_PrioritisedSoundClientRpc(PvPSoundType.Events, "no-building-slots-left", PvPSoundPriority.VeryHigh);
                     SlotHighlighter.HighlightSlots(SlotSpecification);
                 }
             }
@@ -488,12 +488,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         [ClientRpc]
-        private void PvP_SetFactionClientRpc(PvPFaction faction)
+        private void PvP_SetFactionClientRpc()
         {
-            Faction = faction;
+            if (IsOwner)
+                Faction = PvPFaction.Blues;
+            else
+                Faction = PvPFaction.Reds;
         }
     }
 
-    public enum Team { LEFT, RIGHT}
+    public enum Team { LEFT, RIGHT }
 
 }

@@ -275,6 +275,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _explosion.Activate(Transform.Position);
             Invoke("NullifySlotBuilding", 1f);
+
+            BuildingDestroyedClientRpc();
+        }
+
+        private void OnBuildingDestroyed_PvPClient()
+        {
+            _explosion.Activate(Transform.Position);
+            Invoke("NullifySlotBuilding", 1f);
         }
 
         private void NullifySlotBuilding()
@@ -316,6 +324,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
            
                 _buildingPlacementBeacon.gameObject.SetActive(false);      
+        }
+
+        [ClientRpc]
+        private void BuildingDestroyedClientRpc()
+        {
+            OnBuildingDestroyed_PvPClient();
         }
     }
 }

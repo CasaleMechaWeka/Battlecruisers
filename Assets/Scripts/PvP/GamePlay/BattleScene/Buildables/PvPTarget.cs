@@ -146,17 +146,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Destroy()
         {
+            DestroyMe();
+        }
+
+        protected virtual void DestroyMe()
+        {
             if (!IsDestroyed)
             {
                 _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
-   /*             PvP_Rotation.OnValueChanged -= OnPvPRotationChanged;
-                PvP_Position.OnValueChanged -= OnPvPPositionChanged;*/
+                /*             PvP_Rotation.OnValueChanged -= OnPvPRotationChanged;
+                             PvP_Position.OnValueChanged -= OnPvPPositionChanged;*/
             }
         }
 
         protected virtual void InternalDestroy()
-        {
-            Destroy(gameObject);
+        {            
+            Destroy(gameObject);            
         }
 
         protected virtual void OnDestroyed() { }

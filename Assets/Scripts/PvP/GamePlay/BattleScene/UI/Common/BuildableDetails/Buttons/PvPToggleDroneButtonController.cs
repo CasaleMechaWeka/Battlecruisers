@@ -1,5 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using System;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
@@ -50,6 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private void UpdateVisibility()
         {
+            UnityEngine.Debug.Log(" ==========> " + ShowToggleDroneButton);
             gameObject.SetActive(ShowToggleDroneButton);
         }
     }

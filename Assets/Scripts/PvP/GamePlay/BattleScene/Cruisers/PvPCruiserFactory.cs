@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 
            IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
-            PvPFaction faction = PvPFaction.Reds;
+            PvPFaction faction = PvPFaction.Blues;
             PvPDirection facingDirection = PvPDirection.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
 

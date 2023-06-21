@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Assert.IsNotNull(healthBar);
 
                 Buildable.StaticInitialise(gameObject, healthBar, PvPBattleSceneGodClient.Instance.commonStrings);
-                Buildable.Initialise(PvPBattleSceneGodClient.Instance.uiManager);
+                Buildable.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider, PvPBattleSceneGodClient.Instance.uiManager);
 
                 PvP_IsVisible.OnValueChanged += OnVisibleChanged;
             }

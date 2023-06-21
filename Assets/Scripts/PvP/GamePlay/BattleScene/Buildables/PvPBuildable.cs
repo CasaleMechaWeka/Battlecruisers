@@ -28,6 +28,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -259,7 +260,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
 
-            ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
+            ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsServer ? IsDroneConsumerFocusable : IsDroneConsumerFocusable_PvPClient);
 
             PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
@@ -273,8 +274,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsNotNull(deathSound);
             _deathSound = new PvPAudioClipWrapper(deathSound);
-
-
 
             //  PvP_HealthbarOffset.OnValueChanged += OnPvPHealthBarOffsetChanged;
         }
@@ -344,21 +343,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        public virtual void Initialise(/*IPvPFactoryProvider factoryProvider*/      IPvPUIManager uiManager)
+        public virtual void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
-            /*        Logging.Log(Tags.BUILDABLE, this);
+            Logging.Log(Tags.BUILDABLE, this);
 
-                    Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
-                    Helper.AssertIsNotNull(factoryProvider);
+            Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
+            Helper.AssertIsNotNull(factoryProvider);
 
-            
-                    _factoryProvider = factoryProvider;
-                    _targetFactories = _factoryProvider.Targets;
-                    _movementControllerFactory = _factoryProvider.MovementControllerFactory;*/
+
+            _factoryProvider = factoryProvider;
+            _targetFactories = _factoryProvider.Targets;
+            _movementControllerFactory = _factoryProvider.MovementControllerFactory;
             _uiManager = uiManager;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
-            //   BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
@@ -367,8 +366,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
             //  _parent.SetActive(false);
-
-
         }
 
         public virtual void Activate(IPvPCruiser parentCruiser, IPvPCruiser enemyCruiser, IPvPCruiserSpecificFactories cruiserSpecificFactories)
@@ -406,7 +403,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ParentCruiser = activationArgs.ParentCruiser;
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
-
             EnemyCruiser = activationArgs.EnemyCruiser;
 
             _cruiserSpecificFactories = activationArgs.CruiserSpecificFactories;
@@ -565,9 +561,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (ConstructionCompletedSoundKey != null)
             {
                 // _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+                PlayBuildableConstructionCompletedSound();
             }
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             RepairCommand.EmitCanExecuteChanged();
+        }
+
+        protected virtual void OnBuildableCompleted_PvPClient()
+        {
+            BuildableState = PvPBuildableState.Completed;
+            CompletedBuildable?.Invoke(this, EventArgs.Empty);
+            RepairCommand.EmitCanExecuteChanged();
+            ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
+        }
+
+        protected virtual void PlayBuildableConstructionCompletedSound()
+        {
+            if (ConstructionCompletedSoundKey != null)
+            {
+                if (IsOwner)
+                    _factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+            }
         }
 
         private void EnableRenderers(bool enabled)
@@ -612,7 +626,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
 
-            // _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+            CallRpc_PlayDeathSound();
+            //    _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
 
             if (Faction == PvPFaction.Reds)
             {
@@ -665,7 +680,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CallRpc_ToggleDroneConsumerFocusCommandExecute();
             if (IsServer)
                 ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
-
         }
 
 
@@ -674,5 +688,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
                 ToggleDroneConsumerFocusCommandExecute();
         }
+
+        protected virtual void CallRpc_PlayDeathSound()
+        {
+            _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+        }
+
+
     }
 }
