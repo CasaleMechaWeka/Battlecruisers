@@ -52,7 +52,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private void UpdateVisibility()
         {
-            UnityEngine.Debug.Log(" ==========> " + ShowToggleDroneButton);
             gameObject.SetActive(ShowToggleDroneButton);
         }
     }
