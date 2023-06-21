@@ -316,6 +316,9 @@ namespace BattleCruisers.Cruisers
             {
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
+
+            if (IsPlayerCruiser && _enemyCruiser.IsAlive)
+                BattleSceneGod.AddPlayedTime(TargetType.PlayedTime, _time.DeltaTime);
         }
 
         public void MakeInvincible()

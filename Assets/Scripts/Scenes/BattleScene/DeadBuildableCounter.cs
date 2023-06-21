@@ -7,11 +7,13 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         private long count;
         private long credits;
+        private float playedTime;
 
         public DeadBuildableCounter()
         {
             credits = 0;
             count = 0;
+            playedTime = 0f;
         }
 
         public void AddDeadBuildable(int value)
@@ -20,10 +22,19 @@ namespace BattleCruisers.Scenes.BattleScene
             credits += value;
         }
 
+        public void AddPlayedTime(float dt)
+        {
+            playedTime += dt;
+        }
         public long GetTotalDestroyed()
         {
             return count;
         }
+        public float GetPlayedTime()
+        {
+            return playedTime;
+        }
+
 
         public long GetTotalDamageInCredits()
         {

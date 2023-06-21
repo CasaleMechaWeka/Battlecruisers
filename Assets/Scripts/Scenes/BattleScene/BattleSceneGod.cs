@@ -373,6 +373,7 @@ namespace BattleCruisers.Scenes.BattleScene
             deadBuildables.Add(TargetType.Ships, new DeadBuildableCounter());
             deadBuildables.Add(TargetType.Cruiser, new DeadBuildableCounter());
             deadBuildables.Add(TargetType.Buildings, new DeadBuildableCounter());
+            deadBuildables.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
             if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
@@ -465,6 +466,14 @@ namespace BattleCruisers.Scenes.BattleScene
                 {
                     GameOver = true;
                 }
+            }
+        }
+
+        public static void AddPlayedTime(TargetType type, float dt)
+        {
+            if (!GameOver)
+            {            
+                    deadBuildables?[type]?.AddPlayedTime(dt);
             }
         }
 
