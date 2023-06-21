@@ -24,13 +24,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private INextLevelHelper _nextLevelHelper;
         private ScreenController _currentScreen;
         private ISingleSoundPlayer _soundPlayer;
+        private IDataProvider _dataProvider;
 
 
         public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton;
+        public GameObject coins;
 
         public BattlePanelScreenController battlePanel;
         public InfiniteLoadoutScreenController loadoutPanel;
-        public ShopPanelScreenController shopPanel;
+        //public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
         public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
@@ -52,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _lastBattleResult = dataProvider.GameModel.LastBattleResult;
             _nextLevelHelper = nextLevelHelper;
             _soundPlayer = soundPlayer;
+            _dataProvider = dataProvider;
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
@@ -68,9 +71,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            shopPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+
+
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+
         }
+
 
 
 
@@ -155,16 +161,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             // should be enabled in Production
 
-/*            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                _screensSceneGod.LoadBattle1v1Mode();
-            }
-            else
-            {*/
-                GoToScreen(arenaSelectPanel);
-                // _screensSceneGod.LoadMultiplayScene();
-          //  }
-        
+            /*            if (Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            _screensSceneGod.LoadBattle1v1Mode();
+                        }
+                        else
+                        {*/
+            GoToScreen(arenaSelectPanel);
+            // _screensSceneGod.LoadMultiplayScene();
+            //  }
+
         }
 
 

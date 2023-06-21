@@ -280,9 +280,6 @@ namespace BattleCruisers.Scenes
 
             // Interpolate Lifetime Damage (same deal as regular damage)
             yield return StartCoroutine(InterpolateLifetimeDamageValue(prevAllTimeVal, allTimeVal, 10));
-
-
-            // TODO: Update GameModel vars
         }
 
         IEnumerator InterpolateDamageValue(long startVal, long endVal, int steps)
@@ -378,6 +375,16 @@ namespace BattleCruisers.Scenes
         }
         private void Done()
         {
+            // Update GameModel vars
+            // lifetime damage (this value is all we need for rank image/titles elsewhere):
+            long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
+            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+
+            // we need XPToNextLevel to populate any XP progress bars:
+            long newLifetimeScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(ranker.CalculateRank(newLifetimeScore), newLifetimeScore);
+
+            // and now we actually are done:
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
         }
 

@@ -12,8 +12,16 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public string captainName = "Charlie";
         public string CaptainName => captainName;
 
+        public int captainCost;
+        public int CaptainCost => captainCost;
+
         public string stringKeyBase;
         public string StringKeyBase => stringKeyBase;
+
+        // CaptainIndex is the order of which the captains appear in the story mode.
+        public int captainIndex;
+        public int CaptainIndex => captainIndex;
+
 
         //public void Initialise(ILocTable captainStrings)
         //{
