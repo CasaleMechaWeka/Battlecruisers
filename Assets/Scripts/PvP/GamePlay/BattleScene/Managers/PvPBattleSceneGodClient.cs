@@ -65,6 +65,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
 
+        public  IPvPUIManager uiManager;
+        public ILocTable commonStrings;
+
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
         private IPvPPrefabFactory prefabFactory;
@@ -76,9 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPCruiser playerCruiser;
         private PvPCruiser enemyCruiser;
         private IPvPBattleSceneHelper pvpBattleHelper;
-        private IPvPLevel currentLevel;
-        private IPvPUIManager uiManager;
-        private ILocTable commonStrings;
+        private IPvPLevel currentLevel;   
         private PvPLeftPanelComponents leftPanelComponents;
         private IPvPTime time;
         private IPvPPauseGameManager pauseGameManager;
@@ -110,6 +111,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
         static PvPBattleSceneGodClient s_pvpBattleSceneGodClient;
+
+
 
         void Awake()
         {

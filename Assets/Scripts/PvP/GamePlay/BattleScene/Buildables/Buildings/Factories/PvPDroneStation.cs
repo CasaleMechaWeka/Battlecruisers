@@ -33,6 +33,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders);
         }
 
+        protected override void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
+        {
+            base.ShareIsDroneConsumerFocusableValueWithClient(isFocusable);
+            OnShareIsDroneConsumerFocusableValueWithClientRpc(isFocusable);
+        }
+        protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
+        {
+            base.CallRpc_ToggleDroneConsumerFocusCommandExecute();
+            if (IsClient)
+                OnToggleDroneConsumerFocusCommandExecuteServerRpc();
+        }
         protected override void OnBuildableCompleted()
         {
             ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;
@@ -83,6 +94,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 BuildProgress = PvP_BuildProgress.Value;
                 BuildableState = PvP_BuildableState.Value;
             }
+        }
+
+        [ClientRpc]
+        private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
+        { 
+            Debug.Log("IsDroneConsumerFocusable_PvPClient ===> " + (IsDroneConsumerFocusable_PvPClient == isFocusable));
+            IsDroneConsumerFocusable_PvPClient = isFocusable;
+        }
+
+        [ServerRpc]
+        private void OnToggleDroneConsumerFocusCommandExecuteServerRpc()
+        {
+            CallRpc_ToggleDroneConsumerFocusCommandExecute();
         }
     }
 }

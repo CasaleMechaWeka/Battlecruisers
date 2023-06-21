@@ -58,8 +58,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings);
         void StaticInitialise(GameObject parent, PvPHealthBarController healthBar);
         void Initialise(IPvPFactoryProvider factoryProvider);
-        void Initialise();
+        void Initialise(IPvPUIManager uiManager);
         void StartConstruction();
-  
+
     }
 }

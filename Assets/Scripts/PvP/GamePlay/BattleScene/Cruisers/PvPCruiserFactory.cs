@@ -83,9 +83,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public void InitialisePlayerACruiser(
             PvPCruiser playerACruiser,
             PvPCruiser playerBCruiser,
-         //   IPvPCameraFocuser cameraFocuser,
+         // IPvPCameraFocuser cameraFocuser,
             IPvPRankedTargetTracker userChosenTargetTracker
-            // IPvPUserChosenTargetHelper userChosenTargetHelper
+         // IPvPUserChosenTargetHelper userChosenTargetHelper
             )
         {
             PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser,/* cameraFocuser,*/ userChosenTargetTracker);

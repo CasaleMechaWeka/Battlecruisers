@@ -57,8 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 PvPHealthBarController healthBar = GetComponentInChildren<PvPHealthBarController>();
                 Assert.IsNotNull(healthBar);
 
-                Buildable.StaticInitialise(gameObject, healthBar);
-                Buildable.Initialise();
+                Buildable.StaticInitialise(gameObject, healthBar, PvPBattleSceneGodClient.Instance.commonStrings);
+                Buildable.Initialise(PvPBattleSceneGodClient.Instance.uiManager);
 
                 PvP_IsVisible.OnValueChanged += OnVisibleChanged;
             }

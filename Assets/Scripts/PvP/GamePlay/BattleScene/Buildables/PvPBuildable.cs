@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private GameObject _parent;
         private IPvPDroneFeedback _droneFeedback;
 
-        // protected IPvPUIManager _uiManager;
+        protected IPvPUIManager _uiManager;
         protected IPvPDroneConsumerProvider _droneConsumerProvider;
         protected IPvPTargetFactoriesProvider _targetFactories;
         protected IPvPMovementControllerFactory _movementControllerFactory;
@@ -71,8 +71,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float MAX_BUILD_PROGRESS = 1;
 
         #region Properties
-        public PvPBuildableState BuildableState { get;  set; }
-        public float BuildProgress { get;  set; }
+        public PvPBuildableState BuildableState { get; set; }
+        public float BuildProgress { get; set; }
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
         public IPvPBoostable BuildProgressBoostable { get; private set; }
@@ -110,8 +110,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _droneConsumer.DroneNumChanged += DroneConsumer_DroneNumChanged;
                     _droneConsumer.DroneStateChanged += DroneConsumer_DroneStateChanged;
                 }
+
+                ShareIsDroneConsumerFocusableValueWithClient(DroneConsumer != null);
             }
         }
+
+
 
         private bool _isEnabledRenderers = false;
         public bool isEnabledRenderers
@@ -148,6 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         private bool IsDroneConsumerFocusable => DroneConsumer != null;
+        protected bool IsDroneConsumerFocusable_PvPClient;
         public IPvPCommand ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
 
@@ -200,7 +205,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
+        protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
+        {
 
+        }
 
 
         public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
@@ -216,7 +224,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
 
-            ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsDroneConsumerFocusable);
+
+            ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsServer ? IsDroneConsumerFocusable : IsDroneConsumerFocusable_PvPClient);
+
 
             PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
@@ -288,10 +298,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        /*        public void SetHealthBarPosition(Vector2 offset)
-                {
-                    PvP_HealthbarOffset.Value = offset;
-                }*/
+
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
@@ -333,20 +340,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
             }
 
+
+
         }
 
-        public virtual void Initialise(/*IPvPFactoryProvider factoryProvider*/)
+        public virtual void Initialise(/*IPvPFactoryProvider factoryProvider*/      IPvPUIManager uiManager)
         {
             /*        Logging.Log(Tags.BUILDABLE, this);
 
                     Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
                     Helper.AssertIsNotNull(factoryProvider);
 
-                    // _uiManager = uiManager;
+            
                     _factoryProvider = factoryProvider;
                     _targetFactories = _factoryProvider.Targets;
                     _movementControllerFactory = _factoryProvider.MovementControllerFactory;*/
-
+            _uiManager = uiManager;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             //   BuildProgressBoostable = _factoryProvider.BoostFactory.CreateBoostable();
@@ -358,6 +367,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
             //  _parent.SetActive(false);
+
+
         }
 
         public virtual void Activate(IPvPCruiser parentCruiser, IPvPCruiser enemyCruiser, IPvPCruiserSpecificFactories cruiserSpecificFactories)
@@ -499,7 +510,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // PERF  Doesn't need to be every update :)
         public void Update()
         {
-            if(IsServer)
+            if (IsServer)
             {
                 if (BuildableState == PvPBuildableState.InProgress)
                 {
@@ -650,7 +661,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void ToggleDroneConsumerFocusCommandExecute()
         {
-            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
+            if (IsClient)
+                CallRpc_ToggleDroneConsumerFocusCommandExecute();
+            if (IsServer)
+                ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
+
+        }
+
+
+        protected virtual void CallRpc_ToggleDroneConsumerFocusCommandExecute()
+        {
+            if (IsServer)
+                ToggleDroneConsumerFocusCommandExecute();
         }
     }
 }

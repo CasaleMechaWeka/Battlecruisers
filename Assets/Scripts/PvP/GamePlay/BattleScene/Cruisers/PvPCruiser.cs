@@ -116,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IPvPCruiserUnitMonitor UnitMonitor { get; private set; }
         public IPvPPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IPvPUnitTargets UnitTargets { get; private set; }
-        public IPvPTargetTracker BlockedShipsTracker { get; private set; }
+        public IPvPTargetTracker BlockedShipsTracker { get; private set; }        
 
         public event EventHandler<PvPBuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<PvPBuildingCompletedEventArgs> BuildingCompleted;
@@ -223,6 +223,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public async virtual void Initialise(IPvPCruiserArgs args)
         {
             Faction = args.Faction;
+            // client rpc call
+            PvP_SetFactionClientRpc(Faction);
+
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
             DroneManager = args.DroneManager;
@@ -484,6 +487,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
+        [ClientRpc]
+        private void PvP_SetFactionClientRpc(PvPFaction faction)
+        {
+            Faction = faction;
+        }
     }
 
     public enum Team { LEFT, RIGHT}

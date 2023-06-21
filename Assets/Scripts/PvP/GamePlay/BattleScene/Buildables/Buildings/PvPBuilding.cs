@@ -89,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnSingleClick()
         {
             // Logging.LogMethod(Tags.BUILDING);
-            // _uiManager.SelectBuilding(this);
+             _uiManager.SelectBuilding(this);
         }
 
         protected override void OnDoubleClick()

@@ -152,15 +152,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void GotoBattleMode()
         {
-            if (Application.internetReachability == NetworkReachability.NotReachable)
+
+            // should be enabled in Production
+
+/*            if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 _screensSceneGod.LoadBattle1v1Mode();
             }
             else
-            {
+            {*/
                 GoToScreen(arenaSelectPanel);
                 // _screensSceneGod.LoadMultiplayScene();
-            }
+          //  }
         
         }
 
