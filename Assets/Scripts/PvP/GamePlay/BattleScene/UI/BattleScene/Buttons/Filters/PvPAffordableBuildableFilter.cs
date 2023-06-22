@@ -14,25 +14,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public event EventHandler PotentialMatchChange;
         private readonly PvPCruiser _playerCruiser;
 
+
+        // we don't use this constructor :D
         public PvPAffordableBuildableFilter(IPvPDroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
 
             _droneManager = droneManager;
-            _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
+       //     _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
         }
 
 
         public PvPAffordableBuildableFilter(PvPCruiser playerCruiser)
         {
-             Assert.IsNotNull(playerCruiser);
+            Assert.IsNotNull(playerCruiser);
 
             // _droneManager = droneManager;
             // _droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
             _playerCruiser = playerCruiser;
+            _playerCruiser.pvp_NumOfDrones.OnValueChanged += _droneManager_DroneNumChanged;
+     
         }
 
-        private void _droneManager_DroneNumChanged(object sender, PvPDroneNumChangedEventArgs e)
+        private void _droneManager_DroneNumChanged(int oldVal, int newVal /*object sender, PvPDroneNumChangedEventArgs e*/)
         {
             PotentialMatchChange?.Invoke(this, EventArgs.Empty);
         }
