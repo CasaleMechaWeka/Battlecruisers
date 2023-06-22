@@ -71,8 +71,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private const float MAX_BUILD_PROGRESS = 1;
 
+        private PvPBuildableState _buildState;
         #region Properties
-        public PvPBuildableState BuildableState { get; set; }
+        public PvPBuildableState BuildableState
+        {
+            get
+            {
+                return _buildState;
+            }
+            set
+            {
+                _buildState = value;
+                if (IsServer)
+                    OnBuildableStateValueChanged(value);
+            }
+        }
         public float BuildProgress { get; set; }
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
@@ -116,24 +129,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-
-
-        private bool _isEnabledRenderers = false;
-        public bool isEnabledRenderers
-        {
-            set
-            {
-                _isEnabledRenderers = value;
-                if (IsClient)
-                {
-                    EnableRenderers(value);
-                }
-            }
-            get
-            {
-                return _isEnabledRenderers;
-            }
-        }
         private IList<SpriteRenderer> _inGameRenderers;
         private IList<SpriteRenderer> InGameRenderers
         {
@@ -156,6 +151,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected bool IsDroneConsumerFocusable_PvPClient;
         public IPvPCommand ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
+
 
         protected virtual ObservableCollection<IPvPBoostProvider> TurretFireRateBoostProviders
         {
@@ -201,17 +197,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler Deactivated;
 
 
+        protected virtual void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
 
+        }
 
-
-
+        protected virtual void OnValueChangedIsEnableRenderes(bool isEnabled)
+        {
+            EnableRenderers(isEnabled);
+        }
 
         protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
         {
 
         }
 
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+        }
 
+        private void OnHealthbarOffsetChanged()
+        {
+            if (IsServer)
+                CallRpc_SetHealthbarOffset(_healthBar.Offset);
+        }
+        protected virtual void CallRpc_SetHealthbarOffset(Vector2 offset)
+        {
+
+        }
         public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
         {
             base.StaticInitialise(commonStrings);
@@ -220,10 +233,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _parent = parent;
             _healthBar = healthBar;
+            _healthBar.OffsetChanged += OnHealthbarOffsetChanged;
 
             _buildableProgress = gameObject.GetComponentInChildren<PvPBuildableProgressController>(includeInactive: true);
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
+
 
 
             ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsServer ? IsDroneConsumerFocusable : IsDroneConsumerFocusable_PvPClient);
@@ -501,6 +516,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
 
             StartedConstruction?.Invoke(this, EventArgs.Empty);
+            CallRpc_ProgressControllerVisible(true);
         }
 
         // PERF  Doesn't need to be every update :)
@@ -564,6 +580,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 PlayBuildableConstructionCompletedSound();
             }
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
+            CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
         }
 
@@ -571,6 +588,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             BuildableState = PvPBuildableState.Completed;
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
+            CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
         }
@@ -587,7 +605,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void EnableRenderers(bool enabled)
         {
             if (IsServer)
-                isEnabledRenderers = enabled;
+                OnValueChangedIsEnableRenderes(enabled);
+
             Logging.Log(Tags.BUILDING, $"Renderer count: {InGameRenderers.Count}  enabled: {enabled}");
 
             foreach (Renderer renderer in InGameRenderers)
@@ -622,6 +641,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 CleanUpDroneConsumer();
             }
+            _healthBar.OffsetChanged -= OnHealthbarOffsetChanged;
 
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();

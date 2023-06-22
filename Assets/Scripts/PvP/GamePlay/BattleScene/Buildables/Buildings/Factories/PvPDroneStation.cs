@@ -1,9 +1,11 @@
+using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -14,17 +16,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public int numOfDronesProvided;
 
-        public NetworkVariable<Quaternion> PvP_Rotation = new NetworkVariable<Quaternion>();
-        public NetworkVariable<Vector2> PvP_Position = new NetworkVariable<Vector2>();
-        public NetworkVariable<Vector2> PvP_Offset = new NetworkVariable<Vector2>();
-        public NetworkVariable<bool> PvP_IsEnabledRenderers = new NetworkVariable<bool>();
-        public NetworkVariable<bool> PvP_IsEnabledBuildableProgressController = new NetworkVariable<bool>();
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-        public NetworkVariable<PvPBuildableState> PvP_BuildableState = new NetworkVariable<PvPBuildableState>();
+
 
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.DroneStation;
         public override PvPTargetValue TargetValue => PvPTargetValue.Medium;
 
+
+        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
+        {
+            if (IsClient)
+                base.OnValueChangedIsEnableRenderes(isEnabled);
+            if (IsServer)
+                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+        }
+
+        protected override void CallRpc_SetHealthbarOffset(Vector2 offset)
+        {
+            OnSetHealthbarOffsetClientRpc(offset);
+        }
+        protected override void CallRpc_SetPosition(Vector3 pos)
+        {
+            OnSetPositionClientRpc(pos);
+        }
+
+
+        protected override void CallRpc_SetRotation(Quaternion rotation)
+        {
+            OnSetRotationClientRpc(rotation);
+        }
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
@@ -35,7 +55,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
         {
-            //    base.ShareIsDroneConsumerFocusableValueWithClient(isFocusable);
             OnShareIsDroneConsumerFocusableValueWithClientRpc(isFocusable);
         }
         protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
@@ -48,10 +67,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsServer)
             {
-                ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;        
+                ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;
                 base.OnBuildableCompleted();
                 OnBuildableCompletedClientRpc();
-            //    Invoke("OnBuildableCompletedClientRpc", 0.1f);
+
             }
             if (IsClient)
                 OnBuildableCompleted_PvPClient();
@@ -102,39 +121,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 PlayBuildableConstructionCompletedSoundClientRpc();
         }
 
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            OnProgressControllerVisibleClientRpc(isEnabled);
+        }
+
+        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
+            OnBuildableStateValueChangedClientRpc(state);
+        }
 
         private void LateUpdate()
         {
-
             if (IsServer)
             {
-                if (PvP_Position.Value != Position)
-                    PvP_Position.Value = Position;
-                if (PvP_Rotation.Value != Rotation)
-                    PvP_Rotation.Value = Rotation;
-                if (HealthBar is not null && PvP_Offset.Value != HealthBar.Offset)
-                    PvP_Offset.Value = HealthBar.Offset;
-
-                if (PvP_IsEnabledRenderers.Value != isEnabledRenderers)
-                    PvP_IsEnabledRenderers.Value = isEnabledRenderers;
-                if (PvP_IsEnabledBuildableProgressController.Value != _buildableProgress.gameObject.activeSelf)
-                    PvP_IsEnabledBuildableProgressController.Value = _buildableProgress.gameObject.activeSelf;
-
                 if (PvP_BuildProgress.Value != BuildProgress)
                     PvP_BuildProgress.Value = BuildProgress;
-                if (PvP_BuildableState.Value != BuildableState)
-                    PvP_BuildableState.Value = BuildableState;
             }
             if (IsClient)
             {
-                Position = PvP_Position.Value;
-                Rotation = PvP_Rotation.Value;
-                if (HealthBar is not null)
-                    HealthBar.Offset = PvP_Offset.Value;
-                isEnabledRenderers = PvP_IsEnabledRenderers.Value;
-                _buildableProgress.gameObject.SetActive(PvP_IsEnabledBuildableProgressController.Value);
                 BuildProgress = PvP_BuildProgress.Value;
-                BuildableState = PvP_BuildableState.Value;
             }
         }
 
@@ -190,5 +196,40 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnBuildableCompleted();
         }
 
+        [ClientRpc]
+        private void OnSetPositionClientRpc(Vector3 pos)
+        {
+            Position = pos;
+        }
+
+        [ClientRpc]
+        private void OnSetRotationClientRpc(Quaternion rotation)
+        {
+            Rotation = rotation;
+        }
+
+        [ClientRpc]
+        private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
+        {
+            HealthBar.Offset = offset;
+        }
+
+        [ClientRpc]
+        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
+        {
+            OnValueChangedIsEnableRenderes(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+        }
+
+        [ClientRpc]
+        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        {
+            BuildableState = state;
+        }
     }
 }

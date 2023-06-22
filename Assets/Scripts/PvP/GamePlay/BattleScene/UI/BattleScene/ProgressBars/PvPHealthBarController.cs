@@ -13,6 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private bool _followDamagable;
 
         private Vector2 _offset;
+        public Action OffsetChanged;
         public Vector2 Offset
         {
             get => _offset;
@@ -20,6 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 _offset = value;
                 UpdatePosition();
+                OffsetChanged?.Invoke();
             }
         }
 

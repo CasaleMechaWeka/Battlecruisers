@@ -24,6 +24,7 @@ using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
 
 
-        public PvPLeftPanelComponents Initialise(
+        public async Task<PvPLeftPanelComponents> Initialise(
             IPvPDroneManager droneManager,
             IPvPDroneManagerMonitor droneManagerMonitor,
             IPvPUIManager uiManager,
@@ -74,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IPvPBuildMenu buildMenu
-                = SetupBuildMenuController(
+                = await SetupBuildMenuController(
                     uiManager,
                     playerLoadout,
                     prefabFactory,
@@ -92,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
 
-        public PvPLeftPanelComponents Initialise(
+        public async Task<PvPLeftPanelComponents> Initialise(
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
@@ -121,7 +122,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
             IPvPBuildMenu buildMenu
-                = SetupBuildMenuController(
+                = await SetupBuildMenuController(
                     uiManager,
                     playerLoadout,
                     prefabFactory,
@@ -148,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return dronesPanelInitialiser.Initialise(playerCruiser);
         }
 
-        private IPvPBuildMenu SetupBuildMenuController(
+        private async Task<IPvPBuildMenu> SetupBuildMenuController(
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
@@ -162,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             IPvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
             IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
-            IList<IPvPBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
+            IList<IPvPBuildingGroup> buildingGroups = await prefabOrganiser.GetBuildingGroups();
             IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units = prefabOrganiser.GetUnits();
             IPvPBuildableSorterFactory sorterFactory
                 = new PvPBuildableSorterFactory(

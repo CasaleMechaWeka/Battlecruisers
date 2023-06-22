@@ -11,6 +11,8 @@ using BattleCruisers.Buildables.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -34,9 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _buildingGroupFactory = buildingGroupFactory;
         }
 
-        public IList<IPvPBuildingGroup> GetBuildingGroups()
+        public async Task<IList<IPvPBuildingGroup>> GetBuildingGroups()
         {
-            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
+            IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = await GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
             return CreateBuildingGroups(buildings, _buildingGroupFactory);
         }
 
@@ -78,7 +80,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        private IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IPvPPrefabFactory prefabFactory)
+        private async Task<IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>> GetBuildingsFromKeys(ILoadout loadout, IPvPPrefabFactory prefabFactory)
         {
             IDictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<PvPBuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
 
@@ -98,7 +100,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 foreach (PvPBuildingKey buildingKey in pvp_buildingKeys)
                 {
                     IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
                     categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
+              
+          
                 }
             }
 

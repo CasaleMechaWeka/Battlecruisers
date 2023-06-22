@@ -7,6 +7,8 @@ using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
@@ -50,8 +52,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             return Team.RIGHT;
         }
 
-        public ulong LocalClientID {
-            get { 
+        public ulong LocalClientID
+        {
+            get
+            {
                 return NetworkManager.Singleton.LocalClientId;
             }
         }
@@ -77,6 +81,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         static SynchedServerData sync_ServerData;
 
 
+        public void TryPreLoadBuildablePrefab(PvPBuildingCategory category, string prefabName)
+        {
+            LoadBuildablePrefabServerRpc(category, prefabName);
+        }
+
+
         /// <summary>
         /// This call attempts to spawn a prefab by it's addressable guid - it ensures that all the clients have loaded the prefab before spawning it,
         /// and if the clients fail to acknowledge that they've loaded a prefab - the spawn will fail.
@@ -85,6 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         /// <returns></returns>
         public async Task<bool> TrySpawnCruiserDynamicSynchronously(IPvPPrefabKey iKey, PvPPrefab iPrefab)
         {
+
             if (IsServer)
             {
                 var assetGuid = new AddressableGUID()
@@ -102,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 m_SynchronousSpawnAckCount = 0;
                 m_SynchronousSpawnTimeoutTimer = 0;
 
-                Debug.Log("Loading dynamic prefab on the clients...");
+                Debug.Log("Loading dynamic prefab on the clients... ---> " + iKey.PrefabPath);
                 LoadAddressableClientRpc(iKey.PrefabPath);
 
 
@@ -137,6 +148,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 
         }
 
+
+        [ServerRpc(RequireOwnership = false)]
+        void LoadBuildablePrefabServerRpc(PvPBuildingCategory category, string prefabName, ServerRpcParams rpcParams = default)
+        {
+            PvPBuildingKey buildingKey = new PvPBuildingKey(category, prefabName);
+            PvPPrefab iPrefab = PvPBattleSceneGodServer.Instance.factoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+            TrySpawnCruiserDynamicSynchronously(buildingKey, iPrefab);
+        }
 
         [ClientRpc]
         void LoadAddressableClientRpc(string prefabPath, ClientRpcParams rpcParams = default)

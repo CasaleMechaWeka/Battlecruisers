@@ -47,6 +47,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
 
                 transform.rotation = value;
+                if (IsServer)
+                    CallRpc_SetRotation(value);
 
             }
         }
@@ -59,9 +61,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             get { return transform.position; }
             set
             {
-       
                 transform.position = value;
-  
+                if (IsServer)
+                    CallRpc_SetPosition(value);
             }
         }
 
@@ -72,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public Vector2 HealthBarOffset
         {
-            get;set;
+            get; set;
         }
 
 
@@ -106,6 +108,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public ReadOnlyCollection<PvPTargetType> AttackCapabilities { get; private set; }
         public IPvPTarget LastDamagedSource { get; private set; }
         IPvPTarget IPvPTargetProxy.Target => this;
+
+
+        protected virtual void CallRpc_SetPosition(Vector3 pos)
+        {
+
+        }
+
+        protected virtual void CallRpc_SetRotation(Quaternion rotation)
+        {
+            
+        }
+
+        protected virtual void CallRpc_ProgressControllerVisible(bool isEnabled)
+        { 
+
+        }
 
         protected void AddAttackCapability(PvPTargetType attackCapability)
         {
@@ -160,8 +178,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         protected virtual void InternalDestroy()
-        {            
-            Destroy(gameObject);            
+        {
+            Destroy(gameObject);
         }
 
         protected virtual void OnDestroyed() { }
@@ -171,6 +189,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.TARGET, $"{this} destroyed :/");
             pvp_Destroyed.Value = true;
             Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
+            CallRpc_ProgressControllerVisible(false);
         }
 
         public void TakeDamage(float damageAmount, IPvPTarget damageSource)
@@ -197,16 +216,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-/*        private void LateUpdate()
-        {
-            if (IsClient)
-            {
-                
-                Position = PvP_Position.Value;
-                Rotation = PvP_Rotation.Value;
-                Debug.Log("aaa");
-            }
-        }*/
+        /*        private void LateUpdate()
+                {
+                    if (IsClient)
+                    {
+
+                        Position = PvP_Position.Value;
+                        Rotation = PvP_Rotation.Value;
+                        Debug.Log("aaa");
+                    }
+                }*/
 
         protected virtual void OnTakeDamage() { }
 

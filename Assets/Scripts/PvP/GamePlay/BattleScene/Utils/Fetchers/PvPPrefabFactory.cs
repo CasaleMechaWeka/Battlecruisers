@@ -79,10 +79,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
 
-            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPBuildingKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
+         //   var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPBuildingKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
 
-            if (IsLoaded)
-            {
+         //   if (IsLoaded)
+         //   {
                 PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
                 buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
                 buildableWrapper.gameObject.SetActive(true);
@@ -90,8 +90,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 buildableWrapper.Buildable.Initialise(factoryProvider);
                 // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
                 return buildableWrapper.Buildable;
-            }
-            return null;
+        //    }
+         //   return null;
 
         }
 

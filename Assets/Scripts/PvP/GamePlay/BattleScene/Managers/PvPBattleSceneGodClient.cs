@@ -217,7 +217,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
             PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
             leftPanelComponents
-                = leftPanelInitialiser.Initialise(
+                = await leftPanelInitialiser.Initialise(
                     playerCruiser,
                     uiManager,
                     pvpBattleHelper.GetPlayerLoadout(),
