@@ -166,6 +166,9 @@ namespace BattleCruisers.Scenes
 
             // Start animating:
             StartCoroutine(AnimateScreen());
+
+
+            Debug.Log("Playedtime =========> " + BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime().ToString());
         }
 
         /*        private void OnEnable()

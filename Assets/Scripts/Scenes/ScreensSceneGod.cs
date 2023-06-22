@@ -395,11 +395,16 @@ namespace BattleCruisers.Scenes
             CleanUp();
         }
 
-        public void LoadMultiplayScene()
+        public void LoadPvPBattleScene()
         {
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.MULTIPLAY_SCREENS_SCENE, true);
+            _sceneNavigator.GoToScene(SceneNames.PvP_BOOT_SCENE, true);
             CleanUp();
+        }
+
+        public void LoadBattle1v1Mode()
+        {
+
         }
 
         private void CleanUp()

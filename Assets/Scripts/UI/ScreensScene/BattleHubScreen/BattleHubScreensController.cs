@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Helpers;
 using BattleCruisers.Data.Models;
@@ -13,7 +14,7 @@ using BattleCruisers.UI.ScreensScene.HomeScreen;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
+using Ping = UnityEngine.Ping;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -33,9 +34,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public InfiniteLoadoutScreenController loadoutPanel;
         //public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
-       // public ProfilePanelScreenController profilePanel;
+        public ProfilePanelScreenController profilePanel;
+        public ArenaSelectPanelScreenController arenaSelectPanel;
 
-        public CanvasGroupButton continueButton, levelsButton, skirmishButton;
+        public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -59,30 +61,23 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             loadoutButton.Initialise(_soundPlayer, OpenLoadout);
             shopButton.Initialise(_soundPlayer, OpenShop);
             leaderboardButton.Initialise(_soundPlayer, OpenLeaderboard);
-            //profileButton.Initialise(_soundPlayer, OpenProfile);
+            profileButton.Initialise(_soundPlayer, OpenProfile);
 
             continueButton.Initialise(_soundPlayer, Continue);
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
             skirmishButton.Initialise(_soundPlayer, GoToSkirmishScreen);
+            battleButton.Initialise(_soundPlayer, GotoBattleMode);
 
             battlePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
             leaderboardPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
-            //profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
+            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
 
+            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider, nextLevelHelper);
 
-            Text coinsText = coins.GetComponent<Text>();
-            coinsText.text = (dataProvider.GameModel.Coins).ToString();
         }
 
-        private void Update()
-        {
-            Text coinsText = coins.GetComponent<Text>();
-            if(_dataProvider != null)
-            {
-                coinsText.text = (_dataProvider.GameModel.Coins).ToString();
-            }
-        }
+
 
 
         private void GoHome()
@@ -129,13 +124,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
 
 
-        /*private void OpenProfile()
+        private void OpenProfile()
         {
             GoToScreen(profilePanel);
 
             UnselectAll();
 
-        }*/
+        }
 
         public void Continue()
         {
@@ -159,6 +154,23 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoToSkirmishScreen()
         {
             _screensSceneGod.GoToSkirmishScreen();
+        }
+
+        public void GotoBattleMode()
+        {
+
+            // should be enabled in Production
+
+            /*            if (Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            _screensSceneGod.LoadBattle1v1Mode();
+                        }
+                        else
+                        {*/
+            GoToScreen(arenaSelectPanel);
+            // _screensSceneGod.LoadMultiplayScene();
+            //  }
+
         }
 
 

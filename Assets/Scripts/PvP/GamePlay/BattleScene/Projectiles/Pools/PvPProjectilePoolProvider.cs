@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
@@ -131,22 +132,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                         projectileKey));
         }
 
-        public void SetInitialCapacity()
+        public async Task SetInitialCapacity()
         {
-            BulletsPool.AddCapacity(PvPInitialCapacity.BULLET);
-            HighCalibreBulletsPool.AddCapacity(PvPInitialCapacity.BULLET);
-            TinyBulletsPool.AddCapacity(PvPInitialCapacity.BULLET);
-            ShellsSmallPool.AddCapacity(PvPInitialCapacity.SHELL_SMALL);
-            ShellsLargePool.AddCapacity(PvPInitialCapacity.SHELL_LARGE);
-            NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE);
-            RocketShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE);
-            BombsPool.AddCapacity(PvPInitialCapacity.BOMB);
-            RocketsPool.AddCapacity(PvPInitialCapacity.ROCKET);
-            RocketsSmallPool.AddCapacity(PvPInitialCapacity.ROCKET);
-            MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL);
-            MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM);
-            MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE);
-            MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART);
+            await BulletsPool.AddCapacity(PvPInitialCapacity.BULLET);
+            await HighCalibreBulletsPool.AddCapacity(PvPInitialCapacity.BULLET);
+            await TinyBulletsPool.AddCapacity(PvPInitialCapacity.BULLET);
+            await ShellsSmallPool.AddCapacity(PvPInitialCapacity.SHELL_SMALL);
+            await ShellsLargePool.AddCapacity(PvPInitialCapacity.SHELL_LARGE);
+            await NovaShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE);
+            await RocketShellPool.AddCapacity(PvPInitialCapacity.SHELL_LARGE);
+            await BombsPool.AddCapacity(PvPInitialCapacity.BOMB);
+            await RocketsPool.AddCapacity(PvPInitialCapacity.ROCKET);
+            await RocketsSmallPool.AddCapacity(PvPInitialCapacity.ROCKET);
+            await MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL);
+            await MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM);
+            await MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE);
+            await MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART);
         }
     }
 }

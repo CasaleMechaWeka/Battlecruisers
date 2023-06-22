@@ -3,7 +3,7 @@ using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
-
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 {
@@ -88,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 
         void NetworkShutdown()
         {
-            if (SceneManager.GetActiveScene().name != "MultiplayScreensScene")
+            if (SceneManager.GetActiveScene().name != SceneNames.SCREENS_SCENE)
             {
-                SceneManager.LoadScene("MultiplayScreensScene");
+                SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
             }
 
             if (m_NetworkManager.IsConnectedClient)

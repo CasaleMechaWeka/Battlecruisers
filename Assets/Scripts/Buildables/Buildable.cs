@@ -58,7 +58,7 @@ namespace BattleCruisers.Buildables
         protected BuildableProgressController _buildableProgress;
 
         public string stringKeyName;
-        public string keyName{get;set;}
+        public string keyName { get; set; }
         public int numOfDronesRequired;
         public float buildTimeInS;
 
@@ -229,7 +229,7 @@ namespace BattleCruisers.Buildables
             //Assert.IsNotNull(mainRenderer);
             if (mainRenderer == null)
             {
-                return new List<SpriteRenderer>(){};
+                return new List<SpriteRenderer>() { };
             }
             return new List<SpriteRenderer>() { mainRenderer };
         }
@@ -328,7 +328,7 @@ namespace BattleCruisers.Buildables
         /// + Shields   => Boost from Raptor
         /// </summary>
         protected virtual void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders, 
+            IGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);
@@ -485,7 +485,7 @@ namespace BattleCruisers.Buildables
 
             if (Faction == Faction.Reds)
             {
-                BattleSceneGod.AddDeadBuildable(TargetType, (int)(buildTimeInS*numOfDronesRequired));
+                BattleSceneGod.AddDeadBuildable(TargetType, (int)(buildTimeInS * numOfDronesRequired));
                 //BattleSceneGod.ShowDeadBuildableStats();
             }
         }

@@ -39,6 +39,8 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
             //_lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
 
+            _lowHealthFeedback.enabled = false;
+
             _cruiserHealthMonitor = new HealthStateMonitor(cruiser);
             _cruiserHealthMonitor.HealthStateChanged += CruiserHealthMonitor_HealthStateChanged;
 

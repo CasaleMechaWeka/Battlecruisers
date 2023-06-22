@@ -81,11 +81,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             informatorPanelExtended.Initialise();
             buttons
                 .Initialise(
-                    // playerCruiser.DroneFocuser,
-                    // playerCruiser.RepairManager,
+                     playerCruiser.DroneFocuser,
+                     playerCruiser.RepairManager,
                     userChosenTargetHelper,
                     visibilityFilters,
-
                     soundPlayer,
                     informatorPanelExtended,
                     perFrameUpdater,

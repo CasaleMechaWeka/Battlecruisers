@@ -23,6 +23,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sort
 using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
@@ -92,6 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
 
         public PvPLeftPanelComponents Initialise(
+            PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
@@ -104,6 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IStaticData staticData)
         {
             PvPHelper.AssertIsNotNull(
+                playerCruiser,
                 uiManager,
                 playerLoadout,
                 prefabFactory,
@@ -116,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 staticData);
             PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
-            IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel();
+            IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
             IPvPBuildMenu buildMenu
                 = SetupBuildMenuController(
                     uiManager,
@@ -137,12 +140,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         private IPvPHighlightable SetupDronesPanel(IPvPDroneManager droneManager, IPvPDroneManagerMonitor droneManagerMonitor)
         {
-            return dronesPanelInitialiser.Initialise();
+            return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }
 
-        private IPvPHighlightable SetupDronesPanel()
+        private IPvPHighlightable SetupDronesPanel(PvPCruiser playerCruiser)
         {
-            return dronesPanelInitialiser.Initialise();
+            return dronesPanelInitialiser.Initialise(playerCruiser);
         }
 
         private IPvPBuildMenu SetupBuildMenuController(

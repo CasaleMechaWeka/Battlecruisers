@@ -19,6 +19,14 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using System;
+using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
+using BattleCruisers.UI.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -32,10 +40,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
+        private PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
-
+        // Hold reference to avoid garbage collection
+#pragma warning disable CS0414  // Variable is assigned but never used
+        private PvPDroneManagerMonitor droneManagerMonitor;
+#pragma warning restore CS0414  // Variable is assigned but never used
 
 
         public static PvPBattleSceneGodServer Instance
@@ -118,24 +130,46 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 components.TargetIndicator */);
             IPvPUserChosenTargetManager playerBCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
-            factoryProvider.Initialise();
+            await factoryProvider.Initialise();
+            // StartCoroutine(iInitialiseFactoryProvider());
             IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
-            playerACruiser = await cruiserFactory.CreatePlayerACruiser();
-            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser();
+            playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
 
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser /*, cameraComponents.CameraFocuser*/, playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser , /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
+            droneManagerMonitor = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
+            droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;
 
+            IPvPTime time = PvPTimeBC.Instance;
+            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerACruiser);
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+        }
+ 
 
 
+        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)
+        {
+            return
+                new PvPPopulationLimitAnnouncer(
+                    playerCruiser,
+                    playerCruiser.PopulationLimitMonitor
+                    );
+        }
+        private void _droneManagerMonitor_IdleDronesStarted(object sender, EventArgs e)
+        {
+            playerACruiser.pvp_IdleDronesStarted.Value = true;
         }
 
-
+        private void _droneManagerMonitor_IdleDronesEnded(object sender, EventArgs e)
+        {
+            playerACruiser.pvp_IdleDronesEnded.Value = false;
+        }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
             IPvPPrefabFetcher prefabFetcher,

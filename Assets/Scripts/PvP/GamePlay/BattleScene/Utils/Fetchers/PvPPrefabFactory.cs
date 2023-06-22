@@ -19,6 +19,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Thre
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using System.Threading.Tasks;
+using BattleCruisers.Buildables;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Projectiles;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using static BattleCruisers.Data.Static.StaticPrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -42,12 +49,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _prefabCache.GetBuilding(buildingKey);
         }
 
-        public IPvPBuilding CreateBuilding(
+        public Task<IPvPBuilding> CreateBuilding(
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab,
             IPvPUIManager uiManager,
-            IPvPFactoryProvider factoryProvider)
+            IPvPFactoryProvider factoryProvider,
+            ulong clientID)
         {
-            return CreateBuildable(buildingWrapperPrefab.UnityObject, factoryProvider);
+            return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, factoryProvider, clientID);
         }
 
         public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey)
@@ -55,27 +63,59 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _prefabCache.GetUnit(unitKey);
         }
 
-        public IPvPUnit CreateUnit(
+        public async Task<IPvPUnit> CreateUnit(
             IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab,
             /* IPvPUIManager uiManager , */
             IPvPFactoryProvider factoryProvider)
         {
-            return CreateBuildable(unitWrapperPrefab.UnityObject, factoryProvider);
+            var _unitBuildable = await CreateUnitBuildable(unitWrapperPrefab.UnityObject, factoryProvider);
+            return _unitBuildable;
         }
 
-        private TBuildable CreateBuildable<TBuildable>(
+        private async Task<TBuildable> CreateBuildingBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
-            IPvPFactoryProvider factoryProvider) where TBuildable : class, IPvPBuildable
+            IPvPFactoryProvider factoryProvider,
+            ulong clientID) where TBuildable : class, IPvPBuilding
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
 
-            PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
-            buildableWrapper.gameObject.SetActive(true);
-            buildableWrapper.StaticInitialise(_commonStrings);
-            buildableWrapper.Buildable.Initialise(factoryProvider);
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPBuildingKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
 
+            if (IsLoaded)
+            {
+                PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
+                buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
+                buildableWrapper.gameObject.SetActive(true);
+                buildableWrapper.StaticInitialise(_commonStrings);
+                buildableWrapper.Buildable.Initialise(factoryProvider);
+                // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
+                return buildableWrapper.Buildable;
+            }
+            return null;
+
+        }
+
+        private async Task<TBuildable> CreateUnitBuildable<TBuildable>(
+            PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
+            IPvPFactoryProvider factoryProvider) where TBuildable : class, IPvPUnit
+        {
+            PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
+
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPUnitKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
+
+            if (IsLoaded)
+            {
+                PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
+                buildableWrapper.GetComponent<NetworkObject>().Spawn();
+                buildableWrapper.gameObject.SetActive(true);
+                buildableWrapper.StaticInitialise(_commonStrings);
+                buildableWrapper.Buildable.Initialise(factoryProvider);
+                return buildableWrapper.Buildable;
+            }
+
+            return null;
             // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
-            return buildableWrapper.Buildable;
+
         }
 
         public PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey)
@@ -91,21 +131,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return cruiser;
         }
 
-        public IPvPExplosion CreateExplosion(PvPExplosionKey explosionKey)
+        public async Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey)
         {
             PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
-            PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
-            return newExplosion.Initialise();
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(explosionKey, explosionPrefab);
+            if (IsLoaded)
+            {
+                PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
+                newExplosion.GetComponent<NetworkObject>().Spawn();
+                return newExplosion.Initialise();
+            }
+            return null;
         }
 
-        public IPvPShipDeath CreateShipDeath(PvPShipDeathKey shipDeathKey)
+        public async Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey)
         {
             PvPShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
-            PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
-            return newShipDeath.CreateShipDeath();
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(shipDeathKey, shipDeathPrefab);
+            if (IsLoaded)
+            {
+                PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
+                newShipDeath.GetComponent<NetworkObject>().Spawn();
+                return newShipDeath.CreateShipDeath();
+            }
+            return null;
         }
 
-        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
+        public async Task<TProjectile> CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
             where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : PvPProjectileActivationArgs<TStats>
             where TStats : IPvPProjectileStats
@@ -113,24 +165,42 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsNotNull(factoryProvider);
 
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
-            TProjectile projectile = Object.Instantiate(prefab);
-            projectile.Initialise(_commonStrings, factoryProvider);
-            return projectile;
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(prefabKey, prefab);
+            if (IsLoaded)
+            {
+                TProjectile projectile = Object.Instantiate(prefab);
+                projectile.GetComponent<NetworkObject>().Spawn();
+                projectile.Initialise(_commonStrings, factoryProvider);
+                return projectile;
+            }
+
+            return null;
         }
 
-        public IPvPDroneController CreateDrone()
+        public async Task<IPvPDroneController> CreateDrone()
         {
-            PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
-            newDrone.StaticInitialise(_commonStrings);
-            return newDrone;
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone, _prefabCache.Drone);
+            if (IsLoaded)
+            {
+                PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
+                newDrone.GetComponent<NetworkObject>().Spawn();
+                newDrone.StaticInitialise(_commonStrings);
+                return newDrone;
+            }
+            return null;
         }
 
-        public IPvPAudioSourcePoolable CreateAudioSource(IPvPDeferrer realTimeDeferrer)
+        public async Task<IPvPAudioSourcePoolable> CreateAudioSource(IPvPDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
-
-            PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+            var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.AudioSource, _prefabCache.AudioSource);
+            if (IsLoaded)
+            {
+                PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
+                audioSourceInitialiser.GetComponent<NetworkObject>().Spawn();
+                return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+            }
+            return null;
         }
 
         public PvPPrefab GetPrefab(string prefabPath)

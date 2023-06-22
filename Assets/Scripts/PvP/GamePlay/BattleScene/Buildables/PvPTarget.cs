@@ -10,7 +10,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using UnityEngine;
 using UnityEngine.Assertions;
-
+using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -33,18 +34,49 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IPvPTransform Transform { get; private set; }
 
+
+
+        // network variables
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = 0f };
+        public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };
+
         public Quaternion Rotation
         {
             get { return transform.rotation; }
-            set { transform.rotation = value; }
+            set
+            {
+
+                transform.rotation = value;
+
+            }
         }
+
+
 
         public virtual Vector2 DroneAreaPosition => Position;
         public Vector2 Position
         {
             get { return transform.position; }
-            set { transform.position = value; }
+            set
+            {
+       
+                transform.position = value;
+  
+            }
         }
+
+
+
+
+
+
+        public Vector2 HealthBarOffset
+        {
+            get;set;
+        }
+
+
+
 
         // IMaskHighlightable
         protected virtual Vector2 MaskHighlightableSize => Size;
@@ -87,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(commonStrings);
 
-            _healthTracker = new PvPHealthTracker(maxHealth);
+            _healthTracker = new PvPHealthTracker(this, maxHealth);
             _healthTracker.HealthGone += _health_HealthGone;
 
             _time = PvPTimeBC.Instance;
@@ -98,6 +130,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Transform = new PvPTransformBC(transform);
         }
+
 
         private void _health_HealthGone(object sender, EventArgs e)
         {
@@ -113,15 +146,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Destroy()
         {
+            DestroyMe();
+        }
+
+        protected virtual void DestroyMe()
+        {
             if (!IsDestroyed)
             {
                 _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
+                /*             PvP_Rotation.OnValueChanged -= OnPvPRotationChanged;
+                             PvP_Position.OnValueChanged -= OnPvPPositionChanged;*/
             }
         }
 
         protected virtual void InternalDestroy()
-        {
-            Destroy(gameObject);
+        {            
+            Destroy(gameObject);            
         }
 
         protected virtual void OnDestroyed() { }
@@ -129,7 +169,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected void InvokeDestroyedEvent()
         {
             // Logging.Log(Tags.TARGET, $"{this} destroyed :/");
-
+            pvp_Destroyed.Value = true;
             Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
         }
 
@@ -156,6 +196,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
             }
         }
+
+/*        private void LateUpdate()
+        {
+            if (IsClient)
+            {
+                
+                Position = PvP_Position.Value;
+                Rotation = PvP_Rotation.Value;
+                Debug.Log("aaa");
+            }
+        }*/
 
         protected virtual void OnTakeDamage() { }
 

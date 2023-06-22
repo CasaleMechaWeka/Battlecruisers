@@ -15,6 +15,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
 using UnityEngine.Assertions;
+using System.Collections;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -101,32 +103,44 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         // Not in constructor because of circular dependency
-        public void Initialise( /* IPvPUIManager uiManager */)
+        public async Task Initialise( /* IPvPUIManager uiManager */)
         {
             // Assert.IsNotNull(uiManager);
+
 
             IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
             DroneMonitor = new PvPDroneMonitor(droneFactory);
 
             PvPPoolProviders poolProviders = new PvPPoolProviders(this, droneFactory);
             PoolProviders = poolProviders;
-            poolProviders.SetInitialCapacities();
+            await poolProviders.SetInitialCapacities();
 
-            Sound = new PvPSoundFactoryProvider(_components, poolProviders);
+            //    Sound = new PvPSoundFactoryProvider(_components, poolProviders);
         }
+
+        /*        IEnumerator iInitialise()
+                {
+                    yield return null;
+                    IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
+                    DroneMonitor = new PvPDroneMonitor(droneFactory);
+
+                    PvPPoolProviders poolProviders = new PvPPoolProviders(this, droneFactory);
+                    PoolProviders = poolProviders;
+                    poolProviders.SetInitialCapacities();
+                }*/
 
         public void Initialise(IPvPUIManager uiManager)
         {
             Assert.IsNotNull(uiManager);
 
-            IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
-            DroneMonitor = new PvPDroneMonitor(droneFactory);
+            /*            IPvPDroneFactory droneFactory = new PvPDroneFactory(PrefabFactory);
+                        DroneMonitor = new PvPDroneMonitor(droneFactory);
 
-            PvPPoolProviders poolProviders = new PvPPoolProviders(this, uiManager, droneFactory);
-            PoolProviders = poolProviders;
-            poolProviders.SetInitialCapacities();
+                        PvPPoolProviders poolProviders = new PvPPoolProviders(this, uiManager, droneFactory);
+                        PoolProviders = poolProviders;
+                        poolProviders.SetInitialCapacities();*/
 
-            Sound = new PvPSoundFactoryProvider(_components, poolProviders);
+            Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
         }
 
     }

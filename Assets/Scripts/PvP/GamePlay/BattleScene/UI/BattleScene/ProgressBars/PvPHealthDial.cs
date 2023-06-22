@@ -5,23 +5,24 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
 {
-    public class PvPHealthDial<TDamagable> : IPvPHealthDial<TDamagable> where TDamagable : IPvPDamagable
+    public class PvPHealthDial : IPvPHealthDial
     {
         private readonly IPvPFillableImage _healthDialImage;
-        private readonly IPvPFilter<TDamagable> _visibilityFilter;
+        private readonly IPvPFilter<PvPTarget> _visibilityFilter;
         private PvPDamageTakenIndicator _damageTakenIndicator;
 
         private float previousHealthProportion;
 
-        private TDamagable _damagable;
-        public TDamagable Damagable
+        private PvPTarget _damagable;
+        public PvPTarget Damagable
         {
             set
             {
                 if (_damagable != null)
                 {
-                    _damagable.HealthChanged -= _damagable_HealthChanged;
-                    _healthDialImage.IsVisible = false;
+                    _damagable.pvp_Health.OnValueChanged -= _damagable_HealthChanged;
+                    _healthDialImage.IsVisible = false;         
+                  
                 }
 
                 _damagable = value;
@@ -31,12 +32,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     _healthDialImage.IsVisible = true;
                     UpdateDial();
-                    _damagable.HealthChanged += _damagable_HealthChanged;
+                    _damagable.pvp_Health.OnValueChanged += _damagable_HealthChanged;
                 }
             }
         }
 
-        public PvPHealthDial(IPvPFillableImage healthDialImage, IPvPFilter<TDamagable> visibilityFilter, PvPDamageTakenIndicator damageTakenIndicator)
+        public PvPHealthDial(IPvPFillableImage healthDialImage, IPvPFilter<PvPTarget> visibilityFilter, PvPDamageTakenIndicator damageTakenIndicator)
         {
             PvPHelper.AssertIsNotNull(healthDialImage, visibilityFilter);
 
@@ -50,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             previousHealthProportion = 1.0f;
         }
 
-        public PvPHealthDial(IPvPFillableImage healthDialImage, IPvPFilter<TDamagable> visibilityFilter)
+        public PvPHealthDial(IPvPFillableImage healthDialImage, IPvPFilter<PvPTarget> visibilityFilter)
         {
             PvPHelper.AssertIsNotNull(healthDialImage, visibilityFilter);
 
@@ -60,14 +61,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _healthDialImage.IsVisible = false;
         }
 
-        private void _damagable_HealthChanged(object sender, EventArgs e)
+        private void _damagable_HealthChanged(float oldVal, float newVal)
         {
-            UpdateDial();
+            UpdateDial(newVal);
         }
+
+        private void UpdateDial(float curHealth)
+        {
+            float proportionOfMaxHealth = curHealth / _damagable.MaxHealth;
+            _healthDialImage.FillAmount = proportionOfMaxHealth;
+            if (proportionOfMaxHealth < previousHealthProportion && _damageTakenIndicator != null)
+            {
+                _damageTakenIndicator.updateDamageTakenIndicator();
+            }
+            previousHealthProportion = proportionOfMaxHealth;
+        }
+
 
         private void UpdateDial()
         {
-            float proportionOfMaxHealth = _damagable.Health / _damagable.MaxHealth;
+            float proportionOfMaxHealth = _damagable.pvp_Health.Value / _damagable.MaxHealth;
             _healthDialImage.FillAmount = proportionOfMaxHealth;
             if (proportionOfMaxHealth < previousHealthProportion && _damageTakenIndicator != null)
             {

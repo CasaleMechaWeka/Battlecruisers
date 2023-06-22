@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -37,7 +38,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             if (!IsCameraRoughlyOnPlayerCruiser())
             {
-                _cameraFocuser.FocusOnPlayerCruiser();
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                    _cameraFocuser.FocusOnLeftPlayerCruiser();
+                else
+                    _cameraFocuser.FocusOnRightPlayerCruiser();
             }
         }
 
@@ -51,7 +55,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             if (!_isTutorial
                 && !IsCameraRoughlyOnPlayerNavalFactory())
             {
-                _cameraFocuser.FocusOnPlayerNavalFactory();
+                if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+                    _cameraFocuser.FocusOnLeftPlayerNavalFactory();
+                else
+                    _cameraFocuser.FocusOnRightPlayerNavalFactory();
             }
         }
 

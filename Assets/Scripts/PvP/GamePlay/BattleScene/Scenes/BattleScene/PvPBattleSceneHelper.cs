@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private readonly IPvPPrefabFetcher _prefabFetcher;
         private readonly ILocTable _storyStrings;
         public virtual IPvPPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
-        public virtual IPvPPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
+        public virtual IPvPPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
         public abstract IPvPBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public abstract IPvPBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         public abstract IPvPSlotFilter CreateHighlightableSlotFilter();
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract void InitialiseUIManager(PvPManagerArgs args);
         public abstract ILoadout GetPlayerLoadout();
         public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IPvPDroneManager droneManager);
-        public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters();
+        public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
         public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager /*, IPvPPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator*/);
         public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager, IPvPPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator);
         public abstract IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);

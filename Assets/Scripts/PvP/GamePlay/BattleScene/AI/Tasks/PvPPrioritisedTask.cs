@@ -32,9 +32,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _task.Completed += _task_Completed;
         }
 
-        public void Start()
+        public async void Start()
         {
-            _currentState = _currentState.Start();
+            _currentState = await _currentState.Start();
         }
 
         public void Stop()

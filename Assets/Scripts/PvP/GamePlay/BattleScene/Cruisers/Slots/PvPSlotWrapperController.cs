@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPSlotWrapperController : MonoBehaviour, IPvPSlotNumProvider
     {
-        private IList<IPvPSlot> _slots;
-
+        private IList<PvPSlot> _slots;
+        public Dictionary<string, IPvPSlot> _slotsByName = new Dictionary<string, IPvPSlot>();
         // For out of battle scene use
         public void StaticInitialise()
         {
-            _slots = GetComponentsInChildren<IPvPSlot>(includeInactive: true).ToList();
+            _slots = GetComponentsInChildren<PvPSlot>(includeInactive: true).ToList();
         }
 
         // For in battle scene use
@@ -26,7 +27,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 = new PvPBuildingPlacer(
                     new PvPBuildingPlacerCalculator());
             IPvPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
-            IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+            for (int i = 0; i < _slots.Count; ++i)
+            {
+                 _slotsByName.Add(_slots[i].gameObject.name, _slots[i]);
+            }
+                IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
             return new PvPSlotAccessor(typeToSlots);
         }
@@ -34,6 +39,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public int GetSlotCount(PvPSlotType type)
         {
             return _slots.Count(slot => slot.Type == type);
+        }
+
+        static PvPSlotWrapperController slotWrapperController;
+        public static PvPSlotWrapperController Instance
+        {
+            get
+            {
+                if (slotWrapperController == null)
+                {
+                    slotWrapperController = FindObjectOfType<PvPSlotWrapperController>();
+                }
+                if (slotWrapperController == null)
+                {
+                    Debug.LogError("No ServerSingleton in scene, did you run this from the bootstrap scene?");
+                    return null;
+                }
+                return slotWrapperController;
+            }
         }
     }
 }

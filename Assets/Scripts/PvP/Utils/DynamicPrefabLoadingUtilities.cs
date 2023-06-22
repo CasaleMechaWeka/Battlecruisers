@@ -109,6 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Utils
             //             // THIS IS FOR EDUCATIONAL PURPOSES AND SHOULDN'T BE INCLUDED IN YOUR PROJECT
             //             await Task.Delay(artificialDelayMilliseconds);
             // #endif
+            Debug.Log("Dynamically loaded ---> " + iPrefab.gameObject);
             s_NetworkManager.AddNetworkPrefab(iPrefab.gameObject);
             s_LoadedDynamicPrefabResourceHandles.Add(guid, iPrefab);
 

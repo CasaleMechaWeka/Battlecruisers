@@ -6,6 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPSlotInitialiser
     {
-        IDictionary<PvPSlotType, ReadOnlyCollection<IPvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<IPvPSlot> slots, IPvPBuildingPlacer buildingPlacer);
+        IDictionary<PvPSlotType, ReadOnlyCollection<PvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<PvPSlot> slots, IPvPBuildingPlacer buildingPlacer);
     }
 }

@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void GoToMultiplayScreen()
         {
-            _screensSceneGod.LoadMultiplayScene();
+            _screensSceneGod.LoadPvPBattleScene();
         }
 
         public void GoToLoadoutScreen()

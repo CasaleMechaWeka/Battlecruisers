@@ -2,6 +2,7 @@
 using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -12,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Analytics;
+using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
@@ -43,10 +45,11 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                var options = new InitializationOptions();
+                //---> should be enabled in Production
+/*                var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 await UnityServices.InitializeAsync(options);
-                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();*/
             }
             catch (ConsentCheckException e)
             {
@@ -83,6 +86,7 @@ namespace BattleCruisers.Scenes
                 {
                     dataProvider.GameModel.Settings.InitialiseGraphicsSettings();
                 }
+
                 Screen.SetResolution(Math.Max(600, dataProvider.GameModel.Settings.ResolutionWidth), Math.Max(400, dataProvider.GameModel.Settings.ResolutionHeight - (dataProvider.GameModel.Settings.FullScreen ? 0 : (int)(dataProvider.GameModel.Settings.ResolutionHeight * 0.06))), dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height , dataProvider.GameModel.Settings.FullScreen ? (FullScreenMode)1 : (FullScreenMode)3);
                 // Persist this game object across scenes
@@ -137,6 +141,12 @@ namespace BattleCruisers.Scenes
             {
                 hint = _hintProvider.GetHint();
             }
+            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+            {
+                // should be replace with PvP
+                hint = _hintProvider.GetHint();
+            }
+
             LoadingScreenHint = hint;
 
             if (stopMusic)
@@ -150,10 +160,16 @@ namespace BattleCruisers.Scenes
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
-            if (sceneName == SceneNames.MULTIPLAY_SCREENS_SCENE)
-                yield return LoadScene(SceneNames.MULTIPLAY_STARTUP_SCENE, LoadSceneMode.Single);
+            if (sceneName == SceneNames.PvP_BOOT_SCENE)
+            {
+                yield return LoadScene(SceneNames.PvP_INITIALIZE_SCENE, LoadSceneMode.Single);
+            }
             else
+            {
                 yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+            }
+
+
             yield return LoadScene(sceneName, LoadSceneMode.Additive);
 
             Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);
@@ -167,7 +183,18 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
 
             // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
-            LoadingScreenController.Instance.Destroy();
+
+            if (sceneName == SceneNames.PvP_BOOT_SCENE)
+            {
+                MatchmakingScreenController.Instance.Destroy();
+            }
+            else
+            {
+                LoadingScreenController.Instance.Destroy();
+            }
+
+
+
         }
 
         private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)

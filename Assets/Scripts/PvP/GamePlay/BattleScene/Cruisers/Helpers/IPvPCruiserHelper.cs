@@ -5,7 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPCruiserHelper
     {
-        void FocusCameraOnCruiser();
+        void FocusCameraOnCruiser(bool isOwner, Team team);
         void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter);
     }
 }

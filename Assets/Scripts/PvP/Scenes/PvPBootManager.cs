@@ -40,10 +40,11 @@ using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Random = UnityEngine.Random;
+using UnityEditor.PackageManager;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
-    public class MultiplayScreensSceneGod : GameStateBehaviour, IMultiplayScreensSceneGod
+    public class PvPBootManager : GameStateBehaviour
     {
 
         public override GameState ActiveState { get { return GameState.MultiplayScreenScene; } }
@@ -63,9 +64,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private string k_DefaultLobbyName;
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // screens
-        public MultiplayScreenController multiplayScreen;
-        public MatchmakingScreenController matchmakingScreen;
 
         public int defaultLevel;
 
@@ -149,13 +147,12 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private void onMatchmakingFailed()
         {
-            GoToScreen(multiplayScreen);
-            matchmakingScreen.ResetMatchmakingAnimation();
+
         }
 
         private void onMatchmakingStarted()
         {
-            matchmakingScreen.StartMatchmaking();
+
         }
 
         private async Task JoinWithLobbyRequest()
@@ -220,7 +217,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     {
                         Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                         m_LobbyServiceFacade.BeginTracking();
-                        // await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
                     }
                 }
             }
@@ -244,32 +240,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     }
                 }
             }
-            // if (lobbyQuickJoinAttemp.Success)
-            // {
-            //     Debug.Log("Joined to Lobby Name is " + lobbyQuickJoinAttemp.Lobby.Name);
-            //     m_LobbyServiceFacade.SetRemoteLobby(lobbyQuickJoinAttemp.Lobby);
-            //     if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-            //     {
-            //         m_LobbyServiceFacade.BeginTracking();
-            //         await m_ConnectionManager.StartMatchmaking(m_LocalLobby.LobbyID);
-            //     }
-
-            // }
-            // else
-            // {
-            //     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(k_DefaultLobbyName, m_ConnectionManager.MaxConnectedPlayers, isPrivate: false);
-            //     if (lobbyCreationAttemp.Success)
-            //     {
-            //         Debug.Log("Craeted Lobby Name is " + lobbyCreationAttemp.Lobby.Name);
-            //         m_LocalUser.IsHost = true;
-            //         m_LobbyServiceFacade.SetRemoteLobby(lobbyCreationAttemp.Lobby);
-            //         if (m_LobbyServiceFacade.CurrentUnityLobby != null)
-            //         {
-            //             m_LobbyServiceFacade.BeginTracking();
-            //         }
-            //     }
-            // }
-
         }
 
         IEnumerator iStartPvP()
@@ -291,13 +261,15 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             base.Awake();
 
-            if (string.IsNullOrEmpty(Application.cloudProjectId))
-            {
-                OnSignInFailed();
-                return;
-            }
 
-            TrySignIn();
+            //---> should be enabled in Production
+            /*            if (string.IsNullOrEmpty(Application.cloudProjectId))
+                        {
+                            OnSignInFailed();
+                            return;
+                        }
+
+                        TrySignIn();*/
         }
 
 
@@ -318,7 +290,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     try
                     {
-                        unityAuthenticationInitOptions.SetProfile($"{profile} {LocalProfileTool.LocalProfileSuffix}");
+                        /*{LocalProfileTool.LocalProfileSuffix}*/
+                        unityAuthenticationInitOptions.SetProfile($"{profile}");
+
                     }
                     catch (Exception e)
                     {
@@ -373,7 +347,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
         private async void Start()
         {
-            Helper.AssertIsNotNull(multiplayScreen, _uiAudioSource, trashDataList);
+            Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
             ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
@@ -381,12 +355,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
             IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings);
 
+
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "Pre prefab cache load");
             IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "After prefab cache load");
 
-
-            ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
@@ -401,7 +374,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
             trashDataList.Initialise(storyStrings);
-
+            ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(_gameModel.SelectedLevel);
+            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData, commonStrings, storyStrings);
 
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
@@ -410,123 +384,43 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-
             SpriteFetcher spriteFetcher = new SpriteFetcher();
-            IDifficultySpritesProvider difficultySpritesProvider = new DifficultySpritesProvider(spriteFetcher);
-
-            INextLevelHelper nextLevelHelper = new NextLevelHelper(_applicationModel);
-
-            multiplayScreen.Initialise(this, _soundPlayer, _dataProvider);
-            matchmakingScreen.Initialise(this, _soundPlayer, _dataProvider);
-
-
-            multiplayScreen.gameObject.SetActive(true);
-            matchmakingScreen.gameObject.SetActive(false);
-
-            _currentScreen = multiplayScreen;
 
 
             // Temp only because I am starting the scene without a previous choose level scene
-            if (sceneNavigator == null)
+            if (_sceneNavigator == null)
             {
                 _applicationModel.SelectedLevel = defaultLevel;
-                sceneNavigator = Substitute.For<ISceneNavigator>();
+                _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
-
-            sceneNavigator.SceneLoaded(SceneNames.MULTIPLAY_SCREENS_SCENE);
-
-
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
 
-
             m_LobbyServiceFacade.OnMatchMakingFailed += onMatchmakingFailed;
             m_LobbyServiceFacade.OnMatchMakingStarted += onMatchmakingStarted;
 
-            // Debug.Log("m_localLobbyUser Name" + m_LocalUser.DisplayName);
+            //---> should be enabled in Production
+            // m_AuthServiceFacade.AddActionToSignedInEvent(OnSignedIn);
+
+            //---> to play without internet connection for local test, should be removed in Production
+            StartCoroutine(iStartPvP());
         }
 
 
-        /*        void OnEnable()
-                {
-                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.MULTIPLAY_SCREENS_SCENE);
-                }*/
-
-        /*     private async Task InitialiseMultiplayScreensScreenAsync()
-             {
-
-             }*/
-
-        public void GotoMatchmakingScreen()
+        private void OnSignedIn()
         {
-            if (AuthenticationService.Instance.IsAuthorized)
-            {
-                GoToScreen(matchmakingScreen);
+            var IsAuthorized = m_AuthServiceFacade.EnsurePlayerIsAuthorized();
+            if (IsAuthorized.Result)
                 StartCoroutine(iStartPvP());
-            }
         }
 
-        public void GotoSettingScreen()
+
+        private void OnSignedFailed()
         {
 
         }
 
-        public void GotoShopScreen()
-        {
-
-        }
-
-        public void LoadMainMenuScene()
-        {
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
-            StartCoroutine(iDestoryAllNetworkObjects());
-        }
-
-        // public void LoadMatchmakingScene()
-        // {
-        //     /*  _sceneNavigator.GoToScene(SceneNames.MATCHMAKING_SCREENS_SCENE, true);*/
-        //     SceneLoaderWrapper.Instance.LoadScene(SceneNames.MATCHMAKING_SCREENS_SCENE, false);
-        // }
-
-
-        IEnumerator iDestoryAllNetworkObjects()
-        {
-            yield return new WaitForEndOfFrame();
-            GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
-            foreach (GameObject go in gos)
-            {
-                if (go && go.transform.parent == null)
-                {
-                    go.gameObject.BroadcastMessage("DestroyNetworkObject", SendMessageOptions.DontRequireReceiver);
-                }
-            }
-        }
-
-        private void GoToScreen(ScreenController destinationScreen, bool playDefaultMusic = true)
-        {
-
-            Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, $"START  current: {_currentScreen}  destination: {destinationScreen}");
-            Assert.AreNotEqual(_currentScreen, destinationScreen);
-            if (_currentScreen == destinationScreen)
-                return;
-
-            if (_currentScreen != null)
-            {
-                _currentScreen.OnDismissing();
-                _currentScreen.gameObject.SetActive(false);
-                _soundPlayer.PlaySoundAsync(SoundKeys.UI.ScreenChange);
-            }
-
-            _currentScreen = destinationScreen;
-            _currentScreen.gameObject.SetActive(true);
-            _currentScreen.OnPresenting(activationParameter: null);
-
-            if (playDefaultMusic)
-            {
-                _musicPlayer.PlayScreensSceneMusic();
-            }
-        }
 
     }
 }

@@ -18,7 +18,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPBuildingClickHandler _clickHandler;
         private Transform _clickAndDragIcon;
         private Vector3 _originalClickAndDragPosition;
-        private BuildableClickAndDrag _buildableClickAndDrag;
+        private PvPBuildableClickAndDrag _buildableClickAndDrag;
+      
         public void Initialise(
             IPvPSingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapper,
@@ -29,11 +30,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _buildingWrapper = buildingWrapper;
             _clickHandler = clickHandler;
+      
             _clickAndDragIcon = transform.Find("ClickAndDragIcon");
             _originalClickAndDragPosition = transform.position;
             Image clickAndDragIcon = _clickAndDragIcon.GetComponent<Image>();
             clickAndDragIcon.sprite = buildableImage.sprite;
-            _buildableClickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<BuildableClickAndDrag>();
+            _buildableClickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<PvPBuildableClickAndDrag>();
         }
 
         public void Update()
@@ -71,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
         public override void OnPointerDown(PointerEventData eventData)
         {
-            base.OnPointerDown(eventData);
+            base.OnPointerDown(eventData);            
             _clickHandler.HandleClick(IsMatch, _buildingWrapper);
         }
 

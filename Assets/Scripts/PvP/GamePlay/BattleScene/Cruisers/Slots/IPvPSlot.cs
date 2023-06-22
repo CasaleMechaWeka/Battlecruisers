@@ -34,7 +34,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         PvPDirection Direction { get; }
         IPvPBroadcastingProperty<IPvPBuilding> Building { get; }
         ObservableCollection<IPvPBoostProvider> BoostProviders { get; }
-        bool IsVisible { get; set; }
+        bool IsVisibleRederer { get; set; }        
+        
         Vector2 Position { get; }
         IPvPTransform Transform { get; }
 

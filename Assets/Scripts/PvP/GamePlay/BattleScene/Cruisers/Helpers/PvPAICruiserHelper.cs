@@ -7,14 +7,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPPlayerBCruiserHelper : PvPCruiserHelper
     {
-        public PvPPlayerBCruiserHelper(/*IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser*/)
-            : base(/*uIManager, cameraFocuser*/)
+        public PvPPlayerBCruiserHelper(IPvPUIManager uIManager, IPvPCameraFocuser cameraFocuser)
+            : base(uIManager, cameraFocuser)
         {
         }
 
-        public override void FocusCameraOnCruiser()
+        public PvPPlayerBCruiserHelper(/*IPvPUIManager uIManager , IPvPCameraFocuser cameraFocuser*/)
+    : base(/*uIManager , cameraFocuser*/)
         {
-            _cameraFocuser.FocusOnAICruiser();
+        }
+
+        public override void FocusCameraOnCruiser(bool isOwner, Team team)
+        {
+            _cameraFocuser.FocusOnRightPlayerCruiser();
         }
 
         public override void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter)

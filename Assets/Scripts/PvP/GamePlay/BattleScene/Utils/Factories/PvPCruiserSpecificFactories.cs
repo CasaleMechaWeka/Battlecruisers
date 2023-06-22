@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPCruiserSpecificFactories : IPvPCruiserSpecificFactories
     {
         public IPvPAircraftProvider AircraftProvider { get; }
-        // public IPvPPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
+        public IPvPPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IPvPDroneFeedbackFactory DroneFeedbackFactory { get; }
         public IPvPGlobalBoostProviders GlobalBoostProviders { get; }
         public IPvPTurretStatsFactory TurretStatsFactory { get; }
@@ -34,7 +34,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, PvPRandomGenerator.Instance, isTutorial);
             GlobalBoostProviders = new PvPGlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
-            // BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
+         //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
+          //  BuildableEffectsSoundPlayer = factoryProvider.Sound.PrioritisedSoundPlayer;
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
@@ -57,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, PvPRandomGenerator.Instance);
             GlobalBoostProviders = new PvPGlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
-            // BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
+        //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory

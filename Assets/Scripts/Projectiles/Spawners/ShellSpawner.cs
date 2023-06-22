@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Spawners
     public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
     {
         private ITargetFilter _targetFilter;
-        public new List<TargetType> AttackCapabilities { get; private set; }
+        public List<TargetType> _AttackCapabilities { get; private set; }
 
         public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter, List<TargetType> attackCapabilities)
         {
@@ -21,7 +21,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
             Helper.AssertIsNotNull(targetFilter);
             _targetFilter = targetFilter;
-            AttackCapabilities = attackCapabilities;
+            _AttackCapabilities = attackCapabilities;
         }
 
         public ProjectileController SpawnShell(float angleInDegrees, bool isSourceMirrored)
@@ -36,7 +36,7 @@ namespace BattleCruisers.Projectiles.Spawners
                     _parent,
                     _impactSound);
             ProjectileController projectile = base.SpawnProjectile(activationArgs);
-            projectile.AttackCapabilities = AttackCapabilities;
+            projectile.AttackCapabilities = _AttackCapabilities;
             return projectile;
         }
 

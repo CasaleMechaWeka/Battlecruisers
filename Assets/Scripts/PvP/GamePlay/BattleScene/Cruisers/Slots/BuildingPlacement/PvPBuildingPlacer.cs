@@ -1,5 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using System.Diagnostics;
 using UnityEngine.Assertions;
+
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement
 {
@@ -14,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         public void PlaceBuilding(IPvPBuilding buildingToPlace, IPvPSlot parentSlot)
-        {
+        {   
             buildingToPlace.Rotation = _calculator.FindBuildingRotation(parentSlot);
             buildingToPlace.Position = _calculator.FindSpawnPosition(buildingToPlace, parentSlot);
             buildingToPlace.HealthBar.Offset = _calculator.FindHealthBarOffset(buildingToPlace, parentSlot);

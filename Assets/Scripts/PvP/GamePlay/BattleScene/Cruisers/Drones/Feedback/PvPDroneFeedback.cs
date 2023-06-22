@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             RemoveDronesIfNeeded(e.NewNumOfDrones);
         }
 
-        private void AddDronesIfNeeded(int numOfDrones)
+        private async void AddDronesIfNeeded(int numOfDrones)
         {
             while (numOfDrones > _drones.Count)
             {
@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     = new PvPDroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
                         _faction);
-                IPvPDroneController droneToAdd = _dronePool.GetItem(activationArgs);
+                IPvPDroneController droneToAdd = await _dronePool.GetItem(activationArgs);
                 _drones.Add(droneToAdd);
             }
         }

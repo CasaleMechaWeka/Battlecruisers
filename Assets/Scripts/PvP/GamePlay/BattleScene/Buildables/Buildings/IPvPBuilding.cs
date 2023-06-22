@@ -43,6 +43,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// </summary>
         bool IsBoostable { get; }
 
-        // void Activate(PvPBuildingActivationArgs pvPBuildingActivationArgs);
+        void Activate(PvPBuildingActivationArgs pvPBuildingActivationArgs);
     }
 }

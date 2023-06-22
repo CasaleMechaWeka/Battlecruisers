@@ -38,6 +38,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             damagable.HealthChanged += Damagable_HealthChanged;
         }
 
+        public void Initialise(IPvPDamagable damagable /*,  bool followDamagable = false */)
+        {
+            Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
+
+            Assert.IsNotNull(damagable);
+        //  Assert.IsTrue(damagable.Health > 0);
+
+            _damagable = damagable;
+        //    _maxHealth = _damagable.Health;
+            Offset = transform.position;
+        //    _followDamagable = followDamagable;
+
+        //    damagable.HealthChanged += Damagable_HealthChanged;
+        }
+
         private void Damagable_HealthChanged(object sender, EventArgs e)
         {
             OnProgressChanged(_damagable.Health / _maxHealth);

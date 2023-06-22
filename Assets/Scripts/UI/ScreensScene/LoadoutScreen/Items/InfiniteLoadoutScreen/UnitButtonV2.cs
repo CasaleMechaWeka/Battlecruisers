@@ -24,8 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private RectTransform _selectedFeedback;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer, 
-            IItemDetailsManager itemDetailsManager, 
+            ISingleSoundPlayer soundPlayer,
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingItemFamily,
             IBuildableWrapper<IUnit> unitPrefab,
             PrefabKeyName unitKeyName,

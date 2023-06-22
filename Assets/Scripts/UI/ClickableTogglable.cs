@@ -16,12 +16,12 @@ namespace BattleCruisers.UI
     {
         private bool _isPressed = false;
         private bool _isHover = false;
-        protected GameObject _selectedFeedback;
+        protected GameObject _selectedFeedbackIcon;
         public bool IsSelected
         {
             set
             {
-                _selectedFeedback?.SetActive(value);
+                _selectedFeedbackIcon?.SetActive(value);
             }
         }
 

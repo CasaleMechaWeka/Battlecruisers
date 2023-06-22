@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Model
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools
@@ -19,9 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _explosionKey = explosionKey;
         }
 
-        public IPvPExplosion CreateItem()
+        public async Task<IPvPExplosion> CreateItem()
         {
-            return _prefabFactory.CreateExplosion(_explosionKey);
+            return await _prefabFactory.CreateExplosion(_explosionKey);
         }
 
         public override string ToString()

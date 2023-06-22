@@ -15,7 +15,8 @@ namespace BattleCruisers.Scenes
         void LoadBattleScene();
         void LoadCreditsScene();
         void LoadCutsceneScene();
-        void LoadMultiplayScene();
+        void LoadPvPBattleScene();
+        void LoadBattle1v1Mode();
         void GotoShopScreen();
     }
 }

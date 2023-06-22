@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
@@ -75,6 +76,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
                 _allPrefabs.Add(key.PrefabPath, _projectiles.GetPrefab<PvPProjectile>(key));
             }
+
+            _allPrefabs.Add(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone.PrefabPath, Drone);
+            _allPrefabs.Add(PvPStaticPrefabKeys.AudioSource.PrefabPath, AudioSource);
         }
 
 

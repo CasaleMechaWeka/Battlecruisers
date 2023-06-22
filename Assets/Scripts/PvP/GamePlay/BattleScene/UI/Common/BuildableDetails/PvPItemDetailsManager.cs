@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
             _informatorPanel.Show(building);
             _buildingDetails.ShowItemDetails(building);
-            //_selectedItem.Value = building;
+            _selectedItem.Value = building;
         }
 
         public void SelectBuilding(IPvPBuilding building)
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
             _informatorPanel.Show(unit);
             _unitDetails.ShowItemDetails(unit);
-            //_selectedItem.Value = unit;
+            _selectedItem.Value = unit;
         }
 
         public void SelectUnit(IPvPUnit unit)

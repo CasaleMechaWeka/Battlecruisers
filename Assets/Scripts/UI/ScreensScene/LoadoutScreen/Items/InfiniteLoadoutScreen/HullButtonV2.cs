@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IItemDetailsManager itemDetailsManager, 
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             Cruiser cruiserPrefab,

@@ -201,7 +201,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 // case Map.MercenaryOne:
                 //     return "MercenaryOne";
                 default:
-                    return "MultiplayBattleScene";
+                    return "PvPBattleScene";
             }
         }
         public string ToMultiplayQueue()

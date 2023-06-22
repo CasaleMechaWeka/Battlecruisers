@@ -1,11 +1,11 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using UnityEngine.Assertions;
-
+   
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
 {
     public class PvPMainMenuButtonController : PvPCanvasGroupButton, IPvPButton
-    {
+    {   
         private IPvPMainMenuManager _mainMenuManager;
 
         public void Initialise(IPvPSingleSoundPlayer soundPlayer, IPvPMainMenuManager mainMenuManager)

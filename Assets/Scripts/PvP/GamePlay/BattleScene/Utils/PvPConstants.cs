@@ -49,11 +49,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils
         public const string CUTSCENE_SCENE = "HuntressCutscene";
         public const string DESTRUCTION_SCENE = "DestructionScene";
         public const string STAGE_INTERSTITIAL_SCENE = "StageInterstitialScene";
-        public const string MULTIPLAY_SCREENS_SCENE = "MultiplayScreensScene";
-        public const string MATCHMAKING_SCREENS_SCENE = "MatchmakingScreensScene";
-        public const string MULTIPLAY_STARTUP_SCENE = "MultiplayStartupScene";
-        public const string MULTIPLAY_MATCHMAKER_SCENE = "Matchmaker";
-        public const string MULTIPLAY_MATCHMAKING_LOADING_SCENE = "MultiplayMatchmakingLoadingScene";
+        public const string PvP_BATTLE_SCENE = "PvPBattleScene";
+        public const string PvP_BOOT_SCENE = "PvPBootScene";
+        public const string PvP_INITIALIZE_SCENE = "PvPInitializeScene";
     }
 
     public static class GameObjectTags

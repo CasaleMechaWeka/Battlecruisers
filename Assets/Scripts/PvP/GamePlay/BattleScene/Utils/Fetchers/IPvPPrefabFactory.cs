@@ -13,30 +13,31 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
+using System.Threading.Tasks;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
     public interface IPvPPrefabFactory
     {
         IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPvPPrefabKey buildingKey);
-        IPvPBuilding CreateBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab, IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider);
+        Task<IPvPBuilding> CreateBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab, IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider, ulong clientID);
 
         IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey);
-        IPvPUnit CreateUnit(IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab, /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider);
+       Task<IPvPUnit> CreateUnit(IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab, /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider);
 
         PvPCruiser GetCruiserPrefab(IPvPPrefabKey hullKey);
         PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x);
         PvPPrefab GetPrefab(string prefabPath);
 
-        IPvPExplosion CreateExplosion(PvPExplosionKey explosionKey);
-        IPvPShipDeath CreateShipDeath(PvPShipDeathKey shipDeathKey);
+        Task<IPvPExplosion> CreateExplosion(PvPExplosionKey explosionKey);
+        Task<IPvPShipDeath> CreateShipDeath(PvPShipDeathKey shipDeathKey);
 
-        TPvPProjectile CreateProjectile<TPvPProjectile, TPvPActiavtionArgs, TPvPStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
+        Task<TPvPProjectile> CreateProjectile<TPvPProjectile, TPvPActiavtionArgs, TPvPStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
             where TPvPProjectile : PvPProjectileControllerBase<TPvPActiavtionArgs, TPvPStats>
             where TPvPActiavtionArgs : PvPProjectileActivationArgs<TPvPStats>
             where TPvPStats : IPvPProjectileStats;
 
-        IPvPDroneController CreateDrone();
-        IPvPAudioSourcePoolable CreateAudioSource(IPvPDeferrer realTimeDeferrer);
+        Task<IPvPDroneController> CreateDrone();
+        Task<IPvPAudioSourcePoolable> CreateAudioSource(IPvPDeferrer realTimeDeferrer);
     }
 }

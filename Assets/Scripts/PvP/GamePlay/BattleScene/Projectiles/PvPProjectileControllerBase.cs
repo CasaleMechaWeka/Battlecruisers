@@ -154,6 +154,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         void OnTriggerEnter2D(Collider2D collider)
         {
+            if (IsClient)
+                return;
             Logging.LogMethod(Tags.SHELLS);
 
             IPvPTarget target = collider.gameObject.GetComponent<IPvPTargetProxy>()?.Target;

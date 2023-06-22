@@ -19,8 +19,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(enabledFilter, cameraFocuser);
 
             overviewButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnOverview);
-            playerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnPlayerCruiser);
-            aiCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnAICruiser);
+            playerCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnLeftPlayerCruiser);
+            aiCruiserButton.Initialise(singleSoundPlayer, cameraFocuser.FocusOnRightPlayerCruiser);
 
             _enabledToggler = new PvPFilterToggler(enabledFilter, overviewButton, playerCruiserButton, aiCruiserButton);
         }

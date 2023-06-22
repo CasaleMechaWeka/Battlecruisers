@@ -1,3 +1,4 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
 
-        public IPvPHighlightable Initialise()
+        public IPvPHighlightable Initialise(PvPCruiser playerCruiser)
         {
             PvPHelper.AssertIsNotNull(highlight);
 
@@ -44,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPNumOfDronesPanelInitialiser numOfDronesPanel = GetComponentInChildren<PvPNumOfDronesPanelInitialiser>();
             IPvPNumberDisplay twoDigitDisplayer = numOfDronesPanel.CreateTwoDigitDisplay();
 
-            _dronesDisplayer = new PvPDronesDisplayer(twoDigitDisplayer, highlightGameObject);
+            _dronesDisplayer = new PvPDronesDisplayer(playerCruiser, twoDigitDisplayer, highlightGameObject);
 
             PvPHighlightable highlightable = GetComponent<PvPHighlightable>();
             Assert.IsNotNull(highlightable);

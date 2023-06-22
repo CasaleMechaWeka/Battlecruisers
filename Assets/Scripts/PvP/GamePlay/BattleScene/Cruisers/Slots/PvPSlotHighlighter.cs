@@ -21,14 +21,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 if (_highlightedSlot != null)
                 {
-                    _highlightedSlot.IsVisible = false;
+                    _highlightedSlot.IsVisibleRederer = false;
                 }
 
                 _highlightedSlot = value;
 
                 if (_highlightedSlot != null)
                 {
-                    _highlightedSlot.IsVisible = true;
+                    _highlightedSlot.IsVisibleRederer = true;
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 if (_highlightableFilter.IsMatch(slot))
                 {
                     slot.stopBuildingPlacementFeedback();
-                    slot.IsVisible = true;
+                    slot.IsVisibleRederer = true;
                     wasAnySlotHighlighted = true;
                 }
             }
@@ -98,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             foreach (IPvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
             {
-                slot.IsVisible = true;
+                slot.IsVisibleRederer = true;
             }
         }
 
@@ -119,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             foreach (IPvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
             {
-                slot.IsVisible = false;
+                slot.IsVisibleRederer = false;
             }
         }
 

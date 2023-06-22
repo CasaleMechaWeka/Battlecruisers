@@ -13,12 +13,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
     public class PvPUIManager : IPvPUIManager
     {
-        private IPvPCruiser _playerCruiser, _enemyCruiser;
+        private PvPCruiser _playerCruiser, _enemyCruiser;
         private IPvPBuildMenu _buildMenu;
         private IPvPItemDetailsManager _detailsManager;
         private IPvPPrioritisedSoundPlayer _soundPlayer;
@@ -82,6 +83,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             _detailsManager.HideDetails();
 
+
+            // ServerRpc call
+            _playerCruiser.PvP_UnhighlightSlotsServerRpc();
             // _playerCruiser.SlotHighlighter.UnhighlightSlots();
             // _enemyCruiser.SlotHighlighter.UnhighlightSlots();
 
@@ -121,9 +125,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Logging.LogMethod(Tags.UI_MANAGER);
 
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
+
+            // ServerRpc call
+            _playerCruiser.PvP_SelectedBuildingPrefabServerRpc(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
+
+
             _detailsManager.ShowDetails(buildingWrapper.Buildable);
 
-            // bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
+            //      bool wasAnySlotHighlighted = _playerCruiser.SlotHighlighter.HighlightAvailableSlots(buildingWrapper.Buildable.SlotSpecification);
+
+            // ServerRpc call
+            _playerCruiser.PvP_HighlightAvailableSlotsServerRpc(buildingWrapper.Buildable.SlotSpecification.SlotType, buildingWrapper.Buildable.SlotSpecification.BuildingFunction, buildingWrapper.Buildable.SlotSpecification.PreferFromFront);
+
             // ILocTable _commonStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
 
             // if (_explanationPanel != null)
@@ -136,11 +149,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // }
 
 
-            // if (!wasAnySlotHighlighted)
-            // {
-            //     _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
-            //     _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
-            // }
+    /*        if (!wasAnySlotHighlighted)
+            {
+                _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
+                _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
+            }*/
         }
 
         public virtual void SelectBuilding(IPvPBuilding building)

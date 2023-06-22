@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         //             speedComponents,
         //             helpButton);
         // }
-
+            
 
         public PvPRightPanelComponents Initialise(
             IApplicationModel applicationModel,
@@ -77,25 +77,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPUpdater perFrameUpdater,
+            IPvPPauseGameManager pauseGameManager,
             IPvPBattleCompletionHandler battleCompletionHandler,
-            IPvPSingleSoundPlayer soundPlayer
+            IPvPSingleSoundPlayer soundPlayer,
+            IPvPNavigationPermitterManager navigationPermitterManager
             )
         {
             PvPHelper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
             PvPHelper.AssertIsNotNull(
                 applicationModel,
                 uiManager,
-                playerCruiser,
+                playerCruiser, 
                 userChosenTargetHelper,
                 buttonVisibilityFilters,
                 perFrameUpdater,
                 battleCompletionHandler,
-                soundPlayer
+                soundPlayer,
+                navigationPermitterManager
                 );
 
             IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, perFrameUpdater, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
-            IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(modalMenu, battleCompletionHandler);
+            IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             makeRightBackgroundPanelFit();
