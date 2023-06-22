@@ -92,12 +92,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
-
-            // TODO: Check if level time is already tracked? Doesn't seem to be a gettable field yet.
-            // Here's a random number to test with for now:
-            Debug.LogWarning("TIME value is fake! This should not be shipped!");
-            levelTimeInSeconds = UnityEngine.Random.Range(200.0f, 800.0f);
-            
+                
             LandingSceneGod.MusicPlayer.PlayVictoryMusic();
 
             _soundPlayer
@@ -112,6 +107,7 @@ namespace BattleCruisers.Scenes
 
             // Get some values from GameModel and its friends:
             allTimeVal = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            levelTimeInSeconds = BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime();
 
             for (int i = 0; i < destructionCards.Length; i++)
             {
@@ -217,6 +213,7 @@ namespace BattleCruisers.Scenes
 
                                 // Update rank text elements (on screen and in following modal):
                                 rank++;
+                                // in modal
                                 string oldRankText = rankText.text;
                                 string newRankText = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
                                 Sprite oldRankImage = rankGraphic.sprite;
@@ -228,6 +225,7 @@ namespace BattleCruisers.Scenes
 
                                 yield return StartCoroutine(DisplayRankUpModal(modalPeriod));
 
+                                // in screen
                                 rankText.text = newRankText;
                                 rankNumber.text = rank.ToString();
                                 rankGraphic.sprite = newRankImage;
@@ -265,16 +263,12 @@ namespace BattleCruisers.Scenes
                 }
             }
 
-            // Pause for a moment to catch our breath:
-            //yield return new WaitForSeconds(timeStep * 1.5f);
-
             // Interpolate time counter:
-            //yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
-            //yield return new WaitForSeconds(timeStep * 2.0f);
+            yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
 
             // Interpolate game score:
-            //levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
-            //yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
+            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
+            yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // TODO: level rating (maybe?)
 
