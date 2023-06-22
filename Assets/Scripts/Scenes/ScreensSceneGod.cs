@@ -59,6 +59,7 @@ namespace BattleCruisers.Scenes
         public AdvertisingBannerScrollingText AdvertisingBanner;
         public FullScreenAdverts fullScreenads;
         public ShopPanelScreenController shopPanelScreen;
+        public BlackMarketScreenController blackMarketScreen;
 
         public Animator thankYouPlane;
         [SerializeField]
@@ -139,6 +140,7 @@ namespace BattleCruisers.Scenes
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -237,6 +239,11 @@ namespace BattleCruisers.Scenes
         public void GotoShopScreen()
         {
             GoToScreen(shopPanelScreen);
+        }
+
+        public void GotoBlackMarketScreen()
+        {
+            GoToScreen(blackMarketScreen);
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
