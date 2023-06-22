@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ILocTable commonStrings) 
             : base(argsFactory, tutorialStrings)
         {
-            Helper.AssertIsNotNull(playerCruiserHealthBarplayerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory, commonStrings);
+            Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory, commonStrings);
 
             _playerCruiserHealthBar = playerCruiserHealthBar;
             _numOfDrones = numOfDrones;
