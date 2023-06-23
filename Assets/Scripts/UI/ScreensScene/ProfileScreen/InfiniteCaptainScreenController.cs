@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         private void Start()
         {
-            //PopulateScrollBar();
+            PopulateScrollBar();
         }
 
         private void PopulateScrollBar()
