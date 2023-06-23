@@ -117,11 +117,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void CallRpc_SetRotation(Quaternion rotation)
         {
-            
+
         }
 
         protected virtual void CallRpc_ProgressControllerVisible(bool isEnabled)
-        { 
+        {
 
         }
 

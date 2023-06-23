@@ -239,10 +239,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_buildableProgress);
             _buildableProgress.Initialise();
 
-
-
             ToggleDroneConsumerFocusCommand = new PvPCommand(ToggleDroneConsumerFocusCommandExecute, () => IsServer ? IsDroneConsumerFocusable : IsDroneConsumerFocusable_PvPClient);
-
 
             PvPClickHandlerWrapper clickHandlerWrapper = GetComponent<PvPClickHandlerWrapper>();
             Assert.IsNotNull(clickHandlerWrapper);
@@ -377,7 +374,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
 
-            _healthBar.Initialise(this);
+            _healthBar.Initialise(this, followDamagable: true);
 
             Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
             //  _parent.SetActive(false);
