@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         private void Start()
         {
-            PopulateScrollBar();
+            //PopulateScrollBar();
         }
 
         private void PopulateScrollBar()
@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 GameObject uiItem = Instantiate(uiItemPrefab);
 
                 // Access the UI Item's script and set its data
-                CaptainItem captainItem = uiItem.GetComponent<CaptainItem>();
+                CaptainItem captainItem = uiItem.GetComponentInChildren<CaptainItem>();
                 captainItem.SetCaptainData(captainData);
             }
         }

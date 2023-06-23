@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             _soundPlayer = soundPlayer;
 
-        //    captainsButton.Initialise(_soundPlayer, ChangeCaptain);
+            captainsButton.Initialise(_soundPlayer, ChangeCaptain);
         }
 
         private void ChangeCaptain()

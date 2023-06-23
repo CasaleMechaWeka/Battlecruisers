@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -195,6 +196,9 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
+        //[SerializeField]
+        //private List<CaptainList> _unlockedCaptains;
+
         [SerializeField]
         private long _lifetimeDestructionScore;
         public long LifetimeDestructionScore
@@ -234,6 +238,7 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private int _selectedPvPLevel;
 
+        //public CaptainList _currentCaptain;
         [SerializeField]
         private SkirmishModel _skirmish;
 
@@ -313,7 +318,7 @@ namespace BattleCruisers.Data.Models
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
-
+        public ReadOnlyCollection<CaptainList> UnlockedCaptains { get; }
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
