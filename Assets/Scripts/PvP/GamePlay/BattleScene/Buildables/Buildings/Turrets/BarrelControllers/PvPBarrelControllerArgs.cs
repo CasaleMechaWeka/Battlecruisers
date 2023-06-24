@@ -37,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPAnimation BarrelFiringAnimation { get; }
         public IPvPCruiser EnemyCruiser { get; }
 
+        // should be called by server
         public PvPBarrelControllerArgs(
             IPvPUpdater updater,
             IPvPTargetFilter targetFilter,
@@ -88,6 +89,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             LocalBoostProviders = localBoostProviders;
             GlobalFireRateBoostProviders = globalFireRateBoostProvider;
             EnemyCruiser = enemyCruiser;
+            SpawnerSoundKey = firingSound;
+            BarrelFiringAnimation = barrelFiringAnimation ?? new PvPDummyAnimation();
+        }
+
+
+        // should be called by client
+
+        public PvPBarrelControllerArgs(
+            IPvPFactoryProvider factoryProvider,
+            IPvPTarget parent,
+            IPvPSoundKey firingSound = null,
+            IPvPAnimation barrelFiringAnimation = null)
+        {
+            PvPHelper.AssertIsNotNull(parent);
+            Parent = parent;
             SpawnerSoundKey = firingSound;
             BarrelFiringAnimation = barrelFiringAnimation ?? new PvPDummyAnimation();
         }

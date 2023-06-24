@@ -16,13 +16,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public int numOfDronesProvided;
 
+        // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
 
         protected override PvPPrioritisedSoundKey ConstructionCompletedSoundKey => PvPPrioritisedSoundKeys.PvPCompleted.PvPBuildings.DroneStation;
         public override PvPTargetValue TargetValue => PvPTargetValue.Medium;
 
-
+        // Visibility
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
             if (IsClient)
@@ -31,20 +32,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnValueChangedIsEnabledRendersClientRpc(isEnabled);
         }
 
+        // Healthbar offset
         protected override void CallRpc_SetHealthbarOffset(Vector2 offset)
         {
             OnSetHealthbarOffsetClientRpc(offset);
         }
+
+        // set Position of PvPBuildable
         protected override void CallRpc_SetPosition(Vector3 pos)
         {
             OnSetPositionClientRpc(pos);
         }
 
-
+        // Set Rotation of PvPBuildable
         protected override void CallRpc_SetRotation(Quaternion rotation)
         {
             OnSetRotationClientRpc(rotation);
         }
+
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IPvPBoostProvider>> buildRateBoostProvidersList)
@@ -52,6 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders);
         }
+
 
         protected override void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
         {

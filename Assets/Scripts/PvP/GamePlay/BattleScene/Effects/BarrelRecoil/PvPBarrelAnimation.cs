@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     {
         private readonly Animator _animator;
 
-        private const string BARREL_ANIMATION_STATE = "PvPBarrelAnimation";
+        private const string BARREL_ANIMATION_STATE = "BarrelAnimation";
         private const int DEFAULT_ANIMATION_LAYER_INDEX = 0;
 
         public PvPBarrelAnimation(Animator animator)

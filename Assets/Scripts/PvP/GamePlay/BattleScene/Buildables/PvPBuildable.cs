@@ -628,6 +628,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);
+            Invoke("iDestroyParentGameObject", 1f);
+        }
+        private void iDestroyParentGameObject()
+        {
+            Destroy(_parent.gameObject);
         }
 
         protected override void OnDestroyed()

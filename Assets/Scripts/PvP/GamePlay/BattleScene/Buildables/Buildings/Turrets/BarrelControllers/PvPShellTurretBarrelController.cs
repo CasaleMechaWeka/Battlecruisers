@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -44,12 +45,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Fire(float angleInDegrees)
         {
-
+            OnFireEffectClientRpc();
             foreach (PvPShellSpawner spawner in _shellSpawners)
             {
-
                 spawner.SpawnShell(angleInDegrees, IsSourceMirrored);
             }
+        }
+
+        [ClientRpc]
+        private void OnFireEffectClientRpc()
+        {
+            _barrelAnimation?.Play();
+            _muzzleFlash?.Play();   
         }
     }
 }

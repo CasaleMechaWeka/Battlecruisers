@@ -28,5 +28,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ObservableCollection<IPvPBoostProvider> localBoostProviders = null,
             ObservableCollection<IPvPBoostProvider> globalFireRateBoostProviders = null,
             IPvPAnimation barrelFiringAnimation = null);
+
+        void Initialise(
+            IPvPBuildable parent,
+            IPvPFactoryProvider factoryProvider,
+            IPvPSoundKey firingSound = null,
+            IPvPAnimation barrelFiringAnimation = null);
     }
 }
