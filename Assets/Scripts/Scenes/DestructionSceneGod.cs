@@ -89,6 +89,12 @@ namespace BattleCruisers.Scenes
 
         private float timeStep; // used as the basis for all WaitForSeconds() returns 
 
+        // value to divide the score by:
+        [SerializeField]
+        private long scoreDivider;
+
+        private int coinsToAward;
+
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -155,6 +161,7 @@ namespace BattleCruisers.Scenes
             rankNumber.text = rank.ToString();
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
 
             // Set XP bar current/max values:
             levelBar.maxValue = nextLevelXP;
@@ -267,7 +274,7 @@ namespace BattleCruisers.Scenes
             yield return StartCoroutine(InterpolateTimeValue(0, levelTimeInSeconds, 60));
 
             // Interpolate game score:
-            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal));
+            levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider);
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // TODO: level rating (maybe?)
@@ -342,20 +349,38 @@ namespace BattleCruisers.Scenes
 
         IEnumerator DisplayRankUpModal(float stepPeriod)
         {
-            // Get old level (graphic + name)
-            // Get new level (graphic + name)
-
             // Display modal
             levelUpModal.SetActive(true);
             yield return new WaitForSeconds(stepPeriod);
             levelUpModal.SetActive(false);
         }
 
-        private long CalculateScore(float time, long damage)
+        private long CalculateScore(float time, long damage, long constant)
         {
             // feels weird to make this a method but I don't like doing it directly in the animation methods:
-            long score = damage / (long)Mathf.Pow(time, 2.0f) / (long)10;
+            long score = damage / (long)Mathf.Pow(time, 2.0f) / constant;
             return score;
+        }
+
+        private int CalculateCoins(long score)
+        {
+            // 3 coins
+            if (score >= 3000)
+            {
+                return 3;
+            }
+            // 2 coins
+            else if(score >= 2000)
+            {
+                return 2;
+            }
+            // 1 coin
+            else if(score >= 1000)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         void Update()
@@ -377,6 +402,9 @@ namespace BattleCruisers.Scenes
             // we need XPToNextLevel to populate any XP progress bars:
             long newLifetimeScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
             ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(ranker.CalculateRank(newLifetimeScore), newLifetimeScore);
+
+            // Give the player their coins:
+            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins += coinsToAward;
 
             // and now we actually are done:
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
