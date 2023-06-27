@@ -166,7 +166,7 @@ namespace BattleCruisers.Scenes
             }
             currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
-            rankNumber.text = rank.ToString();
+            rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
@@ -245,7 +245,7 @@ namespace BattleCruisers.Scenes
 
                                 // in screen
                                 rankText.text = newRankText;
-                                rankNumber.text = rank.ToString();
+                                rankNumber.text = FormatRankNumber(rank);
                                 rankGraphic.sprite = newRankImage;
 
                                 xpToAdd -= (nextLevelXP - xpRunningTotal);
@@ -447,6 +447,16 @@ namespace BattleCruisers.Scenes
                 return "$" + (num / 1000D).ToString("0.##") + " " + million.text;
 
             return "$" + num.ToString("#,0");
+        }
+
+        private string FormatRankNumber(int rank)
+        {
+            string numString = rank.ToString();
+            if(rank <10 )
+            {
+                numString = "0" + rank;
+            }
+            return rank.ToString();
         }
 
         private string FormatTime(float num)
