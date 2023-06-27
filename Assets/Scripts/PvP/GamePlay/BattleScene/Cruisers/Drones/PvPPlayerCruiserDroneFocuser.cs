@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // _soundPlayer = soundPlayer;
         }
 
-        public void ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer)
+        public PvPPrioritisedSoundKey ToggleDroneConsumerFocus(IPvPDroneConsumer droneConsumer, bool isTriggeredByPlayer)
         {
             Assert.IsNotNull(droneConsumer);
 
@@ -38,13 +38,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 try
                 {
                     PvPPrioritisedSoundKey sound = _soundPicker.PickSound(preFocusState, postFocusState);
-                    //Debug.Log(sound.Key);
+                    // Debug.Log(sound.Key);
                     // _soundPlayer.PlaySound(sound);
 
                     if (droneConsumer.NumOfDronesRequired == PvPRepairManager.NUM_OF_DRONES_REQUIRED_FOR_REPAIR)
                     {
                         PlayerTriggeredRepair?.Invoke(this, EventArgs.Empty);
                     }
+
+                    return sound;
                 }
                 catch (Exception ex)
                 {
@@ -52,6 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 }
 
             }
+
+            return null;
         }
     }
 }

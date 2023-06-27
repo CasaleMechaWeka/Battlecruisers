@@ -206,13 +206,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
-            
+
 
         }
 
 
         protected override void CallRpc_ClickedRepairButton()
-        {
+        {          
             PvP_RepairableButtonClickedServerRpc();
         }
 
@@ -473,7 +473,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_PrioritisedSoundClientRpc(PvPSoundType soundType, string name, PvPSoundPriority priority)
         {
 
-            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new PvPSoundKey(soundType, "no-building-slots-left"), priority));
+            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PvPPrioritisedSoundKey(new PvPSoundKey(soundType, name), priority));
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -507,7 +507,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_RepairableButtonClickedServerRpc()
         {
             IPvPDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
-            DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+            PvPPrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+            PvP_PrioritisedSoundClientRpc(sound.Key.Type, sound.Key.Name, sound.Priority);
         }
     }
 
