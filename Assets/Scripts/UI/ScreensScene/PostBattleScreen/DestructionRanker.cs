@@ -48,14 +48,13 @@ namespace BattleCruisers.PostBattleScreen
         }
 
         // returns the remainder of the score towards the next level,
-        // based on the rank and current lifetime score passed in
-        //public long CalculateXpToNextLevel(int rank, long lifetimeScore)
-        //{
-        //    for (int i = 0; i < rank - 1; i++)
-        //    {
-        //        lifetimeScore -= CalculateLevelXP(i);
-        //    }
-        //    return lifetimeScore;
-        //}
+        // based on the current lifetime score passed in
+        public long CalculateXpToNextLevel(long lifetimeScore)
+        {
+            int rank = CalculateRank(lifetimeScore);
+            long remainder = lifetimeScore - (2500 + 2500 * rank * rank);
+
+            return (long)Mathf.Abs(remainder);
+        }
     }
 }

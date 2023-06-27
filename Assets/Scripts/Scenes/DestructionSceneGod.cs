@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes
     public class DestructionSceneGod : MonoBehaviour
     {
         private ISceneNavigator _sceneNavigator;
-        public DestructionCard [] destructionCards;
+        public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
@@ -103,7 +103,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
-                
+
             LandingSceneGod.MusicPlayer.PlayVictoryMusic();
 
             _soundPlayer
@@ -160,7 +160,7 @@ namespace BattleCruisers.Scenes
 
             // Set starting rank values:
             rank = ranker.CalculateRank(prevAllTimeVal);
-            if(rank == 0)
+            if (rank == 0)
             {
                 rank = 1;
             }
@@ -176,11 +176,13 @@ namespace BattleCruisers.Scenes
             levelBar.maxValue = nextLevelXP;
             levelBar.value = currentXP;
 
+            // From here on out, the screen shouldn't be needing to GET any GameModel variables,
+            // so we can give the player all their points and coins now.
+            // That way if there's a crash or anything before the animation completes, they still get credit.
+            UpdateGameModelVals();
+
             // Start animating:
             StartCoroutine(AnimateScreen());
-
-
-            Debug.Log("Playedtime =========> " + BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime().ToString());
         }
 
         /*        private void OnEnable()
@@ -287,7 +289,7 @@ namespace BattleCruisers.Scenes
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
 
             // Award any coins:
-            if(coinsToAward > 0)
+            if (coinsToAward > 0)
             {
                 coinsCounter.SetActive(true);
             }
@@ -385,12 +387,12 @@ namespace BattleCruisers.Scenes
                 return 3;
             }
             // 2 coins
-            else if(score >= 2000)
+            else if (score >= 2000)
             {
                 return 2;
             }
             // 1 coin
-            else if(score >= 1000)
+            else if (score >= 1000)
             {
                 return 1;
             }
@@ -407,7 +409,8 @@ namespace BattleCruisers.Scenes
                 Done();
             }
         }
-        private void Done()
+
+        private void UpdateGameModelVals()
         {
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
@@ -416,14 +419,14 @@ namespace BattleCruisers.Scenes
 
             // we need XPToNextLevel to populate any XP progress bars:
             long newLifetimeScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)levelBar.value;
-            if(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel < 0)
-            {
-                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = 0; // for safety
-            }
+            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(newLifetimeScore);
+
             // Give the player their coins:
             ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins += coinsToAward;
+        }
 
+        private void Done()
+        {
             // and now we actually are done:
             _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
         }
