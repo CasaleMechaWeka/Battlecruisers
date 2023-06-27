@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public void ShowDetails(IPvPCruiser cruiser)
         {
             HideInformatorContent();
-
+            UnityEngine.Debug.Log(cruiser == null ? "---> cruiser is null" : "cruiser is not null");
             _informatorPanel.Show(cruiser);
             _cruiserDetails.ShowItemDetails(cruiser);
             _selectedItem.Value = cruiser;

@@ -29,46 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPModalMenuController modalMenu;
         public PvPMainMenuButtonController modalMainMenuButton;
         public PvPHelpButton helpButton;
-        public RectTransform rectTransformThis;
-
-        // public PvPRightPanelComponents Initialise(
-        //     IApplicationModel applicationModel,
-        //     IPvPUIManager uiManager,
-        //     IPvPCruiser playerCruiser,
-        //     IPvPUserChosenTargetHelper userChosenTargetHelper,
-        //     IPvPButtonVisibilityFilters buttonVisibilityFilters,
-        //     IPvPPauseGameManager pauseGameManager,
-        //     IPvPBattleCompletionHandler battleCompletionHandler,
-        //     IPvPSingleSoundPlayer soundPlayer,
-        //     IPvPNavigationPermitterManager navigationPermitterManager)
-        // {
-        //     PvPHelper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
-        //     PvPHelper.AssertIsNotNull(
-        //         applicationModel,
-        //         uiManager,
-        //         playerCruiser,
-        //         userChosenTargetHelper,
-        //         buttonVisibilityFilters,
-        //         pauseGameManager,
-        //         battleCompletionHandler,
-        //         soundPlayer,
-        //         navigationPermitterManager);
-
-        //     IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
-        //     PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
-        //     IPvPMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
-        //     modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
-        //     SetupMainMenuButtons(soundPlayer, mainMenuManager);
-        //     makeRightBackgroundPanelFit();
-        //     return
-        //         new PvPRightPanelComponents(
-        //             informator,
-        //             mainMenuManager,
-        //             modalMenu,
-        //             speedComponents,
-        //             helpButton);
-        // }
-            
+        public RectTransform rectTransformThis;            
 
         public PvPRightPanelComponents Initialise(
             IApplicationModel applicationModel,

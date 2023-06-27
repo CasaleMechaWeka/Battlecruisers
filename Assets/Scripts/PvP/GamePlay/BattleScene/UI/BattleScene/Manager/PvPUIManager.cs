@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 if (_shownItem != null)
                 {
-                    _shownItem.Destroyed -= _shownItem_Destroyed;
+                    _shownItem.Destroyed -= _shownItem_Destroyed;                    
                 }
 
                 _shownItem = value;
@@ -194,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public virtual void ShowCruiserDetails(IPvPCruiser cruiser)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-
+            Debug.Log(cruiser == null ? "cruiser is null" : "cruiser is not null");
             _detailsManager.ShowDetails(cruiser);
             ShownItem = cruiser;
             lastClickedCruiser = cruiser;
@@ -254,7 +254,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 {
                     _detailsManager.ShowDetails(lastClickedCruiser);
                 }
-
             }
             else
             {

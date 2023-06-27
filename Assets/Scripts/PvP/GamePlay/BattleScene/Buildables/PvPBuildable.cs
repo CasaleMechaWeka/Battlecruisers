@@ -584,6 +584,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void OnBuildableCompleted_PvPClient()
         {
             BuildableState = PvPBuildableState.Completed;
+            _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
@@ -628,7 +629,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);
-            Invoke("iDestroyParentGameObject", 1f);
+        //    Invoke("iDestroyParentGameObject", 1f);
         }
         private void iDestroyParentGameObject()
         {

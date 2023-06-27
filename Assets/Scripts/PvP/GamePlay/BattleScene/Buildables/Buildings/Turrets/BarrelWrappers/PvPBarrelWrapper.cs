@@ -172,9 +172,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _parent = parent;
         //    _enemyFaction = _parent.EnemyCruiser.Faction;
-            _factoryProvider = factoryProvider;
-
-            Debug.Log(barrelFiringAnimation == null  ? "-------> barrel animation is null" : "------------> barrel animation is not null");
+            _factoryProvider = factoryProvider;            
             foreach (PvPBarrelController barrel in _barrels)
             {
                 IPvPBarrelControllerArgs barrelArgs
