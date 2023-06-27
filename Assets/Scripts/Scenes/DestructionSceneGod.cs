@@ -93,7 +93,12 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private long scoreDivider;
 
+        // coins variables:
         private int coinsToAward;
+        [SerializeField]
+        private GameObject coinsCounter;
+        [SerializeField]
+        private Text coinsText;
 
         async void Start()
         {
@@ -140,6 +145,9 @@ namespace BattleCruisers.Scenes
                 destructionCards[i].gameObject.SetActive(false);
             }
 
+            // Turn off Coins Counter by default:
+            coinsCounter.SetActive(false);
+
             timeStep = cardRevealAnim.length;
             modalPeriod = levelUpModalAnim.length;
 
@@ -162,6 +170,7 @@ namespace BattleCruisers.Scenes
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
             coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
+            coinsText.text = "+" + coinsToAward.ToString();
 
             // Set XP bar current/max values:
             levelBar.maxValue = nextLevelXP;
@@ -276,6 +285,12 @@ namespace BattleCruisers.Scenes
             // Interpolate game score:
             levelScore = CalculateScore(levelTimeInSeconds, Convert.ToInt32(aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider);
             yield return StartCoroutine(InterpolateScore(0, levelScore, 25));
+
+            // Award any coins:
+            if(coinsToAward > 0)
+            {
+                coinsCounter.SetActive(true);
+            }
 
             // TODO: level rating (maybe?)
 
@@ -401,8 +416,11 @@ namespace BattleCruisers.Scenes
 
             // we need XPToNextLevel to populate any XP progress bars:
             long newLifetimeScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(ranker.CalculateRank(newLifetimeScore), newLifetimeScore);
-
+            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)levelBar.value;
+            if(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel < 0)
+            {
+                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = 0; // for safety
+            }
             // Give the player their coins:
             ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins += coinsToAward;
 
