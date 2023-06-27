@@ -34,6 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public IPvPTransform Transform { get; private set; }
 
+        public Action clickedRepairButton { get; set; }
 
 
         // network variables
@@ -147,8 +148,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             HealthGainPerDroneS = DEFAULT_HEALTH_GAIN_PER_DRONE_S;
 
             Transform = new PvPTransformBC(transform);
+            clickedRepairButton += OnClickedRepairButton;
         }
 
+        private void OnClickedRepairButton()
+        { 
+            CallRpc_ClickedRepairButton();
+        }
+         
 
         private void _health_HealthGone(object sender, EventArgs e)
         {
@@ -164,6 +171,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Destroy()
         {
+            clickedRepairButton -= OnClickedRepairButton;
             DestroyMe();
         }
 
@@ -244,7 +252,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual bool CanRepairCommandExecute()
         {
-            return Health < maxHealth;
+            if (IsServer)
+                return Health < maxHealth;
+            return pvp_Health.Value < maxHealth;
         }
 
         public PvPHighlightArgs CreateHighlightArgs(IPvPHighlightArgsFactory highlightArgsFactory)
@@ -280,6 +290,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public virtual bool IsBuildingImmune()
         {
             return false;
+        }
+
+        protected virtual void CallRpc_ClickedRepairButton()
+        {
+            
         }
     }
 }

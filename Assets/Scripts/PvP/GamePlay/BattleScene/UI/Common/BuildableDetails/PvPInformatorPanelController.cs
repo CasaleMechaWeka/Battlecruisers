@@ -74,8 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             base.Show();
    
-            Assert.IsNotNull(item);
-            UnityEngine.Debug.Log(item == null ? "$$$-> cruiser is null" : "cruiser is not null");
+            Assert.IsNotNull(item);            
             buttons.SelectedItem = item;
         }
     }

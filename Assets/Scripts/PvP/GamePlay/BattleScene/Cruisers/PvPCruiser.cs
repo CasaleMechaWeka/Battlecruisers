@@ -206,9 +206,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
-
+            
 
         }
+
+
+        protected override void CallRpc_ClickedRepairButton()
+        {
+            PvP_RepairableButtonClickedServerRpc();
+        }
+
 
         public PvPSlotWrapperController GetSlotWrapperController()
         {
@@ -494,6 +501,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 Faction = PvPFaction.Blues;
             else
                 Faction = PvPFaction.Reds;
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        private void PvP_RepairableButtonClickedServerRpc()
+        {
+            IPvPDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
+            DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
     }
 

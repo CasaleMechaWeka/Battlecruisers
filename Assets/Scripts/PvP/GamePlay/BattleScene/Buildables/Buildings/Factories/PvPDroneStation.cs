@@ -1,6 +1,9 @@
+using BattleCruisers.Buildables.Repairables;
+using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using System.Collections.Generic;
@@ -137,8 +140,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnBuildableStateValueChangedClientRpc(state);
         }
 
-        private void LateUpdate()
+        protected override void CallRpc_ClickedRepairButton()
         {
+            PvP_RepairableButtonClickedServerRpc();
+        }
+        private void LateUpdate()
+        {            
             if (IsServer)
             {
                 if (PvP_BuildProgress.Value != BuildProgress)
@@ -236,6 +243,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
         {
             BuildableState = state;
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        private void PvP_RepairableButtonClickedServerRpc()
+        {
+            IPvPDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
+            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
     }
 }

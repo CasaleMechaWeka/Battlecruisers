@@ -194,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public virtual void ShowCruiserDetails(IPvPCruiser cruiser)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-            Debug.Log(cruiser == null ? "cruiser is null" : "cruiser is not null");
+            
             _detailsManager.ShowDetails(cruiser);
             ShownItem = cruiser;
             lastClickedCruiser = cruiser;

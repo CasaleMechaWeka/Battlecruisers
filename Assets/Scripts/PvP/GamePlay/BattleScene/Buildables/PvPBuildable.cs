@@ -628,8 +628,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
             }
-            Deactivated?.Invoke(this, EventArgs.Empty);
-        //    Invoke("iDestroyParentGameObject", 1f);
+            Deactivated?.Invoke(this, EventArgs.Empty);            
+            //    Invoke("iDestroyParentGameObject", 1f);
         }
         private void iDestroyParentGameObject()
         {
@@ -716,7 +716,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
         }
-
-
     }
 }
