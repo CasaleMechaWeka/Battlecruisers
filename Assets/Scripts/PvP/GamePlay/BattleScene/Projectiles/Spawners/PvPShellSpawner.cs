@@ -17,7 +17,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser;
         private PvPSoundType _type;
         private string _name;
-        private int _burstSize;
         public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPSoundKey firingSound, IPvPTargetFilter targetFilter)
         {
             await base.InitialiseAsync(args, firingSound);
@@ -50,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (IsOwner)
             {
-                Assert.IsNotNull(soundPlayerInitialiser);                
+                Assert.IsNotNull(soundPlayerInitialiser);
                 _type = type;
                 _name = name;
                 _burstSize = burstSize;

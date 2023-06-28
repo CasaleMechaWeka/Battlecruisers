@@ -34,11 +34,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public AudioClip impactSound;
 
         private IPvPSoundKey _firingSound;
-        private int _burstSize;
+        protected int _burstSize;
 
         public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPSoundKey firingSound)
         {
-            PvPHelper.AssertIsNotNull(impactSound, args);
+            PvPHelper.AssertIsNotNull(impactSound, args);           
 
             _impactSound = new PvPAudioClipWrapper(impactSound);
             _parent = args.Parent;

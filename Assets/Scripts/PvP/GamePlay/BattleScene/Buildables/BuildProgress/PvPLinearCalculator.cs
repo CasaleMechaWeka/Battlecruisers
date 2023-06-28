@@ -14,7 +14,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPLinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.DEFAULT)
         {
             // Logging.Log(Tags.BUILD_PROGRESS, $"build speed multiplier: {buildSpeedMultiplier}");
-            _buildMultiplier = buildSpeedMultiplier;
+
+            // should be enabled in Production
+            // _buildMultiplier = buildSpeedMultiplier;
+
+            // should be disabled in Production
+            _buildMultiplier = BuildSpeedMultipliers.VERY_FAST;
         }
 
         public float CalculateBuildProgressInDroneS(IPvPBuildable buildableUnderConstruction, float deltaTime)

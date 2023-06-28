@@ -69,6 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public IPvPUIManager uiManager;
         public ILocTable commonStrings;
+        public Dictionary<string, AudioClip> projectileImpactSounds = new Dictionary<string, AudioClip>();
 
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
@@ -167,7 +168,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
             navigationPermitters = new PvPNavigationPermitters();
-
 
 
             components = GetComponent<PvPBattleSceneGodComponents>();

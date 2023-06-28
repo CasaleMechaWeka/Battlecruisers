@@ -16,6 +16,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEditor;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -196,7 +197,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
+            string filePath = AssetDatabase.GetAssetPath(_impactSound.AudioClip);
+            string fileName = System.IO.Path.GetFileName(filePath);
+            OnPlayExplosionSound(PvPSoundType.Explosions, fileName.Split(".")[0], transform.position);
+           // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
         private void AdjustGameObjectDirection()
@@ -242,6 +246,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void OnActiveClient(Vector3 velocity, float gravityScale)
         {
+        }
+
+        protected virtual void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
+        {
+            
         }
     }
 }
