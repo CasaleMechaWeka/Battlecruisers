@@ -21,12 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             set
             {
                 //   gameObject.SetActive(value);
-                Transform[] trans = transform.GetComponentsInChildren<Transform>(includeInactive: true);
-                foreach (Transform t in trans)
-                {
-                    if (t != transform)
-                        t.gameObject.SetActive(value);
-                }
+                SetVisible(value);
                 _isVisible = value;
                 if (IsServer)
                     CallRpc_SetVisible(value);
@@ -35,12 +30,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         protected virtual void CallRpc_SetPosition(Vector3 position)
         {
-
         }
 
         protected virtual void CallRpc_SetVisible(bool isVisible)
         {
+        }
+
+        protected virtual void SetVisible(bool isVisible)
+        {
 
         }
+
     }
 }

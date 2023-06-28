@@ -17,8 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             return _explosion;
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _explosion = new PvPExplosion(
                        this,
                        GetParticleSystems(),

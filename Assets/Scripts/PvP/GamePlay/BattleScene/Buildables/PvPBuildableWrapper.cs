@@ -50,7 +50,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (IsClient)
             {
-
                 Buildable = GetComponentInChildren<TPvPBuildable>();
                 Assert.IsNotNull(Buildable);
 

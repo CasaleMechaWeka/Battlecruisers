@@ -7,6 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPParticleSystemGroupInitialiser : PvPMonoBehaviourWrapper, IPvPParticleSystemGroupInitialiser
     {
+        private Transform[] trans;
         public IPvPParticleSystemGroup CreateParticleSystemGroup()
         {
             return
@@ -36,12 +37,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 system.Initialise();
             }
-
             return synchronizedSystems;
         }
 
+        protected virtual void Awake()
+        {
+            trans = transform.GetComponentsInChildren<Transform>(includeInactive: true);            
+        }
 
-
+        protected override void SetVisible(bool isVisible)
+        {
+            foreach (Transform t in trans)
+            {
+                if (t != transform)
+                    t.gameObject.SetActive(isVisible);
+            }
+        }
 
     }
 }
