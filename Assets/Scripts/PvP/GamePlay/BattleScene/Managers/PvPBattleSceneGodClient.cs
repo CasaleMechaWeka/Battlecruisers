@@ -52,6 +52,8 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -65,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
 
-        public  IPvPUIManager uiManager;
+        public IPvPUIManager uiManager;
         public ILocTable commonStrings;
 
         private IApplicationModel applicationModel;
@@ -79,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPCruiser playerCruiser;
         private PvPCruiser enemyCruiser;
         private IPvPBattleSceneHelper pvpBattleHelper;
-        private IPvPLevel currentLevel;   
+        private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
         private IPvPTime time;
         private IPvPPauseGameManager pauseGameManager;
@@ -175,7 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             currentLevel = pvpBattleHelper.GetPvPLevel();
 
@@ -279,8 +281,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
         {
 
-                return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
-          
+            return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
+
         }
 
         private void IsPopulationLimitReached_ValueChanged(bool oldVal, bool newVal)
@@ -327,10 +329,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        private void Start()
-        {
-            // InitialiseAsync();
-        }
 
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
@@ -343,10 +341,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         )
         {
             return new PvPBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
-        }
-        void Update()
-        {
-
         }
     }
 }

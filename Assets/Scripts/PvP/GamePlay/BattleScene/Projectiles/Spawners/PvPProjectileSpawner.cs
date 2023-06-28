@@ -10,12 +10,13 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public abstract class PvPProjectileSpawner<TPvPProjectile, TPvPProjectileArgs, TPvPStats> : MonoBehaviour
+    public abstract class PvPProjectileSpawner<TPvPProjectile, TPvPProjectileArgs, TPvPStats> : NetworkBehaviour
         where TPvPProjectile : PvPProjectileControllerBase<TPvPProjectileArgs, TPvPStats>
         where TPvPProjectileArgs : PvPProjectileActivationArgs<TPvPStats>
         where TPvPStats : IPvPProjectileStats
@@ -32,6 +33,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected IPvPAudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
+        private IPvPSoundKey _firingSound;
+        private int _burstSize;
+
         public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPSoundKey firingSound)
         {
             PvPHelper.AssertIsNotNull(impactSound, args);
@@ -47,14 +51,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(poolChooser);
             _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
 
-            IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IPvPProjectileSoundPlayerInitialiser>();
+/*            IPvPProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IPvPProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
-            // _soundPlayer
-            //     = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-            //         args.FactoryProvider.Sound.SoundPlayerFactory,
-            //         firingSound,
-            //         args.BurstSize,
-            //         args.FactoryProvider.SettingsManager);
+            _soundPlayer
+                = await soundPlayerInitialiser.CreateSoundPlayerAsync(
+                    args.FactoryProvider.Sound.SoundPlayerFactory,
+                    firingSound,
+                    args.BurstSize,
+                    args.FactoryProvider.SettingsManager);*/
+            _firingSound = firingSound;
+            _burstSize = args.BurstSize;
         }
 
         protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
@@ -76,14 +82,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Assert.IsNotNull(projectileActivationArgs);
 
             _projectilePool.GetItem(projectileActivationArgs);
-            if (_soundPlayer != null)
+            if (_firingSound != null)
             {
-                _soundPlayer.OnProjectileFired();
+             //   _soundPlayer.OnProjectileFired();
+                OnProjectileFiredSound(_firingSound, _burstSize);
             }
             else
             {
                 Debug.Log("Warning, soundplayer was null when spawn projectile was called");
             }
         }
+        protected virtual void OnProjectileFiredSound(IPvPSoundKey firingSound, int burstSize) { }
     }
 }
