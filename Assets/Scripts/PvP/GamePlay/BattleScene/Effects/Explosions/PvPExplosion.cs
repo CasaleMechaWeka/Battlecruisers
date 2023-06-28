@@ -25,7 +25,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             {
                 particleSystem.Stopped += ParticleSystem_Stopped;
             }
-
             _explosionController.IsVisible = false;
         }
 
@@ -33,7 +32,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         {
             _systemsCompletedCount++;
             Logging.Verbose(Tags.EXPLOSIONS, $"{_systemsCompletedCount}/{_particleSystems.Length} particle systems completed");
-
             if (_systemsCompletedCount == _particleSystems.Length)
             {
                 Deactivate();

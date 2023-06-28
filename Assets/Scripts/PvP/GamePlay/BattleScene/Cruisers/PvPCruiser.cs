@@ -212,7 +212,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
 
         protected override void CallRpc_ClickedRepairButton()
-        {          
+        {
             PvP_RepairableButtonClickedServerRpc();
         }
 
@@ -231,7 +231,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Faction = args.Faction;
             // client rpc call
-            PvP_SetFactionClientRpc();
+            PvP_SetFactionClientRpc(Faction);
 
             _enemyCruiser = args.EnemyCruiser;
             _uiManager = args.UiManager;
@@ -495,12 +495,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         [ClientRpc]
-        private void PvP_SetFactionClientRpc()
+        private void PvP_SetFactionClientRpc(PvPFaction faction)
         {
-            if (IsOwner)
-                Faction = PvPFaction.Blues;
-            else
-                Faction = PvPFaction.Reds;
+            /*            if (IsOwner)
+                            Faction = PvPFaction.Blues;
+                        else
+                            Faction = PvPFaction.Reds;*/
+            Faction = faction;
         }
 
         [ServerRpc(RequireOwnership = true)]
