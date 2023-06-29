@@ -160,10 +160,7 @@ namespace BattleCruisers.Scenes
 
             // Set starting rank values:
             rank = ranker.CalculateRank(prevAllTimeVal);
-            if (rank == 0)
-            {
-                rank = 1;
-            }
+
             currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
@@ -208,7 +205,7 @@ namespace BattleCruisers.Scenes
                 // by the specified number of steps. Steps are divided over time:
                 yield return StartCoroutine(InterpolateDamageValue(damageRunningTotal, damageRunningTotal + destructionValues[i], 10));
                 damageRunningTotal += destructionValues[i];
-                yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
+                //yield return new WaitForSeconds(timeStep); // wait for destruction card reveal anim to finish before proceeding
 
                 // Increase XP counter:
 
