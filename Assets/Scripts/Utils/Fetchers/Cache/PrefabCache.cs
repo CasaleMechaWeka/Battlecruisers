@@ -20,7 +20,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<Cruiser> _cruisers;
         private readonly IMultiCache<ExplosionController> _explosions;
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
-        private readonly IMultiCache<CaptainData> _captains;
+        private readonly IMultiCache<CaptainExoData> _captains;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }

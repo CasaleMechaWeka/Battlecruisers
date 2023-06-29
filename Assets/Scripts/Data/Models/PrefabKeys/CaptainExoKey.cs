@@ -6,7 +6,7 @@ using System;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
-    public class CaptainKey : PrefabKey
+    public class CaptainExoKey : PrefabKey
     {
         private const string prefabPathPreFix = "Prefabs/ScreensScene/ProfileScreen/Captains";
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys
             }
         }
 
-        public CaptainKey(string prefabName) : base(prefabName)
+        public CaptainExoKey(string prefabName) : base(prefabName)
         {
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
-    public class CaptainList : MonoBehaviour
+    public class CaptainExoList : MonoBehaviour
     {
 
     }

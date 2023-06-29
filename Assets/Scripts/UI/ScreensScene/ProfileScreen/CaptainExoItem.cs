@@ -9,19 +9,19 @@ using TMPro;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
-    public class CaptainItem : MonoBehaviour
+    public class CaptainExoItem : MonoBehaviour
     {
-        [SerializeField] private Image _captainImage;
-        [SerializeField] private string _captainNameText;
-        [SerializeField] private int _captainCostText;
+        [SerializeField] private Image _captainExoImage;
+        [SerializeField] private string _captainExoNameText;
+        [SerializeField] private int _captainExoCostText;
 
-        public void SetCaptainData(CaptainData captainData)
+        public void SetCaptainData(CaptainExoData captainExoData)
         {
             // Assign the captainData values to the UI Item's UI elements
             // You can access the UI elements using GetComponentInChildren, Find, or public references set in the Inspector
-            _captainImage.sprite = captainData.CaptainImage;
-            _captainNameText = captainData.CaptainName;
-            _captainCostText = captainData.CaptainCost;
+            _captainExoImage.sprite = captainExoData.CaptainExoImage;
+            _captainExoNameText = captainExoData.CaptainExoName;
+            _captainExoCostText = captainExoData.CaptainExoCost;
         }
     }
 }

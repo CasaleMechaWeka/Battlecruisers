@@ -11,11 +11,11 @@ using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
-    public class CaptainButton : MonoBehaviour
+    public class CaptainExoButton : MonoBehaviour
     {
         [SerializeField]
-        private CaptainData _captainData;
-        private IBroadcastingProperty<CaptainData> _selectedCaptain;
+        private CaptainExoData _captainExoData;
+        private IBroadcastingProperty<CaptainExoData> _selectedCaptainExo;
         private RectTransform _selectedFeedback;
         public TextMeshProUGUI _unitName;
 
@@ -23,11 +23,11 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            CaptainData captainData,
-            IBroadcastingProperty<CaptainData> selectedCaptain)
+            CaptainExoData captainExoData,
+            IBroadcastingProperty<CaptainExoData> selectedCaptainExo)
         {
-            _captainData = captainData;
-            _selectedCaptain = selectedCaptain;
+            _captainExoData = captainExoData;
+            _selectedCaptainExo = selectedCaptainExo;
 
         }
         private void ShowDetails()

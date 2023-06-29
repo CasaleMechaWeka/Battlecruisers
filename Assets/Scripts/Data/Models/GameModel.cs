@@ -318,7 +318,7 @@ namespace BattleCruisers.Data.Models
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
-        public ReadOnlyCollection<CaptainList> UnlockedCaptains { get; }
+        public ReadOnlyCollection<CaptainExoList> UnlockedCaptainExos { get; }
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }

@@ -31,12 +31,12 @@ namespace BattleCruisers.Data.Models
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
-        ReadOnlyCollection<CaptainList> UnlockedCaptains { get; }
+        ReadOnlyCollection<CaptainExoList> UnlockedCaptainExos { get; }
 
         NewItems<HullKey> NewHulls { get; }
         NewItems<BuildingKey> NewBuildings { get; }
         NewItems<UnitKey> NewUnits { get; }
-        //NewItems<CaptainKey> NewCaptains { get; }
+        //NewItems<CaptainExoKey> NewCaptainExos { get; }
 
         Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult);
 
