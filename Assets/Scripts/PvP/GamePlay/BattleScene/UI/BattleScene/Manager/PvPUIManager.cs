@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             {
                 if (_shownItem != null)
                 {
-                    _shownItem.Destroyed -= _shownItem_Destroyed;                    
+                    _shownItem.Destroyed -= _shownItem_Destroyed;
                 }
 
                 _shownItem = value;
@@ -149,11 +149,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // }
 
 
-    /*        if (!wasAnySlotHighlighted)
-            {
-                _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
-                _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
-            }*/
+            /*        if (!wasAnySlotHighlighted)
+                    {
+                        _soundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPCruiser.NoBuildingSlotsLeft);
+                        _playerCruiser.SlotHighlighter.HighlightSlots(buildingWrapper.Buildable.SlotSpecification);
+                    }*/
         }
 
         public virtual void SelectBuilding(IPvPBuilding building)
@@ -194,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public virtual void ShowCruiserDetails(IPvPCruiser cruiser)
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
-            
+
             _detailsManager.ShowDetails(cruiser);
             ShownItem = cruiser;
             lastClickedCruiser = cruiser;

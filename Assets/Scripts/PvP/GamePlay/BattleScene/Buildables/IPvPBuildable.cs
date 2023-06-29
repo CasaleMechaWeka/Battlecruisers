@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ReadOnlyCollection<IPvPDamageCapability> DamageCapabilities { get; }
         IPvPBoostable BuildProgressBoostable { get; }
         bool IsInitialised { get; }
-        IPvPCruiser ParentCruiser { get; }
+        IPvPCruiser ParentCruiser { get; set; }
         IPvPCruiser EnemyCruiser { get; }
         IPvPHealthBar HealthBar { get; }
         string PrefabName { get; }

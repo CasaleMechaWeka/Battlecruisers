@@ -79,8 +79,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPBattleSceneGodComponents components;
         private PvPNavigationPermitters navigationPermitters;
         private IPvPCameraComponents cameraComponents;
-        private PvPCruiser playerCruiser;
-        private PvPCruiser enemyCruiser;
+        public PvPCruiser playerCruiser;
+        public PvPCruiser enemyCruiser;
         private IPvPBattleSceneHelper pvpBattleHelper;
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;

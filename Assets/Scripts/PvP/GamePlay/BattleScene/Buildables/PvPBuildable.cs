@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
         protected virtual PvPPrioritisedSoundKey ConstructionCompletedSoundKey => null;
-        public IPvPCruiser ParentCruiser { get; private set; }
+        public IPvPCruiser ParentCruiser { get; set; }
         public IPvPCruiser EnemyCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
         public string PrefabName => _parent.name;
@@ -722,7 +722,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void CallRpc_SyncFaction(PvPFaction faction)
         {
-            
+
         }
     }
 }

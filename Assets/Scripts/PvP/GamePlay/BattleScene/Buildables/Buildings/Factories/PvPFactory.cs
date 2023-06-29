@@ -116,9 +116,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnSingleClick();
 
-            if (Faction == PvPFaction.Blues)
+            if (/* Faction == PvPFaction.Blues && */ IsClient && IsOwner)
             {
-                // _uiManager.ShowFactoryUnits(this);
+                _uiManager.ShowFactoryUnits(this);
             }
         }
 
@@ -318,5 +318,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             base.ToggleDroneConsumerFocusCommandExecute();
         }
+
+
     }
 }

@@ -240,5 +240,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Faction = faction;
         }
+
     }
 }
