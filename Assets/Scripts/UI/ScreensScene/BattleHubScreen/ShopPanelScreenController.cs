@@ -27,6 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             base.Initialise(screensSceneGod);
 
             _dataProvider = dataProvider;
+            //Initialise each button with it's function
             backButton.Initialise(soundPlayer, Home, this);
             blackMarketButton.Initialise(soundPlayer, BlackMarket, this);
 
@@ -45,6 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         }
 
+
+        //All the button fucntions for shop screen
         public void Home()
         {
             _screensSceneGod.GotoHubScreen();

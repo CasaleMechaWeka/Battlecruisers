@@ -22,7 +22,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public int captainIndex;
         public int CaptainIndex => captainIndex;
 
-
+        public bool IsOwned { get; set; }//To check if player owns them
+                                        
         //public void Initialise(ILocTable captainStrings)
         //{
         //    Assert.IsNotNull(captainStrings);

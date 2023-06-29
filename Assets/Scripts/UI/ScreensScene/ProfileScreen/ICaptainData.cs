@@ -11,6 +11,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         int CaptainCost { get; }
         string StringKeyBase { get; }
         int CaptainIndex { get; }
+
+        bool IsOwned { get; set; }
     }
 }
 
