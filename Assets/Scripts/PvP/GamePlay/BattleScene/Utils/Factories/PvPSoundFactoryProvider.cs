@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private PvPPool<IPvPAudioSourcePoolable, PvPAudioSourceActivationArgs> _audioSourcePool;
 
-        private const int AUDIO_SOURCE_INITIAL_CAPACITY = 9;
+        private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
         public PvPSoundFactoryProvider(IPvPBattleSceneGodComponents components, PvPFactoryProvider factoryProvider /*, IPvPPoolProviders poolProviders */)
         {

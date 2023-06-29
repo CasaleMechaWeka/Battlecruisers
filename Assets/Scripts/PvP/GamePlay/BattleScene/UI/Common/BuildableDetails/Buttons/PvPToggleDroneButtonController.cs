@@ -1,4 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System;
 using System.Diagnostics;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             get
             {
                 return
-                   _buildable != null && _buildable.Faction == PvPFaction.Blues
+                   _buildable != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _buildable.Faction == PvPFaction.Blues : _buildable.Faction == PvPFaction.Reds)
                     && _buildable.ToggleDroneConsumerFocusCommand.CanExecute;
             }
         }

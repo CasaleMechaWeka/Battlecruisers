@@ -6,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             set
             {
                 _buildable = value;
-                gameObject.SetActive(_buttonVisibilityFilter.IsMatch(_buildable));
+                gameObject.SetActive(_buildable != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _buildable.Faction == PvPFaction.Blues : _buildable.Faction == PvPFaction.Reds) && _buttonVisibilityFilter.IsMatch(_buildable));
             }
         }
 

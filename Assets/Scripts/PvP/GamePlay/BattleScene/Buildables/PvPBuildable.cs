@@ -29,6 +29,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -392,6 +393,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _cruiserSpecificFactories = cruiserSpecificFactories;
 
             Faction = ParentCruiser.Faction;
+            CallRpc_SyncFaction(Faction);
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
@@ -415,6 +417,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ParentCruiser = activationArgs.ParentCruiser;
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
+            CallRpc_SyncFaction(Faction);
             EnemyCruiser = activationArgs.EnemyCruiser;
 
             _cruiserSpecificFactories = activationArgs.CruiserSpecificFactories;
@@ -715,6 +718,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void CallRpc_PlayDeathSound()
         {
             _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+        }
+
+        protected virtual void CallRpc_SyncFaction(PvPFaction faction)
+        {
+            
         }
     }
 }

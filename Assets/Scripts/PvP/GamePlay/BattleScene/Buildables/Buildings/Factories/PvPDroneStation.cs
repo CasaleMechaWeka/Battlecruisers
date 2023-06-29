@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Movement.Rotation;
@@ -144,6 +145,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             PvP_RepairableButtonClickedServerRpc();
         }
+
+        protected override void CallRpc_SyncFaction(PvPFaction faction)
+        {
+            OnSyncFationClientRpc(faction);
+        }
+
         private void LateUpdate()
         {            
             if (IsServer)
@@ -157,13 +164,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private void Start()
+/*        private void Start()
         {
             if (IsClient && IsOwner)
                 Faction = PvPFaction.Blues;
             if (IsClient && !IsOwner)
                 Faction = PvPFaction.Reds;
-        }
+        }*/
 
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
@@ -250,6 +257,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             IPvPDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+        }
+
+        [ClientRpc]
+        private void OnSyncFationClientRpc(PvPFaction faction)
+        {
+            Faction = faction;
         }
     }
 }

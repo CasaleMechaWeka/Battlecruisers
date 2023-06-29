@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Tutorial.Highlighting;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,8 +11,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPTopPanelInitialiser : MonoBehaviour
     {
-        public Text playerHealthBarHelpLabel;
-        public Text enemyHealthBarHelpLabel;
+        public Text playerLeftHealthBarHelpLabel;
+        public Text playerRightHealthBarHelpLabel;
 
         public PvPTopPanelComponents Initialise(
             PvPCruiser playerCruiser,
@@ -19,22 +20,41 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             string playerName,
             string enemyName)
         {
-            PvPHelper.AssertIsNotNull(playerHealthBarHelpLabel, enemyHealthBarHelpLabel);
+            PvPHelper.AssertIsNotNull(playerLeftHealthBarHelpLabel, playerRightHealthBarHelpLabel);
             PvPHelper.AssertIsNotNull(playerName, enemyName);
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
 
-            PvPCruiserHealthBarInitialiser playerHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerCruiserHealth/Foreground");
-            Assert.IsNotNull(playerHealthInitialiser);
-            IPvPHighlightable playerCruiserHealthBar = playerHealthInitialiser.Initialise(playerCruiser);
+            IPvPHighlightable playerLeftCruiserHealthBar;
+            IPvPHighlightable playerRightCruiserHealthBar;
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            {
+                playerLeftHealthBarHelpLabel.text = playerName;
+                playerRightHealthBarHelpLabel.text = enemyName;
 
-            PvPCruiserHealthBarInitialiser enemyHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("EnemyCruiserHealth/Foreground");
-            Assert.IsNotNull(enemyHealthInitialiser);
-            IPvPHighlightable enemyCruiserHealthBar = enemyHealthInitialiser.Initialise(enemyCruiser);
+                PvPCruiserHealthBarInitialiser playerLeftHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerLeftCruiserHealth/Foreground");
+                Assert.IsNotNull(playerLeftHealthInitialiser);
+                playerLeftCruiserHealthBar = playerLeftHealthInitialiser.Initialise(playerCruiser);
 
-            playerHealthBarHelpLabel.text = playerName;
-            enemyHealthBarHelpLabel.text = enemyName;
+                PvPCruiserHealthBarInitialiser playerRightHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerRightCruiserHealth/Foreground");
+                Assert.IsNotNull(playerRightHealthInitialiser);
+                playerRightCruiserHealthBar = playerRightHealthInitialiser.Initialise(enemyCruiser);
+            }
+            else
+            {
+                playerLeftHealthBarHelpLabel.text = enemyName;
+                playerRightHealthBarHelpLabel.text = playerName;
 
-            return new PvPTopPanelComponents(playerCruiserHealthBar, enemyCruiserHealthBar);
+                PvPCruiserHealthBarInitialiser playerLeftHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerLeftCruiserHealth/Foreground");
+                Assert.IsNotNull(playerLeftHealthInitialiser);
+                playerLeftCruiserHealthBar = playerLeftHealthInitialiser.Initialise(enemyCruiser);
+
+                PvPCruiserHealthBarInitialiser playerRightHealthInitialiser = transform.FindNamedComponent<PvPCruiserHealthBarInitialiser>("PlayerRightCruiserHealth/Foreground");
+                Assert.IsNotNull(playerRightHealthInitialiser);
+                playerRightCruiserHealthBar = playerRightHealthInitialiser.Initialise(playerCruiser);
+            }
+
+
+            return new PvPTopPanelComponents(playerLeftCruiserHealthBar, playerRightCruiserHealthBar);
         }
     }
 }

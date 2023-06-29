@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
@@ -39,8 +40,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             get
             {
                 return
-                    Repairable.Faction == PvPFaction.Blues
-                    && Repairable.RepairCommand.CanExecute;
+                    Repairable != null &&
+                      (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? Repairable.Faction == PvPFaction.Blues : Repairable.Faction == PvPFaction.Reds) &&
+                      Repairable.RepairCommand.CanExecute;
             }
         }
 
@@ -57,8 +59,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             base.OnClicked();
             _repairable.clickedRepairButton?.Invoke();
-/*            IPvPDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
-            _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);*/
+            /*            IPvPDroneConsumer repairDroneConsumer = _repairManager.GetDroneConsumer(Repairable);
+                        _droneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);*/
         }
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)

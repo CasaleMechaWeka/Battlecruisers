@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
 {
@@ -10,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             return
                 target != null
-                && target.Faction == PvPFaction.Blues
+                /*     && SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT? target.Faction == PvPFaction.Blues : target.Faction == PvPFaction.Reds*/
                 && target.TargetType == PvPTargetType.Buildings
                 && target.IsInScene;
         }

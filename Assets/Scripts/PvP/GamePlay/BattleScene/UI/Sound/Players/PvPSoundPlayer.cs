@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 
             _soundFetcher = soundFetcher;
             _audioSourcePool = audioSourcePool;
-            _audioSourcePool.SetMaxLimit(10);
+            _audioSourcePool.SetMaxLimit(21);
         }
 
         public async Task PlaySoundAsync(IPvPSoundKey soundKey, Vector2 position)
