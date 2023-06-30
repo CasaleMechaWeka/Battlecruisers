@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -144,6 +145,44 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             OnStartBuildingUnitServerRpc(category, prefabName);
         }
+        // PauseBuildingUnit
+        protected override void OnPauseBuildingUnit()
+        {
+            if (IsClient)
+                OnPauseBuildingUnitServerRpc();
+            if (IsServer)
+                base.OnPauseBuildingUnit();
+
+        }
+        // ResumeBuildingUnit
+        protected override void OnResumeBuildingUnit()
+        {
+            if (IsClient)
+                OnResumeBuildingUnitServerRpc();
+            if(IsServer)
+                base.OnResumeBuildingUnit();
+        }
+
+        // NewUnitChosen
+        protected override void OnNewUnitChosen()
+        {
+            if (IsClient)
+            {
+                OnNewUnitChosenServerRpc();
+            }
+            if(IsServer)
+                base.OnNewUnitChosen();
+        
+        }
+
+        protected override void OnIsUnitPausedValueChanged(bool isPaused)
+        {
+            if (IsClient)
+                base.OnIsUnitPausedValueChanged(isPaused);
+            if (IsServer)
+                OnIsUnitPausedValueChangedClientRpc(isPaused);
+        }
+
         protected override void OnUnit_BuildingStarted(ulong objectId)
         {
             if (IsClient)
@@ -294,6 +333,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
         }
 
+        [ServerRpc(RequireOwnership = true)]
+        private void OnPauseBuildingUnitServerRpc()
+        {
+            OnPauseBuildingUnit();
+        }
+        [ServerRpc(RequireOwnership = true)]
+        private void OnResumeBuildingUnitServerRpc()
+        {
+            OnResumeBuildingUnit();
+        }
         [ClientRpc]
         private void OnUnit_BuildingStartedClientRpc(ulong objectId)
         {
@@ -310,6 +359,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnUnitUnderConstruction_DestroyedClientRpc()
         {
             OnUnitUnderConstruction_Destroyed();
+        }
+
+        [ClientRpc]
+        private void OnIsUnitPausedValueChangedClientRpc(bool isPaused)
+        {
+            OnIsUnitPausedValueChanged(isPaused);
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        private void OnNewUnitChosenServerRpc()
+        {
+            OnNewUnitChosen();
         }
     }
 }

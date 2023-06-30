@@ -58,6 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         CleanUpDroneConsumer();
                         DestroyUnitUnderConstruction();
                         _isUnitPaused.Value = false;
+                        OnIsUnitPausedValueChanged(false);
                         _unitPool = null;
                     }
 
@@ -70,6 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
                         Assert.IsNotNull(_unitPool);
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
+                        OnNewUnitChosen();
                     }
                 }
             }
@@ -220,8 +222,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
                     }
                 }
-
             }
+        }
+
+        protected virtual void OnNewUnitChosen()
+        {
+            if (IsServer)
+                NewUnitChosen?.Invoke(this, EventArgs.Empty);
         }
 
         private void Unit_CompletedBuildable(object sender, EventArgs e)
@@ -339,26 +346,56 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void PauseBuildingUnit()
         {
             // Logging.LogMethod(Tags.FACTORY);
-
-            if (UnitWrapper != null
-                && !_isUnitPaused.Value)
+            if (IsClient)
+                OnPauseBuildingUnit();
+            if (IsServer)
             {
-                _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
-                _isUnitPaused.Value = true;
+                if (UnitWrapper != null
+                    && !_isUnitPaused.Value)
+                {
+                    _droneConsumerProvider.ReleaseDroneConsumer(DroneConsumer);
+                    _isUnitPaused.Value = true;
+                    OnIsUnitPausedValueChanged(true);
+                }
             }
+        }
+
+        protected virtual void OnPauseBuildingUnit()
+        {
+            if (IsServer)
+                PauseBuildingUnit();
+        }
+
+        protected virtual void OnIsUnitPausedValueChanged(bool isUnitPaused)
+        {
+            if (IsClient)
+                _isUnitPaused.Value = isUnitPaused;
         }
 
         public void ResumeBuildingUnit()
         {
             // Logging.LogMethod(Tags.FACTORY);
 
-            if (_isUnitPaused.Value)
+            if (IsClient)
+                OnResumeBuildingUnit();
+            if (IsServer)
             {
-                Assert.IsNotNull(UnitWrapper);
+                if (_isUnitPaused.Value)
+                {
+                    Assert.IsNotNull(UnitWrapper);
+                    _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
+                    EnsureDroneConsumerHasHighestPriority();
+                    _isUnitPaused.Value = false;
+                    OnIsUnitPausedValueChanged(false);
+                }
+            }
+        }
 
-                _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
-                EnsureDroneConsumerHasHighestPriority();
-                _isUnitPaused.Value = false;
+        protected virtual void OnResumeBuildingUnit()
+        {
+            if (IsServer)
+            {
+                ResumeBuildingUnit();
             }
         }
 
@@ -382,6 +419,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // Hence, activate drone consumer before focusing on them :)
                 _droneConsumerProvider.ActivateDroneConsumer(DroneConsumer);
                 _isUnitPaused.Value = false;
+                OnIsUnitPausedValueChanged(false);
             }
 
             base.ToggleDroneConsumerFocusCommandExecute();
