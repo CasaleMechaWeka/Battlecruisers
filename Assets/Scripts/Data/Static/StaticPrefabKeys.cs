@@ -145,6 +145,40 @@ namespace BattleCruisers.Data.Static
             }
         }
 
+        public static class CaptainExos
+        {
+            // Captains
+            public static CaptainExoKey CaptainExo_Charlie { get; } = new CaptainExoKey("CaptainExo_Charlie");
+            public static CaptainExoKey CaptainExo_001 { get; } = new CaptainExoKey("CaptainExo_001");
+            public static CaptainExoKey CaptainExo_002 { get; } = new CaptainExoKey("CaptainExo_002");
+            public static CaptainExoKey CaptainExo_003 { get; } = new CaptainExoKey("CaptainExo_003");
+            public static CaptainExoKey CaptainExo_004 { get; } = new CaptainExoKey("CaptainExo_004");
+            public static CaptainExoKey CaptainExo_005 { get; } = new CaptainExoKey("CaptainExo_005");
+            public static CaptainExoKey CaptainExo_006 { get; } = new CaptainExoKey("CaptainExo_006");
+            public static CaptainExoKey CaptainExo_007 { get; } = new CaptainExoKey("CaptainExo_007");
+            public static CaptainExoKey CaptainExo_008 { get; } = new CaptainExoKey("CaptainExo_008");
+            public static CaptainExoKey CaptainExo_009 { get; } = new CaptainExoKey("CaptainExo_009");
+            public static CaptainExoKey CaptainExo_010 { get; } = new CaptainExoKey("CaptainExo_010");
+            public static CaptainExoKey CaptainExo_011 { get; } = new CaptainExoKey("CaptainExo_011");
+            public static CaptainExoKey CaptainExo_012 { get; } = new CaptainExoKey("CaptainExo_012");
+            public static CaptainExoKey CaptainExo_013 { get; } = new CaptainExoKey("CaptainExo_013");
+            public static CaptainExoKey CaptainExo_014 { get; } = new CaptainExoKey("CaptainExo_014");
+            public static CaptainExoKey CaptainExo_015 { get; } = new CaptainExoKey("CaptainExo_015");
+
+            public static IList<IPrefabKey> AllKeys 
+            {
+                get
+                {
+                    return new List<IPrefabKey>()
+                    {
+                        CaptainExo_Charlie, CaptainExo_001, CaptainExo_002, CaptainExo_003, CaptainExo_004, CaptainExo_005,
+                        CaptainExo_006, CaptainExo_007, CaptainExo_008, CaptainExo_009, CaptainExo_010, CaptainExo_011,
+                        CaptainExo_012, CaptainExo_013, CaptainExo_014, CaptainExo_015
+                    };
+                }
+            }
+        }
+
         public static class Effects
         {
             public static EffectKey BuilderDrone { get; } = new EffectKey("BuilderDrone");
