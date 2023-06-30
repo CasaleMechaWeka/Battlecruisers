@@ -363,7 +363,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             building.StartConstruction();
 
-            //   _helper.OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
+            OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
             BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
 
@@ -388,6 +388,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
 
             return building;
+        }
+
+        private void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter)
+        {
+            if (!slotAccessor.IsSlotAvailableForPlayer(buildingStarted.SlotSpecification))
+            {
+                // _uiManager?.HideCurrentlyShownMenu();
+                PvP_HideCurrentlyShownMenuClientRpc();
+            }
+            else
+            {
+                // Unhighlight the one slot that has just been taken
+                slotHighlighter.HighlightAvailableSlots(buildingStarted.SlotSpecification);
+            }
         }
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
@@ -541,6 +555,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                         PvPBattleSceneGodClient.Instance.factoryProvider.SettingsManager, 2);
             _audioSource?.Play(isSpatial: true);
             //   _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
+        }
+
+        [ClientRpc]
+        private void PvP_HideCurrentlyShownMenuClientRpc()
+        {
+            _uiManager?.HideCurrentlyShownMenu();
         }
     }
 
