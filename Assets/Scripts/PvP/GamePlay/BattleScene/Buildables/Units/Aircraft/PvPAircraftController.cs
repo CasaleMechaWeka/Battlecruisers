@@ -323,5 +323,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _factoryProvider.DeferrerProvider.Deferrer.Defer(((IPvPRemovable)this).RemoveFromScene, seabedParkTimeInS);
         }
+
     }
 }

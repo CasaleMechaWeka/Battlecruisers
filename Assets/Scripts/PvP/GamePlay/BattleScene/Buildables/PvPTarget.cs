@@ -198,7 +198,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.TARGET, $"{this} destroyed :/");
             pvp_Destroyed.Value = true;
             Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
+            OnDestroyedEvent();
             CallRpc_ProgressControllerVisible(false);
+        }
+
+        protected virtual void OnDestroyedEvent()
+        {
+            if (IsClient)
+                Destroyed?.Invoke(this, new PvPDestroyedEventArgs(this));
         }
 
         public void TakeDamage(float damageAmount, IPvPTarget damageSource)

@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 #pragma warning restore CS0414  // Variable is assigned but never used
         // All buildables are wrapped by a UnitWrapper or BuildingWrapper, which contains
         // both the target and the health bar.
-        private GameObject _parent;
+        public GameObject _parent;
         private IPvPDroneFeedback _droneFeedback;
 
         protected IPvPUIManager _uiManager;
@@ -563,7 +563,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _healthTracker.AddHealth(buildProgressIncrement * MaxHealth);
 
                     BuildableProgress?.Invoke(this, new PvPBuildProgressEventArgs(this));
-
+                    OnBuildableProgressEvent();
                     if (_cumulativeBuildProgressInDroneS >= _buildTimeInDroneSeconds)
                     {
                         OnBuildableCompleted();
@@ -578,6 +578,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _buildableProgress.FillableImage.fillAmount = BuildProgress;
             }
 
+        }
+
+        protected virtual void OnBuildableProgressEvent()
+        {
+            if (IsClient)
+                BuildableProgress?.Invoke(this, new PvPBuildProgressEventArgs(this));
+        }
+
+        protected virtual void OnCompletedBuildableEvent()
+        {
+            if (IsClient)
+                CompletedBuildable?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnUpdate() { }
@@ -599,6 +611,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 PlayBuildableConstructionCompletedSound();
             }
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
+            OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
         }
@@ -608,6 +621,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             BuildableState = PvPBuildableState.Completed;
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
+            OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
@@ -655,7 +669,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);
-            //    Invoke("iDestroyParentGameObject", 1f);
+            //   Invoke("iDestroyParentGameObject", 1f);
         }
         private void iDestroyParentGameObject()
         {

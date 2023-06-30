@@ -144,6 +144,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             OnStartBuildingUnitServerRpc(category, prefabName);
         }
+        protected override void OnUnit_BuildingStarted(ulong objectId)
+        {
+            if (IsClient)
+                base.OnUnit_BuildingStarted(objectId);
+            if (IsServer)
+                OnUnit_BuildingStartedClientRpc(objectId);
+
+        }
+
+        protected override void OnUnit_CompletedBuildable(ulong objectId)
+        {
+            if (IsClient)
+                base.OnUnit_CompletedBuildable(objectId);
+            if (IsServer)
+                OnUnit_CompletedBuildableClientRpc(objectId);
+        }
+
+        protected override void OnUnitUnderConstruction_Destroyed()
+        {
+            if (IsClient)
+                base.OnUnitUnderConstruction_Destroyed();
+            if (IsServer)
+                OnUnitUnderConstruction_DestroyedClientRpc();
+        }
+
 
         // ----------------------------------------
         protected override void AddBuildRateBoostProviders(
@@ -269,5 +294,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
         }
 
+        [ClientRpc]
+        private void OnUnit_BuildingStartedClientRpc(ulong objectId)
+        {
+            OnUnit_BuildingStarted(objectId);
+        }
+
+        [ClientRpc]
+        private void OnUnit_CompletedBuildableClientRpc(ulong objectId)
+        {
+            OnUnit_CompletedBuildable(objectId);
+        }
+
+        [ClientRpc]
+        private void OnUnitUnderConstruction_DestroyedClientRpc()
+        {
+            OnUnitUnderConstruction_Destroyed();
+        }
     }
 }

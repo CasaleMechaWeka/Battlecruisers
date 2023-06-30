@@ -15,6 +15,7 @@ using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode.Components;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -194,7 +195,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.FACTORY, sender.ToString());
 
             IPvPUnit unit = sender.Parse<IPvPUnit>();
+            PvPBuildable<PvPBuildableActivationArgs> buildable = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+
             UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
+            if (IsServer)
+            {
+                if (buildable._parent.GetComponent<NetworkObject>() != null)
+                {
+                    OnUnit_BuildingStarted(buildable._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                }
+            }
+        }
+
+        protected virtual void OnUnit_BuildingStarted(ulong objectId)
+        {
+            if (IsClient)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                        UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
+                    }
+                }
+
+            }
         }
 
         private void Unit_CompletedBuildable(object sender, EventArgs e)
@@ -203,6 +230,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(UnitUnderConstruction));
             CleanUpUnitUnderConstruction();
+            if (IsServer)
+            {
+                PvPBuildable<PvPBuildableActivationArgs> buildable = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+                if (buildable._parent.GetComponent<NetworkObject>() != null)
+                {
+                    OnUnit_CompletedBuildable(buildable._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                }
+            }
+        }
+
+        protected virtual void OnUnit_CompletedBuildable(ulong objectId)
+        {
+            if (IsClient)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                        UnitCompleted?.Invoke(this, new PvPUnitCompletedEventArgs(unit));
+                    }
+                }
+
+            }
         }
 
         private void UnitUnderConstruction_Destroyed(object sender, PvPDestroyedEventArgs e)
@@ -211,6 +263,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             CleanUpUnitUnderConstruction();
             UnitUnderConstructionDestroyed?.Invoke(this, EventArgs.Empty);
+            OnUnitUnderConstruction_Destroyed();
+        }
+
+        protected virtual void OnUnitUnderConstruction_Destroyed()
+        {
+            if (IsClient)
+            {
+                UnitUnderConstructionDestroyed?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -265,7 +326,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Log(Tags.FACTORY, unit?.ToString());
             UnitWrapper = unit;
-            OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName);
+            if (IsClient)
+                OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName);
         }
 
         public void StopBuildingUnit()

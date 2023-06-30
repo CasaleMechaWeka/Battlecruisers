@@ -61,6 +61,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         base.MaskHighlightableSize.y * 8);
             }
         }
+
+        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
+
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
@@ -162,6 +165,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 && Target != null && IsServer)
             {
                 TryBombTarget();
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (IsServer)
+            {
+                if (PvP_BuildProgress.Value != BuildProgress)
+                    PvP_BuildProgress.Value = BuildProgress;
+            }
+            if (IsClient)
+            {
+                BuildProgress = PvP_BuildProgress.Value;
             }
         }
 
@@ -323,6 +339,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             _aircraftTrailObj.SetActive(true);
         }
+
+        protected override void OnBuildableProgressEvent()
+        {
+            if (IsClient)
+                base.OnBuildableProgressEvent();
+            if (IsServer)
+                OnBuildableProgressEventClientRpc();
+        }
+        protected override void OnCompletedBuildableEvent()
+        {
+            if (IsClient)
+                base.OnCompletedBuildableEvent();
+            if (IsServer)
+                OnCompletedBuildableEventClientRpc();
+        }
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
         //-------------------------------------- RPCs -------------------------------------------------//
 
         [ClientRpc]
@@ -362,6 +401,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnActivatePvPClientRpc()
         {
             Activate_PvPClient();
+        }
+
+        [ClientRpc]
+        private void OnBuildableProgressEventClientRpc()
+        {
+            OnBuildableProgressEvent();
+        }
+
+
+        [ClientRpc]
+        private void OnCompletedBuildableEventClientRpc()
+        {
+            OnCompletedBuildableEvent();
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
         }
     }
 }
