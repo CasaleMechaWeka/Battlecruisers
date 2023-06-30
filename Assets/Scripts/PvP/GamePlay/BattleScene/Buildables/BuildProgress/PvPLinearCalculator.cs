@@ -19,7 +19,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // _buildMultiplier = buildSpeedMultiplier;
 
             // should be disabled in Production
-            _buildMultiplier = BuildSpeedMultipliers.FAST;
+            //_buildMultiplier = BuildSpeedMultipliers.FAST;
+            _buildMultiplier = 10f;
         }
 
         public float CalculateBuildProgressInDroneS(IPvPBuildable buildableUnderConstruction, float deltaTime)

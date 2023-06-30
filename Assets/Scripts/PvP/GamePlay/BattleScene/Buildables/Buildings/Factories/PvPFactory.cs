@@ -14,6 +14,7 @@ using System;
 using Unity.Services.Analytics;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Unity.Netcode.Components;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -155,6 +156,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Vector3 spawnPosition = _unitSpawnPositionFinder.FindSpawnPosition(UnitUnderConstruction);
             UnitUnderConstruction.Position = spawnPosition;
             UnitUnderConstruction.Rotation = transform.rotation;
+
+            if (UnitUnderConstruction.GameObject.GetComponent<NetworkTransform>() != null)
+            {
+                UnitUnderConstruction.GameObject.GetComponent<NetworkTransform>().Teleport(spawnPosition, transform.rotation, UnitUnderConstruction.GameObject.transform.localScale);
+            }
 
             UnitUnderConstruction.StartedConstruction += Unit_BuildingStarted;
             UnitUnderConstruction.CompletedBuildable += Unit_CompletedBuildable;

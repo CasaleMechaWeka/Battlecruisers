@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -127,6 +128,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _targetProcessor.AddTargetConsumer(this);
 
             _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
+
+            /*            if (GetComponent<NetworkTransform>() != null)
+                            GetComponent<NetworkTransform>().enabled = true;
+                        if (GetComponent<NetworkRigidbody2D>() != null)
+                            GetComponent<NetworkRigidbody2D>().enabled = true;*/
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
@@ -305,7 +311,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // set Position of PvPBuildable
         protected override void CallRpc_SetPosition(Vector3 pos)
         {
-            OnSetPositionClientRpc(pos);
+            //  OnSetPositionClientRpc(pos);
         }
 
         // Set Rotation of PvPBuildable
@@ -329,7 +335,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {
             _buildableProgress.gameObject.SetActive(isEnabled);
-            Invoke("ActiveTrail", 1f);
+            if (!isEnabled)
+            {
+                Invoke("ActiveTrail", 0.5f);
+                /*                if (GetComponent<NetworkTransform>() != null)
+                                    GetComponent<NetworkTransform>().enabled = true;
+                                if (GetComponent<NetworkRigidbody2D>() != null)
+                                    GetComponent<NetworkRigidbody2D>().enabled = true;*/
+            }
+
         }
 
         [ClientRpc]
