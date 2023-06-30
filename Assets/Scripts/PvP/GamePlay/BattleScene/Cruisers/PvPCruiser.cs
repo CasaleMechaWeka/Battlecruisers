@@ -45,6 +45,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -133,6 +136,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_IdleDronesEnded = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_popLimitReachedFeedback = new NetworkVariable<bool>();
 
+        private IPvPBroadcastingProperty<bool> _CruiserHasActiveDrones;
 
 
         private void Start()
@@ -269,9 +273,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(unitReadySignalInitialiser);
             _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
 
-            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
-            Assert.IsNotNull(droneSoundFeedbackInitialiser);
-            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones,  /* FactoryProvider.SettingsManager*/ null);
+
+            _CruiserHasActiveDrones = args.HasActiveDrones;
+            _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;
+
+            /*            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
+                        Assert.IsNotNull(droneSoundFeedbackInitialiser);
+                        _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);*/
+
+
 
 
 
@@ -297,6 +307,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             }
 
+        }
+
+
+        private void CruiserHasActiveDrones_ValueChanged(object sender, EventArgs e)
+        {
+            PvP_PlayDroneFeedbackSoundClientRpc();
         }
 
         private void _clickHandler_SingleClick(object sender, EventArgs e)
@@ -420,6 +436,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
+            _CruiserHasActiveDrones.ValueChanged -= CruiserHasActiveDrones_ValueChanged;
             if (Faction == PvPFaction.Reds)
             {
                 //Debug.Log(maxHealth);
@@ -510,6 +527,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
             PvPPrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
             PvP_PrioritisedSoundClientRpc(sound.Key.Type, sound.Key.Name, sound.Priority);
+        }
+
+        [ClientRpc]
+        private void PvP_PlayDroneFeedbackSoundClientRpc()
+        {
+            PvPDroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<PvPDroneSoundFeedbackInitialiser>();
+            Assert.IsNotNull(droneSoundFeedbackInitialiser);
+            AudioSource audioSource = droneSoundFeedbackInitialiser.gameObject.GetComponentInChildren<AudioSource>();
+
+            IPvPAudioSource _audioSource = new PvPEffectVolumeAudioSource(
+                        new PvPAudioSourceBC(audioSource),
+                        PvPBattleSceneGodClient.Instance.factoryProvider.SettingsManager, 2);
+            _audioSource?.Play(isSpatial: true);
+            //   _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
         }
     }
 

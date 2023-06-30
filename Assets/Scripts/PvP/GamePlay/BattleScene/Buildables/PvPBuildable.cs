@@ -446,7 +446,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public virtual void Activate_PvPClient()
         {
-            
+
         }
 
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
@@ -655,7 +655,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);
-            Invoke("iDestroyParentGameObject", 1f);
+            //    Invoke("iDestroyParentGameObject", 1f);
         }
         private void iDestroyParentGameObject()
         {
@@ -740,7 +740,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void CallRpc_PlayDeathSound()
         {
-            _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+            if (IsClient)
+                _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
         }
 
         protected virtual void CallRpc_SyncFaction(PvPFaction faction)
