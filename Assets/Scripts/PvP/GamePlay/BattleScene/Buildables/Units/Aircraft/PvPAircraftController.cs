@@ -26,7 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private SpriteRenderer _spriteRenderer;
         private IPvPBoostable _velocityBoostable;
         private float _fuzziedMaxVelocityInMPerS;
-        private TrailRenderer _aircraftTrail;
+        protected TrailRenderer _aircraftTrail;
+        protected GameObject _aircraftTrailObj;
         private bool _onSeabed;
 
         protected IPvPSpriteChooser _spriteChooser;
@@ -94,12 +95,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_spriteRenderer);
 
             _aircraftTrail = transform.FindNamedComponent<TrailRenderer>("AircraftTrail");
+            _aircraftTrailObj = transform.FindNamedComponent<TrailRenderer>("AircraftTrail").gameObject;
         }
 
         public override void Initialise( /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
             base.Initialise( /* uiManager, */ factoryProvider);
 
+            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _fuzziedMaxVelocityInMPerS = PvPRandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, PvPChangeDirection.Both);
+            DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
+        }
+
+        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        {
+            base.Initialise(factoryProvider, uiManager);
             _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
             _fuzziedMaxVelocityInMPerS = PvPRandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, PvPChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
@@ -134,10 +144,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _kamikazeController.gameObject.SetActive(false);
         }
 
+        public override void Activate_PvPClient()
+        {
+            _aircraftTrail.Clear();
+            base.Activate_PvPClient();
+            /*            PatrollingMovementController
+                            = _movementControllerFactory.CreatePatrollingMovementController(
+                                rigidBody,
+                                maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
+                                patrolPoints: GetPatrolPoints(),
+                                positionEqualityMarginInM: PositionEqualityMarginInM);
+
+
+                        ActiveMovementController = DummyMovementController;
+                        ActiveMovementController.Velocity = Vector2.zero;
+
+                        _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
+                        _onSeabed = false;
+
+                        _kamikazeController.gameObject.SetActive(false);*/
+        }
+
         protected override void OnBuildableCompleted()
         {
+
             base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
+            _aircraftTrailObj.SetActive(true);
         }
 
         protected override void AddBuildRateBoostProviders(

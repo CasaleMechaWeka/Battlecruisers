@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// <summary>
         /// 0-1
         /// </summary>
-        float BuildProgress { get; }
+        float BuildProgress { get; }        
         PvPBuildableState BuildableState { get; }
         int NumOfDronesRequired { get; }
         float BuildTimeInS { get; }

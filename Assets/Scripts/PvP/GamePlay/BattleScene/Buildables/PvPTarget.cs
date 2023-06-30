@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float maxHealth;
 
         public float MaxHealth => maxHealth;
-        public bool IsDestroyed => Health == 0;
+        public bool IsDestroyed => IsServer ? Health == 0 : pvp_Health.Value == 0;
         public PvPFaction Faction { get; protected set; }
         public GameObject GameObject => gameObject;
         public abstract PvPTargetType TargetType { get; }
@@ -36,9 +36,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public Action clickedRepairButton { get; set; }
 
+        private const float NotZero = 100.0f;
 
         // network variables
-        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = 0f };
+        public NetworkVariable<float> pvp_Health = new NetworkVariable<float> { Value = NotZero };
         public NetworkVariable<bool> pvp_Destroyed = new NetworkVariable<bool> { Value = false };
 
         public Quaternion Rotation
@@ -152,10 +153,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         private void OnClickedRepairButton()
-        { 
+        {
             CallRpc_ClickedRepairButton();
         }
-         
+
 
         private void _health_HealthGone(object sender, EventArgs e)
         {
@@ -294,7 +295,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void CallRpc_ClickedRepairButton()
         {
-            
+
         }
     }
 }

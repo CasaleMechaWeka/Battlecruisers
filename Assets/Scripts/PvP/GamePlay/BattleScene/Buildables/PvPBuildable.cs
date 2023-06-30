@@ -30,6 +30,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -352,6 +353,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
             }
 
+            if (_parent.GetComponent<PvPUnitWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
+            }
+
 
 
         }
@@ -388,10 +394,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = true;
             }
+            if (_parent.GetComponent<PvPUnitWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPUnitWrapper>().IsVisible = true;
+            }
             ParentCruiser = parentCruiser;
             EnemyCruiser = enemyCruiser;
             _cruiserSpecificFactories = cruiserSpecificFactories;
-
+            _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
             CallRpc_SyncFaction(Faction);
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
@@ -414,6 +424,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = true;
             }
+            if (_parent.GetComponent<PvPUnitWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPUnitWrapper>().IsVisible = true;
+            }
             ParentCruiser = activationArgs.ParentCruiser;
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
@@ -428,6 +442,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _localBoosterBoostableGroup = _factoryProvider.BoostFactory.CreateBoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_factoryProvider.BoostFactory, _cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+        }
+
+        public virtual void Activate_PvPClient()
+        {
+            
         }
 
         public void Activate(TPvPActivationArgs activationArgs, PvPFaction faction)
@@ -630,6 +649,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)
             {
                 _parent.GetComponent<PvPBuildingWrapper>().IsVisible = false;
+            }
+            if (_parent.GetComponent<PvPUnitWrapper>() is not null && IsServer)
+            {
+                _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);
             Invoke("iDestroyParentGameObject", 1f);

@@ -73,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
-        private IPvPPrefabFactory prefabFactory;
+        public IPvPPrefabFactory prefabFactory;
         private IPvPSpriteProvider spriteProvider;
         public PvPFactoryProvider factoryProvider;
         private PvPBattleSceneGodComponents components;

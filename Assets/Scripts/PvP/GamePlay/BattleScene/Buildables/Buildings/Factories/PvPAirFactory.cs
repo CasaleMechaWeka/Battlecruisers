@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using System.Collections.Generic;
@@ -137,6 +138,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnSyncFationClientRpc(faction);
         }
 
+        // StartBuildingUnit
+
+        protected override void OnStartBuildingUnit(PvPUnitCategory category, string prefabName)
+        {
+            OnStartBuildingUnitServerRpc(category, prefabName);
+        }
+
         // ----------------------------------------
         protected override void AddBuildRateBoostProviders(
             IPvPGlobalBoostProviders globalBoostProviders,
@@ -144,6 +152,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders);
+        }
+
+        private void LateUpdate()
+        {
+            if (IsServer)
+            {
+                if (PvP_BuildProgress.Value != BuildProgress)
+                    PvP_BuildProgress.Value = BuildProgress;
+            }
+            if (IsClient)
+            {
+                BuildProgress = PvP_BuildProgress.Value;
+            }
         }
 
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
@@ -239,6 +260,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnSyncFationClientRpc(PvPFaction faction)
         {
             Faction = faction;
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName)
+        {
+            PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
+            UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
         }
 
     }

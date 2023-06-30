@@ -65,7 +65,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void Activate(PvPBuildingActivationArgs activationArgs)
         {
-
             base.Activate(activationArgs);                
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;

@@ -34,6 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
+        public IPvPPrefabFactory prefabFactory;
         private IApplicationModel applicationModel;
         private IDataProvider dataProvider;
         private PvPBattleSceneGodComponents components;
@@ -114,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
             IPvPPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            IPvPPrefabFactory prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
+            prefabFactory = new PvPPrefabFactory(prefabCache, null, commonStrings);
             IPvPSpriteProvider spriteProvider = new PvPSpriteProvider(new PvPSpriteFetcher());
 
 

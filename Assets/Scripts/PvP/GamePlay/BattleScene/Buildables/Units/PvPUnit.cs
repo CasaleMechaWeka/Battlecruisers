@@ -81,6 +81,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             rigidBody.gravityScale = 0;
         }
 
+        public override void Activate_PvPClient()
+        {
+            base.Activate_PvPClient();
+/*            if (IsOwner)
+                // FacingDirection = ParentCruiser.Direction;
+                FacingDirection = PvPBattleSceneGodClient.Instance.playerCruiser.Direction;
+
+            HealthBar.IsVisible = true;
+            // Disable gravity
+            rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            rigidBody.gravityScale = 0;*/
+        }
+
         protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();

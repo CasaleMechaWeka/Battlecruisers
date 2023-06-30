@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         PvPUnitCategory UnitCategory { get; }
         int NumOfDrones { get; }
-        IPvPBuildableWrapper<IPvPUnit> UnitWrapper { get; }
+        IPvPBuildableWrapper<IPvPUnit> UnitWrapper { get; set; }
         IPvPUnit UnitUnderConstruction { get; }
         IPvPObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }

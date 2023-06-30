@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -86,6 +87,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
+        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        {
+            base.Initialise(factoryProvider, uiManager);
+            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
+        }
+
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
@@ -99,10 +106,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
 
             _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
+
+            OnActivatePvPClientRpc();
         }
 
+        public override void Activate_PvPClient()
+        {
+            base.Activate_PvPClient();
+            /*            _haveDroppedBombOnRun = false;
+                        _isAtCruisingHeight = false;*/
+        }
         protected async override void OnBuildableCompleted()
         {
+
             base.OnBuildableCompleted();
 
             Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
@@ -137,7 +153,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (_isAtCruisingHeight
                 && !IsInKamikazeMode
-                && Target != null)
+                && Target != null && IsServer)
             {
                 TryBombTarget();
             }
@@ -267,6 +283,71 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _targetProcessor.RemoveTargetConsumer(this);
             _targetProcessor = null;
+        }
+
+        //------------------------------------ methods for sync by Sava ------------------------------//
+
+        // Visibility 
+        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
+        {
+            if (IsClient)
+                base.OnValueChangedIsEnableRenderes(isEnabled);
+            if (IsServer)
+                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
+        }
+
+        // ProgressController Visible
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            OnProgressControllerVisibleClientRpc(isEnabled);
+        }
+
+        // set Position of PvPBuildable
+        protected override void CallRpc_SetPosition(Vector3 pos)
+        {
+            OnSetPositionClientRpc(pos);
+        }
+
+        // Set Rotation of PvPBuildable
+        protected override void CallRpc_SetRotation(Quaternion rotation)
+        {
+            OnSetRotationClientRpc(rotation);
+        }
+        private void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
+        }
+        //-------------------------------------- RPCs -------------------------------------------------//
+
+        [ClientRpc]
+        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
+        {
+            OnValueChangedIsEnableRenderes(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            Invoke("ActiveTrail", 1f);
+        }
+
+        [ClientRpc]
+        private void OnSetPositionClientRpc(Vector3 pos)
+        {
+            Position = pos;
+        }
+
+        [ClientRpc]
+        private void OnSetRotationClientRpc(Quaternion rotation)
+        {
+            Rotation = rotation;
+        }
+
+        [ClientRpc]
+        private void OnActivatePvPClientRpc()
+        {
+            Activate_PvPClient();
         }
     }
 }
