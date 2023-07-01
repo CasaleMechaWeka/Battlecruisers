@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         PvPUnitCategory UnitCategory { get; }
         int NumOfDrones { get; }
         IPvPBuildableWrapper<IPvPUnit> UnitWrapper { get; set; }
-        IPvPUnit UnitUnderConstruction { get; }
+        IPvPUnit UnitUnderConstruction { get; set; }
         IPvPObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
         IPvPAudioClipWrapper SelectedSound { get; }
@@ -22,10 +22,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void StopBuildingUnit();
         void PauseBuildingUnit();
         void ResumeBuildingUnit();
+        // void OnNewFactoryChosen();
 
         event EventHandler<PvPUnitStartedEventArgs> UnitStarted;
         event EventHandler<PvPUnitCompletedEventArgs> UnitCompleted;
         event EventHandler NewUnitChosen;
         event EventHandler UnitUnderConstructionDestroyed;
+        // event EventHandler<PvPUnitStartedEventArgs> NewFactoryChosen;
     }
 }

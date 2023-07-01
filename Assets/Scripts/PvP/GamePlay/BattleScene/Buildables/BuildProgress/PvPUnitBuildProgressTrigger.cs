@@ -2,6 +2,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using System;
+using System.Diagnostics;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
@@ -25,6 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 if (_factory != null)
                 {
+                    //     _factory.NewFactoryChosen -= _factory_NewChosen;
                     _factory.UnitStarted -= _factory_UnitStarted;
                     _factory.NewUnitChosen -= _factory_NewUnitChosen;
                     _factory.UnitUnderConstructionDestroyed -= _factory_UnitUnderConstructionDestroyed;
@@ -35,7 +37,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 if (_factory != null)
                 {
                     ShowBuildProgressIfNecessary(_factory.UnitUnderConstruction);
-
+                    //    ShowBuildProgressIfNecessary(_factory.UnitWrapper?.Buildable);
+                    //    _factory.NewFactoryChosen += _factory_NewChosen;
                     _factory.UnitStarted += _factory_UnitStarted;
                     _factory.NewUnitChosen += _factory_NewUnitChosen;
                     _factory.UnitUnderConstructionDestroyed += _factory_UnitUnderConstructionDestroyed;
@@ -43,6 +46,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        private void _factory_NewChosen(object sender, PvPUnitStartedEventArgs e)
+        {
+            ShowBuildProgressIfNecessary(e.StartedUnit);
+        }
         private void _factory_UnitStarted(object sender, PvPUnitStartedEventArgs e)
         {
             ShowBuildProgressIfNecessary(e.StartedUnit);

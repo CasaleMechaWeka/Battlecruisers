@@ -31,10 +31,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler<PvPUnitCompletedEventArgs> UnitCompleted;
         public event EventHandler NewUnitChosen;
         public event EventHandler UnitUnderConstructionDestroyed;
+        // public event EventHandler<PvPUnitStartedEventArgs> NewFactoryChosen;
 
         #region Properties
         public abstract LayerMask UnitLayerMask { get; }
-        public IPvPUnit UnitUnderConstruction { get; private set; }
+        public IPvPUnit UnitUnderConstruction { get; set; }
         public override bool IsBoostable => true;
 
         private PvPObservableValue<bool> _isUnitPaused;
@@ -219,11 +220,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     if (obj.NetworkObjectId == objectId)
                     {
                         IPvPUnit unit = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                        UnitUnderConstruction = unit;
                         UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
                     }
                 }
             }
         }
+
+        /*        void OnNewFactoryChosen()
+                {
+                    NewFactoryChosen?.Invoke();
+                }*/
 
         protected virtual void OnNewUnitChosen()
         {
@@ -336,6 +343,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsClient)
                 OnStartBuildingUnit(UnitWrapper.Buildable.Category, UnitWrapper.Buildable.PrefabName);
         }
+
+
 
         public void StopBuildingUnit()
         {
