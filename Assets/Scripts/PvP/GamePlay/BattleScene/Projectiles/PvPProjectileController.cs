@@ -13,11 +13,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private string _name;
         private Vector3 _pos;
 
+        // Set Position
         protected override void OnSetPosition_Visible(Vector3 position, bool visible)
         {
             OnSetPosition_VisibleClientRpc(position, visible);
         }
-
+        // PlayExplosionSound
         protected override void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
         {
             OnPlayExplosionSoundClientRpc(type, name, position);
