@@ -143,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
             _buildingPlacementBeacon.gameObject.SetActive(false);
 
-         
+
 
         }
 
@@ -153,7 +153,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _buildingPlacementFeedback.gameObject.SetActive(false);
             _renderer.gameObject.SetActive(false);
-       
+
 
         }
 
@@ -261,7 +261,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 if (pvp_IsVisibleRenderer.Value && pvp_IsFree.Value)
                 {
-                    //   _parentCruiser.ConstructSelectedBuilding(this);
+                    //  _parentCruiser.ConstructSelectedBuilding(this);
 
                     //  ServerRpc call
                     OnPointerClickServerRpc(gameObject.name);
@@ -307,8 +307,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
             if (NetworkManager.ConnectedClientsIds.Contains(clientId))
-            {            
-                    _parentCruiser.ConstructSelectedBuilding(_parentCruiser.GetSlotWrapperController()._slotsByName[slotName]);
+            {
+                _parentCruiser.ConstructSelectedBuilding(_parentCruiser.GetSlotWrapperController()._slotsByName[slotName]);
             }
         }
 
@@ -316,14 +316,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void controlBuildingPlacementFeedbackClientRpc(bool active)
         {
-         
-                _renderer.gameObject.SetActive(active);
-      
-                _buildingPlacementFeedback.gameObject.SetActive(active);
-         
-                Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
-           
-                _buildingPlacementBeacon.gameObject.SetActive(false);      
+
+            _renderer.gameObject.SetActive(active);
+
+            _buildingPlacementFeedback.gameObject.SetActive(active);
+
+            Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
+
+            _buildingPlacementBeacon.gameObject.SetActive(false);
         }
 
         [ClientRpc]

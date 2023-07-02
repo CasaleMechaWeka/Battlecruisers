@@ -26,6 +26,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using static BattleCruisers.Data.Static.StaticPrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -57,10 +58,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, factoryProvider, clientID);
         }
-        
+
         public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPvPPrefabKey unitKey)
         {
             return _prefabCache.GetUnit(unitKey);
+        }
+
+        public PvPBuildableOutlineController GetOutline(IPvPPrefabKey outlineKey)
+        {
+            return _prefabCache.GetOutline(outlineKey);
         }
 
         public async Task<IPvPUnit> CreateUnit(
@@ -79,19 +85,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
 
-         //   var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPBuildingKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
+            //   var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(new PvPBuildingKey(buildableWrapperPrefab.Buildable.Category, buildableWrapperPrefab.Buildable.PrefabName), buildableWrapperPrefab);
 
-         //   if (IsLoaded)
-         //   {
-                PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
-                buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
-                buildableWrapper.gameObject.SetActive(true);
-                buildableWrapper.StaticInitialise(_commonStrings);
-                buildableWrapper.Buildable.Initialise(factoryProvider);
-                // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
-                return buildableWrapper.Buildable;
-        //    }
-         //   return null;
+            //   if (IsLoaded)
+            //   {
+            PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
+            buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
+            buildableWrapper.gameObject.SetActive(true);
+            buildableWrapper.StaticInitialise(_commonStrings);
+            buildableWrapper.Buildable.Initialise(factoryProvider);
+            // Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
+            return buildableWrapper.Buildable;
+            //    }
+            //   return null;
 
         }
 
@@ -193,13 +199,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public async Task<IPvPAudioSourcePoolable> CreateAudioSource(IPvPDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
-        //    var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.AudioSource, _prefabCache.AudioSource);
-        //    if (IsLoaded)
-        //    {
-                PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
-                return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
-        //    }
-        //    return null;
+            //    var IsLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(PvPStaticPrefabKeys.AudioSource, _prefabCache.AudioSource);
+            //    if (IsLoaded)
+            //    {
+            PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
+            return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+            //    }
+            //    return null;
         }
 
         public PvPPrefab GetPrefab(string prefabPath)

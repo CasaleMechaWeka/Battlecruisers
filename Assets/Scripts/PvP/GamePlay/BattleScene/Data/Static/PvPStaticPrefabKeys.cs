@@ -228,5 +228,67 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
         }
 
         public static IPvPPrefabKey AudioSource { get; } = new PvPGenericKey("PvPAudioSource", "UI/Sound");
+
+        public static class PvPBuildableOutlines
+        {
+            public static PvPBuildableOutlineKey PvPAirFactoryOutline { get; } = new PvPBuildableOutlineKey("PvPAirFactoryOutline");
+            public static PvPBuildableOutlineKey PvPAntiAirTurretOutline { get; } = new PvPBuildableOutlineKey("PvPAntiAirTurretOutline");
+            public static PvPBuildableOutlineKey PvPAntiShipTurretOutline { get; } = new PvPBuildableOutlineKey("PvPAntiShipTurretOutline");
+            public static PvPBuildableOutlineKey PvPArtilleryOutline { get; } = new PvPBuildableOutlineKey("PvPArtilleryOutline");
+            public static PvPBuildableOutlineKey PvPBroadsidesOutline { get; } = new PvPBuildableOutlineKey("PvPBroadsidesOutline");
+            public static PvPBuildableOutlineKey PvPControlTowerOutline { get; } = new PvPBuildableOutlineKey("PvPControlTowerOutline");
+            public static PvPBuildableOutlineKey PvPDeathstarLauncherOutline { get; } = new PvPBuildableOutlineKey("PvPDeathstarLauncherOutline");
+            public static PvPBuildableOutlineKey PvPEngineeringBay4Outline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBay4Outline");
+            public static PvPBuildableOutlineKey PvPEngineeringBay8Outline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBay8Outline");
+            public static PvPBuildableOutlineKey PvPEngineeringBayOutline { get; } = new PvPBuildableOutlineKey("PvPEngineeringBayOutline");
+            public static PvPBuildableOutlineKey PvPGatlingMortarOutline { get; } = new PvPBuildableOutlineKey("PvPGatlingMortarOutline");
+            public static PvPBuildableOutlineKey PvPKamikazeSignalOutline { get; } = new PvPBuildableOutlineKey("PvPKamikazeSignalOutline");
+            public static PvPBuildableOutlineKey PvPLocalBoosterOutline { get; } = new PvPBuildableOutlineKey("PvPLocalBoosterOutline");
+            public static PvPBuildableOutlineKey PvPMLRSOutline { get; } = new PvPBuildableOutlineKey("PvPMLRSOutline");
+            public static PvPBuildableOutlineKey PvPMortarOutline { get; } = new PvPBuildableOutlineKey("PvPMortarOutline");
+            public static PvPBuildableOutlineKey PvPNavalFactoryOutline { get; } = new PvPBuildableOutlineKey("PvPNavalFactoryOutline");
+            public static PvPBuildableOutlineKey PvPNukeLauncherOutline { get; } = new PvPBuildableOutlineKey("PvPNukeLauncherOutline");
+            public static PvPBuildableOutlineKey PvPRailgunOutline { get; } = new PvPBuildableOutlineKey("PvPRailgunOutline");
+            public static PvPBuildableOutlineKey PvPRocketLauncherOutline { get; } = new PvPBuildableOutlineKey("PvPRocketLauncherOutline");
+            public static PvPBuildableOutlineKey PvPSamSiteOutline { get; } = new PvPBuildableOutlineKey("PvPSamSiteOutline");
+            public static PvPBuildableOutlineKey PvPShieldGeneratorOutline { get; } = new PvPBuildableOutlineKey("PvPShieldGeneratorOutline");
+            public static PvPBuildableOutlineKey PvPStealthGeneratorOutline { get; } = new PvPBuildableOutlineKey("PvPStealthGeneratorOutline");
+            public static PvPBuildableOutlineKey PvPTeslaCoilOutline { get; } = new PvPBuildableOutlineKey("PvPTeslaCoilOutline");
+            public static PvPBuildableOutlineKey PvPUltraliskOutline { get; } = new PvPBuildableOutlineKey("PvPUltraliskOutline");
+
+            public static IList<IPvPPrefabKey> AllKeys
+            {
+                get
+                {
+                    return new List<IPvPPrefabKey>()
+                    {
+                        PvPAirFactoryOutline,
+                        PvPAntiAirTurretOutline,
+                        PvPAntiShipTurretOutline,
+                        PvPArtilleryOutline,
+                        PvPBroadsidesOutline,
+                        PvPControlTowerOutline,
+                        PvPDeathstarLauncherOutline,
+                        PvPEngineeringBay4Outline,
+                        PvPEngineeringBay8Outline,
+                        PvPEngineeringBayOutline,
+                        PvPGatlingMortarOutline,
+                        PvPKamikazeSignalOutline,
+                        PvPLocalBoosterOutline,
+                        PvPMLRSOutline,
+                        PvPMortarOutline,
+                        PvPNavalFactoryOutline,
+                        PvPNukeLauncherOutline,
+                        PvPRailgunOutline,
+                        PvPRocketLauncherOutline,
+                        PvPSamSiteOutline,
+                        PvPShieldGeneratorOutline,
+                        PvPStealthGeneratorOutline,
+                        PvPTeslaCoilOutline,
+                        PvPUltraliskOutline
+                    };
+                }
+            }
+        }
     }
 }

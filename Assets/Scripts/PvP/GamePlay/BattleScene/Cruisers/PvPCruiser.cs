@@ -48,6 +48,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -90,7 +91,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
-        public IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
+        public PvPBuildableOutlineController SelectedBuildableOutlinePrefab { get; set; }
+        private IPvPBuildableWrapper<IPvPBuilding> _selectedBuildingPrefab;
+        public IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab
+        {
+            get
+            {
+                return _selectedBuildingPrefab;
+            }
+            set
+            {
+                _selectedBuildingPrefab = value;
+                SelectedBuildableOutlinePrefab = FactoryProvider.PrefabFactory.GetOutline(new PvPBuildableOutlineKey(value.Buildable.PrefabName + "Outline"));
+            }
+        }
         public IPvPDroneConsumerProvider DroneConsumerProvider { get; private set; }
         public PvPDirection Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
@@ -344,7 +358,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IPvPBuilding building = await FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
-
 
             building.Activate(
                 new PvPBuildingActivationArgs(

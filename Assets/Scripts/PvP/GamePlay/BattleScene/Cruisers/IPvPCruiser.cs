@@ -13,13 +13,15 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
 using UnityEngine;
 using System.Threading.Tasks;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
     public interface IPvPCruiser : IPvPCruiserController, IPvPTarget, IPvPComparableItem, IPvPClickableEmitter
     {
-        
+
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
+        PvPBuildableOutlineController SelectedBuildableOutlinePrefab { get; set; }
         IPvPDroneConsumerProvider DroneConsumerProvider { get; }
         PvPDirection Direction { get; }
         float YAdjustmentInM { get; }

@@ -37,8 +37,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.M
             }
         }
 
-
-
         protected PvPPrefabKey(string prefabName)
         {
             _prefabName = prefabName;
