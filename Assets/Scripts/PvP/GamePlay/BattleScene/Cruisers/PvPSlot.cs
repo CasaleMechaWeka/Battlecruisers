@@ -15,6 +15,7 @@ using UnityEngine.EventSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using Unity.Netcode;
 using System.Linq;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -186,6 +187,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
+        private void SetSlotBuildingOutline(PvPBuildableOutlineController outline)
+        {
+            _buildingPlacer.PlaceOutline(outline, this);
+        }
+
         public event EventHandler Clicked;
 
         public void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<IPvPSlot> neighbouringSlots, IPvPBuildingPlacer buildingPlacer)
@@ -242,7 +248,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     controlBuildingPlacementBeacon(true);
                 }
             }
-
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -262,7 +267,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 if (pvp_IsVisibleRenderer.Value && pvp_IsFree.Value)
                 {
                     //  _parentCruiser.ConstructSelectedBuilding(this);
-
+                    SetSlotBuildingOutline(_parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab));
                     //  ServerRpc call
                     OnPointerClickServerRpc(gameObject.name);
                 }

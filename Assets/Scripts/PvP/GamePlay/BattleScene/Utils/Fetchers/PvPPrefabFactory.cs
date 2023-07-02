@@ -100,6 +100,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //   return null;
 
         }
+        public PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab)
+        {
+            PvPBuildableOutlineController outline = Object.Instantiate(outlinePrefab);
+            outline.StaticInitialise(_commonStrings);
+            return outline;
+        }
 
         private async Task<TBuildable> CreateUnitBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
