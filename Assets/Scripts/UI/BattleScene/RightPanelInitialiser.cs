@@ -28,7 +28,6 @@ namespace BattleCruisers.UI.BattleScene
         public ModalMenuController modalMenu;
         public MainMenuButtonController modalMainMenuButton;
         public HelpButton helpButton;
-        public RectTransform rectTransformThis;
 
         public RightPanelComponents Initialise(
             IApplicationModel applicationModel,
