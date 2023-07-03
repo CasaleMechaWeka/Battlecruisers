@@ -101,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _rigidBody = GetComponent<Rigidbody2D>();
             Assert.IsNotNull(_rigidBody);
-            _isActiveAndAlive = false;       
+            _isActiveAndAlive = false;
         }
 
         public virtual void Activate(TPvPActivationArgs activationArgs)
@@ -197,10 +197,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            string filePath = AssetDatabase.GetAssetPath(_impactSound.AudioClip);
-            string fileName = System.IO.Path.GetFileName(filePath);
-            OnPlayExplosionSound(PvPSoundType.Explosions, fileName.Split(".")[0], transform.position);
-           // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
+            /*            string filePath = AssetDatabase.GetAssetPath(_impactSound.AudioClip);
+                        string fileName = System.IO.Path.GetFileName(filePath);
+                        OnPlayExplosionSound(PvPSoundType.Explosions, fileName.Split(".")[0], transform.position);*/
+            OnPlayExplosionSound(PvPSoundType.Explosions, _impactSound.AudioClip.name, transform.position);
+            // _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
         private void AdjustGameObjectDirection()
@@ -241,7 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void OnSetPosition_Visible(Vector3 position, bool visible)
         {
-            
+
         }
 
         protected virtual void OnActiveClient(Vector3 velocity, float gravityScale)
@@ -250,7 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected virtual void OnPlayExplosionSound(PvPSoundType type, string name, Vector3 position)
         {
-            
+
         }
     }
 }
