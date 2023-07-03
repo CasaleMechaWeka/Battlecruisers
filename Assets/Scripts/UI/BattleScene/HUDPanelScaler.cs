@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    [RequireComponent(typeof(RectTransform))]
     public class HUDPanelScaler : MonoBehaviour
     {
         [SerializeField]
@@ -16,7 +15,19 @@ namespace BattleCruisers.UI.BattleScene
         private void Awake()
         {
             rectTransformThis = GetComponent<RectTransform>();
-            MakeBackgroundPanelFit();
+
+            if (rectTransformThis == null)
+            {
+                Debug.LogError("No RectTransform attached to this GameObject.");
+            }
+        }
+
+        private void Update()
+        {
+            if (rectTransformThis != null)
+            {
+                MakeBackgroundPanelFit();
+            }
         }
 
         public void MakeBackgroundPanelFit()

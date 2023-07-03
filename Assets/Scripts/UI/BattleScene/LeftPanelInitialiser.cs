@@ -37,7 +37,6 @@ namespace BattleCruisers.UI.BattleScene
         public BuildMenuInitialiser buildMenuInitialiser;
         public GameObject popLimitReachedFeedback;
 
-        public RectTransform rectTransformThis;
 
         
 

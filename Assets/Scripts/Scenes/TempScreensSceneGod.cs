@@ -247,6 +247,11 @@ namespace BattleCruisers.Scenes
             GoToScreen(shopPanelScreen);
         }
 
+        public void GotoBlackMarketScreen()
+        {
+            //
+        }
+
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)
         {
             IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);

@@ -48,14 +48,24 @@ namespace BattleCruisers.PostBattleScreen
         }
 
         // returns the remainder of the score towards the next level,
-        // based on the rank and current lifetime score passed in
-        public long CalculateXpToNextLevel(int rank, long lifetimeScore)
+        // based on the current lifetime score passed in
+        public long CalculateXpToNextLevel(long score)
         {
-            for (int i = 0; i < destructionRanks.Length - 1; i++)
+            int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
+
+            if (currentRank >= destructionRanks.Length - 1)
             {
-                lifetimeScore -= CalculateLevelXP(i);
+                // If the current rank is already the highest, there is no remainder
+                return 0;
             }
-            return lifetimeScore;
+
+            long currentRankThreshold = 2500 + 2500 * currentRank * currentRank;
+            long nextRankThreshold = 2500 + 2500 * (currentRank + 1) * (currentRank + 1);
+
+            long scoreDifference = nextRankThreshold - currentRankThreshold;
+            long scoreRemainder = score - currentRankThreshold;
+
+            return scoreRemainder;
         }
     }
 }

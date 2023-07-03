@@ -49,7 +49,6 @@ namespace BattleCruisers.Scenes
         public HomeScreenController homeScreen;
         public LevelsScreenController levelsScreen;
         public PostBattleScreenController postBattleScreen;
-        //public LoadoutScreenController loadoutScreen;
         public InfiniteLoadoutScreenController loadoutScreen;
         public SettingsScreenController settingsScreen;
         public BattleHubScreensController hubScreen;
@@ -59,6 +58,8 @@ namespace BattleCruisers.Scenes
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
         public FullScreenAdverts fullScreenads;
+        public ShopPanelScreenController shopPanelScreen;
+        public BlackMarketScreenController blackMarketScreen;
 
         public Animator thankYouPlane;
         [SerializeField]
@@ -138,6 +139,8 @@ namespace BattleCruisers.Scenes
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, trashDataList, _musicPlayer, commonStrings, storyStrings);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
+            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, nextLevelHelper);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -235,7 +238,12 @@ namespace BattleCruisers.Scenes
 
         public void GotoShopScreen()
         {
-            //place holder for now
+            GoToScreen(shopPanelScreen);
+        }
+
+        public void GotoBlackMarketScreen()
+        {
+            GoToScreen(blackMarketScreen);
         }
 
         private async Task InitialiseLevelsScreenAsync(IDifficultySpritesProvider difficultySpritesProvider, INextLevelHelper nextLevelHelper)

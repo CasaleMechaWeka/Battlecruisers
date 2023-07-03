@@ -7,7 +7,9 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
+using System.Runtime.InteropServices;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
 {
@@ -18,6 +20,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private readonly IMultiCache<Cruiser> _cruisers;
         private readonly IMultiCache<ExplosionController> _explosions;
         private readonly IMultiCache<ShipDeathInitialiser> _shipDeaths;
+        private readonly IMultiCache<CaptainExoData> _captains;
         private readonly IUntypedMultiCache<Projectile> _projectiles;
 
         public DroneController Drone { get; }

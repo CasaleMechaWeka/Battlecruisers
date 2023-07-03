@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Data.Models
 {
@@ -30,11 +31,12 @@ namespace BattleCruisers.Data.Models
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
+        ReadOnlyCollection<CaptainExoList> UnlockedCaptainExos { get; }
 
         NewItems<HullKey> NewHulls { get; }
         NewItems<BuildingKey> NewBuildings { get; }
         NewItems<UnitKey> NewUnits { get; }
-        //NewItems<CaptainKey> NewCaptains { get; }
+        //NewItems<CaptainExoKey> NewCaptainExos { get; }
 
         Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult);
 

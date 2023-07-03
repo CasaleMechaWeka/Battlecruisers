@@ -4,11 +4,8 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
-    public interface ICaptainData
+    public class CaptainExoList : MonoBehaviour
     {
-        Sprite CaptainImage { get; }
-        string CaptainName { get; }
-        string StringKeyBase { get; }
+
     }
 }
-

@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         IDataProvider _dataProvider;
 
-        public CanvasGroupButton backButton,buyButton;
+        public CanvasGroupButton backButton,buyButton,blackMarketButton;
         public GameObject PlayerCoinAmount;
 
         public void Initialise(
@@ -27,7 +27,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             base.Initialise(screensSceneGod);
 
             _dataProvider = dataProvider;
+            //Initialise each button with it's function
             backButton.Initialise(soundPlayer, Home, this);
+            blackMarketButton.Initialise(soundPlayer, BlackMarket, this);
 
 /*            Text coins = PlayerCoinAmount.GetComponent<Text>();
             coins.text = (dataProvider.GameModel.Coins).ToString();*/
@@ -44,6 +46,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         }
 
+
+        //All the button fucntions for shop screen
         public void Home()
         {
             _screensSceneGod.GotoHubScreen();
@@ -51,6 +55,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Buy()
         {
            //
+        }
+        public void BlackMarket()
+        {
+            _screensSceneGod.GotoBlackMarketScreen();
         }
     }
 }
