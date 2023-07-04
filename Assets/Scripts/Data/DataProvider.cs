@@ -38,7 +38,10 @@ namespace BattleCruisers.Data
                     _gameModel.PlayerLoadout.Create_buildsAnd_units();
                     SaveGame();
                 }
-                
+                if(_gameModel.CurrentCaptain == null)
+                {
+                    _gameModel.CurrentCaptain = StaticPrefabKeys.CaptainExos.CaptainExo_Charlie;
+                }
             }
             else
             {

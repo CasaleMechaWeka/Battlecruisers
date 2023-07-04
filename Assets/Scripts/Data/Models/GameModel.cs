@@ -196,9 +196,13 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private List<CompletedLevel> _completedLevels;
 
-        //[SerializeField]
-        //private List<CaptainList> _unlockedCaptains;
-
+        [SerializeField]
+        private CaptainExoKey _currentCaptain;
+        public CaptainExoKey CurrentCaptain
+        {
+            get => _currentCaptain;
+            set => _currentCaptain = value;
+        }
         [SerializeField]
         private long _lifetimeDestructionScore;
         public long LifetimeDestructionScore
@@ -238,7 +242,6 @@ namespace BattleCruisers.Data.Models
         [SerializeField]
         private int _selectedPvPLevel;
 
-        //public CaptainList _currentCaptain;
         [SerializeField]
         private SkirmishModel _skirmish;
 
@@ -369,6 +372,7 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
+            
         }
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)
