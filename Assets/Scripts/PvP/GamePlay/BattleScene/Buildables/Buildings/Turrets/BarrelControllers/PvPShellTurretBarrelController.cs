@@ -39,8 +39,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             foreach (PvPShellSpawner spawner in _shellSpawners)
             {
+ 
                 await spawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, args.TargetFilter);
+ 
             }
+
+  
         }
 
         public override void Fire(float angleInDegrees)

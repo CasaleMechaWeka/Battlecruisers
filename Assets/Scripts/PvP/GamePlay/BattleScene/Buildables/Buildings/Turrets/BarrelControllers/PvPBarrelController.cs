@@ -105,6 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by Server
         public async Task InitialiseAsync(IPvPBarrelControllerArgs args)
         {
+
             Assert.IsNotNull(args);
 
             _parent = args.Parent;
@@ -135,7 +136,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             await InternalInitialiseAsync(args);
 
             _updater = args.Updater;
+            
             _updater.Updated += _updater_Updated;
+    
         }
 
 

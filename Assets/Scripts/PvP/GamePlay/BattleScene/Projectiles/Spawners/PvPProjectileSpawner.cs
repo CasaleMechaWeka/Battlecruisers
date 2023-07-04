@@ -38,7 +38,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, IPvPSoundKey firingSound)
         {
-            PvPHelper.AssertIsNotNull(impactSound, args);           
+
+            PvPHelper.AssertIsNotNull(impactSound, args);
 
             _impactSound = new PvPAudioClipWrapper(impactSound);
             _parent = args.Parent;
@@ -61,6 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     args.FactoryProvider.SettingsManager);*/
             _firingSound = firingSound;
             _burstSize = args.BurstSize;
+
         }
 
         protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)

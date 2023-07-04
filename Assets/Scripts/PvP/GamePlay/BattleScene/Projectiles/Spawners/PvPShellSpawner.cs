@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             await base.InitialiseAsync(args, firingSound);
 
             PvPHelper.AssertIsNotNull(targetFilter);
-            _targetFilter = targetFilter;
+            _targetFilter = targetFilter; 
         }
 
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)

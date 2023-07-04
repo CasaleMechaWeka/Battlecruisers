@@ -159,6 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_targetProcessorWrapper);
             _targetProcessor = _targetProcessorWrapper.CreateTargetProcessor(args);
             _targetProcessor.AddTargetConsumer(this);
+
         }
 
         // should be called by client
@@ -171,8 +172,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPHelper.AssertIsNotNull(parent, factoryProvider);
 
             _parent = parent;
-        //    _enemyFaction = _parent.EnemyCruiser.Faction;
-            _factoryProvider = factoryProvider;            
+            //    _enemyFaction = _parent.EnemyCruiser.Faction;
+            _factoryProvider = factoryProvider;
             foreach (PvPBarrelController barrel in _barrels)
             {
                 IPvPBarrelControllerArgs barrelArgs
