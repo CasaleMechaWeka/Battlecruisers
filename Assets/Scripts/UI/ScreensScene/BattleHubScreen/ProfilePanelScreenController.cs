@@ -51,12 +51,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsButton.Initialise(_soundPlayer, ChangeCaptain);
 
             // XP progress bar setup
-            rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+
+
+/*            rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
             currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
             levelXP = (int)(ranker.CalculateLevelXP(rank));
             xpBar.setValues(currentXP, levelXP);
             currentXPString.text = FormatNumber(currentXP).ToString();
-            levelXPString.text = FormatNumber(levelXP).ToString();
+            levelXPString.text = FormatNumber(levelXP).ToString();*/
         }
 
         private void ChangeCaptain()

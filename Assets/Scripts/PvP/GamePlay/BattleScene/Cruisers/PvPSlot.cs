@@ -55,7 +55,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public ObservableCollection<IPvPBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; private set; }
         public IPvPTransform Transform { get; private set; }
-        public Vector3 BuildingPlacementPoint { get; private set; }
+        private Vector3 _buildingPlacementPoint;
+        public Vector3 BuildingPlacementPoint
+        {
+            get
+            {
+                Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+                _buildingPlacementPoint = buildingPlacementPoint.position;
+                return _buildingPlacementPoint;
+            }
+            set
+            {
+                _buildingPlacementPoint = value;
+            }
+        }
         public Vector2 Position => transform.position;
 
         private IPvPSettableBroadcastingProperty<IPvPBuilding> _baseBuilding;
@@ -204,8 +217,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _explosion = _explosionController.Initialise();
-            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
-            BuildingPlacementPoint = buildingPlacementPoint.position;
+            /*            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+                        BuildingPlacementPoint = buildingPlacementPoint.position;*/
 
             SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _size = slotRenderer.bounds.size;
@@ -267,11 +280,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 if (pvp_IsVisibleRenderer.Value && pvp_IsFree.Value)
                 {
                     //  _parentCruiser.ConstructSelectedBuilding(this);
-                    SetSlotBuildingOutline(_parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab));
-                    //  ServerRpc call
-                    OnPointerClickServerRpc(gameObject.name);
-                }
 
+
+                    SetSlotBuildingOutline(_parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab));
+
+
+                    //  ServerRpc call
+                    //   OnPointerClickServerRpc(gameObject.name);
+                }
                 Clicked?.Invoke(this, EventArgs.Empty);
             }
         }

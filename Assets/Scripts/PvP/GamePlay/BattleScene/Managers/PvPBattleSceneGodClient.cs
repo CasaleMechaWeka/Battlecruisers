@@ -315,6 +315,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser = _cruiser;
             if (enemyCruiser != null)
             {
+                // Invoke("InitialiseAsync", 0.5f);
                 InitialiseAsync();
             }
         }
@@ -325,9 +326,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             enemyCruiser = _cruiser;
             if (playerCruiser != null)
             {
+                //  Invoke("InitialiseAsync", 0.5f);
                 InitialiseAsync();
             }
         }
+
+
 
 
 

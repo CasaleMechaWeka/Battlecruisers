@@ -177,6 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             FactoryProvider = factoryProvider;
             _uiManager = uiManager;
             _helper = helper;
+
             SlotAccessor = _slotWrapperController.Initialise(this);
 
             _clickHandler.SingleClick += _clickHandler_SingleClick;
@@ -200,7 +201,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
 
-
             _slotWrapperController = GetComponentInChildren<PvPSlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(_slotWrapperController);
             _slotWrapperController.StaticInitialise();
@@ -223,9 +223,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             UnitTargets = new PvPUnitTargets(UnitMonitor);
 
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
-
-
-
         }
 
 
