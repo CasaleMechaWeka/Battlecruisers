@@ -28,7 +28,7 @@ namespace BattleCruisers.Utils.Fetchers
 		Cruiser GetCruiserPrefab(IPrefabKey hullKey);
 		Cruiser CreateCruiser(Cruiser cruiserPrefab);
 
-        CaptainExoData GetCaptainExo(IPrefab captainKey);
+        CaptainExoData GetCaptainExo(IPrefabKey captainKey);
         IExplosion CreateExplosion(ExplosionKey explosionKey);
         IShipDeath CreateShipDeath(ShipDeathKey shipDeathKey);
 
