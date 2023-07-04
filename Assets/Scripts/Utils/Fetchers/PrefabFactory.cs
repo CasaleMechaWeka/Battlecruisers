@@ -11,6 +11,7 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers.Cache;
@@ -130,6 +131,11 @@ namespace BattleCruisers.Utils.Fetchers
 
             AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+        }
+
+        public CaptainExoData GetCaptainExo(IPrefabKey key)
+        {
+            return _prefabCache.GetCaptainExo(key);
         }
     }
 }

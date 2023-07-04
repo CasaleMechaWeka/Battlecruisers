@@ -8,6 +8,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Localisation;
@@ -59,6 +60,9 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IDictionary<IPrefabKey, Projectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Projectile>();
             retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
 
+            IDictionary<IPrefabKey, CaptainExoData> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExoData>();
+            retrievePrefabsTasks.Add(GetPrefabs(prefabFetcher, StaticPrefabKeys.CaptainExos.AllKeys, keyToCaptains));
+
             Container<DroneController> droneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(prefabFetcher, StaticPrefabKeys.Effects.BuilderDrone, droneContainer));
 
@@ -76,6 +80,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                     new MultiCache<Cruiser>(keyToCruiser),
                     new MultiCache<ExplosionController>(keyToExplosion),
                     new MultiCache<ShipDeathInitialiser>(keyToDeath),
+                    new MultiCache<CaptainExoData>(keyToCaptains),
                     new UntypedMultiCache<Projectile>(keyToProjectile),
                     droneContainer.Value,
                     audioSourceContainer.Value);

@@ -31,18 +31,20 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             IMultiCache<BuildableWrapper<IUnit>> units, 
             IMultiCache<Cruiser> cruisers, 
             IMultiCache<ExplosionController> explosions, 
-            IMultiCache<ShipDeathInitialiser> shipDeaths, 
+            IMultiCache<ShipDeathInitialiser> shipDeaths,
+            IMultiCache<CaptainExoData> captains,
             IUntypedMultiCache<Projectile> projectiles, 
             DroneController drone,
             AudioSourceInitialiser audioSource)
         {
-            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource);
+            Helper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource, captains);
 
             _buildings = buildings;
             _units = units;
             _cruisers = cruisers;
             _explosions = explosions;
             _shipDeaths = shipDeaths;
+            _captains = captains;
             _projectiles = projectiles;
             Drone = drone;
             AudioSource = audioSource;
@@ -76,6 +78,11 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         public TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey) where TProjectile : Projectile
         {
             return _projectiles.GetPrefab<TProjectile>(prefabKey);
+        }
+
+        public CaptainExoData GetCaptainExo(IPrefabKey key)
+        {
+            return _captains.GetPrefab(key);
         }
     }
 }
