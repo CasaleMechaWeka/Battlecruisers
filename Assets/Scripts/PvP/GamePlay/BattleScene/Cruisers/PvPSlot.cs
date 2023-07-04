@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private Transform _buildingPlacementFeedback;
         private Transform _buildingPlacementBeacon;
-
+        private bool isShowingFeedback = false;
         private PvPBuildableClickAndDrag _clickAndDrag;
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             get { return _renderer.gameObject.activeSelf; }
             set
             {
-
-                _renderer.gameObject.SetActive(value);
+                if (!isShowingFeedback)
+                    _renderer.gameObject.SetActive(value);
                 if (IsServer)
                     pvp_IsVisibleRenderer.Value = value;
             }
@@ -167,8 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             _buildingPlacementFeedback.gameObject.SetActive(false);
             _renderer.gameObject.SetActive(false);
-
-
+            if (IsClient)
+                isShowingFeedback = false;
         }
 
         public void controlBuildingPlacementBeacon(bool active)
@@ -339,7 +339,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void controlBuildingPlacementFeedbackClientRpc(bool active)
         {
-
+            isShowingFeedback = true;
             _renderer.gameObject.SetActive(active);
 
             _buildingPlacementFeedback.gameObject.SetActive(active);
