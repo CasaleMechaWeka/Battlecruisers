@@ -101,6 +101,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public NetworkVariable<bool> pvp_IsVisibleRenderer = new NetworkVariable<bool>();
         public NetworkVariable<bool> pvp_IsFree = new NetworkVariable<bool>();
 
+        private PvPBuildableOutlineController _outline;
+
         public override void OnNetworkSpawn()
         {
             if (IsServer)
@@ -156,9 +158,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _buildingPlacementFeedback.gameObject.SetActive(active);
             Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
             _buildingPlacementBeacon.gameObject.SetActive(false);
-
-
-
         }
 
 
@@ -280,13 +279,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 if (pvp_IsVisibleRenderer.Value && pvp_IsFree.Value)
                 {
                     //  _parentCruiser.ConstructSelectedBuilding(this);
-
-
-                    SetSlotBuildingOutline(_parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab));
-
+                    _outline = _parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
+                    SetSlotBuildingOutline(_outline);
 
                     //  ServerRpc call
-                    //   OnPointerClickServerRpc(gameObject.name);
+                    OnPointerClickServerRpc(gameObject.name);
                 }
                 Clicked?.Invoke(this, EventArgs.Empty);
             }
@@ -321,6 +318,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(building);
             SlotBuilding = building;
+            OnBuildablePlaceOnSlotClientRpc();
         }
 
         [ServerRpc(RequireOwnership = true)]
@@ -351,6 +349,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void BuildingDestroyedClientRpc()
         {
             OnBuildingDestroyed_PvPClient();
+        }
+
+        [ClientRpc]
+        private void OnBuildablePlaceOnSlotClientRpc ()
+        {
+            _outline?.BuildableCreated?.Invoke();
         }
     }
 }
