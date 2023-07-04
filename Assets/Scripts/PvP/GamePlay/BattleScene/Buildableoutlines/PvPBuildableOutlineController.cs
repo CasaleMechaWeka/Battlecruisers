@@ -8,6 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBuildableOutlineController : PvPPrefab
     {
+        public AudioClip placementSound;
         public Vector3 Position
         {
             get { return transform.position; }

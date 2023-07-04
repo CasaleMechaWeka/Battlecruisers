@@ -16,6 +16,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using Unity.Netcode;
 using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Audio;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -282,6 +283,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _outline = _parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
                     SetSlotBuildingOutline(_outline);
 
+                    IPvPAudioClipWrapper _placementSound = new PvPAudioClipWrapper(_outline.placementSound);
+                    _parentCruiser.FactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+
                     //  ServerRpc call
                     OnPointerClickServerRpc(gameObject.name);
                 }
@@ -352,7 +356,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         [ClientRpc]
-        private void OnBuildablePlaceOnSlotClientRpc ()
+        private void OnBuildablePlaceOnSlotClientRpc()
         {
             _outline?.BuildableCreated?.Invoke();
         }

@@ -366,8 +366,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             slot.SetBuilding(building);
 
-
-
             building.CompletedBuildable += Building_CompletedBuildable;
             building.Destroyed += Building_Destroyed;
 
