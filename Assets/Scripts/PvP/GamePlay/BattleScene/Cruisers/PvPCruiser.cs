@@ -568,7 +568,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         [ClientRpc]
         private void PvP_HideCurrentlyShownMenuClientRpc()
         {
-            _uiManager?.HideCurrentlyShownMenu();
+            if (IsOwner)
+                _uiManager?.HideCurrentlyShownMenu();
         }
     }
 
