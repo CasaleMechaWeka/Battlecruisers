@@ -26,6 +26,10 @@ namespace BattleCruisers.Scenes
 {
     public class DestructionSceneGod : MonoBehaviour
     {
+        [SerializeField]
+        private Text screenTitle;
+
+        private IApplicationModel applicationModel;
         private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
@@ -35,6 +39,8 @@ namespace BattleCruisers.Scenes
         public Text million, billion, trillion, quadrillion;
 
         private long[] destructionValues;
+
+        private bool realScene = true;
 
         [SerializeField]
         private AnimationClip cardRevealAnim;
@@ -104,30 +110,53 @@ namespace BattleCruisers.Scenes
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
-            LandingSceneGod.MusicPlayer.PlayVictoryMusic();
-
-            _soundPlayer
-                = new SingleSoundPlayer(
-                    new SoundFetcher(),
-                    new EffectVolumeAudioSource(
-                        new AudioSourceBC(_uiAudioSource),
-                        ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
-
-            nextButton.Initialise(_soundPlayer, Done);
-            _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-
-            // Get some values from GameModel and its friends:
-            allTimeVal = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            levelTimeInSeconds = BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime();
-
-            for (int i = 0; i < destructionCards.Length; i++)
+            if (_sceneNavigator != null)
             {
-                destructionCards[i].destructionValue.text = FormatNumber(BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDamageInCredits());
-                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDestroyed();
+                LandingSceneGod.MusicPlayer.PlayVictoryMusic();
+
+
+                _soundPlayer
+                    = new SingleSoundPlayer(
+                        new SoundFetcher(),
+                        new EffectVolumeAudioSource(
+                            new AudioSourceBC(_uiAudioSource),
+                            applicationModel.DataProvider.SettingsManager, 1));
+
+                nextButton.Initialise(_soundPlayer, Done);
+                _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
+                applicationModel = ApplicationModelProvider.ApplicationModel;
             }
 
-            destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
-            destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
+            // Populate screen:
+            if (BattleSceneGod.deadBuildables != null)
+            {
+                // real values:
+                PopulateScreen();
+            }
+            else
+            {
+                // fake values if the screen is being launched for testing purposes:
+                PopulateScreenFake();
+            }
+
+            // Start animating:
+            StartCoroutine(AnimateScreen());
+        }
+
+        /*        private void OnEnable()
+                {
+                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
+                }*/
+
+        // Gets all the GameModel vars.
+        // Turns them into local vars for frequently-used values,
+        // Populates text fields on the screen with those values,
+        // Calculates and awards any rewards.
+        private void PopulateScreen()
+        {
+            // Get some values from GameModel and its friends:
+            allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            levelTimeInSeconds = BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime();
 
             aircraftVal = BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();
             shipsVal = BattleSceneGod.deadBuildables[TargetType.Ships].GetTotalDamageInCredits();
@@ -136,6 +165,15 @@ namespace BattleCruisers.Scenes
 
             // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
             destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
+                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + BattleSceneGod.deadBuildables[(TargetType)i].GetTotalDestroyed();
+            }
+
+            destructionCards[2].image.sprite = BattleSceneGod.enemyCruiserSprite;
+            destructionCards[2].description.text = BattleSceneGod.enemyCruiserName;
 
             //### Screen Setup ###
 
@@ -161,7 +199,7 @@ namespace BattleCruisers.Scenes
             // Set starting rank values:
             rank = ranker.CalculateRank(prevAllTimeVal);
 
-            currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
+            currentXP = applicationModel.DataProvider.GameModel.XPToNextLevel;
             nextLevelXP = (int)ranker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
@@ -177,15 +215,71 @@ namespace BattleCruisers.Scenes
             // so we can give the player all their points and coins now.
             // That way if there's a crash or anything before the animation completes, they still get credit.
             UpdateGameModelVals();
-
-            // Start animating:
-            StartCoroutine(AnimateScreen());
         }
 
-        /*        private void OnEnable()
-                {
-                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-                }*/
+        // Duplicate of PopulateScreen(), but with fake numbers.
+        // Turns them into local vars for frequently-used values,
+        // Populates text fields on the screen with those values.
+        // This should not be displayed to real users.
+        // DOES NOT Calculate and awards any rewards.
+        private void PopulateScreenFake()
+        {
+            long randomVal = UnityEngine.Random.Range(10, 100000);
+
+            allTimeVal = randomVal;
+            levelTimeInSeconds = UnityEngine.Random.Range(60, 600);
+            aircraftVal = randomVal / UnityEngine.Random.Range(4, 6);
+            shipsVal = randomVal / UnityEngine.Random.Range(4, 6);
+            cruiserVal = randomVal / UnityEngine.Random.Range(4, 6);
+            buildingsVal = randomVal / UnityEngine.Random.Range(4, 6);
+
+            // this seemed like the easiest way to store the values, so their indices match the destructionCards array:
+            destructionValues = new long[] { aircraftVal, shipsVal, cruiserVal, buildingsVal };
+
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].destructionValue.text = FormatNumber(destructionValues[i]);
+                destructionCards[i].numberOfUnitsDestroyed.text = i == 2 ? "1" : "" + UnityEngine.Random.Range(1, 100).ToString();
+            }
+            //### Screen Setup ###
+
+            // Turn cards off by default:
+            for (int i = 0; i < destructionCards.Length; i++)
+            {
+                destructionCards[i].gameObject.SetActive(false);
+            }
+
+            // Turn off Coins Counter by default:
+            coinsCounter.SetActive(false);
+
+            timeStep = cardRevealAnim.length;
+            modalPeriod = levelUpModalAnim.length;
+
+            // Set value texts:
+            damageCausedValueText.text = "0";
+            timeValueText.text = "00:00";
+            prevAllTimeVal = allTimeVal - (aircraftVal + shipsVal + cruiserVal + buildingsVal);
+            allTimeDamageValueText.text = FormatNumber(prevAllTimeVal);
+            scoreText.text = "";
+
+            // Set starting rank values:
+            rank = ranker.CalculateRank(prevAllTimeVal);
+
+            currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
+            nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+            rankNumber.text = FormatRankNumber(rank);
+            rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
+            rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal), scoreDivider));
+            coinsText.text = "+" + coinsToAward.ToString();
+
+            // Set XP bar current/max values:
+            levelBar.maxValue = nextLevelXP;
+            levelBar.value = currentXP;
+
+            screenTitle.text = "Debug Mode";
+            realScene = false;
+        }
 
         IEnumerator AnimateScreen()
         {
@@ -260,7 +354,10 @@ namespace BattleCruisers.Scenes
                                 yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
                                 xpRunningTotal += xpToAdd;
                                 currentXP = xpRunningTotal;
-                                ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = xpRunningTotal;
+                                if (realScene == true)
+                                {
+                                    applicationModel.DataProvider.GameModel.XPToNextLevel = xpRunningTotal;
+                                }
                                 xpToAdd = 0;
                             }
                         }
@@ -274,7 +371,10 @@ namespace BattleCruisers.Scenes
                 {
                     yield return StartCoroutine(InterpolateXPBar(xpRunningTotal, xpRunningTotal + xpToAdd, steps, stepPeriod));
                     currentXP += xpToAdd;
-                    ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = currentXP;
+                    if (realScene == true)
+                    {
+                        applicationModel.DataProvider.GameModel.XPToNextLevel = currentXP;
+                    }
                 }
             }
 
@@ -412,14 +512,14 @@ namespace BattleCruisers.Scenes
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
             long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+            applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
 
             // we need XPToNextLevel to populate any XP progress bars:
-            long newLifetimeScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(newLifetimeScore);
+            long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            applicationModel.DataProvider.GameModel.XPToNextLevel = (int)ranker.CalculateXpToNextLevel(newLifetimeScore);
 
             // Give the player their coins:
-            ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins += coinsToAward;
+            applicationModel.DataProvider.GameModel.Coins += coinsToAward;
         }
 
         private void Done()
@@ -449,9 +549,9 @@ namespace BattleCruisers.Scenes
         private string FormatRankNumber(int rank)
         {
             string numString = rank.ToString();
-            if(rank <10 )
+            if(rank < 10 )
             {
-                numString = "0" + rank;
+                numString = "0" + rank.ToString();
             }
             return rank.ToString();
         }
