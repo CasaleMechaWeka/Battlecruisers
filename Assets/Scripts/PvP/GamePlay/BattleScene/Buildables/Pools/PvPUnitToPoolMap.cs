@@ -60,19 +60,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             switch (ship.PrefabName)
             {
-                case "AttackBoat":
+                case "PvPAttackBoat":
                     return _unitPoolProvider.AttackBoatPool;
 
-                case "Frigate":
+                case "PvPFrigate":
                     return _unitPoolProvider.FrigatePool;
 
-                case "Destroyer":
+                case "PvPDestroyer":
                     return _unitPoolProvider.DestroyerPool;
 
-                case "ArchonBattleship":
+                case "PvPArchonBattleship":
                     return _unitPoolProvider.ArchonPool;
 
-                case "AttackRIB":
+                case "PvPAttackRIB":
                     return _unitPoolProvider.AttackRIBPool;
 
                 default:

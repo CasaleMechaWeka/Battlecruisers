@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
@@ -332,8 +333,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [ServerRpc(RequireOwnership = true)]
         private void OnStartBuildingUnitServerRpc(PvPUnitCategory category, string prefabName)
         {
+            
             PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
             UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
+
         }
 
         [ServerRpc(RequireOwnership = true)]

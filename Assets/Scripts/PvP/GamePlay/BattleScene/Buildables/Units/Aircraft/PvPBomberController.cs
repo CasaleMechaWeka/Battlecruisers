@@ -307,7 +307,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _targetProcessor = null;
         }
 
-        //------------------------------------ methods for sync by Sava ------------------------------//
+        //------------------------------------ methods for sync, written by Sava ------------------------------//
 
         // Visibility 
         protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
