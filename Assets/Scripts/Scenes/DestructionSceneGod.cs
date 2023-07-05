@@ -186,6 +186,9 @@ namespace BattleCruisers.Scenes
             // Turn off Coins Counter by default:
             coinsCounter.SetActive(false);
 
+            // Turn off Level Up Modal by default:
+            levelUpModal.SetActive(false);
+
             timeStep = cardRevealAnim.length;
             modalPeriod = levelUpModalAnim.length;
 
@@ -251,6 +254,9 @@ namespace BattleCruisers.Scenes
 
             // Turn off Coins Counter by default:
             coinsCounter.SetActive(false);
+
+            // Turn off Level Up Modal by default:
+            levelUpModal.SetActive(false);
 
             timeStep = cardRevealAnim.length;
             modalPeriod = levelUpModalAnim.length;
