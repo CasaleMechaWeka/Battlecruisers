@@ -52,20 +52,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // Logging.Log(Tags.FACTORY, $"{_unitWrapper} > {value}");
                 Assert.AreEqual(PvPBuildableState.Completed, BuildableState);
                 if (!ReferenceEquals(_unitWrapper, value))
-                {                    
+                {
                     if (IsServer && _unitWrapper != null)
                     {
                         CleanUpDroneConsumer();
                         DestroyUnitUnderConstruction();
                         _isUnitPaused.Value = false;
                         OnIsUnitPausedValueChanged(false);
-                        _unitPool = null;                        
+                        _unitPool = null;
                     }
 
                     _unitWrapper = value;
 
                     if (IsServer && _unitWrapper != null)
-                    {                        
+                    {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         EnsureDroneConsumerHasHighestPriority();
                         _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
@@ -424,7 +424,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             // Logging.Log(Tags.FACTORY, $"_isUnitPaused.Value: {_isUnitPaused.Value}");
 
-            if (_isUnitPaused.Value)
+            if (_isUnitPaused.Value && IsServer)
             {
                 // Cannot focus on drone consumer if they are not activated.
                 // Hence, activate drone consumer before focusing on them :)
