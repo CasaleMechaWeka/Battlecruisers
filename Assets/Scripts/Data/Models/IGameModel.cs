@@ -10,6 +10,7 @@ namespace BattleCruisers.Data.Models
     public interface IGameModel
     {
         public int Coins { get; set; }
+        public CaptainExoKey CurrentCaptain { get; set; }
 
         int NumOfLevelsCompleted { get; }
         int XPToNextLevel { get; set; }

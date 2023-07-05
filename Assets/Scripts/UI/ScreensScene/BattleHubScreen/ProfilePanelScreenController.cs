@@ -34,6 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         [SerializeField]
         private Text levelXPString;
         public Text million, billion, trillion, quadrillion;
+        public GameObject currentCaptainImage;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -48,7 +49,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             _soundPlayer = soundPlayer;
 
-            captainsButton.Initialise(_soundPlayer, ChangeCaptain);
+            captainsButton.Initialise(_soundPlayer, ChangeCaptainSelection);
+            CaptainExoData captainExoData = prefabFactory.GetCaptainExo(dataProvider.GameModel.CurrentCaptain);
+            Image tempImage = currentCaptainImage.GetComponent<Image>();
+            tempImage.sprite = captainExoData.CaptainExoImage;
+            Debug.Log(captainExoData.CaptainExoImage.name);
 
             // XP progress bar setup
             rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
@@ -59,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             levelXPString.text = FormatNumber(levelXP).ToString();
         }
 
-        private void ChangeCaptain()
+        private void ChangeCaptainSelection()
         {
             if(!captainsPanel.isActiveAndEnabled)
             {
