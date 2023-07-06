@@ -25,6 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 // Instantiate a new UI Item from the prefab
                 GameObject uiItem = Instantiate(uiItemPrefab);
 
+                // StaticPrefabKeys.CaptainExos.AllKeys()
                 // Access the UI Item's script and set its data
                 CaptainExoItem captainExoItem = uiItem.GetComponentInChildren<CaptainExoItem>();
                 captainExoItem.SetCaptainData(captainExoData);
