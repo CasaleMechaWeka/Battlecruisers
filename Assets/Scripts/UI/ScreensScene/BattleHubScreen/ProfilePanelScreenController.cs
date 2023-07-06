@@ -56,12 +56,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             Debug.Log(captainExoData.CaptainExoImage.name);
 
             // XP progress bar setup
-            rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-            currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
-            levelXP = (int)(ranker.CalculateLevelXP(rank));
-            xpBar.setValues(currentXP, levelXP);
-            currentXPString.text = FormatNumber(currentXP).ToString();
-            levelXPString.text = FormatNumber(levelXP).ToString();
+            if (xpBar != null)
+            {
+                rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+                currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
+                levelXP = (int)(ranker.CalculateLevelXP(rank));
+                xpBar.setValues(currentXP, levelXP);
+                currentXPString.text = FormatNumber(currentXP).ToString();
+                levelXPString.text = FormatNumber(levelXP).ToString();
+            }
         }
 
         private void ChangeCaptainSelection()
