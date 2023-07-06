@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using UnityEngine.Assertions;
 
@@ -5,9 +6,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 {
     public abstract class PvPBuildableButtonHotkeyListener
     {
-        protected readonly IPvPHotkeyDetector _hotkeyDetector;
+        protected readonly IHotkeyDetector _hotkeyDetector;
 
-        protected PvPBuildableButtonHotkeyListener(IPvPHotkeyDetector hotkeyDetector)
+        protected PvPBuildableButtonHotkeyListener(IHotkeyDetector hotkeyDetector)
         {
             Assert.IsNotNull(hotkeyDetector);
             _hotkeyDetector = hotkeyDetector;

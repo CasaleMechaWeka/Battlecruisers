@@ -13,7 +13,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,12 +20,13 @@ using Unity.Multiplayer.Samples.Utilities;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
 using System;
-using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Timers;
-using BattleCruisers.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Buildables;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -34,14 +34,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
+        private static IPvPGameEndMonitor _gameEndMonitor;
         public IPvPPrefabFactory prefabFactory;
         private IApplicationModel applicationModel;
-        private IDataProvider dataProvider;
+        public IDataProvider dataProvider;
         private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
+        private static float difficultyDestructionScoreMultiplier;
+
+        public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables;
+
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
 
@@ -137,7 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerACruiser = await cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             playerBCruiser = await cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
 
-            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser , /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
+            cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, /*cameraComponents.CameraFocuser,*/ playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager /*, playerBCruiseruserChosenTargetHelper*/);
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
@@ -150,8 +155,50 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerACruiser);
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
+
+
+            _gameEndMonitor
+                = new PvPGameEndMonitor(
+                    new PvPCruiserDestroyedMonitor(
+                        playerACruiser,
+                        playerBCruiser),
+                        battleCompletionHandler,
+                    new PvPGameEndHandler(
+                        playerACruiser,
+                        playerBCruiser,
+                        ai,
+                        battleCompletionHandler,
+                        components.Deferrer,
+                        cameraComponents.CruiserDeathCameraFocuser,
+                        navigationPermitters.NavigationFilter,
+                        uiManager,
+                        components.TargetIndicator,
+                        windManager,
+                        helper.BuildingCategoryPermitter,
+                        rightPanelComponents.SpeedComponents.SpeedButtonGroup));
+
+
+            deadBuildables = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
+            deadBuildables.Add(PvPTargetType.Aircraft, new PvPDeadBuildableCounter());
+            deadBuildables.Add(PvPTargetType.Ships, new PvPDeadBuildableCounter());
+            deadBuildables.Add(PvPTargetType.Cruiser, new PvPDeadBuildableCounter());
+            deadBuildables.Add(PvPTargetType.Buildings, new PvPDeadBuildableCounter());
+            deadBuildables.Add(PvPTargetType.PlayedTime, new PvPDeadBuildableCounter());
+
+            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            {
+                difficultyDestructionScoreMultiplier = 1.0f;
+            }
+            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            {
+                difficultyDestructionScoreMultiplier = 1.5f;
+            }
+            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            {
+                difficultyDestructionScoreMultiplier = 2.0f;
+            }
         }
- 
+
 
 
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)

@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IPvPBuildableButton _shipTurretButton, _airTurretButton, _mortarButton, _samSiteButton, _teslaCoilButton;
 
         public PvPDefensiveButtonsHotkeyListener(
-            IPvPHotkeyDetector hotkeyDetector,
+            IHotkeyDetector hotkeyDetector,
             IPvPBuildableButton shipTurretButton,
             IPvPBuildableButton airTurretButton,
             IPvPBuildableButton mortarButton,
@@ -25,11 +26,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _samSiteButton = samSiteButton;
             _teslaCoilButton = teslaCoilButton;
 
-            _hotkeyDetector.ShipTurret += _hotkeyDetector_ShipTurret;
-            _hotkeyDetector.AirTurret += _hotkeyDetector_AirTurret;
-            _hotkeyDetector.Mortar += _hotkeyDetector_Mortar;
-            _hotkeyDetector.SamSite += _hotkeyDetector_SamSite;
-            _hotkeyDetector.TeslaCoil += _hotkeyDetector_TeslaCoil;
+            _hotkeyDetector.DefensiveButton1 += _hotkeyDetector_ShipTurret;
+            _hotkeyDetector.DefensiveButton2 += _hotkeyDetector_AirTurret;
+            _hotkeyDetector.DefensiveButton3 += _hotkeyDetector_Mortar;
+            _hotkeyDetector.DefensiveButton4 += _hotkeyDetector_SamSite;
+            _hotkeyDetector.DefensiveButton5 += _hotkeyDetector_TeslaCoil;
         }
 
         private void _hotkeyDetector_ShipTurret(object sender, EventArgs e)
@@ -59,11 +60,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.ShipTurret -= _hotkeyDetector_ShipTurret;
-            _hotkeyDetector.AirTurret -= _hotkeyDetector_AirTurret;
-            _hotkeyDetector.Mortar -= _hotkeyDetector_Mortar;
-            _hotkeyDetector.SamSite -= _hotkeyDetector_SamSite;
-            _hotkeyDetector.TeslaCoil -= _hotkeyDetector_TeslaCoil;
+            _hotkeyDetector.DefensiveButton1 -= _hotkeyDetector_ShipTurret;
+            _hotkeyDetector.DefensiveButton2 -= _hotkeyDetector_AirTurret;
+            _hotkeyDetector.DefensiveButton3 -= _hotkeyDetector_Mortar;
+            _hotkeyDetector.DefensiveButton4 -= _hotkeyDetector_SamSite;
+            _hotkeyDetector.DefensiveButton5 -= _hotkeyDetector_TeslaCoil;
         }
     }
 }

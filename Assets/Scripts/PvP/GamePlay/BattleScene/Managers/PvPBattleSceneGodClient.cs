@@ -54,6 +54,14 @@ using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Colours;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.ProjectileSpawners;
+using BattleCruisers.UI.Music;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Music;
+using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
+using BattleCruisers.Scenes.BattleScene;
+using static BattleCruisers.Data.Static.PrioritisedSoundKeys.Events;
+using BattleCruisers.UI.Sound.Wind;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -61,11 +69,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodClient : MonoBehaviour
     {
         private PvPUserTargetTracker _userTargetTracker;
-
+        private PvPAudioInitialiser _audioInitialiser;
         public PvPCameraInitialiser cameraInitialiser;
         public PvPTopPanelInitialiser topPanelInitialiser;
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
+        private PvPCruiserDeathManager _cruiserDeathManager;
 
         public IPvPUIManager uiManager;
         public ILocTable commonStrings;
@@ -273,6 +282,47 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager);
 
 
+            // Audio
+            IPvPLayeredMusicPlayer layeredMusicPlayer
+                = await components.MusicPlayerInitialiser.CreatePlayerAsync(
+                    factoryProvider.Sound.SoundFetcher,
+                    currentLevel.MusicKeys,
+                    dataProvider.SettingsManager);
+            IPvPCruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);
+
+            _audioInitialiser
+                = new PvPAudioInitialiser(
+                    pvpBattleHelper,
+                    layeredMusicPlayer,
+                    playerCruiser,
+                    enemyCruiser,
+                    components.Deferrer,
+                    time,
+                    battleCompletionHandler,
+                    playerCruiserDamageMonitor,
+                    leftPanelComponents.PopLimitReachedFeedback);
+
+            IPvPWindManager windManager
+                = components.WindInitialiser.Initialise(
+                    cameraComponents.MainCamera,
+                    cameraComponents.Settings,
+                    dataProvider.SettingsManager);
+            windManager.Play();
+
+            _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
+
+            components.HotkeyInitialiser.Initialise(
+                    dataProvider.GameModel.Hotkeys,
+                    PvPInputBC.Instance,
+                    components.UpdaterProvider.SwitchableUpdater,
+                    navigationPermitters.HotkeyFilter,
+                    cameraComponents.CameraFocuser,
+                    rightPanelComponents.SpeedComponents,
+                    rightPanelComponents.MainMenuManager
+                    /*uiManager*/);
+
+
+
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
         }
@@ -330,10 +380,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 InitialiseAsync();
             }
         }
-
-
-
-
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,

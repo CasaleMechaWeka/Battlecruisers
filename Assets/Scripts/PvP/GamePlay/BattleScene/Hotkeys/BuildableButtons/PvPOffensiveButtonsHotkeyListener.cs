@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IPvPBuildableButton _artilleryButton, _railgunButton, _rocketLauncherButton, _MLRSButton, _gatlingMortarButton;
 
         public PvPOffensiveButtonsHotkeyListener(
-            IPvPHotkeyDetector hotkeyDetector,
+            IHotkeyDetector hotkeyDetector,
             IPvPBuildableButton artilleryButton,
             IPvPBuildableButton railgunButton,
             IPvPBuildableButton rocketLauncherButton,
@@ -25,11 +26,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _MLRSButton = MLRSButton;
             _gatlingMortarButton = gatlingMortarButton;
 
-            _hotkeyDetector.Artillery += _hotkeyDetector_Artillery;
-            _hotkeyDetector.Railgun += _hotkeyDetector_Railgun;
-            _hotkeyDetector.RocketLauncher += _hotkeyDetector_RocketLauncher;
-            _hotkeyDetector.MLRS += _hotkeyDetector_MLRS;
-            _hotkeyDetector.GatlingMortar += _hotkeyDetector_GatlingMortar;
+            _hotkeyDetector.OffensiveButton1 += _hotkeyDetector_Artillery;
+            _hotkeyDetector.OffensiveButton2 += _hotkeyDetector_Railgun;
+            _hotkeyDetector.OffensiveButton3 += _hotkeyDetector_RocketLauncher;
+            _hotkeyDetector.OffensiveButton4 += _hotkeyDetector_MLRS;
+            _hotkeyDetector.OffensiveButton5 += _hotkeyDetector_GatlingMortar;
         }
 
         private void _hotkeyDetector_Artillery(object sender, EventArgs e)
@@ -59,11 +60,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.Artillery -= _hotkeyDetector_Artillery;
-            _hotkeyDetector.Railgun -= _hotkeyDetector_Railgun;
-            _hotkeyDetector.RocketLauncher -= _hotkeyDetector_RocketLauncher;
-            _hotkeyDetector.MLRS -= _hotkeyDetector_MLRS;
-            _hotkeyDetector.GatlingMortar -= _hotkeyDetector_GatlingMortar;
+            _hotkeyDetector.OffensiveButton1 -= _hotkeyDetector_Artillery;
+            _hotkeyDetector.OffensiveButton2 -= _hotkeyDetector_Railgun;
+            _hotkeyDetector.OffensiveButton3 -= _hotkeyDetector_RocketLauncher;
+            _hotkeyDetector.OffensiveButton4 -= _hotkeyDetector_MLRS;
+            _hotkeyDetector.OffensiveButton5 -= _hotkeyDetector_GatlingMortar;
         }
     }
 }

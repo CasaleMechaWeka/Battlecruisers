@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
     public enum PvPTargetType
     {
-        Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite, PaddleMine
+        Aircraft, Ships, Cruiser, Buildings, Rocket, Satellite, PaddleMine, PlayedTime
     }
 
     /// <summary>

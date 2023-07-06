@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IPvPBuildableButton _attackBoatButton, _frigateButton, _destroyerButton, _archonButton, _attackRIBButton;
 
         public PvPShipButtonsHotkeyListener(
-            IPvPHotkeyDetector hotkeyDetector,
+            IHotkeyDetector hotkeyDetector,
             IPvPBuildableButton attackBoatButton,
             IPvPBuildableButton frigateButton,
             IPvPBuildableButton destroyerButton,
@@ -25,11 +26,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _archonButton = archonButton;
             _attackRIBButton = attackRIBButton;
 
-            _hotkeyDetector.AttackBoat += _hotkeyDetector_AttackBoat;
-            _hotkeyDetector.Frigate += _hotkeyDetector_Frigate;
-            _hotkeyDetector.Destroyer += _hotkeyDetector_Destroyer;
-            _hotkeyDetector.Archon += _hotkeyDetector_Archon;
-            _hotkeyDetector.AttackRIB += _hotkeyDetector_AttackRIB;
+            _hotkeyDetector.ShipButton1 += _hotkeyDetector_AttackBoat;
+            _hotkeyDetector.ShipButton2 += _hotkeyDetector_Frigate;
+            _hotkeyDetector.ShipButton3 += _hotkeyDetector_Destroyer;
+            _hotkeyDetector.ShipButton4 += _hotkeyDetector_Archon;
+            _hotkeyDetector.ShipButton5 += _hotkeyDetector_AttackRIB;
         }
 
         private void _hotkeyDetector_AttackBoat(object sender, EventArgs e)
@@ -59,11 +60,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.AttackBoat -= _hotkeyDetector_AttackBoat;
-            _hotkeyDetector.Frigate -= _hotkeyDetector_Frigate;
-            _hotkeyDetector.Destroyer -= _hotkeyDetector_Destroyer;
-            _hotkeyDetector.Archon -= _hotkeyDetector_Archon;
-            _hotkeyDetector.AttackRIB -= _hotkeyDetector_AttackRIB;
+            _hotkeyDetector.ShipButton1 -= _hotkeyDetector_AttackBoat;
+            _hotkeyDetector.ShipButton2 -= _hotkeyDetector_Frigate;
+            _hotkeyDetector.ShipButton3 -= _hotkeyDetector_Destroyer;
+            _hotkeyDetector.ShipButton4 -= _hotkeyDetector_Archon;
+            _hotkeyDetector.ShipButton5 -= _hotkeyDetector_AttackRIB;
         }
     }
 }

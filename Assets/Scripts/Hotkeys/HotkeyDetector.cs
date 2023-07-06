@@ -48,8 +48,8 @@ namespace BattleCruisers.Hotkeys
         public event EventHandler ShipButton1, ShipButton2, ShipButton3, ShipButton4, ShipButton5;
 
         public HotkeyDetector(
-            IHotkeyList hotkeyList, 
-            IInput input, 
+            IHotkeyList hotkeyList,
+            IInput input,
             IUpdater updater,
             IBroadcastingFilter filter,
             IUIManager uIManager)
@@ -336,7 +336,7 @@ namespace BattleCruisers.Hotkeys
                 Logging.Log(Tags.HOTKEYS, $"Got _hotkeyList.Archon: {_hotkeyList.AttackRIB}");
                 ShipButton5?.Invoke(this, EventArgs.Empty);
             }
-            
+
         }
 
         public void DisposeManagedState()

@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         public PvPBuildingCategoryButtonsHotkeyInitialiser buildingCategoryButtonsHotkeyInitialiser;
 
         public void Initialise(
-            IPvPHotkeyList hotkeyList,
+            IHotkeyList hotkeyList,
             IPvPInput input,
             IPvPUpdater updater,
             IPvPBroadcastingFilter hotkeyFilter,
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             PvPHelper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager);
 
             // Hotkeys (only for PC)
-            IPvPHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
+            IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
 
             _navigationHotkeyListener = new PvPNavigationHotkeyListener(hotkeyDetector, cameraFocuser);
             _gameSpeedHotkeyListener = new PvPGameSpeedHotkeyListener(hotkeyDetector, speedComponents);
@@ -47,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _escapeHandler = new PvPEscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IPvPHotkeyDetector CreateHotkeyDetector(IPvPHotkeyList hotkeyList, IPvPInput input, IPvPUpdater updater, IPvPBroadcastingFilter hotkeyFilter)
+        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IPvPInput input, IPvPUpdater updater, IPvPBroadcastingFilter hotkeyFilter)
         {
             if (PvPSystemInfoBC.Instance.IsHandheld)
             {

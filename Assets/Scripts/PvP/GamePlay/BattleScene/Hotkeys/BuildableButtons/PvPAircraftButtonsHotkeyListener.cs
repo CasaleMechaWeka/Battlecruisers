@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -6,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 {
     public class PvPAircraftButtonsHotkeyListener : PvPBuildableButtonHotkeyListener, IPvPManagedDisposable
     {
-        private readonly IPvPBuildableButton _bomberButton, _gunshipButton, _fighterButton, _steamCopterButton;
+        private readonly IPvPBuildableButton _bomberButton, _gunshipButton, _fighterButton, _steamCopterButton, _broadswordButton;
 
         public PvPAircraftButtonsHotkeyListener(
-            IPvPHotkeyDetector hotkeyDetector,
+            IHotkeyDetector hotkeyDetector,
             IPvPBuildableButton bomberButton,
             IPvPBuildableButton gunhsipButton,
             IPvPBuildableButton fighterButton,
@@ -23,10 +24,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _fighterButton = fighterButton;
             _steamCopterButton = steamCopterButton;
 
-            _hotkeyDetector.Bomber += _hotkeyDetector_Bomber;
-            _hotkeyDetector.Gunship += _hotkeyDetector_Gunship;
-            _hotkeyDetector.Fighter += _hotkeyDetector_Fighter;
-            _hotkeyDetector.SteamCopter += _hotkeyDetector_SteamCopter;
+            _hotkeyDetector.AircraftButton1 += _hotkeyDetector_Bomber;
+            _hotkeyDetector.AircraftButton2 += _hotkeyDetector_Gunship;
+            _hotkeyDetector.AircraftButton3 += _hotkeyDetector_Fighter;
+            _hotkeyDetector.AircraftButton4 += _hotkeyDetector_SteamCopter;
+            _hotkeyDetector.AircraftButton5 += _hotkeyDetector_Broadsword;
         }
 
         private void _hotkeyDetector_Bomber(object sender, EventArgs e)
@@ -48,13 +50,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         {
             ClickIfPresented(_steamCopterButton);
         }
+        private void _hotkeyDetector_Broadsword(object sender, EventArgs e)
+        {
+            ClickIfPresented(_broadswordButton);
+        }
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.Bomber -= _hotkeyDetector_Bomber;
-            _hotkeyDetector.Gunship -= _hotkeyDetector_Gunship;
-            _hotkeyDetector.Fighter -= _hotkeyDetector_Fighter;
-            _hotkeyDetector.SteamCopter -= _hotkeyDetector_SteamCopter;
+            _hotkeyDetector.AircraftButton1 += _hotkeyDetector_Bomber;
+            _hotkeyDetector.AircraftButton2 += _hotkeyDetector_Gunship;
+            _hotkeyDetector.AircraftButton3 += _hotkeyDetector_Fighter;
+            _hotkeyDetector.AircraftButton4 += _hotkeyDetector_SteamCopter;
+            _hotkeyDetector.AircraftButton5 += _hotkeyDetector_Broadsword;
         }
     }
 }

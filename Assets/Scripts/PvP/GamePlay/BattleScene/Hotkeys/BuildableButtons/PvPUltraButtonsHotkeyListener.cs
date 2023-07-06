@@ -1,3 +1,4 @@
+using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -9,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IPvPBuildableButton _deathstarButton, _nukeLauncherButton, _ultraliskButton, _kamikazeSignalButton, _broadsidesButton;
 
         public PvPUltraButtonsHotkeyListener(
-            IPvPHotkeyDetector hotkeyDetector,
+            IHotkeyDetector hotkeyDetector,
             IPvPBuildableButton deathstarButton,
             IPvPBuildableButton nukeLauncherButton,
             IPvPBuildableButton ultraliskButton,
@@ -25,11 +26,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _kamikazeSignalButton = kamikazeSignalButton;
             _broadsidesButton = broadsidesButton;
 
-            _hotkeyDetector.Deathstar += _hotkeyDetector_Deathstar;
-            _hotkeyDetector.NukeLauncher += _hotkeyDetector_NukeLauncher;
-            _hotkeyDetector.Ultralisk += _hotkeyDetector_Ultralisk;
-            _hotkeyDetector.KamikazeSignal += _hotkeyDetector_KamikazeSignal;
-            _hotkeyDetector.Broadsides += _hotkeyDetector_Broadsides;
+            _hotkeyDetector.UltraButton1 += _hotkeyDetector_Deathstar;
+            _hotkeyDetector.UltraButton2 += _hotkeyDetector_NukeLauncher;
+            _hotkeyDetector.UltraButton3 += _hotkeyDetector_Ultralisk;
+            _hotkeyDetector.UltraButton4 += _hotkeyDetector_KamikazeSignal;
+            _hotkeyDetector.UltraButton5 += _hotkeyDetector_Broadsides;
         }
 
         private void _hotkeyDetector_Deathstar(object sender, EventArgs e)
@@ -59,11 +60,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         public void DisposeManagedState()
         {
-            _hotkeyDetector.Deathstar -= _hotkeyDetector_Deathstar;
-            _hotkeyDetector.NukeLauncher -= _hotkeyDetector_NukeLauncher;
-            _hotkeyDetector.Ultralisk -= _hotkeyDetector_Ultralisk;
-            _hotkeyDetector.KamikazeSignal -= _hotkeyDetector_KamikazeSignal;
-            _hotkeyDetector.Broadsides -= _hotkeyDetector_Broadsides;
+            _hotkeyDetector.UltraButton1 -= _hotkeyDetector_Deathstar;
+            _hotkeyDetector.UltraButton2 -= _hotkeyDetector_NukeLauncher;
+            _hotkeyDetector.UltraButton3 -= _hotkeyDetector_Ultralisk;
+            _hotkeyDetector.UltraButton4 -= _hotkeyDetector_KamikazeSignal;
+            _hotkeyDetector.UltraButton5 -= _hotkeyDetector_Broadsides;
         }
     }
 }
