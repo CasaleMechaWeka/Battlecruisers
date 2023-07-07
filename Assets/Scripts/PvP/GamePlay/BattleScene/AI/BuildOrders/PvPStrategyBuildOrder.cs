@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
     public class PvPStrategyBuildOrder : IPvPDynamicBuildOrder
     {
         private readonly IEnumerator<IPvPPrefabKeyWrapper> _baseBuildOrder;
-        private readonly ILevelInfo _levelInfo;
+        private readonly IPvPLevelInfo _levelInfo;
 
         private PvPBuildingKey _current;
         public PvPBuildingKey Current
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             }
         }
 
-        public PvPStrategyBuildOrder(IEnumerator<IPvPPrefabKeyWrapper> baseBuildOrder, ILevelInfo levelInfo)
+        public PvPStrategyBuildOrder(IEnumerator<IPvPPrefabKeyWrapper> baseBuildOrder, IPvPLevelInfo levelInfo)
         {
             PvPHelper.AssertIsNotNull(baseBuildOrder, levelInfo);
 

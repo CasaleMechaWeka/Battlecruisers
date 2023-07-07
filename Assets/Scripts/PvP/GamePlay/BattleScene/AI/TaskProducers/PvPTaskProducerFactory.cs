@@ -7,6 +7,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using System.Collections;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
+using System.Collections.Generic;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.TaskProducers
 {
@@ -51,9 +57,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 
         public IPvPTaskProducer CreateReplaceDestroyedBuildingsTaskProducer(IPvPTaskList tasks)
         {
-            return new PvPReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
+            return new PvPReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, convertPvEBuildingKey2PvPBuildingKey(_staticData.BuildingKeys));
         }
 
+        private IList<PvPBuildingKey> convertPvEBuildingKey2PvPBuildingKey(IList<BuildingKey> keys)
+        {
+            IList<PvPBuildingKey> iPvPKeys = new List<PvPBuildingKey>();
+            foreach (BuildingKey key in keys)
+            {
+                iPvPKeys.Add(new PvPBuildingKey(convertPvEBuildingCategory2PvPBuildingCategory(key.BuildingCategory), "PvP" + key.PrefabName));
+            }
+
+            return iPvPKeys;
+        }
+
+        private PvPBuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
+        {
+            switch (category)
+            {
+                case BuildingCategory.Ultra:
+                    return PvPBuildingCategory.Ultra;
+                case BuildingCategory.Tactical:
+                    return PvPBuildingCategory.Tactical;
+                case BuildingCategory.Factory:
+                    return PvPBuildingCategory.Factory;
+                case BuildingCategory.Offence:
+                    return PvPBuildingCategory.Offence;
+                case BuildingCategory.Defence:
+                    return PvPBuildingCategory.Defence;
+                default:
+                    throw new System.Exception();
+            }
+        }
         public IPvPTaskProducer CreateAntiAirTaskProducer(IPvPTaskList tasks, IPvPDynamicBuildOrder antiAirBuildOrder)
         {
             IPvPThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
