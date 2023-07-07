@@ -6,10 +6,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 {
     public class PvPDefaultStrategyFactory : IPvPStrategyFactory
     {
-        private readonly ILevelStrategies _levelStrategies;
+        private readonly IPvPLevelStrategies _levelStrategies;
         private readonly int _levelNum;
 
-        public PvPDefaultStrategyFactory(ILevelStrategies levelStrategies, int levelNum)
+        public PvPDefaultStrategyFactory(IPvPLevelStrategies levelStrategies, int levelNum)
         {
             Assert.IsNotNull(levelStrategies);
 
@@ -17,12 +17,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             _levelNum = levelNum;
         }
 
-        public IStrategy GetAdaptiveStrategy()
+        public IPvPStrategy GetAdaptiveStrategy()
         {
             return _levelStrategies.GetAdaptiveStrategy(_levelNum);
         }
 
-        public IStrategy GetBasicStrategy()
+        public IPvPStrategy GetBasicStrategy()
         {
             return _levelStrategies.GetBasicStrategy(_levelNum);
         }

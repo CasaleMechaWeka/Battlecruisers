@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
     public interface IPvPStrategyFactory
     {
-        IStrategy GetAdaptiveStrategy();
-        IStrategy GetBasicStrategy();
+        IPvPStrategy GetAdaptiveStrategy();
+        IPvPStrategy GetBasicStrategy();
     }
 }
