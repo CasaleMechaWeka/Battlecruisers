@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public CanvasGroupButton captainsButton;
 
-        public InfiniteCaptainScreenController captainsPanel;
+        public CaptainSelectorPanel captainsPanel;
 
         // xp and rank vars
         [SerializeField]
