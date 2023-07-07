@@ -317,11 +317,27 @@ namespace BattleCruisers.Data.Models
             set { _skirmish = value; }
         }
 
+        // Captain Logic
+        [SerializeField]
+        private List<CaptainExoKey> _unlockedCaptainExos;
+        public ReadOnlyCollection<CaptainExoKey> UnlockedCaptainExos
+        {
+            get => _unlockedCaptainExos.AsReadOnly();
+        }
+
+            public void AddUnlockedCaptainExo(CaptainExoKey captainExo)
+        {
+            if (!_unlockedCaptainExos.Contains(captainExo))
+            {
+                _unlockedCaptainExos.Add(captainExo);
+            }
+        }
+
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
         public ReadOnlyCollection<CompletedLevel> CompletedLevels { get; }
-        public ReadOnlyCollection<CaptainExoList> UnlockedCaptainExos { get; }
         public NewItems<HullKey> NewHulls { get; set; }
         public NewItems<BuildingKey> NewBuildings { get; set; }
         public NewItems<UnitKey> NewUnits { get; set; }
@@ -350,6 +366,12 @@ namespace BattleCruisers.Data.Models
             _hotkeys = new HotkeysModel();
             _selectedLevel = UNSET_SELECTED_LEVEL;
             _skirmish = null;
+
+
+            _unlockedCaptainExos = new List<CaptainExoKey>();
+            _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
+            _unlockedCaptainExos.Add(_currentCaptain);
+
         }
 
         public GameModel(
@@ -372,7 +394,8 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
-            
+
+
         }
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)

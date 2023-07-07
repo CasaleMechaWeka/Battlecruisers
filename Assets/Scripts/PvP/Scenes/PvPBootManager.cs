@@ -40,7 +40,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Random = UnityEngine.Random;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {

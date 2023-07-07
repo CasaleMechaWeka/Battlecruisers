@@ -40,7 +40,7 @@ namespace BattleCruisers.Data
                 }
                 if(_gameModel.CurrentCaptain == null)
                 {
-                    _gameModel.CurrentCaptain = StaticPrefabKeys.CaptainExos.CaptainExo_Charlie;
+                    _gameModel.CurrentCaptain = StaticPrefabKeys.CaptainExos.CaptainExo000; // Charlie
                 }
             }
             else
