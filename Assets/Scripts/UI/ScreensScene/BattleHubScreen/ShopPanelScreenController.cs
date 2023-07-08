@@ -16,6 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public CanvasGroupButton backButton,buyButton,blackMarketButton;
         public GameObject PlayerCoinAmount;
+        public ShopItemPanel itemPanel;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
@@ -30,6 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             //Initialise each button with it's function
             backButton.Initialise(soundPlayer, Home, this);
             blackMarketButton.Initialise(soundPlayer, BlackMarket, this);
+            itemPanel.Initialise(soundPlayer, prefabFactory, dataProvider.GameModel);
 
 /*            Text coins = PlayerCoinAmount.GetComponent<Text>();
             coins.text = (dataProvider.GameModel.Coins).ToString();*/
