@@ -10,10 +10,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
     public class CaptainExoButton : MonoBehaviour
     {
-
         public Button button;
         public Image captainImage;
-        public Toggle activeCaptainToggle;
+        public Image activeCaptainImage;
 
         private CaptainExoKey captainKey;
 
@@ -21,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             captainKey = key;
             captainImage.sprite = captainSprite;
-            activeCaptainToggle.isOn = isActiveCaptain;
+            activeCaptainImage.gameObject.SetActive(isActiveCaptain);
 
             button.onClick.AddListener(SetCurrentCaptain);
         }
@@ -31,6 +30,10 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             // Code here to set the current captain in GameModel to this button's captain
         }
 
+        public void SetActiveCaptain(CaptainExoKey currentCaptain)
+        {
+            bool isActiveCaptain = captainKey.Equals(currentCaptain);
+            activeCaptainImage.gameObject.SetActive(isActiveCaptain);
+        }
     }
 }
-

@@ -20,7 +20,7 @@ namespace BattleCruisers.Data.Models.PrefabKeys
             }
         }
 
-        public string PrefabPath
+        public virtual string PrefabPath
         {
             get
             {

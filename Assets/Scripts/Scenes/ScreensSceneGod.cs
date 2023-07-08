@@ -106,7 +106,10 @@ namespace BattleCruisers.Scenes
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
-            captainSelectorPanel.Initialize(_gameModel);
+
+            var prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
+            captainSelectorPanel.Initialize(_gameModel, prefabFetcher);
+
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
@@ -422,7 +425,7 @@ namespace BattleCruisers.Scenes
 
         public CaptainExoData GetCaptainExoData(CaptainExoKey key)
         {
-            var prefabPath = key.PrefabPathPrefix + key.PrefabName;
+            var prefabPath = key.PrefabPath;
             var prefab = Resources.Load<GameObject>(prefabPath);
             if (prefab == null)
             {
@@ -438,6 +441,7 @@ namespace BattleCruisers.Scenes
 
             return data;
         }
+
 
 
         private void CleanUp()

@@ -1,14 +1,12 @@
-using UnityEngine;
-using UnityEngine.Assertions;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
-using System.Collections.Generic;
-using BattleCruisers.Data;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Utils.Fetchers;
+using System.Threading.Tasks;
+using System;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
@@ -21,14 +19,16 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         private Transform buttonContainer;
 
         private IGameModel _gameModel;
+        private IPrefabFetcher _prefabFetcher;
 
-        public void Initialize(IGameModel gameModel)
+        public void Initialize(IGameModel gameModel, IPrefabFetcher prefabFetcher)
         {
             _gameModel = gameModel;
+            _prefabFetcher = prefabFetcher;
             PopulateButtons();
         }
 
-        private void PopulateButtons()
+        private async void PopulateButtons()
         {
             foreach (Transform child in buttonContainer)
             {
@@ -37,41 +37,36 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
             foreach (CaptainExoKey captain in _gameModel.UnlockedCaptainExos)
             {
-                var button = Instantiate(buttonPrefab, buttonContainer).GetComponent<Button>();
-                button.GetComponentInChildren<Text>().text = captain.ToString();
-                button.onClick.AddListener(() => _gameModel.CurrentCaptain = captain);
+                var button = Instantiate(buttonPrefab, buttonContainer).GetComponent<CaptainExoButton>();
 
-                var captainExoData = GetCaptainExoData(captain);
-                button.GetComponentInChildren<Image>().sprite = captainExoData.CaptainExoImage;
+                var captainExoData = await GetCaptainExoData(captain);
+
+                button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.CurrentCaptain);
             }
         }
 
-        private CaptainExoData GetCaptainExoData(CaptainExoKey captainExoKey)
+        private async Task<ICaptainExoData> GetCaptainExoData(CaptainExoKey captainExoKey)
         {
-            // Load the prefab associated with the key
-            GameObject captainExoPrefab = Resources.Load<GameObject>(captainExoKey.PrefabPath);
-
-            // Get the CaptainExoData component from the prefab
-            CaptainExoData captainExoData = captainExoPrefab.GetComponent<CaptainExoData>();
+            // Use the PrefabFetcher to load the prefab associated with the key
+            IPrefabContainer<ICaptainExoData> captainExoPrefabContainer = await _prefabFetcher.GetPrefabAsync<ICaptainExoData>(captainExoKey);
 
             // Return the CaptainExoData component
-            return captainExoData;
-        }
-
-        public void UpdateActiveCaptain()
-        {
-            foreach (Transform child in buttonContainer)
-            {
-                var checkbox = child.GetComponentInChildren<Toggle>();
-                var button = child.GetComponent<Button>();
-                var captainName = button.GetComponentInChildren<Text>().text;
-                checkbox.isOn = captainName == _gameModel.CurrentCaptain.ToString();
-            }
+            return captainExoPrefabContainer.Prefab;
         }
 
         private void OnEnable()
         {
             UpdateActiveCaptain();
         }
+
+        private void UpdateActiveCaptain()
+        {
+            foreach (Transform child in buttonContainer)
+            {
+                var button = child.GetComponent<CaptainExoButton>();
+                button.SetActiveCaptain(_gameModel.CurrentCaptain);
+            }
+        }
+
     }
 }
