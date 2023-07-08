@@ -8,15 +8,16 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine.Assertions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using UnityEngine;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.FactoryManagers
 {
     public class PvPFactoryManagerFactory : IPvPFactoryManagerFactory
     {
-        private readonly IPvPGameModel _gameModel;
+        private readonly IGameModel _gameModel;
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
 
@@ -25,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
         private readonly static PvPUnitKey ANTI_AIR_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPFighter;
         private readonly static PvPUnitKey ANTI_NAVAL_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPGunship;
 
-        public PvPFactoryManagerFactory(IPvPGameModel gameModel, IPvPPrefabFactory prefabFactory, IPvPThreatMonitorFactory threatMonitorFactory)
+        public PvPFactoryManagerFactory(IGameModel gameModel, IPvPPrefabFactory prefabFactory, IPvPThreatMonitorFactory threatMonitorFactory)
         {
             PvPHelper.AssertIsNotNull(gameModel, prefabFactory, threatMonitorFactory);
 
@@ -36,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 
         public IPvPFactoryManager CreateNavalFactoryManager(IPvPCruiserController aiCruiser)
         {
-            IList<PvPUnitKey> availableShipKeys = _gameModel.GetUnlockedUnits(PvPUnitCategory.Naval);
+            IList<PvPUnitKey> availableShipKeys = convertPvEUnitKey2PvPUnitKey(_gameModel.GetUnlockedUnits(convertPvPCategory2PvECategory(PvPUnitCategory.Naval)));
             IList<IPvPBuildableWrapper<IPvPUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
@@ -46,13 +47,53 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
                     availableShips,
                     aiCruiser.DroneManager,
                     new PvPAffordableUnitFilter());
-
             return new PvPFactoryManager(PvPUnitCategory.Naval, aiCruiser, unitChooser);
+        }
+
+        private IList<PvPUnitKey> convertPvEUnitKey2PvPUnitKey(IList<UnitKey> keys)
+        {
+            IList<PvPUnitKey> iPvPKeys = new List<PvPUnitKey>();
+            foreach (UnitKey key in keys)
+            {
+                iPvPKeys.Add(new PvPUnitKey(convertPvECategory2PvPUnitCategory(key.UnitCategory), "PvP" + key.PrefabName));
+            }
+
+            return iPvPKeys;
+        }
+
+        private PvPUnitCategory convertPvECategory2PvPUnitCategory(UnitCategory category)
+        {
+            switch (category)
+            {
+                case UnitCategory.Naval:
+                    return PvPUnitCategory.Naval;
+                case UnitCategory.Aircraft:
+                    return PvPUnitCategory.Aircraft;
+                case UnitCategory.Untouchable:
+                    return PvPUnitCategory.Untouchable;
+                default:
+                    throw new System.Exception();
+            }
+        }
+
+        private UnitCategory convertPvPCategory2PvECategory(PvPUnitCategory category)
+        {
+            switch (category)
+            {
+                case PvPUnitCategory.Naval:
+                    return UnitCategory.Naval;
+                case PvPUnitCategory.Aircraft:
+                    return UnitCategory.Aircraft;
+                case PvPUnitCategory.Untouchable:
+                    return UnitCategory.Untouchable;
+                default:
+                    throw new System.Exception();
+            }
         }
 
         public IPvPFactoryManager CreateAirfactoryManager(IPvPCruiserController aiCruiser)
         {
-            Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY), "Default plane should always be available.");
+            Assert.IsTrue(_gameModel.IsUnitUnlocked(new UnitKey(convertPvPCategory2PvECategory(DEFAULT_PLANE_KEY.UnitCategory), DEFAULT_PLANE_KEY.PrefabName)), "Default plane should always be available.");
             IPvPBuildableWrapper<IPvPUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
             IPvPBuildableWrapper<IPvPUnit> lategamePlane;
             if (_gameModel.NumOfLevelsCompleted >= 25)
@@ -65,12 +106,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             }
 
             IPvPBuildableWrapper<IPvPUnit> antiAirPlane =
-                _gameModel.IsUnitUnlocked(ANTI_AIR_PLANE_KEY) ?
+                _gameModel.IsUnitUnlocked(new UnitKey(convertPvPCategory2PvECategory( ANTI_AIR_PLANE_KEY.UnitCategory), ANTI_AIR_PLANE_KEY.PrefabName)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
                 defaultPlane;
 
             IPvPBuildableWrapper<IPvPUnit> antiNavalPlane =
-                _gameModel.IsUnitUnlocked(ANTI_NAVAL_PLANE_KEY) ?
+                _gameModel.IsUnitUnlocked(new UnitKey(convertPvPCategory2PvECategory(ANTI_NAVAL_PLANE_KEY.UnitCategory), ANTI_NAVAL_PLANE_KEY.PrefabName)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 

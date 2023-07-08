@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 
 namespace BattleCruisers.Data.Static
 {
@@ -51,6 +52,7 @@ namespace BattleCruisers.Data.Static
         public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; }
         public int LastLevelWithLoot => 40;
         public ILevelStrategies Strategies { get; }
+        public IPvPLevelStrategies PvPStrategies { get; }
 
         public StaticData()
         {
@@ -67,6 +69,7 @@ namespace BattleCruisers.Data.Static
             _hullToUnlockedLevel = CreateHullAvailabilityMap();
 
             Strategies = new LevelStrategies();
+            PvPStrategies = new PvPLevelStrategies();
 
             AIBannedUltrakeys = new ReadOnlyCollection<BuildingKey>(CreateAIBannedUltraKeys());
 

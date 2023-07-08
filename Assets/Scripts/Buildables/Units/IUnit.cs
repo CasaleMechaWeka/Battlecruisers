@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Units
 {
     public enum UnitCategory
 	{
-		Naval, Aircraft//, Untouchable
+		Naval, Aircraft, Untouchable
 	}
 
 	public enum Direction

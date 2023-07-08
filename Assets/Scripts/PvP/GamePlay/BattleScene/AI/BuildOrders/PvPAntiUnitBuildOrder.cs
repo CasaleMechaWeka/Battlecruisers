@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
     public class PvPAntiUnitBuildOrder : IPvPDynamicBuildOrder
     {
         private readonly PvPBuildingKey _basicDefenceKey, _advancedDefenceKey;
-        private readonly ILevelInfo _levelInfo;
+        private readonly IPvPLevelInfo _levelInfo;
         private readonly int _numOfSlotsToUse;
         private int _numOfSlotsUsed;
         private bool _isFirstKey;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         public PvPAntiUnitBuildOrder(
             PvPBuildingKey basicDefenceKey,
             PvPBuildingKey advancedDefenceKey,
-            ILevelInfo levelInfo,
+            IPvPLevelInfo levelInfo,
             int numOfSlotsToUse)
         {
             PvPHelper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, levelInfo);

@@ -4,10 +4,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 {
     public interface IPvPBuildOrderFactory
     {
-        IPvPDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo);
-        IPvPDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo);
-        IPvPDynamicBuildOrder CreateAntiAirBuildOrder(ILevelInfo levelInfo);
-        IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo);
+        IPvPDynamicBuildOrder CreateBasicBuildOrder(IPvPLevelInfo levelInfo);
+        IPvPDynamicBuildOrder CreateAdaptiveBuildOrder(IPvPLevelInfo levelInfo);
+        IPvPDynamicBuildOrder CreateAntiAirBuildOrder(IPvPLevelInfo levelInfo);
+        IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(IPvPLevelInfo levelInfo);
         bool IsAntiRocketBuildOrderAvailable();
         IPvPDynamicBuildOrder CreateAntiRocketBuildOrder();
         bool IsAntiStealthBuildOrderAvailable();

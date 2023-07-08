@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         /// 1. Follows a base strategy (eg:  balanced, boom or rush)
         /// 2. Replaces destroyed buildings
         /// </summary>
-        public IPvPArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo)
+        public IPvPArtificialIntelligence CreateBasicAI(IPvPLevelInfo levelInfo)
         {
             IPvPTaskList tasks = new PvPTaskList();
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         /// 2. Responds to threats (eg: air, naval)
         /// 3. Replaces destroyed buildings
         /// </summary>
-        public IPvPArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo)
+        public IPvPArtificialIntelligence CreateAdaptiveAI(IPvPLevelInfo levelInfo)
         {
             IPvPTaskList tasks = new PvPTaskList();
             IList<IPvPTaskProducer> taskProducers = new List<IPvPTaskProducer>();

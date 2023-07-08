@@ -14,13 +14,10 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
@@ -32,20 +29,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using Unity.Netcode;
-using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.UI.BattleScene.Cruisers;
-using BattleCruisers.Cruisers.Construction;
 using System.Linq;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Utils.Factories;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Properties;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.AudioSources;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
@@ -185,6 +172,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
             _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+            if (IsClient && IsOwner)
+                BuildingMonitor = new PvPCruiserBuildingMonitor(this);
             //   }
         }
 
@@ -374,6 +363,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
             BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
+            BuildingStartedClientRpc(building.GameObject.GetComponent<NetworkObject>().NetworkObjectId);
 
             slot.controlBuildingPlacementFeedback(true);
 
@@ -491,6 +481,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
+        protected override void OnDamagedEventCalled(ulong objectId)
+        {
+            if (IsClient)
+                base.OnDamagedEventCalled(objectId);
+            if (IsServer)
+                OnDamagedEventCalledClientRpc(objectId);
+        }
+
         [ServerRpc(RequireOwnership = true)]
         public void PvP_HighlightAvailableSlotsServerRpc(PvPSlotType SlotType, PvPBuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
         {
@@ -571,6 +569,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (IsOwner)
                 _uiManager?.HideCurrentlyShownMenu();
         }
+
+        [ClientRpc]
+        private void OnDamagedEventCalledClientRpc(ulong objectId)
+        {
+            OnDamagedEventCalled(objectId);
+        }
+
+        [ClientRpc]
+        private void BuildingStartedClientRpc(ulong objectId)
+        {
+            if (IsClient && IsOwner)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPBuilding building = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPBuilding>();
+                        BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
+                    }
+                }
+            }
+        }
+
     }
 
     public enum Team { LEFT, RIGHT }

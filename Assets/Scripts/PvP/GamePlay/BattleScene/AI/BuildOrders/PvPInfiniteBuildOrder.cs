@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 {
     public class PvPInfiniteBuildOrder : IPvPDynamicBuildOrder
     {
-        private readonly ILevelInfo _levelInfo;
+        private readonly IPvPLevelInfo _levelInfo;
         private readonly IList<PvPBuildingKey> _availableBuildings;
 
         public PvPBuildingKey Current { get; private set; }
 
         public PvPInfiniteBuildOrder(
             PvPBuildingCategory buildingCategory,
-            ILevelInfo levelInfo,
+            IPvPLevelInfo levelInfo,
             IList<PvPBuildingKey> bannedBuildings)
         {
             Assert.IsNotNull(levelInfo);

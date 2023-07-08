@@ -4,7 +4,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
     public interface IPvPAIFactory
     {
-        IPvPArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo);
-        IPvPArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo);
+        IPvPArtificialIntelligence CreateBasicAI(IPvPLevelInfo levelInfo);
+        IPvPArtificialIntelligence CreateAdaptiveAI(IPvPLevelInfo levelInfo);
     }
 }

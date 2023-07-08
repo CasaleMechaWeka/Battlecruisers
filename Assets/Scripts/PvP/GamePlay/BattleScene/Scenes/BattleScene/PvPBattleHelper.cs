@@ -177,7 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         protected virtual IPvPStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new PvPDefaultStrategyFactory(PvPBattleSceneGodServer.Instance.dataProvider.StaticData.Strategies, currentLevelNum);
+            return new PvPDefaultStrategyFactory(PvPBattleSceneGodServer.Instance.dataProvider.StaticData.PvPStrategies, currentLevelNum);
         }
 
     }

@@ -27,6 +27,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Buildables;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes.BattleScene;
+using UnityEngine.Analytics;
+using Unity.Services.Analytics;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -44,6 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPCruiser playerBCruiser;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
         private static float difficultyDestructionScoreMultiplier;
+        private static bool GameOver;
 
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables;
 
@@ -157,7 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
 
-            _gameEndMonitor
+/*            _gameEndMonitor
                 = new PvPGameEndMonitor(
                     new PvPCruiserDestroyedMonitor(
                         playerACruiser,
@@ -175,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         components.TargetIndicator,
                         windManager,
                         helper.BuildingCategoryPermitter,
-                        rightPanelComponents.SpeedComponents.SpeedButtonGroup));
+                        rightPanelComponents.SpeedComponents.SpeedButtonGroup));*/
 
 
             deadBuildables = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
@@ -197,6 +200,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             {
                 difficultyDestructionScoreMultiplier = 2.0f;
             }
+
+            GameOver = false;
+
+/*            string logName = "Battle_Begin";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+            try
+            {
+                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }*/
         }
 
 

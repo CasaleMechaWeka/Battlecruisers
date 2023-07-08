@@ -12,6 +12,10 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -224,6 +228,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnTakeDamage();
 
                 Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                ulong objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuildable<PvPBuildableActivationArgs>>()?._parent.GetComponent<NetworkObject>()?.NetworkObjectId);
+                OnDamagedEventCalled(objectId);
 
                 if (wasFullHealth)
                 {
@@ -303,6 +309,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual void CallRpc_ClickedRepairButton()
         {
 
+        }
+
+        protected virtual void OnDamagedEventCalled(ulong objectId)
+        {
+            if (IsClient)
+            {
+                NetworkObject[] objs = FindObjectsByType<NetworkObject>(FindObjectsSortMode.None);
+                foreach (NetworkObject obj in objs)
+                {
+                    if (obj.NetworkObjectId == objectId)
+                    {
+                        IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPTarget>();
+                        if (damageSource == null)
+                        {
+                            damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                        }
+                        if (damageSource != null)
+                            Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
+                    }
+                }
+            }
+           
         }
     }
 }

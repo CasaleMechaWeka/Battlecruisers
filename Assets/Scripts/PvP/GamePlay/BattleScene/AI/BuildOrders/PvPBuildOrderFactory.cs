@@ -1,5 +1,7 @@
 using BattleCruisers.AI;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -43,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         /// <summary>
         /// Gets the basic build order, which contains counters to threats.
         /// </summary>
-        public IPvPDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
+        public IPvPDynamicBuildOrder CreateBasicBuildOrder(IPvPLevelInfo levelInfo)
         {
             IPvPStrategy strategy = _strategyFactory.GetBasicStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
@@ -53,13 +55,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         /// Build orders do NOT contain counters to threats.  These counters
         /// get created on the fly in response to threats.
         /// </summary>
-        public IPvPDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
+        public IPvPDynamicBuildOrder CreateAdaptiveBuildOrder(IPvPLevelInfo levelInfo)
         {
             IPvPStrategy strategy = _strategyFactory.GetAdaptiveStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
         }
 
-        private IPvPDynamicBuildOrder GetBuildOrder(IPvPStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
+        private IPvPDynamicBuildOrder GetBuildOrder(IPvPStrategy strategy, IPvPLevelInfo levelInfo, bool hasDefensivePlaceholders)
         {
             // Create offensive build order
             int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Platform);
@@ -87,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         /// IEnumerable I would get a fresh copy of the object, so any changes I made to
         /// those objects were lost!!!
         /// </summary>
-        private IPvPDynamicBuildOrder CreateOffensiveBuildOrder(IList<IPvPOffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
+        private IPvPDynamicBuildOrder CreateOffensiveBuildOrder(IList<IPvPOffensiveRequest> requests, int numOfPlatformSlots, IPvPLevelInfo levelInfo)
         {
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
@@ -117,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
-        private IPvPDynamicBuildOrder CreateBuildOrder(IPvPOffensiveRequest request, ILevelInfo levelInfo)
+        private IPvPDynamicBuildOrder CreateBuildOrder(IPvPOffensiveRequest request, IPvPLevelInfo levelInfo)
         {
             //Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
@@ -133,14 +135,62 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
                     return CreateDynamicBuildOrder(PvPBuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
 
                 case PvPOffensiveType.Ultras:
-                    return CreateDynamicBuildOrder(PvPBuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, _staticData.AIBannedUltrakeys);
+                    return CreateDynamicBuildOrder(PvPBuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, convertPvEBuildingKey2PvPBuildingKey(_staticData.AIBannedUltrakeys));
 
                 default:
                     throw new ArgumentException();
             }
         }
 
-        public IPvPDynamicBuildOrder CreateAntiAirBuildOrder(ILevelInfo levelInfo)
+        private IList<PvPBuildingKey> convertPvEBuildingKey2PvPBuildingKey(IList<BuildingKey> keys)
+        {
+            IList<PvPBuildingKey> iPvPKeys = new List<PvPBuildingKey>();
+            foreach (BuildingKey key in keys)
+            {
+                iPvPKeys.Add(new PvPBuildingKey(convertPvEBuildingCategory2PvPBuildingCategory(key.BuildingCategory), "PvP" + key.PrefabName));
+            }
+
+            return iPvPKeys;
+        }
+
+        private PvPBuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
+        {
+            switch (category)
+            {
+                case BuildingCategory.Ultra:
+                    return PvPBuildingCategory.Ultra;
+                case BuildingCategory.Tactical:
+                    return PvPBuildingCategory.Tactical;
+                case BuildingCategory.Factory:
+                    return PvPBuildingCategory.Factory;
+                case BuildingCategory.Offence:
+                    return PvPBuildingCategory.Offence;
+                case BuildingCategory.Defence:
+                    return PvPBuildingCategory.Defence;
+                default:
+                    throw new System.Exception();
+            }
+        }
+        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(PvPBuildingCategory category)
+        {
+            switch (category)
+            {
+                case PvPBuildingCategory.Ultra:
+                    return BuildingCategory.Ultra;
+                case PvPBuildingCategory.Tactical:
+                    return BuildingCategory.Tactical;
+                case PvPBuildingCategory.Factory:
+                    return BuildingCategory.Factory;
+                case PvPBuildingCategory.Offence:
+                    return BuildingCategory.Offence;
+                case PvPBuildingCategory.Defence:
+                    return BuildingCategory.Defence;
+                default:
+                    throw new System.Exception();
+            }
+        }
+
+        public IPvPDynamicBuildOrder CreateAntiAirBuildOrder(IPvPLevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Deck);
             int numOfSlotsToUse = PvPHelper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
@@ -153,7 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
                     numOfSlotsToUse: numOfSlotsToUse);
         }
 
-        public IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo)
+        public IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(IPvPLevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(PvPSlotType.Deck);
             int numOfSlotsToUse = PvPHelper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
@@ -168,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 
         public bool IsAntiRocketBuildOrderAvailable()
         {
-            return _gameModel.IsBuildingUnlocked(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil);
+            return _gameModel.IsBuildingUnlocked(new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil.BuildingCategory), PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil.PrefabName.Remove(0,3)));
         }
 
         public IPvPDynamicBuildOrder CreateAntiRocketBuildOrder()
@@ -178,7 +228,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
 
         public bool IsAntiStealthBuildOrderAvailable()
         {
-            return _gameModel.IsBuildingUnlocked(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher);
+            return _gameModel.IsBuildingUnlocked(new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher.BuildingCategory), PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher.PrefabName));
         }
 
         public IPvPDynamicBuildOrder CreateAntiStealthBuildOrder()
@@ -197,7 +247,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         private IPvPDynamicBuildOrder CreateDynamicBuildOrder(
             PvPBuildingCategory buildingCategory,
             int size,
-            ILevelInfo levelInfo,
+            IPvPLevelInfo levelInfo,
             IList<PvPBuildingKey> bannedBuildings = null)
         {
             return
