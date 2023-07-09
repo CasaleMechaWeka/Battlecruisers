@@ -37,11 +37,16 @@ namespace BattleCruisers.UI.ScreensScene
             costText.text = (captainExo.CaptainExoCost).ToString();
 
             OwnedFeedback feedback = _buyButton.GetComponentInChildren<OwnedFeedback>();
-            feedback.gameObject.SetActive(false);
-            if (captainExo.IsOwned == true)
+            //Debug.Log(feedback);
+            if(feedback != null)
             {
-                feedback.gameObject.SetActive(true);
+                feedback.gameObject.SetActive(false);
+                if (captainExo.IsOwned == true)
+                {
+                    feedback.gameObject.SetActive(true);
+                }
             }
+            
         }
     }
 }
