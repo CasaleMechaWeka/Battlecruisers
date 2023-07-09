@@ -368,9 +368,9 @@ namespace BattleCruisers.Data.Models
             _skirmish = null;
 
 
-            _unlockedCaptainExos = new List<CaptainExoKey>();
+            //_unlockedCaptainExos = new List<CaptainExoKey>();
             _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
-            _unlockedCaptainExos.Add(_currentCaptain);
+            //_unlockedCaptainExos.Add(_currentCaptain);
 
         }
 

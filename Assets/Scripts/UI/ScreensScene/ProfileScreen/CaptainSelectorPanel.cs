@@ -6,6 +6,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
+using BattleCruisers.Data.Static;
 using System;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
@@ -35,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 Destroy(child.gameObject);
             }
 
-            foreach (CaptainExoKey captain in _gameModel.UnlockedCaptainExos)
+            foreach (CaptainExoKey captain in StaticPrefabKeys.CaptainExos.AllKeys)
             {
                 var button = Instantiate(buttonPrefab, buttonContainer).GetComponent<CaptainExoButton>();
 

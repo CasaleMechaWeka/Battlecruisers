@@ -17,6 +17,9 @@ namespace BattleCruisers.UI.ScreensScene
         public ClickedFeedBack _clickedFeedBack;
         public GameObject _itemName;
 
+        private ShopItemDisplayer _shopItemDisplayer;
+        private CaptainExoData _captain;
+
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
@@ -31,18 +34,31 @@ namespace BattleCruisers.UI.ScreensScene
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IPrefabFactory prefabFactory,
-            CaptainExoData captainExo)
+            CaptainExoData captainExo,
+            ShopItemDisplayer itemDisplayer)
         {
             base.Initialise(soundPlayer);
+            _shopItemDisplayer = itemDisplayer;
+            _captain = captainExo;
             Image itemImage = _itemImage.GetComponent<Image>();
             itemImage.sprite = captainExo.CaptainExoImage;
             UpdateClickedFeedback = false;
+            OwnedFeedback feedback = GetComponentInChildren<OwnedFeedback>();
+            if(captainExo.IsOwned == true)
+            {
+                feedback.gameObject.SetActive(true);
+            }
+            else
+            {
+                feedback.gameObject.SetActive(false);
+            }
         }
 
         protected override void OnClicked()
         {
             base.OnClicked();
             UpdateClickedFeedback = true;
+            _shopItemDisplayer.DisplayItem(_captain);
         }
     }
 

@@ -20,7 +20,8 @@ public class ShopItemPanel : Panel
     public void Initialise(
         ISingleSoundPlayer soundPlayer,
         IPrefabFactory prefabFactory,
-        IGameModel gameModel)
+        IGameModel gameModel,
+        ShopItemDisplayer itemDisplayer)
     {
         ShopCaptainButton[] itemButton = GetComponentsInChildren<ShopCaptainButton>(includeInactive: true);
         List<int> captainList = RandomIndex();
@@ -33,7 +34,7 @@ public class ShopItemPanel : Panel
                 {
                     Debug.Log(temp);
                     captainList.Remove(temp.captainIndex);
-                    captain.Initialise(soundPlayer, prefabFactory, temp);
+                    captain.Initialise(soundPlayer, prefabFactory, temp, itemDisplayer);
                     break;
                 }
             }
