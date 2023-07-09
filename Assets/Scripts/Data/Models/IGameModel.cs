@@ -29,6 +29,7 @@ namespace BattleCruisers.Data.Models
         int SelectedPvPLevel { get; set; }
         HotkeysModel Hotkeys { get; }
         SkirmishModel Skirmish { get; set; }
+        CoinBattleModel CoinBattle { get; set; }
 
         ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }

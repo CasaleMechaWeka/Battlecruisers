@@ -6,6 +6,7 @@
         Tutorial = 2,
         Skirmish = 3,
         PvP_1VS1 = 4,
+        CoinBattle = 5
 
         //Voyage = 5
     }

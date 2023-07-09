@@ -246,6 +246,9 @@ namespace BattleCruisers.Data.Models
         private SkirmishModel _skirmish;
 
         [SerializeField]
+        private CoinBattleModel _coinBattle;
+
+        [SerializeField]
         private HotkeysModel _hotkeys;
         public HotkeysModel Hotkeys => _hotkeys;
 
@@ -315,6 +318,12 @@ namespace BattleCruisers.Data.Models
         {
             get { return _skirmish; }
             set { _skirmish = value; }
+        }
+
+        public CoinBattleModel CoinBattle
+        {
+            get { return _coinBattle; }
+            set { _coinBattle = value; }
         }
 
         // Captain Logic
