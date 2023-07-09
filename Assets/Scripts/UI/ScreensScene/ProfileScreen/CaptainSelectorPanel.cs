@@ -38,20 +38,18 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
             foreach (CaptainExoKey captain in StaticPrefabKeys.CaptainExos.AllKeys)
             {
-                var button = Instantiate(buttonPrefab, buttonContainer).GetComponent<CaptainExoButton>();
-
                 var captainExoData = await GetCaptainExoData(captain);
-
-                button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.CurrentCaptain);
+                if (captainExoData.IsOwned)
+                {
+                    var button = Instantiate(buttonPrefab, buttonContainer).GetComponent<CaptainExoButton>();
+                    button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.CurrentCaptain, SelectCaptain);
+                }
             }
         }
 
         private async Task<ICaptainExoData> GetCaptainExoData(CaptainExoKey captainExoKey)
         {
-            // Use the PrefabFetcher to load the prefab associated with the key
             IPrefabContainer<ICaptainExoData> captainExoPrefabContainer = await _prefabFetcher.GetPrefabAsync<ICaptainExoData>(captainExoKey);
-
-            // Return the CaptainExoData component
             return captainExoPrefabContainer.Prefab;
         }
 
@@ -65,9 +63,15 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             foreach (Transform child in buttonContainer)
             {
                 var button = child.GetComponent<CaptainExoButton>();
-                button.SetActiveCaptain(_gameModel.CurrentCaptain);
+                button.UpdateActiveState(_gameModel.CurrentCaptain);
             }
         }
 
+        public void SelectCaptain(CaptainExoKey captain)
+        {
+            _gameModel.CurrentCaptain = captain;
+            UpdateActiveCaptain();
+            gameObject.SetActive(false); // Close the panel after selection
+        }
     }
 }

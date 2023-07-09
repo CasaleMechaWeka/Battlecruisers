@@ -317,21 +317,12 @@ namespace BattleCruisers.Data.Models
             set { _skirmish = value; }
         }
 
-        /* Captain Logic
-        [SerializeField]
-        private List<CaptainExoKey> _unlockedCaptainExos; //is not being initialized
-        public ReadOnlyCollection<CaptainExoKey> UnlockedCaptainExos
-        {
-            get => _unlockedCaptainExos.AsReadOnly();
-        }
+        // Captain Logic
 
-            public void AddUnlockedCaptainExo(CaptainExoKey captainExo)
-        {
-            if (!_unlockedCaptainExos.Contains(captainExo))
-            {
-                _unlockedCaptainExos.Add(captainExo);
-            }
-        } */
+        [SerializeField]
+        private List<string> _ownedExosKeys = new List<string>();
+        public IReadOnlyList<string> OwnedExosKeys => _ownedExosKeys;
+
 
 
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
@@ -368,9 +359,8 @@ namespace BattleCruisers.Data.Models
             _skirmish = null;
 
 
-            //_unlockedCaptainExos = new List<CaptainExoKey>();
             _currentCaptain = new CaptainExoKey("CaptainExo000"); // "CaptainExo000" is Charlie, the default captain
-            //_unlockedCaptainExos.Add(_currentCaptain);
+
 
         }
 
@@ -571,5 +561,20 @@ namespace BattleCruisers.Data.Models
         {
             return UnlockedBuildings.Contains(buildingKey);
         }
+
+        public bool OwnsExo(string exoKey)
+        {
+            return _ownedExosKeys.Contains(exoKey);
+        }
+
+        public void PurchaseExo(string exoKey)
+        {
+            if (!_ownedExosKeys.Contains(exoKey))
+            {
+                _ownedExosKeys.Add(exoKey);
+            }
+        }
+
+
     }
 }

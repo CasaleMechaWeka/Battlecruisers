@@ -29,9 +29,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             base.Initialise(screensSceneGod);
 
             _dataProvider = dataProvider;
-            //Initialise each button with it's function
+            //Initialise each button with its function
             backButton.Initialise(soundPlayer, Home, this);
-            buyButton.Initialise(soundPlayer, Buy, this);
+            buyButton.Initialise(soundPlayer, PurchaseExo, this);
             blackMarketButton.Initialise(soundPlayer, BlackMarket, this);
             itemPanel.Initialise(soundPlayer, prefabFactory, dataProvider.GameModel, itemDisplayer);
             itemDisplayer.gameObject.SetActive(false);
@@ -57,10 +57,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             _screensSceneGod.GotoHubScreen();
         }
-        public void Buy()
+        public void PurchaseExo()
         {
-           //
+        //    _dataProvider.GameModel.PurchaseExo(/* exoKey goes here */);
         }
+
         public void BlackMarket()
         {
             _screensSceneGod.GotoBlackMarketScreen();

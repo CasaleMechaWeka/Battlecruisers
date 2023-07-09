@@ -15,25 +15,26 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public Image activeCaptainImage;
 
         private CaptainExoKey captainKey;
+        private Action<CaptainExoKey> setCurrentCaptainAction;
 
-        public void Initialize(CaptainExoKey key, Sprite captainSprite, bool isActiveCaptain)
+        public void Initialize(CaptainExoKey key, Sprite captainSprite, bool isActiveCaptain, Action<CaptainExoKey> setCurrentCaptainAction)
         {
             captainKey = key;
             captainImage.sprite = captainSprite;
             activeCaptainImage.gameObject.SetActive(isActiveCaptain);
+            this.setCurrentCaptainAction = setCurrentCaptainAction;
 
             button.onClick.AddListener(SetCurrentCaptain);
         }
 
         private void SetCurrentCaptain()
         {
-            // Code here to set the current captain in GameModel to this button's captain
+            setCurrentCaptainAction?.Invoke(captainKey);
         }
 
-        public void SetActiveCaptain(CaptainExoKey currentCaptain)
+        public void UpdateActiveState(CaptainExoKey currentCaptain)
         {
-            bool isActiveCaptain = captainKey.Equals(currentCaptain);
-            activeCaptainImage.gameObject.SetActive(isActiveCaptain);
+            activeCaptainImage.gameObject.SetActive(captainKey == currentCaptain);
         }
     }
 }
