@@ -317,9 +317,9 @@ namespace BattleCruisers.Data.Models
             set { _skirmish = value; }
         }
 
-        // Captain Logic
+        /* Captain Logic
         [SerializeField]
-        private List<CaptainExoKey> _unlockedCaptainExos;
+        private List<CaptainExoKey> _unlockedCaptainExos; //is not being initialized
         public ReadOnlyCollection<CaptainExoKey> UnlockedCaptainExos
         {
             get => _unlockedCaptainExos.AsReadOnly();
@@ -331,7 +331,7 @@ namespace BattleCruisers.Data.Models
             {
                 _unlockedCaptainExos.Add(captainExo);
             }
-        }
+        } */
 
 
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
