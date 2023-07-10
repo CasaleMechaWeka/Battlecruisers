@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     /// </summary>
     public class PvPHealthThresholdMonitor : IPvPHealthThresholdMonitor
     {
-        private readonly IPvPDamagable _damagable;
+        private readonly PvPCruiser _damagable;
         private readonly float _threshold;
         private bool _wasAboveThreshold;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public event EventHandler DroppedBelowThreshold;
         public event EventHandler RoseAboveThreshold;
 
-        public PvPHealthThresholdMonitor(IPvPDamagable damagable, float thresholdProportion)
+        public PvPHealthThresholdMonitor(PvPCruiser damagable, float thresholdProportion)
         {
             Assert.IsNotNull(damagable);
             Assert.IsTrue(thresholdProportion > MIN_THRESHOLD);
@@ -31,10 +31,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _threshold = thresholdProportion * damagable.MaxHealth;
             _wasAboveThreshold = true;
 
-            _damagable.HealthChanged += _damagable_HealthChanged;
+            // _damagable.HealthChanged += _damagable_HealthChanged;
+            _damagable.pvp_Health.OnValueChanged += _damagable_HealthChanged;
         }
 
-        private void _damagable_HealthChanged(object sender, EventArgs e)
+/*        private void _damagable_HealthChanged(object sender, EventArgs e)
+        {
+            if (_wasAboveThreshold
+                && _damagable.Health < _threshold)
+            {
+                DroppedBelowThreshold?.Invoke(this, EventArgs.Empty);
+            }
+            else if (!_wasAboveThreshold
+                && _damagable.Health >= _threshold)
+            {
+                RoseAboveThreshold?.Invoke(this, EventArgs.Empty);
+            }
+
+            _wasAboveThreshold = _damagable.Health >= _threshold;
+        }*/
+
+        private void _damagable_HealthChanged(float oldVal, float newVal)
         {
             if (_wasAboveThreshold
                 && _damagable.Health < _threshold)

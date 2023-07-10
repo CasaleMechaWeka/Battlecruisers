@@ -173,7 +173,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IPvPSoundKey selectedSoundKey = IsPlayerCruiser ? PvPSoundKeys.UI.Selected.FriendlyCruiser : PvPSoundKeys.UI.Selected.EnemyCruiser;
             _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
             if (IsClient && IsOwner)
+            {
                 BuildingMonitor = new PvPCruiserBuildingMonitor(this);
+                UnitMonitor = new PvPCruiserUnitMonitor(BuildingMonitor);
+                PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
+            }
+
             //   }
         }
 

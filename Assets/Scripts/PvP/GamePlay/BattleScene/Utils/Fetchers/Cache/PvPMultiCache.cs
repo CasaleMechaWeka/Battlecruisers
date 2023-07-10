@@ -1,5 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
@@ -16,7 +17,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public TPrefab GetPrefab(IPvPPrefabKey prefabKey)
         {
+
             Assert.IsNotNull(prefabKey);
+            if (!_prefabs.ContainsKey(prefabKey))
+                Debug.Log("PrefabKey ----------------> " + prefabKey.PrefabName);
             Assert.IsTrue(_prefabs.ContainsKey(prefabKey));
             return _prefabs[prefabKey];
         }

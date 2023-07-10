@@ -302,7 +302,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     playerCruiserDamageMonitor,
                     leftPanelComponents.PopLimitReachedFeedback);
 
-            IPvPWindManager windManager
+      
+/*            IPvPWindManager windManager
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
                     cameraComponents.Settings,
@@ -319,8 +320,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     cameraComponents.CameraFocuser,
                     rightPanelComponents.SpeedComponents,
                     rightPanelComponents.MainMenuManager
-                    /*uiManager*/);
-
+                    *//*uiManager*//*);*/
+            
 
 
             MatchmakingScreenController.Instance.FoundCompetitor();

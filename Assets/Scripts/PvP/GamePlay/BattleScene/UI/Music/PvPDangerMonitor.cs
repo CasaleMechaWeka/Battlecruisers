@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
     public class PvPDangerMonitor : IPvPDangerMonitor
     {
         private readonly IPvPDeferrer _timeScaleDeferrer;
-        private readonly IPvPCruiserController _playerCruiser, _aiCruiser;
+        private readonly IPvPCruiserController _playerCruiser, _enemyCruiser;
         private readonly IPvPHealthThresholdMonitor _playerCruiserHealthMonitor, _aiCruiserHealthMonitor;
 
         public const float DANGER_LIFETIME_IN_S = 60;
@@ -28,22 +28,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
         public PvPDangerMonitor(
             IPvPDeferrer timeScaleDeferrer,
             IPvPCruiserController playerCruiser,
-            IPvPCruiserController aiCruiser,
+            IPvPCruiserController enemyCruiser,
             IPvPHealthThresholdMonitor playerCruiserHealthMonitor,
-            IPvPHealthThresholdMonitor aiCruiserHealthMonitor)
+            IPvPHealthThresholdMonitor enemyCruiserHealthMonitor)
         {
-            PvPHelper.AssertIsNotNull(timeScaleDeferrer, timeScaleDeferrer, playerCruiser, aiCruiser, playerCruiserHealthMonitor, aiCruiserHealthMonitor);
+            PvPHelper.AssertIsNotNull(timeScaleDeferrer, timeScaleDeferrer, playerCruiser, enemyCruiser, playerCruiserHealthMonitor, enemyCruiserHealthMonitor);
 
             _timeScaleDeferrer = timeScaleDeferrer;
             _playerCruiser = playerCruiser;
-            _aiCruiser = aiCruiser;
+            _enemyCruiser = enemyCruiser;
             _playerCruiserHealthMonitor = playerCruiserHealthMonitor;
-            _aiCruiserHealthMonitor = aiCruiserHealthMonitor;
+            _aiCruiserHealthMonitor = enemyCruiserHealthMonitor;
 
             _playerCruiser.BuildingMonitor.BuildingCompleted += Cruiser_BuildingCompleted;
             _playerCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
-            _aiCruiser.BuildingMonitor.BuildingCompleted += Cruiser_BuildingCompleted;
-            _aiCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
+            _enemyCruiser.BuildingMonitor.BuildingCompleted += Cruiser_BuildingCompleted;
+            _enemyCruiser.UnitMonitor.UnitCompleted += Cruiser_CompletedBuildingUnit;
 
             _playerCruiserHealthMonitor.DroppedBelowThreshold += CruiserHealthMonitor_DroppedBelowThreshold;
             _playerCruiserHealthMonitor.RoseAboveThreshold += CruiserHealthMonitor_RoseAboveThreshold;
@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
         private void CruiserHealthMonitor_DroppedBelowThreshold(object sender, EventArgs e)
         {
             if (_playerCruiser.IsAlive
-                && _aiCruiser.IsAlive)
+                && _enemyCruiser.IsAlive)
             {
                 EmitDangerStart(deferDangerEnd: false);
             }

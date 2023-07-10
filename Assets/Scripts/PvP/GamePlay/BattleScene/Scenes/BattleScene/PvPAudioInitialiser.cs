@@ -27,26 +27,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IPvPBattleSceneHelper helper,
             IPvPLayeredMusicPlayer musicPlayer,
             PvPCruiser playerCruiser,
-            PvPCruiser aiCruiser,
+            PvPCruiser enemyCruiser,
             IPvPDeferrer deferrer,
             IPvPTime time,
             IPvPBattleCompletionHandler battleCompletionHandler,
             IPvPCruiserDamageMonitor playerCruiserDamageMonitor,
             IPvPGameObject popLimitReachedFeedback)
         {
-            PvPHelper.AssertIsNotNull(helper, musicPlayer, playerCruiser, aiCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor, popLimitReachedFeedback);
+            PvPHelper.AssertIsNotNull(helper, musicPlayer, playerCruiser, enemyCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor, popLimitReachedFeedback);
 
-            _levelMusicPlayer = CreateLevelMusicPlayer(musicPlayer, playerCruiser, aiCruiser, deferrer, battleCompletionHandler);
+            _levelMusicPlayer = CreateLevelMusicPlayer(musicPlayer, playerCruiser, enemyCruiser, deferrer, battleCompletionHandler);
             _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time, playerCruiserDamageMonitor);
-            _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(aiCruiser, time);
-            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time, popLimitReachedFeedback);
+            _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(enemyCruiser, time);
+            //    _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time, popLimitReachedFeedback);
         }
 
         private PvPLevelMusicPlayer CreateLevelMusicPlayer(
             IPvPLayeredMusicPlayer musicPlayer,
-            IPvPCruiser playerCruiser,
-            IPvPCruiser aiCruiser,
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
             IPvPDeferrer deferrer,
             IPvPBattleCompletionHandler battleCompletionHandler)
         {
@@ -55,9 +55,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 (
                     deferrer,
                     playerCruiser,
-                    aiCruiser,
+                    enemyCruiser,
                     new PvPHealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
-                    new PvPHealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f));
+                    new PvPHealthThresholdMonitor(enemyCruiser, thresholdProportion: 0.3f));
             return
                 new PvPLevelMusicPlayer(
                     musicPlayer,
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
         private PvPCruiserEventMonitor CreateCruiserEventMonitor(
-            IPvPCruiser playerCruiser,
+            PvPCruiser playerCruiser,
             IPvPTime time,
             IPvPCruiserDamageMonitor playerCruiserDamageMonitor)
         {
@@ -87,15 +87,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
+        /*        private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, IPvPTime time, IPvPGameObject popLimitReachedFeedback)
+                {
+                    return
+                        new PvPPopulationLimitAnnouncer(
+                            playerCruiser,
+                            playerCruiser.PopulationLimitMonitor
+        *//*                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                            new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
+                            popLimitReachedFeedback*//*);
+                }*/
+
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser, IPvPTime time, IPvPGameObject popLimitReachedFeedback)
         {
             return
                 new PvPPopulationLimitAnnouncer(
-                    playerCruiser,
-                    playerCruiser.PopulationLimitMonitor
-/*                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    playerCruiser.PopulationLimitMonitor,
+                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
-                    popLimitReachedFeedback*/);
+                    popLimitReachedFeedback);
         }
     }
 }

@@ -1,3 +1,5 @@
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
@@ -29,6 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPMortar { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPMortar");
             public static PvPBuildingKey PvPSamSite { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPSamSite");
             public static PvPBuildingKey PvPTeslaCoil { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPTeslaCoil");
+            public static PvPBuildingKey PvPCoastguard { get; } = new PvPBuildingKey(PvPBuildingCategory.Defence, "PvPCoastguard");
 
             // Offence
             public static PvPBuildingKey PvPArtillery { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPArtillery");
@@ -36,6 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPRailgun { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPRailgun");
             public static PvPBuildingKey PvPMLRS { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMLRS");
             public static PvPBuildingKey PvPGatlingMortar { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPGatlingMortar");
+            public static PvPBuildingKey PvPIonCannon { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPIonCannon");
+            public static PvPBuildingKey PvPMissilePod { get; } = new PvPBuildingKey(PvPBuildingCategory.Offence, "PvPMissilePod");
 
 
             // Ultras
@@ -56,9 +61,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Tactical
                         PvPShieldGenerator, PvPStealthGenerator, PvPSpySatelliteLauncher, PvPLocalBooster, PvPControlTower,
                         // Defence
-                        PvPAntiShipTurret, PvPAntiAirTurret, PvPMortar, PvPSamSite, PvPTeslaCoil,
+                        PvPAntiShipTurret, PvPAntiAirTurret, PvPMortar, PvPSamSite, PvPTeslaCoil,PvPCoastguard,
                         // Offence
-                        PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar,
+                        PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar,PvPIonCannon,PvPMissilePod,
                         // Ultras
                         PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides
                     };
