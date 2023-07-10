@@ -14,10 +14,10 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     public class CaptainSelectorPanel : MonoBehaviour
     {
         [SerializeField]
-        private GameObject buttonPrefab;
+        private Transform buttonContainer;
 
         [SerializeField]
-        private Transform buttonContainer;
+        private GameObject captainButtonPrefab; // assign this from the editor
 
         private IGameModel _gameModel;
         private IPrefabFetcher _prefabFetcher;
@@ -41,11 +41,14 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 var captainExoData = await GetCaptainExoData(captain);
                 if (captainExoData.IsOwned)
                 {
-                    var button = Instantiate(buttonPrefab, buttonContainer).GetComponent<CaptainExoButton>();
+                    var buttonGameObject = Instantiate(captainButtonPrefab, buttonContainer);
+                    var button = buttonGameObject.GetComponent<CaptainExoButton>();
                     button.Initialize(captain, captainExoData.CaptainExoImage, captain == _gameModel.CurrentCaptain, SelectCaptain);
                 }
             }
         }
+
+
 
         private async Task<ICaptainExoData> GetCaptainExoData(CaptainExoKey captainExoKey)
         {
@@ -74,4 +77,5 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             gameObject.SetActive(false); // Close the panel after selection
         }
     }
+
 }
