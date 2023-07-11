@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
@@ -22,6 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
 
         public IPvPBuildMenu Initialise(
+            PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             IList<IPvPBuildingGroup> buildingGroups,
             IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
@@ -73,6 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Unit menus
             IPvPUnitClickHandler unitClickHandler
                 = new PvPUnitClickHandler(
+                    playerCruiser,
                     uiManager,
                     eventSoundPlayer,
                     uiSoundPlayer,

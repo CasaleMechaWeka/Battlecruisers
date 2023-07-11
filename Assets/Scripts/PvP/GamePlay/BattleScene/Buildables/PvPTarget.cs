@@ -106,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private bool IsFullHealth => Health == maxHealth;
         public virtual Color Color { set { /* empty */ } }
         public bool IsInScene => gameObject.scene.IsValid();
-        public float Health => IsServer ? (_healthTracker.Health > 0f ? _healthTracker.Health : maxHealth) : (pvp_Health.Value > 0 ? pvp_Health.Value : maxHealth);
+        public float Health => _healthTracker.Health; /*IsServer ? (_healthTracker.Health >= 0f ? _healthTracker.Health : maxHealth) : (pvp_Health.Value >= 0 ? pvp_Health.Value : maxHealth);*/
         public IPvPRepairCommand RepairCommand { get; private set; }
         public float HealthGainPerDroneS { get; protected set; }
 
@@ -228,8 +228,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnTakeDamage();
 
                 Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
-                ulong objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuildable<PvPBuildableActivationArgs>>()?._parent.GetComponent<NetworkObject>()?.NetworkObjectId);
-                OnDamagedEventCalled(objectId);
+                try
+                {
+                    ulong objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuildable<PvPBuildableActivationArgs>>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    OnDamagedEventCalled(objectId);
+                }catch(Exception ex)
+                {
+                    Debug.Log("Cruiser maybe not have _parent " + damageSource.GameObject.name);
+                }
 
                 if (wasFullHealth)
                 {
@@ -320,10 +326,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 {
                     if (obj.NetworkObjectId == objectId)
                     {
-                        IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>().Buildable.Parse<IPvPTarget>();
+                        IPvPTarget damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<IPvPTarget>();
                         if (damageSource == null)
                         {
-                            damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>().Buildable.Parse<IPvPUnit>();
+                            damageSource = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<IPvPUnit>();
                         }
                         if (damageSource != null)
                             Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));

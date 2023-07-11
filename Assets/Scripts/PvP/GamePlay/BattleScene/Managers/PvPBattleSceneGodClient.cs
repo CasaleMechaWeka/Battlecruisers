@@ -243,6 +243,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPauseGameManager pauseGameManager = new PvPPauseGameManager(time);
             _debouncer = new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30);
             playerCruiser.pvp_popLimitReachedFeedback.OnValueChanged += IsPopulationLimitReached_ValueChanged;
+            playerCruiser.pvp_DroneNumIncreased.OnValueChanged += DroneNumIncreased_ValueChanged;
+            playerCruiser.pvp_IdleDronesStarted.OnValueChanged += IdleDronesStarted_ValueChanged;
+            playerCruiser.pvp_IdleDronesEnded.OnValueChanged += IdleDronesEnded_ValueChanged;
 
             IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             IPvPUserChosenTargetHelper userChosenTargetHelper
@@ -302,26 +305,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     playerCruiserDamageMonitor,
                     leftPanelComponents.PopLimitReachedFeedback);
 
-      
-/*            IPvPWindManager windManager
-                = components.WindInitialiser.Initialise(
-                    cameraComponents.MainCamera,
-                    cameraComponents.Settings,
-                    dataProvider.SettingsManager);
-            windManager.Play();
 
-            _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
+            /*            IPvPWindManager windManager
+                            = components.WindInitialiser.Initialise(
+                                cameraComponents.MainCamera,
+                                cameraComponents.Settings,
+                                dataProvider.SettingsManager);
+                        windManager.Play();
 
-            components.HotkeyInitialiser.Initialise(
-                    dataProvider.GameModel.Hotkeys,
-                    PvPInputBC.Instance,
-                    components.UpdaterProvider.SwitchableUpdater,
-                    navigationPermitters.HotkeyFilter,
-                    cameraComponents.CameraFocuser,
-                    rightPanelComponents.SpeedComponents,
-                    rightPanelComponents.MainMenuManager
-                    *//*uiManager*//*);*/
-            
+                        _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
+
+                        components.HotkeyInitialiser.Initialise(
+                                dataProvider.GameModel.Hotkeys,
+                                PvPInputBC.Instance,
+                                components.UpdaterProvider.SwitchableUpdater,
+                                navigationPermitters.HotkeyFilter,
+                                cameraComponents.CameraFocuser,
+                                rightPanelComponents.SpeedComponents,
+                                rightPanelComponents.MainMenuManager
+                                *//*uiManager*//*);*/
+
 
 
             MatchmakingScreenController.Instance.FoundCompetitor();
@@ -345,12 +348,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             leftPanelComponents.PopLimitReachedFeedback.IsVisible = newVal;
         }
 
+        private void DroneNumIncreased_ValueChanged(bool oldVal, bool newVal)
+        {
+           factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NewDronesReady);
+        }
+
+        private void IdleDronesStarted_ValueChanged(bool oldVal, bool newVal)
+        {
+            new PvPDebouncer(PvPTimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.Idle));
+        }
+
+        private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVale)
+        {
+            
+        }
+
 
 
         IEnumerator iLoadedPvPScene()
         {
             yield return new WaitForSeconds(5f);
-            sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
+            sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                 cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();
             else

@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _angleConverter = angleConverter;
             _projectileFlightStats = projectileFlightStats;
-            _adjustedGravity = Constants.GRAVITY * projectileFlightStats.GravityScale;
+            _adjustedGravity = PvPConstants.GRAVITY * projectileFlightStats.GravityScale;
         }
 
         public override float FindDesiredAngle(Vector2 sourcePosition, Vector2 targetPosition, bool isSourceMirrored)

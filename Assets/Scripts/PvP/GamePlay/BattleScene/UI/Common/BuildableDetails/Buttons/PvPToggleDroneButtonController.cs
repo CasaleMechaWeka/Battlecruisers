@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         protected override void OnClicked()
         {
             base.OnClicked();
-            _buildable?.ToggleDroneConsumerFocusCommand.Execute();
+            _buildable?.ToggleDroneConsumerFocusCommand.ExecuteIfPossible();
         }
 
         private void ToggleDroneConsumerFocusCommand_CanExecuteChanged(object sender, EventArgs e)

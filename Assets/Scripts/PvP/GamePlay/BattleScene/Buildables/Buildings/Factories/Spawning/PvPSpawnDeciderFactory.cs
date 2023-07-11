@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         spawnPositionFinder),
                     new PvPPopulationLimitSpawnDecider(
                         factory.ParentCruiser.UnitMonitor,
-                        Constants.POPULATION_LIMIT));
+                        PvPConstants.POPULATION_LIMIT));
         }
     }
 }

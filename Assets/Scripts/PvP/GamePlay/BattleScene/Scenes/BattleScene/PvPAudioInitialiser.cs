@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PvPHelper.AssertIsNotNull(helper, musicPlayer, playerCruiser, enemyCruiser, deferrer, time, battleCompletionHandler, playerCruiserDamageMonitor, popLimitReachedFeedback);
 
             _levelMusicPlayer = CreateLevelMusicPlayer(musicPlayer, playerCruiser, enemyCruiser, deferrer, battleCompletionHandler);
-            _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
+        //    _droneEventSoundPlayer = helper.CreateDroneEventSoundPlayer(playerCruiser, deferrer);
             _cruiserEventMonitor = CreateCruiserEventMonitor(playerCruiser, time, playerCruiserDamageMonitor);
             _ultrasConstructionMonitor = CreateUltrasConstructionMonitor(enemyCruiser, time);
             //    _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerCruiser, time, popLimitReachedFeedback);

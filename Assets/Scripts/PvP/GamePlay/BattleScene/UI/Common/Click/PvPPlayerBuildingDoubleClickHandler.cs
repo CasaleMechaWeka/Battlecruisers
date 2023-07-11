@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             if (playerBuliding.ToggleDroneConsumerFocusCommand.CanExecute)
             {
                 // Building construction or factory production
-                playerBuliding.ToggleDroneConsumerFocusCommand.Execute();
+                playerBuliding.ToggleDroneConsumerFocusCommand.ExecuteIfPossible();
             }
             else if (playerBuliding.RepairCommand.CanExecute)
             {

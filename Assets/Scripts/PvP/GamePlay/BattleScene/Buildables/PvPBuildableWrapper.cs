@@ -31,7 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnVisibleChanged(bool oldVal, bool newVal)
         {
             if (IsClient)
-                gameObject.SetActive(newVal);
+                // gameObject.SetActive(newVal);
+                IsVisible = newVal;
         }
 
         public override void StaticInitialise(ILocTable commonStrings)

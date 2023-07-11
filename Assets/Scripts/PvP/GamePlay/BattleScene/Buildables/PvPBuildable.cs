@@ -656,8 +656,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void Deactivate()
         {
-            Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
-
+            //   Logging.Log(Tags.BUILDABLE, $"{this}:  _parent.SetActive(false);");
+            if (IsClient)
+                return;
             Assert.IsTrue(_parent.activeSelf);
             _parent.SetActive(false);
             if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)
@@ -666,6 +667,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             if (_parent.GetComponent<PvPUnitWrapper>() is not null && IsServer)
             {
+
                 _parent.GetComponent<PvPUnitWrapper>().IsVisible = false;
             }
             Deactivated?.Invoke(this, EventArgs.Empty);

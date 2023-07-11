@@ -15,13 +15,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             switch (difficulty)
             {
                 case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
+                    return PvPBuildSpeedMultipliers.POINT_7_DEFAULT;
 
                 case Difficulty.Hard:
-                    return BuildSpeedMultipliers.DEFAULT;
+                    return PvPBuildSpeedMultipliers.DEFAULT;
 
                 case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
+                    return PvPBuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
 
                 default:
                     throw new ArgumentException($"Unkown difficulty: {difficulty}");
@@ -40,13 +40,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             switch (difficulty)
             {
                 case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_65_DEFAULT;
+                    return PvPBuildSpeedMultipliers.POINT_65_DEFAULT;
 
                 case Difficulty.Hard:
-                    return BuildSpeedMultipliers.POINT_93_DEFAULT;
+                    return PvPBuildSpeedMultipliers.POINT_93_DEFAULT;
 
                 case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
+                    return PvPBuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
 
                 default:
                     throw new ArgumentException($"Unkown difficulty: {difficulty}");

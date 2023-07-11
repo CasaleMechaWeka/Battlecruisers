@@ -55,12 +55,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
 
         protected virtual void ShowEnabledState()
         {
-            SetAlpha(Alpha.ENABLED);
+            SetAlpha(PvPAlpha.ENABLED);
         }
 
         protected virtual void ShowDisabledState()
         {
-            SetAlpha(Alpha.DISABLED);
+            SetAlpha(PvPAlpha.DISABLED);
         }
 
         protected void SetAlpha(float alpha)

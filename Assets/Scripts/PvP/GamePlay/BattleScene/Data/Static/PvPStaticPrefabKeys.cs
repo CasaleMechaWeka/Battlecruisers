@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -49,6 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPUltralisk { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPUltralisk");
             public static PvPBuildingKey PvPKamikazeSignal { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPKamikazeSignal");
             public static PvPBuildingKey PvPBroadsides { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPBroadsides");
+            public static PvPBuildingKey PvPNovaArtillery { get; } = new PvPBuildingKey(PvPBuildingCategory.Ultra, "PvPNovaArtillery");
 
             public static IList<IPvPPrefabKey> AllKeys
             {
@@ -65,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                         // Offence
                         PvPArtillery, PvPRocketLauncher, PvPRailgun, PvPMLRS, PvPGatlingMortar,PvPIonCannon,PvPMissilePod,
                         // Ultras
-                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides
+                        PvPDeathstarLauncher, PvPNukeLauncher, PvPUltralisk, PvPKamikazeSignal, PvPBroadsides, PvPNovaArtillery
                     };
                 }
             }

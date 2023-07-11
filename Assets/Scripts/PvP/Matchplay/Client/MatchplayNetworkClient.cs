@@ -88,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 
         void NetworkShutdown()
         {
-            if (SceneManager.GetActiveScene().name != SceneNames.SCREENS_SCENE)
+            if (SceneManager.GetActiveScene().name != PvPSceneNames.SCREENS_SCENE)
             {
-                SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
+                SceneManager.LoadScene(PvPSceneNames.SCREENS_SCENE);
             }
 
             if (m_NetworkManager.IsConnectedClient)

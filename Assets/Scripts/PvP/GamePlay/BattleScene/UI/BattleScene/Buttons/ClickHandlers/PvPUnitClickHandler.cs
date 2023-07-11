@@ -1,6 +1,7 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Players;
@@ -12,8 +13,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPUnitClickHandler : PvPBuildableClickHandler, IPvPUnitClickHandler
     {
         private readonly IPvPPopulationLimitReachedDecider _populationLimitReachedDecider;
+        private PvPCruiser _playerCruiser;
 
         public PvPUnitClickHandler(
+            PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             IPvPPrioritisedSoundPlayer eventSoundPlayer,
             IPvPSingleSoundPlayer uiSoundPlayer,
@@ -22,6 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             Assert.IsNotNull(populationLimitReachedDecider);
             _populationLimitReachedDecider = populationLimitReachedDecider;
+            _playerCruiser = playerCruiser;
         }
 
         public void HandleClick(bool canAffordBuildable, IPvPBuildableWrapper<IPvPUnit> unitClicked, IPvPFactory unitFactory)
@@ -36,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
                 HandleFactory(unitClicked, unitFactory);
 
-                if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(unitFactory))
+                if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_playerCruiser, unitFactory))
                 {
                     _eventSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PopulationLimitReached);
                 }

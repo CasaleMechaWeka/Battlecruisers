@@ -44,7 +44,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
-        private PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
+        private PvPPopulationLimitAnnouncer _populationLimitAnnouncerA;
+        private PvPPopulationLimitAnnouncer _populationLimitAnnouncerB;
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
 
@@ -55,7 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private PvPDroneManagerMonitor droneManagerMonitor;
+        private PvPDroneManagerMonitor droneManagerMonitorA;
+        private PvPDroneManagerMonitor droneManagerMonitorB;
 #pragma warning restore CS0414  // Variable is assigned but never used
 
 
@@ -150,12 +152,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             // IPvPLevel currentLevel = pvpBattleHelper.GetPvPLevel();
 
-            droneManagerMonitor = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
-            droneManagerMonitor.IdleDronesStarted += _droneManagerMonitor_IdleDronesStarted;
-            droneManagerMonitor.IdleDronesEnded += _droneManagerMonitor_IdleDronesEnded;
+            droneManagerMonitorA = new PvPDroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorA.IdleDronesStarted += _droneManagerMonitorA_IdleDronesStarted;
+            droneManagerMonitorA.IdleDronesEnded += _droneManagerMonitorA_IdleDronesEnded;
+            droneManagerMonitorA.DroneNumIncreased += _droneManagerMonitorA_DroneNumIncreased;
+
+
+
+            droneManagerMonitorB = new PvPDroneManagerMonitor(playerBCruiser.DroneManager, components.Deferrer);
+            droneManagerMonitorB.IdleDronesStarted += _droneManagerMonitorB_IdleDronesStarted;
+            droneManagerMonitorB.IdleDronesEnded += _droneManagerMonitorB_IdleDronesEnded;
+            droneManagerMonitorB.DroneNumIncreased += _droneManagerMonitorB_DroneNumIncreased;
 
             IPvPTime time = PvPTimeBC.Instance;
-            _populationLimitAnnouncer = CreatePopulationLimitAnnouncer(playerACruiser);
+            _populationLimitAnnouncerA = CreatePopulationLimitAnnouncer(playerACruiser);
+            _populationLimitAnnouncerB = CreatePopulationLimitAnnouncer(playerBCruiser);
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
@@ -228,14 +239,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     playerCruiser.PopulationLimitMonitor
                     );
         }
-        private void _droneManagerMonitor_IdleDronesStarted(object sender, EventArgs e)
+        private void _droneManagerMonitorA_IdleDronesStarted(object sender, EventArgs e)
         {
-            playerACruiser.pvp_IdleDronesStarted.Value = true;
+            playerACruiser.pvp_IdleDronesStarted.Value = !playerACruiser.pvp_IdleDronesStarted.Value;
         }
 
-        private void _droneManagerMonitor_IdleDronesEnded(object sender, EventArgs e)
+        private void _droneManagerMonitorA_IdleDronesEnded(object sender, EventArgs e)
         {
-            playerACruiser.pvp_IdleDronesEnded.Value = false;
+            playerACruiser.pvp_IdleDronesEnded.Value = !playerACruiser.pvp_IdleDronesEnded.Value;
+        }
+
+        private void _droneManagerMonitorA_DroneNumIncreased(object sender, EventArgs e) 
+        {
+            playerACruiser.pvp_DroneNumIncreased.Value = !playerACruiser.pvp_DroneNumIncreased.Value;
+        }
+
+        private void _droneManagerMonitorB_IdleDronesStarted(object sender, EventArgs e)
+        {
+            playerBCruiser.pvp_IdleDronesStarted.Value = !playerBCruiser.pvp_IdleDronesStarted.Value;
+        }
+
+        private void _droneManagerMonitorB_IdleDronesEnded(object sender, EventArgs e)
+        {
+            playerBCruiser.pvp_IdleDronesEnded.Value = !playerBCruiser.pvp_IdleDronesEnded.Value;
+        }
+
+        private void _droneManagerMonitorB_DroneNumIncreased(object sender, EventArgs e)
+        {
+            playerBCruiser.pvp_DroneNumIncreased.Value = !playerBCruiser.pvp_DroneNumIncreased.Value;
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,

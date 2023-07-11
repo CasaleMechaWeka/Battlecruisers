@@ -37,8 +37,7 @@ namespace BattleCruisers.Data
                 {
                     _gameModel.PlayerLoadout.Create_buildsAnd_units();
                     SaveGame();
-                }
-                
+                }                
             }
             else
             {

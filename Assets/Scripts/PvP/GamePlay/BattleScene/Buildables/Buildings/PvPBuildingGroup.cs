@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -33,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             for (int i = 1; i < buildings.Count; ++i)
             {
                 if (buildings[i].Buildable.Category != BuildingCategory)
-                {
+                {                   
                     throw new ArgumentException();
                 }
             }

@@ -69,8 +69,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
                     return PvPUnitCategory.Naval;
                 case UnitCategory.Aircraft:
                     return PvPUnitCategory.Aircraft;
-                case UnitCategory.Untouchable:
-                    return PvPUnitCategory.Untouchable;
+/*                case UnitCategory.Untouchable:
+                    return PvPUnitCategory.Untouchable;*/
                 default:
                     throw new System.Exception();
             }
@@ -84,8 +84,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
                     return UnitCategory.Naval;
                 case PvPUnitCategory.Aircraft:
                     return UnitCategory.Aircraft;
-                case PvPUnitCategory.Untouchable:
-                    return UnitCategory.Untouchable;
+/*                case PvPUnitCategory.Untouchable:
+                    return UnitCategory.Untouchable;*/
                 default:
                     throw new System.Exception();
             }

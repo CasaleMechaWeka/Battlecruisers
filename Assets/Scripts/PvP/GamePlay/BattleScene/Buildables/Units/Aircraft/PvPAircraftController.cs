@@ -290,6 +290,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // Make aircraft spin a bit for coolness
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+      
         }
 
         private void OnKamikaze()
@@ -312,7 +313,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // Logging.Warn(Tags.AIRCRAFT, $"{GetInstanceID()}  Should not be called when already on seabed :/");
                 return;
             }
-
+    
             // Freeze unit
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
             rigidBody.velocity = new Vector2(0, 0);

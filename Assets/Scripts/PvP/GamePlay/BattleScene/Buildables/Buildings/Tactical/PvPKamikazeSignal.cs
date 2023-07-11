@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted();
 
-            GameObject[] aircraftGameObjects = GameObject.FindGameObjectsWithTag(GameObjectTags.AIRCRAFT);
+            GameObject[] aircraftGameObjects = GameObject.FindGameObjectsWithTag(PvPGameObjectTags.AIRCRAFT);
 
             foreach (GameObject aircraftGameObject in aircraftGameObjects)
             {

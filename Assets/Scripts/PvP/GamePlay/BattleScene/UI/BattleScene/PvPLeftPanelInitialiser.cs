@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
 
 
-        public async Task<PvPLeftPanelComponents> Initialise(
+/*        public async Task<PvPLeftPanelComponents> Initialise(
             IPvPDroneManager droneManager,
             IPvPDroneManagerMonitor droneManagerMonitor,
             IPvPUIManager uiManager,
@@ -76,6 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
             IPvPBuildMenu buildMenu
                 = await SetupBuildMenuController(
+
                     uiManager,
                     playerLoadout,
                     prefabFactory,
@@ -90,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             makeLeftBackgroundPanelFit();
 
             return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
-        }
+        }*/
 
 
         public async Task<PvPLeftPanelComponents> Initialise(
@@ -123,6 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
             IPvPBuildMenu buildMenu
                 = await SetupBuildMenuController(
+                    playerCruiser,
                     uiManager,
                     playerLoadout,
                     prefabFactory,
@@ -150,6 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         private async Task<IPvPBuildMenu> SetupBuildMenuController(
+            PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPPrefabFactory prefabFactory,
@@ -172,6 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             return
                 buildMenuInitialiser.Initialise(
+                    playerCruiser,
                     uiManager,
                     buildingGroups,
                     units,

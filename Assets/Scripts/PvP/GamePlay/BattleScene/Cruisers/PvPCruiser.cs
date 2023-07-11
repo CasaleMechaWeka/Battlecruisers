@@ -176,7 +176,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 BuildingMonitor = new PvPCruiserBuildingMonitor(this);
                 UnitMonitor = new PvPCruiserUnitMonitor(BuildingMonitor);
-                PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
+               // PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
             }
 
             //   }
