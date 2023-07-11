@@ -388,9 +388,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 difficultyDestructionScoreMultiplier = 2.0f;
             }
 
-
-
-
             GameOver = false;
             string logName = "Battle_Begin";
 #if LOG_ANALYTICS
@@ -405,9 +402,7 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 Debug.Log(ex.Message);
             }
-
         }
-
 
         /*        private void OnEnable()
                 {
