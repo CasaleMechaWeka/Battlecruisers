@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.Es
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.GameSpeed;
 // using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.HelpLabels;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.MainMenu;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -30,13 +31,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IPvPBroadcastingFilter hotkeyFilter,
             IPvPCameraFocuser cameraFocuser,
             IPvPSpeedComponents speedComponents,
-            IPvPMainMenuManager mainMenuManager)
+            IPvPMainMenuManager mainMenuManager,
+            IPvPUIManager uiManager)
         {
             PvPHelper.AssertIsNotNull(buildableButtonsHotkeyInitialiser, buildingCategoryButtonsHotkeyInitialiser);
             PvPHelper.AssertIsNotNull(hotkeyList, input, updater, hotkeyFilter, cameraFocuser, speedComponents, mainMenuManager);
 
             // Hotkeys (only for PC)
-            IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
+            IHotkeyDetector hotkeyDetector = CreateHotkeyDetector(hotkeyList, input, updater, hotkeyFilter, uiManager);
 
             _navigationHotkeyListener = new PvPNavigationHotkeyListener(hotkeyDetector, cameraFocuser);
             _gameSpeedHotkeyListener = new PvPGameSpeedHotkeyListener(hotkeyDetector, speedComponents);
@@ -48,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _escapeHandler = new PvPEscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IPvPInput input, IPvPUpdater updater, IPvPBroadcastingFilter hotkeyFilter)
+        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IPvPInput input, IPvPUpdater updater, IPvPBroadcastingFilter hotkeyFilter, IPvPUIManager uiManager)
         {
             if (PvPSystemInfoBC.Instance.IsHandheld)
             {
@@ -57,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             }
             else
             {
-                return new PvPHotkeyDetector(hotkeyList, input, updater, hotkeyFilter);
+                return new PvPHotkeyDetector(hotkeyList, input, updater, hotkeyFilter, uiManager);
             }
         }
     }

@@ -1,10 +1,13 @@
 using BattleCruisers.Hotkeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene.Update;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions;
+using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using System;
+using System.Diagnostics;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
 {
@@ -14,6 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         private readonly IPvPInput _input;
         private readonly IPvPUpdater _updater;
         private readonly IPvPBroadcastingFilter _filter;
+        private IPvPUIManager _uiManager;
 
         // Navigation
         public event EventHandler PlayerCruiser, Overview, EnemyCruiser;
@@ -49,7 +53,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             IHotkeyList hotkeyList,
             IPvPInput input,
             IPvPUpdater updater,
-            IPvPBroadcastingFilter filter)
+            IPvPBroadcastingFilter filter,
+            IPvPUIManager uiManager)
         {
             PvPHelper.AssertIsNotNull(hotkeyList, input, updater, filter);
 
@@ -57,6 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _input = input;
             _updater = updater;
             _filter = filter;
+            _uiManager = uiManager;
 
             _updater.Updated += _updater_Updated;
         }

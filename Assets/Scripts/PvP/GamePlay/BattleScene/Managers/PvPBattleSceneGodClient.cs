@@ -220,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabContainer<PvPBackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
-            //  cameraComponents.CameraFocuser.FocusOnPlayerCruiser();
+            
             IPvPButtonVisibilityFilters buttonVisibilityFilters = pvpBattleHelper.CreateButtonVisibilityFilters(playerCruiser);
             sceneNavigator = LandingSceneGod.SceneNavigator;
             IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
@@ -306,27 +306,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     leftPanelComponents.PopLimitReachedFeedback);
 
 
-            /*            IPvPWindManager windManager
-                            = components.WindInitialiser.Initialise(
-                                cameraComponents.MainCamera,
-                                cameraComponents.Settings,
-                                dataProvider.SettingsManager);
-                        windManager.Play();
+            IPvPWindManager windManager
+                = components.WindInitialiser.Initialise(
+                    cameraComponents.MainCamera,
+                    cameraComponents.Settings,
+                    dataProvider.SettingsManager);
+            windManager.Play();
 
-                        _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
+            _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
 
-                        components.HotkeyInitialiser.Initialise(
-                                dataProvider.GameModel.Hotkeys,
-                                PvPInputBC.Instance,
-                                components.UpdaterProvider.SwitchableUpdater,
-                                navigationPermitters.HotkeyFilter,
-                                cameraComponents.CameraFocuser,
-                                rightPanelComponents.SpeedComponents,
-                                rightPanelComponents.MainMenuManager
-                                *//*uiManager*//*);*/
+            components.HotkeyInitialiser.Initialise(
+                    dataProvider.GameModel.Hotkeys,
+                    PvPInputBC.Instance,
+                    components.UpdaterProvider.SwitchableUpdater,
+                    navigationPermitters.HotkeyFilter,
+                    cameraComponents.CameraFocuser,
+                    rightPanelComponents.SpeedComponents,
+                    rightPanelComponents.MainMenuManager,
+                    uiManager);
 
-
-
+            // pvp
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
         }
@@ -350,7 +349,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void DroneNumIncreased_ValueChanged(bool oldVal, bool newVal)
         {
-           factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NewDronesReady);
+            factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PvPPrioritisedSoundKeys.PvPEvents.PvPDrones.NewDronesReady);
         }
 
         private void IdleDronesStarted_ValueChanged(bool oldVal, bool newVal)
@@ -360,7 +359,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVale)
         {
-            
+
         }
 
 
