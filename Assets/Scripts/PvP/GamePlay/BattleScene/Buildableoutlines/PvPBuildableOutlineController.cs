@@ -30,6 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Transform puzzleRootPoint = transform.FindNamedComponent<Transform>("PuzzleRootPoint");
             PuzzleRootPoint = puzzleRootPoint.position;
             BuildableCreated += OnBuildableCreated;
+            Invoke("OnBuildableCreated", 2f); // to avoid network issue
         }
 
         private void OnBuildableCreated()
@@ -37,6 +38,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             BuildableCreated -= OnBuildableCreated;
             Destroy(gameObject);
         }
+
+
     }
 }
 
