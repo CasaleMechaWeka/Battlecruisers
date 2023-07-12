@@ -17,7 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
 {
-    public class CoinBattlePanelScreenController : ScreenController
+    public class CoinBattleScreenController : ScreenController
     {
         private IApplicationModel _applicationModel;
         private IRandomGenerator _random;
@@ -53,16 +53,18 @@ namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
         {
             _applicationModel.Mode = GameMode.CoinBattle;
             SaveCoinBattleSettings();
-            _screensSceneGod.LoadBattleScene();
+
+            int maxLevel = _applicationModel.DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
+            int levelIndex = UnityEngine.Random.Range(2, maxLevel);
+            _screensSceneGod.GoToTrashScreen(levelIndex);
         }
 
         private void SaveCoinBattleSettings()
         {
-            int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
-
             _applicationModel.DataProvider.GameModel.CoinBattle
                 = new CoinBattleModel(
-                    // stuff goes here
+                    _applicationModel.DataProvider.SettingsManager.AIDifficulty,
+                    _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull
                     );
             _applicationModel.DataProvider.SaveGame();
         }
