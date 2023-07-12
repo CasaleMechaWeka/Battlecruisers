@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiserDestroyedMonitor : IPvPCruiserDestroyedMonitor
     {
-        private readonly IPvPCruiser _playerCruiser, _aiCruiser;
+        private readonly IPvPCruiser _playerCruiser, _enemyCruiser;
 
         public event EventHandler<PvPCruiserDestroyedEventArgs> CruiserDestroyed;
 
@@ -15,10 +15,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPHelper.AssertIsNotNull(playerCruiser, aiCruiser);
 
             _playerCruiser = playerCruiser;
-            _aiCruiser = aiCruiser;
+            _enemyCruiser = aiCruiser;
 
             _playerCruiser.Destroyed += _playerCruiser_Destroyed;
-            _aiCruiser.Destroyed += _aiCruiser_Destroyed;
+            _enemyCruiser.Destroyed += _aiCruiser_Destroyed;
         }
 
         private void _playerCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void OnCruiserDestroyed(bool wasVictory)
         {
             _playerCruiser.Destroyed -= _playerCruiser_Destroyed;
-            _aiCruiser.Destroyed -= _aiCruiser_Destroyed;
+            _enemyCruiser.Destroyed -= _aiCruiser_Destroyed;
 
             CruiserDestroyed?.Invoke(this, new PvPCruiserDestroyedEventArgs(wasVictory));
         }

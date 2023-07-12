@@ -176,7 +176,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 BuildingMonitor = new PvPCruiserBuildingMonitor(this);
                 UnitMonitor = new PvPCruiserUnitMonitor(BuildingMonitor);
-               // PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
+
+                PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
+                Assert.IsNotNull(unitReadySignalInitialiser);
+                _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
+                // PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
             }
 
             //   }
@@ -274,10 +278,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     PvPHelper.GetOppositeFaction(Faction));
 
-            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
+/*            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
             Assert.IsNotNull(unitReadySignalInitialiser);
-            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
-
+            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);*/
 
             _CruiserHasActiveDrones = args.HasActiveDrones;
             _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;
@@ -495,6 +498,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 OnDamagedEventCalledClientRpc(objectId);
         }
 
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
+        }
         [ServerRpc(RequireOwnership = true)]
         public void PvP_HighlightAvailableSlotsServerRpc(PvPSlotType SlotType, PvPBuildingFunction BuildingFunction, bool PreferFromFront, ServerRpcParams serverRpcParams = default)
         {

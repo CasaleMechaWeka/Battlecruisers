@@ -151,6 +151,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnSyncFationClientRpc(faction);
         }
 
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
+
         private void LateUpdate()
         {            
             if (IsServer)
@@ -263,6 +272,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnSyncFationClientRpc(PvPFaction faction)
         {
             Faction = faction;
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
         }
     }
 }

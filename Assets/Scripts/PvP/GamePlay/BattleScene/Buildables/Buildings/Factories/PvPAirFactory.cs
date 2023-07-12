@@ -208,6 +208,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnUnitUnderConstruction_DestroyedClientRpc();
         }
 
+        protected override void OnDestroyedEvent()
+        {
+            if (IsClient)
+                base.OnDestroyedEvent();
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+        }
+
+
 
         // ----------------------------------------
         protected override void AddBuildRateBoostProviders(
@@ -371,6 +380,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnNewUnitChosenServerRpc()
         {
             OnNewUnitChosen();
+        }
+
+        [ClientRpc]
+        private void OnDestroyedEventClientRpc()
+        {
+            OnDestroyedEvent();
         }
     }
 }
