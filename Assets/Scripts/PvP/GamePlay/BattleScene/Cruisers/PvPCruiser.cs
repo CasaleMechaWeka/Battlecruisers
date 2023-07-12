@@ -182,7 +182,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);
                 // PopulationLimitMonitor = new PvPPopulationLimitMonitor(UnitMonitor);
             }
-
             //   }
         }
 
@@ -278,9 +277,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     PvPHelper.GetOppositeFaction(Faction));
 
-/*            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
-            Assert.IsNotNull(unitReadySignalInitialiser);
-            _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);*/
+            /*            PvPUnitReadySignalInitialiser unitReadySignalInitialiser = GetComponentInChildren<PvPUnitReadySignalInitialiser>();
+                        Assert.IsNotNull(unitReadySignalInitialiser);
+                        _unitReadySignal = unitReadySignalInitialiser.CreateSignal(this);*/
 
             _CruiserHasActiveDrones = args.HasActiveDrones;
             _CruiserHasActiveDrones.ValueChanged += CruiserHasActiveDrones_ValueChanged;

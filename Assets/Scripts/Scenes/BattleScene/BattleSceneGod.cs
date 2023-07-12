@@ -472,8 +472,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public static void AddPlayedTime(TargetType type, float dt)
         {
             if (!GameOver)
-            {            
-                    deadBuildables?[type]?.AddPlayedTime(dt);
+            {
+                deadBuildables?[type]?.AddPlayedTime(dt);
             }
         }
 
