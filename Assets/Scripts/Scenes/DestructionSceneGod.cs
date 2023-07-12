@@ -21,6 +21,7 @@ using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using BattleCruisers.Data.Models;
 
 namespace BattleCruisers.Scenes
 {
@@ -113,7 +114,7 @@ namespace BattleCruisers.Scenes
             if (_sceneNavigator != null)
             {
                 LandingSceneGod.MusicPlayer.PlayVictoryMusic();
-
+                applicationModel = ApplicationModelProvider.ApplicationModel;
 
                 _soundPlayer
                     = new SingleSoundPlayer(
@@ -124,7 +125,7 @@ namespace BattleCruisers.Scenes
 
                 nextButton.Initialise(_soundPlayer, Done);
                 _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-                applicationModel = ApplicationModelProvider.ApplicationModel;
+                
             }
 
             // Populate screen:
