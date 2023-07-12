@@ -430,6 +430,9 @@ namespace BattleCruisers.Scenes.BattleScene
                 case GameMode.Skirmish:
                     return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
 
+                case GameMode.CoinBattle:
+                    return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
             }

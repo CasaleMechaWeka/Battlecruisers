@@ -6,6 +6,7 @@ namespace BattleCruisers.Data.Models
 {
     public interface ICoinBattleModel
     {
-
+        HullKey PlayerCruiser { get; }
+        Difficulty Difficulty { get; }
     }
 }

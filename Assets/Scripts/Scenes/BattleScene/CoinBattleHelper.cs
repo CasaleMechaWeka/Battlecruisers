@@ -30,11 +30,5 @@ namespace BattleCruisers.Scenes.BattleScene
             _coinBattle = DataProvider.GameModel.CoinBattle;
             Assert.IsNotNull(_coinBattle);
         }
-        public override ILevel GetLevel()
-        {
-            int maxLevel = DataProvider.GameModel.NumOfLevelsCompleted - 1; //might need null or not-0 check?
-            int levelIndex = UnityEngine.Random.Range(1, maxLevel);
-            return _appModel.DataProvider.GetLevel(levelIndex);
-        }
     }
 }
