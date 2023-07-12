@@ -11,13 +11,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
         public PvPBattleCompletionHandler(
             IApplicationModel applicationModel,
-            ISceneNavigator sceneNavigator)
+            ISceneNavigator sceneNavigator,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel)
         {
             PvPHelper.AssertIsNotNull(applicationModel, sceneNavigator);
 
@@ -25,6 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _sceneNavigator = sceneNavigator;
 
             _isCompleted = false;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+
         }
 
         public void CompleteBattle(bool wasVictory, bool retryLevel)
@@ -37,6 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
+            _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
 
             switch (_applicationModel.Mode)
             {
@@ -78,6 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
+            _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
 
             switch (_applicationModel.Mode)
             {

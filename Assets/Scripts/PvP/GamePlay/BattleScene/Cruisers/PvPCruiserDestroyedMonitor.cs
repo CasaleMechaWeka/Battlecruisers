@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiserDestroyedMonitor : IPvPCruiserDestroyedMonitor
     {
-        private readonly IPvPCruiser _playerCruiser, _enemyCruiser;
+        private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
 
         public event EventHandler<PvPCruiserDestroyedEventArgs> CruiserDestroyed;
 
@@ -14,27 +14,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             PvPHelper.AssertIsNotNull(playerCruiser, aiCruiser);
 
-            _playerCruiser = playerCruiser;
-            _enemyCruiser = aiCruiser;
+            _playerACruiser = playerCruiser;
+            _playerBCruiser = aiCruiser;
 
-            _playerCruiser.Destroyed += _playerCruiser_Destroyed;
-            _enemyCruiser.Destroyed += _aiCruiser_Destroyed;
+            _playerACruiser.Destroyed += _playerACruiser_Destroyed;
+            _playerBCruiser.Destroyed += _playerBCruiser_Destroyed;
         }
 
-        private void _playerCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _playerACruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
-            OnCruiserDestroyed(false);
+            OnCruiserDestroyed(false); // leftplayer lost, rightplayer win
         }
 
-        private void _aiCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        private void _playerBCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
         {
-            OnCruiserDestroyed(true);
+            OnCruiserDestroyed(true); //  leftplayer win, rightplayer lost
         }
 
         private void OnCruiserDestroyed(bool wasVictory)
         {
-            _playerCruiser.Destroyed -= _playerCruiser_Destroyed;
-            _enemyCruiser.Destroyed -= _aiCruiser_Destroyed;
+            _playerACruiser.Destroyed -= _playerACruiser_Destroyed;
+            _playerBCruiser.Destroyed -= _playerBCruiser_Destroyed;
 
             CruiserDestroyed?.Invoke(this, new PvPCruiserDestroyedEventArgs(wasVictory));
         }

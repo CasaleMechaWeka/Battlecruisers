@@ -75,6 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
         private PvPCruiserDeathManager _cruiserDeathManager;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
 
         public IPvPUIManager uiManager;
         public ILocTable commonStrings;
@@ -98,6 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IPvPDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
+        private IPvPWindManager windManager;
         ISceneNavigator sceneNavigator;
 
         [SerializeField]
@@ -180,6 +182,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
             components = GetComponent<PvPBattleSceneGodComponents>();
+            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
+            _battleSceneGodTunnel.BattleCompleted.OnValueChanged += OnTunnelBattleCompleted_ValueChanged;
             Assert.IsNotNull(components);
             components.Initialise_Client(applicationModel.DataProvider.SettingsManager);
 
@@ -220,10 +224,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPPrefabContainer<PvPBackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
-            
+
             IPvPButtonVisibilityFilters buttonVisibilityFilters = pvpBattleHelper.CreateButtonVisibilityFilters(playerCruiser);
             sceneNavigator = LandingSceneGod.SceneNavigator;
-            IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator);
+            IPvPBattleCompletionHandler battleCompletionHandler = new PvPBattleCompletionHandler(applicationModel, sceneNavigator, _battleSceneGodTunnel);
+            _battleSceneGodTunnel.battleCompletionHandler = battleCompletionHandler;
             PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
             leftPanelComponents
                 = await leftPanelInitialiser.Initialise(
@@ -306,7 +311,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     leftPanelComponents.PopLimitReachedFeedback);
 
 
-            IPvPWindManager windManager
+            windManager
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
                     cameraComponents.Settings,
@@ -330,6 +335,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             StartCoroutine(iLoadedPvPScene());
         }
 
+
+        private void OnTunnelBattleCompleted_ValueChanged(Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal)
+        {
+            if (newVal == Tunnel_BattleCompletedState.Completed)
+            {
+                windManager?.DisposeManagedState();
+                _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= OnTunnelBattleCompleted_ValueChanged;
+            }
+        }
 
         private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
         {

@@ -14,22 +14,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPGameEndMonitor : IPvPGameEndMonitor
     {
         private readonly IPvPCruiserDestroyedMonitor _cruiserDestroyedMonitor;
-        private readonly IPvPBattleCompletionHandler _battleCompletionHandler;
+        private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPGameEndHandler _gameEndHandler;
 
         public event EventHandler GameEnded;
         public PvPGameEndMonitor(
             IPvPCruiserDestroyedMonitor cruiserDestroyedMonitor,
-            IPvPBattleCompletionHandler battleCompletionHandler,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPGameEndHandler gameEndHandler)
         {
-            PvPHelper.AssertIsNotNull(cruiserDestroyedMonitor, battleCompletionHandler, gameEndHandler);
+            PvPHelper.AssertIsNotNull(cruiserDestroyedMonitor, battleSceneGodTunnel, gameEndHandler);
 
             _cruiserDestroyedMonitor = cruiserDestroyedMonitor;
             _cruiserDestroyedMonitor.CruiserDestroyed += _cruiserDestroyedMonitor_CruiserDestroyed;
 
-            _battleCompletionHandler = battleCompletionHandler;
-            _battleCompletionHandler.BattleCompleted += _battleCompletionHandler_BattleCompleted;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+            _battleSceneGodTunnel.BattleCompleted.OnValueChanged += _battleCompletionHandler_BattleCompleted;
 
             _gameEndHandler = gameEndHandler;
         }
@@ -45,14 +45,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         // Always happens
-        private void _battleCompletionHandler_BattleCompleted(object sender, EventArgs e)
+        private void _battleCompletionHandler_BattleCompleted(Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal)
         {
-            _battleCompletionHandler.BattleCompleted -= _battleCompletionHandler_BattleCompleted;
-            _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
+            if(newVal == Tunnel_BattleCompletedState.Completed)
+            {
+                _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= _battleCompletionHandler_BattleCompleted;
+                _cruiserDestroyedMonitor.CruiserDestroyed -= _cruiserDestroyedMonitor_CruiserDestroyed;
 
-            _gameEndHandler.HandleGameEnd();
+                _gameEndHandler.HandleGameEnd();
 
-            GameEnded?.Invoke(this, EventArgs.Empty);
+                GameEnded?.Invoke(this, EventArgs.Empty);
+
+                _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.None;
+            }
+
         }
 
         private static long GetTotalDestructionScore()

@@ -30,13 +30,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         private readonly IPvPCruiser _playerCruiser, _aiCruiser;
         private readonly IPvPArtificialIntelligence _ai;
-        private readonly IPvPBattleCompletionHandler _battleCompletionHandler;
+        private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPDeferrer _deferrer;
         private readonly IPvPCruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPvPPermitter _navigationPermitter;
         private readonly IPvPUIManager _uiManager;
         private readonly IPvPTargetIndicator _targetIndicator;
-        private readonly IPvPWindManager _windManager;
+        // private readonly IPvPWindManager _windManager;
         private readonly IPvPBuildingCategoryPermitter _buildingCategoryPermitter;
         private readonly IPvPToggleButtonGroup _speedButtonGroup;
 
@@ -48,13 +48,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser playerCruiser,
             IPvPCruiser aiCruiser,
             IPvPArtificialIntelligence ai,
-            IPvPBattleCompletionHandler battleCompletionHandler,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPDeferrer deferrer,
             IPvPCruiserDeathCameraFocuser cameraFocuser,
             IPvPPermitter navigationPermitter,
             IPvPUIManager uiManager,
             IPvPTargetIndicator targetIndicator,
-            IPvPWindManager windManager,
+           // IPvPWindManager windManager,
             IPvPBuildingCategoryPermitter buildingCategoryPermitter,
             IPvPToggleButtonGroup speedButtonGroup)
         {
@@ -62,25 +62,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 playerCruiser,
                 aiCruiser,
                 ai,
-                battleCompletionHandler,
+                battleSceneGodTunnel,
                 deferrer,
                 cameraFocuser,
                 navigationPermitter,
                 uiManager,
                 targetIndicator,
-                windManager,
+                // windManager,
                 speedButtonGroup);
 
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _ai = ai;
-            _battleCompletionHandler = battleCompletionHandler;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
             _deferrer = deferrer;
             _cameraFocuser = cameraFocuser;
             _navigationPermitter = navigationPermitter;
             _uiManager = uiManager;
             _targetIndicator = targetIndicator;
-            _windManager = windManager;
+          //  _windManager = windManager;
             _buildingCategoryPermitter = buildingCategoryPermitter;
             _speedButtonGroup = speedButtonGroup;
 
@@ -107,12 +107,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _uiManager.HideCurrentlyShownMenu();
             _uiManager.HideItemDetails();
             _targetIndicator.Hide();
-            _windManager.Stop();
+         //   _windManager.Stop();
             _buildingCategoryPermitter.AllowNoCategories();
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _speedButtonGroup.SelectDefaultButton();
 
-            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
+            _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
         public void HandleCruiserDestroyed(bool wasPlayerVictory, long destructionScore)
@@ -134,12 +134,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _uiManager.HideCurrentlyShownMenu();
             _uiManager.HideItemDetails();
             _targetIndicator.Hide();
-            _windManager.Stop();
+          //  _windManager.Stop();
             _buildingCategoryPermitter.AllowNoCategories();
             // Want to play cruiser sinking animation in real time, regardless of time player has set
             _speedButtonGroup.SelectDefaultButton();
 
-            _deferrer.Defer(() => _battleCompletionHandler.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
+            _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }
 
         private void DestroyCruiserBuildables(IPvPCruiser cruiser)
@@ -188,7 +188,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 _ai.DisposeManagedState();
             }
 
-            _windManager.DisposeManagedState();
+          //  _windManager.DisposeManagedState();
         }
     }
 }

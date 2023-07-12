@@ -37,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
         private static IPvPGameEndMonitor _gameEndMonitor;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public IPvPPrefabFactory prefabFactory;
         private IApplicationModel applicationModel;
         public IDataProvider dataProvider;
@@ -130,6 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
 
             components = GetComponent<PvPBattleSceneGodComponents>();
+            _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
             components.Initialise_Server();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
@@ -176,18 +178,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     new PvPCruiserDestroyedMonitor(
                         playerACruiser,
                         playerBCruiser),
-                        battleCompletionHandler,
+                        _battleSceneGodTunnel,
                     new PvPGameEndHandler(
                         playerACruiser,
                         playerBCruiser,
                         ai,
-                        battleCompletionHandler,
+                        _battleSceneGodTunnel,
                         components.Deferrer,
                         cameraComponents.CruiserDeathCameraFocuser,
                         navigationPermitters.NavigationFilter,
                         uiManager,
                         components.TargetIndicator,
-                        windManager,
+                        //windManager,
                         helper.BuildingCategoryPermitter,
                         rightPanelComponents.SpeedComponents.SpeedButtonGroup));*/
 
