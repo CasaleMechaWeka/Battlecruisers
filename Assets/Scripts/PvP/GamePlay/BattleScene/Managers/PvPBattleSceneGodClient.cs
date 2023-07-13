@@ -63,6 +63,7 @@ using static BattleCruisers.Data.Static.PrioritisedSoundKeys.Events;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -149,7 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 return;
             }
 
-            StaticInitialiseAsync();            
+            StaticInitialiseAsync();
         }
         void OnNetworkDespawn()
         {
@@ -330,12 +331,34 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     rightPanelComponents.SpeedComponents,
                     rightPanelComponents.MainMenuManager,
                     uiManager);
-
+            playerCruiser.Destroyed += PlayerCruiser_Destroyed;
+            enemyCruiser.Destroyed += EnemyCruiser_Destroyed;
             // pvp
             MatchmakingScreenController.Instance.FoundCompetitor();
             StartCoroutine(iLoadedPvPScene());
         }
 
+        private void PlayerCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        {
+            cameraComponents.CruiserDeathCameraFocuser.FocusOnLosingCruiser(playerCruiser);
+            playerCruiser.Destroyed -= PlayerCruiser_Destroyed;
+        }
+
+        private void EnemyCruiser_Destroyed(object sender, PvPDestroyedEventArgs e)
+        {
+            cameraComponents.CruiserDeathCameraFocuser.FocusOnLosingCruiser(enemyCruiser);
+            enemyCruiser.Destroyed -= EnemyCruiser_Destroyed;
+        }
+
+        public void HandleCruiserDestroyed()
+        {
+            playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            navigationPermitters.NavigationFilter.IsMatch = false;
+            uiManager.HideCurrentlyShownMenu();
+            uiManager.HideItemDetails();
+            components.targetIndicator.Hide();
+            pvpBattleHelper.BuildingCategoryPermitter.AllowNoCategories();
+        }
 
         private void OnTunnelBattleCompleted_ValueChanged(Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal)
         {
@@ -383,14 +406,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
 
             // Register all unlocked buildables to server
-            if(SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
-                foreach(BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
                 {
                     _battleSceneGodTunnel.AddUnlockedBuilding_LeftPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
                     yield return null;
                 }
-                foreach(UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
                 {
                     _battleSceneGodTunnel.AddUnlockedUnit_LeftPlayer(unitKey.UnitCategory, unitKey.PrefabName);
                     yield return null;
@@ -411,7 +434,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 _battleSceneGodTunnel.RegisteredAllBuildableRightPlayer();
             }
-           
+
             yield return new WaitForSeconds(5f); // to show matchmaking animation 
             sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)

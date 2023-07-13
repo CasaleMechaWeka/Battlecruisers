@@ -11,6 +11,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using System.Linq;
 using System;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -39,11 +40,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IsRegisteredBuildablesRightPlayer = false;
         }
 
+        public void HandleCruiserDestroyed()
+        {
+            HandleCruiserDestroyedClientRpc();
+        }
+
         public void CompleteBattle(bool wasVictory, bool retryLevel)
         {
             if (IsServer)
             {
                 CompleteBattleClientRpc(wasVictory, retryLevel);
+            }
+        }
+
+        public void ChangeBattleCompletedValue(Tunnel_BattleCompletedState val)
+        {
+            if(IsClient)
+            {
+                ChangeBattleCompletedValueServerRpc(val);
             }
         }
 
@@ -282,6 +296,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IsRegisteredBuildablesRightPlayer = true;
             if (IsRegisteredBuildablesLeftPlayer)
                 RegisteredAllUnlockedBuildables?.Invoke();
+        }
+
+        [ClientRpc]
+        private void HandleCruiserDestroyedClientRpc()
+        {
+            PvPBattleSceneGodClient.Instance.HandleCruiserDestroyed();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void ChangeBattleCompletedValueServerRpc(Tunnel_BattleCompletedState val)
+        {
+            BattleCompleted.Value = val;
         }
     }
 

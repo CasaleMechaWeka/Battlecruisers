@@ -206,25 +206,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1);
 
 
-            /*            _gameEndMonitor
-                            = new PvPGameEndMonitor(
-                                new PvPCruiserDestroyedMonitor(
-                                    playerACruiser,
-                                    playerBCruiser),
-                                    _battleSceneGodTunnel,
-                                new PvPGameEndHandler(
-                                    playerACruiser,
-                                    playerBCruiser,
-                                    ai,
-                                    _battleSceneGodTunnel,
-                                    components.Deferrer,
-                                    cameraComponents.CruiserDeathCameraFocuser,
-                                    navigationPermitters.NavigationFilter,
-                                    uiManager,
-                                    components.TargetIndicator,
-                                    //windManager,
-                                    helper.BuildingCategoryPermitter,
-                                    rightPanelComponents.SpeedComponents.SpeedButtonGroup));*/
+            _gameEndMonitor
+                = new PvPGameEndMonitor(
+                    new PvPCruiserDestroyedMonitor(
+                        playerACruiser,
+                        playerBCruiser),
+                        _battleSceneGodTunnel,
+                    new PvPGameEndHandler(
+                        playerACruiser,
+                        playerBCruiser,
+                        ai_LeftPlayer,
+                        ai_RightPlayer,
+                        _battleSceneGodTunnel,
+                        components.Deferrer
+                        //    cameraComponents.CruiserDeathCameraFocuser,
+                        //    navigationPermitters.NavigationFilter,
+                        //    uiManager,
+                        //    components.TargetIndicator,
+                        //    //windManager,
+                        //    helper.BuildingCategoryPermitter,
+                        //    rightPanelComponents.SpeedComponents.SpeedButtonGroup
+                        ));
 
             deadBuildables = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
             deadBuildables.Add(PvPTargetType.Aircraft, new PvPDeadBuildableCounter());
@@ -269,7 +271,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerACruiser.pvp_IdleDronesEnded.Value = !playerACruiser.pvp_IdleDronesEnded.Value;
         }
 
-        private void _droneManagerMonitorA_DroneNumIncreased(object sender, EventArgs e) 
+        private void _droneManagerMonitorA_DroneNumIncreased(object sender, EventArgs e)
         {
             playerACruiser.pvp_DroneNumIncreased.Value = !playerACruiser.pvp_DroneNumIncreased.Value;
         }

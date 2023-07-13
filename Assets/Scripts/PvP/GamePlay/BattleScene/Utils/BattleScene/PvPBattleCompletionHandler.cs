@@ -41,7 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
-            _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
+            //   _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
+            _battleSceneGodTunnel.ChangeBattleCompletedValue(Tunnel_BattleCompletedState.Completed);
 
             switch (_applicationModel.Mode)
             {
@@ -83,7 +84,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
-            _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
+            //   _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
+            _battleSceneGodTunnel.ChangeBattleCompletedValue(Tunnel_BattleCompletedState.Completed);
 
             switch (_applicationModel.Mode)
             {

@@ -4,6 +4,8 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
@@ -28,8 +30,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPGameEndHandler : IPvPGameEndHandler
     {
-        private readonly IPvPCruiser _playerCruiser, _aiCruiser;
-        private readonly IPvPArtificialIntelligence _ai;
+        private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
+        private readonly IPvPArtificialIntelligence _ai_LeftPlayer;
+        private readonly IPvPArtificialIntelligence _ai_RightPlayer;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPDeferrer _deferrer;
         private readonly IPvPCruiserDeathCameraFocuser _cameraFocuser;
@@ -45,44 +48,49 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const float POST_GAME_WAIT_TIME_IN_S = 10;
 
         public PvPGameEndHandler(
-            IPvPCruiser playerCruiser,
-            IPvPCruiser aiCruiser,
-            IPvPArtificialIntelligence ai,
+            IPvPCruiser playerACruiser,
+            IPvPCruiser playerBCruiser,
+            IPvPArtificialIntelligence ai_LeftPlayer,
+            IPvPArtificialIntelligence ai_RightPlayer,
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
-            IPvPDeferrer deferrer,
-            IPvPCruiserDeathCameraFocuser cameraFocuser,
-            IPvPPermitter navigationPermitter,
-            IPvPUIManager uiManager,
-            IPvPTargetIndicator targetIndicator,
-           // IPvPWindManager windManager,
-            IPvPBuildingCategoryPermitter buildingCategoryPermitter,
-            IPvPToggleButtonGroup speedButtonGroup)
+            IPvPDeferrer deferrer
+        //    IPvPCruiserDeathCameraFocuser cameraFocuser,
+        //    IPvPPermitter navigationPermitter,
+        //    IPvPUIManager uiManager,
+        //    IPvPTargetIndicator targetIndicator,
+        //      IPvPWindManager windManager,
+        //    IPvPBuildingCategoryPermitter buildingCategoryPermitter,
+        //    IPvPToggleButtonGroup speedButtonGroup
+            )
         {
             PvPHelper.AssertIsNotNull(
-                playerCruiser,
-                aiCruiser,
-                ai,
+                playerACruiser,
+                playerBCruiser,
+                ai_LeftPlayer,
+                ai_RightPlayer,
                 battleSceneGodTunnel,
-                deferrer,
-                cameraFocuser,
-                navigationPermitter,
-                uiManager,
-                targetIndicator,
+                deferrer
+                //    cameraFocuser,
+                //    navigationPermitter,
+                //    uiManager,
+                //    targetIndicator,
                 // windManager,
-                speedButtonGroup);
+                //    speedButtonGroup
+                );
 
-            _playerCruiser = playerCruiser;
-            _aiCruiser = aiCruiser;
-            _ai = ai;
+            _playerACruiser = playerACruiser;
+            _playerBCruiser = playerBCruiser;
+            _ai_LeftPlayer = ai_LeftPlayer;
+            _ai_RightPlayer = ai_RightPlayer;
             _battleSceneGodTunnel = battleSceneGodTunnel;
             _deferrer = deferrer;
-            _cameraFocuser = cameraFocuser;
-            _navigationPermitter = navigationPermitter;
-            _uiManager = uiManager;
-            _targetIndicator = targetIndicator;
-          //  _windManager = windManager;
-            _buildingCategoryPermitter = buildingCategoryPermitter;
-            _speedButtonGroup = speedButtonGroup;
+            //   _cameraFocuser = cameraFocuser;
+            //   _navigationPermitter = navigationPermitter;
+            //   _uiManager = uiManager;
+            //   _targetIndicator = targetIndicator;
+            //   _windManager = windManager;
+            //   _buildingCategoryPermitter = buildingCategoryPermitter;
+            //   _speedButtonGroup = speedButtonGroup;
 
             _handledCruiserDeath = false;
             _handledGameEnd = false;
@@ -94,24 +102,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
             _handledCruiserDeath = true;
 
-            IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
-            IPvPCruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
+            IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
+            IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
-            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
-            _ai.DisposeManagedState();
+            _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            _ai_LeftPlayer.DisposeManagedState();
+            _ai_RightPlayer.DisposeManagedState();
             victoryCruiser.MakeInvincible();
-            _navigationPermitter.IsMatch = false;
-            _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
+            //    _navigationPermitter.IsMatch = false;
+            //    _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            _uiManager.HideCurrentlyShownMenu();
-            _uiManager.HideItemDetails();
-            _targetIndicator.Hide();
-         //   _windManager.Stop();
-            _buildingCategoryPermitter.AllowNoCategories();
+            //    _uiManager.HideCurrentlyShownMenu();
+            //    _uiManager.HideItemDetails();
+            //    _targetIndicator.Hide();
+            //   _windManager.Stop();
+            //    _buildingCategoryPermitter.AllowNoCategories();
             // Want to play cruiser sinking animation in real time, regardless of time player has set
-            _speedButtonGroup.SelectDefaultButton();
-
+            //    _speedButtonGroup.SelectDefaultButton();
+            _battleSceneGodTunnel.HandleCruiserDestroyed();
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
         }
 
@@ -121,30 +130,31 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
             _handledCruiserDeath = true;
 
-            IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerCruiser : _aiCruiser;
-            IPvPCruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
+            IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
+            IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
-            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
-            _ai.DisposeManagedState();
+            //    _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            _ai_LeftPlayer.DisposeManagedState();
+            _ai_RightPlayer.DisposeManagedState();
             victoryCruiser.MakeInvincible();
-            _navigationPermitter.IsMatch = false;
-            _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
+            //    _navigationPermitter.IsMatch = false;
+            //    _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
             DestroyCruiserBuildables(losingCruiser);
             StopAllShips(victoryCruiser);
-            _uiManager.HideCurrentlyShownMenu();
-            _uiManager.HideItemDetails();
-            _targetIndicator.Hide();
-          //  _windManager.Stop();
-            _buildingCategoryPermitter.AllowNoCategories();
+            //    _uiManager.HideCurrentlyShownMenu();
+            //    _uiManager.HideItemDetails();
+            //    _targetIndicator.Hide();
+            //    _windManager.Stop();
+            //    _buildingCategoryPermitter.AllowNoCategories();
             // Want to play cruiser sinking animation in real time, regardless of time player has set
-            _speedButtonGroup.SelectDefaultButton();
+            // _speedButtonGroup.SelectDefaultButton();
 
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }
 
         private void DestroyCruiserBuildables(IPvPCruiser cruiser)
         {
-            foreach (IBuilding building in cruiser.BuildingMonitor.AliveBuildings.ToList())
+            foreach (IPvPBuilding building in cruiser.BuildingMonitor.AliveBuildings.ToList())
             {
                 if (!building.IsDestroyed)
                 {
@@ -152,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 }
             }
 
-            foreach (IUnit unit in cruiser.UnitMonitor.AliveUnits.ToList())
+            foreach (IPvPUnit unit in cruiser.UnitMonitor.AliveUnits.ToList())
             {
                 if (!unit.IsDestroyed)
                 {
@@ -168,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         /// </summary>
         private void StopAllShips(IPvPCruiser victoryCruiser)
         {
-            foreach (IUnit unit in victoryCruiser.UnitMonitor.AliveUnits)
+            foreach (IPvPUnit unit in victoryCruiser.UnitMonitor.AliveUnits)
             {
                 if (unit is IShip ship)
                 {
@@ -185,10 +195,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             if (!_handledCruiserDeath)
             {
-                _ai.DisposeManagedState();
+                _ai_LeftPlayer.DisposeManagedState();
+                _ai_RightPlayer.DisposeManagedState();
             }
-
-          //  _windManager.DisposeManagedState();
+            //  _windManager.DisposeManagedState();
         }
     }
 }
