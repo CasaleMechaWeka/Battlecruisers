@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _prefabCache.GetBuilding(buildingKey);
         }
 
-        public Task<IPvPBuilding> CreateBuilding(
+        public IPvPBuilding CreateBuilding(
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab,
             IPvPUIManager uiManager,
             IPvPFactoryProvider factoryProvider,
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _unitBuildable;
         }
 
-        private async Task<TBuildable> CreateBuildingBuildable<TBuildable>(
+        private TBuildable CreateBuildingBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
             IPvPFactoryProvider factoryProvider,
             ulong clientID) where TBuildable : class, IPvPBuilding

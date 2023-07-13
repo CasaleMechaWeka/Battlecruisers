@@ -239,7 +239,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             pvp_NumOfDrones.Value = DroneManager.NumOfDrones;
         }
 
-        public async virtual void Initialise(IPvPCruiserArgs args)
+        public virtual void Initialise(IPvPCruiserArgs args)
         {
             Faction = args.Faction;
             // client rpc call
@@ -338,7 +338,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public Task<IPvPBuilding> ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
+        public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
         {
             // Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
@@ -346,11 +346,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return ConstructSelectedBuilding(slot);
         }
 
-        public async Task<IPvPBuilding> ConstructSelectedBuilding(IPvPSlot slot)
+        public IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot)
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IPvPBuilding building = await FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
+            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
 
             building.Activate(
                 new PvPBuildingActivationArgs(
@@ -369,7 +369,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
-            BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));         
+            BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
 
             ulong objectId = (ulong)(building.GameObject.GetComponent<PvPBuilding>()?._parent.GetComponent<NetworkObject>()?.NetworkObjectId);
             BuildingStartedClientRpc(objectId);

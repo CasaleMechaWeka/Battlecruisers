@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
             _parentCruiser = parentCruiser;
         }
 
-        public async Task<bool> Start()
+        public bool Start()
         {
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
                 IPvPSlot slot = _parentCruiser.SlotAccessor.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
                 Assert.IsNotNull(slot);
 
-                _building = await _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
+                _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
                 _building.CompletedBuildable += _building_CompletedBuildable;
                 _building.Destroyed += _building_Destroyed;
 

@@ -4,7 +4,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 {
     public interface IPvPState
     {
-        Task<IPvPState> Start();
+        IPvPState Start();
         IPvPState Stop();
         IPvPState OnCompleted();
     }

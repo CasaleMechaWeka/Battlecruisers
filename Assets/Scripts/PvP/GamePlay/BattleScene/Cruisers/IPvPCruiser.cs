@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         bool IsPlayerCruiser { get; }
         PvPCruiserDeathExplosion DeathPrefab { get; }
 
-        Task<IPvPBuilding> ConstructSelectedBuilding(IPvPSlot slot);
+        IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot);
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
         bool IsPvPCruiser();
