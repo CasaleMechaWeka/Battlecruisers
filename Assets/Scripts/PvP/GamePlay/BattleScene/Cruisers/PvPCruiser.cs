@@ -369,8 +369,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             OnBuildingConstructionStarted(building, SlotAccessor, SlotHighlighter);
 
-            BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));
-            ulong objectId = (ulong)(building.GameObject.GetComponent<PvPBuildable<PvPBuildableActivationArgs>>()?._parent.GetComponent<NetworkObject>()?.NetworkObjectId);
+            BuildingStarted?.Invoke(this, new PvPBuildingStartedEventArgs(building));         
+
+            ulong objectId = (ulong)(building.GameObject.GetComponent<PvPBuilding>()?._parent.GetComponent<NetworkObject>()?.NetworkObjectId);
             BuildingStartedClientRpc(objectId);
 
             slot.controlBuildingPlacementFeedback(true);

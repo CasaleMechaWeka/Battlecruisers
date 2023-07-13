@@ -94,7 +94,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public bool IsBuildingUnlocked_LeftPlayer(PvPBuildingKey buildingKey)
         {
-            return _unlockedBuildings_LeftPlayer.Contains(new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(buildingKey.BuildingCategory), buildingKey.PrefabName));
+            BuildingKey _buildingKey = convert2PvEBuildingKey(buildingKey);
+            return _unlockedBuildings_LeftPlayer.Contains(_buildingKey);
         }
 
 
@@ -113,10 +114,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public bool IsBuildingUnlocked_RightPlayer(PvPBuildingKey buildingKey)
         {
-            return _unlockedBuildings_RightPlayer.Contains(new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(buildingKey.BuildingCategory), buildingKey.PrefabName));
+            BuildingKey _buildingKey = convert2PvEBuildingKey(buildingKey);
+            return _unlockedBuildings_RightPlayer.Contains(_buildingKey);
         }
 
-
+        private BuildingKey convert2PvEBuildingKey(PvPBuildingKey buildingKey)
+        {
+            return new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(buildingKey.BuildingCategory), buildingKey.PrefabName.Remove(0,3));
+        }
         public IList<PvPUnitKey> GetUnlockedUnits_LeftPlayer(PvPUnitCategory pvpUnitCategory)
         {
             UnitCategory unitCategory = convertPvPUnitCategory2PvEUnitCategory(pvpUnitCategory);
@@ -131,7 +136,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public bool IsUnitUnlocked_LeftPlayer(PvPUnitKey unitKey)
         {
-            return _unlockedUnits_LeftPlayer.Contains(new UnitKey(convertPvPUnitCategory2PvEUnitCategory(unitKey.UnitCategory), unitKey.PrefabName));
+            UnitKey _unitKey = convert2PvEUnitKey(unitKey);
+            return _unlockedUnits_LeftPlayer.Contains(_unitKey);
+        }
+
+        private UnitKey convert2PvEUnitKey(PvPUnitKey unitKey)
+        {
+            return new UnitKey(convertPvPUnitCategory2PvEUnitCategory(unitKey.UnitCategory), unitKey.PrefabName.Remove(0,3));
         }
 
         public IList<PvPUnitKey> GetUnlockedUnits_RightPlayer(PvPUnitCategory pvpUnitCategory)
@@ -148,7 +159,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public bool IsUnitUnlocked_RightPlayer(PvPUnitKey unitKey)
         {
-            return _unlockedUnits_RightPlayer.Contains(new UnitKey(convertPvPUnitCategory2PvEUnitCategory(unitKey.UnitCategory), unitKey.PrefabName));
+            UnitKey _unitKey = convert2PvEUnitKey(unitKey);
+            return _unlockedUnits_RightPlayer.Contains(_unitKey);
         }
 
         public void RegisteredAllBuildableLeftPlayer()

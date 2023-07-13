@@ -197,15 +197,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.FACTORY, sender.ToString());
 
             IPvPUnit unit = sender.Parse<IPvPUnit>();
-            PvPBuildable<PvPBuildableActivationArgs> buildable = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+
 
             UnitStarted?.Invoke(this, new PvPUnitStartedEventArgs(unit));
             if (IsServer)
             {
-                if (buildable._parent.GetComponent<NetworkObject>() != null)
+                PvPBuildable<PvPBuildableActivationArgs> buildable_building = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+                if (buildable_building != null && buildable_building._parent.GetComponent<NetworkObject>() != null)
                 {
-                    OnUnit_BuildingStarted(buildable._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                    OnUnit_BuildingStarted(buildable_building._parent.GetComponent<NetworkObject>().NetworkObjectId);
                 }
+                /*                else
+                                {
+                                    PvPUnit buildable_unit = sender.Parse<PvPUnit>();
+                                    if (buildable_unit != null && buildable_unit._parent.GetComponent<NetworkObject>() != null)
+                                    {
+                                        OnUnit_BuildingStarted(buildable_unit._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                                    }
+                                }*/
+
+
             }
         }
 
@@ -245,11 +256,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             CleanUpUnitUnderConstruction();
             if (IsServer)
             {
-                PvPBuildable<PvPBuildableActivationArgs> buildable = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
-                if (buildable._parent.GetComponent<NetworkObject>() != null)
+                PvPBuildable<PvPBuildableActivationArgs> buildable_building = sender.Parse<PvPBuildable<PvPBuildableActivationArgs>>();
+                if (buildable_building != null && buildable_building._parent.GetComponent<NetworkObject>() != null)
                 {
-                    OnUnit_CompletedBuildable(buildable._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                    OnUnit_CompletedBuildable(buildable_building._parent.GetComponent<NetworkObject>().NetworkObjectId);
                 }
+                // else
+                // {
+                //     PvPUnit buildable_unit = sender.Parse<PvPUnit>();
+                //     if (buildable_unit != null && buildable_unit._parent.GetComponent<NetworkObject>() != null)
+                //     {
+                //         OnUnit_CompletedBuildable(buildable_unit._parent.GetComponent<NetworkObject>().NetworkObjectId);
+                //     }
+                // }
             }
         }
 

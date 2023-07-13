@@ -230,9 +230,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Damaged?.Invoke(this, new PvPDamagedEventArgs(damageSource));
                 try
                 {
-                    ulong objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuildable<PvPBuildableActivationArgs>>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    ulong objectId = ulong.MaxValue;
+                    if (damageSource.GameObject.GetComponent<PvPBuilding>() != null)
+                        objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuilding>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
+                    if (damageSource.GameObject.GetComponent<PvPUnit>() != null)
+                        objectId = (ulong)(damageSource.GameObject.GetComponent<PvPUnit>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
                     OnDamagedEventCalled(objectId);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Debug.Log("Cruiser maybe not have _parent " + damageSource.GameObject.name);
                 }
