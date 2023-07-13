@@ -8,19 +8,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.ThreatM
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Data.Static.Strategies.Helper;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.PlatformAbstractions.Time;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Threading;
-using BattleCruisers.AI;
+
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
@@ -34,26 +27,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
         private readonly IPvPFactoryManagerFactory _factoryManagerFactory;
         private readonly IPvPBuildOrderFactory _buildOrderFactory;
         private readonly IPvPFactoryMonitorFactory _factoryMonitorFactory;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
 
         public PvPAIManager(
             IPvPPrefabFactory prefabFactory,
             IDataProvider dataProvider,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPDeferrer deferrer,
-            IPvPCruiserController playerCruiser,
+            PvPCruiser playerCruiser,
             IPvPStrategyFactory strategyFactory)
         {
-            PvPHelper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyFactory);
+            PvPHelper.AssertIsNotNull(prefabFactory, dataProvider, deferrer, playerCruiser, strategyFactory, battleSceneGodTunnel);
 
             _prefabFactory = prefabFactory;
             _dataProvider = dataProvider;
             _deferrer = deferrer;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
 
             _slotNumCalculatorFactory = new PvPSlotNumCalculatorFactory();
             _threatMonitorFactory = new PvPThreatMonitorFactory(playerCruiser, PvPTimeBC.Instance, deferrer);
-            _factoryManagerFactory = new PvPFactoryManagerFactory(_dataProvider.GameModel, _prefabFactory, _threatMonitorFactory);
+            _factoryManagerFactory = new PvPFactoryManagerFactory(_battleSceneGodTunnel, _prefabFactory, _threatMonitorFactory);
 
             IPvPSlotAssigner slotAssigner = new PvPSlotAssigner();
-            _buildOrderFactory = new PvPBuildOrderFactory(slotAssigner, _dataProvider.StaticData, _dataProvider.GameModel, strategyFactory);
+            _buildOrderFactory = new PvPBuildOrderFactory(slotAssigner, _dataProvider.StaticData, _battleSceneGodTunnel, strategyFactory);
 
             _factoryMonitorFactory = new PvPFactoryMonitorFactory(PvPRandomGenerator.Instance);
         }

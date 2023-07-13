@@ -73,13 +73,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
             taskProducers.Add(_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder));
 
             // Anti rocket
-            if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable())
+            if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable(levelInfo))
             {
                 taskProducers.Add(_taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder()));
             }
 
             // Anti stealth
-            if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable())
+            if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable(levelInfo))
             {
                 taskProducers.Add(_taskProducerFactory.CreateAntiStealthTaskProducer(tasks, _buildOrderFactory.CreateAntiStealthBuildOrder()));
             }

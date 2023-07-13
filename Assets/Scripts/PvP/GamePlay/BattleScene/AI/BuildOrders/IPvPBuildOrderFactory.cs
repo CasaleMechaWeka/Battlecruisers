@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
         IPvPDynamicBuildOrder CreateAdaptiveBuildOrder(IPvPLevelInfo levelInfo);
         IPvPDynamicBuildOrder CreateAntiAirBuildOrder(IPvPLevelInfo levelInfo);
         IPvPDynamicBuildOrder CreateAntiNavalBuildOrder(IPvPLevelInfo levelInfo);
-        bool IsAntiRocketBuildOrderAvailable();
+        bool IsAntiRocketBuildOrderAvailable(IPvPLevelInfo levelInfo);
         IPvPDynamicBuildOrder CreateAntiRocketBuildOrder();
-        bool IsAntiStealthBuildOrderAvailable();
+        bool IsAntiStealthBuildOrderAvailable(IPvPLevelInfo levelInfo);
         IPvPDynamicBuildOrder CreateAntiStealthBuildOrder();
     }
 }

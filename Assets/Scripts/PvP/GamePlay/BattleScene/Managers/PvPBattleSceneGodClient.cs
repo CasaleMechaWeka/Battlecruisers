@@ -62,6 +62,7 @@ using BattleCruisers.Scenes.BattleScene;
 using static BattleCruisers.Data.Static.PrioritisedSoundKeys.Events;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Wind;
+using BattleCruisers.Data.Models.PrefabKeys;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -148,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 return;
             }
 
-            StaticInitialiseAsync();
+            StaticInitialiseAsync();            
         }
         void OnNetworkDespawn()
         {
@@ -380,7 +381,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         IEnumerator iLoadedPvPScene()
         {
-            yield return new WaitForSeconds(5f);
+
+            // Register all unlocked buildables to server
+            if(SynchedServerData.Instance.GetTeam() == Team.LEFT)
+            {
+                foreach(BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                {
+                    _battleSceneGodTunnel.AddUnlockedBuilding_LeftPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
+                    yield return null;
+                }
+                foreach(UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                {
+                    _battleSceneGodTunnel.AddUnlockedUnit_LeftPlayer(unitKey.UnitCategory, unitKey.PrefabName);
+                    yield return null;
+                }
+                _battleSceneGodTunnel.RegisteredAllBuildableLeftPlayer();
+            }
+            else
+            {
+                foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                {
+                    _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
+                    yield return null;
+                }
+                foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                {
+                    _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey.UnitCategory, unitKey.PrefabName);
+                    yield return null;
+                }
+                _battleSceneGodTunnel.RegisteredAllBuildableRightPlayer();
+            }
+           
+            yield return new WaitForSeconds(5f); // to show matchmaking animation 
             sceneNavigator.SceneLoaded(PvPSceneNames.PvP_BOOT_SCENE);
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                 cameraComponents.CameraFocuser.FocusOnLeftPlayerCruiser();

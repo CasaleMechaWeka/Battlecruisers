@@ -25,20 +25,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
     {
         private readonly IPvPSlotAssigner _slotAssigner;
         private readonly IStaticData _staticData;
-        private readonly IGameModel _gameModel;
+        //private readonly IGameModel _gameModel;
         private readonly IPvPStrategyFactory _strategyFactory;
+
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
 
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-        public PvPBuildOrderFactory(IPvPSlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IPvPStrategyFactory strategyFactory)
+        public PvPBuildOrderFactory(IPvPSlotAssigner slotAssigner, IStaticData staticData, PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPStrategyFactory strategyFactory)
         {
-            PvPHelper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyFactory);
+            PvPHelper.AssertIsNotNull(slotAssigner, staticData, battleSceneGodTunnel, strategyFactory);
 
             _slotAssigner = slotAssigner;
             _staticData = staticData;
-            _gameModel = gameModel;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
             _strategyFactory = strategyFactory;
         }
 
@@ -216,9 +218,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
                     numOfSlotsToUse: numOfSlotsToUse);
         }
 
-        public bool IsAntiRocketBuildOrderAvailable()
+        public bool IsAntiRocketBuildOrderAvailable(IPvPLevelInfo levelInfo)
         {
-            return _gameModel.IsBuildingUnlocked(new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil.BuildingCategory), PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil.PrefabName.Remove(0,3)));
+            return levelInfo.AICruiser.Faction == Buildables.PvPFaction.Blues ? _battleSceneGodTunnel.IsBuildingUnlocked_LeftPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil) : _battleSceneGodTunnel.IsBuildingUnlocked_RightPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil);
         }
 
         public IPvPDynamicBuildOrder CreateAntiRocketBuildOrder()
@@ -226,9 +228,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Bui
             return CreateStaticBuildOrder(PvPStaticPrefabKeys.PvPBuildings.PvPTeslaCoil, size: 1);
         }
 
-        public bool IsAntiStealthBuildOrderAvailable()
+        public bool IsAntiStealthBuildOrderAvailable(IPvPLevelInfo levelInfo)
         {
-            return _gameModel.IsBuildingUnlocked(new BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher.BuildingCategory), PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher.PrefabName));
+            return levelInfo.AICruiser.Faction == Buildables.PvPFaction.Blues ? _battleSceneGodTunnel.IsBuildingUnlocked_LeftPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher) : _battleSceneGodTunnel.IsBuildingUnlocked_RightPlayer(PvPStaticPrefabKeys.PvPBuildings.PvPSpySatelliteLauncher);
         }
 
         public IPvPDynamicBuildOrder CreateAntiStealthBuildOrder()

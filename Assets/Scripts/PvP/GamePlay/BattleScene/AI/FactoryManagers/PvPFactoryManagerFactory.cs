@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 {
     public class PvPFactoryManagerFactory : IPvPFactoryManagerFactory
     {
-        private readonly IGameModel _gameModel;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPPrefabFactory _prefabFactory;
         private readonly IPvPThreatMonitorFactory _threatMonitorFactory;
 
@@ -26,18 +26,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
         private readonly static PvPUnitKey ANTI_AIR_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPFighter;
         private readonly static PvPUnitKey ANTI_NAVAL_PLANE_KEY = PvPStaticPrefabKeys.PvPUnits.PvPGunship;
 
-        public PvPFactoryManagerFactory(IGameModel gameModel, IPvPPrefabFactory prefabFactory, IPvPThreatMonitorFactory threatMonitorFactory)
+        public PvPFactoryManagerFactory(PvPBattleSceneGodTunnel battleSceneGodTunnel, IPvPPrefabFactory prefabFactory, IPvPThreatMonitorFactory threatMonitorFactory)
         {
-            PvPHelper.AssertIsNotNull(gameModel, prefabFactory, threatMonitorFactory);
+            PvPHelper.AssertIsNotNull(battleSceneGodTunnel, prefabFactory, threatMonitorFactory);
 
-            _gameModel = gameModel;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
             _prefabFactory = prefabFactory;
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IPvPFactoryManager CreateNavalFactoryManager(IPvPCruiserController aiCruiser)
+        public IPvPFactoryManager CreateNavalFactoryManager(PvPCruiser aiCruiser)
         {
-            IList<PvPUnitKey> availableShipKeys = convertPvEUnitKey2PvPUnitKey(_gameModel.GetUnlockedUnits(convertPvPCategory2PvECategory(PvPUnitCategory.Naval)));
+            IList<PvPUnitKey> availableShipKeys =  aiCruiser.Faction == PvPFaction.Blues? _battleSceneGodTunnel.GetUnlockedUnits_LeftPlayer(PvPUnitCategory.Naval) : _battleSceneGodTunnel.GetUnlockedUnits_RightPlayer(PvPUnitCategory.Naval);
             IList<IPvPBuildableWrapper<IPvPUnit>> availableShips =
                 availableShipKeys
                     .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
@@ -50,53 +50,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             return new PvPFactoryManager(PvPUnitCategory.Naval, aiCruiser, unitChooser);
         }
 
-        private IList<PvPUnitKey> convertPvEUnitKey2PvPUnitKey(IList<UnitKey> keys)
+        public IPvPFactoryManager CreateAirfactoryManager(PvPCruiser aiCruiser)
         {
-            IList<PvPUnitKey> iPvPKeys = new List<PvPUnitKey>();
-            foreach (UnitKey key in keys)
-            {
-                iPvPKeys.Add(new PvPUnitKey(convertPvECategory2PvPUnitCategory(key.UnitCategory), "PvP" + key.PrefabName));
-            }
-
-            return iPvPKeys;
-        }
-
-        private PvPUnitCategory convertPvECategory2PvPUnitCategory(UnitCategory category)
-        {
-            switch (category)
-            {
-                case UnitCategory.Naval:
-                    return PvPUnitCategory.Naval;
-                case UnitCategory.Aircraft:
-                    return PvPUnitCategory.Aircraft;
-/*                case UnitCategory.Untouchable:
-                    return PvPUnitCategory.Untouchable;*/
-                default:
-                    throw new System.Exception();
-            }
-        }
-
-        private UnitCategory convertPvPCategory2PvECategory(PvPUnitCategory category)
-        {
-            switch (category)
-            {
-                case PvPUnitCategory.Naval:
-                    return UnitCategory.Naval;
-                case PvPUnitCategory.Aircraft:
-                    return UnitCategory.Aircraft;
-/*                case PvPUnitCategory.Untouchable:
-                    return UnitCategory.Untouchable;*/
-                default:
-                    throw new System.Exception();
-            }
-        }
-
-        public IPvPFactoryManager CreateAirfactoryManager(IPvPCruiserController aiCruiser)
-        {
-            Assert.IsTrue(_gameModel.IsUnitUnlocked(new UnitKey(convertPvPCategory2PvECategory(DEFAULT_PLANE_KEY.UnitCategory), DEFAULT_PLANE_KEY.PrefabName)), "Default plane should always be available.");
+            Assert.IsTrue(aiCruiser.Faction == PvPFaction.Blues? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(DEFAULT_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(DEFAULT_PLANE_KEY), "Default plane should always be available.");
             IPvPBuildableWrapper<IPvPUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
             IPvPBuildableWrapper<IPvPUnit> lategamePlane;
-            if (_gameModel.NumOfLevelsCompleted >= 25)
+            if (_battleSceneGodTunnel.currentLevelNum >= 25)
             {
                 lategamePlane = _prefabFactory.GetUnitWrapperPrefab(LATEGAME_PLANE_KEY);
             }
@@ -106,12 +65,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
             }
 
             IPvPBuildableWrapper<IPvPUnit> antiAirPlane =
-                _gameModel.IsUnitUnlocked(new UnitKey(convertPvPCategory2PvECategory( ANTI_AIR_PLANE_KEY.UnitCategory), ANTI_AIR_PLANE_KEY.PrefabName)) ?
+                (aiCruiser.Faction == PvPFaction.Blues ?  _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_AIR_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_AIR_PLANE_KEY)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
                 defaultPlane;
 
             IPvPBuildableWrapper<IPvPUnit> antiNavalPlane =
-                _gameModel.IsUnitUnlocked(new UnitKey(convertPvPCategory2PvECategory(ANTI_NAVAL_PLANE_KEY.UnitCategory), ANTI_NAVAL_PLANE_KEY.PrefabName)) ?
+              (  aiCruiser.Faction == PvPFaction.Blues ? _battleSceneGodTunnel.IsUnitUnlocked_LeftPlayer(ANTI_NAVAL_PLANE_KEY) : _battleSceneGodTunnel.IsUnitUnlocked_RightPlayer(ANTI_NAVAL_PLANE_KEY)) ?
                 _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 

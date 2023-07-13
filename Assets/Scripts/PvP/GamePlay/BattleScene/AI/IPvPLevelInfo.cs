@@ -7,8 +7,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
     public interface IPvPLevelInfo
     {
-        IPvPCruiserController AICruiser { get; }
-        IPvPCruiserController PlayerCruiser { get; }
+        PvPCruiser AICruiser { get; }
+        PvPCruiser PlayerCruiser { get; }
 
         bool CanConstructBuilding(PvPBuildingKey buildingKey);
         IList<PvPBuildingKey> GetAvailableBuildings(PvPBuildingCategory category);

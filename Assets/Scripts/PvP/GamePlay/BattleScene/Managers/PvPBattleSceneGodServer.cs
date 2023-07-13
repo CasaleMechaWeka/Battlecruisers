@@ -29,6 +29,8 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes.BattleScene;
 using UnityEngine.Analytics;
 using Unity.Services.Analytics;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
+using BattleCruisers.Scenes.Test.Utilities;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -37,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
         private static IPvPGameEndMonitor _gameEndMonitor;
-        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
+        public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public IPvPPrefabFactory prefabFactory;
         private IApplicationModel applicationModel;
         public IDataProvider dataProvider;
@@ -49,6 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerB;
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
+        private IPvPBattleSceneHelper pvpBattleHelper;
 
         public static Dictionary<PvPTargetType, PvPDeadBuildableCounter> deadBuildables;
 
@@ -135,7 +138,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise_Server();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            IPvPBattleSceneHelper pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, storyStrings);
             IPvPUserChosenTargetManager playerACruiserUserChosenTargetManager = new PvPUserChosenTargetManager();
             IPvPUserChosenTargetHelper playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerACruiserUserChosenTargetManager
@@ -172,27 +175,56 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
+            _battleSceneGodTunnel.RegisteredAllUnlockedBuildables += RegisteredAllBuildalbesToServer;
 
-/*            _gameEndMonitor
-                = new PvPGameEndMonitor(
-                    new PvPCruiserDestroyedMonitor(
-                        playerACruiser,
-                        playerBCruiser),
-                        _battleSceneGodTunnel,
-                    new PvPGameEndHandler(
-                        playerACruiser,
-                        playerBCruiser,
-                        ai,
-                        _battleSceneGodTunnel,
-                        components.Deferrer,
-                        cameraComponents.CruiserDeathCameraFocuser,
-                        navigationPermitters.NavigationFilter,
-                        uiManager,
-                        components.TargetIndicator,
-                        //windManager,
-                        helper.BuildingCategoryPermitter,
-                        rightPanelComponents.SpeedComponents.SpeedButtonGroup));*/
 
+
+
+
+
+
+
+            string logName = "Battle_Begin";
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
+#endif
+            try
+            {
+                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.Flush();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
+        }
+
+
+        private void RegisteredAllBuildalbesToServer()
+        {
+            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1);
+            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1);
+
+
+            /*            _gameEndMonitor
+                            = new PvPGameEndMonitor(
+                                new PvPCruiserDestroyedMonitor(
+                                    playerACruiser,
+                                    playerBCruiser),
+                                    _battleSceneGodTunnel,
+                                new PvPGameEndHandler(
+                                    playerACruiser,
+                                    playerBCruiser,
+                                    ai,
+                                    _battleSceneGodTunnel,
+                                    components.Deferrer,
+                                    cameraComponents.CruiserDeathCameraFocuser,
+                                    navigationPermitters.NavigationFilter,
+                                    uiManager,
+                                    components.TargetIndicator,
+                                    //windManager,
+                                    helper.BuildingCategoryPermitter,
+                                    rightPanelComponents.SpeedComponents.SpeedButtonGroup));*/
 
             deadBuildables = new Dictionary<PvPTargetType, PvPDeadBuildableCounter>();
             deadBuildables.Add(PvPTargetType.Aircraft, new PvPDeadBuildableCounter());
@@ -200,6 +232,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             deadBuildables.Add(PvPTargetType.Cruiser, new PvPDeadBuildableCounter());
             deadBuildables.Add(PvPTargetType.Buildings, new PvPDeadBuildableCounter());
             deadBuildables.Add(PvPTargetType.PlayedTime, new PvPDeadBuildableCounter());
+
 
             if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
@@ -216,23 +249,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             GameOver = false;
 
-/*            string logName = "Battle_Begin";
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-            try
-            {
-                AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
-                AnalyticsService.Instance.Flush();
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
-            }*/
+
         }
-
-
-
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)
         {
             return

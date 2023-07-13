@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(IPvPUserChosenTargetManager playerCruiserUserChosenTargetManager, IPvPPrioritisedSoundPlayer soundPlayer, IPvPTargetIndicator targetIndicator);
         public abstract IPvPPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);
         public abstract IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IPvPDeferrer deferrer);
-        public abstract IPvPArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, IPvPCruiserController playerCruiser, int currentLevelNum);
+        public abstract IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
 
 
         protected PvPBattleSceneHelper(

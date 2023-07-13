@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
 {
     public class PvPThreatMonitorFactory : IPvPThreatMonitorFactory
     {
-        private readonly IPvPCruiserController _playerCruiser;
+        private readonly PvPCruiser _playerCruiser;
         private readonly IPvPTime _time;
         private readonly IPvPDeferrer _deferrer;
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Thr
         private const float ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM = 0.5f;
         private const float STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM = 0.5f;
 
-        public PvPThreatMonitorFactory(IPvPCruiserController playerCruiser, IPvPTime time, IPvPDeferrer deferrer)
+        public PvPThreatMonitorFactory(PvPCruiser playerCruiser, IPvPTime time, IPvPDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(playerCruiser, time, deferrer);
 

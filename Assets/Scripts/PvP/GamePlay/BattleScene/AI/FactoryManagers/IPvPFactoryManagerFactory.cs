@@ -4,7 +4,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Fac
 {
     public interface IPvPFactoryManagerFactory
     {
-        IPvPFactoryManager CreateNavalFactoryManager(IPvPCruiserController aiCruiser);
-        IPvPFactoryManager CreateAirfactoryManager(IPvPCruiserController aiCruiser);
+        IPvPFactoryManager CreateNavalFactoryManager(PvPCruiser aiCruiser);
+        IPvPFactoryManager CreateAirfactoryManager(PvPCruiser aiCruiser);
     }
 }

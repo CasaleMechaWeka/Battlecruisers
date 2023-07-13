@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IPvPPrioritisedSoundPlayer soundPlayer,
             IPvPTargetIndicator targetIndicator
                                 );
-        IPvPArtificialIntelligence CreateAI(IPvPCruiserController aiCruiser, IPvPCruiserController playerCruiser, int currentLevelNum);
+        IPvPArtificialIntelligence CreateAI(PvPCruiser aiCruiser, PvPCruiser playerCruiser, int currentLevelNum);
         IPvPManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IPvPDeferrer deferrer);
         Task<IPvPPrefabContainer<PvPBackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
     }

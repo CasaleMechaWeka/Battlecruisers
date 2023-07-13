@@ -13,87 +13,38 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI
 {
     public class PvPLevelInfo : IPvPLevelInfo
     {
-        private readonly IGameModel _gameModel;
+        private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPPrefabFactory _prefabFactory;
 
-        public IPvPCruiserController AICruiser { get; }
-        public IPvPCruiserController PlayerCruiser { get; }
+        public PvPCruiser AICruiser { get; }
+        public PvPCruiser PlayerCruiser { get; }
 
         public PvPLevelInfo(
-            IPvPCruiserController aiCruiser,
-            IPvPCruiserController playerCruiser,
-            IGameModel gameModel,
+            PvPCruiser aiCruiser,
+            PvPCruiser playerCruiser,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPPrefabFactory prefabFactory)
         {
-            PvPHelper.AssertIsNotNull(aiCruiser, playerCruiser, gameModel, prefabFactory);
+            PvPHelper.AssertIsNotNull(aiCruiser, playerCruiser, battleSceneGodTunnel, prefabFactory);
 
             AICruiser = aiCruiser;
             PlayerCruiser = playerCruiser;
-            _gameModel = gameModel;
-            _prefabFactory = prefabFactory;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+            _prefabFactory = prefabFactory;           
         }
 
         public bool CanConstructBuilding(PvPBuildingKey buildingKey)
         {
             IPvPBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
-
             return
-                _gameModel.IsBuildingUnlocked(new BattleCruisers.Data.Models.PrefabKeys.BuildingKey(convertPvPBuildingCategory2PvEBuildingCategory(buildingKey.BuildingCategory), buildingKey.PrefabName))
+                AICruiser.Faction == Buildables.PvPFaction.Blues ?
+                _battleSceneGodTunnel.IsBuildingUnlocked_LeftPlayer(buildingKey) : _battleSceneGodTunnel.IsBuildingUnlocked_RightPlayer(buildingKey)
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
         }
 
         public IList<PvPBuildingKey> GetAvailableBuildings(PvPBuildingCategory category)
         {
-            IList<BuildingKey> iKeys = _gameModel.GetUnlockedBuildings(convertPvPBuildingCategory2PvEBuildingCategory(category));
-            return convertPvEBuildingKey2PvPBuildingKey(iKeys);
-        }
-
-        private IList<PvPBuildingKey> convertPvEBuildingKey2PvPBuildingKey(IList<BuildingKey> keys)
-        {
-            IList<PvPBuildingKey> iPvPKeys = new List<PvPBuildingKey>();
-            foreach (BuildingKey key in keys)
-            {
-                iPvPKeys.Add(new PvPBuildingKey(convertPvEBuildingCategory2PvPBuildingCategory(key.BuildingCategory), "PvP" + key.PrefabName));
-            }
-
-            return iPvPKeys;
-        }
-
-        private PvPBuildingCategory convertPvEBuildingCategory2PvPBuildingCategory(BuildingCategory category)
-        {
-            switch (category)
-            {
-                case BuildingCategory.Ultra:
-                    return PvPBuildingCategory.Ultra;
-                case BuildingCategory.Tactical:
-                    return PvPBuildingCategory.Tactical;
-                case BuildingCategory.Factory:
-                    return PvPBuildingCategory.Factory;
-                case BuildingCategory.Offence:
-                    return PvPBuildingCategory.Offence;
-                case BuildingCategory.Defence:
-                    return PvPBuildingCategory.Defence;
-                default:
-                    throw new System.Exception();
-            }
-        }
-        private BuildingCategory convertPvPBuildingCategory2PvEBuildingCategory(PvPBuildingCategory category)
-        {
-            switch (category)
-            {
-                case PvPBuildingCategory.Ultra:
-                    return BuildingCategory.Ultra;
-                case PvPBuildingCategory.Tactical:
-                    return BuildingCategory.Tactical;
-                case PvPBuildingCategory.Factory:
-                    return BuildingCategory.Factory;
-                case PvPBuildingCategory.Offence:
-                    return BuildingCategory.Offence;
-                case PvPBuildingCategory.Defence:
-                    return BuildingCategory.Defence;
-                default:
-                    throw new System.Exception();
-            }
+            return AICruiser.Faction == Buildables.PvPFaction.Blues? _battleSceneGodTunnel.GetUnlockedBuildings_LeftPlayer(category) : _battleSceneGodTunnel.GetUnlockedBuildings_RightPlayer(category);             
         }
     }
 }
