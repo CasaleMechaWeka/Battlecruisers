@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            _battleSceneGodTunnel.BattleCompleted.OnValueChanged += OnTunnelBattleCompleted_ValueChanged;
+       //     _battleSceneGodTunnel.BattleCompleted.OnValueChanged += OnTunnelBattleCompleted_ValueChanged;
             Assert.IsNotNull(components);
             components.Initialise_Client(applicationModel.DataProvider.SettingsManager);
 
@@ -360,20 +360,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             pvpBattleHelper.BuildingCategoryPermitter.AllowNoCategories();
         }
 
-        private void OnTunnelBattleCompleted_ValueChanged(Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal)
+        public void OnTunnelBattleCompleted_ValueChanged(/*Tunnel_BattleCompletedState oldVal, Tunnel_BattleCompletedState newVal*/)
         {
-            if (newVal == Tunnel_BattleCompletedState.Completed)
-            {
+/*            if (newVal == Tunnel_BattleCompletedState.Completed)
+            {*/
+                windManager?.Stop();
                 windManager?.DisposeManagedState();
-                _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= OnTunnelBattleCompleted_ValueChanged;
-            }
+               // _battleSceneGodTunnel.BattleCompleted.OnValueChanged -= OnTunnelBattleCompleted_ValueChanged;
+           // }
         }
 
         private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, IPvPCameraFocuser cameraFocuser)
         {
-
             return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
-
         }
 
         private void IsPopulationLimitReached_ValueChanged(bool oldVal, bool newVal)

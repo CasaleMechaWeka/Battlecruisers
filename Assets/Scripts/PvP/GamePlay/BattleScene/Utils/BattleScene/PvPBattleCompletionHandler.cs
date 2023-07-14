@@ -86,7 +86,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _isCompleted = true;
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             //   _battleSceneGodTunnel.BattleCompleted.Value = Tunnel_BattleCompletedState.Completed;
-            _battleSceneGodTunnel.ChangeBattleCompletedValue(Tunnel_BattleCompletedState.Completed);
+            // _battleSceneGodTunnel.ChangeBattleCompletedValue(Tunnel_BattleCompletedState.Completed);
+            PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
             if (NetworkManager.Singleton.IsConnectedClient)
                 NetworkManager.Singleton.Shutdown(true);
 
