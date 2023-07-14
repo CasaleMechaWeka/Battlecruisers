@@ -352,6 +352,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
 
+            Assert.IsNotNull(building);
             building.Activate(
                 new PvPBuildingActivationArgs(
                     this,
