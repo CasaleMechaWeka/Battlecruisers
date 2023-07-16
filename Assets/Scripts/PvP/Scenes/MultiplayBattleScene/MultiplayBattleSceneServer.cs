@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Multiplayer.Samples.Utilities;
 using UnityEngine.SceneManagement;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -92,6 +93,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void OnClientDisconnect(ulong clientId)
         {
             m_clients.Remove(clientId);
+            if (SynchedServerData.Instance.playerAClientNetworkId.Value == clientId)
+            {
+                PvPBattleSceneGodServer.Instance.RegisterAIOfLeftPlayer();
+            }
+            else if (SynchedServerData.Instance.playerBClientNetworkId.Value == clientId)
+            {
+                PvPBattleSceneGodServer.Instance.RegisterAIOfRightPlayer();
+            }
             onClientExit?.Invoke();
         }
 

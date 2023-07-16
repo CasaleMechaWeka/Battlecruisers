@@ -202,9 +202,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private void RegisteredAllBuildalbesToServer()
         {
-            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1);
-            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1);
 
+            // ai should be created when the player leave battle arena.
+/*            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1 *//*current level num*//*);
+            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 *//*current level num*//*);
+*/
 
             _gameEndMonitor
                 = new PvPGameEndMonitor(
@@ -215,8 +217,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     new PvPGameEndHandler(
                         playerACruiser,
                         playerBCruiser,
-                        ai_LeftPlayer,
-                        ai_RightPlayer,
+/*                        ai_LeftPlayer,
+                        ai_RightPlayer,*/
                         _battleSceneGodTunnel,
                         components.Deferrer
                         //    cameraComponents.CruiserDeathCameraFocuser,
@@ -252,6 +254,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             GameOver = false;
 
 
+        }
+
+        public void RegisterAIOfLeftPlayer()
+        {
+            IPvPArtificialIntelligence ai_LeftPlayer = pvpBattleHelper.CreateAI(playerACruiser, playerBCruiser, 1 /* current level num*/);
+            //     IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 current level num);
+            _gameEndMonitor.RegisterAIOfLeftPlayer(ai_LeftPlayer);
+        }
+
+        public void RegisterAIOfRightPlayer()
+        {
+            IPvPArtificialIntelligence ai_RightPlayer = pvpBattleHelper.CreateAI(playerBCruiser, playerACruiser, 1 /*current level num*/);
+            _gameEndMonitor.RegisterAIOfRightPlayer(ai_RightPlayer);
         }
         private PvPPopulationLimitAnnouncer CreatePopulationLimitAnnouncer(PvPCruiser playerCruiser)
         {

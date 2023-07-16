@@ -152,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IPvPLevelInfo levelInfo = new PvPLevelInfo(aiCruiser, playerCruiser, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _prefabFactory);
             IPvPStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
             IPvPAIManager aiManager = new PvPAIManager(_prefabFactory, DataProvider, PvPBattleSceneGodServer.Instance._battleSceneGodTunnel, _deferrer, playerCruiser, strategyFactory);
-            return aiManager.CreateAI(levelInfo, FindDifficulty());
+            return aiManager.CreateAI(levelInfo, FindDifficulty() /* should be modified in production*/);
         }
 
         public override IPvPUserChosenTargetHelper CreateUserChosenTargetHelper(

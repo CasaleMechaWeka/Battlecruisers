@@ -1,3 +1,4 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
@@ -70,6 +71,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 ds += kvp.Value.GetTotalDamageInCredits();
             }
             return ds;
+        }
+
+        public void RegisterAIOfLeftPlayer(IPvPArtificialIntelligence ai_LeftPlayer)
+        {
+            _gameEndHandler.RegisterAIOfLeftPlayer(ai_LeftPlayer);
+        }
+
+        public void RegisterAIOfRightPlayer(IPvPArtificialIntelligence ai_RightPlayer)
+        {
+            _gameEndHandler.RegisterAIOfRightPlayer(ai_RightPlayer);
         }
     }
 }

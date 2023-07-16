@@ -32,8 +32,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPGameEndHandler : IPvPGameEndHandler
     {
         private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
-        private readonly IPvPArtificialIntelligence _ai_LeftPlayer;
-        private readonly IPvPArtificialIntelligence _ai_RightPlayer;
+        private IPvPArtificialIntelligence _ai_LeftPlayer;
+        private IPvPArtificialIntelligence _ai_RightPlayer;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IPvPDeferrer _deferrer;
         private readonly IPvPCruiserDeathCameraFocuser _cameraFocuser;
@@ -51,8 +51,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPGameEndHandler(
             IPvPCruiser playerACruiser,
             IPvPCruiser playerBCruiser,
-            IPvPArtificialIntelligence ai_LeftPlayer,
-            IPvPArtificialIntelligence ai_RightPlayer,
+            /*            IPvPArtificialIntelligence ai_LeftPlayer,
+                        IPvPArtificialIntelligence ai_RightPlayer,*/
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IPvPDeferrer deferrer
         //    IPvPCruiserDeathCameraFocuser cameraFocuser,
@@ -67,8 +67,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPHelper.AssertIsNotNull(
                 playerACruiser,
                 playerBCruiser,
-                ai_LeftPlayer,
-                ai_RightPlayer,
+                /*                ai_LeftPlayer,
+                                ai_RightPlayer,*/
                 battleSceneGodTunnel,
                 deferrer
                 //    cameraFocuser,
@@ -81,8 +81,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             _playerACruiser = playerACruiser;
             _playerBCruiser = playerBCruiser;
-            _ai_LeftPlayer = ai_LeftPlayer;
-            _ai_RightPlayer = ai_RightPlayer;
+            /*            _ai_LeftPlayer = ai_LeftPlayer;
+                        _ai_RightPlayer = ai_RightPlayer;*/
             _battleSceneGodTunnel = battleSceneGodTunnel;
             _deferrer = deferrer;
             //   _cameraFocuser = cameraFocuser;
@@ -153,6 +153,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _battleSceneGodTunnel.HandleCruiserDestroyed();
             _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
             _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S);
+        }
+
+
+
+        public void RegisterAIOfLeftPlayer(IPvPArtificialIntelligence ai_LeftPlayer)
+        {
+            _ai_LeftPlayer = ai_LeftPlayer;
+        }
+
+        public void RegisterAIOfRightPlayer(IPvPArtificialIntelligence ai_RightPlayer)
+        {
+            _ai_RightPlayer = ai_RightPlayer;
         }
 
         private void DestroyCruiserBuildables(IPvPCruiser cruiser)
