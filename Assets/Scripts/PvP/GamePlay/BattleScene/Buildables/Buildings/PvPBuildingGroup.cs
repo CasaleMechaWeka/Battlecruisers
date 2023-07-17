@@ -20,10 +20,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             string groupName,
             string description)
         {
-            if (buildings.Count < MIN_NUM_OF_BUILDINGS || buildings.Count > MAX_NUM_OF_BUILDINGS)
+            // sava added
+
+/*            if (buildings.Count < MIN_NUM_OF_BUILDINGS || buildings.Count > MAX_NUM_OF_BUILDINGS)
             {
                 throw new ArgumentException("Invalid building count: " + buildings.Count);
-            }
+            }*/
 
             BuildingCategory = buildingCategory;
             Buildings = buildings;

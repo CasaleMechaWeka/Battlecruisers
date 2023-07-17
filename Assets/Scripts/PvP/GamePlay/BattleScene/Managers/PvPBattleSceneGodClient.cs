@@ -233,7 +233,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _battleSceneGodTunnel.battleCompletionHandler = battleCompletionHandler;
             PvPTopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, enemyCruiser, "Player A", "Player B");
             leftPanelComponents
-                = await leftPanelInitialiser.Initialise(
+                = leftPanelInitialiser.Initialise(
                     playerCruiser,
                     uiManager,
                     pvpBattleHelper.GetPlayerLoadout(),

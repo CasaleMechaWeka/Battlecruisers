@@ -6,45 +6,45 @@ using System.Collections.Generic;
 namespace BattleCruisers.Data.Static
 {
     public static class StaticPrefabKeys
-	{
-		public static class Buildings
-		{
-			// Factories
-			public static BuildingKey AirFactory { get; } = new BuildingKey(BuildingCategory.Factory, "AirFactory");
-			public static BuildingKey NavalFactory { get; } = new BuildingKey(BuildingCategory.Factory, "NavalFactory");
-			public static BuildingKey DroneStation { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
+    {
+        public static class Buildings
+        {
+            // Factories
+            public static BuildingKey AirFactory { get; } = new BuildingKey(BuildingCategory.Factory, "AirFactory");
+            public static BuildingKey NavalFactory { get; } = new BuildingKey(BuildingCategory.Factory, "NavalFactory");
+            public static BuildingKey DroneStation { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay");
             public static BuildingKey DroneStation4 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay4");
             public static BuildingKey DroneStation8 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay8");
 
-			// Tactical
-			public static BuildingKey ShieldGenerator { get; } = new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
+            // Tactical
+            public static BuildingKey ShieldGenerator { get; } = new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
             public static BuildingKey StealthGenerator { get; } = new BuildingKey(BuildingCategory.Tactical, "StealthGenerator");
             public static BuildingKey SpySatelliteLauncher { get; } = new BuildingKey(BuildingCategory.Tactical, "SpySatelliteLauncher");
-			public static BuildingKey LocalBooster { get; } = new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
+            public static BuildingKey LocalBooster { get; } = new BuildingKey(BuildingCategory.Tactical, "LocalBooster");
             public static BuildingKey ControlTower { get; } = new BuildingKey(BuildingCategory.Tactical, "ControlTower");
 
-			// Defence
-			public static BuildingKey AntiShipTurret { get; } = new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
-			public static BuildingKey AntiAirTurret { get; } = new BuildingKey(BuildingCategory.Defence, "AntiAirTurret");
-			public static BuildingKey Mortar { get; } = new BuildingKey(BuildingCategory.Defence, "Mortar");
-			public static BuildingKey SamSite { get; } = new BuildingKey(BuildingCategory.Defence, "SamSite");
-			public static BuildingKey TeslaCoil { get; } = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
+            // Defence
+            public static BuildingKey AntiShipTurret { get; } = new BuildingKey(BuildingCategory.Defence, "AntiShipTurret");
+            public static BuildingKey AntiAirTurret { get; } = new BuildingKey(BuildingCategory.Defence, "AntiAirTurret");
+            public static BuildingKey Mortar { get; } = new BuildingKey(BuildingCategory.Defence, "Mortar");
+            public static BuildingKey SamSite { get; } = new BuildingKey(BuildingCategory.Defence, "SamSite");
+            public static BuildingKey TeslaCoil { get; } = new BuildingKey(BuildingCategory.Defence, "TeslaCoil");
             public static BuildingKey Coastguard { get; } = new BuildingKey(BuildingCategory.Defence, "Coastguard");//new
 
             // Offence
             public static BuildingKey Artillery { get; } = new BuildingKey(BuildingCategory.Offence, "Artillery");
-			public static BuildingKey RocketLauncher { get; } = new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
-			public static BuildingKey Railgun { get; } = new BuildingKey(BuildingCategory.Offence, "Railgun");
+            public static BuildingKey RocketLauncher { get; } = new BuildingKey(BuildingCategory.Offence, "RocketLauncher");
+            public static BuildingKey Railgun { get; } = new BuildingKey(BuildingCategory.Offence, "Railgun");
             public static BuildingKey MLRS { get; } = new BuildingKey(BuildingCategory.Offence, "MLRS");
             public static BuildingKey GatlingMortar { get; } = new BuildingKey(BuildingCategory.Offence, "GatlingMortar");
             public static BuildingKey IonCannon { get; } = new BuildingKey(BuildingCategory.Offence, "IonCannon");//new
             public static BuildingKey MissilePod { get; } = new BuildingKey(BuildingCategory.Offence, "MissilePod");//new
 
 
-			// Ultras
-			public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
-			public static BuildingKey NukeLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "NukeLauncher");
-			public static BuildingKey Ultralisk { get; } = new BuildingKey(BuildingCategory.Ultra, "Ultralisk");
+            // Ultras
+            public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
+            public static BuildingKey NukeLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "NukeLauncher");
+            public static BuildingKey Ultralisk { get; } = new BuildingKey(BuildingCategory.Ultra, "Ultralisk");
             public static BuildingKey KamikazeSignal { get; } = new BuildingKey(BuildingCategory.Ultra, "KamikazeSignal");
             public static BuildingKey Broadsides { get; } = new BuildingKey(BuildingCategory.Ultra, "Broadsides");
             public static BuildingKey NovaArtillery { get; } = new BuildingKey(BuildingCategory.Ultra, "NovaArtillery");//new
@@ -101,25 +101,25 @@ namespace BattleCruisers.Data.Static
                     };
                 }
             }
-		}
+        }
 
-		public static class Hulls
-		{
-			public static HullKey Bullshark { get; } = new HullKey("Bullshark");
-			public static HullKey Eagle { get; } = new HullKey("Eagle");
-			public static HullKey Hammerhead { get; } = new HullKey("Hammerhead");
-			public static HullKey Longbow { get; } = new HullKey("Longbow");
-			public static HullKey Megalodon { get; } = new HullKey("Megalodon");
-			public static HullKey Raptor { get; } = new HullKey("Raptor");
-			public static HullKey Rockjaw { get; } = new HullKey("Rockjaw");
-			public static HullKey Trident { get; } = new HullKey("Trident");
+        public static class Hulls
+        {
+            public static HullKey Bullshark { get; } = new HullKey("Bullshark");
+            public static HullKey Eagle { get; } = new HullKey("Eagle");
+            public static HullKey Hammerhead { get; } = new HullKey("Hammerhead");
+            public static HullKey Longbow { get; } = new HullKey("Longbow");
+            public static HullKey Megalodon { get; } = new HullKey("Megalodon");
+            public static HullKey Raptor { get; } = new HullKey("Raptor");
+            public static HullKey Rockjaw { get; } = new HullKey("Rockjaw");
+            public static HullKey Trident { get; } = new HullKey("Trident");
             public static HullKey ManOfWarBoss { get; } = new HullKey("ManOfWarBoss");
             public static HullKey HuntressBoss { get; } = new HullKey("HuntressBoss");
             public static HullKey TasDevil { get; } = new HullKey("TasDevil");
             public static HullKey Yeti { get; } = new HullKey("Yeti");
             public static HullKey Rickshaw { get; } = new HullKey("Rickshaw");
             public static HullKey BlackRig { get; } = new HullKey("BlackRig");
-            
+
 
 
             public static IList<IPrefabKey> AllKeys
@@ -165,7 +165,7 @@ namespace BattleCruisers.Data.Static
             public static CaptainExoKey CaptainExo_014 { get; } = new CaptainExoKey("CaptainExo_014");
             public static CaptainExoKey CaptainExo_015 { get; } = new CaptainExoKey("CaptainExo_015");
 
-            public static IList<IPrefabKey> AllKeys 
+            public static IList<IPrefabKey> AllKeys
             {
                 get
                 {
@@ -190,13 +190,13 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey HighCalibreBulletImpact { get; } = new ExplosionKey("HighCalibreBulletImpact");
             public static ExplosionKey TinyBulletImpact { get; } = new ExplosionKey("TinyBulletImpact");
             public static ExplosionKey NovaShellImpact { get; } = new ExplosionKey("NovaShellImpact");
-             public static ExplosionKey RocketShellImpact { get; } = new ExplosionKey("RocketShellImpact");
+            public static ExplosionKey RocketShellImpact { get; } = new ExplosionKey("RocketShellImpact");
             public static ExplosionKey BombExplosion { get; } = new ExplosionKey("ExplosionBomb");
             public static ExplosionKey FlakExplosion { get; } = new ExplosionKey("ExplosionSAM");
             public static ExplosionKey Explosion75 { get; } = new ExplosionKey("Explosion0.75");
             public static ExplosionKey Explosion100 { get; } = new ExplosionKey("Explosion1.0");
             public static ExplosionKey Explosion150 { get; } = new ExplosionKey("Explosion1.5");
-            public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0"); 
+            public static ExplosionKey Explosion500 { get; } = new ExplosionKey("Explosion5.0");
 
             public static IList<IPrefabKey> AllKeys
             {

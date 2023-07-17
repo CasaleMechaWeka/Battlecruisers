@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public interface IPvPPrefabOrganiser
     {
-        Task<IList<IPvPBuildingGroup>> GetBuildingGroups();
+        IList<IPvPBuildingGroup> GetBuildingGroups();
         IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> GetUnits();
     }
 }

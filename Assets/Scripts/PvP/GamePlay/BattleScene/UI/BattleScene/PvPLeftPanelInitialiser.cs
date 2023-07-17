@@ -44,57 +44,57 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
 
 
-/*        public async Task<PvPLeftPanelComponents> Initialise(
-            IPvPDroneManager droneManager,
-            IPvPDroneManagerMonitor droneManagerMonitor,
-            IPvPUIManager uiManager,
-            ILoadout playerLoadout,
-            IPvPPrefabFactory prefabFactory,
-            IPvPSpriteProvider spriteProvider,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IPvPPrioritisedSoundPlayer eventSoundPlayer,
-            IPvPSingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
-        {
-            PvPHelper.AssertIsNotNull(
-                droneManager,
-                droneManagerMonitor,
-                uiManager,
-                playerLoadout,
-                prefabFactory,
-                spriteProvider,
-                buttonVisibilityFilters,
-                playerCruiserFocusHelper,
-                eventSoundPlayer,
-                uiSoundPlayer,
-                populationLimitMonitor,
-                staticData);
-            PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
+        /*        public async Task<PvPLeftPanelComponents> Initialise(
+                    IPvPDroneManager droneManager,
+                    IPvPDroneManagerMonitor droneManagerMonitor,
+                    IPvPUIManager uiManager,
+                    ILoadout playerLoadout,
+                    IPvPPrefabFactory prefabFactory,
+                    IPvPSpriteProvider spriteProvider,
+                    IPvPButtonVisibilityFilters buttonVisibilityFilters,
+                    IPvPPlayerCruiserFocusHelper playerCruiserFocusHelper,
+                    IPvPPrioritisedSoundPlayer eventSoundPlayer,
+                    IPvPSingleSoundPlayer uiSoundPlayer,
+                    IPvPPopulationLimitMonitor populationLimitMonitor,
+                    IStaticData staticData)
+                {
+                    PvPHelper.AssertIsNotNull(
+                        droneManager,
+                        droneManagerMonitor,
+                        uiManager,
+                        playerLoadout,
+                        prefabFactory,
+                        spriteProvider,
+                        buttonVisibilityFilters,
+                        playerCruiserFocusHelper,
+                        eventSoundPlayer,
+                        uiSoundPlayer,
+                        populationLimitMonitor,
+                        staticData);
+                    PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
-            IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
-            IPvPBuildMenu buildMenu
-                = await SetupBuildMenuController(
+                    IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
+                    IPvPBuildMenu buildMenu
+                        = await SetupBuildMenuController(
 
-                    uiManager,
-                    playerLoadout,
-                    prefabFactory,
-                    spriteProvider,
-                    buttonVisibilityFilters,
-                    playerCruiserFocusHelper,
-                    eventSoundPlayer,
-                    uiSoundPlayer,
-                    populationLimitMonitor,
-                    staticData);
+                            uiManager,
+                            playerLoadout,
+                            prefabFactory,
+                            spriteProvider,
+                            buttonVisibilityFilters,
+                            playerCruiserFocusHelper,
+                            eventSoundPlayer,
+                            uiSoundPlayer,
+                            populationLimitMonitor,
+                            staticData);
 
-            makeLeftBackgroundPanelFit();
+                    makeLeftBackgroundPanelFit();
 
-            return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
-        }*/
+                    return new PvPLeftPanelComponents(numberOfDronesHighlightable, buildMenu, new PvPGameObjectBC(popLimitReachedFeedback));
+                }*/
 
 
-        public async Task<PvPLeftPanelComponents> Initialise(
+        public PvPLeftPanelComponents Initialise(
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
@@ -123,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IPvPHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
             IPvPBuildMenu buildMenu
-                = await SetupBuildMenuController(
+                = SetupBuildMenuController(
                     playerCruiser,
                     uiManager,
                     playerLoadout,
@@ -151,7 +151,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return dronesPanelInitialiser.Initialise(playerCruiser);
         }
 
-        private async Task<IPvPBuildMenu> SetupBuildMenuController(
+        private IPvPBuildMenu SetupBuildMenuController(
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
@@ -166,7 +166,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             IPvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
             IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
-            IList<IPvPBuildingGroup> buildingGroups = await prefabOrganiser.GetBuildingGroups();
+            IList<IPvPBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<PvPUnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units = prefabOrganiser.GetUnits();
             IPvPBuildableSorterFactory sorterFactory
                 = new PvPBuildableSorterFactory(
