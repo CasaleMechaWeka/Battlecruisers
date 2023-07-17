@@ -47,21 +47,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             _isVisible.Value = true;
             buttonsPanel.Show();
             settingsPanel.Hide();
-            for (int i = 0; i < 4; i++)
+/*            for (int i = 0; i < 4; i++)
             {
                 if (speedButtons[i].selectedFeedback.gameObject.activeInHierarchy)
                 {
                     lastClicked = i;
                 }
-            }
-            speedButtons[0].TriggerClick();
+            }*/
+          //  speedButtons[0].TriggerClick();
         }
 
         public void HideMenu()
         {
             _canvas.enabled = false;
             _isVisible.Value = false;
-            speedButtons[lastClicked].TriggerClick();
+        //    speedButtons[lastClicked].TriggerClick();
         }
 
         public void ShowSettings()

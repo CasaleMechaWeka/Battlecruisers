@@ -167,8 +167,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                     m_clientData.Remove(authId);
                 }
             }
-            var matchPlayerIntance = GetNetworkedMatchPlayer(networkId);
-            OnServerPlayerDespawned?.Invoke(matchPlayerIntance);
+/*            var matchPlayerIntance = GetNetworkedMatchPlayer(networkId);
+            OnServerPlayerDespawned?.Invoke(matchPlayerIntance);*/
         }
 
 
