@@ -64,7 +64,10 @@ namespace BattleCruisers.PostBattleScreen
 
             long scoreDifference = nextRankThreshold - currentRankThreshold;
             long scoreRemainder = score - currentRankThreshold;
-
+            if(scoreRemainder < 0)
+            {
+                scoreRemainder = 0;
+            }
             return scoreRemainder;
         }
     }

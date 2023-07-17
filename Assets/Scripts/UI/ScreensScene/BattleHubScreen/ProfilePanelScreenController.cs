@@ -59,7 +59,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (xpBar != null)
             {
                 rank = ranker.CalculateRank(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-                currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
+                //currentXP = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.XPToNextLevel;
+                currentXP = (int)ranker.CalculateXpToNextLevel(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore);
                 levelXP = (int)(ranker.CalculateLevelXP(rank));
                 xpBar.setValues(currentXP, levelXP);
                 currentXPString.text = FormatNumber(currentXP).ToString();
