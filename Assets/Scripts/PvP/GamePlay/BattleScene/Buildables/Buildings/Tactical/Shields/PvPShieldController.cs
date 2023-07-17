@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -93,7 +94,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                     if (Health == maxHealth)
                     {
-                        _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.FullyCharged, Position);
+                    //    _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.FullyCharged, Position);
+                        OnPlayFullchargedSoundClientRpc(Position);
                     }
                 }
             }
@@ -134,7 +136,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void PlayDamagedSound()
         {
-            _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.HitWhileActive, Position);
+            //  _soundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.HitWhileActive, Position);
+            OnPlayTakeDamageSoundClientRpc(Position);
         }
 
         private void EnableShield()
@@ -155,6 +158,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override bool IsShield()
         {
             return true;
+        }
+
+        [ClientRpc]
+        private void OnPlayTakeDamageSoundClientRpc(Vector3 position)
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.HitWhileActive, position);
+        }
+
+        [ClientRpc]
+        private void OnPlayFullchargedSoundClientRpc(Vector3 position)
+        {
+            if (IsClient)
+                PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(PvPSoundKeys.Shields.FullyCharged, Position);
         }
     }
 }

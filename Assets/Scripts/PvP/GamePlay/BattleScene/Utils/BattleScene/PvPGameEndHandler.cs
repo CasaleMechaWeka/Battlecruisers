@@ -135,8 +135,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
             //    _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
-            _ai_LeftPlayer.DisposeManagedState();
-            _ai_RightPlayer.DisposeManagedState();
+            if (_ai_LeftPlayer != null)
+                _ai_LeftPlayer.DisposeManagedState();
+            if (_ai_RightPlayer != null)
+                _ai_RightPlayer?.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             //    _navigationPermitter.IsMatch = false;
             //    _cameraFocuser.FocusOnLosingCruiser(losingCruiser);
@@ -210,8 +212,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             if (!_handledCruiserDeath)
             {
-                _ai_LeftPlayer.DisposeManagedState();
-                _ai_RightPlayer.DisposeManagedState();
+                if (_ai_LeftPlayer != null)
+                    _ai_LeftPlayer.DisposeManagedState();
+                if (_ai_RightPlayer != null)
+                    _ai_RightPlayer.DisposeManagedState();
             }
             //  _windManager.DisposeManagedState();
         }
