@@ -122,6 +122,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnDestroyedEventClientRpc();
         }
 
+        protected override void OnBuildableCompleted()
+        {
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
+                OnBuildableCompletedClientRpc();
+            }
+            if (IsClient)
+                OnBuildableCompleted_PvPClient();
+        }
+
         //-------------------------------------- RPCs -------------------------------------------------//
 
         [ClientRpc]
@@ -170,6 +181,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnDestroyedEventClientRpc()
         {
             OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            OnBuildableCompleted();
         }
     }
 }

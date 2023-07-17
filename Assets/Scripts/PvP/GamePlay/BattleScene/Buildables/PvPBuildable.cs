@@ -569,7 +569,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         OnBuildableCompleted();
                     }
                 }
-
                 OnUpdate();
             }
 

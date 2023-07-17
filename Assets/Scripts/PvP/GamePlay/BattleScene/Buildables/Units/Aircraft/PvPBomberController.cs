@@ -122,20 +122,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         protected async override void OnBuildableCompleted()
         {
+            if(IsServer)
+            {
+                base.OnBuildableCompleted();
+                Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
+                _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
+                _targetProcessor.AddTargetConsumer(this);
+                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
 
-            base.OnBuildableCompleted();
-
-            Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
-
-            _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
-            _targetProcessor.AddTargetConsumer(this);
-
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateBomberSpriteChooserAsync(this);
-
-            /*            if (GetComponent<NetworkTransform>() != null)
-                            GetComponent<NetworkTransform>().enabled = true;
-                        if (GetComponent<NetworkRigidbody2D>() != null)
-                            GetComponent<NetworkRigidbody2D>().enabled = true;*/
+                OnBuildableCompletedClientRpc();
+            }
+            if (IsClient)
+                OnBuildableCompleted_PvPClient();
         }
 
         protected override IList<IPvPPatrolPoint> GetPatrolPoints()
@@ -420,6 +418,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnDestroyedEventClientRpc()
         {
             OnDestroyedEvent();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            OnBuildableCompleted();
         }
     }
 }
